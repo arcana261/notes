@@ -1,0 +1,124 @@
+@Configuration
+@EnableWebSecurity
+public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
+ 
+    @Autowired
+    private ClientDetailsService clientDetailsService;
+     
+    @Autowired
+    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+        .withUser("bill").password("abc123").roles("ADMIN").and()
+        .withUser("bob").password("abc123").roles("USER");
+    }
+ 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+        .csrf().disable()
+        .anonymous().disable()
+        .authorizeRequests()
+        .antMatchers("/oauth/token").permitAll();
+    }
+ 
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+ 
+ 
+    @Bean
+    public TokenStore tokenStore() {
+        return new InMemoryTokenStore();
+    }
+ 
+    @Bean
+    @Autowired
+    public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore){
+        TokenStoreUserApprovalHandler handler = new TokenStoreUserApprovalHandler();
+        handler.setTokenStore(tokenStore);
+        handler.setRequestFactory(new DefaultOAuth2RequestFactory(clientDetailsService));
+        handler.setClientDetailsService(clientDetailsService);
+        return handler;
+    }
+     
+    @Bean
+    @Autowired
+    public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
+        TokenApprovalStore store = new TokenApprovalStore();
+        store.setTokenStore(tokenStore);
+        return store;
+    }
+     
+}
+
+
+
+
+@Configuration
+@EnableResourceServer
+public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+ 
+    private static final String RESOURCE_ID = "my_rest_api";
+     
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) {
+        resources.resourceId(RESOURCE_ID).stateless(false);
+    }
+ 
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.
+        anonymous().disable()
+        .requestMatchers().antMatchers("/user/**")
+        .and().authorizeRequests()
+        .antMatchers("/user/**").access("hasRole('ADMIN')")
+        .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+    }
+ 
+}
+
+
+
+@Configuration
+@EnableAuthorizationServer
+public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+ 
+    private static String REALM="MY_OAUTH_REALM";
+     
+    @Autowired
+    private TokenStore tokenStore;
+ 
+    @Autowired
+    private UserApprovalHandler userApprovalHandler;
+ 
+    @Autowired
+    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager;
+ 
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+ 
+        clients.inMemory()
+            .withClient("my-trusted-client")
+            .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+            .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+            .scopes("read", "write", "trust")
+            .secret("secret")
+            .accessTokenValiditySeconds(120).//Access token is only valid for 2 minutes.
+            refreshTokenValiditySeconds(600);//Refresh token is only valid for 10 minutes.
+    }
+ 
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
+                .authenticationManager(authenticationManager);
+    }
+ 
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        oauthServer.realm(REALM+"/client");
+    }
+ 
+}

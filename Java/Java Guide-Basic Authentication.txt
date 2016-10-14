@@ -1,0 +1,55 @@
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+ 
+    private static String REALM="MY_TEST_REALM";
+     
+    @Autowired
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("bill").password("abc123").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("tom").password("abc123").roles("USER");
+    }
+     
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+  
+      http.csrf().disable()
+        .authorizeRequests()
+        .antMatchers("/user/**").hasRole("ADMIN")
+        .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
+        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
+    }
+     
+    @Bean
+    public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint(){
+        return new CustomBasicAuthenticationEntryPoint();
+    }
+     
+    /* To allow Pre-flight [OPTIONS] request from browser */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+    }
+}
+
+
+public class CustomBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
+ 
+    @Override
+    public void commence(final HttpServletRequest request, 
+            final HttpServletResponse response, 
+            final AuthenticationException authException) throws IOException, ServletException {
+        //Authentication failed, send error response.
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
+         
+        PrintWriter writer = response.getWriter();
+        writer.println("HTTP Status 401 : " + authException.getMessage());
+    }
+     
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        setRealmName("MY_TEST_REALM");
+        super.afterPropertiesSet();
+    }
+}

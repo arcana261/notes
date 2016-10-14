@@ -1,0 +1,345 @@
+https://vaadin.com/wiki?p_p_id=36&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=row-1&p_p_col_pos=2&p_p_col_count=4&_36_struts_action=%2Fwiki%2Fview&p_r_p_185834411_nodeName=vaadin.com+wiki&p_r_p_185834411_title=I+b+-+Getting+started+with+Vaadin+Spring+without+Spring+Boot
+https://vaadin.com/wiki/-/wiki/Spring+Vaadin/IV+-+Configuring+and+Using+Vaadin+Spring+without+Spring+Boot
+https://vaadin.com/wiki/-/wiki/Main/Creating+a+Maven+project
+####################################
+## add vaadin repository just below
+## <properties> section
+####################################
+	<repositories>
+		<repository>
+			<id>vaadin-addons</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>
+	</repositories>
+####################################
+## set vaadin version
+####################################
+<properties>
+  <vaadin.version>7.7.3</vaadin.version>
+  <vaadin.plugin.version>7.7.3</vaadin.plugin.version>
+</properties>
+####################################
+## add VAADIN dependenies
+####################################
+<properties>
+  <vaadin.version>7.7.3</vaadin.version>
+  <vaadin-spring.version>1.0.2</vaadin-spring.version>
+</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-bom</artifactId>
+				<version>${vaadin.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-push</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client-compiled</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-themes</artifactId>
+		</dependency>
+		<dependency>
+	            <groupId>com.vaadin</groupId>
+        	    <artifactId>vaadin-spring</artifactId>
+        	    <version>${vaadin-spring.version}</version>
+	        </dependency>
+	</dependencies>
+####################################
+## create directory to store themes
+####################################
+mkdir -p src/main/webapp/VAADIN/themes
+####################################
+## create vaadin plugins
+####################################
+<properties>
+  <vaadin.plugin.version>7.7.3</vaadin.plugin.version>
+</properties>
+<build>
+  <plugins>
+			<plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<version>${vaadin.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>update-theme</goal>
+							<goal>update-widgetset</goal>
+							<goal>compile</goal>
+							<!-- Comment out compile-theme goal to use on-the-fly theme compilation -->
+							<goal>compile-theme</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/webapp/VAADIN/themes</directory>
+							<includes>
+								<include>**/styles.css</include>
+								<include>**/styles.scss.cache</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+  </plugins>
+</build>
+####################################
+## create sample theme
+####################################
+mkdir -p src/main/webapp/VAADIN/themes/mytheme
+
+cat <<EOF > src/main/webapp/VAADIN/themes/mytheme/mytheme.scss
+@import "../valo/valo.scss";
+
+@mixin mytheme {
+  @include valo;
+
+  // Insert your own theme rules here
+}
+EOF
+
+cat <<EOF > src/main/webapp/VAADIN/themes/mytheme/addons.scss
+@mixin addons {
+}
+EOF
+
+cat <<EOF > src/main/webapp/VAADIN/themes/mytheme/styles.scss
+@import "mytheme.scss";
+@import "addons.scss";
+
+.mytheme {
+  @include addons;
+  @include mytheme;
+
+}
+EOF
+####################################
+## create favicon.ico in
+## src/main/webapp/VAADIN/themes/mytheme/favicon.ico
+####################################
+####################################
+## create VAADIN configuration
+####################################
+@Configuration
+@EnableVaadin
+public class VaadinConfig {
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages/messages");
+        return messageSource;
+    }
+}
+####################################
+## Import VaadinConfig in AppConfig
+####################################
+####################################
+## Create initializer in me.arcana package
+####################################
+public class ServletInitializer implements WebApplicationInitializer {
+    @Override
+    public void onStartup(javax.servlet.ServletContext servletContext)
+            throws ServletException {
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(AppConfig.class);
+        context.refresh();
+        
+        servletContext.addListener(new ContextLoaderListener(context));
+        registerServlet(servletContext);
+    }
+
+    private void registerServlet(ServletContext servletContext) {
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet(
+                "vaadin", SpringVaadinServlet.class);
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/*");
+    }
+}
+####################################
+## Disable @Import in AppConfig
+## on MvcConfig
+##
+## Also Comment-out MvcConfig totally
+####################################
+####################################
+## Create SpringContextHelper class
+## in "me.arcana.context"
+####################################
+public class AppContext {
+	private static ApplicationContext context;
+	
+	private AppContext() {
+	}
+	
+	private static ApplicationContext getContext() {
+		if (context == null) {
+			ServletContext servletContext = VaadinServlet.getCurrent().getServletContext();
+			context = WebApplicationContextUtils.
+					getRequiredWebApplicationContext(servletContext);
+		}
+		
+		return context;
+	}
+	
+	public static Object getBean(final String beanRef) {
+		return getContext().getBean(beanRef);
+	}
+	
+	public static <T> T getBean(final Class<T> klass) {
+		return getContext().getBean(klass);
+	}
+	
+	public static <T> T getBean(final String beanRef, final Class<T> klass) {
+		return getContext().getBean(beanRef, klass);
+	}
+	
+	private static MessageSource getMessageSource() {
+		return getBean(MessageSource.class);
+	}
+	
+	public static String getMessage(String code, Object[] args, Locale locale) {
+		return getMessageSource().getMessage(code, args, locale);
+	}
+	
+	public static String getMessage(String code, Locale locale) {
+		return getMessage(code, new Object[] { }, locale);
+	}
+	
+	public static String getMessage(String code, Object[] args) {
+		return getMessage(code, args, Locale.getDefault());
+	}
+	
+	public static String getMessage(String code) {
+		return getMessage(code, new Object[] { });
+	}
+}
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+## GUIDELINE: AUTO-WIRING DOES NOT WORK
+####################################
+    @Override
+    protected void init(VaadinRequest vaadinRequest) {
+    	parkService = AppContext.getBean(ParkService.class);
+        ...
+    }
+####################################
+## GUIDELINE: Creating Buttons
+####################################
+private final Button clearFilterTextButton = new Button(FontAwesome.CLOSE);
+
+filterText.setTextChangeEventMode(TextChangeEventMode.EAGER);
+clearFilterTextButton.setDescription("Clear current filter");
+clearFilterTextButton.addClickListener(e -> {
+	filterText.setValue("");
+	updateGrid("");
+});
+layout.addComponent(clearFilterTextButton);
+####################################
+## GUIDELINE: Creating Grids
+####################################
+final Grid grid = new Grid();
+grid.setContainerDataSource(new BeanItemContainer<>(Person.class, parkService.findAllPeople()));
+grid.setColumns("id", "firstName", "lastName");
+####################################
+## GUIDELINE: TextField Example
+####################################
+private TextField filterText = new TextField();
+
+filterText.setInputPrompt("Filter by name...");
+filterText.addTextChangeListener(e -> {
+	updateGrid(e.getText());
+});
+####################################
+## GUIDELINE: Creating Grids
+####################################
+####################################
+## GUIDELINE: Demo UI
+####################################
+@SpringUI
+@Theme("mytheme")
+@SuppressWarnings("serial")
+public class Sample extends UI {
+    @Override
+    protected void init(VaadinRequest vaadinRequest) {
+        final VerticalLayout layout = new VerticalLayout();
+        
+        final TextField name = new TextField();
+        name.setCaption("Type your name here:");
+
+        Button button = new Button("Click Me");
+        button.addClickListener( e -> {
+            layout.addComponent(new Label("Thanks " + name.getValue() 
+                    + ", it works!"));
+        });
+        
+        layout.addComponents(name, button);
+        layout.setMargin(true);
+        layout.setSpacing(true);
+        
+        setContent(layout);
+    }
+
+    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+    @VaadinServletConfiguration(ui = Sample.class, productionMode = false)
+    public static class MyUIServlet extends VaadinServlet {
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

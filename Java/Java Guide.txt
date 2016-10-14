@@ -1,0 +1,1761 @@
+http://websystique.com/
+https://github.com/spring-projects/spring-petclinic/
+####################################
+## GUIDELINE
+## ---------------------------------
+## slf4j logging
+####################################
+private static final Logger log = LoggerFactory.getLogger(MyClass.class);
+####################################
+## GUIDELINE
+## ---------------------------------
+## Enum Classes
+####################################
+public enum UserProfileType {
+    USER("USER"),
+    DBA("DBA"),
+    ADMIN("ADMIN");
+     
+    String userProfileType;
+     
+    private UserProfileType(String userProfileType){
+        this.userProfileType = userProfileType;
+    }
+     
+    public String getUserProfileType(){
+        return userProfileType;
+    }
+     
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## Define Entity Class
+####################################
+@Entity
+@Table(indexes = { @Index(name = "IDX_MYIDX1", columnList = "id,name,surname") })
+####################################
+## GUIDELINE
+## ---------------------------------
+## Auto Increment Keys
+####################################
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+####################################
+## GUIDELINE
+## ---------------------------------
+## Inheritance
+####################################
+@MappedSuperclass
+public class BaseEntity {
+####################################
+## GUIDELINE
+## ---------------------------------
+## Column Definition
+##
+## REMEMBER: Do not define "dual" relation
+## spec for ManyToMany relations
+####################################
+---> Hibernate Validations (see above)
+@Column(name=,unique=,length=,nullable=,insertable=,updateable=,columnDefinition=,scale=,precision=)
+
+@Temporal(TemporalType.TIMESTAMP)
+private Date date;
+
+@ManyToOne
+@JoinColumn(name = "owner_id")
+private Person owner;
+
+@OneToMany(fetch = FetchType.EAGER | LAZY, cascade = CascadeType.ALL, mappedBy = "otherEntityProperty")
+private Set<Pet> pets;
+
+@ManyToMany(fetch = FetchType.LAZY)
+@JoinTable(name = "APP_USER_USER_PROFILE", 
+     joinColumns = { @JoinColumn(name = "USER_ID") }, 
+     inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
+private Set<UserProfile> userProfiles;
+####################################
+## GUIDELINE
+## ---------------------------------
+## EXAMPLE ENTITY DECLARATION
+####################################
+@Entity
+public class Person extends BaseEntity {
+	@NotEmpty
+	private String firstName;
+	
+	@NotEmpty
+	private String lastName;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "owner")
+	private Set<Pet> pets;
+	
+	public Person() {
+	}
+	
+	public Person(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	protected Set<Pet> getPetsInternal() {
+		if (pets == null) {
+			pets = new HashSet<Pet>();
+		}
+		
+		return pets;
+	}
+	
+	public void addPet(Pet pet) {
+		pet.setOwner(this);
+		getPetsInternal().add(pet);
+	}
+	
+	public void removePet(Pet pet) {
+		pet.setOwner(null);
+		getPetsInternal().remove(pet);
+	}
+	
+	public Iterable<Pet> getPets() {
+		return getPetsInternal();
+	}
+	
+	@Override
+	protected ToStringCreator toStringCreator(ToStringCreator creator) {
+		return super.toStringCreator(creator)
+				.append("firstName", firstName)
+				.append("lastName", lastName);
+	}
+}
+
+@Entity
+public class Pet extends BaseEntity {
+	@NotEmpty
+	private String name;
+	
+	@ManyToOne
+	@JoinColumn(name = "owner_id")
+	private Person owner;
+	
+	public Pet() {
+	}
+	
+	public Pet(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public Person getOwner() {
+		return owner;
+	}
+	
+	public void setOwner(Person owner) {
+		this.owner = owner;
+	}
+	
+	@Override
+	protected ToStringCreator toStringCreator(ToStringCreator creator) {
+		return super.toStringCreator(creator)
+				.append("name", this.name);
+	}
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## hibernate validator practices
+## NOTE: application to both fields
+## and properties, and parameters
+##
+## -> validations has "message" property
+## which can change validation message
+####################################
+@NotNull
+@NotEmpty
+@AssertTrue -> boolean only
+@AssertFalse -> boolean only
+@Size(min = 3)
+@Size(min = 2, max = 3)
+@Pattern(regexp = "[a-z]")
+@ConstraintComposition(OR)
+@Min(value = 0)
+@Valid
+@DecimalMax(value = "350") -> float, double, BigDecimal types
+@DecimalMin(value = "350") -> float, double, BigDecimal types
+@Size(min = 2,
+      max = 14,
+      message = "The license plate '${validatedValue}' must be between {min} and {max} characters long"
+)
+@Email
+@Range(min=, max=)
+@URL(protocol=,host=,port=,regexp=,flags=)
+@Past -> Date only
+@Future -> Date only
+####################################
+## GUIDELINE
+## ---------------------------------
+## Hibernate Define Custom Validator
+####################################
+@Min(value = 0)
+@NotNull
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+@Retention(RUNTIME)
+@Documented
+@Constraint(validatedBy = {})
+@SupportedValidationTarget(ValidationTarget.ANNOTATED_ELEMENT)
+@ReportAsSingleViolation
+public @interface ValidInvoiceAmount {
+
+	String message() default "message";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
+
+	@OverridesAttribute(constraint = Min.class, name = "value")
+	long value();
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## Hibernate Define Class Level Validator
+## ---> to combine multiple fields
+##      inside one validation
+####################################
+@Address 
+public class Address {
+    @NotNull @Max(50) private String street1;
+    @Max(50) private String street2;
+    ...
+}
+
+@ConstraintValidator(MultiCountryAddressValidator.class)
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Address {
+    String message() default "{error.address}";
+    String[] groups() default {};
+}
+
+public class MultiCountryAddressValidator implements Constraint<Address> {
+    public void initialize(Address constraintAnnotation) {
+    // initialize the zipcode/city/country correlation service
+    }
+
+    public boolean isValid(Object object) {
+        if (!(object instanceof Address)) {
+            throw new IllegalArgumentException("@Address only applies to Address");
+        }
+        Address address = (Address) object;
+        // ...
+    }
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## JPA Query Language
+####################################
+
+                            **
+                             ^
+                             |
+[return-type] (find|query|readAll)
+                |                          E.g. Top10
+                |    *                  *       ^
+                |    ^                  ^       |
+                |    |   E.g. First10   |       |
+                |    |        ^         |       |
+                |    |        |         |       |
+                (| First | First#num | Top | Top#num | One)
+                |
+                (| By(|#column(#query|)[(And|Or)#column(#query|)]*))
+                (| OrderBy[#column(Asc|Desc)]+)
+                                             |
+                                             (...args, (|Pageable|Sort))
+                                                            |
+                                                            ^
+                                                           ***
+
+* -> [return-type] is Entity
+** -> [return-type] is Stream<Entity>
+*** -> [return-type] could be List<Entity>, Page<Entity> or Slice<Entity>
+otherwise [return-type] is List<Entity>
+
+#query -->
+
+--------------------------------------------------------------------------------------------------------
+Not : <>                   | LessThan : <          | Like : like '1'        | In (*) : in (...)        |
+Is : =                     | GreaterThan : >       | NotLike : not like '1' | NotIn (*) : not in (...) |
+Equals : =                 | LessThanEqual : <=    | StartingWith : '1%'    |                          |
+IgnoreCase : = for strings | GreaterThanEqual : >= | EndingWith : '%1'      |                          |
+IsNull : is null           | Between : > 1 AND < 2 | Containing : '%1%'     |                          |
+IsNotNull : is not null    | After : for dates     | ContainingIgnoreCase   |                          |
+NotNull : is not null      | Before : for dates    | StartingWithIgnoreCase |                          |
+True :  = true             |                       | EndingWithIgnoreCase   |                          |
+False : = false            |                       | LikeIgnoreCase         |                          |
+                           |                       | NotLikeLikeIgnoreCase  |                          |
+--------------------------------------------------------------------------------------------------------
+
+(*) : argument is of type Collection<T>
+####################################
+## GUIDELINE
+## ---------------------------------
+## JPA Query By Example (QBE)
+##
+## repository should be JpaRepository
+####################################
+
+// Step 1: Setup Example
+Person person = new Person();                          
+person.setFirstname("Dave");
+
+// Step 2: Setup Matcher
+ExampleMatcher matcher = ExampleMatcher.matching()     
+  .withIgnorePaths("lastname")                         
+  .withIncludeNullValues()                             
+  .withMatcher("firstname", match -> match.endsWith());
+
+// Step 3: Setup Query
+Example<Person> query = Example.of(example, matcher);
+
+// Step 4: Execute Query
+List<Person> data = personRepository.findAll(query);
+####################################
+## GUIDELINE
+## ---------------------------------
+## JPA Manual Query
+####################################
+@Query("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName%")
+Collection<Owner> findByLastName(@Param("lastName") String lastName);
+####################################
+## GUIDELINE
+## ---------------------------------
+## JPA Projection
+####################################
+interface FullNameAndCountry {
+  @Value("#{target.firstName} #{target.lastName}")
+  String getFullName();
+
+  @Value("#{target.address.country}")
+  String getCountry();
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## JPA Async
+####################################
+@Async (Future<T> | CompleteableFuture<T> | ListenableFuture<T>) ...
+####################################
+## GUIDELINE
+## ---------------------------------
+## Defining Repository
+##
+## @NoRepositoryBean for inheritance
+##
+## repository methods:
+## (save, delete, exists, count, findOne, findAll)
+####################################
+public interface MyRepository extends JpaRepository<Entity, Long> {
+  ... queries
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## Service Declaration
+####################################
+public interface ClinicService {
+    Collection<PetType> findPetTypes() throws DataAccessException;
+    Owner findOwnerById(int id) throws DataAccessException;
+    Pet findPetById(int id) throws DataAccessException;
+    void savePet(Pet pet) throws DataAccessException;
+    void saveVisit(Visit visit) throws DataAccessException;
+    Collection<Vet> findVets() throws DataAccessException;
+    void saveOwner(Owner owner) throws DataAccessException;
+    Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException;
+}
+
+@Service
+public class ClinicServiceImpl implements ClinicService {
+
+    private PetRepository petRepository;
+    private VetRepository vetRepository;
+    private OwnerRepository ownerRepository;
+    private VisitRepository visitRepository;
+
+    @Autowired
+    public ClinicServiceImpl(PetRepository petRepository, VetRepository vetRepository, OwnerRepository ownerRepository, VisitRepository visitRepository) {
+        this.petRepository = petRepository;
+        this.vetRepository = vetRepository;
+        this.ownerRepository = ownerRepository;
+        this.visitRepository = visitRepository;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Owner findOwnerById(int id) throws DataAccessException {
+        return ownerRepository.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public void savePet(Pet pet) throws DataAccessException {
+        petRepository.save(pet);
+    }
+}
+
+
+@Cacheable(cacheNames="books", key="#isbn")
+public Movie findByDirector(String name);
+
+@CachePut(cacheNames="book", key="#isbn")
+public Book updateBook(ISBN isbn, BookDescriptor descriptor);
+
+@CacheEvict(cacheNames="books", allEntries=true)
+public void loadBooks(InputStream batch);
+####################################
+## GUIDELINE
+## ---------------------------------
+## Defining Controllers
+####################################
+@Controller
+@RequestMapping("/")
+public class HelloWorldController {
+ 
+    @RequestMapping(method = RequestMethod.GET)
+    public String sayHello(ModelMap model) {
+        model.addAttribute("greeting", "Hello World from Spring 4 MVC");
+        return "welcome";
+    }
+ 
+    @RequestMapping(value = "/helloagain", method = RequestMethod.GET)
+    public String sayHelloAgain(ModelMap model) {
+        model.addAttribute("greeting", "Hello World Again, from Spring 4 MVC");
+        return "welcome";
+    }
+}
+
+
+REDIRECTION: return "redirect:/otherPath"
+
+@SessionAttributes("roles")
+public class AppController {
+}
+
+@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+public String listUsers(ModelMap model) { }
+
+@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
+public String saveUser(@Valid User user, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            return "registration";
+        }
+        ...
+}
+
+@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.GET)
+public String editUser(@PathVariable String ssoId, ModelMap model) { }
+
+@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.POST)
+public String updateUser(@Valid User user, BindingResult result, ModelMap model, @PathVariable String ssoId) { }
+
+...BindingResult result..
+if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())) {
+  FieldError ssoError = new FieldError("user","ssoId",messageSource.getMessage(
+       "non.unique.ssoId",
+        new String[]{user.getSsoId()}, Locale.getDefault()));
+  
+  result.addError(ssoError);
+  return "registration";
+}
+
+@Controller
+@RequestMapping("/")
+@SessionAttributes("roles")
+public class AppController {
+    @ModelAttribute("roles")
+    public List<UserProfile> initializeProfiles() {
+        return userProfileService.findAll();
+    }
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## Using PageRequest
+####################################
+Pageable page = new PageRequest(start / length, length, new Sort(
+	new Order(Direction.ASC, "lastName"),
+	new Order(Direction.ASC, "firstName")
+));
+####################################
+## GUIDELINE
+## ---------------------------------
+## messages.properties file
+## put in "src/main/resources/messages" directory
+##
+## messages_en.properties file should be empty
+## messages_fa.properties should be full
+####################################
+NotEmpty.user.firstName=First name can not be blank.
+NotEmpty.user.lastName=Last name can not be blank.
+NotEmpty.user.email=Email can not be blank.
+NotEmpty.user.password=Password can not be blank.
+NotEmpty.user.ssoId=SSO ID can not be blank.
+NotEmpty.user.userProfiles=At least one profile must be selected.
+non.unique.ssoId=SSO ID {0} already exist. Please fill in different value.
+####################################
+## GUIDELINE
+## ---------------------------------
+## creating converter
+## put in "me.arcana.converter"
+####################################
+/**
+ * A converter class used in views to map id's to actual userProfile objects.
+ */
+@Component
+public class RoleToUserProfileConverter implements Converter<Object, UserProfile>{
+ 
+    @Autowired
+    UserProfileService userProfileService;
+ 
+    /**
+     * Gets UserProfile by Id
+     * @see org.springframework.core.convert.converter.Converter#convert(java.lang.Object)
+     */
+    public UserProfile convert(Object element) {
+        Integer id = Integer.parseInt((String)element);
+        UserProfile profile= userProfileService.findById(id);
+        System.out.println("Profile : "+profile);
+        return profile;
+    }
+}
+
+public class AppConfig extends WebMvcConfigurerAdapter{
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(roleToUserProfileConverter);
+    }
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## Spring MVC4 Rest Controller
+####################################
+@RestController
+public class HelloWorldRestController {
+}
+
+@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+public ResponseEntity<User> getUser(@PathVariable("id") long id) { }
+
+@RequestMapping(value = "/user/", method = RequestMethod.POST)
+public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) { }
+
+HttpHeaders headers = new HttpHeaders();
+headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
+return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+
+return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+####################################
+## GUIDELINE
+## ---------------------------------
+## Defining JSP's
+##
+## REMEMBER: "spring" is a superset of "c"
+##
+####################################
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<spring:message code="welcome.springmvc" text="default text" />
+
+<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+
+<a href="<c:url value='/newuser' />">Add New User</a>
+<c:forEach items="${users}" var="user">
+                    <tr>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.email}</td>
+                    </tr>
+</c:forEach>
+
+<form:form method="POST" modelAttribute="user" class="form-horizontal">
+</form:form>
+
+<form:input type="hidden" path="id" id="id"/>
+
+------->
+form input with error example
+------->
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-3 control-lable" for="firstName">First Name</label>
+                <div class="col-md-7">
+                    <form:input type="text" path="firstName" id="firstName" class="form-control input-sm"/>
+                    <div class="has-error">
+                        <form:errors path="firstName" class="help-inline"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+------->
+form select with error example
+------->
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-3 control-lable" for="userProfiles">Roles</label>
+                <div class="col-md-7">
+                    <form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id"
+ 
+itemLabel="type" class="form-control input-sm" />
+                    <div class="has-error">
+                        <form:errors path="userProfiles" class="help-inline"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+------->
+conditions example
+------->
+        <div class="row">
+            <div class="form-actions floatRight">
+                <c:choose>
+                    <c:when test="${edit}">
+                        <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+####################################
+## GUIDELINE
+## ---------------------------------
+## JSP Re-usable parts using tags
+####################################
+
+------------------------------------
+Step 1
+------------------------------------
+Create layout.tag in "WEB-INF/tags" folder
+------------------------------------
+<%@ tag trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+
+<%@ attribute name="pageName" required="true" %>
+<%@ attribute name="customScript" required="false" fragment="true"%>
+
+<!doctype html>
+<html>
+<petclinic:htmlHeader/>
+
+<body>
+<petclinic:bodyHeader menuName="${pageName}"/>
+
+<div class="container-fluid">
+    <div class="container xd-container">
+
+        <jsp:doBody/>
+
+        <petclinic:pivotal/>
+    </div>
+</div>
+<petclinic:footer/>
+<jsp:invoke fragment="customScript" />
+
+</body>
+
+</html>
+------------------------------------
+Step 2
+------------------------------------
+Use tag in views (JSP)
+------------------------------------
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+
+<petclinic:layout pageName="owners">
+    <h2>Find Owners</h2>
+</petclinic:layout>
+
+####################################
+## GUIDELINE
+## ---------------------------------
+## EXAMPLE Defining REST-ful content negotiaion
+####################################
+@Controller
+class AccountController {    
+    // RESTful method
+    @RequestMapping(value="/accounts", produces={"application/xml", "application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody List<Account> listWithMarshalling(Principal principal) {
+        return accountManager.getAccounts(principal);
+    }
+
+    // View-based method
+    @RequestMapping("/accounts")
+    public String listWithView(Model model, Principal principal) {
+        // Call RESTful method to avoid repeating account lookup logic
+        model.addAttribute( listWithMarshalling(principal) );
+
+        // Return the view to use for rendering the response
+        return ¨accounts/list¨;
+    }
+}
+####################################
+## GUIDELINE
+## ---------------------------------
+## EXAMPLE BeanNameResolver usage
+####################################
+<bean id="myExcelView" class="com.example.CustomExcelView" />
+
+@Controller
+@RequestMapping("/excelview")
+public class ExcelController {
+    public String getExcel(Model model){
+        Map<String,String> revenueData = new HashMap<String,String>();
+        revenueData.put("Jan-2010", "$100,000,000");
+        revenueData.put("Feb-2010", "$110,000,000");
+        revenueData.put("Mar-2010", "$130,000,000");
+        revenueData.put("Apr-2010", "$140,000,000");
+        revenueData.put("May-2010", "$200,000,000");
+        model.addAttribute("revenueData",revenueData);
+
+        return "myExcelView";
+    }
+}
+
+public class CustomExcelView extends AbstractExcelView { 
+@Override
+    protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
+        HttpServletRequest request, HttpServletResponse response)
+        throws Exception {
+        Map<String,String> revenueData = (Map<String,String>) model.get("revenueData");
+        //create a wordsheet
+        HSSFSheet sheet = workbook.createSheet("Revenue Report");
+
+
+	    HSSFRow header = sheet.createRow(0);
+	    header.createCell(0).setCellValue("Month");
+	    header.createCell(1).setCellValue("Revenue");
+
+	    int rowNum = 1;
+	    for (Map.Entry<String, String> entry : revenueData.entrySet()) {
+		//create the row data
+		HSSFRow row = sheet.createRow(rowNum++);
+		row.createCell(0).setCellValue(entry.getKey());
+		row.createCell(1).setCellValue(entry.getValue());
+		    }
+        }
+    }
+}
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+####################################
+## Initialize project with mvnw
+####################################
+mkdir -p SampleProject
+cd SampleProject
+mvn -N io.takari:maven:wrapper -Dmaven=3.3.9
+./mvnw -B archetype:generate -DgroupId=me.arcana -DartifactId=sample-project -Dpackage=jar
+mv sample-project/* .
+rm -rf sample-project/
+rm -rf src/main/java/jar/
+rm -rf src/test/java/jar/
+####################################
+## update pom.xml with build plugins
+####################################
+  <properties>
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <mainClass>me.arcana.Main</mainClass>
+  </properties>
+  <build>
+  	<sourceDirectory>src</sourceDirectory>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-compiler-plugin</artifactId>
+  			<configuration>
+  				<source>${java.version}</source>
+  				<target>${java.version}</target>
+  				<verbose>true</verbose>
+  				<showWarnings>true</showWarnings>
+  				
+  				<compilerArguments>
+  					<Xlint />
+  				</compilerArguments>
+  			</configuration>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-jar-plugin</artifactId>
+  			<configuration>
+  				<archive>
+  					<manifest>
+  						<addClasspath>true</addClasspath>
+  						<classpathPrefix>lib</classpathPrefix>
+  						<mainClass>${mainClass}</mainClass>
+  					</manifest>
+  				</archive>
+  			</configuration>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-dependency-plugin</artifactId>
+  			<executions>
+  				<execution>
+  					<phase>install</phase>
+  					<goals>
+  						<goal>copy-dependencies</goal>
+  					</goals>
+  					<configuration>
+  						<outputDirectory>${project.build.directory}/lib</outputDirectory>
+  					</configuration>
+  				</execution>
+  			</executions>
+  		</plugin>
+  	</plugins>
+  </build>
+####################################
+## add spring-context dependency
+####################################
+  <properties>
+    <spring.version>Athens-RELEASE</spring.version>
+  </properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>${spring.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+  <dependencies>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-context</artifactId>
+    </dependency>
+  </dependencies>
+####################################
+## Remove version from junit since
+## Spring.io platform provides it
+####################################
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+####################################
+## create resources folder
+####################################
+mkdir -p src/main/resources
+####################################
+## add resources folder
+####################################
+  <build>
+  	<resources>
+  		<resource>
+  			<directory>${project.basedir}/src/main/resources</directory>
+  		</resource>
+  	</resources>
+  </build>
+####################################
+## set content encoding to UTF-8
+####################################
+<build>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-resources-plugin</artifactId>
+  			<configuration>
+  				<encoding>UTF-8</encoding>
+  			</configuration>
+  		</plugin>
+</build>
+####################################
+## create application.properties file
+####################################
+touch src/main/resources/application.properties
+####################################
+## enable maven filtering to read properties correctly
+####################################
+<build>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources>
+</build>
+####################################
+## create AppConfig in com.arcana.me.config
+####################################
+@Configuration
+public class AppConfig {
+}
+####################################
+## enable auto-scan of annotations
+####################################
+@ComponentScan("me.arcana")
+####################################
+## enable placeholder configurer
+## so we can do @Value with @PropertySource
+## configurations
+####################################
+@Bean
+public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+	return new PropertySourcesPlaceholderConfigurer();
+}
+####################################
+## create Application in me.arcana.application
+####################################
+public interface Application {
+	void run(ApplicationContext context, String[] args);
+}
+####################################
+## create base application context
+## in me.arcana.application.impl
+####################################
+public abstract class BaseApplication implements Application {
+	private ApplicationContext context;
+	private String[] args;
+	
+	public void run(ApplicationContext context, String[] args) {
+		this.context = context;
+		this.args = args;
+		run();
+	}
+	
+	protected abstract void run();
+	
+	public ApplicationContext getContext() {
+		return context;
+	}
+	
+	public String[] getArgs() {
+		return args;
+	}
+}
+####################################
+## create ConsoleApplication in me.arcana.application.impl
+####################################
+@Component
+public class ConsoleApplication extends BaseApplication {
+	public void run() {
+		System.out.println("Hello, World!");
+	}
+}
+####################################
+## create Main in me.arcana
+####################################
+public class Main {
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext context =
+				new AnnotationConfigApplicationContext();
+		context.register(AppConfig.class);
+		context.refresh();
+		
+		Application app = context.getBean(Application.class);
+		app.run(context, args);
+	}
+}
+####################################
+## test build
+####################################
+./mvnw install
+java -jar target/sample-project-1.0-SNAPSHOT.jar
+####################################
+## add JPA specifications through
+## hibernate-core
+####################################
+<dependencies>
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+</dependencies>
+####################################
+## add spring-orm since we want ORM!
+####################################
+<dependencies>
+    <depencency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+    </dependency>
+</dependencies>
+####################################
+## add spring-data JPA repositories
+## support
+####################################
+<dependencies>
+    <dependency>
+    	<groupId>org.springframework.data</groupId>
+    	<artifactId>spring-data-jpa</artifactId>
+    </dependency>
+</dependencies>
+####################################
+## add hibernate validations support
+####################################
+<dependencies>
+    <dependency>
+    	<groupId>javax.validation</groupId>
+    	<artifactId>validation-api</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+	<artifactId>hibernate-validator</artifactId>
+    </dependency>
+</dependencies>
+####################################
+## add H2 embedded database which we
+## use for tests
+####################################
+<dependencies>
+  <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+  </dependency>
+</dependencies>
+####################################
+## add JDBC config to pom.xml
+####################################
+<properties>
+  <jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName>
+  <jdbc.url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</jdbc.url>
+  <jdbc.username></jdbc.username>
+  <jdbc.password></jdbc.password>
+</properties>
+####################################
+## add JDBC config to application.properties
+####################################
+
+# JDBC configuration
+jdbc.driverClassName=@jdbc.driverClassName@
+jdbc.url=@jdbc.url@
+jdbc.username=@jdbc.username@
+jdbc.password=@jdbc.password@
+####################################
+## add Tomcat JDBC since it's awesome
+####################################
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jdbc</artifactId>
+    </dependency>
+  </dependencies>
+####################################
+## create BaseStore class in
+## me.arcana.config.store package
+## to dynamically work with configs
+####################################
+public abstract class BaseStore {
+	private String nodeName;
+	private Preferences loaded;
+	
+	protected BaseStore(String nodeName) {
+		this.nodeName = nodeName;
+		this.loaded = null;
+	}
+	
+	protected String getNodeName() {
+		return nodeName;
+	}
+	
+	protected Preferences getPreferences() {
+		if (loaded == null) {
+			loaded = Preferences.userRoot().node(getNodeName());
+		}
+		
+		return loaded;
+	}
+	
+	public void clear() {
+		try {
+			getPreferences().removeNode();
+		}
+		catch (Exception e) {
+		}
+		finally {
+			loaded = null;
+		}
+	}
+}
+####################################
+## add clearConfiguration method to
+## BaseApplication
+####################################
+	public void clearConfiguration() {
+		for (String beanName : getContext().getBeanNamesForType(BaseStore.class)) {
+			BaseStore store = (BaseStore)getContext().getBean(beanName);
+			store.clear();
+		}
+	}
+####################################
+## create JDBC config store
+####################################
+@Component
+public class JdbcStore extends BaseStore {
+	public JdbcStore() {
+		super(JdbcStore.class.getName());
+	}
+	
+	public String getDriverClassName(String def) {
+		return getPreferences().get("driverClassName", def);
+	}
+	
+	public void setDriverClassName(String driverClassName) {
+		getPreferences().put("driverClassName", driverClassName);
+	}
+	
+	public String getUrl(String def) {
+		return getPreferences().get("url", def);
+	}
+	
+	public void setUrl(String url) {
+		getPreferences().put("url", url);
+	}
+	
+	public String getUsername(String def) {
+		return getPreferences().get("username", def);
+	}
+	
+	public void setUsername(String username) {
+		getPreferences().put("username", username);
+	}
+	
+	public String getPassword(String def) {
+		return getPreferences().get("password", def);
+	}
+	
+	public void setPassword(String password) {
+		getPreferences().put("password", password);
+	}
+}
+####################################
+## create JDBC config
+####################################
+import org.apache.tomcat.jdbc.pool.DataSource;
+
+@Configuration
+@PropertySource("classpath:application.properties")
+public class JdbcConfig {
+	@Value("${jdbc.driverClassName}")
+	private String driverClassName;
+	
+	@Value("${jdbc.url}")
+	private String url;
+	
+	@Value("${jdbc.username}")
+	private String username;
+	
+	@Value("${jdbc.password}")
+	private String password;
+	
+	private JdbcStore store = new JdbcStore();
+	
+	@Bean
+	public javax.sql.DataSource dataSource() {
+		DataSource result = new DataSource();
+		result.setDriverClassName(store.getDriverClassName(driverClassName));
+		result.setUrl(store.getUrl(url));
+		result.setUsername(store.getUsername(username));
+		result.setPassword(store.getPassword(password));
+		
+		return result;
+	}
+}
+####################################
+## import config into AppConfig
+####################################
+@Configuration
+@Import({JdbcConfig.class})
+@ComponentScan("me.arcana")
+public class AppConfig {
+}
+####################################
+## add JPA properties to pom.xml
+##
+## List of JPA supported databases:
+##
+## search for AbstractJpaVendorAdapter
+## supported databases DB2, DERBY, H2, HSQL, INFORMIX, MYSQL, ORACLE, POSTGRESQL, SQL_SERVER, SYBASE
+####################################
+<properties>
+  <jpa.database>H2</jpa.database>
+  <jpa.showSql>true</jpa.showSql>
+  <jpa.generateDdl>true</jpa.generateDdl>
+</properties>
+####################################
+## add JPA properties to application.properties
+####################################
+# JPA configuration
+jpa.database=@jpa.database@
+jpa.showSql=@jpa.showSql@
+jpa.generateDdl=@jpa.generateDdl@
+####################################
+## create JPA configuration store
+####################################
+@Component
+public class JpaStore extends BaseStore {
+	public JpaStore() {
+		super(JpaStore.class.getName());
+	}
+	
+	public Database getDatabase(Database def) {
+		return Database.valueOf(getPreferences().get("database", def.name()));
+	}
+	
+	public void setDatabase(Database database) {
+		getPreferences().put("database", database.name());
+	}
+}
+####################################
+## create JPA configuration
+####################################
+@Configuration
+@EnableJpaRepositories("me.arcana.repository")
+@EnableTransactionManagement
+@PropertySource("classpath:application.properties")
+public class JpaConfig {
+	@Value("${jpa.database}")
+	private String database;
+	
+	@Value("${jpa.showSql}")
+	private boolean showSql;
+	
+	@Value("${jpa.generateDdl}")
+	private boolean generateDdl;
+	
+	private JpaStore store = new JpaStore();
+	
+	@Bean
+	public JpaVendorAdapter jpaVendorAdapter() {
+		HibernateJpaVendorAdapter result = new HibernateJpaVendorAdapter();
+		result.setDatabase(store.getDatabase(Database.valueOf(database)));
+		result.setShowSql(showSql);
+		result.setGenerateDdl(generateDdl);
+		
+		return result;
+	}
+	
+	@Bean
+	public EntityManagerFactory entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+		LocalContainerEntityManagerFactoryBean result = new LocalContainerEntityManagerFactoryBean();
+		result.setDataSource(dataSource);
+		result.setJpaVendorAdapter(jpaVendorAdapter);
+		result.setPersistenceUnitName("SampleProject2");
+		result.setPackagesToScan("me.arcana");
+		result.afterPropertiesSet();
+		
+		return result.getObject();
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+		JpaTransactionManager result = new JpaTransactionManager();
+		result.setEntityManagerFactory(entityManagerFactory);
+		
+		return result;
+	}
+
+	@Bean
+	public static PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
+		return new PersistenceExceptionTranslationPostProcessor();
+	}
+}
+####################################
+## add JPA configuration to AppConfig
+####################################
+@Import({JdbcConfig.class, JpaConfig.class})
+####################################
+## integrate slf4j logger dependencies
+####################################
+<dependencies>
+  <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+  <dependency>
+</dependencies>
+####################################
+## add logback-classic
+####################################
+<dependencies>
+  <dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-classic</artifactId>
+  </dependency>
+</dependencies>
+####################################
+## add slf4j.loglevel to properties
+####################################
+<properties>
+  <slf4j.loglevel>info</slf4j.loglevel>
+</properties>
+####################################
+## add slf4j.loglevel to application.properties
+####################################
+
+# control logging level
+slf4j.loglevel=@slf4j.loglevel@
+####################################
+## create logback configuration store
+####################################
+import ch.qos.logback.classic.Level;
+
+@Component
+public class LogBackStore extends BaseStore {
+	public LogBackStore() {
+		super(LogBackStore.class.getName());
+	}
+	
+	public Level getLogLevel(Level def) {
+		return Level.valueOf(getPreferences().get("loglevel", def.levelStr));
+	}
+	
+	public void setLogLevel(Level logLevel) {
+		getPreferences().put("loglevel", logLevel.levelStr);
+	}
+}
+####################################
+## create logback configuration
+####################################
+import ch.qos.logback.classic.Level;
+
+@Configuration
+@PropertySource("classpath:application.properties")
+public class LogBackConfig {
+	@Value("${slf4j.loglevel}")
+	private String logLevel;
+	
+	private LogBackStore store = new LogBackStore();
+	
+	@Bean
+	public Level slf4jLogLevel() {
+		return store.getLogLevel(Level.valueOf(logLevel));
+	}
+	
+	public static void applyLogLevel(ApplicationContext context) {
+		Logger root = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+		root.setLevel((Level)context.getBean("slf4jLogLevel"));
+	}
+}
+####################################
+## integrate in AppConfig
+####################################
+@Import({JdbcConfig.class, JpaConfig.class, LogBackConfig.class})
+####################################
+## set initialization in BaseApplication
+####################################
+	public void run(ApplicationContext context, String[] args) {
+		this.context = context;
+		this.args = args;
+		
+		LogBackConfig.applyLogLevel(context);
+		
+		run();
+	}
+####################################
+## create logback.xml file in resources folder
+####################################
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
+####################################
+## define BaseEntity model in me.arcana.model
+####################################
+@MappedSuperclass
+public class BaseEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public boolean isNew() {
+		return this.id == null;
+	}
+	
+	protected ToStringCreator toStringCreator(ToStringCreator creator) {
+		return creator
+				.append("id", this.id);
+	}
+	
+	@Override
+	public String toString() {
+		return toStringCreator(new ToStringCreator(this)).toString();
+	}
+}
+####################################
+## add ehcache dependencies
+####################################
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-context-support</artifactId>
+</dependency>
+
+<dependency>
+  <groupId>net.sf.ehcache</groupId>
+  <artifactId>ehcache</artifactId>
+</dependency>
+
+<dependency>
+  <groupId>javax.cache</groupId>
+  <artifactId>cache-api</artifactId>
+</dependency>
+
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-ehcache</artifactId>
+</dependency>
+####################################
+## create ehcache.xml config file in
+## resources folder
+####################################
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd"
+	updateCheck="true"
+	monitoring="autodetect"
+	dynamicConfig="true">
+
+	<diskStore path="java.io.tmpdir" />
+
+	<cache name="movieFindCache"
+		maxEntriesLocalHeap="10000"
+		maxEntriesLocalDisk="1000"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="300" timeToLiveSeconds="600"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</cache>
+
+</ehcache>
+####################################
+## create EhCacheConfig class
+##
+## NOTE: ehcache is not JSR complient
+##
+####################################
+import net.sf.ehcache.CacheManager;
+
+@Configuration
+@EnableCaching
+public class EhCacheConfig {
+	@Bean
+	public CacheManager ehcache() {
+		EhCacheManagerFactoryBean result = new EhCacheManagerFactoryBean();
+		result.setConfigLocation(new ClassPathResource("classpath:ehcache.xml"));
+		result.setShared(true);
+		result.afterPropertiesSet();
+		
+		return result.getObject();
+	}
+	
+	@Bean
+	public EhCacheCacheManager cacheManager(CacheManager ehcache) {
+		EhCacheCacheManager result = new EhCacheCacheManager();
+		result.setCacheManager(ehcache);
+		
+		return result;
+	}
+}
+####################################
+## Merge in AppConfig
+####################################
+@Import({JdbcConfig.class, JpaConfig.class, LogBackConfig.class, EhCacheConfig.class})
+####################################
+## Import Apache J2EE dependencies
+####################################
+<properties>
+  <tomcat.version>8.5.5</tomcat.version>
+  <el-api.version>2.2</el-api.version>
+</properties>
+<dependencies>
+  <dependency>
+    <groupId>org.apache.tomcat</groupId>
+    <artifactId>tomcat-servlet-api</artifactId>
+    <version>${tomcat.version}</version>
+    <scope>provided</scope>
+  </dependency>
+  <dependency>
+    <groupId>javax.servlet.jsp</groupId>
+    <artifactId>javax.servlet.jsp-api</artifactId>
+    <scope>provided</scope>
+  </dependency>
+  <dependency>
+    <groupId>javax.servlet.jsp.jstl</groupId>
+    <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+  </dependency>
+  <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jasper-el</artifactId>
+        <version>${tomcat.version}</version>
+        <scope>provided</scope>
+  </dependency>
+  <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-jstlel</artifactId>
+  </dependency>  
+  <dependency>
+    	<groupId>javax.el</groupId>
+    	<artifactId>el-api</artifactId>
+    	<version>${el-api.version}</version>
+    	<scope>provided</scope>
+  </dependency>
+</dependencies>
+####################################
+## Enabling JSON Support
+####################################
+<dependencies>
+    <dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+    	<artifactId>jackson-core</artifactId>
+    </dependency>
+    
+    <dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+    	<artifactId>jackson-databind</artifactId>
+    </dependency>
+    
+    <dependency>
+    	<groupId>com.jayway.jsonpath</groupId>
+    	<artifactId>json-path</artifactId>
+    </dependency>
+</dependencies>
+####################################
+## Import Spring MVC J2EE dependencies
+####################################
+<dependencies>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc</artifactId>
+  </dependency>
+</dependencies>
+####################################
+## create folder structure for webapp
+####################################
+mkdir -p src/main/webapp/WEB-INF/{views,tags}
+mkdir -p src/main/webapp/static/{css,js,images}
+mkdir -p src/main/resources/messages
+touch src/main/resources/messages/messages.properties
+####################################
+## add tomcat maven plugin so we can
+## launch tomcat from maven
+##
+## ./mvnw tomcat7:run
+####################################
+<properties>
+  <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
+</properties>
+<build>
+  <plugins>
+  		<plugin>
+  			<groupId>org.apache.tomcat.maven</groupId>
+  			<artifactId>tomcat7-maven-plugin</artifactId>
+  			<version>${tomcat7-maven-plugin.version}</version>
+  			<configuration>
+  				<server>tomcat-development-server</server>
+  				<port>9966</port>
+  				<path>/sample</path>
+  			</configuration>
+  		</plugin>
+  </plugins>
+</build>
+####################################
+## change packaing to "war"
+####################################
+<packaging>war</packaging>
+####################################
+## allow WEB-INF to not include a
+## web.xml file
+####################################
+<build>
+  <plugins>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-war-plugin</artifactId>
+  			<configuration>
+  				<failOnMissingWebXml>false</failOnMissingWebXml>
+  			</configuration>
+  		</plugin>
+  </plugins>
+</build>
+####################################
+## Create MVC Configuration
+####################################
+@Configuration
+@EnableWebMvc
+public class MvcConfig extends WebMvcConfigurerAdapter {
+	@Override
+	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+		configurer.ignoreAcceptHeader(true)
+			.favorParameter(true)
+			.favorPathExtension(false)
+			.parameterName("mediaType")
+			.useJaf(false)
+			.defaultContentType(MediaType.APPLICATION_JSON)
+			.mediaType("xml", MediaType.APPLICATION_XML)
+			.mediaType("json", MediaType.APPLICATION_JSON);
+	}
+	
+	@Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+		BeanNameViewResolver beanNameResolver = new BeanNameViewResolver();
+ 
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setSuffix(".jsp");
+        
+        registry.viewResolver(beanNameResolver);
+        registry.viewResolver(viewResolver);
+    }
+     
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+    }
+     
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+    }
+     
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages/messages");
+        return messageSource;
+    }
+     
+    @Override
+    public void configurePathMatch(PathMatchConfigurer matcher) {
+        matcher.setUseRegisteredSuffixPatternMatch(true);
+    }
+}
+####################################
+## Register MvcConfig in AppConfig
+####################################
+@Import({JdbcConfig.class, JpaConfig.class, LogBackConfig.class, EhCacheConfig.class, MvcConfig.class})
+####################################
+## Create ServletInitializer in model.arcana
+####################################
+public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class[] { AppConfig.class };
+    }
+  
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return null;
+    }
+  
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] { "/" };
+    }
+}
+####################################
+## define models in me.arcana.model
+####################################
+####################################
+## define repositories in me.arcana.repository
+####################################
+####################################
+## define services in me.arcana.service
+## and me.arcana.service.impl
+####################################
+####################################
+## define controllers in me.arcana.service.controller
+####################################
+

@@ -1,0 +1,26 @@
+VBoxManage modifyhd "C:\Users\arcana\Gento-SSD.vdi" --resize 80000
+
+
+parted /dev/sda
+print
+resizepart
+  -> Partition number? 3
+  -> End? 100%
+print
+quit
+
+modprobe dm-crypt
+modprobe aes
+modprobe sha256
+cryptsetup luksOpen /dev/sda3 enc1 --debug
+pvresize /dev/mapper/enc1
+pvdisplay
+vgdisplay
+lvdisplay
+lvextend -l +100%FREE /dev/vg1/lv2
+lvdisplay
+e2fsck -f /dev/vg1/lv2
+resize2fs -p /dev/vg1/lv2
+mount /dev/vg1/lv2 /mnt/gentoo
+df
+
