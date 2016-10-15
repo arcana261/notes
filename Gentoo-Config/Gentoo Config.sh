@@ -3535,10 +3535,10 @@ systemctl disable named
 systemctl disable nginx
 systemctl disable postgresql-9.5.service
 # create network
-docker create network -d bridge arcana.me
+docker network create -d bridge arcana.me
 # configure bind
-docker run -td --restart=always --name ns1.arcana.me -h ns1.arcana.me -e ROOT_PASSWORD=root -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
-echo "127.0.0.1 ns1.arcana.me"
+docker run -td --restart=always --name ns1.arcana.me -h ns1.arcana.me -e ROOT_PASSWORD=root --net arcana.me -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
+echo "127.0.0.1 ns1.arcana.me" >> /etc/hosts
 >> open https://ns1.arcana.me:10000 in browser
 >> login with root/root
 >> open Servers -> BIND DNS Server
@@ -3563,7 +3563,7 @@ echo "127.0.0.1 ns1.arcana.me"
 # configure socks proxy
 docker run -td --restart=always --name socks.arcana.me -h socks.arcana.me --net arcana.me -w /root -p 8082:8082 ubuntu
 docker exec -it socks.arcana.me bash
-> apt-get update && apt-get install -y ssh && apt-get -y autoclean && apt-get -y autoremove && apt-get -y clean
+> apt-get update && apt-get install -y ssh
 > ssh-keygen -t rsa
 > ssh root@178.162.207.98 mkdir -p .ssh
 > cat ~/.ssh/id_rsa.pub | ssh root@178.162.207.98 'cat >> .ssh/authorized_keys'
@@ -3573,7 +3573,7 @@ docker exec -it socks.arcana.me bash
 > cat <<EOF > socks.sh
   #!/bin/bash
   while true; do ssh -D 0.0.0.0:8082 root@178.162.207.98; done
-  EOF
+EOF
 > chmod +x socks.sh 
 > ./socks.sh
 > Ctrl+P + Ctrl+Q
@@ -3586,7 +3586,7 @@ docker exec -it proxy.arcana.me bash
 > cat <<EOF > http.sh
   #!/bin/bash
   delegated -P8083 SERVER=http SOCKS=socks.arcana.me:8082
-  EOF
+EOF
 > chmod +x http.sh
 > ./http.sh
 > Ctrl+P + Ctrl+Q
@@ -3597,48 +3597,61 @@ nano -w /etc/systemd/system/docker.service.d/http_proxy.conf
 systemctl daemon-reload
 >>> TEST NEW HTTP/SOCKS PROXY CONFIGS IN FIREFOX FOXYPROXY
 systemctl restart docker.service
-nano -w /home/arcana/Desktop/socks.sh
-> #!/bin/bash
-> docker exec -d socks.arcana.me bash socks.sh
-nano -w /home/arcana/Desktop/http.sh
-> #!/bin/bash
-> docker exec -d proxy.arcana.me bash http.sh
+cat <<EOF > /home/arcana/Desktop/socks.sh
+#!/bin/bash
+docker exec -d socks.arcana.me bash socks.sh
+EOF
+
+cat <<EOF > /home/arcana/Desktop/http.sh
+#!/bin/bash
+docker exec -d proxy.arcana.me bash http.sh
+EOF
+
 # configure nginx reverse proxy server
 docker pull nginx
 docker run -td --restart=always --name arcana.me -h arcana.me --net arcana.me -w /etc/nginx -p 80:80 -p 443:443 nginx
 docker exec -it arcana.me bash
 > apt-get update && apt-get install -y nano vim net-tools iputils-ping dnsutils
+> exit
+docker commit arcana.me arcana.me-snap-...
+docker exec -it arcana.me bash
 > vim nginx.conf
 > >> include /etc/nginx/vhosts/*;
 > mkdir -p /etc/nginx/vhosts
 > mkdir -p /etc/nginx/ssl
 > openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/ns1.arcana.me.key -out /etc/nginx/ssl/ns1.arcana.me.crt
-> vim /etc/nginx/vhosts/ns1.arcana.me
->> server {
->>  listen 443 ssl;
->>  server_name ns1.arcana.me;
->>  ssl_verify_client off;
->>  ssl_certificate /etc/nginx/ssl/ns1.arcana.me.crt;
->>  ssl_certificate_key /etc/nginx/ssl/ns1.arcana.me.key;
->>  location / {
->>    proxy_pass https://ns1.arcana.me:10000/;
->>    proxy_pass_header Set-Cookie;
->>    proxy_pass_header P3P;
->>    proxy_set_header X-Real-IP $remote_addr;
->>    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
->>    proxy_set_header X-Forwarded-Proto $scheme;
->>    proxy_set_header X-NginX-Proxy true;
->>    proxy_cookie_domain ns1.arcana.me:10000 ns1.arcana.me;
->>  }
->> }
->> server {
->>  listen 80;
->>  server_name ns1.arcana.me;
->>  return 301 https://$host$request_uri;
->> }
+
+cat <<EOF > /etc/nginx/vhosts/ns1.arcana.me
+server {
+  listen 443 ssl;
+  server_name ns1.arcana.me;
+  ssl_verify_client off;
+  ssl_certificate /etc/nginx/ssl/ns1.arcana.me.crt;
+  ssl_certificate_key /etc/nginx/ssl/ns1.arcana.me.key;
+  location / {
+    proxy_pass https://ns1.arcana.me:10000/;
+    proxy_pass_header Set-Cookie;
+    proxy_pass_header P3P;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_cookie_domain ns1.arcana.me:10000 ns1.arcana.me;
+  }
+}
+server {
+  listen 80;
+  server_name ns1.arcana.me;
+  return 301 https://\$host\$request_uri;
+}
+EOF
+
 > exit
+
 docker restart arcana.me
+docker commit arcana.me arcana.me-snap-...
 docker exec -it ns1.arcana.me bash
+
 > sed -i -- 's/referers_none=1/referers_none=0/g' /etc/webmin/config
 > echo "referers=ns1.arcana.me" >> /etc/webmin/config
 > exit
@@ -3769,9 +3782,13 @@ Help -> Install New Software -> All Available Sites -> Web, XML, JavaEE and OSGi
   -> Eclipse XML Editors and Tools
   -> Eclipse XSL Developer Tools
   -> JavaScript Development Tools
+  -> JavaScript Development Tools Chromium/V8 Remote Debugger
   -> m2e connector For mavenarchiver pom properties
+  -> m2e-wtp - Maven Integration For WTP
   -> JSF Tools
   -> JSF Tools - Web Page Editor
+# install VAADIN plugins
+Helper -> Eclipse MarketPlace -> VAADIN plugin
 # configure preferences
  Window -> Preferences -> Editors -> Text Editors -> Show line numbers
 

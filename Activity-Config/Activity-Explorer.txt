@@ -1,0 +1,68 @@
+####################################
+## Pull docker tomcat (Optional)
+####################################
+docker pull tomcat
+####################################
+## Download activity
+####################################
+cd /usr/local/src
+wget https://github.com/Activiti/Activiti/releases/download/activiti-5.21.0/activiti-5.21.0.zip
+unar activiti-5.21.0.zip
+docker run -td --restart=always --name explorer.kadona.me -h explorer.kadona.me --net arcana.me -w /usr/local/tomcat tomcat
+docker cp activiti-5.21.0/wars/activiti-explorer.war explorer.kadona.me:/usr/local/tomcat/webapps/
+docker cp activiti-5.21.0/wars/activiti-rest.war explorer.kadona.me:/usr/local/tomcat/webapps/
+docker exec -it explorer.kadona.me bash
+> apt-get update && apt-get install -y nano vim net-tools iputils-ping dnsutils
+> vim conf/server.xml 
+## replace port 8080 with 80
+## replace port 8443 with 443
+
+<Host>
+  <Context path="" docBase="activiti-explorer" debug="0" reloadable="true"></Context>
+> exit
+docker restart explorer.kadona.me
+####################################
+## Add vhost
+####################################
+docker commit arcana.me arcana.me-snap-...
+docker exec -it arcana.me bash
+> openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/explorer.kadona.me.key -out /etc/nginx/ssl/explorer.kadona.me.crt
+
+cat <<EOF > /etc/nginx/vhosts/explorer.kadona.me
+server {
+  listen 443 ssl;
+  server_name explorer.kadona.me;
+  ssl_verify_client off;
+  ssl_certificate /etc/nginx/ssl/explorer.kadona.me.crt;
+  ssl_certificate_key /etc/nginx/ssl/explorer.kadona.me.key;
+  location / {
+    proxy_pass http://explorer.kadona.me:80/;
+    proxy_pass_header Set-Cookie;
+    proxy_pass_header P3P;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_cookie_domain explorer.kadona.me:80 explorer.kadona.me;
+  }
+}
+server {
+  listen 80;
+  server_name explorer.kadona.me;
+  return 301 https://\$host\$request_uri;
+}
+EOF
+> exit
+docker restart arcana.me
+####################################
+## Add exporer.kadona.me address record
+####################################
+####################################
+## Login
+####################################
+User	Pass	Role
+----------------------
+kermit	kermit	admin
+gonzo	gonzo	manager
+fozzie	fozzie	user
+
