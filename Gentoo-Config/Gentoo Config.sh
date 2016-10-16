@@ -3707,6 +3707,24 @@ docker restart arcana.me
 >> Create MX record
 >>> Mail Server Records -> Name = @, Mail Server = mail.arcana.me, Priority = 1
 >> add smtp.arcana.me and imap.arcana.me and pop3.arcana.me records
+
+cd /home/arcana
+mkdir -p Desktop/services/mail.arcana.me
+cat <<EOF > Desktop/services/mail.arcana.me/stop.sh
+#!/bin/bash
+docker stop peps_smtpin peps_server peps_smtpout peps_solr peps_mongod
+EOF
+cat <<EOF > Desktop/services/mail.arcana.me/start.sh
+#!/bin/bash
+docker restart peps_smtpin
+docker restart peps_server
+docker restart peps_smtpout
+docker restart peps_solr
+docker restart peps_mongod
+EOF
+chmod +x Desktop/services/mail.arcana.me/start.sh
+chmod +x Desktop/services/mail.arcana.me/stop.sh
+
 # configure local gitlab instance
 docker pull gilab/gitlab-ce
 docker run -td --restart=always --name git.arcana.me -h git.arcana.me -w /root --net arcana.me -v /var/run/docker.sock:/var/run/docker.sock gitlab/gitlab-ce
@@ -3767,6 +3785,22 @@ docker exec -it git.arcana.me bash
 >> nano -w /etc/gitlab-runner/config.toml
 ??? you might need to add following inside [runners.docker] in /etc/gitlab-runner/config.toml file
 ??? links = ["git.arcana.me"]
+
+
+cd /home/arcana
+mkdir -p Desktop/services/git.arcana.me
+cat <<EOF > Desktop/services/git.arcana.me/stop.sh
+#!/bin/bash
+docker stop git.arcana.me runner.git.arcana.me
+EOF
+cat <<EOF > Desktop/services/git.arcana.me/start.sh
+#!/bin/bash
+docker restart git.arcana.me
+docker restart runner.git.arcana.me
+EOF
+chmod +x Desktop/services/git.arcana.me/start.sh
+chmod +x Desktop/services/git.arcana.me/stop.sh
+
 # install eclipse
 layman -a java
 emerge --ask dev-util/eclipse-sdk-bin
@@ -3789,6 +3823,8 @@ Help -> Install New Software -> All Available Sites -> Web, XML, JavaEE and OSGi
   -> JSF Tools - Web Page Editor
 # install VAADIN plugins
 Helper -> Eclipse MarketPlace -> VAADIN plugin
+                              -> Spring Tool Suite (STS)
+                              -> Eclipse Moonrise UI Theme
 # configure preferences
  Window -> Preferences -> Editors -> Text Editors -> Show line numbers
 
