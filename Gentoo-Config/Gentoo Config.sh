@@ -3561,7 +3561,7 @@ echo "127.0.0.1 ns1.arcana.me" >> /etc/hosts
                                    -> Update reverse? -> Yes
                       -> Apply Zone
 # configure socks proxy
-docker run -td --restart=always --name socks.arcana.me -h socks.arcana.me --net arcana.me -w /root -p 8082:8082 ubuntu
+docker run -td --restart=no --name socks.arcana.me -h socks.arcana.me --net arcana.me -w /root -p 8082:8082 ubuntu
 docker exec -it socks.arcana.me bash
 > apt-get update && apt-get install -y ssh
 > ssh-keygen -t rsa
@@ -3579,7 +3579,7 @@ EOF
 > Ctrl+P + Ctrl+Q
 >>> Add socks.arcana.me to BIND
 # configure http proxy
-docker run -td --restart=always --name proxy.arcana.me -h proxy.arcana.me --net arcana.me -w /root -p 8083:8083 ubuntu
+docker run -td --restart=no --name proxy.arcana.me -h proxy.arcana.me --net arcana.me -w /root -p 8083:8083 ubuntu
 docker cp /usr/local/bin/delegated proxy.arcana.me:/usr/bin
 docker exec -it proxy.arcana.me bash
 > delegated --help
@@ -3597,15 +3597,22 @@ nano -w /etc/systemd/system/docker.service.d/http_proxy.conf
 systemctl daemon-reload
 >>> TEST NEW HTTP/SOCKS PROXY CONFIGS IN FIREFOX FOXYPROXY
 systemctl restart docker.service
-cat <<EOF > /home/arcana/Desktop/socks.sh
-#!/bin/bash
-docker exec -d socks.arcana.me bash socks.sh
-EOF
 
-cat <<EOF > /home/arcana/Desktop/http.sh
+cd /home/arcana
+mkdir -p Desktop/services/proxy.arcana.me
+cat <<EOF > Desktop/services/proxy.arcana.me/stop.sh
 #!/bin/bash
+docker stop socks.arcana.me proxy.arcana.me
+EOF
+cat <<EOF > Desktop/services/proxy.arcana.me/start.sh
+#!/bin/bash
+docker restart socks.arcana.me
+docker restart proxy.arcana.me
+docker exec -d socks.arcana.me bash socks.sh
 docker exec -d proxy.arcana.me bash http.sh
 EOF
+chmod +x Desktop/services/proxy.arcana.me/start.sh
+chmod +x Desktop/services/proxy.arcana.me/stop.sh
 
 # configure nginx reverse proxy server
 docker pull nginx
@@ -3825,6 +3832,8 @@ Help -> Install New Software -> All Available Sites -> Web, XML, JavaEE and OSGi
 Helper -> Eclipse MarketPlace -> VAADIN plugin
                               -> Spring Tool Suite (STS)
                               -> Eclipse Moonrise UI Theme
+                              -> Vrapper (Vim)
 # configure preferences
  Window -> Preferences -> Editors -> Text Editors -> Show line numbers
+        -> General -> Appearance -> Theme -> Moonrise
 

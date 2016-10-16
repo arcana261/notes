@@ -8,7 +8,7 @@ docker pull tomcat
 cd /usr/local/src
 wget https://github.com/Activiti/Activiti/releases/download/activiti-5.21.0/activiti-5.21.0.zip
 unar activiti-5.21.0.zip
-docker run -td --restart=always --name explorer.kadona.me -h explorer.kadona.me --net arcana.me -w /usr/local/tomcat tomcat
+docker run -td --restart=no --name explorer.kadona.me -h explorer.kadona.me --net arcana.me -w /usr/local/tomcat tomcat
 docker cp activiti-5.21.0/wars/activiti-explorer.war explorer.kadona.me:/usr/local/tomcat/webapps/
 docker cp activiti-5.21.0/wars/activiti-rest.war explorer.kadona.me:/usr/local/tomcat/webapps/
 docker exec -it explorer.kadona.me bash
@@ -35,8 +35,12 @@ server {
   ssl_verify_client off;
   ssl_certificate /etc/nginx/ssl/explorer.kadona.me.crt;
   ssl_certificate_key /etc/nginx/ssl/explorer.kadona.me.key;
+  resolver 127.0.0.11;
+
   location / {
-    proxy_pass http://explorer.kadona.me:80/;
+    set $target explorer.kadona.me;
+    proxy_pass http://$target:80;
+
     proxy_pass_header Set-Cookie;
     proxy_pass_header P3P;
     proxy_set_header X-Real-IP \$remote_addr;
@@ -57,6 +61,32 @@ docker restart arcana.me
 ####################################
 ## Add exporer.kadona.me address record
 ####################################
+
+cd /home/arcana
+mkdir -p Desktop/services/kadona.me
+cat <<EOF > Desktop/services/kadona.me/stop.sh
+#!/bin/bash
+docker stop explorer.kadona.me
+EOF
+cat <<EOF > Desktop/services/kadona.me/start.sh
+#!/bin/bash
+docker restart explorer.kadona.me
+EOF
+chmod +x Desktop/services/kadona.me/start.sh
+chmod +x Desktop/services/kadona.me/stop.sh
+####################################
+## Setup persistent Database
+####################################
+docker run -td --restart=no --name db.explorer.kadona.me -h db.explorer.kadona.me --net arcana.me -e POSTGRES_PASSWORD=1234 -d postgres
+docker exec -it db.explorer.kadona.me psql -U postgres -c 'create database activiti;'
+docker exec -it explorer.kadona.me bash
+> /usr/local/tomcat/webapps/activiti-explorer/WEB-INF/lib
+> wget http://central.maven.org/maven2/org/postgresql/postgresql/9.4.1211/postgresql-9.4.1211.jar
+> vim /usr/local/tomcat/webapps/activiti-explorer/WEB-INF/classes/db.properties
+  >> jdbc.url=jdbc:h2:file:persistent-h2-db;DB_CLOSE_DELAY=1000
+> exit
+docker restart db.explorer.kadona.me
+
 ####################################
 ## Login
 ####################################

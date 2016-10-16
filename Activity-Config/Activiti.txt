@@ -1,0 +1,23 @@
+####################################
+## Add Maven dependency
+####################################
+<properties>
+  <activiti.version>5.21.0</activiti.version>
+</properties>
+
+<dependencies>
+        <dependency>
+        	<groupId>org.activiti</groupId>
+        	<artifactId>activiti-engine</artifactId>
+        	<version>${activiti.version}</version>
+        </dependency>
+        
+        <dependency>
+        	<groupId>org.activiti</groupId>
+        	<artifactId>activiti-spring</artifactId>
+        	<version>${activiti.version}</version>
+        </dependency>
+</dependencies>
+
+
+
