@@ -3598,21 +3598,20 @@ systemctl daemon-reload
 >>> TEST NEW HTTP/SOCKS PROXY CONFIGS IN FIREFOX FOXYPROXY
 systemctl restart docker.service
 
-cd /home/arcana
-mkdir -p Desktop/services/proxy.arcana.me
-cat <<EOF > Desktop/services/proxy.arcana.me/stop.sh
+mkdir -p /opt/services/proxy.arcana.me
+cat <<EOF > /opt/services/proxy.arcana.me/stop.sh
 #!/bin/bash
 docker stop socks.arcana.me proxy.arcana.me
 EOF
-cat <<EOF > Desktop/services/proxy.arcana.me/start.sh
+cat <<EOF > /opt/services/proxy.arcana.me/start.sh
 #!/bin/bash
 docker restart socks.arcana.me
 docker restart proxy.arcana.me
 docker exec -d socks.arcana.me bash socks.sh
 docker exec -d proxy.arcana.me bash http.sh
 EOF
-chmod +x Desktop/services/proxy.arcana.me/start.sh
-chmod +x Desktop/services/proxy.arcana.me/stop.sh
+chmod +x /opt/services/proxy.arcana.me/start.sh
+chmod +x /opt/services/proxy.arcana.me/stop.sh
 
 # configure nginx reverse proxy server
 docker pull nginx
@@ -3655,8 +3654,22 @@ EOF
 
 > exit
 
+mkdir -p /opt/services/arcana.me
+cat <<EOF > /opt/services/arcana.me/backup.sh
+#!/bin/bash
+docker commit arcana.me arcana.me-snapshot:`date +%F-%H-%M`
+docker tag arcana.me-snapshot:`date +%F-%H-%M` arcana.me-snapshot:latest
+EOF
+cat <<EOF > /opt/services/arcana.me/restore.sh
+#!/bin/bash
+docker stop arcana.me && docker rm -v arcana.me
+docker run -td --restart=always --name arcana.me -h arcana.me --net arcana.me -w /etc/nginx -p 80:80 -p 443:443 arcana.me-snapshot:latest
+EOF
+chmod +x /opt/services/arcana.me/backup.sh
+chmod +x /opt/services/arcana.me/restore.sh
+
 docker restart arcana.me
-docker commit arcana.me arcana.me-snap-...
+/opt/services/arcana.me/backup.sh
 docker exec -it ns1.arcana.me bash
 
 > sed -i -- 's/referers_none=1/referers_none=0/g' /etc/webmin/config
@@ -3688,8 +3701,12 @@ docker exec -it arcana.me bash
 >>  ssl_verify_client off;
 >>  ssl_certificate /etc/nginx/ssl/mail.arcana.me.crt;
 >>  ssl_certificate_key /etc/nginx/ssl/mail.arcana.me.key;
+>>  resolver 127.0.0.11;
+>>
 >>  location / {
->>    proxy_pass https://peps_server:443/;
+>>    set $target peps_server;
+>>    proxy_pass https://$target:443;
+>>
 >>    proxy_pass_header Set-Cookie;
 >>    proxy_pass_header P3P;
 >>    proxy_set_header X-Real-IP $remote_addr;
@@ -3715,13 +3732,12 @@ docker restart arcana.me
 >>> Mail Server Records -> Name = @, Mail Server = mail.arcana.me, Priority = 1
 >> add smtp.arcana.me and imap.arcana.me and pop3.arcana.me records
 
-cd /home/arcana
-mkdir -p Desktop/services/mail.arcana.me
-cat <<EOF > Desktop/services/mail.arcana.me/stop.sh
+mkdir -p /opt/services/mail.arcana.me
+cat <<EOF > /opt/services/mail.arcana.me/stop.sh
 #!/bin/bash
 docker stop peps_smtpin peps_server peps_smtpout peps_solr peps_mongod
 EOF
-cat <<EOF > Desktop/services/mail.arcana.me/start.sh
+cat <<EOF > /opt/services/mail.arcana.me/start.sh
 #!/bin/bash
 docker restart peps_smtpin
 docker restart peps_server
@@ -3729,8 +3745,8 @@ docker restart peps_smtpout
 docker restart peps_solr
 docker restart peps_mongod
 EOF
-chmod +x Desktop/services/mail.arcana.me/start.sh
-chmod +x Desktop/services/mail.arcana.me/stop.sh
+chmod +x /opt/services/mail.arcana.me/start.sh
+chmod +x /opt/services/mail.arcana.me/stop.sh
 
 # configure local gitlab instance
 docker pull gilab/gitlab-ce
@@ -3744,8 +3760,12 @@ docker exec -it arcana.me bash
 >>  ssl_verify_client off;
 >>  ssl_certificate /etc/nginx/ssl/git.arcana.me.crt;
 >>  ssl_certificate_key /etc/nginx/ssl/git.arcana.me.key;
+>>  resolver 127.0.0.11;
+>>
 >>  location / {
->>    proxy_pass http://git.arcana.me:80/;
+>>    set $target git.arcana.me;
+>>    proxy_pass http://$target:80;
+>>
 >>    proxy_pass_header Set-Cookie;
 >>    proxy_pass_header P3P;
 >>    proxy_set_header X-Real-IP $remote_addr;
@@ -3793,20 +3813,18 @@ docker exec -it git.arcana.me bash
 ??? you might need to add following inside [runners.docker] in /etc/gitlab-runner/config.toml file
 ??? links = ["git.arcana.me"]
 
-
-cd /home/arcana
-mkdir -p Desktop/services/git.arcana.me
-cat <<EOF > Desktop/services/git.arcana.me/stop.sh
+mkdir -p /opt/services/git.arcana.me
+cat <<EOF > /opt/services/git.arcana.me/stop.sh
 #!/bin/bash
 docker stop git.arcana.me runner.git.arcana.me
 EOF
-cat <<EOF > Desktop/services/git.arcana.me/start.sh
+cat <<EOF > /opt/services/git.arcana.me/start.sh
 #!/bin/bash
 docker restart git.arcana.me
 docker restart runner.git.arcana.me
 EOF
-chmod +x Desktop/services/git.arcana.me/start.sh
-chmod +x Desktop/services/git.arcana.me/stop.sh
+chmod +x /opt/services/git.arcana.me/start.sh
+chmod +x /opt/services/git.arcana.me/stop.sh
 
 # install eclipse
 layman -a java
@@ -3831,9 +3849,8 @@ Help -> Install New Software -> All Available Sites -> Web, XML, JavaEE and OSGi
 # install VAADIN plugins
 Helper -> Eclipse MarketPlace -> VAADIN plugin
                               -> Spring Tool Suite (STS)
-                              -> Eclipse Moonrise UI Theme
                               -> Vrapper (Vim)
 # configure preferences
  Window -> Preferences -> Editors -> Text Editors -> Show line numbers
-        -> General -> Appearance -> Theme -> Moonrise
+        -> General -> Appearance -> Theme -> Dark
 

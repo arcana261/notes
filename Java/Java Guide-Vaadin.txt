@@ -241,6 +241,10 @@ public class AppContext {
 	public static String getMessage(String code) {
 		return getMessage(code, new Object[] { });
 	}
+
+	public static void autowire(Object object) {
+		getContext().getAutowireCapableBeanFactory().autowireBean(object);
+	}
 }
 ####################################
 ####################################

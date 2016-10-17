@@ -3,7 +3,7 @@
 ####################################
 docker pull tomcat
 ####################################
-## Download activity
+## Download latest version of activity
 ####################################
 cd /usr/local/src
 wget https://github.com/Activiti/Activiti/releases/download/activiti-5.21.0/activiti-5.21.0.zip
@@ -11,24 +11,17 @@ unar activiti-5.21.0.zip
 docker run -td --restart=no --name explorer.kadona.me -h explorer.kadona.me --net arcana.me -w /usr/local/tomcat tomcat
 docker cp activiti-5.21.0/wars/activiti-explorer.war explorer.kadona.me:/usr/local/tomcat/webapps/
 docker cp activiti-5.21.0/wars/activiti-rest.war explorer.kadona.me:/usr/local/tomcat/webapps/
-docker exec -it explorer.kadona.me bash
-> apt-get update && apt-get install -y nano vim net-tools iputils-ping dnsutils
-> vim conf/server.xml 
-## replace port 8080 with 80
-## replace port 8443 with 443
-
-<Host>
-  <Context path="" docBase="activiti-explorer" debug="0" reloadable="true"></Context>
-> exit
+docker exec -t explorer.kadona.me bash -c "apt-get update && apt-get install -y nano vim net-tools iputils-ping dnsutils"
+docker exec -t explorer.kadona.me sed -i -- 's/\"8080\"/\"80\"/g' conf/server.xml
+docker exec -t explorer.kadona.me sed -i -- 's/\"8443\"/\"443\"/g' conf/server.xml
 docker restart explorer.kadona.me
 ####################################
-## Add vhost
+## Add DNS records
 ####################################
-docker commit arcana.me arcana.me-snap-...
-docker exec -it arcana.me bash
-> openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/explorer.kadona.me.key -out /etc/nginx/ssl/explorer.kadona.me.crt
+/opt/services/arcana.me/backup.sh
+docker exec -it arcana.me openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/explorer.kadona.me.key -out /etc/nginx/ssl/explorer.kadona.me.crt
 
-cat <<EOF > /etc/nginx/vhosts/explorer.kadona.me
+docker exec -t arcana.me bash -c "cat <<EOF > /etc/nginx/vhosts/explorer.kadona.me
 server {
   listen 443 ssl;
   server_name explorer.kadona.me;
@@ -38,14 +31,14 @@ server {
   resolver 127.0.0.11;
 
   location / {
-    set $target explorer.kadona.me;
-    proxy_pass http://$target:80;
+    set \\\$target explorer.kadona.me;
+    proxy_pass http://\\\$target:80;
 
     proxy_pass_header Set-Cookie;
     proxy_pass_header P3P;
-    proxy_set_header X-Real-IP \$remote_addr;
-    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header X-Real-IP \\\$remote_addr;
+    proxy_set_header X-Forwarded-For \\\$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \\\$scheme;
     proxy_set_header X-NginX-Proxy true;
     proxy_cookie_domain explorer.kadona.me:80 explorer.kadona.me;
   }
@@ -53,39 +46,35 @@ server {
 server {
   listen 80;
   server_name explorer.kadona.me;
-  return 301 https://\$host\$request_uri;
+  return 301 https://\\\$host\\\$request_uri;
 }
 EOF
-> exit
+"
+
 docker restart arcana.me
 ####################################
-## Add exporer.kadona.me address record
+## Add explorer.kadona.me address record
 ####################################
 
-cd /home/arcana
-mkdir -p Desktop/services/kadona.me
-cat <<EOF > Desktop/services/kadona.me/stop.sh
+mkdir -p /opt/services/kadona.me
+cat <<EOF > /opt/services/kadona.me/stop.sh
 #!/bin/bash
 docker stop explorer.kadona.me
 EOF
-cat <<EOF > Desktop/services/kadona.me/start.sh
+cat <<EOF > /opt/services/kadona.me/start.sh
 #!/bin/bash
 docker restart explorer.kadona.me
 EOF
-chmod +x Desktop/services/kadona.me/start.sh
-chmod +x Desktop/services/kadona.me/stop.sh
+chmod +x /opt/services/kadona.me/start.sh
+chmod +x /opt/services/kadona.me/stop.sh
+
 ####################################
 ## Setup persistent Database
 ####################################
-docker run -td --restart=no --name db.explorer.kadona.me -h db.explorer.kadona.me --net arcana.me -e POSTGRES_PASSWORD=1234 -d postgres
-docker exec -it db.explorer.kadona.me psql -U postgres -c 'create database activiti;'
-docker exec -it explorer.kadona.me bash
-> /usr/local/tomcat/webapps/activiti-explorer/WEB-INF/lib
-> wget http://central.maven.org/maven2/org/postgresql/postgresql/9.4.1211/postgresql-9.4.1211.jar
-> vim /usr/local/tomcat/webapps/activiti-explorer/WEB-INF/classes/db.properties
-  >> jdbc.url=jdbc:h2:file:persistent-h2-db;DB_CLOSE_DELAY=1000
-> exit
-docker restart db.explorer.kadona.me
+
+docker exec -t explorer.kadona.me sed -i -- 's/jdbc.url=.*/jdbc.url=jdbc:h2:file:persistent-h2-db;DB_CLOSE_DELAY=1000/g' /usr/local/tomcat/webapps/activiti-explorer/WEB-INF/classes/db.properties
+
+docker restart explorer.kadona.me
 
 ####################################
 ## Login

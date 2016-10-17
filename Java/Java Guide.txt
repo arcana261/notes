@@ -1,3 +1,6 @@
+applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+
+
 http://websystique.com/
 https://github.com/spring-projects/spring-petclinic/
 ####################################
@@ -12,6 +15,13 @@ private static final Logger log = LoggerFactory.getLogger(MyClass.class);
 ## Running in debug
 ####################################
 mvnDebug tomcat7:run
+####################################
+## GUIDELINE
+## ---------------------------------
+## Tomcat remove prefix
+####################################
+<Host>
+  <Context path="" docBase="activiti-explorer" debug="0" reloadable="true"></Context>
 ####################################
 ## GUIDELINE
 ## ---------------------------------

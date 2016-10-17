@@ -18,6 +18,172 @@
         	<version>${activiti.version}</version>
         </dependency>
 </dependencies>
+####################################################
+# Add to application.properties file
+####################################################
+
+# 
+# #### Activiti
+#
+
+ # Activiti Engine Configuration
+ activiti.engine.databaseSchemaUpdate=true
+ activiti.engine.jobExecutorActivate=false
+ activiti.engine.asyncExecutorEnabled=true
+ activiti.engine.asyncExecutorActivate=true
+ activiti.engine.mailServerHost=mail.denaecommerce.com
+ activiti.engine.mailServerPort=5025
+####################################
+## Add configuration
+####################################
+@Configuration
+@PropertySource("classpath:application.properties")
+public class ActivitiConfig {
+	@Value("${activiti.engine.databaseSchemaUpdate}")
+	private boolean databaseSchemaUpdate;
+
+	@Value("${activiti.engine.jobExecutorActivate}")
+	private boolean jobExecutorActivate;
+
+	@Value("${activiti.engine.asyncExecutorEnabled}")
+	private boolean asyncExecutorEnabled;
+
+	@Value("${activiti.engine.asyncExecutorActivate}")
+	private boolean asyncExecutorActivate;
+
+	@Value("${activiti.engine.mailServerHost}")
+	private String mailServerHost;
+
+	@Value("${activiti.engine.mailServerPort}")
+	private short mailServerPort;
+
+	@Bean
+	SpringProcessEngineConfiguration processEngineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager) {
+		SpringProcessEngineConfiguration result = new SpringProcessEngineConfiguration();
+		result.setDataSource(dataSource);
+		result.setDatabaseSchemaUpdate(databaseSchemaUpdate ? "true" : "false");
+		result.setJobExecutorActivate(jobExecutorActivate);
+		result.setAsyncExecutorEnabled(asyncExecutorEnabled);
+		result.setAsyncExecutorActivate(asyncExecutorActivate);
+		result.setMailServerHost(mailServerHost);
+		result.setMailServerPort(mailServerPort);
+		result.setTransactionManager(transactionManager);
+		
+                // TODO: Process engine bean declarations go here
+		// result.setBeans(Collections.singletonMap("myService", myService()));
+
+		return result;
+	}
+
+	@Bean
+	public ProcessEngineFactoryBean processEngineFactoryBean(
+			SpringProcessEngineConfiguration processEngineConfiguration) {
+		ProcessEngineFactoryBean bean = new ProcessEngineFactoryBean();
+		bean.setProcessEngineConfiguration(processEngineConfiguration);
+
+		return bean;
+	}
+	
+	@Bean
+	public ProcessEngine processEngine(ProcessEngineFactoryBean processEngineFactoryBean) {
+		return processEngineFactoryBean.getProcessEngineConfiguration().buildProcessEngine();
+	}
+
+	@Bean
+	public RuntimeService runtimeService(ProcessEngineFactoryBean processEngineFactoryBean) {
+		return processEngineFactoryBean.getProcessEngineConfiguration().getRuntimeService();
+	}
+
+	@Bean
+	public IdentityService identityService(ProcessEngineFactoryBean processEngineFactoryBean) {
+		return processEngineFactoryBean.getProcessEngineConfiguration().getIdentityService();
+	}
+
+	@Bean
+	public TaskService taskService(ProcessEngineFactoryBean processEngineFactoryBean) {
+		return processEngineFactoryBean.getProcessEngineConfiguration().getTaskService();
+	}
+
+	@Bean
+	public RepositoryService repositoryService(ProcessEngineFactoryBean processEngineFactoryBean) {
+		return processEngineFactoryBean.getProcessEngineConfiguration().getRepositoryService();
+	}
+}
+####################################
+## Download BPM file
+##
+## REMEMBER: DO NOT REMOVE .bpmn20.xml EXTENSION!
+## IMPORTANT!
+## 
+####################################
+####################################
+## Correct ID in XML file
+## correct with (id = "sample-process")
+## is "sample-process.bpmn20.xml"
+####################################
+<process id="process" isExecutable="true">
+####################################
+## Auto-wire services
+####################################
+@SpringUI
+@Theme("mytheme")
+@SuppressWarnings("serial")
+public class Sample extends UI {
+
+	@Autowired
+	private RuntimeService runtimeService;
+	
+	@Autowired
+	private RepositoryService repositoryService;
+
+	@Override
+	protected void init(VaadinRequest request) {
+		AppContext.autowire(this);
+                .....
+####################################
+## Deploy process
+####################################
+repositoryService.createDeployment().addClasspathResource("sample-process.bpmn20.xml").name("my-deployment").deploy();
+####################################
+## Register beans in process engine
+##
+## Look at "setBeans" method
+##
+####################################
+@Bean
+	SpringProcessEngineConfiguration processEngineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager) {
+		SpringProcessEngineConfiguration result = new SpringProcessEngineConfiguration();
+		result.setDataSource(dataSource);
+		result.setDatabaseSchemaUpdate(databaseSchemaUpdate ? "true" : "false");
+		result.setJobExecutorActivate(jobExecutorActivate);
+		result.setAsyncExecutorEnabled(asyncExecutorEnabled);
+		result.setAsyncExecutorActivate(asyncExecutorActivate);
+		result.setMailServerHost(mailServerHost);
+		result.setMailServerPort(mailServerPort);
+		result.setTransactionManager(transactionManager);
+		
+		result.setBeans(Collections.singletonMap("myService", myService()));
+
+		return result;
+	}
+####################################
+## Launch process
+####################################
+Map<String, Object> vars = new HashMap<String, Object>();
+vars.put("x", 5);
+vars.put("y", 7);
+
+log.info("Started Process: " + runtimeService.startProcessInstanceByKey("sample-process", vars).getId());
+
+
+
+
+
+
+
+
+
+
 
 
 
