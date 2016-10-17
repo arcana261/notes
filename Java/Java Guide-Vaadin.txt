@@ -2,6 +2,10 @@ https://github.com/vaadin/vaadin/tree/master/uitest/src/main/java/com/vaadin/tes
 https://vaadin.com/api/valo/
 https://vaadin.com/wiki/-/wiki/Main/Valo+theme+-+Getting+started
 
+https://github.com/vaadin/dashboard-demo
+https://vaadin.com/book/vaadin7
+http://demo.vaadin.com/sampler/
+
 
 https://vaadin.com/wiki?p_p_id=36&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=row-1&p_p_col_pos=2&p_p_col_count=4&_36_struts_action=%2Fwiki%2Fview&p_r_p_185834411_nodeName=vaadin.com+wiki&p_r_p_185834411_title=I+b+-+Getting+started+with+Vaadin+Spring+without+Spring+Boot
 https://vaadin.com/wiki/-/wiki/Spring+Vaadin/IV+-+Configuring+and+Using+Vaadin+Spring+without+Spring+Boot
@@ -404,6 +408,22 @@ getUI().getNavigator().navigateTo(SimpleLoginMainView.NAME);
 ----> Implement View
 
 public class SimpleLoginView extends CustomComponent implements View {
+	public SimpleLoginView() {
+		setSizeFull();
+
+		// Create the user input field
+		user = new TextField("User:");
+		user.setWidth("300px");
+		user.setRequired(true);
+		user.setInputPrompt("Your username (eg. joe@email.com)");
+		user.addValidator(new EmailValidator("Username must be an email address"));
+		user.setInvalidAllowed(false);
+		.....
+		.....
+
+		setCompositionRoot(viewLayout);
+	}
+
         @Override
 	public void enter(ViewChangeEvent event) {
 		// focus the username field when user arrives to the login view

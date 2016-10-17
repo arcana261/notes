@@ -30,6 +30,10 @@ server {
   ssl_certificate_key /etc/nginx/ssl/explorer.kadona.me.key;
   resolver 127.0.0.11;
 
+  location = / {
+    return 301 \\\$scheme://\\\$host/activiti-explorer;
+  }
+
   location / {
     set \\\$target explorer.kadona.me;
     proxy_pass http://\\\$target:80;

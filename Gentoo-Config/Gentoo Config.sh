@@ -3476,15 +3476,22 @@ tar xvf delegate9.9.13.tar.gz
 cd delegate9.9.13
 make -j5
 cp src/delegated /usr/local/bin/
-# create proxy scripts on desktop
-cd /home/arcana/Desktop
-nano -w socks.sh
-> #!/bin/bash
-> ssh -D 8082 proxy.arcane.net
-nano -w http.sh
-> #!/bin/bash
-> delegated -P8083 SERVER=http SOCKS=localhost:8082
-chmod +x socks.sh http.sh
+ln -sn /usr/local/bin/delegated /usr/bin/delegated
+# create proxy scripts
+
+mkdir -p /opt/services/proxy.arcana.me
+cat <<EOF > /opt/services/proxy.arcana.me/start.sh
+#!/bin/bash
+delegated -P8083 SERVER=http SOCKS=localhost:8082
+while true; do ssh -D 8082 root@178.162.207.98; done
+EOF
+cat <<EOF > /opt/services/proxy.arcana.me/stop.sh
+#!/bin/bash
+killall -9 delegated ssh screen
+EOF
+chmod +x /opt/services/proxy.arcana.me/start.sh
+chmod +x /opt/services/proxy.arcana.me/stop.sh
+
 # install docker
 >> app-emulation/runc+="seccomp"
 >> app-emulation/containerd+="seccomp"
@@ -3494,13 +3501,18 @@ chmod +x socks.sh http.sh
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 emerge --ask app-emulation/docker
+
 mkdir -p /etc/systemd/system/docker.service.d
-nano -w /etc/systemd/system/docker.service.d/http_proxy.conf
-> [Service]
-> Environment="HTTP_PROXY=http://127.0.0.1:8083/"
-nano -w /etc/systemd/system/docker.service.d/no_proxy.conf
-> [Service]
-> Environment="NO_PROXY=127.0.0.0/8, localhost, ::1"
+cat <<EOF > /etc/systemd/system/docker.service.d/http_proxy.conf
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8083/"
+EOF
+
+cat <<EOF > /etc/systemd/system/docker.service.d/no_proxy.conf
+[Service]
+Environment="NO_PROXY=127.0.0.0/8, localhost, ::1"
+EOF
+
 systemctl daemon-reload
 systemctl enable docker.service
 usermod -aG docker arcana
@@ -3525,6 +3537,22 @@ echo "app-emulation/docker-swarm ~amd64" >> /etc/portage/package.accept_keywords
 emerge --ask app-emulation/docker-swarm
 # disable git HTTPS check
 git config --global http.sslVerify false
+
+
+
+######## To start docker using overlayfs
+cat <<EOF > /etc/systemd/system/docker.service.d/overlay.conf 
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd --storage-driver=overlay
+EOF
+
+cat <<EOF > /etc/modules-load.d/overlay.conf
+overlay
+EOF
+
+
+
 #########################################################
 ##         SYSTEM BOOTSTRAP USING DOCKER               ##
 #########################################################
@@ -3591,9 +3619,11 @@ EOF
 > ./http.sh
 > Ctrl+P + Ctrl+Q
 >>> Add proxy.arcana.me to BIND
-nano -w /etc/systemd/system/docker.service.d/http_proxy.conf
-> [Service]
-> Environment="HTTP_PROXY=http://proxy.arcana.me:8083/"
+cat <<EOF > /etc/systemd/system/docker.service.d/http_proxy.conf
+[Service]
+Environment="HTTP_PROXY=http://proxy.arcana.me:8083/"
+EOF
+
 systemctl daemon-reload
 >>> TEST NEW HTTP/SOCKS PROXY CONFIGS IN FIREFOX FOXYPROXY
 systemctl restart docker.service
