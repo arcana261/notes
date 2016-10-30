@@ -5,6 +5,7 @@ unicode
 pam
 readline
 systemd
+vim-syntax
 -consolekits
 vdpau
 dri

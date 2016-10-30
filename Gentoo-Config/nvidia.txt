@@ -1,0 +1,21 @@
+# disable nouveau in kernel
+genkernel --install --udev --lvm --luks --makeopts=-j9 --menuconfig all
+
+# Install ProxyChains
+ emerge --ask net-misc/proxychains
+ vim /etc/proxychains.conf
+ > socks5	127.0.0.1	8082
+
+>> x11-drivers/nvidia-drivers+="acpi gtk3"
+emerge --ask x11-drivers/nvidia-drivers
+
+eselect opengl set nvidia
+eselect opencl set nvidia
+
+# set xfce font DPI per-user
+# run as "arcana"
+mkdir -p ~/.config/xfce4
+echo "Xft.dpi: 96" >> ~/.config/xfce4/Xft.xrd
+
+# set video output to vdpau for better decoding performance
+>> Gnome MPlayer -> Edit -> Preferences -> Video Output -> vdpau
