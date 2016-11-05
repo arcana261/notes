@@ -1,0 +1,19 @@
+pacman -Sy
+pacman --needed -S bash pacman pacman-mirrors msys2-runtime
+exit
+
+pacman -Su
+exit
+
+pacman -S base-devel git mercurial cvs wget p7zip
+pacman -S perl ruby python2 mingw-w64-i686-toolchain mingw-w64-x86_64-toolchain
+mkdir /c/msys2/repos
+cd /c/msys2/repos
+git clone https://github.com/Alexpux/MINGW-packages.git
+
+# install a mingw package
+cd ${package-name}
+updpkgsums
+makepkg-mingw -fsiL
+pacman -U ${package-name}'''.pkg.tar.xz
+
