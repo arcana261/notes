@@ -155,6 +155,10 @@ lvdisplay
   mkfs.ext4 /dev/vg1/lv2
   mkfs.ext4 /dev/vg2/lv3
 # mount partitions
+##
+## IF VOLUME IS INACTIVE, ACTIVATE USING:
+## lvchange -a y /dev/vg1/lv1
+##
 mount /dev/vg1/lv2 /mnt/gentoo
 mkdir -p /mnt/gentoo/{home,boot}
 mount /dev/vg2/lv3 /mnt/gentoo/home
@@ -164,8 +168,12 @@ mount /dev/vg2/lv3 /mnt/gentoo/home
  # EFI
   mount /dev/sda2 /mnt/gentoo/boot
 # identify that date is correct
+# set time using
+# date --set "Wed Oct 26 18:41:30 UTC 2016"
 date
 # download stage3 in /mnt/gentoo
+# using scp
+# scp /mnt/cdrom/stage3-amd64-20161020.tar.bz2 root@127.0.0.1:/mnt/gentoo
 cd /mnt/gentoo
 # extract stage3 tarball
 tar xvjpf stage3-amd64-20150917.tar.bz2 --xattrs
@@ -177,8 +185,6 @@ mount --rbind /sys /mnt/gentoo/sys
 mount --make-rslave /mnt/gentoo/sys
 mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/dev
-mount --rbind /run /mnt/gentoo/run
-mount --make-rslave /mnt/gentoo/run
 # chroot into new environment
 chroot /mnt/gentoo /bin/bash
 source /etc/profile
@@ -219,17 +225,18 @@ locale-gen
 # verify that locales are installed
 locale -a
 # we now set system-wide locale setting
+# -> en_US.utf8
 eselect locale list
 eselect locale set 4
 # reload the environment
 env-update && source /etc/profile
 export PS1="(chroot) $PS1"
 # install gentoolkit
-emerge app-portage/gentoolkit
+emerge --ask app-portage/gentoolkit
 # select a kernel from https://wiki.gentoo.org/wiki/Kernel/Overview
 #  is gentoo-sources
 echo "sys-kernel/gentoo-sources symlink" >> /etc/portage/package.use/gentoo-sources
-emerge sys-kernel/gentoo-sources
+emerge --ask sys-kernel/gentoo-sources
 # see progress of merge inside another terminal
 # tail -f /mnt/gentoo/var/log/emerge-fetch.log
 # check linux sources installed successfully
@@ -254,35 +261,76 @@ ls -l /usr/src/linux
   pat: Page Attribute Table -> kernel
   pse36: 36-bit page size extensions
   clflush: CLFLUSH instruction (SSE2)
+  [NON-VM] dts: Debug Store (buffer for debugging and profiling instructions)
+  [NON-VM] acpi: ACPI via MSR (temperature monitoring and clock speed modulation)
   mmx: MMX Instructions -> gcc -mmmx
   fxsr: FXSAVE, FXRESTORE instructions, CR4 bit 9 -> gcc -mfxsr
   sse: SSE Instructions (a.k.a. Katmai New Instructions) -> gcc -msse
   sse2: SSE2 Instructions -> gcc -msse2
+  [NON-VM] ss: CPU self snoop
   ht: Hyper-threading -> kernel
+  tm: Automatic clock control (Thermal Monitor)
+  [NON-VM] pbe: Pending Break Enable (PBE# pin) wakeup support
   syscall: SYSCALL and SYSRET instructions
   nx: NX bit (used for Exec sheild, etc..) -> kernel
+  [NON-VM] pdpe1gb: One GB pages (allows hugepagesz=1G)
   rdtscp: RDTSCP Instruction
   lm: Long mode -> CPU is AMD64/x86_64
   constant_tsc: TSC ticks at a constant rate
+  [NON-VM] arch_perfmon: Intel Architectural PerfMon
+  [NON-VM] pebs: Precise-Event Based Sampling
+  [NON-VM] bts: Branch Trace Store
   rep_good: rep microcode works well
   nopl: the NOPL (0f 1f) instructions
   xtopology: cpu topology enum extensions
   nonstop_tsc: TSC does not stop in C states
+  [NON-VM] aperfmperf: APERFMPERF
+  [NON-VM] eagerfpu: Non lazy FPU restore
   pni: Prescott New Instructions-SSE3 -> gcc -msse3
   pclmulqdq: An extended instruction set for block ciphering -> -mpclmul
+  [NON-VM] dtes64: 64-bit Debug Store
+  [NON-VM] monitor: Monitor/Mwait support (Intel SSE3 supplements)
+  [NON-VM] ds_cpl: CPL Qual. Debug Store
+  [NON-VM] vmx: Hardware virtualization: Intel VMX
+  [NON-VM] est: Enhanced SpeedStep
+  [NON-VM] tm2: Thermal Monitor 2
   ssse3: Supplemental SSE3 Instructions -> gcc -mssse3
   cx16: CMPXCHG16B Instruction -> gcc -mcx16
+  [NON-VM] xtpr: Send Task Priority Messages
+  [NON-VM] pdcm: Performance Capabilities
   sse4_1: SSE4.1 Instructions -> gcc -msse4.1
   sse4_2: SSE4.2 Instructions -> gcc -msse4.2
   movbe: MOVBE Instruction (Big-Endian) -> gcc -mmovbe
   popcnt: POPCNT Instruction -> gcc -mpopcnt
+  [NON-VM] tsc_deadline_timer: Tsc deadline timer
   aes: AES Instruction set -> gcc -maes
   xsave: XSAVE, XRESTOR, XSETBV, XGETBV -> gcc -mxsave
   avx: Advanced Vector Extensions -> gcc -mavx
+  [NON-VM] f16c: 16-bit fp conversions (CVT16)
   rdrand: RDRAND (on-chip random number generator) -> kernel, gcc -mrdrnd
-  hypervisor: Running on hypervisor -> System in under virtualization
+  [VM] hypervisor: Running on hypervisor -> System in under virtualization
   lahf_lm: LAHF/SAHF in long mode -> gcc -msahf
   abm: Advanced bit manipulation (lzcnt and popcnt) -> gcc -mabm
+  [NON-VM] epb: IA32_ENERGY_PERF_BIAS support
+  [NON-VM] tpr_shadow: Intel TPR Shadow
+  [NON-VM] vnmi: Intel Virtual NMI
+  [NON-VM] flexpriority: Intel FlexPriority
+  [NON-VM] ept: Intel Extended Page Table
+  [NON-VM] vpid: Intel Virtual Processor ID
+  [NON-VM] fsgsbase: {RD/WR}{FS/GS}BASE instructions
+  [NON-VM] tsc_adjust: TSC adjustment MSR
+  [NON-VM] bmi1: 1st group bit manipulation extensions
+  [NON-VM] avx2: AVX2 instructions
+  [NON-VM] smep: Supervisor Mode Execution Protection
+  [NON-VM] bmi2: 2nd group bit manipulation extensions
+  [NON-VM] erms: Enhanced REP MOVSB/STOSB
+  [NON-VM] invpcid: Invalidate Processor Context ID
+  [NON-VM] xsaveopt: Optimized XSAVE -> gcc -mxsaveopt
+  [NON-VM] dtherm (formerly dts): digital thermal sensor
+  [NON-VM] ida: Intel Dynamic Acceleration
+  [NON-VM] arat: Always Running APIC Timer
+  [NON-VM] pln: Intel Power Limit Notification
+  [NON-VM] pts: Intel Package Thermal Status
 # find best CFLAGS in
 # https://wiki.gentoo.org/wiki/Safe_CFLAGS
 # to see which optimization options are enabled by GCC see output of following command
@@ -332,6 +380,7 @@ emerge --ask --deep --update --newuse @world
 emerge --depclean
 # install openssl
 emerge --ask dev-libs/openssl
+update-ca-certificates
 echo "dev-lang/python ssl" >> /etc/portage/package.use/python
 echo "net-misc/iputils ssl" >> /etc/portage/package.use/iputils
 echo "net-misc/openssh ssl" >> /etc/portage/package.use/openssh
@@ -339,19 +388,62 @@ echo "net-misc/wget ssl" >> /etc/portage/package.use/wget
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 # enable NLS for localization support in whole system
-USE+="nls"
+>> app-arch/tar+="nls"
+>> app-arch/xz-utils+="nls"
+>> app-editors/nano+="nls"
+>> app-portage/portage-utils+="nls"
+>> app-shells/bash+="nls"
+>> dev-libs/popt+="nls"
+>> net-misc/wget+="nls"
+>> sys-apps/coreutils+="nls"
+>> sys-apps/diffutils+="nls"
+>> sys-apps/findutils+="nls"
+>> sys-apps/gawk+="nls"
+>> sys-apps/grep+="nls"
+>> sys-apps/help2man+="nls"
+>> sys-apps/kbd+="nls"
+>> sys-apps/man-db+="nls"
+>> sys-apps/man-pages+="nls"
+>> sys-apps/net-tools+="nls"
+>> sys-apps/sed+="nls"
+>> sys-apps/shadow+="nls"
+>> sys-apps/texinfo+="nls"
+>> sys-apps/util-linux+="nls"
+>> sys-devel/binutils+="nls"
+>> sys-devel/bison+="nls"
+>> sys-devel/flex+="nls"
+>> sys-devel/gcc+="nls"
+>> sys-devel/gettext+="nls"
+>> sys-devel/make+="nls"
+>> sys-fs/e2fsprogs+="nls"
+>> sys-libs/e2fsprogs-libs+="nls"
+>> sys-libs/timezone-data+="nls"
+>> sys-process/procps+="nls"
+>> sys-process/psmisc+="nls"
+>> sys-libs/gdbm+="nls"
+>> app-text/opensp+="nls"
+emerge --ask --deep --update --newuse @world
+emerge --depclean
 hash -r
 env-update && source /etc/profile
 export PS1="(chroot) $PS1"
 emerge --depclean
 # enable linguas
 nano -w /etc/portage/make.conf
->> LINGUAS="en_US fa_IR en fa en_GB en-GB fa-IR"
->> L10N="en_US fa_IR en fa en_GB en-GB fa-IR"
+>> LINGUAS="en_US fa_IR en fa en_GB en-GB fa-IR en-US"
+>> L10N="en_US fa_IR en fa en_GB en-GB fa-IR en-US"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 # enable unicode support
-USE+="unicode"
+>> app-arch/unzip+="unicode"
+>> app-editors/nano+="unicode"
+>> dev-lang/python+="unicode"
+>> sys-apps/less+="unicode"
+>> sys-apps/openrc+="unicode"
+>> sys-apps/util-linux+="unicode"
+>> sys-libs/ncurses+="unicode"
+>> sys-process/procps+="unicode"
+>> dev-libs/expat+="unicode"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 # install PAM (Pluggable Authentication Module) cause it's dangerous not to have
@@ -360,16 +452,17 @@ emerge --depclean
 >> sys-apps/openrc+="pam"
 >> sys-apps/shadow+="pam"
 >> sys-apps/util-linux+="pam"
+>> sys-libs/pam+="nls"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 # enable "readline" without it, one can not use even "bash" properly
 # as the only thing you can do in bash if you mistype is to delete
 # backwards pressing backspace, and nothing else.
->> app-shells/bash readline
->> dev-lang/python readline
->> dev-libs/libxml readline
->> sys-devel/bc readline
->> sys-apps/gawk readline
+>> app-shells/bash+="readline"
+>> dev-lang/python+="readline"
+>> dev-libs/libxml+="readline"
+>> sys-devel/bc+="readline"
+>> sys-apps/gawk+="readline"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 # disable static on busybox cause cannot co-exist with PAM
@@ -386,7 +479,6 @@ emerge --depclean
 emerge -C sys-apps/sysvinit
 emerge -C sys-fs/eudev
 emerge -C virtual/udev
-USE+="-consolekit"
 >> sys-apps/systemd+="acl nat pam policykit sysv-utils"
 >> www-client/w3m+="ssl"
 >> sys-apps/dbus+="systemd"
@@ -409,6 +501,7 @@ emerge --depclean
 >> sys-libs/libcap+="pam"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
+>> www-client/w3m+="nls unicode"
 >> sys-apps/busybox+="systemd"
 >> sys-apps/util-linux+="systemd"
 >> sys-auth/pambase+="systemd"
@@ -416,15 +509,21 @@ emerge --depclean
 >> sys-process/procps+="systemd"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
+>> dev-libs/libgpg-error+="nls"
+>> sys-apps/acl+="nls"
+>> sys-apps/attr+="nls"
+>> sys-auth/polkit+="nls"
+>> sys-process/procps+="ncurses modern-top"
 >> sys-apps/systemd+="cryptsetup"
 >> virtual/libudev+="systemd"
->> sys-fs/cryptsetup+="udev"
+>> sys-fs/cryptsetup+="udev nls"
 >> sys-fs/lvm2+="-thin udev readline systemd"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
  # enable "udev" support to enable device discovery
 >> sys-apps/util-linux+="udev"
 >> dev-libs/libxml2+="readline"
+>> dev-libs/libpcre+="readline"
  # disable tty7 to work better with X
 nano -w /etc/systemd/logind.conf
 > NAutoVTs=6
@@ -432,9 +531,8 @@ nano -w /etc/systemd/logind.conf
  # enable network service
 systemctl enable systemd-networkd.service 
 systemctl enable systemd-resolved.service
-umount /run
 mkdir -p /run/systemd/resolve
-ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf 
+ln -snf /run/systemd/resolve/resolv.conf /etc/resolv.conf 
 nano -w /etc/systemd/network/50-dhcp.network
 > [Match]
 > Name=en*
@@ -446,7 +544,7 @@ nano -w /etc/systemd/network/50-dhcp.network
  > nameserver 4.2.2.4
  > nameserver 8.8.8.8
  # enable mtab
-ln -sf /proc/self/mounts /etc/mtab
+ln -snf /proc/self/mounts /etc/mtab
  # enable other services
  # to list unit files issue
  # systemctl list-unit-files
@@ -473,9 +571,11 @@ emerge --ask sys-apps/usbutils
 # usage: acpitool -e
 emerge --ask sys-power/acpitool
 # install hwinfo
+>> app-arch/cpio+="nls"
 emerge --ask sys-apps/hwinfo
 # install genkernel 
 >> sys-kernel/genkernel-next+="cryptsetup"
+>> dev-libs/boost+="nls"
 emerge --ask genkernel-next
  # configure fstab for genkernel
  # use blkid for this UUID=<uuid>
@@ -641,8 +741,9 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 # Processor type and features
 #  * Supervisor Mode Access Prevention
 >>> recovery from hardware memory errors
+>>> requires special hardware
 # Processor type and features
-#  * Enable recovery from hardware memory errors
+#  [] Enable recovery from hardware memory errors
 >>> KSM may come handy
 # Processor type and features
 #  * Enable KSM for page merging
@@ -689,7 +790,6 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 #   [] Processor Aggregator || ACPI 4.0 supports this
 #   * Thermal Zone
 #   * Power Management Timer Support
-#   [] Container and Module Devices || ACPI 5.0 supports this
 #   [] ACPI Platform Error Interface (APEI) || ACPI 5.0 supports this
 #   [] APEI Generic Hardware Error Source || ACPI 5.0 supports this
 #   [] APEI PCIe AER logging/recovering support || ACPI 5.0 supports this
@@ -717,6 +817,7 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 #  * IOMMU Hardware Support
 #   * Support for Intel IOMMU using DMA Remapping Devices
 #   * Enable Intel DMA Remapping Devices by default
+#   * Support for Shared Virtual Memory with Intel IOMMU
 #  * DMA Engine support
 #   <> Intel I/OAT DMA support || my CPU isn't xeon
 # Processor type and features
@@ -795,7 +896,7 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 #   * Tmpfs POSIX Access Control Lists
 >>> enable hwpoison to better tolerate memory corruption errors now that we have procfs support
 # Processor type and features
-#  * HWPoison pages injector
+#  [] HWPoison pages injector
 >>> enable kernel .config now that we have procfs support
 # General Setup
 #  * Enable access to .config through /proc/config.gz
@@ -943,6 +1044,14 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 #    [] Intel (82586/82593/82596) devices
 #    M Intel (R) PRO/1000 Gigabit Ethernet support
 #   M PHY Device support and infrastructure
+>>> NON-VM Ethernet Controller: Intel Corporation Ethernet Connection I217-V
+>>> kernel driver in use: e1000e
+>>> kernel driver in use: e1000
+# Device Drivers
+#  * Network device support
+#   * Ethernet driver support
+#    * Intel devices
+#     M Intel (R) PRO/1000 PCI-Express Gigabit Ethernet support
 >>> enable sound
 # Device Drivers
 #  * Sound card support
@@ -1001,6 +1110,30 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 >>> Audio device: Intel Corporation 82801FB/FBM/FR/FW/FRW (ICH6 Family) High Definition Audio Controller
 >>> kernel driver in use: snd_hda_intel
 # --- nothing do to, already enabled by now ---
+>>>>>>>>>>>>>>>>>> NON-VM
+>>> codecs:
+ snd_hda_codec_hdmi: 1
+ snd_hda_codec_realtek: 1
+ snd_hda_codec_generic: 1
+ snd_hda_codec: 4
+ snd_hda_core: 5
+ snd_hwdep: 2
+ snd_pcm: 5
+ snd: 22
+ >>> snd_hda_codec_hdmi
+ # Device Drivers
+ #  Sound card support
+ #   * Advanced Linux Sound Architecture
+ #    * Dynamic device file minor numbers
+ #     (4) Max number of sound cards
+ #    HD-Audio
+ #     M Build HDMI/DisplayPort HD-audio codec support
+ >> snd_hda_codec_realtek
+ # Device Drivers
+ #  Sound card support
+ #   * Advanced Linux Sound Architecture
+ #    HD-Audio
+ #     M Build Realtek HD-audio codec support
 >>> disable MPS Table, since our CPU is new
 # Processor type and features
 #  [] Enable MPS table
@@ -1182,9 +1315,25 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 >>> add AGP graphics support to kernel
 # Device Drivers
 #  Graphics Support
-#   M /dev/agpgart (AGP Support)
-#   Direct Rendering Manager
-#    M Direct Rendering Manager (XFree86 4.1.0 and higher DRI support)
+#   * /dev/agpgart (AGP Support)
+#   * Direct Rendering Manager (XFree86 4.1.0 and higher DRI support)
+#    * Intel 8xx/9xx/G3x/HD Graphics
+#    M Virtio GPU driver
+>>> NON-VM: NOUVEAU to support Nvidia card
+# Device Drivers
+#  Graphics Support
+#   * Direct Rendering Manager (XFree86 4.1.0 and higher DRI support)
+#    * Enable legacy fbdev support for your modesetting driver
+#    * Nouveau (NVIDIA) cards
+#     * Support for backlight control
+#    Frame buffer Devices
+#     * Enable Video Mode Handling Helpers
+#     * Support for frame buffer devices
+#      * Enable firmware EDID
+#     [] nVidia Framebuffer Support
+#     [] Simple framebuffer support
+#    Console display driver support
+#     * Support for the Framebuffer Console Decorations
 >>> enable FUSE for ntfs3g
 # File systems
 #  M FUSE (Filesystem in Userspace) support
@@ -1247,6 +1396,15 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 #      [] rt2800usb - Include support for rt53xx devices
 #      * rt2800usb - Include support for rt55xx devices
 #      * rt2800usb - Include support for unknown (USB) devices
+>>> NON-VM: Qualcomm Atheros AR9462 Wireless Network Adapter
+>>> kernel driver in use: ath9k
+# Device Drivers
+#  * Network Device Support
+#   M Atheros Wireless Cards
+#    M Atheros 802.11n wireless cards support
+#     * Atheros bluetooth coexistence support
+#     * Atheros ath9k PCI/PCIe bus support
+#     * Atheros ath9k support for PC OEM cards
 >>> Webcam, Pixart, Imaging, Inc
 # Device Drivers
 #  M Multimedia Support
@@ -1258,8 +1416,8 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 #     M Pixart PAC7302 USB Camera Driver
 #  * USB support
 #   M USB Gadget Support
-#    M USB Webcam Gadget |||| kernel compile error(?)
->>> CIFS, support for mounting shares via fstab using
+#    M USB Webcam Gadget |||| kernel compile error
+>>> CIFS, support _for mounting shares via fstab using
 >>> mount -t cifs [-o username=xxx,password=xxx] //server/share /mnt/point
 # File systems
 #  * Network File Systems
@@ -1273,9 +1431,10 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 #   M USB Gadget Support
 #    [] Printer Gadget || libusb handles them so we have to disable this
 >>> Enable IA32 Emulation to support crosslibs
->>> Important for compiling glibc later on
+>>> Important _for compiling glibc later on
 # Executable file formats / Emulations
 #  * IA32 Emulation
+#   * IA32 a.out support
 >>> synaptics support
 # Device Drivers
 #  Input device support
@@ -1301,7 +1460,7 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 #    * Enable extended accounting over taskstats
 #    * Enable per-task storage I/O accounting
 >>> enable user namespace support to enable sandboxing
->>> required for chromium to work properly
+>>> required _for chromium to work properly
 # General Setup
 #  * Namespaces support
 #   * User namespace
@@ -1323,7 +1482,7 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 >>> sys-process/audit support
 # General Setup
 #  * Auditing support
->>> PPP (for momemmanager support)
+>>> PPP (_for momemmanager support)
 # Device Drivers
 #  * Network device support
 #   M PPP (point-to-point protocol) support
@@ -1440,11 +1599,13 @@ emerge --ask sys-process/dcron
 systemctl enable dcron
 crontab /etc/crontab
 # install file-indexing
+>> sys-apps/mlocate+="nls"
 emerge --ask sys-apps/mlocate
 # enable serial consoles, uncomment them
 nano -w /etc/inittab
 # install filesystem tools
 emerge --ask sys-fs/dosfstools
+>> sys-fs/ntfs3g+="acl xattr"
 emerge --ask sys-fs/ntfs3g
 # change keymaps if necessary
 nano -w /etc/conf.d/keymaps
@@ -1477,7 +1638,9 @@ emerge --depclean
 >> net-misc/networkmanager+="-ppp -modemmanager resolvconf ncurses systemd wext wifi"
   >> if bluetooth is needed, USE+="bluetooth"
   >> if connection sharing is needed, USE+="connection-sharing"
-emerge --ask networkmanager
+>> dev-libs/newt+="nls"
+>> net-dns/libidn+="nls"
+emerge --ask net-misc/networkmanager
 systemctl enable NetworkManager
 systemctl disable systemd-networkd.service
 systemctl disable systemd-resolved.service
@@ -1496,15 +1659,21 @@ ln -snf /run/resolvconf/interfaces/NetworkManager /etc/resov.conf
   grub2-install /dev/sda
   grub2-mkconfig -o /boot/grub/grub.cfg
  # EFI
-  >> sys-boot/grub+="device-mapper grub_platforms_efi-64"
+  >> sys-boot/grub+="device-mapper nls grub_platforms_efi-64"
   # install grub
   emerge --ask sys-boot/grub
   emerge --ask sys-boot/os-prober
   etc-update
+  >> dev-scheme/guile+="nls readline"
+  >> net-libs/gnutls+="nls"
+  >> www-client/w3m+="unicode"
+  >> net-wireless/bluez+="systemd readline"
   # configure grub
   nano -w /etc/default/grub
   > GRUB_CMDLINE_LINUX="crypt_root=/dev/sda3 dolvm root=/dev/vg1/lv2 init=/usr/lib/systemd/systemd plymouth.enable=0"
-  > GRUB_CMDLINE_LINUX_DEFAULT="console=tty1"
+  > GRUB_CMDLINE_LINUX_DEFAULT="console=tty1 vga792 nouveau.modeset=1"
+  > GRUB_GFXMODE=1920x1080
+  > GRUB_GFXPAYLOAD_LINUX=keep
   mkdir -p /boot/EFI
   grub-install --efi-directory=/boot
   grub-mkconfig -o /boot/grub/grub.cfg
@@ -1532,7 +1701,12 @@ nmtui
 > Set system host name
 reboot
 
+# find windows (chroot does not allow grub to find windows boot loader)
+grub-mkconfig -o /boot/grub/grub.cfg
+reboot
+
 # install screen, an important tools for tty
+>> app-misc/screen+="pam"
 emerge --ask app-misc/screen
 # install lsof
 emerge --ask sys-process/lsof
@@ -1545,21 +1719,26 @@ emerge --ask sys-process/htop
 # install llvm & clang, many different packages need it!
 >> sys-devel/llvm+="clang -video_cards_radeon"
 emerge --ask sys-devel/llvm
+echo "sys-libs/libomp ~amd64" >> /etc/portage/package.accept_keywords
+emerge --ask sys-libs/libomp
 # install vpdau
 >> x11-libs/libvdpau+="dri"
 emerge --ask x11-libs/libvdpau
 # install libdrm - direct rendering manager
->> x11-libs/libdrm+="libkms -video_cards_amdgpu -video_cards_intel -video_cards_nouveau -video_cards_radeon -video_cards_vmware"
+>> x11-libs/libdrm+="libkms -video_cards_amdgpu video_cards_intel video_cards_nouveau -video_cards_radeon -video_cards_vmware"
 emerge --ask x11-libs/libdrm
 # install libva - VAAPI
->> x11-libs/libva+="X drm vdpau -video_cards_dummy -video_cards_intel -video_cards_nouveau"
+>> x11-libs/libva-intel-driver+="X"
+>> x11-libs/libva+="X drm vdpau -video_cards_dummy video_cards_intel video_cards_nouveau"
 emerge --ask x11-libs/libva
 # install mesa
->> media-libs/mesa+="vaapi vdpau -opencl xvmc openmax osmesa xa classic dri3 egl gallium gbm llvm -video_cards_intel -video_cards_nouveau -video_cards_radeon -video_cards_vmware"
+>> media-libs/mesa+="vaapi vdpau -opencl xvmc openmax osmesa xa classic dri3 egl gallium gbm llvm video_cards_intel video_cards_nouveau -video_cards_radeon -video_cards_radeonsi -video_cards_vmware"
 emerge --ask media-libs/mesa
 # install libtxc
 emerge --ask media-libs/libtxc_dxtn
 # install cairo
+>> media-fonts/liberation-fonts+="X"
+>> sys-libs/binutils-libs+="nls"
 >> x11-libs/cairo+="opengl"
 emerge --ask x11-libs/cairo
 >> x11-libs/libva+="opengl"
@@ -1569,16 +1748,17 @@ emerge --depclean
 # install xorg-drivers
 # list acquirable from xorg-drivers meta package
 INPUT_DEVICES+="evdev synaptics virtualbox keyboard mouse"
-VIDEO_CARDS+="virtualbox"
+VIDEO_CARDS+="nouveau intel virtualbox fbdev v4l vesa vga"
 CFLAGS+="-Wno-error=maybe-uninitialized"
 FFLAGS+="-Wno-error=maybe-uninitialized"
 >> x11-apps/xinit+="systemd"
 >> x11-base/xorg-server+="systemd"
 >> x11-drivers/xf86-video-virtualbox+="dri"
+>> x11-drivers/xf86-video-intel+="dri dri3 xvmc"
 ##>>>>>> ?????????????????????
 ##>> replace new in /usr/src/linux/include/linux/string.h
 ##>>>>>> ?????????????????????
-emerge xorg-drivers
+emerge --ask xorg-drivers
 CFLAGS-="-Wno-error=maybe-uninitialized"
 FFLAGS-="-Wno-error=maybe-uninitialized"
 # install virtualbox guest additions
@@ -1597,6 +1777,8 @@ systemctl restart virtualbox-guest-additions.service
  >> x11-libs/gdk-pixbuf+="X"
  >> x11-libs/cairo+="X"
  >> x11-libs/gtk+ += "X"
+ >> dev-libs/atk+="nls"
+ >> x11-libs/libdrm+="libkms"
  emerge --ask --deep --update --newuse @world
  emerge --depclean
  # list available themes
@@ -1611,9 +1793,9 @@ systemctl restart virtualbox-guest-additions.service
  # configure grub
  nano -w /etc/default/grub
  > GRUB_CMDLINE_LINUX-="plymouth.enable=0"
- > GRUB_CMDLINE_LINUX_DEFAULT="vga792 quiet splash"
+ > GRUB_CMDLINE_LINUX_DEFAULT="vga792 nouveau.modeset=1 quiet splash"
  ##vga=791 splash=silent,theme:default console=tty1 quiet
- > GRUB_GFXMODE=1024x768x24
+ > GRUB_GFXMODE=1920x1080
  > GRUB_GFXPAYLOAD_LINUX=keep
  grub-mkconfig -o /boot/grub/grub.cfg
  reboot
@@ -1642,6 +1824,8 @@ emerge --ask x11-base/xorg-server
 # install twm
 emerge --ask x11-wm/twm
 # install xterm
+>> media-fonts/font-misc-misc+="X nls"
+>> x11-terms/xterm+="truetype unicode"
 emerge --ask x11-terms/xterm
 # install xclock
 emerge --ask x11-apps/xclock
@@ -1656,6 +1840,7 @@ startx
 
 # install lightdm
 >> sys-apps/accountsservice+="systemd"
+>> sys-libs/libnih+="nls"
 emerge --ask x11-misc/lightdm
 mkdir -p /var/lib/lightdm-data
 # create our own user!
@@ -1664,20 +1849,31 @@ gpasswd -a arcana vboxguest
 gpasswd -a arcana vboxsf
 passwd arcana
 systemctl enable accounts-daemon.service
-systemctl enable lightdm.service
->> "media-fonts/font-misc-misc"+="X"
->> "media-fonts/liberation-fonts"+="X"
 >> "media-libs/freetype"+="X"
 >> "x11-libs/pango"+="X"
 >> "app-accessibility/at-spi2-core"+="X"
->> "dev-scheme/guile"+="readline"
+>> "dev-lang/yasm"+="nls"
+>> "app-arch/zip"+="unicode"
+>> "net-misc/openssh"+="X"
+>> "sys-apps/groff"+="X"
+>> "sys-process/psmisc"+="X"
+>> "www-client/w3m"+="X"
+>> "app-arch/libarchive"+="acl expat"
+>> "app-arch/tar"+="acl xattr"
+>> "net-misc/rsync"+="acl xattr"
+>> "sys-apps/shadow"+="acl xattr"
+>> "sys-apps/sed"+="acl"
+>> "sys-devel/gettext"+="acl"
+>> "sys-apps/portage"+="xattr"
+>> "dev-libs/glib"+="xattr"
+>> "sys-devel/patch"+="xattr"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 
 # install gvfs
  # install udisks
  >> sys-fs/udisks+="cryptsetup systemd acl -gptfdisk"
- >> sys-block/parted+="device-mapper readline"
+ >> sys-block/parted+="device-mapper readline nls"
  emerge --ask sys-fs/udisks
  # install gvfs itself
  >> gnome-base/gvfs+="archive cdda fuse mtp systemd udisks"
@@ -1690,8 +1886,8 @@ emerge --depclean
  >> dev-perl/libwww-perl+="ssl"
  >> x11-libs/libwnck+="startup-notification"
  >> xfce-base/libxfce4ui+="startup-notification"
- >> x11-misc/xscreensaver+="opengl"
- >> xfce-base/xfce4-session+="policykit systemd"
+ >> x11-misc/xscreensaver+="opengl jpeg pam"
+ >> xfce-base/xfce4-session+="policykit systemd nls"
  emerge --ask xfce-base/xfce4-session
  emerge --ask xfce-base/xfce4-panel
  nano -w /etc/env.d/99xdg
@@ -1714,7 +1910,8 @@ emerge --depclean
  emerge x11-terms/xfce4-terminal
  # install thunar
  >> xfce-base/thunar+="exif libnotify pcre udisks"
- >> x11-libs/libcanberra+="udev"
+ >> media-libs/libcanberra+="udev alsa"
+ >> media-libs/libexif+="nls"
  emerge --ask xfce-base/thunar
  # install xfdesktop
  >> xfce-base/xfdesktop+="libnotify"
@@ -1741,12 +1938,14 @@ emerge --depclean
 
 
 # emerge some themes
+>> dev-lang/ruby+="readline"
 emerge --ask x11-themes/greybird
 emerge --ask x11-themes/clearlooks-phenix 
 emerge --ask x11-themes/gnome-themes-standard 
 emerge --ask x11-themes/gtk-engines-aurora 
 emerge --ask x11-themes/light-themes 
 emerge --ask x11-themes/murrine-themes
+>> x11-themes/nimbus+="gtk"
 emerge --ask x11-themes/nimbus 
 >> dev-libs/libpcre+="pcre16"
 >> app-arch/libarchive+="bzip2"
@@ -1754,6 +1953,7 @@ emerge --ask x11-themes/nimbus
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 emerge --ask x11-themes/oxygen-molecule
+>> x11-themes/redhat-artwork+="audacious cursors icons"
 emerge --ask x11-themes/redhat-artwork
 emerge --ask x11-themes/shiki-colors
 emerge --ask x11-themes/tactile3 
@@ -1763,6 +1963,15 @@ emerge --ask x11-themes/xfwm4-themes
 >> Settings -> Appearance -> Style -> Greybird
                           -> Icons -> Oxygen
 >> Settings -> Window Manager -> Greybird
+# install mesa-progs so we can check existence
+# of 3d rendering
+>> x11-apps/mesa-progs+="egl"
+emerge --ask x11-apps/mesa-progs
+# check existence of 3d rendering
+glxinfo | grep rendering
+# should print "Yes"
+# check rendering performance
+glxgears
 # enable icu
 >> dev-db/sqlite+="icu"
 >> dev-libs/boost+="icu"
@@ -1783,7 +1992,9 @@ emerge --depclean
 # install taskmanager
 >> xfce-extra/xfce4-taskmanager+="gksu"
 >> gnome-base/gconf+="policykit"
->> app-admin/sudo+="pam"
+>> app-admin/sudo+="pam nls"
+>> x11-libs/libgksu+="nls"
+emerge --ask app-admin/sudo
 emerge --ask xfce-extra/xfce4-taskmanager 
 	# install SSH askpass
 	emerge ssh-askpass-fullscreen
@@ -1794,8 +2005,10 @@ emerge --ask xfce-extra/xfce4-taskmanager
 # install mount plugin
 emerge --ask xfce-extra/xfce4-mount-plugin
 # install calendar
+>> app-office/orage+="berkdb dbus libnotify"
 emerge --ask app-office/orage 
 # install text editor
+>> app-editors/mousepad+="dbus"
 emerge --ask app-editors/mousepad 
 # install archive support
 emerge --ask xfce-extra/thunar-archive-plugin
@@ -1806,40 +2019,48 @@ emerge --ask xfce-extra/thunar-volman
 >> Settings -> Removable Drives and Media -> Mount removeable drives when hot-plugged
                                           -> Mount removeable drives when inserted
 # install pulseaudio, alsa is required for Intel HD to work
->> media-sound/pulseaudio+="X alsa alsa-plugin dbus equalizer gdbm glib systemd"
->> media-plugins/alsa-plugins+="pulseaudio"
+### Canberra
+### To enable the gtk+3 sound effects add
+###                  canberra-gtk-module to the colon separated list of modules in the
+###                  GTK_MODULES environment variable.
+###
+>> sys-devel/gcc+="openmp"
+emerge --ask --deep --update --newuse @world
+emerge --depclean
+>> media-sound/pulseaudio+="X alsa alsa-plugin dbus gdbm glib systemd bluetooth"
+>> media-plugins/alsa-plugins+="pulseaudio speex"
 emerge --ask media-sound/pulseaudio
 >> media-libs/libcanberra+="pulseaudio alsa"
->> media-libs/libsndfile+="alsa"
+>> media-libs/libsndfile+="alsa sqlite"
+>> sci-libs/fftw+="openmp threads"
+>> media-libs/flac+="ogg"
+>> media-libs/speex+="ogg"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 # install ffmpeg
 >> media-video/ffmpeg+="X aac alsa amr bluray cdio fribidi gsm libass v4l mp3 openal opengl openssl pulseaudio sdl speex truetype twolame vaapi vdpau vorbis wavpack webp x264 x265 xvid zlib"
->> media-libs/libwebp+="gif tiff"
+>> media-libs/libwebp+="gif tiff opengl"
+>> media-libs/giflib+="X"
 >> media-libs/libsdl+="X alsa opengl pulseaudio"
 >> media-libs/openal+="alsa pulseaudio"
 emerge --ask media-video/ffmpeg
 >> media-plugins/alsa-plugins+="ffmpeg speex"
->> media-libs/libcanberra+="udev"
 >> app-misc/pax-utils+="caps"
 >> net-misc/iputils+="caps filecaps"
 >> sys-apps/util-linux+="caps"
->> app-arch/libarchive+="acl xattr"
->> app-arch/tar+="acl xattr"
->> net-misc/rsync+="acl"
->> sys-apps/shadow+="acl"
->> sys-fs/ntfs3g+="acl xattr"
->> app-arch/unzip+="unicode"
+>> app-arch/libarchive+="iconv xattr"
+>> net-misc/rsync+="iconv"
+>> app-arch/unzip+="natspec"
 >> sys-libs/slang+="readline"
->> media-libs/libwebp+="opengl"
->> app-editors/mousepad+="dbus"
->> app-office/orage+="dbus libnotify"
->> www-client/w3m+="X"
->> media-libs/giflib+="X"
->> net-misc/openssh+="X"
->> virtual/ffmpeg+="encode X gsm mp3 sdl speex truetype vaapi vdpau x264"
+>> app-crypt/gnupg+="nls"
+>> app-text/recode+="nls"
+>> dev-lang/yasm+="nls"
+>> app-arch/zip+="unicode"
+>> virtual/ffmpeg+="encode X gsm mp3 sdl speex truetype vaapi vdpau x264 threads"
 emerge --ask --deep --update --newuse @world
 emerge --ask --deep --update --changed-use @world
+emerge --ask app-arch/zip
+emerge --ask dev-lang/yasm
 emerge --depclean
     # CHOICE: If CUDA
 	>> media-libs/opencv+="cuda"
@@ -1856,6 +2077,7 @@ cp /boot/EFI/gentoo/grubx64.efi /boot/EFI/BOOT/bootx64.efi
 reboot
 # install gstreamer
 >> media-libs/gstreamer+="caps nls orc"
+>> media-libs/gst-plugins-base+="nls"
 emerge --ask media-libs/gstreamer
 >> media-plugins/gst-plugins-meta+="X a52 aac alsa cdda dts dv dvd ffmpeg flac lame libass libvisual mms mp3 mpeg ogg pulseaudio taglib v4l vaapi vcd vorbis wavpack x264"
 >> media-libs/libmpeg2+="X sdl"
@@ -1867,13 +2089,15 @@ emerge --ask media-libs/gstreamer
 >> media-plugins/libvisual-plugins+="alsa opengl"
 >> media-plugins/gst-plugins-vaapi+="X drm opengl"
 >> media-plugins/gst-plugins-v4l2+="udev"
+>> media-libs/libvisual+="nls"
+>> media-libs/libquicktime+="X aac alsa dv encode ffmpeg opengl jpeg png vorbis x264 lame"
 emerge --ask media-plugins/gst-plugins-meta
 # install volume deamon
 >> xfce-extra/xfce4-volumed-pulse+="libnotify"
 emerge --ask xfce-extra/xfce4-volumed-pulse
 # install xfce pulseaudio plugin
 >> xfce-extra/xfce4-pulseaudio-plugin+="keybinder libnotify"
-emerge xfce-extra/xfce4-pulseaudio-plugin
+emerge --ask xfce-extra/xfce4-pulseaudio-plugin
 # add volume to panel
 >> Right Click On Panel -> Add Items -> PulseAudio plugin
 >> Settings -> Session and Startup -> Splash -> Mice
@@ -1896,11 +2120,13 @@ emerge --ask --deep --update --newuse @world
 emerge --depclean
 >> sys-power/pm-utils+="alsa"
 >> xfce-extra/xfce4-power-manager+="networkmanager policykit systemd"
+>> media-sound/alsa-utils+="nls"
 emerge --ask xfce-extra/xfce4-power-manager 
 systemctl enable upower
 systemctl restart upower
 reboot
 >> Settings -> Power Manager -> Status notifications
+                             -> System -> Suspend -> when inactive for 30 Minutes
 # install fonts
 # other useflags already applied before: fontconfig fribidi
 # other useflags already applied before: truetype
@@ -1965,7 +2191,6 @@ emerge --ask media-video/mplayer
 >> media-libs/gmtk+="alsa pulseaudio"
 >> media-video/gnome-mplayer+="alsa pulseaudio libnotify"
 emerge --ask media-video/gnome-mplayer
->> media-libs/libquicktime+="X aac alsa dv ffmpeg opengl x264 jpeg png vorbis"
 >> media-sound/alsa-utils+="ncurses"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
@@ -1976,19 +2201,13 @@ emerge --depclean
 systemctl enable canberra-system-bootup.service
 systemctl enable canberra-system-shutdown.service
 systemctl enable canberra-system-shutdown-reboot.service
->> sys-apps/sed+="acl"
->> sys-devel/gettext+="acl"
-emerge --ask --deep --update --newuse @world
-emerge --depclean
->> media-plugins/alsa-plugins+="jack libsamplerate"
->> media-plugins/gst-plugins-meta+="oss jack"
->> media-plugins/libvisual-plugins+="jack mplayer"
->> media-sound/mpg123+="jack oss portaudio"
->> media-sound/pulseaudio+="jack"
->> media-video/ffmpeg+="jack theora oss opus"
->> media-video/mplayer+="jack theora oss"
->> media-libs/portaudio+="alsa jack oss"
->> media-sound/jack-audio-connection-kit+="alsa oss pam"
+>> media-plugins/alsa-plugins+="libsamplerate"
+>> media-plugins/libvisual-plugins+="mplayer"
+>> media-sound/mpg123+="portaudio"
+>> media-video/ffmpeg+="theora opus"
+>> media-video/mplayer+="theora"
+>> media-libs/portaudio+="alsa"
+>> media-sound/jack-audio-connection-kit+="alsa pam"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 >> media-sound/pavucontrol+="nls"
@@ -1998,8 +2217,17 @@ emerge --ask media-sound/pavucontrol
 >> media-sound/paprefs+="nls"
 >> media-sound/pulseaudio+="gnome"
 emerge --ask media-sound/paprefs
->> xfce-extra/xfce4-mixer+="alsa keybinder oss"
+>> xfce-extra/xfce4-mixer+="alsa keybinder"
 emerge --ask xfce-extra/xfce4-mixer
+# enable fontconfig full hinting for better font drawing
+cat <<EOF > /etc/fonts/local.conf
+<match target="font">
+  <edit mode="assign" name="hintstyle">
+    <const>hintfull</const>
+  </edit>
+</match>
+EOF
+
 ###
 ### to test audio, use "speaker-test -t wav -c 2"
 ###
@@ -2012,8 +2240,27 @@ emerge --ask xfce-extra/xfce4-mixer
 ###
 # configure gnome-mplayer
 reboot
+
+
+##### Fix brightness issue on nouveau
+# 1. Identify display
+xrandr
+# 2. Set screen brightness
+xrandr --output HDMI-1 --brightness 0.6
+xrandr --output HDMI-1 --gama 1:1:1
+# 3. Turn on VSYNC
+cat <<EOF > /etc/X11/xorg.conf.d/20-nouveau.conf
+Section "Device"
+  Identifier "nvidia card"
+  Driver "nouveau"
+  Option "GLXVBlank" "true"
+EndSection
+EOF
+
+
 >> Gnome MPlayer -> Edit -> Preferences -> Video Output -> x11
                                         -> Enable Video Hardware Support
+                                        -> Audio Output -> Pulse Audio
 # install tumbler
 >> sys-apps/systemd+="xkb"
 >> x11-libs/libxcb+="xkb"
@@ -2022,8 +2269,10 @@ emerge --ask --deep --update --newuse @world
 emerge --depclean
 reboot
 >> xfce-extra/tumbler+="ffmpeg gstreamer jpeg odf pdf raw"
->> app-text/poppler+="cairo"
+>> app-text/poppler+="cairo png tiff"
 >> media-libs/libopenraw+="gtk"
+>> media-video/ffmpegthumbnailer+="gtk jpeg png"
+>> media-libs/lcms+="jpeg tiff"
 emerge --ask xfce-extra/tumbler
 reboot
 # install cd burn utility
@@ -2034,8 +2283,9 @@ emerge --ask app-cdr/xfburn
 # install gpicview
 emerge --ask x11-misc/xdg-utils
 emerge --ask media-gfx/gpicview
+setfacl -Rm g:wheel:rwX,d:g:wheel:rwX /usr/share/
 # set gpicview as default
->> sudo gpicview
+gpicview
 >> Settings (icon) -> Make gpic the default image viewer
 reboot
 # install bind-tools like nslookup and dig
@@ -3876,6 +4126,9 @@ Help -> Install New Software -> All Available Sites -> Web, XML, JavaEE and OSGi
   -> m2e-wtp - Maven Integration For WTP
   -> JSF Tools
   -> JSF Tools - Web Page Editor
+Help -> Install New Software -> All Available Sites -> General Purpose Tools
+  -> Docker Tooling
+
 # install VAADIN plugins
 Helper -> Eclipse MarketPlace -> VAADIN plugin
                               -> Spring Tool Suite (STS)
