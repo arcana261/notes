@@ -1,0 +1,7 @@
+# -> Direction Configuration -> Rules
+
+Chain: INPUT
+Priority: 0
+Args:
+	-p tcp -m tcp --dport 22 --source 192.168.56/24 -j ACCEPT
+
