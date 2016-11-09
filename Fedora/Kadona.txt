@@ -1,0 +1,110 @@
+/usr/local/tomcat
+
+docker run -td --restart=no --name explorer.kadona.me -h explorer.kadona.me --net arcana.me -w /usr/local/tomcat tomcat
+docker exec -it explorer.kadona.me bash
+
+
+>>>>>>>>>>>>>>>>>>>>>> EXECUTE IN CONTAINER
+
+apt-get update
+apt-get install -y nano vim net-tools iputils-ping dnsutils wget unar
+pushd /usr/local/src
+wget https://github.com/Activiti/Activiti/releases/download/activiti-5.22.0/activiti-5.22.0.zip
+unar activiti-5.22.0.zip
+cp -f activiti-5.22.0/wars/activiti-explorer.war /usr/local/tomcat/webapps/
+cp -f activiti-5.22.0/wars/activiti-rest.war /usr/local/tomcat/webapps/
+popd
+sed -i -- 's/8080/80/g' conf/server.xml
+sed -i -- 's/8443/443/g' conf/server.xml
+exit
+
+
+>>>>>>>>>>>>>>>>>>>>>> END EXECUTE IN CONTAINER
+
+/opt/services/arcana.me/backup.sh
+docker exec -it arcana.me bash
+
+
+>>>>>>>>>>>>>>>>>>>>>> EXECUTE IN CONTAINER
+
+export subj="
+C=IR
+ST=TEHRAN
+O=DENA
+localityName=TEHRAN
+commonName=explorer.kadona.me
+organizationalUnitName=IT
+emailAddress=kharatizadeh@denaecommerce.com
+"
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/explorer.kadona.me.key -out /etc/nginx/ssl/explorer.kadona.me.crt -subj "$(echo -n "$subj" | tr "\n" "/")" -batch
+
+cat <<EOF > /etc/nginx/vhosts/explorer.kadona.me
+server {
+  listen 443 ssl;
+  server_name explorer.kadona.me;
+  ssl_verify_client off;
+  ssl_certificate /etc/nginx/ssl/explorer.kadona.me.crt;
+  ssl_certificate_key /etc/nginx/ssl/explorer.kadona.me.key;
+  resolver 127.0.0.11;
+
+  location = / {
+    return 301 \$scheme://explorer.kadona.me/activiti-explorer;
+  }
+
+  location / {
+    set \$target explorer.kadona.me;
+    proxy_pass http://\$target:80;
+
+    proxy_pass_header Set-Cookie;
+    proxy_pass_header P3P;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_cookie_domain explorer.kadona.me:80 explorer.kadona.me;
+  }
+}
+server {
+  listen 80;
+  server_name explorer.kadona.me;
+  return 301 https://\$host\$request_uri;
+}
+EOF
+
+exit
+
+
+>>>>>>>>>>>>>>>>>>>>>> END EXECUTE IN CONTAINER
+
+/opt/services/arcana.me/restart.sh
+
+>>>>>>>>>>>>>>>>>>>>>> DEFINE ZONE kadona.me and explorer.kadona.me
+
+mkdir -p /opt/services/explorer.kadona.me
+
+cat <<EOF > /opt/services/explorer.kadona.me/start.sh
+#!/bin/bash
+docker restart explorer.kadona.me
+EOF
+cat <<EOF > /opt/services/explorer.kadona.me/stop.sh
+#!/bin/bash
+docker stop explorer.kadona.me
+EOF
+cat <<EOF > /opt/services/explorer.kadona.me/restart.sh
+#!/bin/bash
+docker stop explorer.kadona.me
+docker restart explorer.kadona.me
+EOF
+chmod +x /opt/services/explorer.kadona.me/start.sh
+chmod +x /opt/services/explorer.kadona.me/stop.sh
+chmod +x /opt/services/explorer.kadona.me/restart.sh
+
+
+
+
+
+
+
+
+
+

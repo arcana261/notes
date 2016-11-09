@@ -1,0 +1,300 @@
+# install
+
+dnf -y update
+
+sudo tee /etc/yum.repos.d/docker.repo <<-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/fedora/$releasever/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+
+dnf -y install docker-engine
+systemctl enable docker
+groupadd docker
+usermod -aG docker kharatizadeh
+
+mkdir -p /etc/systemd/system/docker.service.d
+cat <<EOF > /etc/systemd/system/docker.service.d/overlay.conf 
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd --storage-driver=overlay
+EOF
+
+cat <<EOF > /etc/systemd/system/docker.service.d/http-proxy.conf 
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8083/"
+EOF
+
+cat <<EOF > /etc/modules-load.d/overlay.conf
+overlay
+EOF
+
+rm -rfv /var/lib/docker
+systemctl daemon-reload
+systemctl restart docker
+
+# build delegate
+rm -fv /usr/local/src/delegate9.9.13.tar.gz
+cp -f /home/kharatizadeh/Documents/notes/delegate9.9.13.tar.gz /usr/local/src/
+pushd /usr/local/src/
+rm -rfv delegate9.9.13
+rm -fv /usr/local/bin/delegated
+rm -fv /usr/bin/delegated
+tar xvf delegate9.9.13.tar.gz
+cd delegate9.9.13
+make -j9
+cp src/delegated /usr/local/bin/
+ln -sn /usr/local/bin/delegated /usr/bin/delegated
+popd
+
+
+# build system using docker
+# start ssh proxy in another terminal
+> while true; do ssh -D 0.0.0.0:8082 kharatizadeh@94.23.178.145; done
+# start delegated in another terminal
+> delegated -P8083 SERVER=http SOCKS=localhost:8082
+# create network
+docker network create -d bridge arcana.me
+# configure bind
+docker run -td --restart=always --name ns1.arcana.me -h ns1.arcana.me -e ROOT_PASSWORD=root --net arcana.me -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
+echo "127.0.0.1 ns1.arcana.me" >> /etc/hosts
+>> open https://ns1.arcana.me:10000 in browser
+>> login with root/root
+>> open Servers -> BIND DNS Server
+-> Setup RDNC
+-> Forwarding and Transfers -> 4.2.2.4
+                            -> 8.8.8.8
+-> Create Master Zone -> Domain name/Network -> arcana.me.
+                      -> Email Address -> root@arcana.me
+                      -> Addresses -> Name -> @
+                                   -> Address -> 127.0.0.1
+                                   -> Update reverse? -> Yes
+                      -> Addresses -> Name -> ns1
+                                   -> Address -> 127.0.0.1
+                                   -> Update reverse? -> No
+                      -> Addresses -> Name -> www
+                                   -> Address -> 127.0.0.1
+                                   -> Update reverse? -> No
+                      -> Addresses -> Name -> vpn
+                                   -> Address -> 94.23.178.145
+                                   -> Update reverse? -> Yes
+                      -> Apply Zone
+# pull ubuntu
+docker pull ubuntu
+# exit SSH proxy in another terminal
+> exit
+> Ctrl + C
+# kill delegated
+killall -9 delegated
+# configure proxy containers
+docker run -td --restart=no --name socks.arcana.me -h socks.arcana.me --net arcana.me -w /root -p 8082:8082 ubuntu
+docker exec -it socks.arcana.me bash
+
+>>>>>>>>>> SET IP ADDRESS OF BIND
+nmtui
+> 127.0.0.1
+
+>>>>>>>>>>>>>>>>>>>>>> EXECUTE IN CONTAINER
+
+apt-get update
+apt-get install -y ssh
+rm -rfv ~/.ssh
+ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
+ssh kharatizadeh@94.23.178.145 mkdir -p .ssh
+ssh kharatizadeh@94.23.178.145 'touch .ssh/authorized_keys'
+ssh kharatizadeh@94.23.178.145 "chmod 700 .ssh; chmod 640 .ssh/authorized_keys"
+cat ~/.ssh/id_rsa.pub | ssh kharatizadeh@94.23.178.145 'cat >> .ssh/authorized_keys'
+
+cat <<EOF > socks.sh
+#!/bin/bash
+while true; do ssh -D 0.0.0.0:8082 kharatizadeh@94.23.178.145; done
+EOF
+
+
+chmod +x socks.sh 
+exit
+
+
+>>>>>>>>>>>>>>>>>>>>>> END EXECUTE IN CONTAINER
+
+
+>>> Add socks.arcana.me to BIND
+# configure http proxy
+docker run -td --restart=no --name proxy.arcana.me -h proxy.arcana.me --net arcana.me -w /root -p 8083:8083 ubuntu
+docker cp /usr/local/bin/delegated proxy.arcana.me:/usr/bin
+docker exec -it proxy.arcana.me bash
+
+
+>>>>>>>>>>>>>>>>>>>>>> EXECUTE IN CONTAINER
+
+delegated --help
+cat <<EOF > http.sh
+  #!/bin/bash
+  delegated -P8083 SERVER=http SOCKS=socks.arcana.me:8082
+EOF
+chmod +x http.sh
+exit
+
+
+>>>>>>>>>>>>>>>>>>>>>> END EXECUTE IN CONTAINER
+
+mkdir -p /opt/services/proxy.arcana.me
+cat <<EOF > /opt/services/proxy.arcana.me/stop.sh
+#!/bin/bash
+docker stop socks.arcana.me proxy.arcana.me
+EOF
+cat <<EOF > /opt/services/proxy.arcana.me/start.sh
+#!/bin/bash
+docker restart socks.arcana.me
+docker restart proxy.arcana.me
+docker exec -d socks.arcana.me bash socks.sh
+docker exec -d proxy.arcana.me bash http.sh
+EOF
+cat <<EOF > /opt/services/proxy.arcana.me/restart.sh
+#!/bin/bash
+docker stop socks.arcana.me proxy.arcana.me
+docker restart socks.arcana.me
+docker restart proxy.arcana.me
+docker exec -d socks.arcana.me bash socks.sh
+docker exec -d proxy.arcana.me bash http.sh
+EOF
+chmod +x /opt/services/proxy.arcana.me/start.sh
+chmod +x /opt/services/proxy.arcana.me/stop.sh
+chmod +x /opt/services/proxy.arcana.me/restart.sh
+/opt/services/proxy.arcana.me/restart.sh
+
+
+# Configure Nginx Web Server
+docker run -td --restart=no --name arcana.me -h arcana.me --net arcana.me -w /etc/nginx -p 80:80 -p 443:443 nginx
+docker exec -it arcana.me bash
+
+
+>>>>>>>>>>>>>>>>>>>>>> EXECUTE IN CONTAINER
+
+apt-get update
+apt-get install -y nano vim net-tools iputils-ping dnsutils
+
+
+> vim nginx.conf
+> >> include /etc/nginx/vhosts/*;
+
+mkdir -p /etc/nginx/vhosts
+mkdir -p /etc/nginx/ssl
+export subj="
+C=IR
+ST=TEHRAN
+O=DENA
+localityName=TEHRAN
+commonName=ns1.arcana.me
+organizationalUnitName=IT
+emailAddress=kharatizadeh@denaecommerce.com
+"
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/ns1.arcana.me.key -out /etc/nginx/ssl/ns1.arcana.me.crt -subj "$(echo -n "$subj" | tr "\n" "/")" -batch
+
+cat <<EOF > /etc/nginx/vhosts/ns1.arcana.me
+server {
+  listen 443 ssl;
+  server_name ns1.arcana.me;
+  ssl_verify_client off;
+  ssl_certificate /etc/nginx/ssl/ns1.arcana.me.crt;
+  ssl_certificate_key /etc/nginx/ssl/ns1.arcana.me.key;
+  location / {
+    proxy_pass https://ns1.arcana.me:10000/;
+    proxy_pass_header Set-Cookie;
+    proxy_pass_header P3P;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_cookie_domain ns1.arcana.me:10000 ns1.arcana.me;
+  }
+}
+server {
+  listen 80;
+  server_name ns1.arcana.me;
+  return 301 https://\$host\$request_uri;
+}
+EOF
+
+exit
+
+
+>>>>>>>>>>>>>>>>>>>>>> END EXECUTE IN CONTAINER
+
+mkdir -p /opt/services/arcana.me
+cat <<EOF > /opt/services/arcana.me/backup.sh
+#!/bin/bash
+docker stop arcana.me
+docker commit arcana.me arcana.me-snapshot:`date +%F-%H-%M`
+docker tag arcana.me-snapshot:`date +%F-%H-%M` arcana.me-snapshot:latest
+docker restart arcana.me
+EOF
+cat <<EOF > /opt/services/arcana.me/restore.sh
+#!/bin/bash
+docker stop arcana.me && docker rm -v arcana.me
+docker run -td --restart=no --name arcana.me -h arcana.me --net arcana.me -w /etc/nginx -p 80:80 -p 443:443 arcana.me-snapshot:latest
+EOF
+cat <<EOF > /opt/services/arcana.me/start.sh
+#!/bin/bash
+docker restart arcana.me
+EOF
+cat <<EOF > /opt/services/arcana.me/stop.sh
+#!/bin/bash
+docker stop arcana.me
+EOF
+cat <<EOF > /opt/services/arcana.me/restart.sh
+#!/bin/bash
+docker stop arcana.me
+docker restart arcana.me
+EOF
+chmod +x /opt/services/arcana.me/backup.sh
+chmod +x /opt/services/arcana.me/restore.sh
+chmod +x /opt/services/arcana.me/start.sh
+chmod +x /opt/services/arcana.me/stop.sh
+chmod +x /opt/services/arcana.me/restart.sh
+
+/opt/services/arcana.me/backup.sh
+docker exec -it ns1.arcana.me bash
+
+>>>>>>>>>>>>>>>>>>>>>> EXECUTE IN CONTAINER
+
+sed -i -- 's/referers_none=1/referers_none=0/g' /etc/webmin/config
+echo "referers=ns1.arcana.me" >> /etc/webmin/config
+exit
+
+
+>>>>>>>>>>>>>>>>>>>>>> END EXECUTE IN CONTAINER
+
+docker restart ns1.arcana.me
+/opt/services/arcana.me/restart.sh
+
+
+
+# uninstall
+systemctl stop docker.service
+systemctl disable docker.service
+dnf -y install yum-plugin-remove-with-leaves
+dnf -y remove docker-engine
+rm -rfv /var/lib/docker
+rm -fv /etc/yum.repos.d/docker.repo
+rm -rfv /etc/systemd/system/docker.service.d
+rm -rfv /etc/docker
+rm -rfv /var/run/docker
+rm -fv /etc/sysconfig/docker
+rm -fv /etc/systemd/system/multi-user.target.wants/docker.service
+rm -fv /etc/modules-load.d/overlay.conf
+rm -rfv /opt/services
+
+cat <<EOF > /etc/hosts
+127.0.0.1               localhost.localdomain localhost
+::1             localhost6.localdomain6 localhost6
+127.0.0.1       kharatizadeh-pc
+EOF
+
+systemctl daemon-reload
+reboot
+
+

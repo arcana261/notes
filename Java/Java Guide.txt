@@ -853,6 +853,11 @@ rm -rf src/test/java/jar/
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <mainClass>me.arcana.Main</mainClass>
+
+    <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
+    <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+    <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+
   </properties>
   <build>
   	<sourceDirectory>src/main/java</sourceDirectory>
@@ -860,6 +865,8 @@ rm -rf src/test/java/jar/
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven-compiler-plugin.version}</version>
+
   			<configuration>
   				<source>${java.version}</source>
   				<target>${java.version}</target>
@@ -874,6 +881,8 @@ rm -rf src/test/java/jar/
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-jar-plugin</artifactId>
+                        <version>${maven-jar-plugin.version}</version>
+
   			<configuration>
   				<archive>
   					<manifest>
@@ -887,6 +896,8 @@ rm -rf src/test/java/jar/
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-dependency-plugin</artifactId>
+                        <version>${maven-dependency-plugin.version}</version>
+
   			<executions>
   				<execution>
   					<phase>install</phase>
@@ -952,10 +963,16 @@ mkdir -p src/main/resources
 ####################################
 ## set content encoding to UTF-8
 ####################################
+<properties>
+    <maven-resources-plugin.version>3.0.1</maven-resources-plugin.version>
+</properties>
+
 <build>
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-resources-plugin</artifactId>
+                        <version>${maven-resources-plugin.version}</version>
+
   			<configuration>
   				<encoding>UTF-8</encoding>
   			</configuration>
