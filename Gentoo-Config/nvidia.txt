@@ -17,5 +17,10 @@ eselect opencl set nvidia
 mkdir -p ~/.config/xfce4
 echo "Xft.dpi: 96" >> ~/.config/xfce4/Xft.xrd
 
+# add nvidia to videocards,
+## note: keep "nouveau"
+nano -w /etc/portage/make.conf
+> VIDEO_CARDS="nvidia nouveau intel virtualbox fbdev v4l vesa vga"
+
 # set video output to vdpau for better decoding performance
 >> Gnome MPlayer -> Edit -> Preferences -> Video Output -> vdpau
