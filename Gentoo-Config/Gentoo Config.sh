@@ -1586,6 +1586,9 @@ NOTE: Virtualbox does not support PCI MMCONFIG
 # General Setup
 #  * Control Group Support
 #   * HugeTLB Resource Controller for Control Groups
+>>> Disable compatibility flag
+# Processort type and features
+#  [] Disable the 32-bit vDSO (needed for glibc 2.3.3)
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 # install firmwares, specially using wifi
 emerge --ask sys-kernel/linux-firmware
@@ -2337,15 +2340,8 @@ layman -L
 layman -a y2kbadbug
 # install mugshot
 echo "x11-misc/mugshot ~amd64" >> /etc/portage/package.accept_keywords
->> x11-misc/mugshot+="accountsservice pidgin webcam"
->> net-im/pidgin+="dbus gadu idn networkmanager tk meanwhile mxit prediction sasl silc spell"
->> dev-lang/tk+="truetype xscreensaver"
->> net-libs/gupnp+="networkmanager"
->> dev-libs/cyrus-sasl+="pam"
->> net-mail/mailbase+="pam"
+>> x11-misc/mugshot+="accountsservice -pidgin -webcam"
 emerge --ask x11-misc/mugshot
-chown root:mail /var/spool/mail/
-chmod 03775 /var/spool/mail/
 # configure mugshot
 >> whisker -> arcana -> profile picture
                      -> email address
@@ -2375,6 +2371,7 @@ emerge --ask gnome-extra/nm-applet
 reboot
 # install vim
 >> app-editors/vim+="X acl cscope gpm vim-pager"
+>> app-editors/vim-core+="acl nls"
 emerge --ask app-editors/vim
 # change default editor to vi
 eselect editor list
@@ -2385,6 +2382,7 @@ eselect vi list
 env-update && source /etc/profile
 # install gedit
 >> app-editors/gedit+="spell"
+>> dev-libs/libpeas+="jit"
 emerge --ask app-editors/gedit
 xdg-mime default gedit.desktop text/plain
 >> gedit -> Preferences -> Font & Colors -> Cobalt
@@ -2393,6 +2391,7 @@ xdg-mime default gedit.desktop text/plain
  >> sys-libs/ntdb+="python"
  >> sys-libs/tevent+="python"
  >> sys-libs/tdb+="python"
+ >> net-fs/cifs-utils+="acl creds"
  emerge --ask net-fs/samba
  >> gnoma-base/gvfs+="samba"
  >> media-video/ffmpeg+="samba librtmp jpeg2k lzma ssh quvi"
@@ -2442,6 +2441,7 @@ xdg-mime default gedit.desktop text/plain
  >> app-text/poppler+="cxx tiff"
  >> net-print/cups-filters+="dbus jpeg png tiff"
  >> app-text/djvu+="jpeg tiff"
+ >> media-libs/jbig2dec+="png"
  emerge --ask net-print/cups
  >> app-text/ghostscript-gpl+="cups"
  >> dev-qt/qtgui+="dbus evdev jpeg mng nas tiff cups"
@@ -2476,16 +2476,18 @@ xdg-mime default gedit.desktop text/plain
  >> SANE_BACKENDS="hp"
  >> media-gfx/sane-backends+="systemd usb v4l"
  emerge --ask media-gfx/sane-backends 
+ gpasswd -a arcana scanner
+ gpasswd -a root scanner
  >> x11-libs/gtk+ += "colord"
  >> x11-misc/colord+="scanner systemd"
  emerge --ask --deep --update --newuse @world
  emerge --depclean
  # install hplip
- >> net-print/hplip+="X fax hpcups hpijs libnotify policykit scanner snmp"
+ >> net-print/hplip+="X fax hpcups hpijs libnotify policykit scanner snmp qt4"
  >> dev-python/pillow+="tiff jpeg truetype"
  >> net-analyzer/net-snmp+="X"
- >> media-gfx/xsane+="jpeg png tiff"
- emerge --ask ne-print/hplip
+ >> media-gfx/xsane+="jpeg png tiff lcms nls"
+ emerge --ask net-print/hplip
  # install printer
  hp-setup
    # open cups
@@ -2502,46 +2504,41 @@ xdg-mime default gedit.desktop text/plain
  ### replaced with %20
  ###
  # install gtklp
+ >> net-print/gtklp+="nls"
  emerge --ask net-print/gtklp
 # enable some more use flags
->> app-text/poppler+="png"
 >> media-libs/freetype+="png harfbuzz"
->> media-libs/jbig2dec+="png"
->> media-video/ffmpegthumbnailer+="gtk jpeg png"
 >> sys-libs/slang+="png"
->> app-text/djvu+="jpeg tiff"
->> dev-python/pillow+="jpeg2k"
->> media-libs/lcms+="jpeg tiff"
 >> media-libs/libv4l+="jpeg"
 >> media-libs/netpbm+="jpeg2k"
 >> media-libs/tiff+="jpeg"
+>> virtual/ffmpeg+="jpeg2k opus theora"
 >> x11-libs/gdk-pixbuf+="jpeg2k"
->> x11-misc/xscreensaver+="jpeg pam xinerama"
->> dev-qt/qtgui+="xinerama"
->> media-libs/libsdl+="xinerama"
->> media-video/mplayer+="xinerama"
->> x11-libs/gtk+ += "xinerama"
->> app-misc/screen+="pam"
->> sys-process/psmisc+="X"
->> sys-apps/groff+="X"
->> www-client/w3m+="X"
->> dev-libs/libunique+="dbus"
+>> dev-python/pillow+="jpeg2k lcms"
+>> media-libs/libmng+="lcms"
+>> app-text/libgxps+="lcms"
 >> media-libs/cogl+="gstreamer"
 >> media-libs/libcanberra+="gstreamer"
->> dev-qt/qtmultimedia+="alsa"
 >> net-nds/openldap+="icu"
->> app-editors/vim-core+="acl"
->> net-fs/cifs-utils+="caps"
+>> dev-qt/qtcore+="icu"
+>> dev-vcs/git+="nls"
+>> dev-vcs/subversion+="nls"
+>> net-print/gutenprint+="nls gtk"
+>> app-editors/vim+="nls"
+>> media-video/mplayer+="unicode xinerama xvid x264 vorbis libmpeg2"
+>> net-wireless/bluez+="cups"
 >> net-libs/libproxy+="networkmanager"
+>> dev-libs/libunique+="dbus"
+>> dev-qt/qtgui+="xinerama"
+>> media-libs/libsdl+="xinerama"
+>> x11-libs/gtk+ +="xinerama"
+>> x11-misc/xscreensaver+="xinerama"
+>> x11-terms/xterm+="xinerama"
+>> dev-qt/qtmultimedia+="alsa"
 >> media-libs/jasper+="jpeg opengl"
-emerge --ask --deep --update --newuse @world
-emerge --ask --deep --update --changed-use @world
-emerge --depclean
->> virtual/ffmpeg+="opus theora jpeg2k"
-emerge --ask --deep --update --newuse @world
-emerge --depclean
 >> sys-libs/zlib+="minizip"
 emerge --ask --deep --update --newuse @world
+emerge --ask --deep --update --changed-use @world
 emerge --depclean
 >> dev-libs/libdbusmenu+="gtk3"
 emerge --ask dev-libs/libdbusmenu
@@ -2582,36 +2579,39 @@ gpasswd -a root plugdev
  >> media-fonts/croscorefonts+="X"
  emerge --ask --deep --update --newuse @world
  emerge --depclean
- echo "dev-java/icedtea ~amd64" >> /etc/portage/package.accept_keywords
+ emerge --ask dev-libs/libx86emu
+ emerge --ask @preserved-rebuild
+ >> dev-java/icedtea-web+="javascript nsplugin tagsoup"
+ >> dev-java/icedtea-bin+="alsa cups gtk webstart nsplugin nss pulseaudio"
  emerge --ask dev-java/icedtea-bin
  >> dev-java/icedtea+="alsa cups gtk infinality nsplugin nss pulseaudio source sunec webstart"
- >> dev-java/icedtea-web+="javascript nsplugin tagsoup"
+ >> dev-libs/elfutils+="nls"
+ echo "dev-java/icedtea ~amd64" >> /etc/portage/package.accept_keywords
  emerge --ask dev-java/icedtea
  emerge -C dev-java/icedtea-bin
-
+ # select active java VM
+  eselect java-vm list
+ # eselect java-vm set system <num>
+  >> select latest icedtea version
+ # test java installation
+ java -version
 # Install VLC Media Player
- >> media-video/vlc+="X a52 alsa bidi bluray cdda cddb dbus dts dvd faad flac fontconfig jack jpeg libass libnotify libtar libtiger modplug mp3 mpeg mtp musepack ogg opengl opus png postproc projectm pulseaudio -qt4 qt5 samba sdl sdl-image sftp skins speex svg taglib theora tremor truetype twolame udev v4l vaapi vcdx vdpau vorbis vpx wma-fixed x264 x265 xml xv matroska kate"
+ >> media-video/vlc+="X a52 alsa bidi bluray cdda cddb dbus dts dvd faad flac fontconfig jpeg libass libnotify libtar libtiger modplug mp3 mpeg mtp musepack ogg opengl opus png postproc projectm pulseaudio -qt4 qt5 samba sdl sdl-image sftp skins speex svg taglib theora tremor truetype twolame udev v4l vaapi vcdx vdpau vorbis vpx wma-fixed x264 x265 xml xv matroska kate"
  media-libs/sdl-image+="gif jpeg png tiff"
  dev-libs/libtar+="zlib"
  emerge --ask media-video/vlc
  >> VLC -> Tools -> Preferences -> Video -> Output -> X11 video output (XCB)
+                                                   -> VDPAU (Nvidia only)
+                                -> Audio -> Output Module -> Pulse Audio
 # Install Evolution Data Server
- >> gnome-extra/evolution-data-server+="gnome-online-accounts gtk weather ldap"
+ >> gnome-extra/evolution-data-server+="gnome-online-accounts gtk weather ldap google"
  >> dev-lang/ruby+="readline ncurses ssl"
  >> net-misc/modemmanager+="policykit"
  >> net-im/telepathy-mission-control+="networkmanager"
  >> net-libs/webkit-gtk+="gnome-keyring spell nsplugin"
  >> app-crypt/libsecret+="crypt"
- >> dev-libs/libgdata+="gnome-online-accounts"
+ >> dev-libs/libgdata+="gnome-online-accounts crypt"
  emerge --ask gnome-extra/evolution-data-server
-# Install PostgreSQL
- >> dev-db/postgresql+="pam nls readline ssl threads server"
- emerge --ask dev-db/postgresql
- emerge --config dev-db/postgresql:9.5
- systemctl enable postgresql-9.5.service
- systemctl restart postgresql-9.5.service
- # test postgres
- sudo -u postgres psql -d template1
 # enable some services
  systemctl enable pwcheck.service
  systemctl enable samba.service
@@ -2630,31 +2630,27 @@ gpasswd -a root plugdev
  systemctl restart snmptrapd.service
  systemctl restart udisks2.service
 # upgrade some packages
- >> net-nds/openldap+="crypt sasl slp ssl"
- >> virtual/ffmpeg+="threads"
- >> net-misc/curl+="threads"
- >> net-libs/libgadu+="threads" 
- >> sci-libs/fftw+="threads"
- >> media-libs/libvisual+="threads"
- >> media-gfx/sane-backends+="threads"
+ >> dev-libs/boehm-pc+="threads"
  >> dev-libs/elfutils+="threads"
- >> dev-libs/boehm-gc+="threads"
- >> dev-lang/tk+="threads"
- >> dev-lang/tcl+="threads"
+ >> media-gfx/sane-backends+="threads"
+ >> media-libs/libvisual+="threads"
+ >> net-misc/curl+="threads"
+ >> net-mail/mailbase+="nls"
+ >> dev-qt/qtcore+="systemd"
  emerge --ask --deep --update --newuse @world
  emerge --depclean
-# select active java VM
- eselect java-vm list
+ # select active java VM
+  eselect java-vm list
  # eselect java-vm set system <num>
- >> select latest icedtea version
+  >> select latest icedtea version
+ # test java installation
 # install libreoffice
- >> app-office/libreoffice+="-branding cups dbus eds google gstreamer gtk java libreoffice_extensions_nlpsolver libreoffice_extensions_wiki-publisher odk postgres quickstarter vlc gnome"
- >> dev-db/postgresql+="kerberos"
- emerge --ask --deep --update --newuse @world
- emerge --depclean
+ >> app-office/libreoffice+="-branding cups dbus eds google gstreamer gtk java libreoffice_extensions_nlpsolver libreoffice_extensions_wiki-publisher odk quickstarter vlc gnome"
  >> media-fonts/libertine+="X"
  >> net-libs/neon+="nls libproxy ssl zlib"
- >> dev-libs/redland+="postgres sqlite"
+ >> dev-libs/redland+="sqlite odbc"
+ >> media-libs/raptor+="unicode"
+ >> dev-db/unixODBC+="unicode"
  emerge --ask app-office/libreoffice
  # add persian language
  LibreOffice -> Tools -> Options -> Language Settings -> Languages -> * Complex Text Layout (CTL) -> Persian
@@ -2672,9 +2668,9 @@ gpasswd -a root plugdev
  emerge --ask app-arch/unace
  emerge --ask app-arch/arj
  emerge --ask app-arch/cpio
- >> app-arch/dpkg+="bzip2 zlib"
+ >> app-arch/dpkg+="bzip2 zlib nls"
  emerge --ask app-arch/dpkg
- >> app-cdr/cdrtools+="acl caps"
+ >> app-cdr/cdrtools+="acl caps nls unicode"
  emerge --ask app-cdr/cdrtools
  emerge --ask app-arch/zip
  emerge --ask app-arch/unzip
@@ -2682,7 +2678,7 @@ gpasswd -a root plugdev
  emerge --ask app-arch/lzop
  emerge --ask app-arch/unrar
  >> sys-libs/db+="java"
- >> app-arch/rpm+="acl caps"
+ >> app-arch/rpm+="acl caps nls"
  emerge --ask app-arch/rpm
  emerge --ask app-arch/zoo
 # install more fonts
@@ -2694,33 +2690,42 @@ gpasswd -a root plugdev
  eselect fontconfig list
  eselect fontconfig enable <num>
  > 63-source-pro.conf
- # IF TRASH DOES NOT WORK: enable trash
- # CHECK VIA "gvfs-trash <somefile>"
- # AND "gvfs-ls trash://"
-  mkdir -p /home/.Trash
-  chown root:wheel /home/.Trash
-  chmod o=rw,g=rw /home/.Trash
-  chmod g+s /home/.Trash
-  setfacl -Rm g::rwX,d:g::rwX,o:rwX,d:o:rwX /home/.Trash
-  ln -s /home/.Trash /usr/share/Trash
  # upgrade gvfs
  >> gnome-base/gvfs+="bluray gnome-online-accounts google gphoto2 gtk nfs"
  >> dev-libs/libgdata+="crypt"
+ >> media-libs/libgphoto2+="exif gd jpeg nls"
+ >> media-libs/gd+="jpeg fontconfig png tiff truetype webp xpm zlib"
  emerge --ask --deep --update --newuse @world
  emerge --depclean
  # install strace utility
  >> dev-util/strace+="aio"
  emerge --ask dev-util/strace
+ gpasswd -a arcana disk
+ # IF TRASH DOES NOT WORK: enable trash
+ # CHECK VIA "gvfs-trash <somefile>"
+ # AND "gvfs-ls trash://"
+ # 
+ # Debug trash using
+ # strace gvfs-trash /home/arcana/Documents/test.txt 2>&1 | grep Trash
+  cat <<EOF > /etc/polkit-1/rules.d/10-admin.rules
+polkit.addAdminRule(function (action, subject) {
+  return ["unix-group:wheel"];
+});
+EOF
+
+  mkdir -p /home/arcana/.local/share/Trash/
+  mkdir -p /home/.Trash
+  chown root:wheel /home/.Trash
+  chmod o=rw,g=rw /home/.Trash
+  chmod g+s /home/.Trash
+  setfacl -Rm g::rwX,d:g::rwX,o:rwX,d:o:rwX /home/.Trash
+  ln -snf /home/.Trash /usr/share/Trash
  # download persian fonts from yasdl or p30download. etc.
  # extract downloaded RAR file
  mkdir -p ~/.fonts
  cp -r ~/Downloads/..../* ~/.fonts
 # install transmission bit torrent client
- >> dev-qt/qtnetwork+="libproxy networkmanager ssl"
- >> dev-qt/linguist-tools+="qml"
- >> dev-qt/qtdeclarative+="localstorage xml"
- >> net-p2p/transmission+="qt5 systemd"
- >> dev-qt/qtsql+="postgres"
+ >> net-p2p/transmission+="gtk systemd"
  emerge --ask net-p2p/transmission
  systemctl enable transmission-daemon.service
  systemctl restart transmission-daemon.service
@@ -2738,6 +2743,8 @@ gpasswd -a root plugdev
  >> media-sound/sox+="alsa amr ao encode flac id3tag mad ogg opus png pulseaudio twolame wavpack"
  >> app-accessibility/espeak+="pulseaudio"
  >> app-accessibility/speech-dispatcher+="ao alsa pulseaudio"
+ >> dev-libs/re2+="icu"
+ >> media-libs/libvpx+="svc"
  emerge --ask www-client/chromium
  >>>> right click on firefox icon in xfce bottom panel
  >>>>, click on properties, add chromium
@@ -2773,7 +2780,7 @@ emerge --ask media-fonts/bitstream-cyberbit
 emerge --ask media-fonts/droid
 >> media-fonts/ipamonafont+="X"
 emerge --ask media-fonts/ipamonafont
->> media-fonts/ja-ipafonts
+>> media-fonts/ja-ipafonts+="X"
 emerge --ask media-fonts/ja-ipafonts
 >> media-fonts/takao-fonts+="X"
 emerge --ask media-fonts/takao-fonts
@@ -2794,7 +2801,7 @@ eselect fontconfig enable <num>
 # enable chrome as default
  -> Settings -> Preferred Applications -> Interner -> Web Browser -> Chromium
 # install avahi
->> net-dns/avahi+="dbus gtk utils"
+>> net-dns/avahi+="dbus gtk utils nls"
 emerge --ask net-dns/avahi
 systemctl enable avahi-daemon.service
 systemctl enable avahi-dnsconfd.service
@@ -2814,6 +2821,7 @@ emerge --depclean
 emerge --ask www-client/w3m
 # install banshee
 >> media-sound/banshee+="aac bpm cdda daap encode mtp udev youtube karma"
+>> media-plugins/gst-plugins-meta+="vpx xv xvid dvb http modplug"
 >> media-fonts/canterell+="X"
 >> gnome-base/gnome-vfs+="acl samba ssl"
 >> gnome-base/gnome-settings-daemon+="networkmanager policykit"
@@ -2822,9 +2830,10 @@ emerge --ask dev-dotnet/gdk-sharp
 emerge --ask dev-dotnet/gnome-sharp
 emerge --ask media-sound/banshee
 emerge --ask dev-dotnet/glib-sharp
-emerge --ask dev-dotnet/gtk-sharp
 emerge --ask dev-dotnet/pango-sharp
->> media-plugins/gst-plugins-meta+="http modplug xvid"
+emerge --ask dev-dotnet/gdk-sharp
+emerge --ask dev-dotnet/gtk-sharp
+emerge --ask dev-dotnet/gnome-sharp
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 emerge --deselect dev-lang/mono
@@ -2833,6 +2842,7 @@ emerge --depclean
 Banshee -> Edit -> Preferences -> Extensions -> * Youtube
                                              -> * Library watcher
                                -> Source Specific -> Music -> * Copy files to media folder when  importing
+                                                              * Update file_ and folder names
                                                   -> Videos -> * Copy files to media folder when importing
                                -> General -> * Sync metadata between library and files
                                           -> * Sync ratings between library and files
@@ -2841,6 +2851,9 @@ Banshee -> Edit -> Preferences -> Extensions -> * Youtube
                 -> * Show Cover Art
 # install disk utility
 >> sys-apps/gnome-disk-utility+="fat systemd"
+>> dev-libs/libpwquality+="pam"
+>> dev-libs/appstream-glib+="nls"
+>> sys-libs/cracklib+="nls"
 emerge --ask sys-apps/gnome-disk-utility
 # install gdm
 >> gnome-base/gdm+="audit accessibility xinerama"
@@ -2851,7 +2864,7 @@ emerge --ask sys-apps/gnome-disk-utility
 >> media-libs/clutter-gst+="X udev"
 >> dev-libs/liblouis+="python"
 >> media-libs/mesa+="gles2"
->> app-accessibility/brltty+="python X gpm iconv icu java ncurses usb"
+>> app-accessibility/brltty+="nls python X gpm iconv icu java ncurses usb"
 >> media-libs/clutter+="egl"
 >> media-libs/cogl+="gles2"
 >> app-accessibility/speech-dispatcher+="python"
@@ -2868,6 +2881,7 @@ emerge --ask sys-apps/gnome-disk-utility
 >> gnome-base/gnome-session+="systemd"
 >> dev-libs/gmime+="mono"
 >> media-libs/clutter+="gtk"
+>> gnome-base/gnome-shell+="nls"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 emerge --ask gnome-base/gdm
@@ -2875,6 +2889,7 @@ emerge --ask gnome-base/gdm
  layman -a sunrise
  >> dev-libs/libotf+="X"
  >> app-i18n/ibus-m17n+="nls gtk"
+ >> app-i18n/ibus-table+="nls"
  emerge --ask app-i18n/ibus-m17n
  emerge --ask app-i18n/ibus-qt
  emerge --ask app-i18n/ibus-table
@@ -2904,6 +2919,9 @@ systemctl enable auditd.service
 systemctl enable brltty.service
 systemctl enable ModemManager.service
 emerge --ask media-gfx/argyllcms
+# enable ACPI daemon for Nvidia
+systemctl enable acpid.service
+systemctl enable acpid.socket
 # reboot system
 reboot
 # install imagemagick
@@ -2914,7 +2932,7 @@ reboot
 >> media-gfx/graphviz+="cairo nls X gdk-pixbuf gtk java pdf postscript qt4 svg"
 emerge --ask media-gfx/imagemagick
 # install inkscape
->> media-gfx/inkscape+="cdr dbus dia exif imagemagick inkjar jpeg lcms nls postscript spell visio wpg"
+>> media-gfx/inkscape+="cdr dbus dia exif imagemagick inkjar jpeg lcms nls postscript spell visio wpg openmp"
 >> media-gfx/imagemagick+="cxx"
 emerge --ask media-gfx/inkscape
 # configure default proxy server in firefox
@@ -2952,7 +2970,6 @@ emerge --ask media-gfx/inkscape
 >> app-arch/zip+="bzip2"
 >> app-arch/unzip+="bzip2"
 >> app-crypt/gnupg+="bzip2"
->> dev-db/postgresql+="zlib xml uuid"
 >> dev-libs/libpcre+="zlib"
 >> dev-libs/openssl+="zlib"
 >> media-libs/lcms+="zlib"
@@ -2978,7 +2995,7 @@ emerge --ask media-gfx/inkscape
 >> media-video/mjpegtools+="gtk"
 >> net-libs/gssdp+="gtk"
 >> net-print/gutenprint+="gtk"
->> net-ndns/openldap+="gtk"
+>> net-nds/openldap+="gtk"
 >> sys-auth/polkit+="gtk"
 >> x11-misc/xdg-user-dirs+="gtk"
 >> x11-themes/nimbus+="gtk"
@@ -3032,6 +3049,12 @@ emerge --ask --deep --update --newuse @world
 emerge --depclean
 >> dev-util/gtk-doc+="doc highlight vim"
 emerge --ask dev-util/gtk-doc
+# ensure system is fully updates
+emerge --ask --deep --update --newuse @world
+emerge --ask --deep --update --changed-use @world
+emerge --ask --deep --update --newuse @system
+emerge --ask --deep --update --changed-use @system
+emerge --depclean
 # reboot system
 reboot
 # install gimp
@@ -3047,6 +3070,7 @@ emerge --ask gnome-base/nautilus
 >> x11-themes/redhat-artwork+="nautilus"
 >> app-arch/file-roller+="nautilus"
 >> app-text/evince+="nautilus"
+>> app-misc/tracker+="nautilus"
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 # set nautilus as default
@@ -3064,7 +3088,6 @@ emerge --depclean
 reboot
 # install nautilus utilities
  emerge --ask gnome-extra/nautilus-actions
- emerge --ask gnome-extra/nautilus-share
  gpasswd -a arcana samba
  gpasswd -a root samba
  emerge --ask gnome-extra/gnome-directory-thumbnailer
@@ -3073,7 +3096,7 @@ reboot
  emerge --ask gnome-extra/gnome-system-monitor
  emerge --ask gnome-extra/gnome-calculator
  emerge --ask gnome-extra/gnome-calendar
- >> dev-libs/folks+="eds telepathy tracker utils"
+ >> dev-libs/folks+="eds telepathy tracker utils bluetooth"
  >> gnome-extra/gnome-contacts+="v4l"
  >> gnome-extra/evolution-data-server+="vala"
  emerge --ask gnome-extra/gnome-contacts
@@ -3098,13 +3121,11 @@ reboot
  emerge --ask gnome-extra/polkit-gnome
  emerge --ask gnome-extra/gnome-tweak-tool
  emerge --ask gnome-extra/gnome-weather
- emerge --ask gnome-extra/gnome-web-photo
  >> dev-python/rdflib+="berkdb redland sqlite"
- >> gnome-extra/zeitgeist+="datahub fts nls downloads-monitor icu plugins telepathy"
- >> gnome-extra/zeitgeist-datasources+="chromium firefox mono telepathy thunderbird vim"
+ >> gnome-extra/zeitgeist+="datahub fts nls downloads-monitor icu plugins"
+ >> gnome-extra/zeitgeist-datasources+="chromium firefox thunderbird vim"
  >> dev-libs/redland-bindings+="python"
  >> app-editors/vim+="python"
- >> dev-util/monodevelop+="git subversion"
  emerge --ask gnome-extra/gnome-activity-journal
  >> dev-libs/folks+="zeitgeist"
  emerge --ask --deep --update --newuse @world
@@ -3113,6 +3134,11 @@ reboot
  >> app-admin/packagekit-base+="cron networkmanager nsplugin systemd command-not-found"
  >> app-admin/packagekit+="gtk"
  echo "app-admin/packagekit-base ~amd64" >> /etc/portage/package.accept_keywords
+ echo "app-admin/packagekit-gtk ~amd64" >> /etc/portage/package.accept_keywords
+ echo "app-admin/packagekit ~amd64" >> /etc/portage/package.accept_keywords
+ emerge --ask app-admin/packagekit
+# install bash completion
+ emerge --ask app-shells/bash-completion
  echo "gnome-extra/gnome-software ~amd64" >> /etc/portage/package.accept_keywords
  ###
  # to fix compile error, temporarily declare method as static:
@@ -3128,7 +3154,6 @@ reboot
  emerge --ask gnome-extra/gnome-user-docs
  emerge --ask gnome-extra/gnome-search-tool
  emerge --ask gnome-extra/gpointing-device-settings 
- echo "app-admin/packagekit-gtk ~amd64" >> /etc/portage/package.accept_keywords
  echo "gnome-extra/gnome-packagekit ~amd64" >> /etc/portage/package.accept_keywords
  >> gnome-extra/gnome-pacakgekit+="systemd udev"
  emerge --ask gnome-extra/gnome-packagekit
@@ -3149,35 +3174,37 @@ reboot
  chmod g=rw,o=rw /usr/share/gnome-do
  chown root:wheel /usr/share/gnome-do
  chmod g+s /usr/share/gnome-do
- sefacl -Rm g::rwX,d:g::rwX,o:rwX,d:o:rwX /usr/share/gnome-dictionary
+ sefacl -Rm g::rwX,d:g::rwX,o:rwX,d:o:rwX /usr/share/gnome-do
  emerge --ask gnome-extra/gconf-editor
- >> media-libs/celt+="ogg"
- >> app-emulation/spice+="sasl"
- >> sys-firmware/ipxe+="qemu efi iso usb undi lkrn"
- >> app-emulation/qemu+="xattr vte vnc virtfs vhost-net uuid usb threads systemtap ssh spice snappy seccomp sdl sasl pulseaudio png opengl nfs ncurses lzo jpeg gtk filecaps fdt curl caps bzip2 bluetooth alsa aio"
- >> sys-fs/mtools+="X"
- >> app-emulation/libvirt+="audit avahi fuse lvm nfs parted policykit sasl systemd"
- >> net-libs/gtk-vnc+="pulseaudio sasl"
- >> net-misc/spice-gtk+="gtk3 dbus gstreamer lz4 policykit -pulseaudio sasl"
- >> net-nds/rpcbind+="systemd"
- >> net-fs/nfs-utils+="caps"
- nano -w /etc/portage/make.conf
- > QEMU_SOFTMMU_TARGETS="x86_64 i386"
- > QEMU_USER_TARGETS="x86_64 i386"
- emerge --ask gnome-extra/gnome-boxes
- gpasswd -a arcana kvm
- gpasswd -a root kvm
- vim /etc/modules-load.d/kvm-intel.conf
- > kvm-intel
- systemctl enable libvirt-guests.service
- systemctl enable libvirtd.service
- systemctl enable rpcbind.service
- systemctl enable virtlockd.service
- systemctl enable virtlogd.service
-# reboot
+# install virtualbox
+ >> app-emulation/virtualbox+="additions opengl qt4 sdk udev alsa extensions pam pulseaudio python  vnc"
+ >> net-libs/gsoap+="ssl"
+ >> net-libs/libvncserver+="ssl threads zlib"
+ echo "app-emulation/virtualbox-extpack-oracle PUEL" >> /etc/portage/package.license
+ proxychains emerge --ask app-emulation/virtualbox
+ >> sys-apps/usermode-utilities+="fuse"
+ emerge --ask sys-apps/usermode-utilities
+ emerge --ask net-misc/bridge-utils
+ gpasswd -a arcana vboxusers
+ gpasswd -a root vboxusers
+ nano -w /etc/modules-load.d/virtualbox.conf
+ > vboxdrv
+ > vboxnetadp
+ > vboxnetflt
  reboot
+# configure virtualbox
+ File -> Preferences -> Network -> Host-only Networks -> Add
+                     -> Update -> [] Check for_ Updates
+# create physical disks
+ mkdir -p "/home/arcana/VirtualBox VMs/Physical"
+ VBoxManage internalcommands createrawvmdk -filename "/home/arcana/VirtualBox VMs/Physical/Driver0.vmdk" -rawdisk /dev/sda
+ VBoxManage internalcommands createrawvmdk -filename "/home/arcana/VirtualBox VMs/Physical/Driver1.vmdk" -rawdisk /dev/sdb
+ chown -R arcana:wheel "/home/arcana/VirtualBox VMs"
+ chmod -R g+s "/home/arcana/VirtualBox VMs"
+ setfacl -Rm g::rwX,d:g::rwX "/home/arcana/VirtualBox VMs"
+# create physical VM
+ ....
 # continue configuring system for gnome
- udevadm trigger -c add /dev/kvm
  >> dev-libs/libgit2+="threads ssh"
  >> dev-libs/libgit2-glib+="ssh"
  emerge --ask gnome-extra/gnome-builder
@@ -3185,7 +3212,7 @@ reboot
  >> gnome-extra/gucharmap+="cjk"
  emerge --ask gnome-extra/gucharmap
  >> app-office/mdbtools+="odbc"
- >> gnome-extra/libgda+="berkdb gnome-keyring gtk ldap postgres json mdb"
+ >> gnome-extra/libgda+="berkdb gnome-keyring gtk ldap json mdb"
  emerge --ask gnome-extra/libgda
  emerge --ask gnome-extra/gnome-integration-spotify
  emerge --ask gnome-extra/libgsf
@@ -3204,12 +3231,6 @@ reboot
  emerge --ask gnome-extra/docky
  >> gnome-extra/eiciel+="xattr"
  emerge --ask gnome-extra/eiciel
- >> mail-filter/bogofilter+="berkdb sqlite"
- >> mail-client/evolution+="bogofilter weather crypt highlight ldap spell ssl"
- >> app-text/highlight+="qt4"
- emerge --ask gnome-extra/evolution-ews
-# add evolution to list of mail client
- XFCE Bottom Panel -> Right click on Mail -> Properties -> Add -> Evolution
 # continue installing gnome
  emerge --ask x11-terms/gnome-terminal
  -> Settings -> Preferred Applications -> Utilities -> Terminal Emulator -> GNOME Terminal
@@ -3220,13 +3241,10 @@ reboot
  emerge --ask gnome-extra/assogiate 
  echo "gnome-extra/cameramonitor ~amd64" >> /etc/portage/package.accept_keywords
  emerge --ask gnome-extra/cameramonitor
- echo "gnome-extra/avant-window-navigator ~amd64" >> /etc/portage/package.accept_keywords
- emerge --ask gnome-extra/avant-window-navigator
- >> gnome-extra/avant-window-navigator-extras+="gconf gstreamer webkit"
- echo "gnome-extra/avant-window-navigator-extras ~amd64" >> /etc/portage/package.accept_keywords
- emerge --ask gnome-extra/avant-window-navigator-extras
  >> gnome-extra/cjs+="cairo gtk"
  emerge --ask gnome-extra/cjs
+ >> gnome-extra/gnome-dvb-daemon+="nls"
+ >> media-libs/gst-rtsp-server+="nls"
  emerge --ask gnome-extra/gnome-dvb-daemon
  echo "gnome-extra/chrome-gnome-shell ~amd64" >> /etc/portage/package.accept_keywords
  emerge --ask gnome-extra/gnome-shell-frippery
@@ -3244,7 +3262,13 @@ reboot
  >> net-im/telepathy-connection-managers+="irc xmpp gadu icq meanwhile msn sip sipe steam yahoo"
  >> net-im/empathy+="gnome-online-accounts spell"
  >> x11-plugins/pidgin-sipe+="telepathy openssl"
+ >> net-libs/libgadu+="ssl threads gnutls"
+ >> net-libs/sofia-sip+="ssl"
+ >> net-libs/farstream+="upnp"
+ >> net-im/pidgin+="dbus eds idn networkmanager nls gadu gstreamer gtk meanwhile xscreensaver prediction spell"
+ >> net-libs/gupnp+="networkmanager"
  emerge --ask gnome-base/gnome-core-apps
+ >> gnome-extra/gnome-dvb-daemon+="totem"
  >> gnome-base/gnome-extra-apps+="-share"
  >> media-libs/libraw+="lcms jpeg jpeg2k"
  >> net-misc/whois+="nls iconv idn"
@@ -3280,21 +3304,29 @@ reboot
  emerge --ask gnome-base/gnome-desktop
  emerge --ask gnome-base/gnome-control-center
  >> gnome-base/gnome+="bluetooth cdr classic extras accessibility cups"
+ >> media-libs/celt+="ogg"
+ >> net-libs/libpcap+="dbus bluetooth canusb netlink"
+ >> net-analyzer/nmap+="nls ssl"
+ >> media-libs/libraw+="openmp"
+ >> net-misc/spice-gtk+="gtk3 dbus gstreamer policykit"
+ >> net-libs/gtk-vnc+="pulseaudio"
+ >> mail-client/evolution+="crypt highlight map spell ssl weather bogofilter"
  emerge --ask gnome-base/gnome
 # some configurations are necessary
  touch /usr/share/recently-used.xbel
  chown root:wheel /usr/share/recently-used.xbel
  chmod g=rw,o=rw /usr/share/recently-used.xbel
  chmod g+s /usr/share/recently-used.xbel
- setfacl -Rm g::rwX,d:g::rwX,o:rwX,d:o:rwX
+ setfacl -Rm g::rwX,d:g::rwX,o:rwX,d:o:rwX /usr/share/recently-used.xbel
  chown root:wheel /usr/share
  chmod g+s /usr/share
  setfacl -m g:wheel:rwX,d:g:wheel:rwX /usr/share
+ mkdir -p /usr/share/docky
  chown -R root:wheel /usr/share/docky
  chmod -R g=rw,o=rw /usr/share/docky
  chmod -R g+s /usr/share/docy
  setfacl -Rm g::rwX,d:g::rwX,o:rwX,d:o:rwX /usr/share/docky
-# change default video sink of gstreamer
+# NON-VM: change default video sink of gstreamer
  -> gconf editor -> system -> gstreamer -> 0.10 -> default -> videosink -> ximagesink
 # upgrade system to use gnome environment 
  >> app-office/mdbtools+="gnome"
@@ -3317,7 +3349,6 @@ reboot
  >> media-gfx/gimp+="gnome"
  >> net-dns/libidn+="mono"
  >> app-misc/tracker+="nautilus upnp-av"
- >> gnome-extra/gnome-dvb-daemon+="-totem"
  emerge --ask --deep --update --newuse @world
  emerge --depclean
 # reboot
@@ -3331,6 +3362,8 @@ Settings -> Details -> Default Applications -> Photos -> Image Viewer
                                             -> Web -> Chromium
                                             -> Music -> Banshee Media Player
                                             -> Video -> VLC media player
+                                            -> Mail -> Mozilla Thunderbird
+                                            -> Calendar -> Calendar
                     -> Removeabe Media -> Software -> Ask what to do
 # Use EOG to assign a backgound wallpaper to gnome!
  -> Open Picture -> Right Click -> Set as Wallpaper
@@ -3350,13 +3383,31 @@ Settings -> Details -> Default Applications -> Photos -> Image Viewer
                             -> Time Format -> AM/PM
              -> Users -> Change Profile Picture
 # start docky
+ >> gnome-extra/docky+="nls"
+ emerge --ask gnome-extra/docky
  -> Docky -> Settings -> * Start when user logs in
 # reboot
  reboot
 # configure gnome-do
- -> gnome-do -> Preferences -> Keyboard -> Summon Do -> "<Super>d"
+ -> gnome-do -> Preferences -> Keyboard -> Summon Do -> "<Ctrl>d"
+                                        -> Plugins -> Banshee Media Player
+                                                   -> Eye of GNOME Slideshow
+                                                   -> Files and Folders
+                                                   -> Firefox
+                                                   -> GNOME Dictionary
+                                                   -> GNOME Screenshot
+                                                   -> GNOME Session Management
+                                                   -> GNOME Terminal
+                                                   -> GNOME Calculator
+                                                   -> Google Calendar
+                                                   -> Google Contacts
+                                                   -> Google Docs
+                                                   -> Locate Files
+                                                   -> Volume Control
 # configure synapse
  -> synapse -> Preferences -> General -> Startup on logon
+                                      -> [] Show notification icon
+                                      -> Actiavte -> <Control>grave
 # configure tweaks
  -> Tweak Tool -> Extensions -> * Removeable drive menu
                              -> * Topicons
@@ -3364,6 +3415,27 @@ Settings -> Details -> Default Applications -> Photos -> Image Viewer
                              -> * Places status indicator
                -> Window -> * Maximize
                          -> * Minimize
+
+############### IMPORTANTTTTTTTTTTTTTT GNOME SHELL KEYS
+# Super key: Switch between overview and desktop
+# Alt+F1: Switch between overview and desktop
+# Alt+F2: Pop up command dialog
+# Super+F10: Open Application Menu
+# Alt+Tab: Pop up application switcher
+# Alt+Shift+Tab: Cycle in reverse direction in the application switcher
+# Alt+` key above Tab: Switch between windows of the same application in Alt+Tab
+# Ctrl+Alt+Tab: Pop up accessibility switcher
+# Ctrl+Shift+Alt+R: Start and end screencast recording
+# Ctrl+Alt+Up/Down arrow: Switch between workspaces
+# Ctrl+Alt+Shift+Up/Down arrow: Move the current window to a different workspace
+# F10: Toggle maximize
+# F11: Toggle full screen
+# Super + Up arrow: Toggle maximize
+# Super + Down arrow: Toggle unmaximize
+# Super + Left/Right arrow: Dock left/right
+##################################################################
+
+
 # install geany
 >> dev-util/geany+="gtk3 vte"
 emerge --ask dev-util/geany
@@ -3397,12 +3469,14 @@ emerge --depclean
 # install python requests module
 emerge --ask dev-python/requests
 # continue installing qt goodies
->> dev-qt/qt-creator+="android autotools baremetal clang cmake cvs git ios python qbs subversion systemd webkit winrt"
+>> dev-qt/qt-creator+="android autotools baremetal clang cmake cvs git ios python subversion systemd webkit winrt glsl systemd clangcodemodel clangstaticanalyzer"
 >> dev-libs/botan+="threads bzip2 gmp ssl zlib"
 >> dev-vcs/cvs+="nls crypt pam"
 >> dev-qt/qtscript+="jit scripttools"
 >> sys-devel/gdb+="client nls server expat lzma"
-emerge --ask dev-qt/qt-creator
+>> dev-qt/qtnetwork+="ssl libproxy networkmanager"
+echo "=dev-qt/qt-creator-4.0.3 ~amd64" >> /etc/portage/package.accept_keywords
+emerge --ask =dev-qt/qt-creator-4.0.3
 emerge --ask --deep --update --newuse @world
 emerge --depclean
 # configure Qt Creator
@@ -3410,6 +3484,10 @@ emerge --depclean
                                         -> FakeVim
                                         -> AutotoolsProjectManager
                                         -> ModelEditor
+               -> Tools -> Options -> FakeVim -> * Use FakeVim
+                                   -> Text Editor -> Font_Colors -> Color Scheme -> Dark
+                                                  -> Display -> * Enable Text wrapping
+                                   -> Beutifier -> Clang Format -> Use Predefined Style -> Google
 # install pgadmin
 >> x11-libs/wxGTK+="X gstreamer libnotify opengl sdl tiff webkit"
 emerge --ask dev-db/pgadmin3
@@ -3425,61 +3503,28 @@ emerge --ask dev-db/pgadmin3
  emerge --depclean
  >> mail-mta/nullmailer+="ssl"
  emerge --ask app-admin/sudo
- emerge -C xfce-base/xfce4-app
-# install codeblocks
- >> dev-util/codeblocks+="contrib pch"
- >> x11-libs/wxGTK=="gnome odbc pch"
- echo "dev-util/codeblocks ~amd64" >> /erc/portage/package.accept_keywords
- >> gnome-base/libgnomeprint+="cups"
- emerge --ask dev-util/codeblocks
-# run codeblocks, set GNU GCC as default compiler
- -> Code Blocks
-# install MC, a tool for terminal
- >> app-misc/mc+="X edit gpm nls samba sftp slang spell xdg"
- emerge --ask app-misc/mc
-# unmerge some un-needed tools
  emerge -C xfce-extra/thunar-vcs-plugin
  emerge -C xfce-extra/thunar-shares-plugin
  emerge -C xfce-extra/thunar-media-tags-plugin
  emerge -C xfce-extra/thunar-archive-plugin
  emerge -C xfce-extra/thunar-volman
  emerge -C media-gfx/gpicview
- emerge -C xfce-extra/xfce4-playercontrol-plugin
  emerge -C xfce-extra/tumbler
- emerge -C xfce-extra/xfce4-xkb-plugin
- emerge -C xfce-extra/xfswitch-plugin
  emerge -C app-cdr/xfburn
- emerge --depclean
+ emerge -C xfce-extra/xfce4-playercontrol-plugin
  emerge --ask --deep --update --newuse @world
  emerge --depclean
- emerge -C xfce-extra/xfce4-mount-plugin
- emerge -C xfce-extra/xfce4-pulseaudio-plugin
- emerge -C xfce-extra/xfce4-volumed-pulse
- emerge -C xfce-extra/xfce4-power-manager
- emerge -C xfce-extra/xfce4-mixer
- emerge -C xfce-extra/xfce4-whiskermenu-plugin
- emerge -C xfce-extra/xfdashboard
- emerge -C xfce-base/xfce4-settings
- emerge -C xfce-base/xfdesktop
- emerge -C xfce-base/xfce4-panel
- emerge -C xfce-base/xfce4-session
- emerge -C xfce-extra/xfce4-notifyd
- emerge -C xfce-base/thunar
- emerge -C xfce-base/xfce4-appfinder
- emerge -C xfce-base/xfwm4
- emerge -C xfce-base/libxfce4ui
- emerge -C xfce-base/garcon
- emerge -C xfce-base/exo
- emerge -C xfce-base/xfconf
- emerge -C x11-themes/xfwm4-themes
- emerge --depclean
- emerge --ask --deep --update --newuse @world
- emerge --depclean
- emerge -C x11-misc/lightdm
- emerge -C x11-misc/lightdm-gtk-greeter
- emerge --depclean
- emerge --ask --deep --update --newuse @world
- emerge --depclean
+# install codeblocks
+ >> dev-util/codeblocks+="contrib pch"
+ >> x11-libs/wxGTK=="gnome odbc pch"
+ >> gnome-base/libgnomeprint+="cups"
+ echo "dev-util/codeblocks ~amd64" >> /erc/portage/package.accept_keywords
+ emerge --ask dev-util/codeblocks
+# run codeblocks, set GNU GCC as default compiler
+ -> Code Blocks
+# install MC, a tool for terminal
+ >> app-misc/mc+="X edit gpm nls samba sftp slang spell xdg"
+ emerge --ask app-misc/mc
 # reboot system
  reboot
 # upgrade system
@@ -3535,10 +3580,11 @@ emerge --ask dev-db/pgadmin3
  emerge --ask app-vim/bash-support
 # install redis
  emerge --ask dev-db/redis
+ systemctl enable redis.service
+# enable some services
  systemctl enable bluetooth.service
  systemctl enable ntpd.service
  systemctl enable ntpdate.service
- systemctl enable redis.service
  systemctl enable sntp.service
  systemctl enable gpsd.socket
 # install nodejs
@@ -3556,6 +3602,7 @@ emerge --ask dev-db/pgadmin3
  >> dev-util/electron+="proprietary-codecs system-ffmpeg cups gnome gnome-keyring hidpi pulseaudio -lto"
  echo "dev-util/electron ~amd64" >> /etc/portage/package.accept_keywords
  echo "app-editors/atom ~amd64" >> /etc/portage/package.accept_keywords
+ echo "app-eselect/eselect-electron ~amd64" >> /etc/portage/package.accept_keywords
 
  emerge --ask app-editors/atom
 # configure atom
@@ -3690,6 +3737,7 @@ emerge --ask gnome-extra/cinnamon-desktop
 >> sys-power/pm-utils+="ntp"
 >> gnome-extra/cinnamon-settings-daemon+="colord cups systemd"
 emerge --ask gnome-extra/cinnamon-settings-daemon
+>> gnome-extra/cinnamon-control-center+="systemd"
 emerge --ask gnome-extra/cinnamon-control-center
 emerge --ask gnome-extra/cinnamon-translations
 >> gnome-extra/cinnamon-session+="systemd"
@@ -3699,6 +3747,7 @@ emerge --ask gnome-extra/cinnamon-screensaver
 >> gnome-extra/nemo+="nls exif tracker xmp"
 emerge --ask gnome-extra/nemo
 >> x11-wm/muffin+="xinerama"
+>> gnome-extra/cinnamon+="nls"
 emerge --ask gnome-extra/cinnamon
 # add gtk support to transmission
 >> net-p2p/transmission+="gtk"
