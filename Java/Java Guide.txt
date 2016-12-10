@@ -12,6 +12,13 @@ private static final Logger log = LoggerFactory.getLogger(MyClass.class);
 ####################################
 ## GUIDELINE
 ## ---------------------------------
+## purge maven repository
+####################################
+rm -rf ~/.m2/wrapper
+rm -rf ~/.m2/repository
+####################################
+## GUIDELINE
+## ---------------------------------
 ## Running in debug
 ####################################
 mvnDebug tomcat7:run
@@ -840,6 +847,7 @@ public class CustomExcelView extends AbstractExcelView {
 mkdir -p SampleProject
 cd SampleProject
 mvn -N io.takari:maven:wrapper -Dmaven=3.3.9
+git add -f .mvn/wrapper/maven-wrapper.jar
 ./mvnw -B archetype:generate -DgroupId=me.arcana -DartifactId=sample-project -Dpackage=jar
 mv sample-project/* .
 rm -rf sample-project/

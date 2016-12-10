@@ -1,0 +1,11 @@
+.\qemu-system-x86_64.exe -bios .\ovmf-x64\OVMF-pure-efi.fd -hda \\.\PhysicalDrive0,format=raw -hdb \\.\PhysicalDrive1 -boot menu=on -m 4096 -cpu host 
+
+
+.\qemu-system-x86_64.exe -bios .\ovmf-x64\OVMF-pure-efi.fd -drive file=\\.\PhysicalDrive0,if=virtio,format=raw,media=disk,index=0 -drive file=\\.\PhysicalDrive1,if=virtio,format=raw,media=disk,index=1 -boot menu=on -m 4096 -drive file=.\ovmf-x64\vgabios-qxl.bin,format=raw,if=pflash,readonly
+
+.\qemu-system-x86_64.exe -bios .\ovmf-x64\OVMF-pure-efi.fd -drive file=\\.\PhysicalDrive0,if=none,format=raw,id=sda -drive file=\\.\PhysicalDrive1,if=none,format=raw,id=sdb -device ich9-ahci,id=ahci -device ide-drive,drive=sda,bus=ahci.0 -device ide-drive,drive=sdb,bus=ahci.1 -boot menu=on -m 4096
+
+
+.\qemu-system-x86_64.exe -L .
+
+qemu-system-x86_64 -bios /usr/share/ovmf/ovmf_x64.bin -enable-kvm -cpu host -smp 4 -m 4096 -net nic,model=virtio -net user -drive file=~/vm/win10.hd.img.raw,format=raw,if=virtio -vga qxl -usbdevice tablet -rtc base=utc

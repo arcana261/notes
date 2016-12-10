@@ -1,0 +1,11 @@
+1. Install Squid
+2. Open "C:\Program Files\Squid\etc\squid\squid.conf"
+3. Change port to 8083 (http_port 8083)
+
+
+cache_peer 127.0.0.1 parent 8118 0 no-query default
+        acl all src 0.0.0.0/0.0.0.0
+        never_direct allow all 
+		
+		
+		cache deny all

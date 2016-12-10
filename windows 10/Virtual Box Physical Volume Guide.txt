@@ -1,0 +1,8 @@
+# Ctrl+X -> Command Prompt (Admin)
+mkdir "C:\Users\Arcana\VirtualBox VMs\Physical"
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands createrawvmdk -filename "C:\Users\Arcana\VirtualBox VMs\Physical\Driver0.vmdk" -rawdisk \\.\PhysicalDrive0
+
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands createrawvmdk -filename "C:\Users\Arcana\VirtualBox VMs\Physical\Driver1.vmdk" -rawdisk \\.\PhysicalDrive1
+
+---> Remember to use "Host IO Cache" on SATA controller
+---> Remember to start VirtualBox as Administrator
