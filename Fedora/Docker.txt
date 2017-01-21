@@ -17,11 +17,16 @@ groupadd docker
 usermod -aG docker kharatizadeh
 
 mkdir -p /etc/systemd/system/docker.service.d
-cat <<EOF > /etc/systemd/system/docker.service.d/overlay.conf 
-[Service]
-ExecStart=
-ExecStart=/usr/bin/dockerd --storage-driver=overlay
-EOF
+#######################
+	cat <<EOF > /etc/systemd/system/docker.service.d/overlay.conf 
+	[Service]
+	ExecStart=
+	ExecStart=/usr/bin/dockerd --storage-driver=overlay
+	EOF
+########## OR #########
+vim /etc/sysconfig/docker-storage
+> DOCKER_STORAGE_OPTIONS=--storage-driver=overlay
+#######################
 
 cat <<EOF > /etc/systemd/system/docker.service.d/http-proxy.conf 
 [Service]

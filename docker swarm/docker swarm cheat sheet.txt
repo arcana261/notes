@@ -1,0 +1,175 @@
+# infinite SSH tunnel
+while true; do ssh -D 8084 root@178.162.207.98; done
+
+# stop clamav
+systemctl stop clamd.service
+systemctl stop clamd@scan.service
+systemctl stop clam-freshclam.service
+systemctl disable clamd.service
+systemctl disable clamd@scan.service
+systemctl disable clam-freshclam.service
+
+####
+##
+## A cluster with N (odd) managers can tolerate up to "(N-1)/2" manager loss
+## e.g. If we have 3 managers, we can tolerate up to "(3-1)/2"="1" manager loss
+## maximum recommended managers is "7"
+##
+####
+
+# initialize docker swarm on manager
+docker swarm init --advertise-addr 10.0.2.254
+
+# join swarm on worker via token
+    docker swarm join \
+    --token SWMTKN-1-3d9xwkh9sahmnf3m0cry4k0n807h09fz4kxfpxohvdn2pb6c3z-2s6fbznf29ci00cf8pnrvm1uo \
+    10.0.2.254:2377
+
+# regain key to join nodes via manager
+# (regain above join command)
+docker swarm join-token worker
+
+# see list of cluster nodes
+docker node ls
+
+# see information about a swarm node
+docker node inspect --pretty worker1
+
+# start a service in swarm
+docker service create --replicas 1 --name helloworld alpine ping docker.com
+
+# list services in swarm
+docker service ls
+
+# inspect running service
+docker service inspect --pretty helloworld
+
+# to see which node is running service
+docker service ps helloworld
+
+######## ---> TO SEE CONTAINER, RUN "docker ps" ON THE NODE RUNNING THE SERVICE (KNOWN VIA "docker service ps <servicename>")
+
+# to scale service
+docker service scale helloworld=5
+
+# to delete a service
+docker service rm helloworld
+
+# to promote a worker to manager
+docker node promote
+
+# to drain a node
+# ---> CAN ALSO BE USED TO DRAIN MANAGER, PREVENTING IT FROM RECEIVING TASKS!
+docker node update --availability drain <NODE>
+
+# to activate a node
+docker node update --availability active <NODE>
+
+# backup swarm state for disaster recovery
+/var/lib/docker/swarm/raft
+
+# force new cluster for disaster recovery on previous manager
+docker swarm init --force-new-cluster --advertise-addr node01:2377
+
+# create an overlay network
+docker network create -d overlay sample
+
+# apply rolling update
+docker service create --replicas 3 --name redis --update-delay 10s redis:3.0.6
+docker service update --image redis:3.0.7 redis
+
+# continue a failed update
+docker service update redis
+
+# publish ports
+docker service create --replicas 2 --name my-web --update-delay 10s --publish 8080:80 nginx:1.11.7
+
+# test flocker
+docker volume create -d flocker --name test -o size=512MB --label test
+flockerctl ls
+
+docker run -it --name test --volume test:/data ubuntu bash
+docker service create --replicas 1 --name test --update-delay 10s --mount type=volume,source=test,destination=/var/lib/postgresql/data 10.0.2.254:5000/postgres:9.6
+docker service ps test
+
+##########################################################
+##                 FOCKER CTL                           ##
+##########################################################
+
+# list nodes
+flockerctl list-nodes
+
+# create volume
+flockerctl create --node cc7114a3 --size 512Mb
+
+# list volumes
+flockerctl list
+
+# destroy volume
+flockerctl destroy -d <volume UUID>
+
+
+##########################################################
+##                      RBD                             ##
+##########################################################
+
+# list images
+rbd ls <pool>
+
+# map image
+rbd map <pool>/<image>
+
+# show mapped images
+rbd showmapped
+
+# unmap image
+rbd unmap /dev/rbd0
+
+####################################################################
+####################################################################
+####################################################################
+
+High-Availability / Failover of flocker control service
+
+the control service does not support HA yes. But you can back regular backups of
+/var/lib/flocker and the CA/Control Certificates
+and restoring these on a new control service with the same
+dns is how we typically tell folks to handle recovery.
+All services will continue to run when this happens.
+
+Control Service HA is on our roadmap but its unclear when this will be completed yet.
+
+
+##########################################################
+##                BUNDLE UP COMPOSE                     ##
+##########################################################
+
+1. create a new "bundle.yml" file
+2. override network to "overlay"
+3. for each "built" image, give it image name
+   inside private repository
+
+version: '2'
+
+services:
+  depends.avl.me:
+    image: '10.0.2.254:5000/reportingservice_depends.avl.me:latest'
+  sequelize_consumer.avl.me:
+    image: '10.0.2.254:5000/reportingservice_sequelize_consumer.avl.me:latest'
+  oplog_monitor.avl.me:
+    image: '10.0.2.254:5000/reportingservice_oplog_monitor.avl.me:latest'
+  mongo.avl.me:
+    image: '10.0.2.254:5000/reportingservice_mongo.avl.me:latest'
+
+networks:
+  net.avl.me:
+    driver: 'overlay'
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,943 @@
+# change to root
+sudo bash
+# check ip address of interfaces
+ip addr
+# check availability of internet
+ping 4.2.2.4
+ping google.com
+# update system
+yum update
+# reboot system
+reboot
+
+!!!!
+
+# change to root
+sudo bash
+# install net-tools to have ifconfig support
+yum install net-tools
+# install vim and nano
+yum install vim nano
+# install selinux utilities
+yum install policycoreutils-python
+
+# change ssh port
+vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+# allow ssh port in selinux
+semanage port -a -t ssh_port_t -p tcp 2122
+# restart sshd
+systemctl restart sshd
+# check if sshd is running
+systemctl status sshd
+
+# automatically connect all interfaces
+nmtui
+> [*] automatically connect...
+# reboot
+reboot
+# ensure that all interfaces are available
+ifconfig
+# goto root
+sudo bash
+
+# setup firewall
+systemctl enable firewalld
+systemctl restart firewalld
+# new rules
+...
+
+firewall-cmd --permanent --remove-service=ssh
+firewall-cmd --permanent --add-port=2122/tcp
+
+...
+# reload firewall
+firewall-cmd --reload
+# SSH INTO VM!
+
+# open root
+sudo bash
+# install wget and curl
+yum install wget curl
+# enable EPEL repository
+pushd /usr/local/src
+wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+rpm -ivh epel-release-7-8.noarch.rpm
+popd
+# install some good utilities
+yum install screen htop
+# install privoxy
+yum install privoxy
+# config privoxy
+vim /etc/privoxy/config
+<<<<<<<<<<<<<<<<<<<<
+listen-address	127.0.0.1:8085
+forward-socks5	/		127.0.0.1:8084	.
+>>>>>>>>>>>>>>>>>>>>
+# allow selinux
+semanage port -a -t http_cache_port_t -p tcp 8085
+# restart privoxy
+systemctl enable privoxy
+systemctl restart privoxy
+
+#>> install docker engine <<
+# add repository
+tee /etc/yum.repos.d/docker.repo <<-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/centos/7/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+# install docker
+yum install docker-engine
+# enable proxy in docker
+mkdir -p /etc/systemd/system/docker.service.d
+cat <<EOF > /etc/systemd/system/docker.service.d/http-proxy.conf
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8085/"
+EOF
+cat <<EOF > /etc/systemd/system/docker.service.d/no-proxy.conf
+[Service]
+Environment="NO_PROXY=10.0.2.254"
+EOF
+nano -w /usr/lib/systemd/system/docker.service
+...
+#ExecStart=/usr/bin/dockerd 
+ExecStart=/usr/bin/dockerd --insecure-registry=10.0.2.254:5000
+...
+systemctl daemon-reload
+systemctl enable docker
+systemctl restart docker
+# check if proxy is present
+docker info
+# you should see under key Http Proxy
+# fireup a SOCKS5 proxy server on localhost:8084
+ssh -D 8084 .....
+# test docker
+docker pull ubuntu
+docker run --rm -it ubuntu
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+exit
+<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# install python pip since docker-compose
+# is available to install through pip
+yum install python-pip
+# upgrade pip
+pip install --upgrade pip
+# install docker-compose
+pip install docker-compose
+# check docker compose
+docker-compose version
+# add reporting user to docker group
+# so that it could control docker
+gpasswd -a arcana docker
+# install git
+yum install git
+# exit sudo mode
+exit
+
+################## install NVM
+mkdir -p ~/.local/src/nvm
+cd ~/.local/src/nvm
+https_proxy="http://127.0.0.1:8085/" curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o install_nvm.sh
+bash install_nvm.sh
+# close and re-open ssh
+exit
+....
+
+# check nvm versions
+nvm ls-remote
+# install nodejs
+nvm install 6.9.4
+# check node version
+node --version
+
+# check docker availability
+docker info
+
+# install more system utilities
+yum install psmisc bind-utils gcc-c++
+
+# enable password-less login to SSH server
+ssh-keygen -t rsa
+ssh root@178.162.207.98 mkdir -p .ssh
+cat ~/.ssh/id_rsa.pub | ssh root@178.162.207.98 'cat >> .ssh/authorized_keys'
+ssh root@178.162.207.98 "chmod 700 .ssh; chmod 640 .ssh/authorized_keys"
+# test it
+ssh root@178.162.207.98
+...
+exit
+...
+
+# pull required images
+docker pull registry:2
+docker pull owncloud:8.2.9-apache
+docker pull postgres:9.4.10
+docker pull nginx:1.11.7
+docker pull alpine
+docker pull redis:3.0.6
+docker pull erikh/dnscache
+docker pull offers/network-dns-cache:0.0.1
+
+# pull required images for "reporting stack"
+docker pull mongo:3.4.0
+docker pull mongo-express:0.32.0
+docker pull wurstmeister/zookeeper:3.4.6
+docker pull wurstmeister/kafka:0.10.1.0-2
+docker pull node:6.9.2
+docker pull redis:3.0.7
+docker pull postgres:9.6
+docker pull fenglc/pgadmin4:1.1
+docker pull begriffs/postgrest:v0.3.2.0
+docker pull jsreport/jsreport:1.0.9
+
+# pull required images for flocker
+docker pull sameersbn/bind:latest
+
+# install some dependency
+npm install -g sequelize-cli
+
+# install ruby
+yum install git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel
+# exit root
+exit
+# install rbenv
+mkdir -p ~/.local/src/rbenv
+pushd ~/.local/src/rbenv
+git clone git://github.com/sstephenson/rbenv.git .rbenv
+echo 'export PATH="$HOME/.local/src/rbenv/.rbenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+exec $SHELL
+git clone git://github.com/sstephenson/ruby-build.git ~/.local/src/rbenv/.rbenv/plugins/ruby-build
+echo 'export PATH="$HOME/.local/src/rbenv/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
+exec $SHELL
+popd
+# install ruby
+rbenv install -v 2.2.1
+rbenv global 2.2.1
+# check ruby version
+ruby -v
+# configure gems
+echo "gem: --no-document" > ~/.gemrc
+gem install bundler
+# install rails
+gem install rails -v 4.2.0
+rbenv rehash
+# verify that rails was successfuly installed
+rails -v
+#
+# fix path
+#
+nano -w /etc/profile.d/binfix.sh
+...
+export PATH=$PATH:/usr/local/bin
+...
+
+# install RKHunter
+sudo bash
+yum install rkhunter
+# update rkhunter database
+rkhunter --update
+# update rkhunter properties
+rkhunter --propupd
+# check rkhunter
+rkhunter --versioncheck
+# check for problems!
+rkhunter -c --enable all --disable none --rwo
+# create cron job for rkhunter
+crontab -l
+# edit and add a new cron job
+crontab -e
+> 15 04 * * * /usr/bin/rkhunter --cronjob --update --quiet
+
+# install fail2ban
+yum install fail2ban
+# configure fail2ban
+vim /etc/fail2ban/jail.local
+...
+[sshd]
+enabled = true
+port = 2122
+...
+# enable fail2ban
+systemctl enable fail2ban
+systemctl restart fail2ban
+# check fail2ban status
+fail2ban-client status
+fail2ban-client status sshd
+
+# install clamav
+yum install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd
+# configure selinux fro clamav
+setsebool -P antivirus_can_scan_system 1
+# configure clamav
+cp /usr/share/clamav/template/clamd.conf /etc/clamd.d/clamd.conf
+sed -i '/^Example/d' /etc/clamd.d/clamd.conf
+sed -i '/^Example/d' /etc/freshclam.conf
+vim /etc/clamd.d/clamd.conf
+...
+User clamscan
+LocalSocket /var/run/clamd.<SERVICE>/clamd.sock
+...
+# create systemd service
+vim /usr/lib/systemd/system/clam-freshclam.service
+...
+# Run the freshclam as daemon
+[Unit]
+Description = freshclam scanner
+After = network.target
+
+[Service]
+Type = forking
+ExecStart = /usr/bin/freshclam -d -c 4
+Restart = on-failure
+PrivateTmp = true
+
+[Install]
+WantedBy=multi-user.target
+...
+# start the service
+systemctl enable clam-freshclam.service
+systemctl restart clam-freshclam.service
+# check service status
+systemctl status clam-freshclam.service
+# fix service files
+mv /usr/lib/systemd/system/clamd@.service /usr/lib/systemd/system/clamd.service
+# remove the "@" sign
+vim /usr/lib/systemd/system/clamd@scan.service
+... <<<<<<<<<
+.include /lib/systemd/system/clamd@.service
+...
+... >>>>>>>>>
+.include /lib/systemd/system/clamd.service
+...
+vim /usr/lib/systemd/system/clamd.service
+...
+[Unit]
+Description = clamd scanner daemon
+After = syslog.target nss-lookup.target network.target
+
+[Service]
+Type = simple
+ExecStart = /usr/sbin/clamd -c /etc/clamd.d/clamd.conf --foreground=yes
+Restart = on-failure
+PrivateTmp = true
+
+[Install]
+WantedBy=multi-user.target
+...
+# start all services
+systemctl enable clamd.service
+systemctl enable clamd@scan.service
+systemctl restart clamd.service
+systemctl restart clamd@scan.service
+
+# install flocker
+# NOTE: RPM SHOULD RESOLVE TO "https://clusterhq-archive.s3.amazonaws.com/centos/clusterhq-release.el7.centos.noarch.rpm"
+#
+yum install gcc libffi-devel openssl-devel python python-devel python-virtualenv
+yum install https://clusterhq-archive.s3.amazonaws.com/centos/clusterhq-release$(rpm -E %dist).noarch.rpm
+yum install clusterhq-flocker-cli
+yum install clusterhq-flocker-node
+yum install clusterhq-flocker-docker-plugin
+mkdir -p /etc/flocker
+#
+# ensure all nodes reach primary manager via host name
+#
+echo "10.0.2.254 manager1.flocker.me" >> /etc/hosts
+#
+# generate cluster certificate
+#
+mkdir -p ~/flocker/cluster-cert
+pushd ~/flocker/cluster-cert
+flocker-ca initialize mehdi
+ls
+popd
+#
+# generate control service certificate
+#
+mkdir -p ~/flocker/control-service-cert
+pushd ~/flocker/cluster-cert
+flocker-ca create-control-certificate -o ~/flocker/control-service-cert manager1.flocker.me
+mv ~/flocker/control-service-cert/*.crt ~/flocker/control-service-cert/control-service.crt
+mv ~/flocker/control-service-cert/*.key ~/flocker/control-service-cert/control-service.key
+ls ~/flocker/control-service-cert
+popd
+#
+# generate node certificates (FOR i = 1 ... N)
+#
+for ((i = 1; i <= 10; i++)); do
+	mkdir -p ~/flocker/node-cert-$i
+	pushd ~/flocker/cluster-cert
+	flocker-ca create-node-certificate -o ~/flocker/node-cert-$i
+	mv ~/flocker/node-cert-$i/*.crt ~/flocker/node-cert-$i/node.crt
+	mv ~/flocker/node-cert-$i/*.key ~/flocker/node-cert-$i/node.key
+	ls ~/flocker/node-cert-$i/
+	popd
+done
+#
+# generate client certificates (FOR i = 1 .. N)
+#
+for ((i = 1; i <= 10; i++)); do
+	mkdir -p ~/flocker/client-cert-$i
+	pushd ~/flocker/cluster-cert
+	flocker-ca create-api-certificate -o ~/flocker/client-cert-$i client
+	ls ~/flocker/client-cert-$i/
+	popd	
+done
+#
+# generate docker plugin certificates (FOR i = 1 .. N)
+#
+for ((i = 1; i <= 10; i++)); do
+	mkdir -p ~/flocker/plugin-cert-$i
+	pushd ~/flocker/cluster-cert
+	flocker-ca create-api-certificate -o ~/flocker/plugin-cert-$i plugin
+	ls ~/flocker/plugin-cert-$i/
+	popd	
+done
+#
+# install CEPH plugin for flocker
+#
+pushd /usr/local/src
+git clone https://github.com/ClusterHQ/flocker-ceph-driver
+cd flocker-ceph-driver/
+/opt/flocker/bin/pip install /usr/local/src/flocker-ceph-driver/
+popd
+#
+# configure flocker backend
+#
+mkdir -p /etc/ceph
+nano -w /etc/ceph/ceph.conf
+...
+[global]
+fsid = bc8d57f7-d79e-4d94-8afe-ec1c7e61c72d
+mon_initial_members = cephMon, cephmds
+mon_host = 192.168.5.12,192.168.5.11
+auth_cluster_required = cephx
+auth_service_required = cephx
+auth_client_required = cephx
+osd_pool_default_pg_num = 128
+osd_pool_default_pgp_num =128
+
+[osd]
+filestore_max_inline_xattrs = 10
+filestore_max_inline_xattr_size = 65536
+filestore_max_xattr_value_size = 65536
+osd_max_object_name_len = 256
+osd_max_object_namespace_len = 64
+journal_aio = true
+journal_dio = true
+journal_block_align = true
+journal_force_aio = true
+
+...
+======================== TEST LOCAL ===============================
+[global]
+fsid = de2d4fe9-2fee-4638-a4e3-52bc0cfe6666
+mon_initial_members = mon1
+mon_host = 192.168.5.28
+auth_cluster_required = cephx
+auth_service_required = cephx
+auth_client_required = cephx
+osd_pool_default_size = 2
+rbd_default_features = 3
+======================== END TEST LOCAL ===========================
+#
+# configure flocker backend
+#
+mkdir -p /etc/flocker/
+nano -w /etc/flocker/agent.yml
+...
+
+version: 1
+control-service:
+  hostname: "manager1.flocker.me"
+  port: 4524
+dataset:
+  backend: "ceph_flocker_driver"
+  cluster_name: "ceph"
+  user_id: "cephu"
+  ceph_conf_path: "/etc/ceph/ceph.conf"
+  storage_pool: "rbd"
+...
+#
+# install additional dependencies for ceph
+#
+yum install librados2-devel librbd1-devel
+######################yum install https://ceph.com/rpm-testing/rhel7/x86_64/kmod-libceph-3.10-0.1.20140702gitdc9ac62.el7.x86_64.rpm
+######################yum install https://ceph.com/rpm-testing/rhel7/x86_64/kmod-rbd-3.10-0.1.20140702gitdc9ac62.el7.x86_64.rpm
+yum install ceph-common
+yum install redhat-lsb
+nano -w /etc/modules-load.d/ceph.conf
+...
+rbd
+...
+
+#
+# create keyrings
+#
+nano -w /etc/ceph/ceph.client.admin.keyring
+...
+[client.admin]
+	key = AQCZ52dY0ap7GBAA/KZMj9r7JLBrzHZxSINiIw==
+	caps mds = "allow *"
+	caps mon = "allow *"
+	caps osd = "allow *"
+...
+======================== TEST LOCAL ===============================
+[client.admin]
+	key = AQDiw19Y9TT5ExAAXe/QnxKl3hTFQpQrJdIhXg==
+======================== END TEST LOCAL ===========================
+nano -w /etc/ceph/ceph.client.NASU.keyring
+...
+[client.NASU]
+	key = AQDnTHtYRGU/GRAAJP6Qf8MXmJtFB06ZnBNYcA==
+...
+======================== TEST LOCAL ===============================
+nano -w /etc/ceph/ceph.client.testrbd.keyring
+...
+[client.testrbd]
+	key = AQD2xGBYQULBBxAA5N7xXjqzbcc0rL+HVolAeg==
+...
+======================== END TEST LOCAL ===========================
+#
+# add our ceph servers to /etc/hosts
+#
+nano -w /etc/hosts
+...
+192.168.5.10	cephadmin
+192.168.5.12	cephMon
+192.168.5.11	cephmds
+192.168.5.97	node0001
+192.168.5.103	node0002
+192.168.5.107	node0003
+192.168.5.109	node0004
+192.168.5.111	node0005
+192.168.5.110	node0006
+192.168.5.200	NASU
+...
+======================== TEST LOCAL ===============================
+192.168.5.29	admin
+192.168.5.30	osd2
+192.168.5.27	osd1
+192.168.5.28	mon1
+192.168.5.40	testrbd
+192.168.5.41	testrbd2	
+======================== END TEST LOCAL ===========================
+#
+# install flockerctl command
+#
+http_proxy="http://127.0.0.1:8085/" https_proxy="http://127.0.0.1:8085/" curl -sSL https://get.flocker.io | sh
+#
+# test flockerctl
+#
+flockerctl --version
+#
+# setup environment for flockerctl
+#
+nano -w /etc/profile.d/flocker.sh
+...
+export FLOCKER_CERTS_PATH=/etc/flocker
+export FLOCKER_USER=client
+export FLOCKER_CONTROL_SERVICE=10.0.2.254
+...
+
+
+
+#
+# Setup Ports for Docker Swarm
+#
+
+####################### CHOICE: MANAGER ################################
+# ----> FOR BASE MANAGER
+firewall-cmd --add-port=2376/tcp --permanent
+firewall-cmd --add-port=2377/tcp --permanent
+firewall-cmd --add-port=7946/tcp --permanent
+firewall-cmd --add-port=7946/udp --permanent
+firewall-cmd --add-port=4789/udp --permanent
+firewall-cmd --reload
+systemctl restart docker
+
+# ----> FOR EVERY MANAGER
+
+nmtui ->>>>>>>>>>>>> set IP to static (enp0s3)
+>>>>>> 10.0.2.254/24, 10.0.2.1, (10.0.2.254 | 4.2.2.4 | 8.8.8.8)
+>>>>>> SET SYSTEM HOST NAME (manager${n}.flocker.me)
+reboot
+
+# ----> FOR EVERY MANAGER
+
+##
+## verify static ip
+##
+ifconfig
+##
+## verify resolv.conf
+##
+cat /etc/resolv.conf
+
+# ----> FOR PRIMARY MANAGER
+docker network create -d bridge flocker.me
+docker run -td --restart=always --name ns1.flocker.me -h ns1.flocker.me -e ROOT_PASSWORD=root --net flocker.me -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
+firewall-cmd --add-port=53/udp --permanent
+firewall-cmd --add-port=53/tcp --permanent
+firewall-cmd --add-port=10000/tcp --permanent
+firewall-cmd --reload
+##
+## add <IP> ns1.flocker.me to /etc/hosts of physical machine
+## open "https://ns1.flocker.me:10000" in browser
+## login with "root/root"
+##
+>> open Servers -> BIND DNS Server
+-> Setup RDNC
+-> Forwarding and Transfers -> 4.2.2.4
+                            -> 8.8.8.8
+-> Create Master Zone -> Domain name/Network -> flocker.me.
+                      -> Email Address -> m_kharatizadeh@yahoo.com
+                      -> Addresses -> Name -> @
+                                   -> Address -> 10.0.2.254
+                                   -> Update reverse? -> Yes
+                      -> Addresses -> Name -> ns1
+                                   -> Address -> 10.0.2.254
+                                   -> Update reverse? -> No
+                      -> Addresses -> Name -> manager1
+                                   -> Address -> 10.0.2.254
+                                   -> Update reverse? -> Yes (and replace existing)
+                      -> Addresses -> Name -> manager2
+                                   -> Address -> 10.0.2.253
+                                   -> Update reverse? -> Yes
+                      -> Addresses -> Name -> manager3
+                                   -> Address -> 10.0.2.252
+                                   -> Update reverse? -> Yes
+                      -> Apply Zone
+##
+## restart DNS service
+##
+docker restart ns1.flocker.me
+##
+## test DNS service
+##
+ping flocker.me -c 4
+ping ns1.flocker.me -c 4
+ping manager1.flocker.me -c 4
+ping manager2.flocker.me -c 4
+ping manager3.flocker.me -c 4
+
+
+# ----> FOR EVERY MANAGER
+mkdir -p /etc/flocker/
+cp -fv ~/flocker/cluster-cert/cluster.crt /etc/flocker/
+chmod 0700 /etc/flocker
+
+# ----> FOR PRIMARY MANAGER
+
+cp -fv ~/flocker/control-service-cert/control-service.crt /etc/flocker/
+cp -fv ~/flocker/control-service-cert/control-service.key /etc/flocker/
+chmod 0600 /etc/flocker/control-service.key
+
+# ----> FOR EVERY MANAGER (NODE_NUMBER = N..1)
+
+export NODE_NUMBER=10
+cp -fv ~/flocker/node-cert-${NODE_NUMBER}/node.crt /etc/flocker/
+cp -fv ~/flocker/node-cert-${NODE_NUMBER}/node.key /etc/flocker/
+chmod 0600 /etc/flocker/node.key
+cp -fv ~/flocker/client-cert-${NODE_NUMBER}/client.crt /etc/flocker/
+cp -fv ~/flocker/client-cert-${NODE_NUMBER}/client.key /etc/flocker/
+chmod 0600 /etc/flocker/client.key
+cp -fv ~/flocker/plugin-cert-${NODE_NUMBER}/plugin.crt /etc/flocker/
+cp -fv ~/flocker/plugin-cert-${NODE_NUMBER}/plugin.key /etc/flocker/
+chmod 0600 /etc/flocker/plugin.key
+
+# ----> FOR PRIMARY MANAGER
+# ----> FOR PRIMARY MANAGER
+# ----> FOR PRIMARY MANAGER
+# ----> FOR PRIMARY MANAGER
+# ----> FOR PRIMARY MANAGER
+# ----> FOR PRIMARY MANAGER
+
+# verify rbd is clean of old images
+rbd ls
+##### -> remove image: rbd rm <image>
+# create a new rbd volume (100MB)
+rbd create meta-flocker --size 100
+# check if it exists
+rbd info meta-flocker
+# map it
+rbd map meta-flocker
+# verify it is mapped
+rbd showmapped
+# format new volume to xfs
+mkfs.xfs -f /dev/rbd/rbd/meta-flocker
+# mount and check new volume
+mkdir -p /root/mnt
+mount /dev/rbd/rbd/meta-flocker /root/mnt
+lsblk -f
+# copy CA certificates
+mkdir -p /root/mnt/ca
+cp -rfv ~/flocker/* /root/mnt/ca
+ls -la /root/mnt/ca
+# ok now unmount and unmap it
+umount /root/mnt
+rbd unmap /dev/rbd/rbd/meta-flocker
+# verify it is unmapped
+rbd showmapped
+# prepare for auto-mount before flocker service
+mkdir -p /var/lib/flocker
+# create mounter/unmounter script
+nano -w /usr/bin/mount-rbd-rbd-meta-flocker
+...
+#!/bin/bash -
+
+# Image mount/unmount and pool are passed from the systems service as arguments
+# Determine if we are mounting or unmounting
+if [ "$1" == "m" ]; then
+   modprobe rbd
+   rbd map --pool rbd meta-flocker --id admin --keyring /etc/ceph/ceph.client.admin.keyring
+   mkdir -p /var/lib/flocker
+   mount /dev/rbd/rbd/meta-flocker /var/lib/flocker
+fi
+if [ "$1" == "u" ]; then
+   umount /var/lib/flocker
+   rbd unmap /dev/rbd/rbd/meta-flocker
+fi
+...
+chmod +x /usr/bin/mount-rbd-rbd-meta-flocker
+# create systemd service
+nano -w /etc/systemd/system/mount-rbd-rbd-meta-flocker.service
+...
+[Unit]
+Description=RADOS block device mapping for meta-flocker in pool rbd"
+Conflicts=shutdown.target
+Wants=network-online.target
+After=NetworkManager-wait-online.service
+Before=flocker-control.service flocker-control-agent.service flocker-control-api.service flocker-dataset-agent.service flocker-container-agent.service flocker-docker-plugin.service docker.service
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/mount-rbd-rbd-meta-flocker m
+ExecStop=/usr/bin/mount-rbd-rbd-meta-flocker u
+
+[Install]
+WantedBy=multi-user.target
+...
+systemctl daemon-reload
+systemctl enable mount-rbd-rbd-meta-flocker
+systemctl restart mount-rbd-rbd-meta-flocker
+# verify if mounter correctly
+lsblk -f
+df
+
+# ----> END FOR PRIMARY MANAGER
+# ----> END FOR PRIMARY MANAGER
+# ----> END FOR PRIMARY MANAGER
+# ----> END FOR PRIMARY MANAGER
+# ----> END FOR PRIMARY MANAGER
+
+# ----> FOR PRIMARY MANAGER
+systemctl enable flocker-control
+systemctl restart flocker-control
+
+firewall-cmd --reload
+firewall-cmd --permanent --add-service flocker-control-api
+firewall-cmd --add-service flocker-control-api
+firewall-cmd --reload
+firewall-cmd --permanent --add-service flocker-control-agent
+firewall-cmd --add-service flocker-control-agent
+firewall-cmd --reload
+
+# -----> FOR EVERY MANAGER
+systemctl enable flocker-dataset-agent
+systemctl restart flocker-dataset-agent
+systemctl enable flocker-container-agent
+systemctl restart flocker-container-agent
+systemctl enable flocker-docker-plugin
+systemctl restart flocker-docker-plugin
+systemctl restart docker
+
+curl --cacert /etc/flocker/cluster.crt --cert /etc/flocker/client.crt --key /etc/flocker/client.key https://manager1.flocker.me:4523/v1/configuration/containers
+
+# ----> FOR PRIMARY MANAGER
+
+docker swarm init --advertise-addr 10.0.2.254
+
+# ----> FOR EVERY MANAGER
+docker node ls
+
+# ----> FOR EVERY MANAGER
+## check flocker nodes
+flockerctl list-nodes
+
+# ----> FOR PRIMARY MANAGER
+reboot
+
+# ----> FOR PRIMARY MANAGER
+########## test flocker volume creation
+# list nodes
+flockerctl list-nodes
+# create volume
+flockerctl create --node cc7114a3 --size 512Mb
+# list volumes
+flockerctl ls
+# destroy volume
+flockerctl destroy -d <volume UUID>
+
+####################### CHOICE: WORKER #################################
+
+# -----> FOR BASE WORKER
+
+firewall-cmd --add-port=2376/tcp --permanent
+firewall-cmd --add-port=7946/tcp --permanent
+firewall-cmd --add-port=7946/udp --permanent
+firewall-cmd --add-port=4789/udp --permanent
+firewall-cmd --reload
+systemctl restart docker
+
+# ----> FOR EVERY WORKER
+
+nmtui ->>>>>>>>>>>>> set IP to static (enp0s3)
+>>>>>> 10.0.2.100(+worker number)/24, 10.0.2.1, (10.0.2.254 | 4.2.2.4 | 8.8.8.8)
+>>>>>> SET SYSTEM HOST NAME (worker${n}.flocker.me)
+reboot
+
+##
+## verify static ip
+##
+ifconfig
+##
+## verify resolv.conf
+##
+cat /etc/resolv.conf
+##
+## test DNS
+##
+ping flocker.me -c 4
+ping ns1.flocker.me -c 4
+ping manager1.flocker.me -c 4
+ping manager2.flocker.me -c 4
+ping manager3.flocker.me -c 4
+
+# ----> FOR EVERY WORKER (NODE_NUMBER = 1..N)
+
+export NODE_NUMBER=2
+cp -fv ~/flocker/cluster-cert/cluster.crt /etc/flocker/
+cp -fv ~/flocker/node-cert-${NODE_NUMBER}/node.crt /etc/flocker/
+cp -fv ~/flocker/node-cert-${NODE_NUMBER}/node.key /etc/flocker/
+chmod 0700 /etc/flocker
+chmod 0600 /etc/flocker/node.key
+cp -fv ~/flocker/client-cert-${NODE_NUMBER}/client.crt /etc/flocker/
+cp -fv ~/flocker/client-cert-${NODE_NUMBER}/client.key /etc/flocker/
+chmod 0600 /etc/flocker/client.key
+cp -fv ~/flocker/plugin-cert-${NODE_NUMBER}/plugin.crt /etc/flocker/
+cp -fv ~/flocker/plugin-cert-${NODE_NUMBER}/plugin.key /etc/flocker/
+chmod 0600 /etc/flocker/plugin.key
+
+systemctl enable flocker-dataset-agent
+systemctl restart flocker-dataset-agent
+systemctl enable flocker-container-agent
+systemctl restart flocker-container-agent
+systemctl enable flocker-docker-plugin
+systemctl restart flocker-docker-plugin
+systemctl restart docker
+
+curl --cacert /etc/flocker/cluster.crt --cert /etc/flocker/client.crt --key /etc/flocker/client.key https://manager1.flocker.me:4523/v1/configuration/containers
+
+    docker swarm join \
+    --token SWMTKN-1-3d9xwkh9sahmnf3m0cry4k0n807h09fz4kxfpxohvdn2pb6c3z-2s6fbznf29ci00cf8pnrvm1uo \
+    10.0.2.254:2377
+
+## check flocker nodes
+flockerctl list-nodes
+
+########################################################################
+
+
+
+########################################################################
+########################################################################
+##
+##  Deploy registry server
+##
+########################################################################
+########################################################################
+
+#### ->>>>>>>>>>>>>>> OPEN SSH SERVER TUNNEL IN ANOTHER SCREEN
+docker run -td --name docker-registry -h docker-registry -p 5000:5000 --network flocker.me --restart=always registry:2
+
+# ----> FOR EVERY NODE
+firewall-cmd --add-port=5000/tcp --permanent
+
+docker tag registry:2 10.0.2.254:5000/registry:2
+docker tag owncloud:8.2.9-apache 10.0.2.254:5000/owncloud:8.2.9-apache
+docker tag postgres:9.4.10 10.0.2.254:5000/postgres:9.4.10
+docker tag nginx:1.11.7 10.0.2.254:5000/nginx:1.11.7
+docker tag alpine 10.0.2.254:5000/alpine:latest
+docker tag redis:3.0.6 10.0.2.254:5000/redis:3.0.6
+docker tag erikh/dnscache 10.0.2.254:5000/enrikh/dnscache:latest
+docker tag offers/network-dns-cache:0.0.1 10.0.2.254:5000/offers/network-dns-cache:0.0.1
+docker tag mongo:3.4.0 10.0.2.254:5000/mongo:3.4.0
+docker tag mongo-express:0.32.0 10.0.2.254:5000/mongo-express:0.32.0
+docker tag wurstmeister/zookeeper:3.4.6 10.0.2.254:5000/wurstmeister/zookeeper:3.4.6
+docker tag wurstmeister/kafka:0.10.1.0-2 10.0.2.254:5000/wurstmeister/kafka:0.10.1.0-2
+docker tag node:6.9.2 10.0.2.254:5000/node:6.9.2
+docker tag redis:3.0.7 10.0.2.254:5000/redis:3.0.7
+docker tag postgres:9.6 10.0.2.254:5000/postgres:9.6
+docker tag fenglc/pgadmin4:1.1 10.0.2.254:5000/fenglc/pgadmin4:1.1
+docker tag begriffs/postgrest:v0.3.2.0 10.0.2.254:5000/begriffs/postgrest:v0.3.2.0
+docker tag jsreport/jsreport:1.0.9 10.0.2.254:5000/jsreport/jsreport:1.0.9
+docker tag sameersbn/bind:latest 10.0.2.254:5000/sameersbn/bind:latest
+docker tag clusterhq/uft:latest 10.0.2.254:5000/clusterhq/uft:latest
+docker tag gliderlabs/alpine:latest 10.0.2.254:5000/gliderlabs/alpine:latest
+
+docker push 10.0.2.254:5000/registry:2
+docker push 10.0.2.254:5000/owncloud:8.2.9-apache
+docker push 10.0.2.254:5000/postgres:9.4.10
+docker push 10.0.2.254:5000/nginx:1.11.7
+docker push 10.0.2.254:5000/alpine:latest
+docker push 10.0.2.254:5000/redis:3.0.6
+docker push 10.0.2.254:5000/enrikh/dnscache:latest
+docker push 10.0.2.254:5000/offers/network-dns-cache:0.0.1
+docker push 10.0.2.254:5000/mongo:3.4.0
+docker push 10.0.2.254:5000/mongo-express:0.32.0
+docker push 10.0.2.254:5000/wurstmeister/zookeeper:3.4.6
+docker push 10.0.2.254:5000/wurstmeister/kafka:0.10.1.0-2
+docker push 10.0.2.254:5000/node:6.9.2
+docker push 10.0.2.254:5000/redis:3.0.7
+docker push 10.0.2.254:5000/postgres:9.6
+docker push 10.0.2.254:5000/fenglc/pgadmin4:1.1
+docker push 10.0.2.254:5000/begriffs/postgrest:v0.3.2.0
+docker push 10.0.2.254:5000/jsreport/jsreport:1.0.9
+docker push 10.0.2.254:5000/sameersbn/bind:latest
+docker push 10.0.2.254:5000/clusterhq/uft:latest
+docker push 10.0.2.254:5000/gliderlabs/alpine:latest
+
+# ----> FOR EVERY OTHER NODE
+
+docker pull 10.0.2.254:5000/registry:2
+docker pull 10.0.2.254:5000/owncloud:8.2.9-apache
+docker pull 10.0.2.254:5000/postgres:9.4.10
+docker pull 10.0.2.254:5000/nginx:1.11.7
+docker pull 10.0.2.254:5000/alpine:latest
+docker pull 10.0.2.254:5000/redis:3.0.6
+docker pull 10.0.2.254:5000/enrikh/dnscache:latest
+docker pull 10.0.2.254:5000/offers/network-dns-cache:0.0.1
+docker pull 10.0.2.254:5000/mongo:3.4.0
+docker pull 10.0.2.254:5000/mongo-express:0.32.0
+docker pull 10.0.2.254:5000/wurstmeister/zookeeper:3.4.6
+docker pull 10.0.2.254:5000/wurstmeister/kafka:0.10.1.0-2
+docker pull 10.0.2.254:5000/node:6.9.2
+docker pull 10.0.2.254:5000/redis:3.0.7
+docker pull 10.0.2.254:5000/postgres:9.6
+docker pull 10.0.2.254:5000/fenglc/pgadmin4:1.1
+docker pull 10.0.2.254:5000/begriffs/postgrest:v0.3.2.0
+docker pull 10.0.2.254:5000/jsreport/jsreport:1.0.9
+docker pull 10.0.2.254:5000/sameersbn/bind:latest
+docker pull 10.0.2.254:5000/clusterhq/uft:latest
+docker pull 10.0.2.254:5000/gliderlabs/alpine:latest
+
+#### ->>>>>>>>>>>>>>> CLOSE SSH SERVER TUNNEL IN ANOTHER SCREEN
+

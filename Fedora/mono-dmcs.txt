@@ -1,0 +1,7 @@
+#!/bin/bash
+MONO=`which mono`
+MCS='/usr/lib/mono/4.5/mcs.exe'
+
+$MONO $MCS -sdk:4.0 "$@"
+
+
