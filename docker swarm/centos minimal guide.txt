@@ -797,6 +797,11 @@ firewall-cmd --add-port=4789/udp --permanent
 firewall-cmd --reload
 systemctl restart docker
 
+### disable firewall since it poses problems with
+### docker overlay network infrastructure
+systemctl disable firewalld
+systemctl stop firewalld
+
 # ----> FOR EVERY WORKER
 
 nmtui ->>>>>>>>>>>>> set IP to static (enp0s3)
@@ -823,7 +828,7 @@ ping manager3.flocker.me -c 4
 
 # ----> FOR EVERY WORKER (NODE_NUMBER = 1..N)
 
-export NODE_NUMBER=2
+export NODE_NUMBER=8
 cp -fv ~/flocker/cluster-cert/cluster.crt /etc/flocker/
 cp -fv ~/flocker/node-cert-${NODE_NUMBER}/node.crt /etc/flocker/
 cp -fv ~/flocker/node-cert-${NODE_NUMBER}/node.key /etc/flocker/

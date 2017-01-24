@@ -1,5 +1,13 @@
+# exit code standards
+http://tldp.org/LDP/abs/html/exitcodes.html
+
 # infinite SSH tunnel
 while true; do ssh -D 8084 root@178.162.207.98; done
+
+# destroy all flockerctl volumes
+for line in $(flockerctl ls | awk '{print $1}'); do echo "destroying $line ..."; flockerctl move -d $line -t $(flockerctl list-nodes | grep 10.0.2.254 | awk '{print $1}'); echo "wait for 15 seconds..."; sleep 15; flockerctl destroy -d $line; echo "wait for 15 seconds..."; sleep 15; done
+# destroy all flockerctl volumes (no copy, no wait)
+for line in $(flockerctl ls | awk '{print $1}'); do echo "destroying $line ..."; flockerctl destroy -d $line; done
 
 # stop clamav
 systemctl stop clamd.service
@@ -8,6 +16,10 @@ systemctl stop clam-freshclam.service
 systemctl disable clamd.service
 systemctl disable clamd@scan.service
 systemctl disable clam-freshclam.service
+
+# remove all containers
+docker stop $(docker ps -a -q)
+docker rm -v $(docker ps -a -q)
 
 ####
 ##
@@ -108,6 +120,8 @@ flockerctl list
 # destroy volume
 flockerctl destroy -d <volume UUID>
 
+# move volume from a server
+flockerctl move -d <volume UUID> -t <node UUID>
 
 ##########################################################
 ##                      RBD                             ##
@@ -124,6 +138,70 @@ rbd showmapped
 
 # unmap image
 rbd unmap /dev/rbd0
+
+##########################################################
+##                  RESIZE VOLUME                       ##
+##########################################################
+1. given /dev/rbd? which is nearly full, find UUID by
+   sudo df | grep /dev/rbd? which would yield
+   /flocker/<UUID> as mount point
+2. find name or half of name by running
+   flockerctl ls | grep <UUID>
+   look for "name=" in third column from left
+   name could be in-complete because it could
+   span multiple rows which grep can not tell
+3. find complete name by running
+   docker volume ls | grep <HALF_NAME>
+4. goto server specified by command
+   flockerctl ls | grep <UUID>
+5. find which container owning volume by
+   running command:
+
+   for id in $(docker ps | awk '{print $1}'); do echo inspecting $id; docker inspect -f '{{ .Mounts }}' $id | grep <NAME>; done
+
+   IF NOT FOUND:
+
+   for id in $(docker ps -a | awk '{print $1}'); do echo inspecting $id; docker inspect -f '{{ .Mounts }}' $id | grep <NAME>; done
+
+6. find container status and service/container name by running command
+   docker ps -a | grep <CONTAINER_ID>
+7. if container is running
+     IF is service in swarm:
+       run in manager:
+         docker service scale <SERVICE_NAME>=0
+     IF is normal container:
+       run in node:
+         docker stop <CONTAINER_NAME>
+   wait for a little bit..
+
+8. unmount volume by running command:
+   umount /flocker/<UUID>
+
+9. resize actual image:
+   NOTE: size is in MB (mega bytes)
+   rbd resize --image flocker-<UUID> --size 2048
+
+10. verify that image is actually resized:
+    rbd info flocker-<UUID>
+
+11. ensure filesystem is ext4
+    blkid /dev/rbd/rbd/flocker-<UUID>
+
+12. resize ext4 filesystem
+    resize2fs /dev/rbd/rbd/flocker-<UUID>
+
+13. restart docker
+    systemctl restart docker
+
+14. restart container/service if it was already running!
+    
+
+##########################################################
+##                      UTILS                           ##
+##########################################################
+
+# create a 1MB random file
+dd if=/dev/zero of=file_to-create bs=1k count=1000
 
 ####################################################################
 ####################################################################
