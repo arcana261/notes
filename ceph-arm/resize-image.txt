@@ -1,0 +1,85 @@
+# resize the image
+qemu-img resize ubuntu.img +24G
+
+# bring up the loop
+sudo modprobe -r loop
+sudo modprobe loop max_loop=10 max_part=15
+sudo losetup -f ubuntu.img
+
+# verify loop is up
+lsblk
+
+###
+### IF partitions are not found
+### first verify image is loaded
+### by running "lsblk"
+### and that /dev/loop0 is loaded
+### and the size matches that of the
+### image. then run the following command
+### to reload the partition table
+###
+### partprobe /dev/loop0
+###
+
+# print partition table and save it!
+sudo parted /dev/loop0 print
+
+# mount root and get a copy of fstab
+sudo mount /dev/loop0p2 /mnt
+cat /mnt/etc/fstab
+
+# unmount it again
+sudo umount /mnt
+
+# open partitioning
+sudo parted /dev/loop0
+
+## remove all partitions except the boot
+> rm 5
+> rm 3
+> rm 2
+
+## recreate partitions
+> mkpart primary ext4 256M 41G
+> mkpart extended 41G 100%
+> mkpart logical linux-swap 41G 100%
+
+## print to see partitions
+> print
+
+## say goodbye
+> quit
+
+# view created filesystems
+lsblk
+
+# restore root filesystem id
+sudo tune2fs /dev/loop0p2 -U <UUID>
+# verify UUID is restored
+sudo blkid /dev/loop0p2
+# create a new swap
+sudo mkswap /dev/loop0p5
+# get new swap id and remember it
+sudo blkid /dev/loop0p5
+
+# run fsck on root partition
+sudo e2fsck -f /dev/loop0p2
+# resize root filesystem
+sudo resize2fs -p /dev/loop0p2
+# mount root filesystem
+sudo mount /dev/loop0p2 /mnt
+# edit fstab and change swap filesystem UUID
+sudo vim /mnt/etc/fstab
+> UUID=<new UUID> none swap sw 0 0
+
+# unmount /mnt
+sudo umount /mnt
+# de-loop /dev/loop0
+sudo losetup -d /dev/loop0
+
+
+
+
+
+
+
