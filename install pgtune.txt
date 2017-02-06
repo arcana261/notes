@@ -1,0 +1,8 @@
+sed -i "s/deb http:\/\/security\.debian\.org.*//g" /etc/apt/sources.list
+apt-get update
+apt-get -y install git
+cd /
+git clone https://github.com/gregs1104/pgtune.git
+
+
+

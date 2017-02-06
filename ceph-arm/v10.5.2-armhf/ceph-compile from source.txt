@@ -1,0 +1,127 @@
+###### Ubuntu 14.04
+# https://github.com/ceph/ceph
+# v10.2.5
+
+##
+## what would change if we compile in 16.04?
+##
+## 1. package dependencies for "equivs" down below
+## 2. babelrc version might differ
+## 3. boost version might differ
+##
+## NOTE: Ubuntu 16.04 might contain different sub modules
+## of boost, find missing ones by running "cmake" in ceph
+## which would complain and compile the missing submodules.
+##     HINT: TAKE A LOOK AT "--with-libraries=filesystem,program_options,system,random"
+##
+##
+
+apt-get install -y git cmake make
+
+wget http://mirrors.kernel.org/ubuntu/pool/main/p/po-debconf/po-debconf_1.0.16+nmu2ubuntu1_all.deb
+dpkg -i ...
+
+echo "deb http://security.ubuntu.com/ubuntu trusty-security main" >> /etc/apt/sources.list
+apt-get update
+
+wget http://security.ubuntu.com/ubuntu/pool/main/a/apparmor/dh-apparmor_2.8.95~2430-0ubuntu5.1_all.deb
+dpkg -i ...
+
+apt-get install debhelper
+wget http://mirrors.kernel.org/ubuntu/pool/universe/e/equivs/equivs_2.0.9_all.deb
+dpkg -i ...
+
+apt-get install equivs
+
+# install python pip
+apt-get install python-setuptools python-dev build-essential 
+# check if date is ok, otherwise will cause
+# problems with SSL verification
+date
+# set date using
+# date --set "1/23/2017 6:47"
+
+# /tmp is low so unmount it
+# /etc/init.d/mysql stop
+# /etc/init.d/apache2 stop
+## find out by "lsof | grep /tmp"
+umount /tmp
+echo 'MINTMPKB=0' > sudo /etc/default/mountoverflowtmp
+
+easy_install pip 
+pip install --upgrade pip 
+pip install --upgrade virtualenv 
+# check pip version
+pip --version
+
+# install babeltrace
+apt-get install software-properties-common
+apt-add-repository ppa:lttng/ppa
+apt-get update
+apt-get install babeltrace
+# test babeltrace
+babeltrace --help
+
+git config --global http.sslVerify false
+git clone --recursive --branch v10.2.5 https://github.com/ceph/ceph.git
+cd ceph
+
+# if you get no package "ceph-build-deps" error
+# open "install-deps.sh" and comment line containing
+# apt-get remove -y ceph-build-deps
+
+./install-deps.sh
+
+# compile babeltrace
+## HINT: compile exactly the version
+## pointed by "babeltrace --help" which
+## we obtained using ubuntu repository
+## earlier.
+cd ~
+apt-get install libglib2.0-dev bison flex libpopt0 libpopt-dev libelf-dev libdw-dev swig
+git clone https://github.com/efficios/babeltrace.git
+cd babeltrace
+git checkout tags/v1.5.1 -b to-compile
+./bootstrap
+./configure --enable-python-bindings
+make
+make install
+ldconfig
+
+# install boost manually
+# to obain boost_random
+# check version of boost by
+# examining already installed
+# packages.
+# download using VPN or something
+# because of sanctions.
+## SCP boost into our machine
+## http://www.boost.org/
+### in our case, Ubuntu 14.04 version "1.54" was needed
+### apt-get install libboost...[TAB] will show packages with versions.
+cd ~
+tar xvf boost_...
+cd boost_...
+apt-get install build-essential g++
+./bootstrap.sh --show-libraries
+./bootstrap.sh --with-libraries=filesystem,program_options,system,random
+./b2
+./b2 install
+## copy newly compiled files to where distribution used to store
+## them
+## find by using "find /usr/lib -name "*boost*"
+cp -rv /usr/local/lib/libboost* /usr/lib/arm-linux-gnueabihf/
+
+##
+## in file src/CMakeLists.txt line 997
+## change "journal/AsyncOpTracker.cc"
+## to "common/AsyncOpTracker.cc"
+##
+
+# continue with installing ceph
+cd ~/ceph
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_SBINDIR=/sbin ..
+make
+

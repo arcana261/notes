@@ -1,0 +1,40 @@
+# scp "babeltrace.tar.xz" and "ceph.tar.xz" to server
+scp babeltrace.tar.xz root@....:~/
+scp ceph.tar.xz root@....:~/
+
+.........................
+# extrace tar.xz files
+
+tar xvJf babeltrace.tar.xz
+tar xvJf ceph.tar.xz
+
+.........................
+
+# create symbolic link from /root
+# to /home/ubuntu
+# because they have been compiled
+# in /home/ubuntu
+
+ln -s /root /home/ubuntu
+
+apt-get update
+apt-get install git cmake make nano vim screen htop debhelper xz-utils libtool libtool-bin equivs python-pip babeltrace libglib2.0-dev bison flex libpopt0 libpopt-dev libelf-dev libdw-dev swig
+pip install --upgrade pip
+
+cd ~/ceph
+./install-deps.sh
+
+cd ~/babeltrace
+make install
+ldconfig
+
+cd ~/ceph/build
+make install
+
+...
+...
+...
+...
+...
+
+

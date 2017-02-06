@@ -1,0 +1,528 @@
+###### Ubuntu 14.04
+# https://github.com/ceph/ceph
+# v10.2.5
+
+##
+## what would change if we compile in 16.04?
+##
+## 1. package dependencies for "equivs" down below
+## 2. babelrc version might differ
+## 3. boost version might differ
+##
+## NOTE: Ubuntu 16.04 might contain different sub modules
+## of boost, find missing ones by running "cmake" in ceph
+## which would complain and compile the missing submodules.
+##     HINT: TAKE A LOOK AT "--with-libraries=filesystem,program_options,system,random"
+##
+##
+
+apt-get update
+apt-get install git cmake make nano vim screen htop debhelper xz-utils libtool libtool-bin
+
+
+########################################################
+###### armhf CROSS COMPILE on arm64 ####################
+########################################################
+########################################################
+
+dpkg --add-architecture armhf
+
+
+%%%%%%%%%%%%%%%%%%%%%%% IF ENVIRONMENT IS NON ARM UBUNTU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-security main restricted" >> /etc/apt/sources.list
+echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-security universe" >> /etc/apt/sources.list
+echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-security multiverse" >> /etc/apt/sources.list
+
+apt-get update
+
+apt-get install gcc-arm-linux-gnueabihf
+apt-get install lsb-release devscripts equivs dpkg-dev debhelper ubuntu-dev-tools sbuild stress
+
+sbuild-update --keygen
+mk-sbuild --target=armhf xenial
+
+schroot -c xenial-amd64-armhf
+
+
+mk-build-deps -aarmhf debian/control
+
+sbuild --build=amd64 --host=armhf -d trusty myapp_1.0.dsc
+
+%%%%%%%%%%%%%%%%%%%%%%% END IF ENVIRONMENT IS NON ARM UBUNTU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+apt-get update
+apt-get install libc6:armhf libstdc++6:armhf
+
+>>> undo: apt-get purge ".*:<arch>"
+
+########################################################
+########################################################
+########################################################
+
+apt-get install equivs
+
+### 16.04
+apt-get install python-pip
+...................................................................................................
+
+apt-get install babeltrace
+...................................................................................................
+
+git config --global http.sslVerify false
+git clone --recursive --branch v10.2.5 https://github.com/ceph/ceph.git
+cd ceph
+
+# if you get no package "ceph-build-deps" error
+# open "install-deps.sh" and comment line containing
+# apt-get remove -y ceph-build-deps
+
+./install-deps.sh
+
+# compile babeltrace
+## HINT: compile exactly the version
+## pointed by "babeltrace --help" which
+## we obtained using ubuntu repository
+## earlier.
+cd ~
+apt-get install libglib2.0-dev bison flex libpopt0 libpopt-dev libelf-dev libdw-dev swig
+git clone https://github.com/efficios/babeltrace.git
+cd babeltrace
+git checkout tags/v1.3.2 -b to-compile
+./bootstrap
+./configure --enable-python-bindings
+make
+make install
+ldconfig
+
+
+
+
+##
+## in file src/CMakeLists.txt
+## find "target_link_libraries(ceph-objectstore-tool"
+## remove "tcmalloc" from lsit
+##
+
+
+##
+## in file src/CMakeLists.txt line 997
+## change "journal/AsyncOpTracker.cc"
+## to "common/AsyncOpTracker.cc"
+##
+
+##
+## in file src/CMakeLists.txt
+## locate "tools/rbd_mirror/image_replayer/" source files
+## add following line
+##
+## tools/rbd_mirror/image_replayer/EventProcessor.cc
+##
+
+##
+## in file src/erasure_code/CMakeLists.txt
+## remove from "add_custom_target" from end of file
+## values
+## "ec_jerasure_sse3"
+## "ec_jerasure_sse4"
+##
+##
+
+##
+## in following files do
+##
+## src/erasure-code/jerasure/gf-complete/src/neon/gf_w4_neon.c
+## src/erasure-code/jerasure/gf-complete/src/neon/gf_w8_neon.c
+## src/erasure-code/jerasure/gf-complete/src/neon/gf_w16_neon.c
+## src/erasure-code/jerasure/gf-complete/src/neon/gf_w32_neon.c
+## src/erasure-code/jerasure/gf-complete/src/neon/gf_w64_neon.c
+##
+## add following line at the head of these files
+##                 #include <arm_neon.h>
+##
+
+
+##
+## in file src/erasure-code/jerasure/CMakeLists.txt
+## after "add_library(neon_objs" add
+##
+## set_target_properties(neon_objs PROPERTIES COMPILE_FLAGS ${ARM_NEON_FLAGS})
+##
+
+##
+## in file src/CMakeLists.txt
+## comment following line
+##
+## add_subdirectory(test)
+##
+
+##
+## in file debian/rules
+## add following option to ./configure
+##
+## --without-tcmalloc
+##
+
+########## 
+########## TO SEE AVAILABLE CMAKE OPTIONS
+########## cmake -LH
+########## 
+
+# continue with installing ceph
+cd ~/ceph
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_SBINDIR=/sbin -DCMAKE_INSTALL_PREFIX=/usr -DWITH_SYSTEMD=ON ..
+make
+
+
+..............................................................................
+.......................... BUILD PACKAGE ...............................
+cd ~/ceph
+apt-get install debhelper
+dpkg-buildpackage
+..............................................................................
+..............................................................................
+
+
+..............................................................................
+make install
+ln -s /sbin/sgdisk /usr/sbin/sgdisk
+
+cd /usr/lib/python2.7/dist-packages/rados
+python setup.py install
+
+cd /usr/lib/python2.7/dist-packages/rbd
+cp -rfv ~/ceph/src/include/rbd .
+python setup.py install
+
+cd /usr/lib/python2.7/dist-packages/cephfs
+python setup.py install
+
+cd ~/ceph/src/ceph-disk
+python setup.py install
+ln -s `which ceph-disk` /usr/sbin/ceph-disk
+
+pip install ceph-deploy
+
+groupadd ceph
+useradd -g ceph -M ceph
+usermod -L ceph
+gpasswd -a ceph ceph
+
+cp -rv ~/ceph/udev/* /etc/udev/rules.d/
+reboot
+
+mkdir -p /var/run/ceph
+chown -R ceph:ceph /var/run/ceph
+chmod -R g+s /var/run/ceph
+
+cp -rv ~/ceph/systemd/* /lib/systemd/system/
+systemctl daemon-reload
+
+mv /lib/systemd/system/ceph-create-keys@.service /lib/systemd/system/ceph-create-keys@ubuntu-arm.service
+systemctl daemon-reload
+systemctl enable ceph-create-keys@ubuntu-arm.service
+reboot
+
+cp ~/ceph/src/ceph-osd-prestart.sh /usr/lib/ceph/
+chmod +x /usr/lib/ceph/ceph-osd-prestart.sh
+
+cp ~/ceph/build/bin/ceph-crush-location /usr/bin/
+chmod +x /usr/bin/ceph-crush-location
+
+mkdir -p /root/.python-eggs
+chmod -R 777 /root/.python-eggs
+
+############ CONFIGURE STANDALONE CEPH ####################
+
+mkdir -p /etc/ceph
+cp /usr/etc/ceph.conf.example /etc/ceph/ceph.conf
+mkdir -p ~/ceph-keys
+
+# create new key for cluster
+# e.g.
+# 8c7b3da9-85b4-4ee0-b418-79ea12997890
+uuidgen
+
+vim /etc/ceph/ceph.conf
+... remove [mon.a], [osd.0], [osd.1], [mds.a] sections
+... add fsid to ceph.conf
+[global]
+fsid = <UUID>
+... set initial members
+[global]
+mon initial members = ubuntu-arm
+... set monitor hosts
+[global]
+mon host = 127.0.0.1
+...
+
+# create monitor secret key
+ceph-authtool --create-keyring ~/ceph-keys/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'
+
+# generate administrator keyring
+ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow'
+
+# add client.admin key to ceph.mon.keyring
+ceph-authtool ~/ceph-keys/ceph.mon.keyring --import-keyring /etc/ceph/ceph.client.admin.keyring 
+
+# generate a monitor map
+monmaptool --create --add ubuntu-arm 127.0.0.1 --fsid <UID> ~/ceph-keys/monmap
+
+# create default data directory {cluster}-{hostname}
+mkdir -p /var/lib/ceph/mon/ceph-ubuntu-arm
+chown -R ceph:ceph /var/lib/ceph/mon
+chmod -R g+s /var/lib/ceph/mon
+
+# populate monitor deamons with monitor map and keyring
+ceph-mon --cluster ceph --mkfs -i ubuntu-arm --monmap ~/ceph-keys/monmap --keyring ~/ceph-keys/ceph.mon.keyring
+chown -R ceph:ceph /var/lib/ceph/mon
+
+# update configuration
+#### osd pool default size = N
+#### denotes number of replicas
+#### each object should have,
+#### also minimum number of OSD's
+vim /etc/ceph/ceph.conf
+...
+[global]
+public network = 10.0.2.0/24
+auth cluster required = cephx
+auth service required = cephx
+auth client required = cephx
+osd journal size = 1000
+osd pool default size = 1
+osd pool default min size = 1
+osd pool default pg num = 333
+osd pool default pgp num = 333
+osd crush chooseleaf type = 1
+osd max object name len = 256
+osd max object namespace len = 64
+...
+
+# touch done file
+touch /var/lib/ceph/mon/ceph-ubuntu-arm/done
+chown ceph:ceph /var/lib/ceph/mon/ceph-ubuntu-arm/done
+
+mv /lib/systemd/system/ceph-mon@.service /lib/systemd/system/ceph-mon@ubuntu-arm.service
+systemctl daemon-reload
+systemctl restart ceph-mon@ubuntu-arm.service
+systemctl enable ceph-mon@ubuntu-arm.service
+
+# verify service state
+systemctl status ceph-mon@ubuntu-arm.service
+
+# verify monitor is running
+ceph -s
+
+# verify default created pools
+ceph osd lspools
+
+########## OSD CREATION (LONG FORM) #############
+
+# generate a new UUID for OSD
+uuidgen
+
+# create an OSD
+ceph osd create <UUID> <num=0,1,2...>
+
+# create default directory
+# {cluster name}-{osd number}
+mkdir -p /var/lib/ceph/osd/ceph-0
+chown -R ceph:ceph /var/lib/ceph/osd
+chmod -R g+s /var/lib/ceph/osd
+
+# initialize OSD data directory
+ceph-osd --cluster ceph -i {osd number} --mkfs --mkkey --osd-uuid <UUID>
+chown -R ceph:ceph /var/lib/ceph/osd
+
+# register OSD authentication key
+ceph auth add osd.{osd num} osd 'allow *' mon 'allow profile osd' -i /var/lib/ceph/osd/{cluster}-{osd num}/keyring
+
+# add OSD to crush map
+ceph --cluster <cluster> osd crush add-bucket <hostname> host
+
+# place cep node under root "default"
+ceph --cluster <cluster> osd crush move <hostname> root=default
+
+# add OSD to crushmap so it can begin receiving data
+# osd.0 osd.1 ...
+ceph --cluster <cluster> osd crush add osd.<number> 1.0 host=<host name>
+
+# configure systemd service
+## @0.service is actually @<osd num>.service
+mv /lib/systemd/system/ceph-osd@.service /lib/systemd/system/ceph-osd@0.service
+systemctl daemon-reload
+systemctl restart ceph-osd@0.service
+systemctl enable ceph-osd@0.service
+
+# verify service status
+systemctl status ceph-osd@0.service
+
+# verify ceph state
+ceph -s
+
+# verify osd tree
+ceph osd tree
+
+########## MDS Creation #############
+
+# create MDS data directory
+# {cluster name}-{host name}
+mkdir -p /var/lib/ceph/mds/ceph-ubuntu-arm
+chown -R ceph:ceph /var/lib/ceph/mds
+chmod -R g+s /var/lib/ceph/mds
+
+# create a keyring for mds
+ceph-authtool --create-keyring /var/lib/ceph/mds/ceph-ubuntu-arm/keyring --gen-key -n mds.ubuntu-arm
+
+# import keyring and set caps
+ceph auth add mds.ubuntu-arm osd "allow rwx" mds "allow" mon "allow profile mds" -i /var/lib/ceph/mds/ceph-ubuntu-arm/keyring
+chown -R ceph:ceph /var/lib/ceph/mds
+
+# add mds to ceph.conf
+vim /etc/ceph/ceph.conf
+...
+[mds.ubuntu-arm]
+host = ubuntu-arm
+...
+
+# test daemon manual way
+ceph-mds --cluster ceph -i ubuntu-arm -m 127.0.0.1:6789
+killall -9 ceph-mds
+
+# create systemd service
+mv /lib/systemd/system/ceph-mds@.service /lib/systemd/system/ceph-mds@ubuntu-arm.service
+systemctl daemon-reload
+systemctl restart ceph-mds@ubuntu-arm.service
+systemctl enable ceph-mds@ubuntu-arm.service
+
+# verify service status
+systemctl status ceph-mds@ubuntu-arm.service
+
+# verify ceph state
+ceph -s
+
+# verify osd tree
+ceph osd tree
+
+########## create ceph filesystem #############
+
+# create pools (10 is pgnum)
+ceph osd pool create cephfs_data 10
+ceph osd pool create cephfs_metadata 10
+
+# verify pools created
+ceph osd lspools
+
+# create filesystem
+ceph fs new cephfs cephfs_metadata cephfs_data
+
+# verify filesystem is created
+ceph fs ls
+
+# view mds stats
+ceph mds stat
+
+# test cephfs
+ceph-fuse -m 127.0.0.1:6789 -c /etc/ceph/ceph.conf --cluster ceph --name client.admin /mnt
+touch /mnt/test.txt
+umount /mnt
+
+########## test rbd #############
+
+# create a new image of size 100 megabytes
+rbd create test --size 100
+
+# verify image created
+rbd ls
+
+# disable some features to work with ARM
+rbd feature disable test exclusive-lock object-map fast-diff deep-flatten
+
+# map image
+rbd map rbd/test
+
+# verify it is mapped
+rbd showmapped
+
+# format as ext4
+mkfs.ext4 /dev/rbd/rbd/test
+
+# mount image
+mount /dev/rbd/rbd/test /mnt
+
+# verify image
+lsblk
+
+# write some data (10MB)
+dd if=/dev/zero of=/mnt/test.data bs=1k count=10000
+
+# verify file is created
+ls /mnt
+
+# verify free disk space
+df -m
+
+# unmount image
+umount /mnt
+
+# verify it is not mounted
+lsblk
+
+# unmap image
+rbd unmap /dev/rbd/rbd/test
+
+# verify it is not mapped
+rbd showmapped
+
+# delete image
+rbd rm test
+
+# verify image does not exist
+rbd ls
+
+########## stop services #############
+
+systemctl stop ceph-mds@ubuntu-arm.service
+systemctl stop ceph-osd@0.service
+systemctl stop ceph-mon@ubuntu-arm.service
+systemctl stop ceph-create-keys@ubuntu-arm.service
+
+systemctl disable ceph-mds@ubuntu-arm.service
+systemctl disable ceph-osd@0.service
+systemctl disable ceph-mon@ubuntu-arm.service
+systemctl disable ceph-create-keys@ubuntu-arm.service
+
+
+############## ###################
+
+VSTART_DEST=/etc/ceph vstart.sh -d -n -x -l
+
+###############################
+..............................................................................
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+## IF moving cmake-built environment
+## create symbolic link from /home/ubuntu
+## to where-ever new files are located
+
+ln -s /root /home/ubuntu
+
+
+
+
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
+

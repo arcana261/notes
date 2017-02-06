@@ -1,0 +1,38 @@
+lsb_release -a
+
+rm -rfv /etc/apt/sources.list.d/linaro-*
+apt-get update
+apt-get -y purge mysql-server apache2
+apt-get -y autoremove
+rm -rfv debs/
+rm -fv readme.txt
+apt-get -y upgrade
+apt-get -y dist-upgrade
+
+cat <<EOF > /etc/apt/sources.list
+deb http://us.ports.ubuntu.com/ubuntu-ports/ xenial main restricted
+deb http://us.ports.ubuntu.com/ubuntu-ports/ xenial-updates main restricted
+deb http://us.ports.ubuntu.com/ubuntu-ports/ xenial universe
+deb http://us.ports.ubuntu.com/ubuntu-ports/ xenial-updates universe
+deb http://us.ports.ubuntu.com/ubuntu-ports/ xenial multiverse
+deb http://us.ports.ubuntu.com/ubuntu-ports/ xenial-updates multiverse
+deb http://us.ports.ubuntu.com/ubuntu-ports/ xenial-backports main restricted universe multiverse
+deb http://ports.ubuntu.com/ubuntu-ports xenial-security main restricted
+deb http://ports.ubuntu.com/ubuntu-ports xenial-security universe
+deb http://ports.ubuntu.com/ubuntu-ports xenial-security multiverse
+EOF
+
+apt-get update
+
+
+
+apt-get -y upgrade
+
+
+
+apt-get -y dist-upgrade
+apt-get -y autoremove
+
+do-release-upgrade
+lsb_release -a
+

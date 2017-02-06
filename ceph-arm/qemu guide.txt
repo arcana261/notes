@@ -1,0 +1,202 @@
+#############################################
+######### FEDORA 25 GUEST ADDITIONS #########
+#############################################
+dnf update kernel*
+reboot
+
+dnf install gcc kernel-devel kernel-headers dkms make bzip2 perl
+cat <<EOF > /etc/profile.d/kernel-sources.sh
+export KERN_DIR=/usr/src/kernels/`uname -r`
+EOF
+reboot
+
+# test KERN_DIR
+ls -la $KERN_DIR
+
+>>>> INSTALL ADDITIONS FROM CD
+gpasswd -a arcana vboxsf
+gpasswd -a root vboxsf
+reboot
+
+#############################################
+
+#############################################
+######### FEDORA 25 SSH             #########
+#############################################
+dnf remove vim-minimal
+dnf install vim nano sudo htop screen wget NetworkManager-tui
+
+systemctl enable sshd.service
+systemctl enable sshd.socket
+systemctl restart sshd.service
+#############################################
+
+#############################################
+######### FEDORA 25 MULTITARGET     #########
+#############################################
+systemctl set-default multi-user.target
+
+>>>>>> restore with
+>>>>>> systemctl set-default graphical.target
+
+reboot
+
+#############################################
+
+## ubuntu
+## 123
+
+>>>>>>>>>>>>>>>>> https://gist.github.com/takeshixx/686a4b5e057deff7892913bf69bcb85a
+
+## /dev/vda2
+
+## set number of processors to 3
+## -smp 3 
+
+dnf groupinstall with-optional virtualization
+dnf install qemu-system-arm qemu-system-aarch64 dhcp
+
+------------- yum install qemu qemu-system-arm
+------------- yum install qemu-kvm qemu-img virt-manager libvirt libvirt-python libvirt-client virt-install virt-viewer
+------------- yum install dhcp
+
+systemctl enable libvirtd
+systemctl restart libvirtd
+
+>>>>>>>>>>>>> DOWNLOAD vmlinuz and initrd.gz ipea from ubuntu website (link below, cdimage.ubuntu.com)
+>>>>>>>>>>>>> http://cdimage.ubuntu.com/netboot/16.04.1/?_ga=1.145432628.1087983495.1450715953
+
+ip tuntap add dev tap0 mode tap
+ip link set up dev tap0
+ip link add br0 type bridge
+ip link set tap0 master br0
+ip link set eth0 master br0
+
+sysctl -w net.ipv4.ip_forward=1
+
+####################################################
+########### STATIC IP ON HOST  #####################
+echo "subnet 192.168.0.0 netmask 255.255.255.0 {
+  range 192.168.0.10 192.168.0.100;
+  option routers 192.168.0.1;
+  option domain-name-servers 208.67.222.222, 208.67.220.220;
+}" > qemu-dhcpd.conf
+
+ip addr add 192.168.0.1/24 dev br0
+ip link set up dev br0
+dhcpd -cf qemu-dhcpd.conf br0
+####################################################
+############# DYNAMIC IP ON HOST ###################
+ip link set up dev br0
+dhclient br0&
+####################################################
+
+
+qemu-img create -f raw ubuntu.img 16G
+
+qemu-system-arm -kernel vmlinuz -initrd initrd.gz -append "root=/dev/ram rw" -no-reboot -nographic -m 4000 -M virt -cpu cortex-a15 -net nic -net tap,ifname=tap0,script=no,downscript=no -hda ubuntu.img
+
+qemu-system-aarch64 -kernel vmlinuz -initrd initrd.gz -append "root=/dev/ram rw" -no-reboot -nographic -m 4000 -M virt -cpu cortex-a53 -netdev tap,ifname=tap0,script=no,downscript=no,id=my_net_id -device driver=virtio-net,netdev=my_net_id -hda ubuntu.img -smp 2
+
+sudo modprobe -r loop
+sudo modprobe loop max_loop=10 max_part=15
+sudo losetup -f ubuntu.img
+sudo mount /dev/loop0p1 /mnt
+
+
+###
+### IF partitions are not found
+### first verify image is loaded
+### by running "lsblk"
+### and that /dev/loop0 is loaded
+### and the size matches that of the
+### image. then run the following command
+### to reload the partition table
+###
+### partprobe /dev/loop0
+###
+
+...............
+.... COPY vmlinuz AND initrd.img FROM LOOPBACK DEVICE
+...............
+
+sudo umount /mnt
+sudo losetup -d /dev/loop0
+
+
+qemu-system-arm -kernel vmlinuz -initrd initrd.img -append "root=/dev/vda2 rw" -no-reboot -nographic -m 4000 -M virt -cpu cortex-a15 -net nic -net tap,ifname=tap0,script=no,downscript=no -drive file=ubuntu.img,if=virtio
+
+qemu-system-aarch64 -kernel vmlinuz -initrd initrd.img -append "root=/dev/vda2 rw" -no-reboot -nographic -m 4000 -M virt -cpu cortex-a53 -netdev tap,ifname=tap0,script=no,downscript=no,id=my_net_id -device driver=virtio-net,netdev=my_net_id -drive file=ubuntu.img,if=none,id=hd0,format=raw -device virtio-blk-pci,drive=hd0 -smp 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+qemu-system-arm -kernel vmlinuz -initrd initrd.gz -append "root=/dev/ram mem=4000M devtmpfs.mount=0 rw" -no-reboot -nographic -m 4000 -M virt -cpu cortex-a15 -net nic -net tap,ifname=tap0,script=no,downscript=no -hda ubuntu.img
+
+
+
+
+
+
+
+
+
+
+
+
+qemu-system-arm -machine cubieboard -cpu cortex-a8 -kernel vmlinuz -m 4000 -append "root=/dev/sda2 panic=1 init=/bin/sh rw" -hda 2013-07-26-wheezy-raspbian.img
+
+
+qemu-img resize 2013-07-26-wheezy-raspbian.img +2G
+
+http://cdimage.ubuntu.com/netboot/16.04.1/?_ga=1.145432628.1087983495.1450715953
+
+https://gist.github.com/takeshixx/686a4b5e057deff7892913bf69bcb85a
+
+
+qemu-system-arm -machine versatilepb -nographic -cpu cortex-a8 -kernel vmlinuz -m 4000 -append "root=/dev/sda2 console=ttyAMA0,115200 console=tty highres=off console=ttyS0 panic=1 init=/bin/sh rw" -initrd initrd.gz -clock unix -device usb-kbd -usbdevice keyboard -hda ct-lubuntu-server-nand-v2.0.img 
+
+
+
+
+Processor	: ARMv7 Processor rev 4 (v7l)
+processor	: 0
+BogoMIPS	: 1816.98
+
+processor	: 1
+BogoMIPS	: 1823.53
+
+Features	: swp half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xc07
+CPU revision	: 4
+
+Hardware	: sun7i
+Revision	: 0000
+Serial		: 0000000000000000
+Chipid		: 16516692-80487180-48514848-0982d6ae
+
+
