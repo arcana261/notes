@@ -51,6 +51,30 @@ sbuild --build=amd64 --host=armhf -d trusty myapp_1.0.dsc
 %%%%%%%%%%%%%%%%%%%%%%% END IF ENVIRONMENT IS NON ARM UBUNTU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+??????????????????????????????????????????????????????????????????
+??????????????????????????????????????????????????????????????????
+??????????????????????????????????????????????????????????????????
+??????????????????????????????????????????????????????????????????
+???????????????? UBUNTU /etc/network/interfaces ??????????????????
+
+auto eth0
+#iface eth0 inet dhcp
+iface eth0 inet static
+    address 192.168.0.130
+    netmask 255.255.255.0
+    network 192.168.0.0
+    broadcast 192.168.0.255
+    gateway 192.168.0.1
+    dns-nameservers 192.168.0.1
+
+??????????????????????????????????????????????????????????????????
+??????????????????????????????????????????????????????????????????
+??????????????????????????????????????????????????????????????????
+??????????????????????????????????????????????????????????????????
+??????????????????????????????????????????????????????????????????
+
+
+
 apt-get update
 apt-get install libc6:armhf libstdc++6:armhf
 
@@ -100,7 +124,6 @@ ldconfig
 
 
 
-
 ##
 ## in file src/CMakeLists.txt
 ## find "target_link_libraries(ceph-objectstore-tool"
@@ -119,7 +142,7 @@ ldconfig
 ## locate "tools/rbd_mirror/image_replayer/" source files
 ## add following line
 ##
-## tools/rbd_mirror/image_replayer/EventProcessor.cc
+## tools/rbd_mirror/image_replayer/EventPreprocessor.cc
 ##
 
 ##
@@ -175,7 +198,7 @@ ldconfig
 cd ~/ceph
 mkdir build
 cd build
-cmake -DCMAKE_INSTALL_SBINDIR=/sbin -DCMAKE_INSTALL_PREFIX=/usr -DWITH_SYSTEMD=ON ..
+cmake -DCMAKE_INSTALL_SBINDIR=/sbin -DCMAKE_INSTALL_PREFIX=/usr -DWITH_SYSTEMD=ON -DALLOCATOR=libc ..
 make
 
 
@@ -190,7 +213,7 @@ dpkg-buildpackage
 
 ..............................................................................
 make install
-ln -s /sbin/sgdisk /usr/sbin/sgdisk
+ln -s `which sgdisk` /usr/sbin/sgdisk
 
 cd /usr/lib/python2.7/dist-packages/rados
 python setup.py install
@@ -240,7 +263,7 @@ chmod -R 777 /root/.python-eggs
 ############ CONFIGURE STANDALONE CEPH ####################
 
 mkdir -p /etc/ceph
-cp /usr/etc/ceph.conf.example /etc/ceph/ceph.conf
+cp /usr/etc/ceph/ceph.conf.example /etc/ceph/ceph.conf
 mkdir -p ~/ceph-keys
 
 # create new key for cluster
@@ -306,8 +329,14 @@ osd max object namespace len = 64
 
 # touch done file
 touch /var/lib/ceph/mon/ceph-ubuntu-arm/done
-chown ceph:ceph /var/lib/ceph/mon/ceph-ubuntu-arm/done
+chown ceph:ceph /var/lib/ceph/mon
 
+vim /lib/systemd/system/ceph-mon@.service
+...
+... remove "PartOf" directive
+... change WantedBy directory to
+... WantedBy=multi-user.target
+...
 mv /lib/systemd/system/ceph-mon@.service /lib/systemd/system/ceph-mon@ubuntu-arm.service
 systemctl daemon-reload
 systemctl restart ceph-mon@ubuntu-arm.service
@@ -321,6 +350,48 @@ ceph -s
 
 # verify default created pools
 ceph osd lspools
+
+# create bootstrap directories
+mkdir -p /var/lib/ceph/bootstrap-{osd,rgw,mds}
+chown -R ceph:ceph /var/lib/ceph
+chmod -R g+s /var/lib/ceph
+
+# create bootstrap keyrings
+ceph-authtool -n client.bootstrap-osd --create-keyring /var/lib/ceph/bootstrap-osd/ceph.keyring --cap mon 'allow profile bootstrap-osd'
+ceph-authtool -n client.bootstrap-rgw --create-keyring /var/lib/ceph/bootstrap-rgw/ceph.keyring --cap mon 'allow profile bootstrap-rgw'
+ceph-authtool -n client.bootstrap-mds --create-keyring /var/lib/ceph/bootstrap-mds/ceph.keyring --cap mon 'allow profile bootstrap-mds'
+chown -R ceph:ceph /var/lib/ceph
+chmod -R g+s /var/lib/ceph
+
+# import keyrings
+ceph auth import -i /var/lib/ceph/bootstrap-osd/ceph.keyring
+ceph auth import -i /var/lib/ceph/bootstrap-rgw/ceph.keyring
+ceph auth import -i /var/lib/ceph/bootstrap-mds/ceph.keyring
+
+
+########## MIGRATE FOLLOWING #######################
+/etc/ceph/ceph.conf
+/etc/ceph/ceph.client.admin.keyring
+####################################################
+
+########## OSD CREATION (SHORT FORM) #############
+>>>>>>> MIGRATE /var/lib/ceph/bootstrap-osd/ceph.keyring
+
+# generate a new UUID for OSD
+uuidgen
+
+# create an OD
+ceph osd create <UUID> <num=0,1,2...>
+
+# create default directory
+# {cluster name}-{osd number}
+mkdir -p /var/lib/ceph/osd/ceph-0
+chown -R ceph:ceph /var/lib/ceph/osd
+chmod -R g+s /var/lib/ceph/osd
+
+ceph-disk prepare --cluster {cluster-name} --cluster-uuid {uuid} --fs-type {ext4|xfs|btrfs} /dev/sdb
+
+ceph-disk activate /dev/sdb
 
 ########## OSD CREATION (LONG FORM) #############
 
@@ -338,7 +409,6 @@ chmod -R g+s /var/lib/ceph/osd
 
 # initialize OSD data directory
 ceph-osd --cluster ceph -i {osd number} --mkfs --mkkey --osd-uuid <UUID>
-chown -R ceph:ceph /var/lib/ceph/osd
 
 # register OSD authentication key
 ceph auth add osd.{osd num} osd 'allow *' mon 'allow profile osd' -i /var/lib/ceph/osd/{cluster}-{osd num}/keyring
@@ -352,6 +422,9 @@ ceph --cluster <cluster> osd crush move <hostname> root=default
 # add OSD to crushmap so it can begin receiving data
 # osd.0 osd.1 ...
 ceph --cluster <cluster> osd crush add osd.<number> 1.0 host=<host name>
+
+# reset ownership
+chown -R ceph:ceph /var/lib/ceph/osd
 
 # configure systemd service
 ## @0.service is actually @<osd num>.service
@@ -382,7 +455,6 @@ ceph-authtool --create-keyring /var/lib/ceph/mds/ceph-ubuntu-arm/keyring --gen-k
 
 # import keyring and set caps
 ceph auth add mds.ubuntu-arm osd "allow rwx" mds "allow" mon "allow profile mds" -i /var/lib/ceph/mds/ceph-ubuntu-arm/keyring
-chown -R ceph:ceph /var/lib/ceph/mds
 
 # add mds to ceph.conf
 vim /etc/ceph/ceph.conf
@@ -394,6 +466,10 @@ host = ubuntu-arm
 # test daemon manual way
 ceph-mds --cluster ceph -i ubuntu-arm -m 127.0.0.1:6789
 killall -9 ceph-mds
+
+# give perms again
+chown -R ceph:ceph /var/lib/ceph/mds
+chmod -R g+s /var/lib/ceph/mds
 
 # create systemd service
 mv /lib/systemd/system/ceph-mds@.service /lib/systemd/system/ceph-mds@ubuntu-arm.service
@@ -413,8 +489,8 @@ ceph osd tree
 ########## create ceph filesystem #############
 
 # create pools (10 is pgnum)
-ceph osd pool create cephfs_data 10
-ceph osd pool create cephfs_metadata 10
+ceph osd pool create cephfs_data 100
+ceph osd pool create cephfs_metadata 100
 
 # verify pools created
 ceph osd lspools
@@ -431,6 +507,11 @@ ceph mds stat
 # test cephfs
 ceph-fuse -m 127.0.0.1:6789 -c /etc/ceph/ceph.conf --cluster ceph --name client.admin /mnt
 touch /mnt/test.txt
+
+# write some data (10MB)
+dd if=/dev/zero of=/mnt/test.data bs=1k count=10000
+
+# unmount
 umount /mnt
 
 ########## test rbd #############
