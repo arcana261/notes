@@ -17,7 +17,10 @@
 ##
 
 apt-get update
-apt-get install git cmake make nano vim screen htop debhelper xz-utils libtool libtool-bin
+apt-get install openssh-server git cmake make nano vim screen htop debhelper xz-utils libtool libtool-bin curl
+
+systemctl enable sshd.service
+systemctl restart sshd.service
 
 
 ########################################################
@@ -282,6 +285,9 @@ mon initial members = ubuntu-arm
 ... set monitor hosts
 [global]
 mon host = 127.0.0.1
+... disable features that causes rbd images fail to map
+[global]
+rbd default features = 3
 ...
 
 # create monitor secret key
@@ -368,6 +374,15 @@ ceph auth import -i /var/lib/ceph/bootstrap-osd/ceph.keyring
 ceph auth import -i /var/lib/ceph/bootstrap-rgw/ceph.keyring
 ceph auth import -i /var/lib/ceph/bootstrap-mds/ceph.keyring
 
+# allow root ssh login
+# required for "ceph-deploy"
+# to work properly
+
+vim /etc/ssh/sshd_config
+...
+PermitRootLogin yes
+...
+systemctl restart sshd
 
 ########## MIGRATE FOLLOWING #######################
 /etc/ceph/ceph.conf
@@ -425,9 +440,16 @@ ceph --cluster <cluster> osd crush add osd.<number> 1.0 host=<host name>
 
 # reset ownership
 chown -R ceph:ceph /var/lib/ceph/osd
+chmod -R g+s /var/lib/ceph/osd
 
 # configure systemd service
 ## @0.service is actually @<osd num>.service
+vim /lib/systemd/system/ceph-osd@.service
+...
+... remove "PartOf" directive
+... change WantedBy directory to
+... WantedBy=multi-user.target
+...
 mv /lib/systemd/system/ceph-osd@.service /lib/systemd/system/ceph-osd@0.service
 systemctl daemon-reload
 systemctl restart ceph-osd@0.service
@@ -472,6 +494,12 @@ chown -R ceph:ceph /var/lib/ceph/mds
 chmod -R g+s /var/lib/ceph/mds
 
 # create systemd service
+vim /lib/systemd/system/ceph-mds@.service
+...
+... remove "PartOf" directive
+... change WantedBy directory to
+... WantedBy=multi-user.target
+...
 mv /lib/systemd/system/ceph-mds@.service /lib/systemd/system/ceph-mds@ubuntu-arm.service
 systemctl daemon-reload
 systemctl restart ceph-mds@ubuntu-arm.service
@@ -523,7 +551,7 @@ rbd create test --size 100
 rbd ls
 
 # disable some features to work with ARM
-rbd feature disable test exclusive-lock object-map fast-diff deep-flatten
+### rbd feature disable test exclusive-lock object-map fast-diff deep-flatten
 
 # map image
 rbd map rbd/test
@@ -566,6 +594,43 @@ rbd rm test
 
 # verify image does not exist
 rbd ls
+
+########## RGW Creation #############
+>>>>>>> MIGRATE /var/lib/ceph/bootstrap-rgw/ceph.keyring
+
+# create directory
+mkdir -p /var/lib/ceph/radosgw/ceph-ubuntu-arm/
+chown -R ceph:ceph /var/lib/ceph/radosgw
+chmod -R g+s /var/lib/ceph/radosgw
+
+# create a keyring for RGW
+ceph-authtool --create-keyring /var/lib/ceph/radosgw/ceph-ubuntu-arm/keyring --gen-key -n client.ubuntu-arm
+
+# import keyring and set caps
+ceph auth add client.ubuntu-arm mon "allow rw" osd "allow rwx" -i /var/lib/ceph/radosgw/ceph-ubuntu-arm/keyring
+
+# allow firewall
+ufw allow 7480
+
+# create systemd service
+vim /lib/systemd/system/ceph-radosgw@.service
+...
+... remove "PartOf" directive
+... change WantedBy directory to
+... WantedBy=multi-user.target
+...
+mv /lib/systemd/system/ceph-radosgw@.service /lib/systemd/system/ceph-radosgw@rgw0.ceph.me.service
+systemctl daemon-reload
+systemctl enable ceph-radosgw@rgw0.ceph.me.service
+systemctl restart ceph-radosgw@rgw0.ceph.me.service
+
+### radosgw should now be accessible via http://<host>:7480
+### open it in browser to see if it works at all!
+
+# create test user
+# and save the keys!
+# "access_key" and "secret_key" are used to access
+radosgw-admin user create --uid="testuser" --display-name="Test User"
 
 ########## stop services #############
 
