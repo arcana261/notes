@@ -632,6 +632,605 @@ systemctl restart ceph-radosgw@rgw0.ceph.me.service
 # "access_key" and "secret_key" are used to access
 radosgw-admin user create --uid="testuser" --display-name="Test User"
 
+########## Test RGW S3 Connection #############
+
+pip install boto
+
+vim s3test.py
+...
+import boto.s3.connection
+
+access_key = '<access key>'
+secret_key = '<secret key>'
+conn = boto.connect_s3(
+        aws_access_key_id=access_key,
+        aws_secret_access_key=secret_key,
+        host='{hostname}', port={port},
+        is_secure=False, calling_format=boto.s3.connection.OrdinaryCallingFormat(),
+       )
+
+bucket = conn.create_bucket('my-new-bucket')
+for bucket in conn.get_all_buckets():
+    print "{name} {created}".format(
+        name=bucket.name,
+        created=bucket.creation_date,
+    )
+...
+
+########## Create DNS Nameserver for Ceph (Dockerized) #############
+
+
+apt-get update
+apt-get install apt-transport-https ca-certificates
+apt-key adv \
+               --keyserver hkp://ha.pool.sks-keyservers.net:80 \
+               --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | tee /etc/apt/sources.list.d/docker.list
+apt-get update
+# check if docker-engine is in apt cache
+apt-cache policy docker-engine
+# install prerequisities
+apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+# reboot server
+reboot
+# instal docker-engine
+apt-get install docker-engine
+# install privoxy to help docker pull images over sanctions
+apt-get install privoxy
+systemctl enable privoxy
+vim /etc/privoxy/config
+<<<<<<<<<<<<<<<<<<<<
+listen-address	127.0.0.1:8085
+forward-socks5	/		127.0.0.1:8084	.
+>>>>>>>>>>>>>>>>>>>>
+systemctl restart privoxy
+# enable proxy in docker
+mkdir -p /etc/systemd/system/docker.service.d
+vim /etc/systemd/system/docker.service.d/http-proxy.conf
+...
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8085/"
+...
+systemctl daemon-reload
+systemctl enable docker
+systemctl restart docker
+# check if proxy is present
+docker info
+# add user to docker group
+gpasswd -a arcana docker
+# reboot
+reboot
+# you should see under key Http Proxy
+# fireup a SOCKS5 proxy server on localhost:8084
+ssh -D 8084 .....
+# test docker
+docker pull ubuntu:xenial
+docker run --rm -it ubuntu:xenial
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+exit
+<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# install python pip since docker-compose
+# is available to install through pip
+apt-get install python-pip
+# upgrade it
+pip install --upgrade pip
+# install docker-compose
+pip install docker-compose
+# check docker compose
+docker-compose version
+
+# pull bind image
+docker pull sameersbn/bind:latest
+
+# start bind
+docker network create -d bridge ceph.me
+docker run -td --restart=always --name ns1.ceph.me -h ns1.ceph.me -e ROOT_PASSWORD=root --net ceph.me -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
+ufw reload
+ufw allow 53/tcp
+ufw allow 53/udp
+ufw reload
+
+##
+## add <IP> ns1.ceph.me to /etc/hosts of physical machine
+## open "https://ns1.flocker.me:10000" in browser
+## login with "root/root"
+##
+>> open Servers -> BIND DNS Server
+-> Setup RDNC
+-> Forwarding and Transfers -> 4.2.2.4
+                            -> 8.8.8.8
+-> Create Master Zone -> Domain name/Network -> ceph.me.
+                      -> Email Address -> m_kharatizadeh@yahoo.com
+
+..... ADD ENTRIES .....
+> @
+> ns1.ceph.me
+> monitor0.ceph.me
+> osd0.ceph.me
+> mds0.ceph.me
+> rgw0.ceph.me
+> dns.ceph.me
+> rgw.ceph.me (this is HTTPS nginx reverse proxy enabled)
+.......................
+
+# restart DNS service
+docker restart ns1.ceph.me
+
+# add nameserver to all servers
+vim /etc/network/interfaces
+...
+dns-nameservers 10.0.2.244 4.2.2.4 8.8.8.8
+...
+
+# reboot all servers
+reboot
+
+# test dns in all servers
+ping dns.ceph.me
+
+########## Create nginx reverse proxy for Rados Gateway #############
+
+# install nginx
+apt-get update
+apt-get install nginx
+
+# add firewall rules
+ufw reload
+ufw allow 80
+ufw allow 443
+ufw reload
+
+# install openssl
+apt-get install openssl
+
+##################################################################
+##################################################################
+##################################################################
+# create CA and issue certificate
+##################################################################
+##################################################################
+##################################################################
+mkdir -p /root/ca
+cd /root/ca
+mkdir certs crl newcerts private
+chmod 700 private
+touch index.txt
+echo 1000 > serial
+
+vim /root/ca/openssl.cnf
+........................
+[ ca ]
+# `man ca`
+default_ca = CA_default
+
+[ CA_default ]
+# Directory and file locations.
+dir               = /root/ca
+certs             = $dir/certs
+crl_dir           = $dir/crl
+new_certs_dir     = $dir/newcerts
+database          = $dir/index.txt
+serial            = $dir/serial
+RANDFILE          = $dir/private/.rand
+
+# The root key and root certificate.
+private_key       = $dir/private/ca.key.pem
+certificate       = $dir/certs/ca.cert.pem
+
+# For certificate revocation lists.
+crlnumber         = $dir/crlnumber
+crl               = $dir/crl/ca.crl.pem
+crl_extensions    = crl_ext
+default_crl_days  = 30
+
+# SHA-1 is deprecated, so use SHA-2 instead.
+default_md        = sha256
+
+name_opt          = ca_default
+cert_opt          = ca_default
+default_days      = 375
+preserve          = no
+policy            = policy_strict
+
+[ policy_strict ]
+# The root CA should only sign intermediate certificates that match.
+# See the POLICY FORMAT section of `man ca`.
+countryName             = match
+stateOrProvinceName     = match
+organizationName        = match
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ policy_loose ]
+# Allow the intermediate CA to sign a more diverse range of certificates.
+# See the POLICY FORMAT section of the `ca` man page.
+countryName             = optional
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ req ]
+# Options for the `req` tool (`man req`).
+default_bits        = 2048
+distinguished_name  = req_distinguished_name
+string_mask         = utf8only
+
+# SHA-1 is deprecated, so use SHA-2 instead.
+default_md          = sha256
+
+# Extension to add when the -x509 option is used.
+x509_extensions     = v3_ca
+
+[ req_distinguished_name ]
+# See <https://en.wikipedia.org/wiki/Certificate_signing_request>.
+countryName                     = Country Name (2 letter code)
+stateOrProvinceName             = State or Province Name
+localityName                    = Locality Name
+0.organizationName              = Organization Name
+organizationalUnitName          = Organizational Unit Name
+commonName                      = Common Name
+emailAddress                    = Email Address
+
+# Optionally, specify some defaults.
+countryName_default             = GB
+stateOrProvinceName_default     = England
+localityName_default            =
+0.organizationName_default      = Alice Ltd
+#organizationalUnitName_default =
+#emailAddress_default           =
+
+[ v3_ca ]
+# Extensions for a typical CA (`man x509v3_config`).
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[ v3_intermediate_ca ]
+# Extensions for a typical intermediate CA (`man x509v3_config`).
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[ usr_cert ]
+# Extensions for client certificates (`man x509v3_config`).
+basicConstraints = CA:FALSE
+nsCertType = client, email
+nsComment = "OpenSSL Generated Client Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth, emailProtection
+
+[ server_cert ]
+# Extensions for server certificates (`man x509v3_config`).
+basicConstraints = CA:FALSE
+nsCertType = server
+nsComment = "OpenSSL Generated Server Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer:always
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+
+[ crl_ext ]
+# Extension for CRLs (`man x509v3_config`).
+authorityKeyIdentifier=keyid:always
+
+[ ocsp ]
+# Extension for OCSP signing certificates (`man ocsp`).
+basicConstraints = CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = critical, digitalSignature
+extendedKeyUsage = critical, OCSPSigning
+........................
+
+# create root key
+cd /root/ca
+openssl genrsa -aes256 -out private/ca.key.pem 4096
+chmod 400 private/ca.key.pem
+
+# create root certificate
+cd /root/ca
+openssl req -config openssl.cnf \
+      -key private/ca.key.pem \
+      -new -x509 -days 7300 -sha256 -extensions v3_ca \
+      -out certs/ca.cert.pem
+chmod 444 certs/ca.cert.pem
+
+# verify root certificate
+openssl x509 -noout -text -in certs/ca.cert.pem
+
+# create intermediate pair
+mkdir -p /root/ca/intermediate
+cd /root/ca/intermediate
+mkdir certs crl csr newcerts private
+chmod 700 private
+touch index.txt
+echo 1000 > serial
+echo 1000 > /root/ca/intermediate/crlnumber
+vim /root/ca/intermediate/openssl.cnf
+........................
+# OpenSSL intermediate CA configuration file.
+# Copy to `/root/ca/intermediate/openssl.cnf`.
+
+[ ca ]
+# `man ca`
+default_ca = CA_default
+
+[ CA_default ]
+# Directory and file locations.
+dir               = /root/ca/intermediate
+certs             = $dir/certs
+crl_dir           = $dir/crl
+new_certs_dir     = $dir/newcerts
+database          = $dir/index.txt
+serial            = $dir/serial
+RANDFILE          = $dir/private/.rand
+
+# The root key and root certificate.
+private_key       = $dir/private/intermediate.key.pem
+certificate       = $dir/certs/intermediate.cert.pem
+
+# For certificate revocation lists.
+crlnumber         = $dir/crlnumber
+crl               = $dir/crl/intermediate.crl.pem
+crl_extensions    = crl_ext
+default_crl_days  = 30
+
+# SHA-1 is deprecated, so use SHA-2 instead.
+default_md        = sha256
+
+name_opt          = ca_default
+cert_opt          = ca_default
+default_days      = 375
+preserve          = no
+policy            = policy_loose
+
+[ policy_strict ]
+# The root CA should only sign intermediate certificates that match.
+# See the POLICY FORMAT section of `man ca`.
+countryName             = match
+stateOrProvinceName     = match
+organizationName        = match
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ policy_loose ]
+# Allow the intermediate CA to sign a more diverse range of certificates.
+# See the POLICY FORMAT section of the `ca` man page.
+countryName             = optional
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ req ]
+# Options for the `req` tool (`man req`).
+default_bits        = 2048
+distinguished_name  = req_distinguished_name
+string_mask         = utf8only
+
+# SHA-1 is deprecated, so use SHA-2 instead.
+default_md          = sha256
+
+# Extension to add when the -x509 option is used.
+x509_extensions     = v3_ca
+
+[ req_distinguished_name ]
+# See <https://en.wikipedia.org/wiki/Certificate_signing_request>.
+countryName                     = Country Name (2 letter code)
+stateOrProvinceName             = State or Province Name
+localityName                    = Locality Name
+0.organizationName              = Organization Name
+organizationalUnitName          = Organizational Unit Name
+commonName                      = Common Name
+emailAddress                    = Email Address
+
+# Optionally, specify some defaults.
+countryName_default             = GB
+stateOrProvinceName_default     = England
+localityName_default            =
+0.organizationName_default      = Alice Ltd
+organizationalUnitName_default  =
+emailAddress_default            =
+
+[ v3_ca ]
+# Extensions for a typical CA (`man x509v3_config`).
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[ v3_intermediate_ca ]
+# Extensions for a typical intermediate CA (`man x509v3_config`).
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[ usr_cert ]
+# Extensions for client certificates (`man x509v3_config`).
+basicConstraints = CA:FALSE
+nsCertType = client, email
+nsComment = "OpenSSL Generated Client Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth, emailProtection
+
+[ server_cert ]
+# Extensions for server certificates (`man x509v3_config`).
+basicConstraints = CA:FALSE
+nsCertType = server
+nsComment = "OpenSSL Generated Server Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer:always
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+
+[ crl_ext ]
+# Extension for CRLs (`man x509v3_config`).
+authorityKeyIdentifier=keyid:always
+
+[ ocsp ]
+# Extension for OCSP signing certificates (`man ocsp`).
+basicConstraints = CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = critical, digitalSignature
+extendedKeyUsage = critical, OCSPSigning
+........................
+
+# create intermediate key
+cd /root/ca
+openssl genrsa -aes256 \
+      -out intermediate/private/intermediate.key.pem 4096
+chmod 400 intermediate/private/intermediate.key.pem
+
+# create intermediate certificate
+cd /root/ca
+openssl req -config intermediate/openssl.cnf -new -sha256 \
+      -key intermediate/private/intermediate.key.pem \
+      -out intermediate/csr/intermediate.csr.pem
+cd /root/ca
+openssl ca -config openssl.cnf -extensions v3_intermediate_ca \
+      -days 3650 -notext -md sha256 \
+      -in intermediate/csr/intermediate.csr.pem \
+      -out intermediate/certs/intermediate.cert.pem
+chmod 444 intermediate/certs/intermediate.cert.pem
+
+# verify intermediate certificate
+openssl x509 -noout -text \
+      -in intermediate/certs/intermediate.cert.pem
+openssl verify -CAfile certs/ca.cert.pem \
+      intermediate/certs/intermediate.cert.pem
+
+# create certificate chain file
+cat intermediate/certs/intermediate.cert.pem \
+      certs/ca.cert.pem > intermediate/certs/ca-chain.cert.pem
+chmod 444 intermediate/certs/ca-chain.cert.pem
+
+# create server key
+cd /root/ca
+openssl genrsa -aes256 \
+      -out intermediate/private/rgw.ceph.me.key.pem 2048
+chmod 400 intermediate/private/rgw.ceph.me.key.pem
+
+# generate certificate
+cd /root/ca
+openssl req -config intermediate/openssl.cnf \
+      -key intermediate/private/rgw.ceph.me.key.pem \
+      -new -sha256 -out intermediate/csr/rgw.ceph.me.csr.pem
+
+# sign certificate
+cd /root/ca
+openssl ca -config intermediate/openssl.cnf \
+      -extensions server_cert -days 375 -notext -md sha256 \
+      -in intermediate/csr/rgw.ceph.me.csr.pem \
+      -out intermediate/certs/rgw.ceph.me.cert.pem
+chmod 444 intermediate/certs/rgw.ceph.me.cert.pem
+
+
+# verify server certificate
+openssl x509 -noout -text \
+      -in intermediate/certs/rgw.ceph.me.cert.pem
+
+# Deploy certificates
+# ca-chain.cert.pem
+# ca.cert.pem
+# rgw.ceph.me.key.pem
+# rgw.ceph.me.crt.pem
+
+##################################################################
+##################################################################
+##################################################################
+##################################################################
+##################################################################
+##################################################################
+
+# create directories
+mkdir -p /var/lib/nginx/rgw.ceph.me
+cp -fv /root/ca/intermediate/certs/rgw.ceph.me.crt.pem /var/lib/nginx/rgw.ceph.me/
+openssl rsa -in /root/ca/intermediate/private/rgw.ceph.me.key.pem -out /var/lib/nginx/rgw.ceph.me/rgw.ceph.me.key.pem
+chown -R www-data:www-data /var/lib/nginx/rgw.ceph.me
+chmod -R g+s /var/lib/nginx/rgw.ceph.me
+
+# config nginx
+vim /etc/nginx/nginx.conf
+........................................................................
+... add to http {
+sendfile on;
+........................................................................
+vim /etc/nginx/conf.d/rgw.ceph.me.conf
+........................................................................
+server {
+  listen 443 ssl;
+  server_name rgw.ceph.me;
+  ssl_verify_client off;
+  ssl_certificate /var/lib/nginx/rgw.ceph.me/rgw.ceph.me.crt.pem;
+  ssl_certificate_key /var/lib/nginx/rgw.ceph.me/rgw.ceph.me.key.pem;
+  client_max_body_size 50M;
+
+  location / {
+    proxy_pass http://rgw0.ceph.me:7480/;
+    proxy_pass_header Set-Cookie;
+    proxy_pass_header P3P;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_cookie_domain rgw0.ceph.me:7480 rgw.ceph.me;
+  }
+}
+
+server {
+  listen 80;
+  server_name rgw.ceph.me;
+  return 301 https://$host$request_uri;
+}
+........................................................................
+
+# test configuration
+nginx -c /etc/nginx/nginx.conf
+
+# enable services
+systemctl enable nginx
+systemctl restart nginx
+
+########## Enable S3 Windows Client #############
+
+... configure DNS nameserver
+
+... Tnt Drive (S3 Compatible)
+... cyberduck.io
+... s3browser.com
+... use "rgw.ceph.me" as API endpoint
+
+........ install certificates
+........ rename from xxxx.cert.pem to -> xxxx.crt
+... ca.cert.pem
+... ca-chain.cert.pem
+
+
+Control Panel -> Internet Options -> Content -> Certificates
+
+
+.... Install For
+
+.. Personal
+.. Intermediate Certificate Authorities
+.. Trusted Root Certification
+
+
 ########## stop services #############
 
 systemctl stop ceph-mds@ubuntu-arm.service
