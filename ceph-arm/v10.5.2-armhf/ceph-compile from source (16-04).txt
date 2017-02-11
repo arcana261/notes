@@ -1,3 +1,20 @@
+Resources Needed:
+
+1. Give QEMU guest 5000 MB RAM
+2. Give Host containing QEMU 8GB RAM
+3. Give QEMU a 100GB disk image
+4. Monitor VM -> 192 MB
+5. OSD VM -> 192 MB
+6. MDS VM -> 192 MB
+7. RGW VM -> 192 MB
+8. DNS VM -> 240 MB
+9. NGINX VM -> 192 MB
+10. WIN VM -> 896MB, 1.5GB, 2GB
+
+
+
+
+
 ###### Ubuntu 14.04
 # https://github.com/ceph/ceph
 # v10.2.5
@@ -632,6 +649,9 @@ systemctl restart ceph-radosgw@rgw0.ceph.me.service
 # "access_key" and "secret_key" are used to access
 radosgw-admin user create --uid="testuser" --display-name="Test User"
 
+# create swift access
+radosgw-admin subuser create --uid=testuser --subuser=testuser:swift --access=full
+
 ########## Test RGW S3 Connection #############
 
 pip install boto
@@ -1213,6 +1233,7 @@ systemctl restart nginx
 ... Tnt Drive (S3 Compatible)
 ... cyberduck.io
 ... s3browser.com
+... dragon disk
 ... use "rgw.ceph.me" as API endpoint
 
 ........ install certificates
@@ -1229,6 +1250,63 @@ Control Panel -> Internet Options -> Content -> Certificates
 .. Personal
 .. Intermediate Certificate Authorities
 .. Trusted Root Certification
+
+
+########## Create Docker Registry #############
+## >>> add "registry.ceph.me" to DNS server
+
+vim /etc/systemd/system/docker.service.d/no-proxy.conf
+...
+[Service]
+Environment="NO_PROXY=registry.ceph.me"
+...
+vim /lib/systemd/system/docker.service
+...
+#ExecStart=/usr/bin/dockerd 
+ExecStart=/usr/bin/dockerd --insecure-registry=registry.ceph.me:5000
+...
+systemctl daemon-reload
+systemctl enable docker
+systemctl restart docker
+# check if proxy is present
+docker info
+# you should see under key Http Proxy
+
+# pull required image
+docker pull registry:2
+
+# start registry
+docker run -td --name registry.ceph.me -h registry.ceph.me -p 5000:5000 --network ceph.me --restart=always registry:2
+
+# allow port in firewall
+ufw reload
+ufw allow 5000
+ufw reload
+
+########## Install FlockerCTL #############
+
+apt-get update
+apt-get install proxychains
+vim /etc/proxychains.conf
+...
+socks5	127.0.0.1	8084
+...
+vim /etc/apt/apt.conf
+...
+Acquire::http::proxy "http://127.0.0.1:8085/";
+Acquire::https::proxy "http://127.0.0.1:8085/";
+...
+
+apt-get install apt-transport-https software-properties-common
+add-apt-repository "deb https://clusterhq-archive.s3.amazonaws.com/ubuntu/$(lsb_release --release --short)/\$(ARCH) /"
+vim /etc/apt/preferences.d/buildbot-700
+...
+Package: *
+Pin: origin clusterhq-archive.s3.amazonaws.com
+Pin-Priority: 700
+...
+proxychains apt-get update
+proxychains apt-get install --force-yes clusterhq-flocker-cli
 
 
 ########## stop services #############
