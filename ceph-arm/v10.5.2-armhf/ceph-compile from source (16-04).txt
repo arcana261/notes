@@ -12,7 +12,8 @@ Resources Needed:
 10. WIN VM -> 896MB, 1.5GB, 2GB
 
 
-
+[Swarm]
+[240MB, 256MB, 512MB, ...]
 
 
 ###### Ubuntu 14.04
@@ -1283,31 +1284,183 @@ ufw reload
 ufw allow 5000
 ufw reload
 
-########## Install FlockerCTL #############
+########## Base Shared CephFS #############
+>> migrate /etc/ceph.conf
+>> migrate /etc/ceph.client.admin.keyring
 
-apt-get update
-apt-get install proxychains
-vim /etc/proxychains.conf
+# create directory
+mkdir -p /var/lib/shared
+
+# create mounter/umounter script
+vim /usr/bin/mount-shared
 ...
-socks5	127.0.0.1	8084
+#!/bin/bash -
+
+# Image mount/unmount and pool are passed from the systems service as arguments
+# Determine if we are mounting or unmounting
+if [ "$1" == "m" ]; then
+   mkdir -p /var/lib/shared
+   ceph-fuse -f -c /etc/ceph/ceph.conf /var/lib/shared
+fi
+if [ "$1" == "u" ]; then
+   umount /var/lib/shared
+fi
 ...
-vim /etc/apt/apt.conf
+chmod +x /usr/bin/mount-shared
+
+# create systemd service
+vim /lib/systemd/system/mount-shared.service
 ...
-Acquire::http::proxy "http://127.0.0.1:8085/";
-Acquire::https::proxy "http://127.0.0.1:8085/";
+[Unit]
+Description=CephFS Object Storage Mapping
+Conflicts=shutdown.target
+Wants=network-online.target
+After=NetworkManager-wait-online.service
+Before=docker.service
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/mount-shared m
+ExecStop=/usr/bin/mount-shared u
+
+[Install]
+WantedBy=multi-user.target
 ...
 
-apt-get install apt-transport-https software-properties-common
-add-apt-repository "deb https://clusterhq-archive.s3.amazonaws.com/ubuntu/$(lsb_release --release --short)/\$(ARCH) /"
-vim /etc/apt/preferences.d/buildbot-700
-...
-Package: *
-Pin: origin clusterhq-archive.s3.amazonaws.com
-Pin-Priority: 700
-...
-proxychains apt-get update
-proxychains apt-get install --force-yes clusterhq-flocker-cli
+# enable service
+systemctl daemon-reload
+systemctl enable mount-shared.service
+systemctl restart mount-shared.service
 
+# check if mounted
+df
+
+# reboot to check if still mounted
+reboot
+
+
+########## Base Swarm Manager #############
+
+# enable firewall rules
+ufw reload
+ufw allow 2376/tcp
+ufw allow 2377/tcp
+ufw allow 7946/tcp
+ufw allow 7946/udp
+ufw allow 4789/udp
+ufw reload
+systemctl restart docker
+
+########## Base Swarm Worker #############
+
+ufw reload
+ufw allow 2376/tcp
+ufw allow 7946/tcp
+ufw allow 7946/udp
+ufw allow 4789/udp
+ufw reload
+systemctl restart docker
+
+########## Setup Manager #############
+
+docker swarm init --advertise-addr 10.0.2.247
+
+########## Swarm Manager #############
+
+# pull required image
+docker pull dperson/samba:latest
+docker tag dperson/samba:latest registry.ceph.me:5000/dperson/samba:latest
+
+########## Swarm Worker #############
+
+# join cluster
+docker swarm join \
+    --token SWMTKN-1-3wcnxbp8xq0f47468dplhlri4uy3u2o965eup083k4lab1o3bx-9egg3lu8stp63xflqaltpq3p7 \
+    10.0.2.247:2377
+
+########## Samba Help #############
+
+Configuration
+
+sudo docker run -it --rm dperson/samba -h
+Usage: samba.sh [-opt] [command]
+Options (fields in '[]' are optional, '<>' are required):
+    -h          This help
+    -c "<from:to>" setup character mapping for file/directory names
+                required arg: "<from:to>" character mappings separated by ','
+    -i "<path>" Import smbpassword
+                required arg: "<path>" - full file path in container
+    -n          Start the 'nmbd' daemon to advertise the shares
+    -p          Set ownership and permissions on the shares
+    -s "<name;/path>[;browse;readonly;guest;users;admins;wl]" Config a share
+                required arg: "<name>;<comment>;</path>"
+                <name> is how it's called for clients
+                <path> path to share
+                NOTE: for the default values, just leave blank
+                [browsable] default:'yes' or 'no'
+                [readonly] default:'yes' or 'no'
+                [guest] allowed default:'yes' or 'no'
+                [users] allowed default:'all' or list of allowed users
+                [admins] allowed default:'none' or list of admin users
+                [writelist] list of users that can write to a RO share
+    -t ""       Configure timezone
+                possible arg: "[timezone]" - zoneinfo timezone for container
+    -u "<username;password>[;ID;group]"       Add a user
+                required arg: "<username>;<passwd>"
+                <username> for user
+                <password> for user
+                [ID] for user
+                [group] for user
+    -w "<workgroup>"       Configure the workgroup (domain) samba should use
+                required arg: "<workgroup>"
+                <workgroup> for samba
+
+########## Samba Examples #############
+
+sudo docker run -it -p 139:139 -p 445:445 -d dperson/samba \
+            -u "example1;badpass" \
+            -u "example2;badpass" \
+            -s "public;/share" \
+            -s "users;/srv;no;no;no;example1,example2" \
+            -s "example1 private;/example1;no;no;no;example1" \
+            -s "example2 private;/example2;no;no;no;example2"
+
+########## Start Samba #############
+
+mkdir -p /var/lib/shared/share.ceph.me/{config,data}
+mkdir -p /var/lib/shared/share.ceph.me/data/{public,users,user1,user2,admin,files}
+chown -R nobody:nogroup /var/lib/shared/share.ceph.me
+chmod -R g+s /var/lib/shared/share.ceph.me
+chmod -R 777 /var/lib/shared/
+
+docker network create -d overlay ceph_me
+
+docker service create --replicas 1 --name share_ceph_me --update-delay 10s \
+	--network ceph_me \
+	--publish 137:137/udp --publish 138:138/udp --publish 139:139 --publish 445:445 \
+	--mount type=bind,src=/var/lib/shared/share.ceph.me/config,dst=/etc/samba \
+	--mount type=bind,src=/var/lib/shared/share.ceph.me/data,dst=/mount \
+	registry.ceph.me:5000/dperson/samba:latest \
+	-n \
+	-u "user1;user1" \
+	-u "user2;user2" \
+	-u "admin;admin" \
+	-s "public;/mount/public;yes;no;yes;all;none;" \
+	-s "users;/mount/users;yes;no;no;user1,user2,admin;none;" \
+	-s "user1;/mount/user1;yes;no;no;user1,admin;none;" \
+	-s "user2;/mount/user2;yes;no;no;user2,admin;none;" \
+	-s "admin;/mount/admin;yes;no;no;admin;none;" \
+	-s "files;/mount/files;yes;yes;no;user1,user2,admin;admin;"
+	
+
+########## Forward Samba From Host Machine #############
+
+ssh -L 0.0.0.0:139:10.0.2.247:139 -L 0.0.0.0:445:10.0.2.247:445 arcana@10.0.2.247
+
+firewall-cmd --reload
+firewall-cmd --add-port=139/tcp --permanent
+firewall-cmd --add-port=445/tcp --permanent
+firewall-cmd --reload
 
 ########## stop services #############
 
