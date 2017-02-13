@@ -4,7 +4,7 @@ Resources Needed:
 2. Give Host containing QEMU 8GB RAM
 3. Give QEMU a 100GB disk image
 4. Monitor VM -> 192 MB
-5. OSD VM -> 192 MB
+5. OSD VM -> 400 MB
 6. MDS VM -> 192 MB
 7. RGW VM -> 192 MB
 8. DNS VM -> 240 MB
@@ -209,6 +209,16 @@ ldconfig
 ##
 ## --without-tcmalloc
 ##
+
+## vim make-debs.sh
+## comment "git clean" line
+## add "--without-tcmalloc" to ./configure
+
+## vim make_dist.sh
+## remove "update submodule" section
+
+## vim autogen.sh
+## remove "update submodule" section
 
 ########## 
 ########## TO SEE AVAILABLE CMAKE OPTIONS
@@ -427,6 +437,7 @@ ceph-disk prepare --cluster {cluster-name} --cluster-uuid {uuid} --fs-type {ext4
 ceph-disk activate /dev/sdb
 
 ########## OSD CREATION (LONG FORM) #############
+??????? optionally assign different mount point for /var/lib/ceph/osd
 
 # generate a new UUID for OSD
 uuidgen
@@ -468,6 +479,10 @@ vim /lib/systemd/system/ceph-osd@.service
 ... change WantedBy directory to
 ... WantedBy=multi-user.target
 ...
+???
+??? change user and group to "root" if using
+??? different mount point
+???
 mv /lib/systemd/system/ceph-osd@.service /lib/systemd/system/ceph-osd@0.service
 systemctl daemon-reload
 systemctl restart ceph-osd@0.service
@@ -483,6 +498,7 @@ ceph -s
 ceph osd tree
 
 ########## MDS Creation #############
+??????? optionally assign different mount point for /var/lib/ceph/mds
 
 # create MDS data directory
 # {cluster name}-{host name}
@@ -518,6 +534,10 @@ vim /lib/systemd/system/ceph-mds@.service
 ... change WantedBy directory to
 ... WantedBy=multi-user.target
 ...
+???
+??? change user and group to "root" if using
+??? different mount point
+???
 mv /lib/systemd/system/ceph-mds@.service /lib/systemd/system/ceph-mds@ubuntu-arm.service
 systemctl daemon-reload
 systemctl restart ceph-mds@ubuntu-arm.service
