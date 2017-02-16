@@ -1,15 +1,30 @@
+Ceph Deploy Guide:
+https://blog.zhaw.ch/icclab/deploy-ceph-and-start-using-it-end-to-end-tutorial-installation-part-13/
+http://blog.programster.org/ubuntu-14-04-add-a-ceph-metadata-server/
+
+
+
+
 Resources Needed:
+
+(ufw assign 64MB more RAM)
+(docker needs at least 240MB RAM)
 
 1. Give QEMU guest 5000 MB RAM
 2. Give Host containing QEMU 8GB RAM
 3. Give QEMU a 100GB disk image
 4. Monitor VM -> 192 MB
 5. OSD VM -> 400 MB
-6. MDS VM -> 192 MB
+6. MDS VM -> 208 MB
 7. RGW VM -> 192 MB
-8. DNS VM -> 240 MB
+8. DNS VM -> 272 MB
 9. NGINX VM -> 192 MB
 10. WIN VM -> 896MB, 1.5GB, 2GB
+11. Admin Node -> 192 MB
+
+NOTES:
+1. get cephfs layout on file
+   getfattr -n ceph.file.layout file
 
 
 [Swarm]
@@ -35,7 +50,7 @@ Resources Needed:
 ##
 
 apt-get update
-apt-get install openssh-server git cmake make nano vim screen htop debhelper xz-utils libtool libtool-bin curl
+apt-get install openssh-server git cmake make nano vim screen htop debhelper xz-utils libtool libtool-bin curl attr reprepro
 
 systemctl enable sshd.service
 systemctl restart sshd.service
@@ -167,6 +182,8 @@ ldconfig
 ##
 
 ##
+## ONLY ON ARM
+##
 ## in file src/erasure_code/CMakeLists.txt
 ## remove from "add_custom_target" from end of file
 ## values
@@ -175,6 +192,9 @@ ldconfig
 ##
 ##
 
+##
+## ONLY ON ARM
+##
 ##
 ## in following files do
 ##
@@ -188,7 +208,9 @@ ldconfig
 ##                 #include <arm_neon.h>
 ##
 
-
+##
+## ONLY ON ARM
+##
 ##
 ## in file src/erasure-code/jerasure/CMakeLists.txt
 ## after "add_library(neon_objs" add
@@ -208,11 +230,13 @@ ldconfig
 ## add following option to ./configure
 ##
 ## --without-tcmalloc
+## --without-babeltrace
 ##
 
 ## vim make-debs.sh
 ## comment "git clean" line
 ## add "--without-tcmalloc" to ./configure
+## replace --with-babeltrace with --without-babeltrace in ./configure
 
 ## vim make_dist.sh
 ## remove "update submodule" section
@@ -239,8 +263,18 @@ cd ~/ceph
 apt-get install debhelper
 dpkg-buildpackage
 ..............................................................................
+.......................... BUILD PACKAGE ALTERNATIVE APPROACH.................
+./make-debs.sh
+..............................................................................
 ..............................................................................
 
+Package output location:
+/tmp/release/Ubuntu/WORKDIR/
+
+########### Save output package
+mkdir -p ~/ceph-10.2.5-build-x64/
+rm -rfv /tmp/release/Ubuntu/WORKDIR/ceph-10.2.5
+cp -rfv /tmp/release/Ubuntu/WORKDIR/* ~/ceph-10.2.5-build-x64
 
 ..............................................................................
 make install
@@ -290,6 +324,206 @@ chmod +x /usr/bin/ceph-crush-location
 
 mkdir -p /root/.python-eggs
 chmod -R 777 /root/.python-eggs
+
+..............................................................................
+..............................................................................
+..............................................................................
+Package Installation
+..............................................................................
+..............................................................................
+..............................................................................
+
+sudo apt-get update
+sudo dpkg -i *.deb
+sudo apt-get install -f
+sudo reboot
+
+sudo apt-get install python-pip
+sudo pip install --upgrade pip
+sudo pip install ceph-deploy
+
+usermod -s /bin/bash ceph
+passwd -d ceph
+passwd ceph
+echo "ceph ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ceph
+apt-get install openssh-server screen htop vim
+systemctl enable sshd
+systemctl restart sshd
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>> set dns-search correctly
+vim /etc/network/interfaces
+
+auto enp0s3
+iface enp0s3 inet static
+        address 10.0.2.219
+        netmask 255.255.255.0
+        network 10.0.2.0
+        broadcast 10.0.2.255
+        gateway 10.0.2.2
+        dns-search ceph.me 
+        dns-nameservers 10.0.2.220 4.2.2.4 8.8.8.8
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+########## Create Base Docker #############
+
+apt-get update
+apt-get install apt-transport-https ca-certificates
+apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | tee /etc/apt/sources.list.d/docker.list
+apt-get update
+# check if docker-engine is in apt cache
+apt-cache policy docker-engine
+# install prerequisities
+apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+# reboot server
+reboot
+# instal docker-engine
+apt-get install docker-engine
+# install privoxy to help docker pull images over sanctions
+apt-get install privoxy
+systemctl enable privoxy
+vim /etc/privoxy/config
+<<<<<<<<<<<<<<<<<<<<
+listen-address	127.0.0.1:8085
+forward-socks5	/		127.0.0.1:8084	.
+>>>>>>>>>>>>>>>>>>>>
+systemctl restart privoxy
+# enable proxy in docker
+mkdir -p /etc/systemd/system/docker.service.d
+vim /etc/systemd/system/docker.service.d/http-proxy.conf
+...
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8085/"
+...
+systemctl daemon-reload
+systemctl enable docker
+systemctl restart docker
+# check if proxy is present
+docker info
+# add user to docker group
+gpasswd -a arcana docker
+# reboot
+reboot
+# you should see under key Http Proxy
+# fireup a SOCKS5 proxy server on localhost:8084
+ssh -D 8084 .....
+# test docker
+docker pull ubuntu:xenial
+docker run --rm -it ubuntu:xenial
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+exit
+<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# install python pip since docker-compose
+# is available to install through pip
+apt-get install python-pip
+# upgrade it
+pip install --upgrade pip
+# install docker-compose
+pip install docker-compose
+# check docker compose
+docker-compose version
+
+docker network create -d bridge ceph.me
+
+########## Create DNS server (dockerized) #############
+
+# pull bind image
+docker pull sameersbn/bind:latest
+
+# start bind
+docker run -td --restart=always --name ns1.ceph.me -h ns1.ceph.me -e ROOT_PASSWORD=root --net ceph.me -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
+ufw reload
+ufw allow 53/tcp
+ufw allow 53/udp
+ufw reload
+
+##
+## add <IP> ns1.ceph.me to /etc/hosts of physical machine
+## open "https://ns1.ceph.me:10000" in browser
+## login with "root/root"
+##
+>> open Servers -> BIND DNS Server
+-> Setup RDNC
+-> Forwarding and Transfers -> 4.2.2.4
+                            -> 8.8.8.8
+-> Create Master Zone -> Domain name/Network -> ceph.me.
+                      -> Email Address -> m_kharatizadeh@yahoo.com
+
+..... ADD ENTRIES .....
+> @
+> ns1.ceph.me
+> dns.ceph.me
+.......................
+
+# restart DNS service
+docker restart ns1.ceph.me
+
+# add nameserver to all servers
+vim /etc/network/interfaces
+...
+dns-nameservers 10.0.2.220 4.2.2.4 8.8.8.8
+...
+
+# reboot all servers
+reboot
+
+############ CONFIGURE CEPH (ceph-deploy) ####################
+
+# admin node
+## alwayssssssssssssssssssssssssss ssh via "ceph" user to admin node
+#
+
+ssh-keygen
+ssh-copy-id ceph@mon0
+ssh-copy-id ceph@osd0
+ssh-copy-id ceph@mds0
+
+ceph-deploy new mon0
+
+vim ~/ceph.conf
+..................................
+public_network = {ip-address}/{netmask}
+rbd_default_features = 3
+osd_journal_size = 1000
+osd_pool_default_size = 1
+osd_pool_default_min_size = 1
+osd_pool_default_pg_num = 333
+osd_pool_default_pgp_num = 333
+osd_crush_chooseleaf_type = 1
+osd_max_object_name_len = 256
+osd_max_object_namespace_len = 64
+..................................
+
+#### ceph-deploy install --no-adjust-repos mon0.ceph.me osd0.ceph.me osd1.ceph.me
+
+ceph-deploy mon create-initial
+
+# list osd disks
+ceph-deploy disk list osd0
+
+# activate osd
+ceph-deploy osd prepare osd0:/dev/sdb
+ceph-deploy osd activate osd0:/dev/sdb1
+
+# activate mds
+ceph-deploy mds create mds0
+
+# copy configuration files to all nodes
+ceph-deploy admin mon0 osd0 mds0 admin
+
+# add permission
+sudo chmod +r /etc/ceph/ceph.client.admin.keyring
+
+# view cluster stat
+ceph -s
+
+# view mds stats
+ceph mds stat
+
+############ CONFIGURE ISCSI ####################
+# https://linhost.info/2012/05/configure-ubuntu-to-serve-as-an-iscsi-target/
+
+apt-get install iscsitarget iscsitarget-source iscsitarget-dkms
 
 ############ CONFIGURE STANDALONE CEPH ####################
 
@@ -697,117 +931,6 @@ for bucket in conn.get_all_buckets():
         created=bucket.creation_date,
     )
 ...
-
-########## Create DNS Nameserver for Ceph (Dockerized) #############
-
-
-apt-get update
-apt-get install apt-transport-https ca-certificates
-apt-key adv \
-               --keyserver hkp://ha.pool.sks-keyservers.net:80 \
-               --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | tee /etc/apt/sources.list.d/docker.list
-apt-get update
-# check if docker-engine is in apt cache
-apt-cache policy docker-engine
-# install prerequisities
-apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
-# reboot server
-reboot
-# instal docker-engine
-apt-get install docker-engine
-# install privoxy to help docker pull images over sanctions
-apt-get install privoxy
-systemctl enable privoxy
-vim /etc/privoxy/config
-<<<<<<<<<<<<<<<<<<<<
-listen-address	127.0.0.1:8085
-forward-socks5	/		127.0.0.1:8084	.
->>>>>>>>>>>>>>>>>>>>
-systemctl restart privoxy
-# enable proxy in docker
-mkdir -p /etc/systemd/system/docker.service.d
-vim /etc/systemd/system/docker.service.d/http-proxy.conf
-...
-[Service]
-Environment="HTTP_PROXY=http://127.0.0.1:8085/"
-...
-systemctl daemon-reload
-systemctl enable docker
-systemctl restart docker
-# check if proxy is present
-docker info
-# add user to docker group
-gpasswd -a arcana docker
-# reboot
-reboot
-# you should see under key Http Proxy
-# fireup a SOCKS5 proxy server on localhost:8084
-ssh -D 8084 .....
-# test docker
-docker pull ubuntu:xenial
-docker run --rm -it ubuntu:xenial
->>>>>>>>>>>>>>>>>>>>>>>>>>>
-exit
-<<<<<<<<<<<<<<<<<<<<<<<<<<<
-# install python pip since docker-compose
-# is available to install through pip
-apt-get install python-pip
-# upgrade it
-pip install --upgrade pip
-# install docker-compose
-pip install docker-compose
-# check docker compose
-docker-compose version
-
-# pull bind image
-docker pull sameersbn/bind:latest
-
-# start bind
-docker network create -d bridge ceph.me
-docker run -td --restart=always --name ns1.ceph.me -h ns1.ceph.me -e ROOT_PASSWORD=root --net ceph.me -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
-ufw reload
-ufw allow 53/tcp
-ufw allow 53/udp
-ufw reload
-
-##
-## add <IP> ns1.ceph.me to /etc/hosts of physical machine
-## open "https://ns1.flocker.me:10000" in browser
-## login with "root/root"
-##
->> open Servers -> BIND DNS Server
--> Setup RDNC
--> Forwarding and Transfers -> 4.2.2.4
-                            -> 8.8.8.8
--> Create Master Zone -> Domain name/Network -> ceph.me.
-                      -> Email Address -> m_kharatizadeh@yahoo.com
-
-..... ADD ENTRIES .....
-> @
-> ns1.ceph.me
-> monitor0.ceph.me
-> osd0.ceph.me
-> mds0.ceph.me
-> rgw0.ceph.me
-> dns.ceph.me
-> rgw.ceph.me (this is HTTPS nginx reverse proxy enabled)
-.......................
-
-# restart DNS service
-docker restart ns1.ceph.me
-
-# add nameserver to all servers
-vim /etc/network/interfaces
-...
-dns-nameservers 10.0.2.244 4.2.2.4 8.8.8.8
-...
-
-# reboot all servers
-reboot
-
-# test dns in all servers
-ping dns.ceph.me
 
 ########## Create nginx reverse proxy for Rados Gateway #############
 
@@ -1320,6 +1443,7 @@ vim /usr/bin/mount-shared
 # Determine if we are mounting or unmounting
 if [ "$1" == "m" ]; then
    mkdir -p /var/lib/shared
+   umount /var/lib/shared
    ceph-fuse -f -c /etc/ceph/ceph.conf /var/lib/shared
 fi
 if [ "$1" == "u" ]; then
@@ -1338,10 +1462,11 @@ Wants=network-online.target
 After=NetworkManager-wait-online.service
 Before=docker.service
 [Service]
-Type=oneshot
+Type=simple
 RemainAfterExit=yes
 ExecStart=/usr/bin/mount-shared m
 ExecStop=/usr/bin/mount-shared u
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
@@ -1481,6 +1606,10 @@ firewall-cmd --reload
 firewall-cmd --add-port=139/tcp --permanent
 firewall-cmd --add-port=445/tcp --permanent
 firewall-cmd --reload
+
+########## Create NFS (based on shared /var/lib/shared cephfs drive) #############
+
+
 
 ########## stop services #############
 

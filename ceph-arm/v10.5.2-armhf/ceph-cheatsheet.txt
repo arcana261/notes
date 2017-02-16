@@ -1,0 +1,23 @@
+## remove osd
+###################################
+
+# admin:
+ceph osd out {osd-num}
+
+# osd:
+systemctl stop ceph-osd@{osd-num}
+
+# admin:
+ceph osd crush remove osd.{osd-num}
+ceph osd crush remove osd{osd-num}
+ceph auth del osd.{osd-num}
+ceph osd rm {osd-num}
+vim ceph.conf
+.....
+remove [osd.{osd-num] section if present
+.....
+
+# osd:
+
+
+
