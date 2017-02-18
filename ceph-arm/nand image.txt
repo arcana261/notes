@@ -1,0 +1,7 @@
+# http://www.linuxweblog.com/dd-image
+
+dd if=/dev/nand conv=sync,noerror bs=64K | gzip -c  > /mnt/nand.img.gz
+
+# view progress, run in another terminal
+watch -n5 "kill -USR1 $(pgrep '^dd$')" 
+

@@ -25,6 +25,8 @@ Resources Needed:
 NOTES:
 1. get cephfs layout on file
    getfattr -n ceph.file.layout file
+2. set ceohfs layout on file
+   setfattr -n ceph.file.layout.stripe_unit -v 1048576 file2
 
 
 [Swarm]
@@ -263,13 +265,21 @@ cd ~/ceph
 apt-get install debhelper
 dpkg-buildpackage
 ..............................................................................
+Package output location:
+~/ (like /home/ubuntu)
+..............................................................................
+
+
+..............................................................................
 .......................... BUILD PACKAGE ALTERNATIVE APPROACH.................
 ./make-debs.sh
 ..............................................................................
 ..............................................................................
-
 Package output location:
 /tmp/release/Ubuntu/WORKDIR/
+..............................................................................
+..............................................................................
+
 
 ########### Save output package
 mkdir -p ~/ceph-10.2.5-build-x64/
@@ -520,10 +530,128 @@ ceph -s
 # view mds stats
 ceph mds stat
 
+########## create ceph filesystem #############
+
+# create pools (10 is pgnum)
+ceph osd pool create cephfs_data 100
+ceph osd pool create cephfs_metadata 100
+
+# verify pools created
+ceph osd lspools
+
+# create filesystem
+ceph fs new cephfs cephfs_metadata cephfs_data
+
+# verify filesystem is created
+ceph fs ls
+
+# view mds stats
+ceph mds stat
+
+# test cephfs
+ceph-fuse -m 127.0.0.1:6789 -c /etc/ceph/ceph.conf --cluster ceph --name client.admin /mnt
+touch /mnt/test.txt
+
+# write some data (10MB)
+dd if=/dev/zero of=/mnt/test.data bs=1k count=10000
+
+# check df
+df
+
+# unmount
+umount /mnt
+
 ############ CONFIGURE ISCSI ####################
 # https://linhost.info/2012/05/configure-ubuntu-to-serve-as-an-iscsi-target/
 
-apt-get install iscsitarget iscsitarget-source iscsitarget-dkms
+apt-get update
+apt-get install iscsitarget iscsitarget-dkms attr
+reboot
+
+>> migrate /etc/ceph.conf
+>> migrate /etc/ceph.client.admin.keyring
+
+# create directory
+mkdir -p /var/lib/shared
+
+# create mounter/umounter script
+vim /usr/bin/mount-shared
+...
+#!/bin/bash -
+
+# Image mount/unmount and pool are passed from the systems service as arguments
+# Determine if we are mounting or unmounting
+if [ "$1" == "m" ]; then
+   mkdir -p /var/lib/shared
+   umount /var/lib/shared
+   ceph-fuse -f -c /etc/ceph/ceph.conf /var/lib/shared
+fi
+if [ "$1" == "u" ]; then
+   umount /var/lib/shared
+fi
+...
+chmod +x /usr/bin/mount-shared
+
+# create systemd service
+vim /lib/systemd/system/mount-shared.service
+...
+[Unit]
+Description=CephFS Object Storage Mapping
+Conflicts=shutdown.target
+Wants=network-online.target
+After=NetworkManager-wait-online.service
+Before=docker.service iscsitarget.service
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/bin/mount-shared m
+ExecStop=/usr/bin/mount-shared u
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+...
+
+# enable service
+systemctl daemon-reload
+systemctl enable mount-shared.service
+systemctl restart mount-shared.service
+
+# check if mounted
+df
+
+# reboot to check if still mounted
+reboot
+
+# create iscsi image file
+mkdir -p /var/lib/shared/iscsi.ceph.me
+touch /var/lib/shared/iscsi.ceph.me/disk00.img
+setfattr -n ceph.file.layout.stripe_unit -v 65536 /var/lib/shared/iscsi.ceph.me/disk00.img
+
+dd if=/dev/zero of=/var/lib/shared/iscsi.ceph.me/disk00.img count=0 bs=1 seek=20G
+
+# configure iscsi
+vim /etc/default/iscsitarget
+...
+ISCSITARGET_ENABLE=true
+...
+
+# configure iscsi LUN
+vim /etc/iet/ietd.conf
+...
+# add to the end
+# naming rule : [ iqn.yaer-month.domain:any name ]
+Target iqn.2017-02.iscsi.ceph.me:target00
+    # provided devicce as a iSCSI target
+    Lun 0 Path=/var/lib/shared/iscsi.ceph.me/disk00.img,Type=fileio
+    # iSCSI Initiator's IP address you allow to connect
+    initiator-address 10.0.2.225
+    # authentication info ( set anyone you like for "username", "password" )
+    # incominguser admin admin
+...
+
+systemctl enable iscsitarget.service
+systemctl restart iscsitarget.service
 
 ############ CONFIGURE STANDALONE CEPH ####################
 
@@ -785,34 +913,6 @@ ceph -s
 
 # verify osd tree
 ceph osd tree
-
-########## create ceph filesystem #############
-
-# create pools (10 is pgnum)
-ceph osd pool create cephfs_data 100
-ceph osd pool create cephfs_metadata 100
-
-# verify pools created
-ceph osd lspools
-
-# create filesystem
-ceph fs new cephfs cephfs_metadata cephfs_data
-
-# verify filesystem is created
-ceph fs ls
-
-# view mds stats
-ceph mds stat
-
-# test cephfs
-ceph-fuse -m 127.0.0.1:6789 -c /etc/ceph/ceph.conf --cluster ceph --name client.admin /mnt
-touch /mnt/test.txt
-
-# write some data (10MB)
-dd if=/dev/zero of=/mnt/test.data bs=1k count=10000
-
-# unmount
-umount /mnt
 
 ########## test rbd #############
 
