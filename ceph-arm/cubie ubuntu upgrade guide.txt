@@ -4,8 +4,8 @@ rm -rfv /etc/apt/sources.list.d/linaro-*
 apt-get update
 apt-get -y purge mysql-server apache2
 apt-get -y autoremove
-rm -rfv debs/
-rm -fv readme.txt
+rm -rfv /root/debs/
+rm -fv /root/readme.txt
 apt-get -y upgrade
 apt-get -y dist-upgrade
 
@@ -23,16 +23,22 @@ deb http://ports.ubuntu.com/ubuntu-ports xenial-security multiverse
 EOF
 
 apt-get update
-
-
-
 apt-get -y upgrade
-
-
-
 apt-get -y dist-upgrade
 apt-get -y autoremove
-
 do-release-upgrade
+
 lsb_release -a
+
+apt-get clean
+
+
+################ OPTIONAL ########################
+######## WIPE NAND STRUCTURE
+
+# set empty filesystem area to zero
+dd if=/dev/zero of=/delete.me bs=8M; rm -fv /delete.me
+
+# view progress, run in another terminal
+watch -n5 "kill -USR1 $(pgrep '^dd$')" 
 

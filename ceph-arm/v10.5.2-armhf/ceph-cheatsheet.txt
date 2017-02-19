@@ -1,3 +1,16 @@
+Remember:
+
+1. configure data scrubbing hours
+2. performance domains
+3. failure domains
+4. seperation of journals
+5. for SSD performance domains, you can increase filestore max sync interval
+6. compute journalsize from formulae {2 * (expected throughput * filestore max sync interval)}
+
+
+http://accelazh.github.io/ceph/Ceph-Performance-Tuning-Checklist
+
+
 ## remove osd
 ###################################
 

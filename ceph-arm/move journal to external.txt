@@ -1,0 +1,101 @@
+###### NOTE: ######################################
+# you can query udev parameters using
+# 
+# udevadm info --query=all --name /dev/sdb2
+###################################################
+
+###### NOTE: ######################################
+# ceph udev rules are located in
+#
+# /lib/udev/rules.d/95-ceph-osd.rules
+###################################################
+
+###### NOTE: ######################################
+# ceph GPT journal entry type (file system type)
+# is "45b0969e-9b03-4f30-b4c6-b4b80ceff106"
+#
+# retrieved by looking at file 
+# /lib/udev/rules.d/95-ceph-osd.rules
+# 
+# this line in particular
+#
+# ENV{ID_PART_ENTRY_TYPE}=="45b0969e-9b03-4f30-b4c6-b4b80ceff106", \
+###### NOTE: ######################################
+
+
+# admin:
+# set noout - so that no data migration start
+ceph osd set noout
+
+# osd0:
+systemctl stop ceph-osd@0.service
+
+# osd0:
+# wait a little bit to finish the stop and flush the cache IMPORTANT!!
+# note: -i 0 is osd.0 (osd number)
+sudo -u ceph ceph-osd -i 0 --flush-journal
+
+# osd0:
+# create a new journal partition
+#### NOTE: "parted" does not work!
+#### USE ONLY AND ONLY "gdisk"
+####
+gdisk /dev/sdc
+> n					# new partition
+> 1					# new partition number
+> <Enter>				# starting offset (use default)
+> <Enter>				# finishing offset (use default)
+> 45b0969e-9b03-4f30-b4c6-b4b80ceff106	# partition type GUID
+>
+> p					# print new partition table
+> w					# write and quit
+
+# osd0:
+# acquire new journal uuid
+blkid /dev/sdc1
+
+# osd0:
+# fix journal_uuid file
+# example:
+## echo "d8562b91-bd25-448c-afbe-cd64eca17124" > /var/lib/ceph/osd/ceph-0/journal_uuid
+echo "<UUID>" > /var/lib/ceph/osd/ceph-0/journal_uuid
+
+# osd0:
+# remove old journal symlink
+rm -f /var/lib/ceph/osd/ceph-0/journal
+
+# osd0:
+# create new journal symlink
+# example:
+# sudo -u ceph ln -s /dev/disk/by-partuuid/d8562b91-bd25-448c-afbe-cd64eca17124 /var/lib/ceph/osd/ceph-0/journal
+sudo -u ceph ln -s /dev/disk/by-partuuid/<UUID> /var/lib/ceph/osd/ceph-0/journal
+
+# osd0:
+# remove old journal
+parted /dev/sdb
+> print
+# verify journal partition number
+> rm 2
+> print
+> quit
+
+# osd0:
+# fix permissions
+chown ceph:ceph /var/lib/ceph/osd/ceph-0/journal_uuid
+
+# osd0:
+# initialize new journal
+sudo ceph-osd -i 0 --mkjournal
+
+# osd0:
+# reboot OSD
+reboot
+
+# osd0:
+# check if service is up
+systemctl status ceph-osd@0.service
+
+# admin:
+# remove noout flag from ceph
+ceph osd unset noout
+

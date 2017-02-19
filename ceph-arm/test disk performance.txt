@@ -1,0 +1,21 @@
+----> note: 6-8 GB is enough for OSD journal
+----> osd journal size = {2 * (expected throughput * filestore max sync interval)}
+---->       filestore max sync interval is 5s
+---->       throughput is is MB/s. which is "min(hard disk throughput, network throughput)"
+
+
+
+-------------> https://forum.proxmox.com/threads/move-ceph-journal-to-ssd.23217/
+
+# test performance
+dd if=/dev/zero of=/test1.img bs=1G count=1 oflag=dsync
+
+## cubie NAND write is 5.8 MB/s
+## cubie HDD write is 33.3 MB/s
+
+# test read performance
+echo 3 | sudo tee /proc/sys/vm/drop_caches
+time time dd if=/test1.img of=/dev/null bs=8k
+
+## cubie NAND read is 14.6 MB/s
+## cubie HDD read is 110 MB/s

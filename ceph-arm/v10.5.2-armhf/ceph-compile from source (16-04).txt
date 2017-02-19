@@ -512,14 +512,54 @@ ceph-deploy mon create-initial
 ceph-deploy disk list osd0
 
 # activate osd
+# syntax:
+# host:data
+# host:data:journal
 ceph-deploy osd prepare osd0:/dev/sdb
 ceph-deploy osd activate osd0:/dev/sdb1
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% WITH EXTERNAL JOURNAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#### OSD:
+
+gdisk /dev/sdb
+> n					# new partition
+> 1					# new partition number
+> <Enter>				# starting offset (use default)
+> <Enter>				# finishing offset (use default)
+> 4fbd7e29-9d25-41b8-afd0-062c0ceff05d	# partition type GUID
+>
+> p					# print new partition table
+> w					# write and quit
+
+gdisk /dev/sdc
+> n					# new partition
+> 1					# new partition number
+> <Enter>				# starting offset (use default)
+> <Enter>				# finishing offset (use default)
+> 45b0969e-9b03-4f30-b4c6-b4b80ceff106	# partition type GUID
+>
+> p					# print new partition table
+> w					# write and quit
+
+#### ADMIN:
+ceph-deploy osd prepare osd0:/dev/sdb1:/dev/sdc1
+ceph-deploy osd activate osd0:/dev/sdb1:/dev/sdc1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 # activate mds
 ceph-deploy mds create mds0
 
 # copy configuration files to all nodes
 ceph-deploy admin mon0 osd0 mds0 admin
+#########################
+#
+####### or just if you want to push config do
+#
+# ceph-deploy config push osd0 mds0 mon0
+#
+#########################
 
 # add permission
 sudo chmod +r /etc/ceph/ceph.client.admin.keyring
@@ -529,6 +569,9 @@ ceph -s
 
 # view mds stats
 ceph mds stat
+
+# verify osd tree
+ceph osd tree
 
 ########## create ceph filesystem #############
 

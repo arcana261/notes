@@ -1,7 +1,14 @@
 # http://www.linuxweblog.com/dd-image
 
+# you can fill NAND with zeroes (empty space)
+dd if=/dev/zero of=/delete.me bs=8M; rm -fv /delete.me
+
+# create the nand image as gzipped archive
 dd if=/dev/nand conv=sync,noerror bs=64K | gzip -c  > /mnt/nand.img.gz
 
 # view progress, run in another terminal
 watch -n5 "kill -USR1 $(pgrep '^dd$')" 
+
+# unpack nand image
+gunzip -c /mnt/nand.img.gz | dd of=/dev/nand conv=sync,noerror bs=64K
 
