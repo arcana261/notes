@@ -9,6 +9,7 @@ Resources Needed:
 
 (ufw assign 64MB more RAM)
 (docker needs at least 240MB RAM)
+(zabbix agent needs at lest 64MB RAM)
 
 1. Give QEMU guest 5000 MB RAM
 2. Give Host containing QEMU 8GB RAM

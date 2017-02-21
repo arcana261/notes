@@ -1,0 +1,263 @@
+# Controller Node -> 4GB
+# Compute Node -> 2GB
+
+(ufw assign 64MB more RAM)
+(docker needs at least 240MB RAM)
+
+#########################################
+## configure base host machine
+## hostname: "baseubuntu.ostack.me"
+#########################################
+
+>> install ubuntu 16.04 minimal netboot installation
+
+# set root password
+sudo passwd root
+
+# update system
+sudo apt-get update
+
+# ensure no dead package
+sudo apt-get autoremove
+
+# install some tools
+sudo apt-get install vim nano screen htop psmisc dnsutils wget \
+			xz-utils openssh-server ufw
+			
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo ufw reload
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+# configure EFI grub
+sudo mkdir -p /boot/efi/EFI/ubuntu/fonts/
+sudo cp /usr/share/grub/unicode.pf2 /boot/efi/EFI/ubuntu/fonts/
+sudo vim /etc/default/grub
+...
+... remove GRUB_HIDDEN_TIMEOUT
+... remove GRUB_HIDDEN_TIMEOUT_QUIET
+GRUB_CMDLINE_LINUX_DEFAULT="console=tty1"
+...
+sudo grub-mkconfig -o /boot/efi/EFI/ubuntu/grub.cfg
+
+# reboot system
+sudo reboot
+
+# configure pip
+sudo pip install --upgrade pip
+
+# check ip address and range
+ifconfig
+
+# check default route
+ip route show
+
+# check default dns server
+cat /etc/resolv.conf
+
+# configure vmware ethernet
+sudo vim /etc/network/interfaces
+...
+auto ens38
+iface ens38 inet static
+	address 192.168.217.10
+	netmask 255.255.255.0
+	network 192.168.217.0
+	broadcast 192.168.217.255
+	gateway 192.168.217.2
+	dns-search ostack.me
+	dns-nameservers 192.168.217.12 192.168.217.2 4.2.2.4
+...
+
+# reboot system
+sudo reboot
+
+#########################################
+## configure base docker machine
+## clone: base ubuntu
+## hostname: "basedocker.ostack.me"
+## ip: "192.168.217.11"
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname basedocker.ostack.me
+vim /etc/hosts
+> 127.0.1.1    basedocker.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.11
+reboot
+
+# import repository
+sudo apt-get update
+sudo apt-get install apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
+sudo apt-get update
+
+# check if docker-engine is in apt cache
+sudo apt-cache policy docker-engine
+
+# install prerequisities
+sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+
+# reboot server
+sudo reboot
+
+# instal docker-engine
+sudo apt-get install docker-engine
+
+# install privoxy to help docker pull images over sanctions
+sudo apt-get install privoxy
+sudo systemctl enable privoxy
+sudo vim /etc/privoxy/config
+<<<<<<<<<<<<<<<<<<<<
+listen-address	127.0.0.1:8085
+forward-socks5	/		127.0.0.1:8084	.
+>>>>>>>>>>>>>>>>>>>>
+sudo systemctl restart privoxy
+
+# enable proxy in docker
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
+...
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8085/"
+...
+sudo systemctl daemon-reload
+sudo systemctl enable docker
+sudo systemctl restart docker
+
+# check if proxy is present
+sudo docker info
+
+# add user to docker group
+sudo gpasswd -a arcana docker
+
+# reboot
+sudo reboot
+
+# create password-less login to VPN server
+sudo apt-get install -y ssh
+ssh-keygen -t rsa
+ssh root@178.162.207.98 mkdir -p .ssh
+cat ~/.ssh/id_rsa.pub | ssh root@178.162.207.98 'cat >> .ssh/authorized_keys'
+ssh root@178.162.207.98 "chmod 700 .ssh; chmod 640 .ssh/authorized_keys"
+ssh root@178.162.207.98
+
+# you should see under key Http Proxy
+# fireup a SOCKS5 proxy server on localhost:8084
+ssh -D 8084 root@178.162.207.98
+
+# test docker
+docker pull ubuntu:xenial
+docker run --rm -it ubuntu:xenial
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+exit
+<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# install python pip since docker-compose
+# is available to install through pip
+sudo apt-get install python-pip
+
+# upgrade it
+sudo pip install --upgrade pip
+
+# install docker-compose
+sudo pip install docker-compose
+
+# check docker compose
+docker-compose version
+
+# create base network
+docker network create -d bridge ostack.me
+
+#########################################
+## configure DNS server
+## clone: base docker
+## hostname: "dns.ostack.me"
+## ip: "192.168.217.12"
+## RAM: 400MB
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname dns.ostack.me
+vim /etc/hosts
+> 127.0.1.1    dns.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.12
+reboot
+
+### set static ip for host only adapter
+# check ip address and range
+ifconfig
+# check default route
+ip route show
+# check default dns server
+cat /etc/resolv.conf
+# configure vmware ethernet
+sudo vim /etc/network/interfaces
+...
+auto ens38
+iface ens38 inet static
+	address 192.168.249.10
+	netmask 255.255.255.0
+	network 192.168.249.0
+	broadcast 192.168.249.255
+...
+# reboot system
+sudo reboot
+
+# pull bind image
+docker pull sameersbn/bind:latest
+
+# start bind
+docker run -td --restart=always --name ns1.ostack.me -h ns1.ostack.me -e ROOT_PASSWORD=root --net ostack.me -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
+sudo ufw reload
+sudo ufw allow 53/tcp
+sudo ufw allow 53/udp
+sudo ufw reload
+
+##
+## add <IP> ns1.ostack.me to /etc/hosts of physical machine
+## open "https://ns1.ostack.me:10000" in browser
+## login with "root/root"
+##
+>> open Servers -> BIND DNS Server
+-> Setup RDNC
+-> Forwarding and Transfers -> 4.2.2.4
+                            -> 8.8.8.8
+-> Create Master Zone -> Domain name/Network -> ostack.me.
+                      -> Email Address -> m_kharatizadeh@yahoo.com
+
+..... ADD ENTRIES .....
+> @
+> ns1.ostack.me
+> dns.ostack.me
+> basedocker.ostack.me
+> baseubuntu.ostack.me
+.......................
+
+# restart DNS service
+docker restart ns1.ostack.me
+
+#########################################
+## configure zabbix server
+## clone: base ubuntu
+## hostname: "zserver.ostack.me"
+## ip: "192.168.217.13"
+## RAM: 400MB
+#########################################

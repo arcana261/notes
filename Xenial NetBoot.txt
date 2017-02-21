@@ -1,0 +1,44 @@
+# boot gentoo
+# format hard drive as GPT
+sudo bash
+lsblk
+parted /dev/sda
+...
+mklabel gpt
+quit
+...
+poweroff
+
+# boot ubuntu xenial netboot installer
+# uses "guided LVM" partitioning
+# don't choose anything as base package installation
+
+# boot gentoo to fix EFI firmware
+sudo bash
+lsblk
+mount /dev/sda1 /mnt 
+mkdir -p /mnt/EFI/BOOT
+cp /mnt/EFI/ubuntu/grubx64.efi /mnt/EFI/BOOT/bootx64.efi
+umount /mnt
+poweroff
+
+# update system
+sudo apt-get update
+# ensure no dead package
+sudo apt-get autoremove
+# install some tools
+sudo apt-get install vim nano screen htop psmisc dnsutils wget \
+			w3m git python-pip equivs xz-utils make g++ gcc cpp \
+			autoconf automake libtool flex bison gdb \
+			w3m-img
+# install network manager
+sudo apt-get install network-manager
+sudo systemctl enable NetworkManager.service
+sudo systemctl restart NetworkManager.service
+
+sudo mkdir -p /boot/efi/EFI/ubuntu/fonts/
+sudo cp /usr/share/grub/unicode.pf2 /boot/efi/EFI/ubuntu/fonts/
+sudo grub-mkconfig -o /boot/efi/EFI/ubuntu/grub.cfg
+
+
+
