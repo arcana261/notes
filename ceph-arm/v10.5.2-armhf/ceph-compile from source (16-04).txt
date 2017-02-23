@@ -8,6 +8,7 @@ http://blog.programster.org/ubuntu-14-04-add-a-ceph-metadata-server/
 Resources Needed:
 
 (ufw assign 64MB more RAM)
+(zabbix assign 32MB more RAM)
 (docker needs at least 240MB RAM)
 
 1. Give QEMU guest 5000 MB RAM
@@ -503,6 +504,8 @@ osd_crush_chooseleaf_type = 1
 osd_max_object_name_len = 256
 osd_max_object_namespace_len = 64
 ..................................
+NOOOOOTEEEEEEEEEEEE: OPTIONALLY
+"cluster_network = {ip-address}/{netmask}"
 
 #### ceph-deploy install --no-adjust-repos mon0.ceph.me osd0.ceph.me osd1.ceph.me
 

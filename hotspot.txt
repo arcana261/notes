@@ -1,0 +1,12 @@
+# check if device supports AP
+sudo iw list
+..............
+Supported interface modes:
+       * AP ?
+..............
+
+sudo xhost local:root
+
+sudo nm-connection-editor
+
+sudo nmcli connection up Mehdix

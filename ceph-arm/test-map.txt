@@ -1,0 +1,228 @@
+# begin crush map
+tunable choose_local_tries 0
+tunable choose_local_fallback_tries 0
+tunable choose_total_tries 50
+tunable chooseleaf_descend_once 1
+tunable chooseleaf_vary_r 1
+tunable straw_calc_version 1
+
+# devices
+device 0 osd.0
+device 1 osd.1
+device 2 osd.2
+device 3 osd.3
+device 4 osd.4
+device 5 osd.5
+device 6 osd.6
+device 7 osd.7
+device 8 osd.8
+device 9 osd.9
+device 10 osd.10
+device 11 osd.11
+device 12 osd.12
+
+# types
+type 0 osd
+type 1 host
+type 2 chassis
+type 3 serverroom
+type 4 root
+
+# buckets
+host vm0 {
+        id -2           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.0 weight 6
+}
+
+host vm1 {
+        id -3           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.1 weight 6
+}
+
+host vm2 {
+        id -4           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.2 weight 6
+}
+
+host vm3 {
+        id -5           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.3 weight 6
+}
+
+host cub0 {
+        id -6           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.4 weight 6
+}
+
+host cub1 {
+        id -7           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.5 weight 6
+}
+
+host cub2 {
+        id -8           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.6 weight 6
+}
+
+host cub3 {
+        id -9           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.7 weight 6
+}
+
+host cub4 {
+        id -10           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.8 weight 6
+}
+
+host cub5 {
+        id -11           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.9 weight 6
+}
+
+host cub6 {
+        id -12           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.10 weight 6
+}
+
+host cub7 {
+        id -13           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.11 weight 6
+}
+
+host cub8 {
+        id -22           # do not change unnecessarily
+        # weight 0.077
+        alg straw
+        hash 0  # rjenkins1
+        item osd.12 weight 6
+}
+
+chassis srv0 {
+	id -14
+	alg straw
+	hash 0
+	item vm0 weight 6
+	item vm1 weight 6
+	item vm2 weight 6
+	item vm3 weight 6
+}
+
+chassis cubcas0 {
+	id -15
+	alg straw
+	hash 0
+	item cub0 weight 6
+	item cub1 weight 6
+	item cub2 weight 6
+	item cub3 weight 6
+	item cub4 weight 6
+	item cub5 weight 6
+	item cub6 weight 6
+	item cub7 weight 6
+	item cub8 weight 6
+
+}
+
+serverroom sr_kaveh {
+	id -16
+	alg straw
+	hash 0
+	item srv0 weight 24
+	item cubcas0 weight 54
+}
+
+root default {
+	id -17
+	alg straw
+	hash 0
+	item sr_kaveh weight 78
+}
+
+serverroom sr_kaveh_ssd_journal {
+	id -18
+	alg straw
+	hash 0
+	item srv0 weight 24
+}
+
+root ssd_journal {
+	id -19
+	alg straw
+	hash 0
+	item sr_kaveh_ssd_journal weight 24
+}
+
+serverroom sr_kaveh_cubie {
+	id -20
+	alg straw
+	hash 0
+	item cubcas0 weight 54
+}
+
+root cubie {
+	id -21
+	alg straw
+	hash 0
+	item sr_kaveh_cubie weight 54
+}
+
+# -22
+# rules
+
+rule replicated_ruleset {
+        ruleset 0
+        type replicated
+        min_size 3
+        max_size 3
+ 	step take ssd_journal
+ 	step chooseleaf firstn 1 type host
+ 	step emit
+	step take sr_kaveh_cubie
+	step chooseleaf firstn 2 type chassis
+	step emit
+	step take sr_kaveh_cubie
+	step chooseleaf firstn 2 type host
+	step emit
+        #step take default
+        #step chooseleaf firstn 0 type host
+        #step emit
+}
+
+# end crush map
+

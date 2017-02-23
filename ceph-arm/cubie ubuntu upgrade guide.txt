@@ -4,6 +4,7 @@ rm -rfv /etc/apt/sources.list.d/linaro-*
 apt-get update
 apt-get -y purge mysql-server apache2
 apt-get -y autoremove
+rm -rfv /var/www
 rm -rfv /root/debs/
 rm -fv /root/readme.txt
 apt-get -y upgrade

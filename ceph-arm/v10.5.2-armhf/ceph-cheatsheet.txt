@@ -8,8 +8,31 @@ Remember:
 6. compute journalsize from formulae {2 * (expected throughput * filestore max sync interval)}
 
 
+http://ceph.com/pgcalc/
+
 http://accelazh.github.io/ceph/Ceph-Performance-Tuning-Checklist
 
+https://www.sebastien-han.fr/blog/2012/12/07/ceph-2-speed-storage-with-crush/
+
+http://docs.ceph.com/docs/master/rados/operations/crush-map/
+
+http://redhatstorage.redhat.com/2015/02/12/10-commands-every-ceph-administrator-should-know/
+1. Check or watch cluster health: ceph status || ceph -w
+2. Check cluster usage stats: ceph df
+3. Check placement group stats: ceph pg dump
+4. View the CRUSH map: ceph osd tree
+5. Create or remove OSDs: ceph osd create || ceph osd rm
+6. Create or delete a storage pool: ceph osd pool create || ceph osd pool delete
+7. Repair an OSD: ceph osd repair
+8. Benchmark an OSD: ceph tell osd.* bench
+9. Adjust an OSD’s crush weight: ceph osd crush reweight
+10. List cluster keys: ceph auth list
+ceph osd primary-affinity <osd-id> <weight>
+
+(weight is between [0,1])
+
+
+http://cephnotes.ksperis.com/blog/2015/02/02/crushmap-example-of-a-hierarchical-cluster-map
 
 ## remove osd
 ###################################
@@ -31,6 +54,50 @@ remove [osd.{osd-num] section if present
 .....
 
 # osd:
+
+
+## set primary affinity
+###################################
+[mon]
+...
+mon osd allow primary affinity = true
+...
+
+ceph osd primary-affinity osd.<id> <weight>
+
+
+NOTE: weight is between 0 and 1
+
+## decompile crush map
+###################################
+
+ceph osd getcrushmap -o my-crush-map
+crushtool -d my-crush-map -o my-crush-map.txt
+
+## compile crush map
+###################################
+
+crushtool -c crushmap.txt -o crushmap-new.bin
+
+## test utilization of custom crush map
+###################################
+crushtool --test -i crushmap-new.bin --show-utilization --rule 0 --num-rep=2
+crushtool --test -i crushmap-new.bin --show-choose-tries --rule 0 --num-rep=2
+crushtool --test -i test-map.bin --show-bad-mappings --rule 0 --num-rep=3
+
+## set crushmap to the compiled version
+###################################
+
+ceph osd setcrushmap -i /tmp/crush-compiled1
+
+
+
+
+
+
+
+
+
 
 
 
