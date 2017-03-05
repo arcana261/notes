@@ -36,6 +36,8 @@ Port 2122
 PermitRootLogin no
 ...
 sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
 sudo ufw allow 2122/tcp
 sudo ufw reload
 sudo systemctl enable sshd
@@ -229,6 +231,7 @@ docker run -td --restart=always --name ns1.ostack.me -h ns1.ostack.me -e ROOT_PA
 sudo ufw reload
 sudo ufw allow 53/tcp
 sudo ufw allow 53/udp
+sudo ufw allow 10000/tcp
 sudo ufw reload
 
 ##
@@ -255,9 +258,142 @@ sudo ufw reload
 docker restart ns1.ostack.me
 
 #########################################
-## configure zabbix server
+## configure base zabbix
 ## clone: base ubuntu
-## hostname: "zserver.ostack.me"
+## hostname: "basezabbix.ostack.me"
 ## ip: "192.168.217.13"
 ## RAM: 400MB
 #########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname basezabbix.ostack.me
+vim /etc/hosts
+> 127.0.1.1    basezabbix.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.13
+reboot
+
+# import repository and refresh
+wget http://repo.zabbix.com/zabbix/3.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.2-1+xenial_all.deb
+sudo dpkg -i zabbix-release_3.2-1+xenial_all.deb
+sudo apt-get update
+
+#########################################
+## configure zabbix server
+## clone: base zabbix
+## hostname: "zserver.ostack.me"
+## ip: "192.168.217.14"
+## RAM: 400MB
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname zserver.ostack.me
+vim /etc/hosts
+> 127.0.1.1    zserver.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.14
+reboot
+
+### set static ip for host only adapter
+# check ip address and range
+ifconfig
+# check default route
+ip route show
+# check default dns server
+cat /etc/resolv.conf
+# configure vmware ethernet
+sudo vim /etc/network/interfaces
+...
+auto ens38
+iface ens38 inet static
+	address 192.168.249.11
+	netmask 255.255.255.0
+	network 192.168.249.0
+	broadcast 192.168.249.255
+...
+# reboot system
+sudo reboot
+
+# install zabbix server
+sudo apt-get install zabbix-server-pgsql zabbix-frontend-php
+
+# create database password
+sudo -u postgres psql
+> \password
+> \q
+
+# allow password login in datbase configuration
+nano -w /etc/postgresql/9.5/main/pg_hba.conf
+>> change "peer" to "md5"
+
+# restart db service
+sudo systemctl restart postgresql.service
+
+# create database for zabbix
+psql -U postgres
+> create database zabbix; 
+> \q 
+
+# import config
+zcat /usr/share/doc/zabbix-server-pgsql/create.sql.gz | psql -U postgres zabbix
+
+# set db user/password
+nano -w /etc/zabbix/zabbix_server.conf
+> DBUser=postgres
+> DBPassword=1234
+
+# start and enable systemd service
+systemctl start zabbix-server
+systemctl enable zabbix-server
+
+# check if zabbix is running already
+systemctl status zabbix-server
+
+# set correct PHP timezone
+nano -w /etc/zabbix/apache.conf
+> php_value date.timezone Asia/Tehran
+
+# restat and enable apache service
+systemctl restart apache2.service
+systemctl enable apache2.service
+
+# check if apache is running
+systemctl status apache2.service
+
+# install some php plugins
+apt-get install php-bcmath
+apt-get install php-mbstring
+apt-get install php-xmlwriter
+apt-get install php-xmlreader
+apt-get install php-pgsql
+
+# restart apache
+systemctl restart apache2.service
+
+# finish installing frontend
+>>>>>>>> goto http://<hostname>/zabbix
+
+# login
+# user: "Admin"
+# pass: "zabbix"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
