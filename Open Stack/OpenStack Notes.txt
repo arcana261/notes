@@ -1,0 +1,153 @@
+Identity Service -> Key Stone
+Compute Service -> Nova
+Image Service -> Glance
+Networking Service -> Neutron
+
+
+Controller¶
+The controller node runs the Identity service, Image service, management portions of Compute, management portion of Networking, various Networking agents, and the dashboard. It also includes supporting services such as an SQL database, message queue, and NTP.
+Optionally, the controller node runs portions of the Block Storage, Object Storage, Orchestration, and Telemetry services.
+The controller node requires a minimum of two network interfaces.
+
+Compute¶
+The compute node runs the hypervisor portion of Compute that operates instances. By default, Compute uses the KVM hypervisor. The compute node also runs a Networking service agent that connects instances to virtual networks and provides firewalling services to instances via security groups.
+You can deploy more than one compute node. Each node requires a minimum of two network interfaces.
+
+Block Storage¶
+The optional Block Storage node contains the disks that the Block Storage and Shared File System services provision for instances.
+For simplicity, service traffic between compute nodes and this node uses the management network. Production environments should implement a separate storage network to increase performance and security.
+You can deploy more than one block storage node. Each node requires a minimum of one network interface.
+
+Object Storage¶
+The optional Object Storage node contain the disks that the Object Storage service uses for storing accounts, containers, and objects.
+For simplicity, service traffic between compute nodes and this node uses the management network. Production environments should implement a separate storage network to increase performance and security.
+This service requires two nodes. Each node requires a minimum of one network interface. You can deploy more than two object storage nodes.
+
+Note
+If you choose to install on VMs, make sure your hypervisor provides a way to disable MAC address filtering on the provider network interface.
+
+Passwords¶
+Password name	Description
+Database password (no variable used)	Root password for the database
+ADMIN_PASS	Password of user admin
+CINDER_DBPASS	Database password for the Block Storage service
+CINDER_PASS	Password of Block Storage service user cinder
+DASH_DBPASS	Database password for the dashboard
+DEMO_PASS	Password of user demo
+GLANCE_DBPASS	Database password for Image service
+GLANCE_PASS	Password of Image service user glance
+KEYSTONE_DBPASS	Database password of Identity service
+NEUTRON_DBPASS	Database password for the Networking service
+NEUTRON_PASS	Password of Networking service user neutron
+NOVA_DBPASS	Database password for Compute service
+NOVA_PASS	Password of Compute service user nova
+RABBIT_PASS	Password of user guest of RabbitMQ
+
+
+
+Users and services can locate other services by using the service catalog, which is managed by the Identity service. As the name implies, a service catalog is a collection of available services in an OpenStack deployment. Each service can have one or many endpoints and each endpoint can be one of three types: admin, internal, or public.
+
+Together, regions, services, and endpoints created within the Identity service comprise the service catalog for a deployment. 
+
+The Identity service contains these components:
+	Server
+A centralized server provides authentication and authorization services using a RESTful interface.
+	Drivers
+Drivers or a service back end are integrated to the centralized server. They are used for accessing identity information in repositories external to OpenStack, and may already exist in the infrastructure where OpenStack is deployed (for example, SQL databases or LDAP servers).
+	Modules
+Middleware modules run in the address space of the OpenStack component that is using the Identity service. These modules intercept service requests, extract user credentials, and send them to the centralized server for authorization. The integration between the middleware modules and OpenStack components uses the Python Web Server Gateway Interface.
+
+CONTROLLER NODEEEE
+IDENTITY SERVICEEEEEEEEEEE
+$ export OS_USERNAME=admin
+$ export OS_PASSWORD=ADMIN_PASS
+$ export OS_PROJECT_NAME=admin
+$ export OS_USER_DOMAIN_NAME=Default
+$ export OS_PROJECT_DOMAIN_NAME=Default
+$ export OS_AUTH_URL=http://controller:35357/v3
+$ export OS_IDENTITY_API_VERSION=3
+
+
+The Identity service provides authentication services for each OpenStack service. The authentication service uses a combination of domains, projects, users, and roles.
+
+
+OPENSTACK IMAGE SERVICE
+glance-api
+	Accepts Image API calls for image discovery, retrieval, and storage.
+glance-registry
+	Stores, processes, and retrieves metadata about images. Metadata includes items such as size and type.
+Database
+	Stores image metadata and you can choose your database depending on your preference. Most deployments use MySQL or SQLite.
+Storage repository for image files
+	Various repository types are supported including normal file systems (or any filesystem mounted on the glance-api controller node), Object Storage, RADOS block devices, VMware datastore, and HTTP. Note that some repositories will only support read-only usage.
+Metadata definition service
+	A common API for vendors, admins, services, and users to meaningfully define their own custom metadata. This metadata can be used on different types of resources like images, artifacts, volumes, flavors, and aggregates. A definition includes the new property’s key, description, constraints, and the resource types which it can be associated with.
+
+
+
+
+OPENSTACK COMPUTE SERVICE (Nova)
+nova-api service
+	Accepts and responds to end user compute API calls. The service supports the OpenStack Compute API, the Amazon EC2 API, and a special Admin API for privileged users to perform administrative actions. It enforces some policies and initiates most orchestration activities, such as running an instance.
+nova-api-metadata service
+	Accepts metadata requests from instances. The nova-api-metadata service is generally used when you run in multi-host mode with nova-network installations. For details, see Metadata service in the OpenStack Administrator Guide.
+nova-compute service
+	A worker daemon that creates and terminates virtual machine instances through hypervisor APIs. For example:
+		XenAPI for XenServer/XCP
+		libvirt for KVM or QEMU
+		VMwareAPI for VMware
+	Processing is fairly complex. Basically, the daemon accepts actions from the queue and performs a series of system commands such as launching a KVM instance and updating its state in the database.
+nova-scheduler service
+	Takes a virtual machine instance request from the queue and determines on which compute server host it runs.
+nova-conductor module
+	Mediates interactions between the nova-compute service and the database. It eliminates direct accesses to the cloud database made by the nova-compute service. The nova-conductor module scales horizontally. However, do not deploy it on nodes where the nova-compute service runs. For more information, see Configuration Reference Guide.
+nova-cert module
+	A server daemon that serves the Nova Cert service for X509 certificates. Used to generate certificates for euca-bundle-image. Only needed for the EC2 API.
+nova-network worker daemon
+	Similar to the nova-compute service, accepts networking tasks from the queue and manipulates the network. Performs tasks such as setting up bridging interfaces or changing IPtables rules.
+nova-consoleauth daemon
+	Authorizes tokens for users that console proxies provide. See nova-novncproxy and nova-xvpvncproxy. This service must be running for console proxies to work. You can run proxies of either type against a single nova-consoleauth service in a cluster configuration. For information, see About nova-consoleauth.
+nova-novncproxy daemon
+	Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
+nova-spicehtml5proxy daemon
+	Provides a proxy for accessing running instances through a SPICE connection. Supports browser-based HTML5 client.
+nova-xvpvncproxy daemon
+	Provides a proxy for accessing running instances through a VNC connection. Supports an OpenStack-specific Java client.
+nova-cert daemon
+	x509 certificates.
+nova client
+	Enables users to submit commands as a tenant administrator or end user.
+The queue
+	A central hub for passing messages between daemons. Usually implemented with RabbitMQ, also can be implemented with another AMQP message queue, such as ZeroMQ.
+SQL database
+	Stores most build-time and run-time states for a cloud infrastructure, including:
+		Available instance types
+		Instances in use
+		Available networks
+		Projects
+	Theoretically, OpenStack Compute can support any database that SQL-Alchemy supports. Common databases are SQLite3 for test and development work, MySQL, MariaDB, and PostgreSQL.
+
+
+
+
+OPENSTACK NETWORKING SERVICE (Neutron)
+neutron-server
+	Accepts and routes API requests to the appropriate OpenStack Networking plug-in for action.
+OpenStack Networking plug-ins and agents
+	Plug and unplug ports, create networks or subnets, and provide IP addressing.
+	These plug-ins and agents differ depending on the vendor and technologies used in the particular cloud.
+	OpenStack Networking ships with plug-ins and agents for Cisco virtual and physical switches, NEC OpenFlow products, Open vSwitch, Linux bridging, and the VMware NSX product.
+	The common agents are L3 (layer 3), DHCP (dynamic host IP addressing), and a plug-in agent.
+Messaging queue
+	Used by most OpenStack Networking installations to route information between the neutron-server and various agents. Also acts as a database to store networking state for particular plug-ins.
+
+
+
+Virtual Networking Infrastructure (VNI) 
+Physical Networking Infrastructure (PNI) 
+
+OpenStack Networking enables projects to create advanced virtual network topologies which may include services such as a firewall, a load balancer, and a virtual private network (VPN).
+
+Networking provides networks, subnets, and routers as object abstractions. Each abstraction has functionality that mimics its physical counterpart: networks contain subnets, and routers route traffic between different subnets and networks.
+
+

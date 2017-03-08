@@ -5,14 +5,57 @@
 (docker needs at least 240MB RAM)
 
 #########################################
-## configure base host machine
-## hostname: "baseubuntu.ostack.me"
+## install ubuntu net-boot
 #########################################
 
 >> install ubuntu 16.04 minimal netboot installation
 
+>> start fedora or some other live thing
+
+>>>>>>> INSIDE LIVE LINUX
+
+sudo bash
+pvscan
+pvdisplay
+vgscan
+vgdisplay
+lvscan
+lvdisplay
+mount /dev/ubuntu-vg/root /mnt
+mount /dev/sda2 /mnt/boot
+mount /dev/sda1 /mnt/boot/efi
+mount --rbind /sys /mnt/sys
+mount --rbind /dev /mnt/dev
+mount --rbind /proc /mnt/proc
+mount --make-rslave /mnt/sys
+mount --make-rslave /mnt/dev
+mount --make-rslave /mnt/proc
+chroot /mnt /bin/bash
+
+>>>>>>> INSIDE CHROOT
+
+# configure EFI grub
+mkdir -p /boot/efi/EFI/ubuntu/fonts/
+cp /usr/share/grub/unicode.pf2 /boot/efi/EFI/ubuntu/fonts/
+vi /etc/default/grub
+...
+... remove GRUB_HIDDEN_TIMEOUT
+... remove GRUB_HIDDEN_TIMEOUT_QUIET
+GRUB_CMDLINE_LINUX_DEFAULT="console=tty1"
+...
+grub-mkconfig -o /boot/efi/EFI/ubuntu/grub.cfg
+
 # set root password
-sudo passwd root
+passwd root
+
+# reboot system
+reboot
+
+#########################################
+## configure base host machine
+## hostname: "baseubuntu.ostack.me"
+## ip: "xxx.10"
+#########################################
 
 # update system
 sudo apt-get update
@@ -22,7 +65,7 @@ sudo apt-get autoremove
 
 # install some tools
 sudo apt-get install vim nano screen htop psmisc dnsutils wget \
-			xz-utils openssh-server ufw
+			xz-utils openssh-server ufw mlocate
 			
 # configure firewall
 sudo systemctl enable ufw
@@ -42,23 +85,6 @@ sudo ufw allow 2122/tcp
 sudo ufw reload
 sudo systemctl enable sshd
 sudo systemctl restart sshd
-
-# configure EFI grub
-sudo mkdir -p /boot/efi/EFI/ubuntu/fonts/
-sudo cp /usr/share/grub/unicode.pf2 /boot/efi/EFI/ubuntu/fonts/
-sudo vim /etc/default/grub
-...
-... remove GRUB_HIDDEN_TIMEOUT
-... remove GRUB_HIDDEN_TIMEOUT_QUIET
-GRUB_CMDLINE_LINUX_DEFAULT="console=tty1"
-...
-sudo grub-mkconfig -o /boot/efi/EFI/ubuntu/grub.cfg
-
-# reboot system
-sudo reboot
-
-# configure pip
-sudo pip install --upgrade pip
 
 # check ip address and range
 ifconfig
@@ -80,7 +106,7 @@ iface ens38 inet static
 	broadcast 192.168.217.255
 	gateway 192.168.217.2
 	dns-search ostack.me
-	dns-nameservers 192.168.217.12 192.168.217.2 4.2.2.4
+	dns-nameservers 192.168.217.2 4.2.2.4 8.8.8.8
 ...
 
 # reboot system
@@ -90,7 +116,7 @@ sudo reboot
 ## configure base docker machine
 ## clone: base ubuntu
 ## hostname: "basedocker.ostack.me"
-## ip: "192.168.217.11"
+## ip: "xxx.11"
 #########################################
 
 # set host and ip
@@ -147,12 +173,13 @@ sudo docker info
 
 # add user to docker group
 sudo gpasswd -a arcana docker
+sudo gpasswd -a root docker
 
 # reboot
 sudo reboot
 
 # create password-less login to VPN server
-sudo apt-get install -y ssh
+sudo apt-get install ssh
 ssh-keygen -t rsa
 ssh root@178.162.207.98 mkdir -p .ssh
 cat ~/.ssh/id_rsa.pub | ssh root@178.162.207.98 'cat >> .ssh/authorized_keys'
@@ -177,6 +204,9 @@ sudo apt-get install python-pip
 # upgrade it
 sudo pip install --upgrade pip
 
+# check pip version
+pip --version
+
 # install docker-compose
 sudo pip install docker-compose
 
@@ -190,7 +220,7 @@ docker network create -d bridge ostack.me
 ## configure DNS server
 ## clone: base docker
 ## hostname: "dns.ostack.me"
-## ip: "192.168.217.12"
+## ip: "xxx.12"
 ## RAM: 400MB
 #########################################
 
@@ -202,26 +232,6 @@ vim /etc/hosts
 vim /etc/network/interfaces
 > address 192.168.217.12
 reboot
-
-### set static ip for host only adapter
-# check ip address and range
-ifconfig
-# check default route
-ip route show
-# check default dns server
-cat /etc/resolv.conf
-# configure vmware ethernet
-sudo vim /etc/network/interfaces
-...
-auto ens38
-iface ens38 inet static
-	address 192.168.249.10
-	netmask 255.255.255.0
-	network 192.168.249.0
-	broadcast 192.168.249.255
-...
-# reboot system
-sudo reboot
 
 # pull bind image
 docker pull sameersbn/bind:latest
@@ -258,11 +268,14 @@ sudo ufw reload
 docker restart ns1.ostack.me
 
 #########################################
+## SET DNS SERVER IN ALL OF MACHINES
+#########################################
+
+#########################################
 ## configure base zabbix
 ## clone: base ubuntu
 ## hostname: "basezabbix.ostack.me"
-## ip: "192.168.217.13"
-## RAM: 400MB
+## ip: "xxx.13"
 #########################################
 
 # set host and ip
@@ -275,15 +288,17 @@ vim /etc/network/interfaces
 reboot
 
 # import repository and refresh
-wget http://repo.zabbix.com/zabbix/3.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.2-1+xenial_all.deb
-sudo dpkg -i zabbix-release_3.2-1+xenial_all.deb
-sudo apt-get update
+sudo bash
+echo "deb http://ppa.launchpad.net/tbfr/zabbix/ubuntu precise main" >> /etc/apt/sources.list.d/zabbix.list
+echo "deb-src http://ppa.launchpad.net/tbfr/zabbix/ubuntu precise main" >> /etc/apt/sources.list.d/zabbix.list
+exit
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C407E17D5F76A32B
 
 #########################################
 ## configure zabbix server
 ## clone: base zabbix
 ## hostname: "zserver.ostack.me"
-## ip: "192.168.217.14"
+## ip: "xxx.14"
 ## RAM: 400MB
 #########################################
 
@@ -296,26 +311,6 @@ vim /etc/network/interfaces
 > address 192.168.217.14
 reboot
 
-### set static ip for host only adapter
-# check ip address and range
-ifconfig
-# check default route
-ip route show
-# check default dns server
-cat /etc/resolv.conf
-# configure vmware ethernet
-sudo vim /etc/network/interfaces
-...
-auto ens38
-iface ens38 inet static
-	address 192.168.249.11
-	netmask 255.255.255.0
-	network 192.168.249.0
-	broadcast 192.168.249.255
-...
-# reboot system
-sudo reboot
-
 # install zabbix server
 sudo apt-get install zabbix-server-pgsql zabbix-frontend-php
 
@@ -325,52 +320,89 @@ sudo -u postgres psql
 > \q
 
 # allow password login in datbase configuration
-nano -w /etc/postgresql/9.5/main/pg_hba.conf
+sudo vim /etc/postgresql/9.5/main/pg_hba.conf
 >> change "peer" to "md5"
 
 # restart db service
 sudo systemctl restart postgresql.service
+sudo systemctl enable postgresql.service
 
 # create database for zabbix
 psql -U postgres
+> create user zabbix with password 'myPassword';
 > create database zabbix; 
+> grant all privileges on database zabbix to zabbix;
 > \q 
 
 # import config
-zcat /usr/share/doc/zabbix-server-pgsql/create.sql.gz | psql -U postgres zabbix
+zcat /usr/share/zabbix-server-pgsql/schema.sql.gz | psql -U zabbix zabbix
+zcat /usr/share/zabbix-server-pgsql/images.sql.gz | psql -U zabbix zabbix
+zcat /usr/share/zabbix-server-pgsql/data.sql.gz | psql -U zabbix zabbix
 
 # set db user/password
-nano -w /etc/zabbix/zabbix_server.conf
-> DBUser=postgres
+sudo vim /etc/zabbix/zabbix_server.conf
+> DBUser=zabbix
 > DBPassword=1234
 
+# some PHP configuration
+sudo vim /etc/php/7.0/cli/php.ini
+...
+post_max_size = 16M
+max_execution_time = 300
+max_input_time = 300
+date.timezone = UTC
+...
+sudo vim /etc/php/7.0/fpm/php.ini
+...
+post_max_size = 16M
+max_execution_time = 300
+max_input_time = 300
+date.timezone = UTC
+...
+
 # start and enable systemd service
-systemctl start zabbix-server
-systemctl enable zabbix-server
+sudo systemctl start zabbix-server
+sudo systemctl enable zabbix-server
 
 # check if zabbix is running already
-systemctl status zabbix-server
+sudo systemctl status zabbix-server
 
-# set correct PHP timezone
-nano -w /etc/zabbix/apache.conf
-> php_value date.timezone Asia/Tehran
+# configure zabbix PHP-based configuration
+sudo cp /usr/share/doc/zabbix-frontend-php/examples/zabbix.conf.php.example /etc/zabbix/zabbix.conf.php
+sudo vim /etc/zabbix/zabbix.conf.php
+...
+$DB["TYPE"]                             = 'POSTGRESQL';
+$DB['DATABASE'] = 'zabbix';
+$DB['USER'] = 'zabbix';
+$DB['PASSWORD'] = 'Your.Password.Here'
+...
 
-# restat and enable apache service
-systemctl restart apache2.service
-systemctl enable apache2.service
+# configure apache2 for zabbix
+sudo cp /usr/share/doc/zabbix-frontend-php/examples/apache.conf /etc/apache2/conf-enabled/zabbix.conf
+# ensure that alias mode is enabled
+sudo a2enmod alias
+# enable apache2
+sudo systemctl enable apache2
+sudo systemctl restart apache2
 
 # check if apache is running
 systemctl status apache2.service
 
 # install some php plugins
-apt-get install php-bcmath
-apt-get install php-mbstring
-apt-get install php-xmlwriter
-apt-get install php-xmlreader
-apt-get install php-pgsql
+sudo apt-get install php-bcmath php-mbstring php-xmlwriter php-xmlreader php-pgsql php-mysql
 
 # restart apache
-systemctl restart apache2.service
+sudo systemctl restart apache2.service
+
+# allow through firewall
+sudo ufw reload
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 10051/tcp
+sudo ufw reload
+
+# enable apache php mod
+sudo apt-get install php libapache2-mod-php
 
 # finish installing frontend
 >>>>>>>> goto http://<hostname>/zabbix
@@ -378,6 +410,1003 @@ systemctl restart apache2.service
 # login
 # user: "Admin"
 # pass: "zabbix"
+
+Configuration -> Templates -> Create Template (link to Template OS Linux)
+
+#########################################
+## INSTALL ZABBIX AGENT ON
+## "basedocker.ostack.me"
+## "basezabbix.ostack.me"
+## "dns.ostack.me"
+## "zserver.ostack.me"
+#########################################
+
+sudo apt-get update
+sudo apt-get install zabbix-agent
+sudo vim /etc/zabbix/zabbix_agentd.conf
+...
+Server=Zabbix.Server.IP.Address
+Hostname=Hostname_Of_Current_Machine
+...
+
+sudo ufw reload
+sudo ufw allow 10050/tcp
+sudo ufw reload
+
+sudo systemctl restart zabbix-agent
+sudo systemctl enable zabbix-agent
+
+#########################################
+## configure base openstack
+## clone: base zabbix
+## hostname: "baseostack.ostack.me"
+## ip: "xxx.15"
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname zserver.ostack.me
+vim /etc/hosts
+> 127.0.1.1    zserver.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.xxx
+vim /etc/zabbix/zabbix_agentd.conf
+...
+Hostname=Hostname_Of_Current_Machine
+...
+reboot
+
+# install chrony for NTP
+sudo apt-get update
+sudo apt-get install chrony
+
+# enable chrony services
+sudo systemctl restart chrony
+sudo systemctl enable chrony
+
+# configure firewall for chrony
+sudo ufw reload
+sudo ufw allow 123/udp
+sudo ufw allow 323/udp
+sudo ufw reload
+
+# install openstack stuff
+sudo apt-get install software-properties-common
+sudo add-apt-repository cloud-archive:newton
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+
+# install openstack client
+sudo apt-get install python-openstackclient
+
+#########################################
+## configure controller node
+## clone: base openstack
+## hostname: "controller.ostack.me"
+## ip: "xxx.16"
+## RAM: 2GB
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname zserver.ostack.me
+vim /etc/hosts
+> 127.0.1.1    zserver.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.xxx
+vim /etc/zabbix/zabbix_agentd.conf
+...
+Hostname=Hostname_Of_Current_Machine
+...
+reboot
+
+# configure chrony for NTP
+sudo vim /etc/chrony/chrony.conf
+...
+allow 192.168.74.0/24
+...
+sudo systemctl restart chrony
+
+# test chrony
+chronyc sources
+
+# install mariadb
+sudo apt-get install mariadb-server python-pymysql
+
+# set bind address to private network
+sudo vim /etc/mysql/mariadb.conf.d/99-openstack.cnf
+...
+[mysqld]
+bind-address = 0.0.0.0
+
+default-storage-engine = innodb
+innodb_file_per_table
+max_connections = 4096
+collation-server = utf8_general_ci
+character-set-server = utf8
+...
+
+# enable and restart the service
+sudo systemctl restart mysql
+sudo systemctl enable mysql
+
+# configure firewall 3306
+sudo ufw reload
+sudo ufw allow from 192.168.74.0/24 to any port 3306
+sudo ufw allow from 127.0.0.0/16 to any port 3306
+sudo ufw reload
+
+# install and secure mysql
+sudo mysql_secure_installation
+
+# install rabbitmq
+# to coordinate operations and status information among services
+sudo apt-get install rabbitmq-server
+
+# create user and set password
+sudo rabbitmqctl add_user openstack "RABBIT_PASS"
+
+# set permissions for rabbitmq user
+sudo rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+
+# open firewall ports for rabbitmq
+sudo ufw reload
+sudo ufw allow 5672/tcp
+sudo ufw reload
+
+# install memcached
+# which is used for identity service
+sudo apt-get install memcached python-memcache
+
+# change listen ip address to management network
+# change -l 127.0.0.1 to
+sudo vim /etc/memcached.conf
+...
+xxx.xxx.xxx.16
+...
+
+# enable memcached ports through firewall
+sudo ufw reload
+sudo ufw allow from 192.168.74.0/24 to any port 11211
+sudo ufw reload
+
+# enable and restart memcached service
+sudo systemctl restart memcached
+sudo systemctl enable memcached
+
+### install identity service
+### 5000 and 35357
+
+# prepare database for identity service
+sudo mysql -u root -p
+> CREATE DATABASE keystone;
+> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'KEYSTONE_DBPASS';
+> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'KEYSTONE_DBPASS';
+> exit
+
+# install keystone
+sudo apt-get install keystone
+
+# edit keystone configuration
+sudo vim /etc/keystone/keystone.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+[database]
+...
+connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
+
+[token]
+...
+provider = fernet
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# populate identity service database
+sudo bash
+/bin/sh -c "keystone-manage db_sync" keystone
+exit
+
+# initialize fernet repositories
+sudo keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+sudo keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+
+# allow identity service through firewall
+sudo ufw reload
+sudo ufw allow 5000/tcp
+sudo ufw allow 35357/tcp
+sudo ufw reload
+
+# bootstrap identity service
+sudo keystone-manage bootstrap --bootstrap-password ADMIN_PASS --bootstrap-admin-url http://controller.ostack.me:35357/v3/ --bootstrap-internal-url http://controller.ostack.me:35357/v3/ --bootstrap-public-url http://controller.ostack.me:5000/v3/ --bootstrap-region-id RegionOne
+
+# configure apache web server
+sudo vim /etc/apache2/apache2.conf
+...
+ServerName controller.ostack.me
+...
+
+# enable and restart apache
+sudo systemctl restart apache2
+sudo systemctl enable apache2
+sudo rm -f /var/lib/keystone/keystone.db
+
+# configure environment for keystone
+sudo vim /etc/environment
+...
+OS_USERNAME=admin
+OS_PROJECT_NAME=admin
+OS_USER_DOMAIN_NAME=Default
+OS_PROJECT_DOMAIN_NAME=Default
+OS_AUTH_URL=http://controller.ostack.me:35357/v3
+OS_IDENTITY_API_VERSION=3
+...
+# reboot
+sudo reboot
+
+# create services, projects, users and roles
+sudo openstack project create --os-username admin --domain default --description "Service Project" service
+sudo openstack project create --os-username admin --domain default --description "Demo Project" demo
+sudo openstack user create --domain default --password-prompt demo
+sudo openstack role create user
+sudo openstack role add --project demo --user demo user
+
+# disable temporary authentication token mechanism
+sudo vim /etc/keystone/keystone-paste.ini
+...
+>>> remove admin_token_auth from
+>>>>>> [pipeline:public_api]
+>>>>>> [pipeline:admin_api]
+>>>>>> [pipeline:api_v3]
+...
+
+# test keystone authentication
+sudo openstack --os-auth-url http://controller:35357/v3 --os-project-domain-name Default --os-user-domain-name Default --os-project-name admin --os-username admin token issue
+sudo openstack --os-auth-url http://controller:5000/v3 --os-project-domain-name Default --os-user-domain-name Default --os-project-name demo --os-username demo token issue
+
+# create project files
+mkdir -p ~/openstack/{admin,demo}
+vim ~/openstack/admin/admin-openrc
+...
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=admin
+export OS_USERNAME=admin
+export OS_AUTH_URL=http://controller:35357/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+...
+vim ~/openstack/demo/demo-openrc
+...
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=demo
+export OS_USERNAME=demo
+export OS_AUTH_URL=http://controller:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+...
+
+# test client scripts
+. ~/openstack/admin/admin-openrc
+openstack token issue
+. ~/openstack/demo/demo-openrc
+openstack token issue
+
+#########################################
+## >>> baseostack.ostack.me
+#########################################
+
+sudo vim /etc/chrony/chrony.conf
+... add
+server controller.ostack.me iburst
+... comment following
+pool 2.debian.pool.ntp.org offline iburst
+...
+sudo systemctl restart chrony
+
+# test chrony
+chronyc sources
+
+# create project files
+mkdir -p ~/openstack/{admin,demo}
+vim ~/openstack/admin/admin-openrc
+...
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=admin
+export OS_USERNAME=admin
+export OS_AUTH_URL=http://controller:35357/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+...
+vim ~/openstack/demo/demo-openrc
+...
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=demo
+export OS_USERNAME=demo
+export OS_AUTH_URL=http://controller:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+...
+
+# test client scripts
+. ~/openstack/admin/admin-openrc
+openstack token issue
+. ~/openstack/demo/demo-openrc
+openstack token issue
+
+#########################################
+## >>> controller.ostack.me
+#########################################
+
+### install glance
+
+# setup database for glance
+sudo mysql -u root -p
+> CREATE DATABASE glance;
+> GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'GLANCE_DBPASS';
+> GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'GLANCE_DBPASS';
+> exit
+
+# load admin profile
+. ~/openstack/admin/admin-openrc
+
+# create user for glance
+sudo openstack user create --domain default --password-prompt glance
+
+# add user "glance" to project "service" and role "admin"
+sudo openstack role add --project service --user glance admin
+
+# create glance service entity
+sudo openstack service create --name glance --description "OpenStack Image" image
+
+# create endpoints
+sudo openstack endpoint create --region RegionOne image public http://controller.ostack.me:9292
+sudo openstack endpoint create --region RegionOne image internal http://controller.ostack.me:9292
+sudo openstack endpoint create --region RegionOne image admin http://controller.ostack.me:9292
+
+# allow port through firewall
+sudo ufw reload
+sudo ufw allow 9292/tcp
+sudo ufw reload
+
+# install glance service
+sudo apt-get install glance
+
+# configure glance
+sudo vim /etc/glance/glance-api.conf
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<<<<<<< Comment out or remove any other options in the [keystone_authtoken] section.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+[database]
+...
+connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+[keystone_authtoken]
+...
+auth_uri = http://controller:5000
+auth_url = http://controller:35357
+memcached_servers = controller:11211
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+project_name = service
+username = glance
+password = GLANCE_PASS
+
+[paste_deploy]
+...
+flavor = keystone
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+[glance_store]
+...
+stores = file,http
+default_store = file
+filesystem_store_datadir = /var/lib/glance/images/
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+# populate glance database
+sudo bash
+/bin/sh -c "glance-manage db_sync" glance
+exit
+
+# start and enable glance services
+sudo systemctl restart glance-registry
+sudo systemctl restart glance-api
+sudo systemctl enable glance-registry
+sudo systemctl enable glance-api
+
+# test glance installation
+. ~/openstack/admin/admin-openrc
+wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+
+# upload the image to glance service
+sudo openstack image create "cirros" --file cirros-0.3.4-x86_64-disk.img --disk-format qcow2 --container-format bare --public
+
+# confirm uploaded image
+sudo openstack image list
+
+### install compute service
+
+# initialize database
+sudo mysql -u root -p
+> CREATE DATABASE nova_api;
+> CREATE DATABASE nova;
+> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';
+> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';
+> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';
+> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';
+> exit
+
+# load admin environment
+. ~/openstack/admin/admin-openrc
+
+# create nova user
+sudo openstack user create --domain default --password-prompt nova
+
+# add admin role to nova user
+sudo openstack role add --project service --user nova admin
+
+# create nova service entity
+sudo openstack service create --name nova --description "OpenStack Compute" compute
+
+# create nova api endpoints
+sudo openstack endpoint create --region RegionOne compute public http://controller:8774/v2.1/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne compute internal http://controller:8774/v2.1/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne compute admin http://controller:8774/v2.1/%\(tenant_id\)s
+
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 8774/tcp
+sudo ufw allow 8773/tcp
+sudo ufw allow 8775/tcp
+sudo ufw allow 5900:5999/tcp
+sudo ufw allow 6080/tcp
+sudo ufw allow 6081/tcp
+sudo ufw allow 6082/tcp
+sudo ufw reload
+
+# install nova package
+sudo apt-get install nova-api nova-conductor nova-consoleauth nova-novncproxy nova-scheduler
+
+# reboot server
+sudo reboot
+
+# configure nova
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>> Comment out or remove any other options in the [keystone_authtoken] section.
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[api_database]
+...
+connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova_api
+
+[database]
+...
+connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
+
+[DEFAULT]
+...
+transport_url = rabbit://openstack:RABBIT_PASS@controller
+
+[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://controller:5000
+auth_url = http://controller:35357
+memcached_servers = controller:11211
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+project_name = service
+username = nova
+password = NOVA_PASS
+
+[DEFAULT]
+...
+my_ip = 10.0.0.11
+
+[DEFAULT]
+...
+use_neutron = True
+firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+[vnc]
+...
+vncserver_listen = $my_ip
+vncserver_proxyclient_address = $my_ip
+
+[glance]
+...
+
+
+[oslo_concurrency]
+...
+lock_path = /var/lib/nova/tmp
+
+
+
+>>> remove log-dir from DEFAULT section
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# populate nova database
+sudo bash
+/bin/sh -c "nova-manage api_db sync" nova
+/bin/sh -c "nova-manage db sync" nova
+exit
+
+# finalize compute installation
+sudo systemctl restart nova-api
+sudo systemctl restart nova-consoleauth
+sudo systemctl restart nova-scheduler
+sudo systemctl restart nova-conductor
+sudo systemctl restart nova-novncproxy
+
+sudo systemctl enable nova-api
+sudo systemctl enable nova-consoleauth
+sudo systemctl enable nova-scheduler
+sudo systemctl enable nova-conductor
+sudo systemctl enable nova-novncproxy
+
+#########################################
+## configure base compute node
+## clone: base open stack
+## hostname: "basecompute.ostack.me"
+## RAM: 2GB
+## ip: "xxx.17"
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname zserver.ostack.me
+vim /etc/hosts
+> 127.0.1.1    zserver.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.xxx
+vim /etc/zabbix/zabbix_agentd.conf
+...
+Hostname=Hostname_Of_Current_Machine
+...
+reboot
+
+# install compute package
+sudo apt-get install nova-compute
+
+# configure nova compute
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>> Comment out or remove any other options in the [keystone_authtoken] section.
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+...
+transport_url = rabbit://openstack:RABBIT_PASS@controller.ostack.me
+
+[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://controller.ostack.me:5000
+auth_url = http://controller.ostack.me:35357
+memcached_servers = controller.ostack.me:11211
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+project_name = service
+username = nova
+password = NOVA_PASS
+
+[DEFAULT]
+...
+use_neutron = True
+firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+[vnc]
+...
+enabled = True
+vncserver_listen = 0.0.0.0
+vncserver_proxyclient_address = $my_ip
+novncproxy_base_url = http://controller.ostack.me:6080/vnc_auto.html
+
+[glance]
+...
+api_servers = http://controller.ostack.me:9292
+
+[oslo_concurrency]
+...
+lock_path = /var/lib/nova/tmp
+
+
+
+----------> REMOVE log-dir FROM [Default] SECTION
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 8774/tcp
+sudo ufw allow 8773/tcp
+sudo ufw allow 8775/tcp
+sudo ufw allow 5900:5999/tcp
+sudo ufw allow 6080/tcp
+sudo ufw allow 6081/tcp
+sudo ufw allow 6082/tcp
+sudo ufw reload
+
+#########################################
+## configure (2) compute nodes (1-2)
+## clone: base compute
+## hostname: "compute<N>.ostack.me"
+## RAM: 2GB
+## ip: "xxx.18" - "xxx.19"
+#########################################
+
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+...
+my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+sudo systemctl enable nova-compute
+sudo systemctl restart nova-compute
+
+#########################################
+## >>> controller.ostack.me
+#########################################
+
+# verify operation of compute installation
+
+. ~/openstack/admin/admin-openrc
+sudo openstack compute service list
+
+#########################################
+## >>> controller.ostack.me
+#########################################
+
+### install neutron
+
+# initialize database for neutron
+sudo mysql -u root -p
+> CREATE DATABASE neutron;
+> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';
+> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';
+> exit
+
+# create service and credentials for neutron
+. ~/openstack/admin/admin-openrc
+sudo openstack user create --domain default --password-prompt neutron
+sudo openstack role add --project service --user neutron admin
+sudo openstack service create --name neutron --description "OpenStack Networking" network
+sudo openstack endpoint create --region RegionOne network public http://controller.ostack.me:9696
+sudo openstack endpoint create --region RegionOne network internal http://controller.ostack.me:9696
+sudo openstack endpoint create --region RegionOne network admin http://controller.ostack.me:9696
+
+#########################################
+## >>> controller.ostack.me
+## CONFIGURE FOR SELF SERVICE NETWORKS
+#########################################
+
+# install required packages
+sudo apt-get install neutron-server neutron-plugin-ml2 neutron-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent neutron-metadata-agent
+
+# create configurations
+sudo vim /etc/neutron/neutron.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>> Comment out or remove any other connection options in the [database] section.
+>>> Comment out or remove any other options in the [keystone_authtoken] section.
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+[database]
+...
+connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller.ostack.me/neutron
+
+[DEFAULT]
+...
+core_plugin = ml2
+service_plugins = router
+allow_overlapping_ips = True
+
+[DEFAULT]
+...
+transport_url = rabbit://openstack:RABBIT_PASS@controller.ostack.me
+
+[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://controller.ostack.me:5000
+auth_url = http://controller.ostack.me:35357
+memcached_servers = controller.ostack.me:11211
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+project_name = service
+username = neutron
+password = NEUTRON_PASS
+
+[DEFAULT]
+...
+notify_nova_on_port_status_changes = True
+notify_nova_on_port_data_changes = True
+
+[nova]
+...
+auth_url = http://controller.ostack.me:35357
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+region_name = RegionOne
+project_name = service
+username = nova
+password = NOVA_PASS
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure the modular layer 2 (ML2) plugin
+sudo vim /etc/neutron/plugins/ml2/ml2_conf.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[ml2]
+...
+type_drivers = flat,vlan,vxlan
+
+[ml2]
+...
+tenant_network_types = vxlan
+
+[ml2]
+...
+mechanism_drivers = linuxbridge,l2population
+
+[ml2]
+...
+extension_drivers = port_security
+
+[ml2_type_flat]
+...
+flat_networks = provider
+
+[ml2_type_vxlan]
+...
+vni_ranges = 1:1000
+
+[securitygroup]
+...
+enable_ipset = True
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# confiugre linux bridge agent
+sudo vim /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[linux_bridge]
+physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
+
+[vxlan]
+enable_vxlan = True
+local_ip = OVERLAY_INTERFACE_IP_ADDRESS
+l2_population = True
+
+[securitygroup]
+...
+enable_security_group = True
+firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure layer 3 agent
+# (routing and NAT services)
+
+sudo vim /etc/neutron/l3_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+...
+interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+sudo vim /etc/neutron/dhcp_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+...
+interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
+enable_isolated_metadata = True
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+#########################################
+## >>> controller.ostack.me
+## CONTINUE CONFIGURING NETWORK SERVICE
+#########################################
+
+# configure metadata service
+
+sudo vim /etc/neutron/metadata_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+...
+nova_metadata_ip = controller
+metadata_proxy_shared_secret = METADATA_SECRET
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure nova to use metadata service
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[neutron]
+...
+url = http://controller.ostack.me:9696
+auth_url = http://controller.ostack.me:35357
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+region_name = RegionOne
+project_name = service
+username = neutron
+password = NEUTRON_PASS
+service_metadata_proxy = True
+metadata_proxy_shared_secret = METADATA_SECRET
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# populate the database
+sudo bash
+/bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+exit
+
+# restart compute API services
+sudo systemctl restart nova-api
+
+# enable and restart the services
+sudo systemctl restart neutron-server
+sudo systemctl restart neutron-linuxbridge-agent
+sudo systemctl restart neutron-dhcp-agent
+sudo systemctl restart neutron-metadata-agent
+
+sudo systemctl enable neutron-server
+sudo systemctl enable neutron-linuxbridge-agent
+sudo systemctl enable service neutron-dhcp-agent
+sudo systemctl enable neutron-metadata-agent
+
+#########################################
+## >>> basecompute.ostack.me
+## >>> compute1.ostack.me
+## >>> compute2.ostack.me
+## CONFIGURE BASE COMPUTE FOR NEUTRON
+#########################################
+
+sudo apt-get install neutron-linuxbridge-agent
+
+# configure neutron
+sudo vim /etc/neutron/neutron.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+>>> In the [database] section, comment out any connection options because compute nodes do not directly access the database.
+>>> Comment out or remove any other options in the [keystone_authtoken] section.
+
+[DEFAULT]
+...
+transport_url = rabbit://openstack:RABBIT_PASS@controller.ostack.me
+
+[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://controller.ostack.me:5000
+auth_url = http://controller.ostack.me:35357
+memcached_servers = controller.ostack.me:11211
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+project_name = service
+username = neutron
+password = NEUTRON_PASS
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure linux bridge agent
+sudo vim /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[linux_bridge]
+physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
+
+[vxlan]
+enable_vxlan = True
+l2_population = True
+
+[securitygroup]
+...
+enable_security_group = True
+firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure compute to use neutron service
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[neutron]
+...
+url = http://controller.ostack.me:9696
+auth_url = http://controller.ostack.me:35357
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+region_name = RegionOne
+project_name = service
+username = neutron
+password = NEUTRON_PASS
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+#########################################
+## >>> compute1.ostack.me
+## >>> compute2.ostack.me
+## CONFIGURE COMPUTE NODES FOR NEUTRON
+#########################################
+
+# configure linux bridge agent
+sudo vim /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[vxlan]
+local_ip = OVERLAY_INTERFACE_IP_ADDRESS
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# enable and restart the services
+sudo systemctl restart nova-compute
+sudo systemctl restart neutron-linuxbridge-agent
+
+sudo systemctl enable nova-compute
+sudo systemctl enable neutron-linuxbridge-agent
+
+#########################################
+## >>> controller.ostack.me
+## VERIFY NEUTRON CONFIGURATION
+#########################################
+
+# load admin credentials
+. ~/openstack/admin/admin-openrc
+
+# check neutron extensions
+sudo neutron --os-password=<PASSWORD> ext-list
+
+# verify self service networks
+sudo openstack network agent list
+
+>>>>>>>>>>>>> OUTPUT <<<<<<<<<<<<<<<
++--------------------------------------+--------------------+------------+-------------------+-------+-------+---------------------------+
+| ID                                   | Agent Type         | Host       | Availability Zone | Alive | State | Binary                    |
++--------------------------------------+--------------------+------------+-------------------+-------+-------+---------------------------+
+| f49a4b81-afd6-4b3d-b923-66c8f0517099 | Metadata agent     | controller | None              | True  | UP    | neutron-metadata-agent    |
+| 27eee952-a748-467b-bf71-941e89846a92 | Linux bridge agent | controller | None              | True  | UP    | neutron-linuxbridge-agent |
+| 08905043-5010-4b87-bba5-aedb1956e27a | Linux bridge agent | compute1   | None              | True  | UP    | neutron-linuxbridge-agent |
+| 830344ff-dc36-4956-84f4-067af667a0dc | L3 agent           | controller | nova              | True  | UP    | neutron-l3-agent          |
+| dd3644c9-1a3a-435a-9282-eb306b4b0391 | DHCP agent         | controller | nova              | True  | UP    | neutron-dhcp-agent        |
++--------------------------------------+--------------------+------------+-------------------+-------+-------+---------------------------+
+>>>>>>>>>>>>> OUTPUT <<<<<<<<<<<<<<<
+
 
 
 

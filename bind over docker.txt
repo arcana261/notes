@@ -1,0 +1,85 @@
+# import repository
+sudo apt-get update
+sudo apt-get install screen apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
+sudo apt-get update
+
+# check if docker-engine is in apt cache
+sudo apt-cache policy docker-engine
+
+# install prerequisities
+sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+
+# reboot server
+sudo reboot
+
+# instal docker-engine
+sudo apt-get install docker-engine
+
+# install privoxy to help docker pull images over sanctions
+sudo apt-get install privoxy
+sudo systemctl enable privoxy
+sudo vim /etc/privoxy/config
+<<<<<<<<<<<<<<<<<<<<
+listen-address	127.0.0.1:8085
+forward-socks5	/		127.0.0.1:8084	.
+>>>>>>>>>>>>>>>>>>>>
+sudo systemctl restart privoxy
+
+# enable proxy in docker
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
+...
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8085/"
+...
+sudo systemctl daemon-reload
+sudo systemctl enable docker
+sudo systemctl restart docker
+
+# check if proxy is present
+sudo docker info
+
+# add user to docker group
+sudo gpasswd -a <USERNAME> docker
+sudo gpasswd -a root docker
+
+# reboot
+sudo reboot
+
+# you should see under key Http Proxy
+# fireup a SOCKS5 proxy server on localhost:8084
+ssh -D 8084 root@XXXXXXXXXXXXXXXXX
+
+# pull image
+docker pull sameersbn/bind:latest
+
+# install python pip since docker-compose
+# is available to install through pip
+sudo apt-get install python-pip
+
+# upgrade it
+sudo pip install --upgrade pip
+
+# check pip version
+pip --version
+
+# install docker-compose
+sudo pip install docker-compose
+
+# check docker compose
+docker-compose version
+
+# start bind
+docker run -td --restart=always --name ns1.<DOMAIN NAME> -h ns1.<DOMAIN NAME> -e ROOT_PASSWORD=<ROOT PASSWORD> -w /etc/webmin -p 53:53/udp -p 53:53/tcp -p 10000:10000/tcp sameersbn/bind:latest
+sudo ufw reload
+sudo ufw allow 53/tcp
+sudo ufw allow 53/udp
+sudo ufw allow 10000/tcp
+sudo ufw reload
+
+
+
+
+

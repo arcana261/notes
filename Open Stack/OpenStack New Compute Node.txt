@@ -1,0 +1,13 @@
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+...
+my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+sudo systemctl enable nova-compute
+sudo systemctl restart nova-compute
+
+sudo systemctl restart neutron-linuxbridge-agent
+sudo systemctl enable neutron-linuxbridge-agent
+
