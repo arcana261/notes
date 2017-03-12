@@ -33,6 +33,7 @@ lsb_release -a
 
 apt-get clean
 
+reboot
 
 ################ OPTIONAL ########################
 ######## WIPE NAND STRUCTURE

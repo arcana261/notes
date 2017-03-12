@@ -1,7 +1,28 @@
+1) install proxychains on base openstack
+2) set /etc/hosts "controller.ostack.me" to valid IP address
+3) "export ...." on start of installation
+4) add "password" to openrc files
+5) properly set name and hostname of DNS to "ns1.ostack.me"
+6) seperation of provider network and management network
+7) each password different, record in a table
+
+UBUNTU GUIDE:
+https://docs.openstack.org/newton/install-guide-ubuntu/
+
+INSTALL ADDITIONAL SERVICES
+https://docs.openstack.org/newton/install-guide-ubuntu/additional-services.html
+
+
 Identity Service -> Key Stone
 Compute Service -> Nova
 Image Service -> Glance
 Networking Service -> Neutron
+Dashboard Service -> Horizon
+Block Storage Service -> Cinder
+
+
+Dashboard URL
+http://controller.ostack.me/horizon/
 
 
 Controller¶
@@ -150,4 +171,23 @@ OpenStack Networking enables projects to create advanced virtual network topolog
 
 Networking provides networks, subnets, and routers as object abstractions. Each abstraction has functionality that mimics its physical counterpart: networks contain subnets, and routers route traffic between different subnets and networks.
 
+
+Block Storage Service
+The Block Storage service (cinder) provides block storage devices to guest instances. The method in which the storage is provisioned and consumed is determined by the Block Storage driver, or drivers in the case of a multi-backend configuration. There are a variety of drivers that are available: NAS/SAN, NFS, iSCSI, Ceph, and more.
+
+
+Block Storage Service (CINDER)
+The OpenStack Block Storage service (cinder) adds persistent storage to a virtual machine. Block Storage provides an infrastructure for managing volumes, and interacts with OpenStack Compute to provide volumes for instances. The service also enables management of volume snapshots, and volume types.
+The Block Storage service consists of the following components:
+.......................
+cinder-api
+	Accepts API requests, and routes them to the cinder-volume for action.
+cinder-volume
+	Interacts directly with the Block Storage service, and processes such as the cinder-scheduler. It also interacts with these processes through a message queue. The cinder-volume service responds to read and write requests sent to the Block Storage service to maintain state. It can interact with a variety of storage providers through a driver architecture.
+	cinder-scheduler daemon
+Selects the optimal storage provider node on which to create the volume. A similar component to the nova-scheduler.
+	cinder-backup daemon
+The cinder-backup service provides backing up volumes of any type to a backup storage provider. Like the cinder-volume service, it can interact with a variety of storage providers through a driver architecture.
+	Messaging queue
+Routes information between the Block Storage processes.
 

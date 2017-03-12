@@ -1,0 +1,13 @@
+sudo gpasswd -a arcana adm
+sudo gpasswd -a root adm
+
+sudo vim /etc/init.d/vmware
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Start the virtual ethernet kernel service
+   vmwareStartVmnet() {
+      vmwareLoadModule $vnet
+      "$BINDIR"/vmware-networks --start >> $VNETLIB_LOG 2>&1
+      chgrp adm  /dev/vmnet*
+      chmod g+rw /dev/vmnet*
+<<<<<<<<<<<<<<<<<<<<<<<<<<<
+

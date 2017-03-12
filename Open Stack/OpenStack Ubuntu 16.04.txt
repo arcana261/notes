@@ -1,5 +1,6 @@
-# Controller Node -> 4GB
+# Controller Node -> 6GB
 # Compute Node -> 2GB
+# Cinder Node -> 1GB
 
 (ufw assign 64MB more RAM)
 (docker needs at least 240MB RAM)
@@ -1284,11 +1285,13 @@ sudo systemctl restart neutron-server
 sudo systemctl restart neutron-linuxbridge-agent
 sudo systemctl restart neutron-dhcp-agent
 sudo systemctl restart neutron-metadata-agent
+sudo systemctl restart neutron-l3-agent
 
 sudo systemctl enable neutron-server
 sudo systemctl enable neutron-linuxbridge-agent
 sudo systemctl enable service neutron-dhcp-agent
 sudo systemctl enable neutron-metadata-agent
+sudo systemctl enable neutron-l3-agent
 
 #########################################
 ## >>> basecompute.ostack.me
@@ -1360,6 +1363,17 @@ username = neutron
 password = NEUTRON_PASS
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# install lvm tools
+sudo apt-get install lvm2
+
+# allow lvm only on sda
+sudo vim /etc/lvm/lvm.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+devices {
+...
+filter = [ "a/sda/", "r/.*/"]
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 #########################################
 ## >>> compute1.ostack.me
 ## >>> compute2.ostack.me
@@ -1407,9 +1421,384 @@ sudo openstack network agent list
 +--------------------------------------+--------------------+------------+-------------------+-------+-------+---------------------------+
 >>>>>>>>>>>>> OUTPUT <<<<<<<<<<<<<<<
 
+#########################################
+## >>> controller.ostack.me
+## INSTALL DASHBOARD (horizon)
+#########################################
+
+sudo apt-get install openstack-dashboard
+
+# setup configuration
+sudo vim /etc/openstack-dashboard/local_settings.py
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+> set host
+OPENSTACK_HOST = "controller.ostack.me"
+
+> allow all hosts
+ALLOWED_HOSTS = ['*', ]
+
+> configure memcached
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+CACHES = {
+    'default': {
+         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+         'LOCATION': 'controller.ostack.me:11211',
+    }
+}
+
+> enable identity API v3
+OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
+
+> enable support for domains
+OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
+
+> configure API version
+OPENSTACK_API_VERSIONS = {
+    "identity": 3,
+    "image": 2,
+    "volume": 2,
+}
+
+> configure default as the domain for new users
+OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
+
+> configure user as the default role for new users
+OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
+
+> configure time zone
+> https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+TIME_ZONE = "Asia/Tehran"
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# finalize installation
+sudo systemctl restart apache2
+sudo systemctl enable apache2
+
+# enable ports throgh firewall
+sudo ufw reload
+sudo ufw allow 80/tcp
+sudo ufw reload
+
+# verify horizon installation
+>>>>>> OPEN http://controller.ostack.me/horizon/ in browser
+>> domain: "default"
+>> username: "admin"
+>> password
+
+#########################################
+## HORIZON BUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+## Truncated or oversized response headers received from daemon process 'horizon': /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+#########################################
+
+sudo vim /etc/apache2/conf-available/openstack-dashboard.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+> Add following line
+WSGIApplicationGroup %{GLOBAL}
+
+> Remove following line
+WSGIProcessGroup horizon
+
+> Remove following line
+  Order allow,deny
+  Allow from all
+
+> Add following line
+        Require all granted
+
+> Remove following line
+WSGIDaemonProcess horizon user=horizon group=horizon processes=3 threads=10 display-name=%{GROUP}
+
+> Add following line
+WSGIDaemonProcess horizon user=horizon group=horizon processes=3 threads=10 graceful-timeout=120 display-name=%{GROUP} 
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+sudo systemctl restart apache2
+
+#########################################
+## >>> controller.ostack.me
+## INSTALL CINDER (Block Storage Service)
+#########################################
+
+# configure database
+sudo mysql -u root -p
+> CREATE DATABASE cinder;
+> GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY 'CINDER_DBPASS';
+> GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY 'CINDER_DBPASS';
+> exit
+
+# load admin credentials
+. ~/openstack/admin/admin-openrc
+
+# create a cinder user
+sudo openstack user create --domain default --password-prompt cinder
+
+# add "admin" role to cinder user
+sudo openstack role add --project service --user cinder admin
+
+# create "cinder" and "cinderv2" service entities
+sudo openstack service create --name cinder --description "OpenStack Block Storage" volume
+sudo openstack service create --name cinderv2 --description "OpenStack Block Storage" volumev2
+
+# create API endpoints
+sudo openstack endpoint create --region RegionOne volume public http://controller:8776/v1/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne volume internal http://controller:8776/v1/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne volume admin http://controller:8776/v1/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne volumev2 public http://controller:8776/v2/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne volumev2 internal http://controller:8776/v2/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne volumev2 admin http://controller:8776/v2/%\(tenant_id\)s
+
+# allow port through firewall
+sudo ufw reload
+sudo ufw allow 8776/tcp
+sudo ufw reload
+
+# install cinder packages
+sudo apt-get install cinder-api cinder-scheduler
+
+# create configuration
+sudo vim /etc/cinder/cinder.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+> Comment out or remove any other options in the [keystone_authtoken] section.
+
+[database]
+...
+connection = mysql+pymysql://cinder:CINDER_DBPASS@controller.ostack.me/cinder
+
+[DEFAULT]
+...
+transport_url = rabbit://openstack:RABBIT_PASS@controller.ostack.me
+
+[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://controller.ostack.me:5000
+auth_url = http://controller.ostack.me:35357
+memcached_servers = controller.ostack.me:11211
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+project_name = service
+username = cinder
+password = CINDER_PASS
+
+[DEFAULT]
+...
+my_ip = <MANAGEMENT IP ADDRESS>
 
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# populate the database
+
+sudo bash 
+/bin/sh -c "cinder-manage db sync" cinder
+exit
+
+# configure compute to use block storage
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[cinder]
+os_region_name = RegionOne
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# restart compute API service
+sudo systemctl restart nova-api
+
+# enable and restart block storage service
+sudo systemctl restart cinder-scheduler
+sudo systemctl restart cinder-api 
+sudo systemctl enable cinder-scheduler
+sudo systemctl enable cinder-api 
+
+#########################################
+## CHOICE::::::::: LVM
+## ----> ADD A NEW HARD DISK
+## configure base cinder node
+## clone: base open stack
+## hostname: "basecinder.ostack.me"
+## RAM: 1GB
+## ip: "xxx.20"
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname zserver.ostack.me
+vim /etc/hosts
+> 127.0.1.1    zserver.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.xxx
+vim /etc/zabbix/zabbix_agentd.conf
+...
+Hostname=Hostname_Of_Current_Machine
+...
+reboot
+
+# install lvm tools
+sudo apt-get install lvm2
+
+# allow lvm only on sda/sdb
+sudo vim /etc/lvm/lvm.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+devices {
+...
+filter = [ "a/sda/", "a/sdb/", "r/.*/"]
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# reboot for lvm settings to take effect
+sudo reboot
+
+# create LVM physical volume
+sudo pvcreate /dev/sdb
+
+# create volume group
+sudo vgcreate cinder-volumes /dev/sdb
+
+# install cinder package
+sudo apt-get install cinder-volume
+
+# reboot system
+sudo reboot
+
+# create configuration
+sudo vim /etc/cinder/cinder.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+> Comment out or remove any other options in the [keystone_authtoken] section.
+
+[database]
+...
+connection = mysql+pymysql://cinder:CINDER_DBPASS@controller.ostack.me/cinder
+
+[DEFAULT]
+...
+transport_url = rabbit://openstack:RABBIT_PASS@controller.ostack.me
+
+[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://controller.ostack.me:5000
+auth_url = http://controller.ostack.me:35357
+memcached_servers = controller.ostack.me:11211
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+project_name = service
+username = cinder
+password = CINDER_PASS
+
+[lvm]
+...
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_group = cinder-volumes
+iscsi_protocol = iscsi
+iscsi_helper = tgtadm
+
+[DEFAULT]
+...
+enabled_backends = lvm
+
+[DEFAULT]
+...
+glance_api_servers = http://controller.ostack.me:9292
+
+[oslo_concurrency]
+...
+lock_path = /var/lib/cinder/tmp
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# allow port through firewall
+sudo ufw reload
+sudo ufw allow 8776/tcp
+sudo ufw reload
+
+#########################################
+## CHOICE::::::::: LVM
+## "cinder1.ostack.me"
+## "cinder2.ostack.me"
+## clone basecinder
+## RAM: 1GB
+## ip: "xxx.21" - "xxx.22"
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname zserver.ostack.me
+vim /etc/hosts
+> 127.0.1.1    zserver.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.xxx
+vim /etc/zabbix/zabbix_agentd.conf
+...
+Hostname=Hostname_Of_Current_Machine
+...
+reboot
+
+# create configuration
+sudo vim /etc/cinder/cinder.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+...
+my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# enable and start services
+sudo systemctl restart tgt
+sudo systemctl restart cinder-volume
+sudo systemctl enable tgt
+sudo systemctl enable cinder-volume
+
+#########################################
+## >>> controller.ostack.me
+## verify cinder installation
+#########################################
+
+# load environment
+. ~/openstack/admin/admin-openrc
+
+# view services
+sudo openstack volume service list
+
+>>>>>>>>>>>>>>>> OUTPUT <<<<<<<<<<<<<<<<
+
++------------------+------------+------+---------+-------+----------------------------+
+| Binary           | Host       | Zone | Status  | State | Updated_at                 |
++------------------+------------+------+---------+-------+----------------------------+
+| cinder-scheduler | controller | nova | enabled | up    | 2016-09-30T02:27:41.000000 |
+| cinder-volume    | block@lvm  | nova | enabled | up    | 2016-09-30T02:27:46.000000 |
++------------------+------------+------+---------+-------+----------------------------+
+
+>>>>>>>>>>>>>>>> OUTPUT <<<<<<<<<<<<<<<<
+
+#########################################
+## >>> controller.ostack.me
+## LAUNCH INSTANCE
+#########################################
+
+# load admin environment
+. ~/openstack/admin/admin-openrc
+
+##### configure provider network first
+
+# create a virtual network
+sudo openstack network create  --share --provider-physical-network provider --provider-network-type flat provider
+
+# create subnet on new network
+sudo openstack subnet create --network provider --allocation-pool start=START_IP_ADDRESS,end=END_IP_ADDRESS --dns-nameserver DNS_RESOLVER --gateway PROVIDER_NETWORK_GATEWAY --subnet-range PROVIDER_NETWORK_CIDR provider
+
+>>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
+sudo openstack subnet create --network provider --allocation-pool start=192.168.98.100,end=192.168.98.254 --dns-nameserver 4.2.2.4 --gateway 192.168.98.1 --subnet-range 192.168.98.0/24 provider
+>>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
 
 
 

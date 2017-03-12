@@ -1,0 +1,37 @@
+#########################################
+## CHOICE::::::::: LVM
+## "cinder1.ostack.me"
+## "cinder2.ostack.me"
+## clone basecinder
+## RAM: 1GB
+## ip: "xxx.21" - "xxx.22"
+#########################################
+
+# set host and ip
+sudo bash
+hostnamectl set-hostname zserver.ostack.me
+vim /etc/hosts
+> 127.0.1.1    zserver.ostack.me
+vim /etc/network/interfaces
+> address 192.168.217.xxx
+vim /etc/zabbix/zabbix_agentd.conf
+...
+Hostname=Hostname_Of_Current_Machine
+...
+reboot
+
+# create configuration
+sudo vim /etc/cinder/cinder.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+...
+my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# enable and start services
+sudo systemctl restart tgt
+sudo systemctl restart cinder-volume
+sudo systemctl enable tgt
+sudo systemctl enable cinder-volume
+
+
