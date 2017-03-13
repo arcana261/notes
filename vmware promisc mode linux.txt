@@ -11,3 +11,14 @@ sudo vim /etc/init.d/vmware
       chmod g+rw /dev/vmnet*
 <<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+========================================================
+
+# check if promisc mode is enabled
+# look in "Flags" section
+# try to look for "P"
+sudo netstat -i
+
+# enable promisc mode
+sudo ip link set eth0 promisc on
+
+

@@ -1,0 +1,39 @@
+Neutron
+===============================
+
+
+KVM
+===============================
+
+# view running instances
+sudo virsh list
+
+# view all configuration of instance
+sudo virsh dumpxml <NAME>
+
+# view birdges
+sudo brctl show
+
+# view ethernet information
+ethtool -i tapad44a2b4-1b
+
+# view arp table
+arp
+
+
+
+
+
+
+> controller
+ps -ef | grep dnsmasq
+
+
+
+sudo bridge fdb show
+
+
+sudo ufw reload
+sudo ufw allow 4789/udp
+sudo ufw reload
+

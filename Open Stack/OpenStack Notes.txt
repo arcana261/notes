@@ -12,6 +12,24 @@ https://docs.openstack.org/newton/install-guide-ubuntu/
 INSTALL ADDITIONAL SERVICES
 https://docs.openstack.org/newton/install-guide-ubuntu/additional-services.html
 
+NETWORK TROUBLESHOOTING
+https://docs.openstack.org/ops-guide/ops-network-troubleshooting.html
+
+ARTICLE ON VXLAN
+https://vincent.bernat.im/en/blog/2012-multicast-vxlan
+http://www.jasonvanpatten.com/2015/12/02/vxlan-providing-ponies-for-bad-system-designers/
+http://www.jasonvanpatten.com/2015/12/22/vxlan-configuration-and-deployment/
+
+Networking Layers:
+1. Physical Layer
+2. Date Link Layer (MAC)
+	The FDB (forwarding database) table is used by a Layer 2 device (switch/bridge) to store the MAC addresses that have been learned and which ports that MAC address was learned on. The MAC addresses are learned through transparent bridging on switches and dedicated bridges.
+3. Network Layer (IP)
+	The ARP (Address Resolution Protocol) table is used by a Layer 3 device (router, switch, server, desktop) to store the IP address to MAC address entries for a specific network device. 
+4. Transport Layer
+5. Session Layer
+6. Presentation Layer
+7. Application Layer
 
 Identity Service -> Key Stone
 Compute Service -> Nova
@@ -190,4 +208,46 @@ Selects the optimal storage provider node on which to create the volume. A simil
 The cinder-backup service provides backing up volumes of any type to a backup storage provider. Like the cinder-volume service, it can interact with a variety of storage providers through a driver architecture.
 	Messaging queue
 Routes information between the Block Storage processes.
+
+
+
+
+-----------------------------------------------------------------
+TO LAUNCH INSTANCE
+
+1. Flavor
+2. Image Name
+3. Network
+4. Security Group
+5. Key
+6. Instance Name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1108,6 +1108,11 @@ sudo openstack endpoint create --region RegionOne network public http://controll
 sudo openstack endpoint create --region RegionOne network internal http://controller.ostack.me:9696
 sudo openstack endpoint create --region RegionOne network admin http://controller.ostack.me:9696
 
+# open ports in firewall
+sudo ufw reload
+sudo ufw allow 9696/tcp
+sudo ufw reload
+
 #########################################
 ## >>> controller.ostack.me
 ## CONFIGURE FOR SELF SERVICE NETWORKS
@@ -1239,6 +1244,12 @@ dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
 enable_isolated_metadata = True
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# allow dns
+sudo ufw reload
+sudo ufw allow 53/tcp
+sudo ufw allow 53/udp
+sudo ufw reload
+
 #########################################
 ## >>> controller.ostack.me
 ## CONTINUE CONFIGURING NETWORK SERVICE
@@ -1276,6 +1287,11 @@ metadata_proxy_shared_secret = METADATA_SECRET
 sudo bash
 /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
 exit
+
+# allow VXLAN port through firewall
+sudo ufw reload
+sudo ufw allow 4789/udp
+sudo ufw reload
 
 # restart compute API services
 sudo systemctl restart nova-api
@@ -1373,6 +1389,11 @@ devices {
 ...
 filter = [ "a/sda/", "r/.*/"]
 <<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# allow VXLAN port through firewall
+sudo ufw reload
+sudo ufw allow 4789/udp
+sudo ufw reload
 
 #########################################
 ## >>> compute1.ostack.me
@@ -1799,6 +1820,127 @@ sudo openstack subnet create --network provider --allocation-pool start=START_IP
 >>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
 sudo openstack subnet create --network provider --allocation-pool start=192.168.98.100,end=192.168.98.254 --dns-nameserver 4.2.2.4 --gateway 192.168.98.1 --subnet-range 192.168.98.0/24 provider
 >>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
+
+##### configure self service network
+
+# load demo project environment
+. ~/openstack/demo/demo-openrc
+
+# create a new network
+sudo openstack network create selfservice
+
+# assign subnet to network
+sudo openstack subnet create --network selfservice --dns-nameserver DNS_RESOLVER --gateway SELFSERVICE_NETWORK_GATEWAY --subnet-range SELFSERVICE_NETWORK_CIDR selfservice
+
+>>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
+sudo openstack subnet create --network selfservice --dns-nameserver 4.2.2.4 --gateway 192.168.99.1 --subnet-range 192.168.99.0/24 selfservice
+>>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
+
+# make provider network routable
+. ~/openstack/admin/admin-openrc
+sudo neutron net-update provider --router:external --os-password <PASSWORD>
+. ~/openstack/demo/demo-openrc
+
+# create a new router
+sudo openstack router create router
+
+# add self service network as interface of router
+sudo neutron router-interface-add router selfservice --os-password <PASSWORD>
+
+# set gateway on provider network on router
+sudo neutron router-gateway-set router provider --os-password <PASSWORD>
+
+##### verify operations
+
+# load admin environment
+. ~/openstack/admin/admin-openrc
+
+# verify network namespaces
+sudo ip netns
+>>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
+qrouter-89dd2083-a160-4d75-ab3a-14239f01ea0b
+qdhcp-7c6f9b37-76b4-463e-98d8-27e5686ed083
+qdhcp-0e62efcd-8cee-46c7-b163-d8df05c3c5ad
+>>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
+
+# List ports on the router to determine the gateway IP address on the provider network
+sudo neutron router-port-list router --os-password <PASSWORD>
+
+>>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
++--------------------------------------+------+-------------------+------------------------------------------+
+| id                                   | name | mac_address       | fixed_ips                                |
++--------------------------------------+------+-------------------+------------------------------------------+
+| bff6605d-824c-41f9-b744-21d128fc86e1 |      | fa:16:3e:2f:34:9b | {"subnet_id":                            |
+|                                      |      |                   | "3482f524-8bff-4871-80d4-5774c2730728",  |
+|                                      |      |                   | "ip_address": "172.16.1.1"}              |
+| d6fe98db-ae01-42b0-a860-37b1661f5950 |      | fa:16:3e:e8:c1:41 | {"subnet_id":                            |
+|                                      |      |                   | "5cc70da8-4ee7-4565-be53-b9c011fca011",  |
+|                                      |      |                   | "ip_address": "203.0.113.102"}           |
++--------------------------------------+------+-------------------+------------------------------------------+
+>>>>>>>>>>>>>>> EXAMPLE <<<<<<<<<<<<<<<
+
+# ping the router on the provider network
+ping -c 4 203.0.113.102
+
+##### continue configuring to launch
+
+# create flavor
+sudo openstack flavor create --id 0 --vcpus 1 --ram 64 --disk 1 m1.nano
+
+# generate ssh key for demo project
+. ~/openstack/demo/demo-openrc
+ssh-keygen -q -N ""
+sudo openstack keypair create --public-key ~/.ssh/id_rsa.pub mykey
+sudo openstack keypair list
+. ~/openstack/admin/admin-openrc
+
+# add some important security rules to "default" security group
+sudo openstack security group rule create --proto icmp default
+sudo openstack security group rule create --proto tcp --dst-port 22 default
+
+##### launch instance
+
+# load demo project environment
+. ~/openstack/demo/demo-openrc
+
+# list available flavors
+sudo openstack flavor list
+
+# list available images
+sudo openstack image list
+
+# list available networks
+sudo openstack network list
+
+# list available security groups
+sudo openstack security group list
+
+# list available keys
+sudo openstack keypair list
+
+# launch the instance
+sudo openstack server create --flavor m1.nano --image cirros --nic net-id=SELFSERVICE_NET_ID --security-group default --key-name mykey selfservice-instance
+
+# check status of instance
+sudo openstack server list
+
+# cirros
+# cubswin:)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
