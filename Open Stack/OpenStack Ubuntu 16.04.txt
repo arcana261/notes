@@ -1291,6 +1291,13 @@ exit
 # allow VXLAN port through firewall
 sudo ufw reload
 sudo ufw allow 4789/udp
+sudo ufw allow 8472/udp
+sudo ufw reload
+
+# allow DHCP port through firewall
+sudo ufw reload
+sudo ufw allow 67/udp
+sudo ufw allow 68/udp
 sudo ufw reload
 
 # restart compute API services
@@ -1393,6 +1400,13 @@ filter = [ "a/sda/", "r/.*/"]
 # allow VXLAN port through firewall
 sudo ufw reload
 sudo ufw allow 4789/udp
+sudo ufw allow 8472/udp
+sudo ufw reload
+
+# allow DHCP port through firewall
+sudo ufw reload
+sudo ufw allow 67/udp
+sudo ufw allow 68/udp
 sudo ufw reload
 
 #########################################

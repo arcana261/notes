@@ -35,5 +35,11 @@ sudo bridge fdb show
 
 sudo ufw reload
 sudo ufw allow 4789/udp
+sudo ufw allow 8472/udp
 sudo ufw reload
 
+# allow DHCP port through firewall
+sudo ufw reload
+sudo ufw allow 67/udp
+sudo ufw allow 68/udp
+sudo ufw reload
