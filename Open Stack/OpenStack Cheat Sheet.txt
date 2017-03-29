@@ -155,8 +155,6 @@ sudo ip addr add <IP>/<CIDR> broadcast <IP> dev br0
 sudo ip route add default via <GATEWAY> dev br0
 
 >>>>>>>> USE NAT
-# enable FORWARDing in ufw firewall
-
 # assign ip to both linked veth's
 sudo ip addr add 192.168.74.1/24 broadcast 192.168.74.255 dev veth0
 sudo ip netns exec <NAMESPACE> ip addr add 192.168.74.2/24 broadcast 192.168.74.255 dev veth1
@@ -165,22 +163,37 @@ sudo ip netns exec <NAMESPACE> ip addr add 192.168.74.2/24 broadcast 192.168.74.
 ifconfig
 sudo ip netns <NAMESPACE> ifconfig
 
-# enable ipv4 forwarding in kernel
-sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+# enable FORWARDing in ufw firewall
+sudo vim /etc/default/ufw 
+> DEFAULT_FORWARD_POLICY="ACCEPT"
 
-# Flush forward rules, policy DROP by default.
-sudo iptables -P FORWARD DROP
-sudo iptables -F FORWARD
+# enable ufw ipv4 port forwarding
+sudo vim /etc/ufw/sysctl.conf 
+> net.ipv4.ip_forward=1
 
-# Flush nat rules.
-sudo iptables -t nat -F
+# setup NAT in ufw
+sudo vim /etc/ufw/before.rules
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # NAT table rules
+> *nat
+> :POSTROUTING ACCEPT [0:0]
+>
+> # Forward traffic through eth0 - Change to match you out-interface
+> -A POSTROUTING -s 192.168.74.0/24 -o <ETHERNET> -j MASQUERADE
+>
+> # don't delete the 'COMMIT' line or these nat table rules won't
+> # be processed
+> COMMIT
 
-# Enable masquerading of 10.200.1.0.
-sudo iptables -t nat -A POSTROUTING -s 192.168.74.0/255.255.255.0 -o <ETHERNET> -j MASQUERADE
+# force restart ufw
+sudo ufw disable
+sudo ufw enable
 
-# Allow forwarding between eth0 and v-eth1.
-iptables -A FORWARD -i <ETHERNET> -o veth1 -j ACCEPT
-iptables -A FORWARD -o <ETHERNET> -i veth1 -j ACCEPT
+# verify masquerade is set
+sudo iptables -t nat -L -v
 
 # setup gateway for namespace
 sudo ip netns exec <NAMESPACE> ip route add default via 192.168.74.1 dev veth1
@@ -214,9 +227,29 @@ iptables -A FORWARD -o <ETHERNET> -i veth1 -j ACCEPT
 
 
 
+===============================
+===============================
+UFW port forwarding in NAT
+===============================
+===============================
+# NAT table rules
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
 
+# Port Forwardings
+-A PREROUTING -i eth0 -p tcp --dport 22 -j DNAT --to-destination 192.168.1.10
 
+# Forward traffic through eth0 - Change to match you out-interface
+-A POSTROUTING -s 192.168.1.0/24 -o eth0 -j MASQUERADE
 
+# don't delete the 'COMMIT' line or these nat table rules won't
+# be processed
+COMMIT
+===============================
+===============================
+===============================
+===============================
 
 
 > controller
