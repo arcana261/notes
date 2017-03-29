@@ -1,6 +1,78 @@
+IPROUTE2 CHEATSHEET:
+http://baturin.org/docs/iproute2/
+
+REMEMBERR: linux bridging acts funny if physical ethernet
+attached to bridge has IP address.. IP address should
+be assigned to bridge instead of ethernet!
+
+
 Neutron
 ===============================
 
+# view running neutron services
+sudo openstack network agent list
+
+# check dnsmasq (dhcp server) running on controller node
+ps aux | grep dnsmasq
+
+# debug dhcp issue by tcpdump
+tcpdump -i br100 -n port 67 or port 68
+
+# delete a port
+neutron port-delete <port id>
+
+# delete a subnet
+neutron subnet-delete <subnet id>
+
+# view network namespaces
+sudo ip netns
+
+# view FDB (router forwarding database)
+sudo bridge fdb show
+
+# view birdges
+sudo brctl show
+
+# enable ipv4 forwarding in kernel
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+# view network namespace configs
+sudo ip netns exec <NAMESPACE> ip link show
+sudo ip netns exec <NAMESPACE> ip addr show
+
+# up/down interface
+sudo ip link set dev <ETH> up
+sudo ip link set dev <ETH> down
+
+# add default route (gw)
+sudo ip route add default via <GATEWAY> dev <ETHERNET>
+
+# create a new tap device
+sudo ip tuntap add name tap0 mode tap
+
+# create a new bridge
+sudo brctl addbr mybridge
+
+# add interface to bridge
+sudo brctl addif mybridge eth0
+
+# view a certain bridge
+sudo brctl showbr mybridge
+
+# view macs in bridge
+sudo brctl showmacs mybridge
+
+# view arp table
+arp
+
+# view NDP (neighborhood discovery protocol) table
+sudo ip neighbor show
+
+Compute
+===============================
+
+# view instance or VM log
+openstack console log show <VM name or UUID>
 
 KVM
 ===============================
@@ -19,6 +91,128 @@ ethtool -i tapad44a2b4-1b
 
 # view arp table
 arp
+
+Network Namespaces Playground
+===============================
+
+# add network namespace
+sudo ip netns add <new namespace name>
+
+# view current network namespaces
+sudo ip netns list
+
+# create a new veth (virtual ethernet) to assign to network namespace
+sudo ip link add veth0 type veth peer name veth1
+
+# verify veth is created
+# there should be 2 veth's
+# veth0 and veth1
+# which should be linked to each other
+sudo ip link list
+
+# assign veth1 to namespace
+ip link set dev veth1 netns <NAMESPACE NAME>
+
+# verify veth1 is assigned to namespace
+# veth1 should exist on our namespace
+# but not on global namespace
+sudo ip netns exec <NAMESPACE NAME> ip link list
+sudo ip link list
+
+# enable loopback interface
+sudo ip netns exec <NAMESPACE NAME> ip link set dev lo up
+sudo ip netns exec <NAMESPACE NAME> ip link addr add 127.0.0.1/24 dev lo
+
+# enable veth interfaces
+sudo ip link set dev veth0 up
+sudo ip netns exec <NAMESPACE NAME> ip link set dev veth1 up
+
+>>>>>>>> USE BRIDGE
+# assign ip inside namespace
+sudo ip netns exec <NAMESPACE NAME> ip addr add <IP>/<CIDR> broadcast <IP> dev veth1
+sudo ip netns exec <NAMESPACE NAME> ip route add default via <GATEWAY> dev veth1
+
+# remove ip from physical namespace
+sudo ip route delete default
+sudo ip addr delete <IP>/<CIDR> dev <ETHERNET>
+
+# view current bridges in system
+sudo brctl show
+
+# create a new bridge and assign interfaces
+sudo brctl addbr br0
+sudo brctl addif br0 <ETHERNET>
+sudo brctl addif br0 veth0
+
+# veriy bridge
+sudo brctl show
+
+# up the bridge
+sudo ip link set dev br0 up
+
+# assign ip address to bridge
+sudo ip addr add <IP>/<CIDR> broadcast <IP> dev br0
+sudo ip route add default via <GATEWAY> dev br0
+
+>>>>>>>> USE NAT
+# enable FORWARDing in ufw firewall
+
+# assign ip to both linked veth's
+sudo ip addr add 192.168.74.1/24 broadcast 192.168.74.255 dev veth0
+sudo ip netns exec <NAMESPACE> ip addr add 192.168.74.2/24 broadcast 192.168.74.255 dev veth1
+
+# verify assigned ip addresses
+ifconfig
+sudo ip netns <NAMESPACE> ifconfig
+
+# enable ipv4 forwarding in kernel
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+# Flush forward rules, policy DROP by default.
+sudo iptables -P FORWARD DROP
+sudo iptables -F FORWARD
+
+# Flush nat rules.
+sudo iptables -t nat -F
+
+# Enable masquerading of 10.200.1.0.
+sudo iptables -t nat -A POSTROUTING -s 192.168.74.0/255.255.255.0 -o <ETHERNET> -j MASQUERADE
+
+# Allow forwarding between eth0 and v-eth1.
+iptables -A FORWARD -i <ETHERNET> -o veth1 -j ACCEPT
+iptables -A FORWARD -o <ETHERNET> -i veth1 -j ACCEPT
+
+# setup gateway for namespace
+sudo ip netns exec <NAMESPACE> ip route add default via 192.168.74.1 dev veth1
+
+===============================
+===============================
+===============================
+===============================
+# Share internet access between host and NS.
+
+# Enable IP-forwarding.
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# Flush forward rules, policy DROP by default.
+sudo iptables -P FORWARD DROP
+sudo iptables -F FORWARD
+
+# Flush nat rules.
+sudo iptables -t nat -F
+
+# Enable masquerading of 10.200.1.0.
+sudo iptables -t nat -A POSTROUTING -s 192.168.74.0/255.255.255.0 -o <ETHERNET> -j MASQUERADE
+
+# Allow forwarding between eth0 and v-eth1.
+iptables -A FORWARD -i <ETHERNET> -o veth1 -j ACCEPT
+iptables -A FORWARD -o <ETHERNET> -i veth1 -j ACCEPT
+===============================
+===============================
+===============================
+===============================
+
+
 
 
 
@@ -43,3 +237,24 @@ sudo ufw reload
 sudo ufw allow 67/udp
 sudo ufw allow 68/udp
 sudo ufw reload
+
+
+
+guide on routing:
+http://blog.scottlowe.org/2013/05/29/a-quick-introduction-to-linux-policy-routing/
+http://blog.scottlowe.org/2013/05/30/a-use-case-for-policy-routing-with-kvm-and-open-vswitch/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
