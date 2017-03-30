@@ -1,6 +1,13 @@
 IPROUTE2 CHEATSHEET:
 http://baturin.org/docs/iproute2/
 
+TUNNEL CHEATSHEET WITH IPROUTE:
+http://www.deepspace6.net/docs/iproute2tunnel-en.html
+
+DEAMONS TO TURN UNIX WORKSTATION INTO A ROUTER:
+http://freecode.com/projects/mrouted
+http://freecode.com/projects/pimd
+
 REMEMBERR: linux bridging acts funny if physical ethernet
 attached to bridge has IP address.. IP address should
 be assigned to bridge instead of ethernet!
@@ -43,6 +50,9 @@ sudo ip netns exec <NAMESPACE> ip addr show
 # up/down interface
 sudo ip link set dev <ETH> up
 sudo ip link set dev <ETH> down
+
+# change interface name
+sudo ip link set dev eth0 name inside
 
 # add default route (gw)
 sudo ip route add default via <GATEWAY> dev <ETHERNET>
@@ -92,6 +102,63 @@ ethtool -i tapad44a2b4-1b
 # view arp table
 arp
 
+VXLAN Playground (uni-cast)
+-> assume server1 physical address 192.168.73.40
+-> assume server2 physical address 192.168.73.41
+-> assume server3 physical address 192.168.73.42
+--> assume server1 vxlan address 192.168.80.40
+--> assume server2 vxlan address 192.168.80.41
+--> assume server3 vxlan address 192.168.80.42
+===============================
+
+# all servers
+sudo ufw reload
+sudo ufw allow 4789/udp
+sudo ufw reload
+
+### server 1 #####################
+
+# create a unicast vxlan between server1 and server2
+sudo ip link add name vxlan2 type vxlan id 41 dev eth0 remote 192.168.73.41 local 192.168.73.40 dstport 4789
+sudo ip link set dev vxlan2 up
+
+# create a unicast vxlan between server1 and server3
+sudo ip link add name vxlan3 type vxlan id 42 dev eth0 remote 192.168.73.42 local 192.168.73.40 dstport 4789
+sudo ip link set dev vxlan3 up
+
+# create a bridge between two vxlan's
+sudo brctl addbr br0
+sudo ip link set dev br0 up
+sudo brctl addif br0 vxlan2
+sudo brctl addif br0 vxlan3
+
+# assign ip address to bridge
+sudo ip addr add 192.168.80.40/24 broadcast 192.168.80.255 dev br0
+
+### END OF server 1 #####################
+
+### server 2 #####################
+
+# create a unicast vxlan between server1 and server2
+sudo ip link add name vxlan2 type vxlan id 41 dev eth0 remote 192.168.73.40 local 192.168.73.41 dstport 4789
+sudo ip link set dev vxlan2 up
+
+# assign ip address to vxlan
+sudo ip addr add 192.168.80.41/24 broadcast 192.168.80.255 dev vxlan2
+
+### END OF server 2 #####################
+
+### server 3 #####################
+
+# create a unicast vxlan between server1 and server3
+sudo ip link add name vxlan3 type vxlan id 42 dev eth0 remote 192.168.73.40 local 192.168.73.42 dstport 4789
+sudo ip link set dev vxlan3 up
+
+# assign ip address to vxlan3
+sudo ip addr add 192.168.80.42/24 broadcast 192.168.80.255 dev vxlan3
+
+### END OF server 3 #####################
+
 Network Namespaces Playground
 ===============================
 
@@ -121,7 +188,7 @@ sudo ip link list
 
 # enable loopback interface
 sudo ip netns exec <NAMESPACE NAME> ip link set dev lo up
-sudo ip netns exec <NAMESPACE NAME> ip link addr add 127.0.0.1/24 dev lo
+sudo ip netns exec <NAMESPACE NAME> ip link addr add 127.0.0.1/8 dev lo
 
 # enable veth interfaces
 sudo ip link set dev veth0 up
