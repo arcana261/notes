@@ -504,6 +504,15 @@ Hostname=Hostname_Of_Current_Machine
 ...
 reboot
 
+# disable ufw since it conflicts with
+# bridging and postrouting (ipv4 forwarding)
+# set by openstack networking (neutron)
+# automatically
+sudo ufw disable
+sudo systemctl stop ufw
+sudo systemctl disable ufw
+sudo reboot
+
 # configure chrony for NTP
 sudo vim /etc/chrony/chrony.conf
 ...
@@ -994,6 +1003,15 @@ Hostname=Hostname_Of_Current_Machine
 ...
 reboot
 
+# disable ufw since it conflicts with
+# bridging and postrouting (ipv4 forwarding)
+# set by openstack networking (neutron)
+# automatically
+sudo ufw disable
+sudo systemctl stop ufw
+sudo systemctl disable ufw
+sudo reboot
+
 # install compute package
 sudo apt-get install nova-compute
 
@@ -1299,6 +1317,12 @@ sudo ufw allow 4789/udp
 sudo ufw allow 8472/udp
 sudo ufw reload
 
+# allow dns port through firewall
+sudo ufw reload
+sudo ufw allow 53/udp
+sudo ufw allow 53/tcp
+sudo ufw reload
+
 # allow DHCP port through firewall
 sudo ufw reload
 sudo ufw allow 67/udp
@@ -1406,6 +1430,12 @@ filter = [ "a/sda/", "r/.*/"]
 sudo ufw reload
 sudo ufw allow 4789/udp
 sudo ufw allow 8472/udp
+sudo ufw reload
+
+# allow dns port through firewall
+sudo ufw reload
+sudo ufw allow 53/udp
+sudo ufw allow 53/tcp
 sudo ufw reload
 
 # allow DHCP port through firewall
@@ -1947,10 +1977,73 @@ sudo openstack server list
 # cirros
 # cubswin:)
 
+#########################################
+## configure gateway for provider networks
+## clone: base zabbix
+## hostname: "gw.ostack.me"
+## RAM: 256MB
+## ip: "xxx.23"
+#########################################
 
+# set host and ip
+sudo bash
+hostnamectl set-hostname gw.ostack.me
+vim /etc/hosts
+> 127.0.1.1    gw.ostack.me
+vim /etc/network/interfaces
+> address xxx.xxx.xxx.23
+vim /etc/zabbix/zabbix_agentd.conf
+...
+Hostname=Hostname_Of_Current_Machine
+...
+reboot
 
+# add additional ip to ens33
+sudo vim /etc/network/interfaces
+...
+auto ens33:0
+iface ens33:0 inet static
+	address 192.168.200.1
+	netmask 255.255.255.0
+	network 192.168.200.0
+	broadcast 192.168.200.255
+...
+sudo reboot
 
+# verify ip address has been added
+sudo ip addr show
 
+# enable FORWARDing in ufw firewall
+sudo vim /etc/default/ufw 
+> DEFAULT_FORWARD_POLICY="ACCEPT"
+
+# enable ufw ipv4 port forwarding
+sudo vim /etc/ufw/sysctl.conf 
+> net.ipv4.ip_forward=1
+
+# setup NAT in ufw
+sudo vim /etc/ufw/before.rules
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # NAT table rules
+> *nat
+> :POSTROUTING ACCEPT [0:0]
+>
+> # Forward traffic through eth0 - Change to match you out-interface
+> -A POSTROUTING -s 192.168.74.0/24 -o ens33 -j MASQUERADE
+>
+> # don't delete the 'COMMIT' line or these nat table rules won't
+> # be processed
+> COMMIT
+
+# force restart ufw
+sudo ufw disable
+sudo ufw enable
+
+# verify masquerade is set
+sudo iptables -t nat -L -v
 
 
 
