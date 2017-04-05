@@ -26,6 +26,57 @@
 
 
 
+# update system
+sudo apt-get update
+
+# ensure no dead package
+sudo apt-get autoremove
+
+# install some tools
+sudo apt-get install vim nano screen htop psmisc dnsutils wget \
+			xz-utils openssh-server ufw mlocate \
+			uuid-runtime tcpdump man-db \
+			traceroute w3m bridge-utils iputils-arping \
+			dnsmasq
+			
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+# allow vxlan through ufw
+sudo ufw reload
+sudo ufw allow 4789/udp
+sudo ufw reload
+
+# allow dhcp through ufw
+sudo ufw reload
+sudo ufw allow 67/udp
+sudo ufw allow 68/udp
+sudo ufw reload
+
+# allow dns through ufw
+sudo ufw reload
+sudo ufw allow 53/udp
+sudo ufw allow 53/tcp
+sudo ufw reload
+
+
+
            ------- Router 3 -------
            |                      |
            |                      |
@@ -44,41 +95,198 @@ Network 2: 192.168.81/24
 
 
 
+## setup virtual ethernet for server1
+sudo ip netns add server1
+sudo ip link add name veth-server1 type veth peer name peer-server1
+sudo ip link set dev veth-server1 up
+sudo ip link set dev peer-server1 netns server1
+sudo ip netns exec server1 bash
+>>>>>>>
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-server1 name eth0
+sudo ip link set dev eth0 up
+sudo ip link set dev eth0 address 3e:bc:33:3b:5b:af
+<<<<<<<
+
+## setup virtual ethernet for server2
+sudo ip netns add server2
+sudo ip link add name veth-server2 type veth peer name peer-server2
+sudo ip link set dev veth-server2 up
+sudo ip link set dev peer-server2 netns server2
+sudo ip netns exec server2 bash
+>>>>>>>
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-server2 name eth0
+sudo ip link set dev eth0 address 4a:4b:cf:36:c3:11
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for router1
+sudo ip netns add router1
+sudo ip link add name veth-router1 type veth peer name peer-router1
+sudo ip link set dev veth-router1 up
+sudo ip link set dev peer-router1 netns router1
+sudo ip netns exec router1 bash
+>>>>>>>
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-router1 name eth0
+sudo ip link set dev eth0 address 9e:b2:11:ac:eb:d6
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for server3
+sudo ip netns add server3
+sudo ip link add name veth-server3 type veth peer name peer-server3
+sudo ip link set dev veth-server3 up
+sudo ip link set dev peer-server3 netns server3
+sudo ip netns exec server3 bash
+>>>>>>>
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-server3 name eth0
+sudo ip link set dev eth0 address 92:c6:ae:6e:30:2b
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for server4
+sudo ip netns add server4
+sudo ip link add name veth-server4 type veth peer name peer-server4
+sudo ip link set dev veth-server4 up
+sudo ip link set dev peer-server4 netns server4
+sudo ip netns exec server4 bash
+>>>>>>>
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-server4 name eth0
+sudo ip link set dev eth0 address fe:63:0c:45:ae:ce
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for router2
+sudo ip netns add router2
+sudo ip link add name veth-router2 type veth peer name peer-router2
+sudo ip link set dev veth-router2 up
+sudo ip link set dev peer-router2 netns router2
+sudo ip netns exec router2 bash
+>>>>>>>
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-router2 name eth0
+sudo ip link set dev eth0 address b2:ad:35:a9:62:59
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for router3
+sudo ip netns add router3
+sudo ip link add name veth-router3 type veth peer name peer-router3
+sudo ip link set dev veth-router3 up
+sudo ip link set dev peer-router3 netns router3
+sudo ip netns exec router3 bash
+>>>>>>>
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-router3 name eth0
+sudo ip link set dev eth0 address 72:61:86:da:db:78
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## create bridge between veths
+sudo ip link add name br-veth type bridge
+sudo ip link set dev br-veth up
+sudo ip addr add 192.168.73.1/24 broadcast 192.168.73.255 dev br-veth
+sudo ip link set dev veth-server1 master br-veth
+sudo ip link set dev veth-server2 master br-veth
+sudo ip link set dev veth-router1 master br-veth
+sudo ip link set dev veth-server3 master br-veth
+sudo ip link set dev veth-server4 master br-veth
+sudo ip link set dev veth-router2 master br-veth
+sudo ip link set dev veth-router3 master br-veth
+sudo ip link set dev veth-dhcp master br-veth
+
+## setup fabric dhcp server
+sudo vim /tmp/dhcp.hosts
+>>>>>>>
+3e:bc:33:3b:5b:af,192.168.73.41,1h
+4a:4b:cf:36:c3:11,192.168.73.42,1h
+9e:b2:11:ac:eb:d6,192.168.73.43,1h
+92:c6:ae:6e:30:2b,192.168.73.44,1h
+fe:63:0c:45:ae:ce,192.168.73.45,1h
+b2:ad:35:a9:62:59,192.168.73.46,1h
+72:61:86:da:db:78,192.168.73.47,1h
+<<<<<<<
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp.pid --interface=br-veth --dhcp-hostsfile=/tmp/dhcp.hosts --dhcp-leasefile=/tmp/dhcp.lease --dhcp-range=192.168.73.2,192.168.73.254 --log-dhcp
+
+## refresh ip address inside all namespaces
+sudo dhclient eth0
+
+## test connectivity in all namespaces
+ping -c 2 192.168.73.1 && ping -c 2 192.168.73.41 && ping -c 2 192.168.73.42 && ping -c 2 192.168.73.43 && ping -c 2 192.168.73.44 && ping -c 2 192.168.73.45 && ping -c 2 192.168.73.46 && ping -c 2 192.168.73.47
+
+## setup ufw to be friendly with ip forwarding
+# enable FORWARDing in ufw firewall
+sudo vim /etc/default/ufw 
+> DEFAULT_FORWARD_POLICY="ACCEPT"
+
+# enable ufw ipv4 port forwarding
+sudo vim /etc/ufw/sysctl.conf 
+> net.ipv4.ip_forward=1
+
+# re-enable firewall
+sudo ufw disable
+sudo ufw enable
+
+
+
+
 
 
 ##### Setup network1
 
-# connect server 1 to vxlan
-sudo ip link add name vtep1 type vxlan id 80 dev ens33 remote 192.168.73.43 local 192.168.73.41 dstport 4789
-sudo ip link set dev vtep1 address be:09:cc:ef:9a:fe
-sudo ip link set dev vtep1 up
-sudo ip addr add 192.168.80.2/24 broadcast 192.168.80.255 dev vtep1
-
-# connect server 2 to vxlan
-sudo ip link add name vtep1 type vxlan id 80 dev ens33 remote 192.168.73.43 local 192.168.73.42 dstport 4789
-sudo ip link set dev vtep1 address 76:dd:fd:1b:97:ca
-sudo ip link set dev vtep1 up
-sudo ip addr add 192.168.80.3/24 broadcast 192.168.80.255 dev vtep1
-
 # setup vxlan in router 1
-sudo ip link add name vtep1 type vxlan id 80 dev ens33 remote 192.168.73.43 local 192.168.73.43 dstport 4789
+sudo ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.73.43 local 192.168.73.43 dstport 4789
 sudo ip link set dev vtep1 address 8a:e0:7a:de:bc:c2
 sudo ip link set dev vtep1 up
 sudo ip addr add 192.168.80.1/24 broadcast 192.168.80.255 dev vtep1
 
 # populate router1 FDB table
-sudo bridge fdb add be:09:cc:ef:9a:fe dev vtep1 dst 192.168.73.41 port 4789 vni 80 via ens33
-sudo bridge fdb add 76:dd:fd:1b:97:ca dev vtep1 dst 192.168.73.42 port 4789 vni 80 via ens33
+sudo bridge fdb add be:09:cc:ef:9a:fe dev vtep1 dst 192.168.73.41 port 4789 vni 80 via eth0
+sudo bridge fdb add 76:dd:fd:1b:97:ca dev vtep1 dst 192.168.73.42 port 4789 vni 80 via eth0
+sudo bridge fdb add ca:a1:fe:ac:eb:38 dev vtep1 dst 192.168.73.47 port 4789 vni 80 via eth0
 
 # populate router1 ARP table
 sudo arp -i vtep1 -s 192.168.80.2 be:09:cc:ef:9a:fe
 sudo arp -i vtep1 -s 192.168.80.3 76:dd:fd:1b:97:ca
+sudo arp -i vtep1 -s 192.168.80.4 ca:a1:fe:ac:eb:38
 
 # setup PVLAN arp proxying so router can act as a router!
 sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/vtep1/arp_filter"
 sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep1/proxy_arp_pvlan"
 sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep1/forwarding"
 sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+# setup network1 dhcp server
+sudo vim /tmp/network1.hosts
+>>>>>>>
+be:09:cc:ef:9a:fe,192.168.80.2,1h
+76:dd:fd:1b:97:ca,192.168.80.3,1h
+ca:a1:fe:ac:eb:38,192.168.80.4,1h
+<<<<<<<
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network1.pid --interface=vtep1 --dhcp-hostsfile=/tmp/network1.hosts --dhcp-leasefile=/tmp/network1.lease --dhcp-range=192.168.80.2,192.168.80.254 --log-dhcp
+
+# connect server 1 to vxlan
+sudo ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.73.43 local 192.168.73.41 dstport 4789
+sudo ip link set dev vtep1 address be:09:cc:ef:9a:fe
+sudo ip link set dev vtep1 up
+sudo dhclient vtep1
+
+# connect server 2 to vxlan
+sudo ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.73.43 local 192.168.73.42 dstport 4789
+sudo ip link set dev vtep1 address 76:dd:fd:1b:97:ca
+sudo ip link set dev vtep1 up
+sudo dhclient vtep1
 
 # test network 1
 # execute in server1, server2 and router1
@@ -87,31 +295,21 @@ ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3
 
 ##### Setup network2
 
-# connect server 3 to vxlan
-sudo ip link add name vtep2 type vxlan id 81 dev ens33 remote 192.168.73.46 local 192.168.73.44 dstport 4789
-sudo ip link set dev vtep2 address ea:07:c6:1e:71:5d
-sudo ip link set dev vtep2 up
-sudo ip addr add 192.168.81.2/24 broadcast 192.168.81.255 dev vtep2
-
-# connect server 4 to vxlan
-sudo ip link add name vtep2 type vxlan id 81 dev ens33 remote 192.168.73.46 local 192.168.73.45 dstport 4789
-sudo ip link set dev vtep2 address 9e:de:c5:56:11:a1
-sudo ip link set dev vtep2 up
-sudo ip addr add 192.168.81.3/24 broadcast 192.168.81.255 dev vtep2
-
 # setup vxlan in router 2
-sudo ip link add name vtep2 type vxlan id 81 dev ens33 remote 192.168.73.46 local 192.168.73.46 dstport 4789
+sudo ip link add name vtep2 type vxlan id 81 dev eth0 remote 192.168.73.46 local 192.168.73.46 dstport 4789
 sudo ip link set dev vtep2 address 9a:b5:99:9c:f2:ea
 sudo ip link set dev vtep2 up
 sudo ip addr add 192.168.81.1/24 broadcast 192.168.81.255 dev vtep2
 
 # populate router2 FDB table
-sudo bridge fdb add ea:07:c6:1e:71:5d dev vtep2 dst 192.168.73.44 port 4789 vni 81 via ens33
-sudo bridge fdb add 9e:de:c5:56:11:a1 dev vtep2 dst 192.168.73.45 port 4789 vni 81 via ens33
+sudo bridge fdb add ea:07:c6:1e:71:5d dev vtep2 dst 192.168.73.44 port 4789 vni 81 via eth0
+sudo bridge fdb add 9e:de:c5:56:11:a1 dev vtep2 dst 192.168.73.45 port 4789 vni 81 via eth0
+sudo bridge fdb add 3e:6c:ac:f6:b9:3b dev vtep2 dst 192.168.73.47 port 4789 vni 81 via eth0
 
 # populate router1 ARP table
 sudo arp -i vtep2 -s 192.168.81.2 ea:07:c6:1e:71:5d
 sudo arp -i vtep2 -s 192.168.81.3 9e:de:c5:56:11:a1
+sudo arp -i vtep2 -s 192.168.81.4 3e:6c:ac:f6:b9:3b
 
 # setup PVLAN arp proxying so router can act as a router!
 sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/vtep2/arp_filter"
@@ -119,7 +317,28 @@ sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep2/proxy_arp_pvlan"
 sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep2/forwarding"
 sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
-# test network 1
+# setup network2 dhcp server
+sudo vim /tmp/network2.hosts
+>>>>>>>
+ea:07:c6:1e:71:5d,192.168.81.2,1h
+9e:de:c5:56:11:a1,192.168.81.3,1h
+3e:6c:ac:f6:b9:3b,192.168.81.4,1h
+<<<<<<<
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network2.pid --interface=vtep2 --dhcp-hostsfile=/tmp/network2.hosts --dhcp-leasefile=/tmp/network2.lease --dhcp-range=192.168.81.2,192.168.81.254 --log-dhcp
+
+# connect server 3 to vxlan
+sudo ip link add name vtep2 type vxlan id 81 dev eth0 remote 192.168.73.46 local 192.168.73.44 dstport 4789
+sudo ip link set dev vtep2 address ea:07:c6:1e:71:5d
+sudo ip link set dev vtep2 up
+sudo dhclient vtep2
+
+# connect server 4 to vxlan
+sudo ip link add name vtep2 type vxlan id 81 dev eth0 remote 192.168.73.46 local 192.168.73.45 dstport 4789
+sudo ip link set dev vtep2 address 9e:de:c5:56:11:a1
+sudo ip link set dev vtep2 up
+sudo dhclient vtep2
+
+# test network 2
 # execute in server4, server5 and router2
 ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3
 
@@ -127,33 +346,17 @@ ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3
 
 ### Setup router3
 
-## connect router3 to network 1
-
-# router 3
-sudo ip link add name vtep1 type vxlan id 80 dev ens33 remote 192.168.73.43 local 192.168.73.47 dstport 4789
+# connect router3 to network 1
+sudo ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.73.43 local 192.168.73.47 dstport 4789
 sudo ip link set dev vtep1 address ca:a1:fe:ac:eb:38
 sudo ip link set dev vtep1 up
-sudo ip addr add 192.168.80.4/24 broadcast 192.168.80.255 dev vtep1
+sudo dhclient vtep1
 
-# router 1
-sudo bridge fdb add ca:a1:fe:ac:eb:38 dev vtep1 dst 192.168.73.47 port 4789 vni 80 via ens33
-sudo arp -i vtep1 -s 192.168.80.4 ca:a1:fe:ac:eb:38
-
-# test connectivity throughout network 1 and router 3
-ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3 && ping -c 2 192.168.80.4
-
-## connect router3 to network 2
-sudo ip link add name vtep2 type vxlan id 81 dev ens33 remote 192.168.73.46 local 192.168.73.47 dstport 4789
+# connect router3 to network 2
+sudo ip link add name vtep2 type vxlan id 81 dev eth0 remote 192.168.73.46 local 192.168.73.47 dstport 4789
 sudo ip link set dev vtep2 address 3e:6c:ac:f6:b9:3b
 sudo ip link set dev vtep2 up
-sudo ip addr add 192.168.81.4/24 broadcast 192.168.80.255 dev vtep2
-
-# router 2
-sudo bridge fdb add 3e:6c:ac:f6:b9:3b dev vtep2 dst 192.168.73.47 port 4789 vni 81 via ens33
-sudo arp -i vtep2 -s 192.168.81.4 3e:6c:ac:f6:b9:3b
-
-# test connectivity throughout network 2 and router 3
-ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3 && ping -c 2 192.168.81.4
+sudo dhclient vtep2
 
 # setup ARP proxy and IP forwarding so that router3 can forward traffic between router1 and router2
 sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/vtep1/arp_filter"
@@ -169,23 +372,44 @@ sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 # router1
 sudo ip route add 192.168.81/24 via 192.168.80.4
 sudo bridge fdb delete 00:00:00:00:00:00 dev vtep1
-sudo bridge fdb add 00:00:00:00:00:00 dev vtep1 dst 192.168.73.47 port 4789 vni 80 via ens33
+sudo bridge fdb add 00:00:00:00:00:00 dev vtep1 dst 192.168.73.47 port 4789 vni 80 via eth0
 
 # setup router2 routing table
 # and connect it's broadcast to router 3
 # router2
 sudo ip route add 192.168.80/24 via 192.168.81.4
 sudo bridge fdb delete 00:00:00:00:00:00 dev vtep2
-sudo bridge fdb add 00:00:00:00:00:00 dev vtep2 dst 192.168.73.47 port 4789 vni 81 via ens33
+sudo bridge fdb add 00:00:00:00:00:00 dev vtep2 dst 192.168.73.47 port 4789 vni 81 via eth0
 
-# setup gatway inside server1 and server2
-sudo ip route add 192.168.81/24 via 192.168.80.1
+# setup routing in server1, server2
+sudo ip route add 192.168.81/24 via 192.168.80.1 dev vtep1
 
-# setup gateway inside server3 and server4
-sudo ip route add 192.168.80/24 via 192.168.81.1
+# setup routing in server3, server4
+sudo ip route add 192.168.80/24 via 192.168.81.1 dev vtep2
 
 # test total connectivity in all nodes
 ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3 && ping -c 2 192.168.80.4 && ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3 && ping -c 2 192.168.81.4
+
+################ CLEANUP #################
+sudo killall -9 dnsmasq
+sudo killall -9 dhclient
+sudo ip netns delete server1
+sudo ip netns delete server2
+sudo ip netns delete router1
+sudo ip netns delete server3
+sudo ip netns delete server4
+sudo ip netns delete router2
+sudo ip netns delete router3
+sudo ip link delete br-veth
+sudo ip link delete veth-server1
+sudo ip link delete veth-server2
+sudo ip link delete veth-router1
+sudo ip link delete veth-server3
+sudo ip link delete veth-server4
+sudo ip link delete veth-router2
+sudo ip link delete veth-router3
+
+
 
 
 

@@ -1,0 +1,21 @@
+# change mirror to Main Server
+Activities -> Software & Updates -> Ubuntu Software -> Download from: -> Main Server 
+
+# update to latest
+sudo apt-get update
+sudo apt-get autoremove
+sudo apt-get upgrade
+sudo apt-get distupgrade
+sudo do-release-upgrade
+sudo reboot
+
+# install some base packages
+sudo apt-get install vim nano screen htop psmisc dnsutils wget \
+			xz-utils openssh-server ufw mlocate \
+			uuid-runtime tcpdump man-db \
+			traceroute w3m bridge-utils \
+			default-jdk git
+
+# use nvidia driver and proprietary intel drivers
+Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver
+						       -> Use Processor microcode firmware for intel CPUs from intel-microcode
