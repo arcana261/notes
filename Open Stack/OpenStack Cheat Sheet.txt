@@ -51,6 +51,19 @@ sudo brctl show
 # enable ipv4 forwarding in kernel
 sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
+# enable arp proxy
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/all/proxy_arp"
+sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/all/arp_filter"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/all/forwarding"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+# enable arp proxy (pvlan mode)
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/all/proxy_arp"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/all/proxy_arp_pvlan"
+sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/all/arp_filter"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/all/forwarding"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
 # view network namespace configs
 sudo ip netns exec <NAMESPACE> ip link show
 sudo ip netns exec <NAMESPACE> ip addr show
@@ -89,14 +102,28 @@ arp -i <IFACE>
 # add custom arp entry
 arp -i <IFACE> -s <IP> <MAC>
 
+# arping an ip address!
+arping -c 4 -I <IFACE> <IP ADDRESS>
+
 # add vxlan FDB entry
 bridge fdb add <MAC> dev <VXLAN> dst <REAL DESTINATION IP> port <UDP PORT, mostly 4789>
+
+# add bridge FDB entry
+bridge fdb add <MAC> dev <ETHERNET> master <BRIDGE>
 
 # view NDP (neighborhood discovery protocol) table
 sudo ip neighbor show
 
 # add vxlan custom destination
 sudo bridge fdb add 00:00:10:00:00:0A dev vtep1000 dst 172.10.1.1
+
+# create and manage bridge using iproute2
+sudo ip link add name br0 type bridge
+sudo ip link set dev ${interface name} master ${bridge name}
+sudo ip link set dev ${interface name} nomaster
+
+# tcpdump debug ARP requests
+sudo tcpdump -nevi <ETHERNET>
 
 Compute
 ===============================
@@ -122,124 +149,30 @@ ethtool -i tapad44a2b4-1b
 # view arp table
 arp
 
-VXLAN Playground (uni-cast with controller)
--> assume server1 physical address 192.168.73.40
--> assume server2 physical address 192.168.73.41
--> assume server3 physical address 192.168.73.42
---> assume server1 vxlan address 192.168.80.40
---> assume server2 vxlan address 192.168.80.41
---> assume server3 vxlan address 192.168.80.42
-===============================
 
-# all servers
-sudo ufw reload
-sudo ufw allow 4789/udp
-sudo ufw reload
 
-### server 1 #####################
 
-# create a unicast vxlan between server1 and server2
-sudo ip link add name vxlan2 type vxlan id 41 dev eth0 remote 192.168.73.41 local 192.168.73.40 dstport 4789
-sudo ip link set dev vxlan2 up
 
-# create a unicast vxlan between server1 and server3
-sudo ip link add name vxlan3 type vxlan id 42 dev eth0 remote 192.168.73.42 local 192.168.73.40 dstport 4789
-sudo ip link set dev vxlan3 up
 
-# create a bridge between two vxlan's
-sudo brctl addbr br0
-sudo ip link set dev br0 up
-sudo brctl addif br0 vxlan2
-sudo brctl addif br0 vxlan3
+sudo ip link add name vtep1 type vxlan id 81 dev ens33 group 192.168.73.41 dstport 4789 
 
-# assign ip address to bridge
-sudo ip addr add 192.168.80.40/24 broadcast 192.168.80.255 dev br0
+sudo ip maddress show
 
-### END OF server 1 #####################
 
-### server 2 #####################
 
-# create a unicast vxlan between server1 and server2
-sudo ip link add name vxlan2 type vxlan id 41 dev eth0 remote 192.168.73.40 local 192.168.73.41 dstport 4789
-sudo ip link set dev vxlan2 up
 
-# assign ip address to vxlan
-sudo ip addr add 192.168.80.41/24 broadcast 192.168.80.255 dev vxlan2
 
-### END OF server 2 #####################
 
-### server 3 #####################
 
-# create a unicast vxlan between server1 and server3
-sudo ip link add name vxlan3 type vxlan id 42 dev eth0 remote 192.168.73.40 local 192.168.73.42 dstport 4789
-sudo ip link set dev vxlan3 up
 
-# assign ip address to vxlan3
-sudo ip addr add 192.168.80.42/24 broadcast 192.168.80.255 dev vxlan3
 
-### END OF server 3 #####################
 
-VXLAN Playground (uni-cast without controller (CUSTOM ARP AND FDB TABLE))
--> assume server1 physical address 192.168.73.41
--> assume server2 physical address 192.168.73.42
--> assume server3 physical address 192.168.73.43
--> assume server4 physical address 192.168.73.44
---> assume server1 vxlan address 192.168.80.41
---> assume server2 vxlan address 192.168.80.42
---> assume server3 vxlan address 192.168.80.43
---> assume server4 vxlan address 192.168.80.44
-===============================
 
-server1: (be:09:cc:ef:9a:fe)
-server2: (76:dd:fd:1b:97:ca)
-server3: (8a:e0:7a:de:bc:c2)
-server4: (ea:07:c6:1e:71:5d)
 
-## create firewall rule
-# all servers
-sudo ufw reload
-sudo ufw allow 4789/udp
-sudo ufw reload
 
-## create vxlans
-# server1
-sudo ip link add name vxlan0 type vxlan id 80 dev ens33 remote 192.168.73.41 local 192.168.73.41 dstport 4789
-sudo ip link set dev vxlan0 up
-sudo ip link set dev vxlan0 address be:09:cc:ef:9a:fe
-sudo ip addr add 192.168.80.41/24 broadcast 192.168.80.255 dev vxlan0
-# server2
-sudo ip link add name vxlan0 type vxlan id 80 dev ens33 remote 192.168.73.41 local 192.168.73.42 dstport 4789
-sudo ip link set dev vxlan0 up
-sudo ip link set dev vxlan0 address 76:dd:fd:1b:97:ca
-sudo ip addr add 192.168.80.42/24 broadcast 192.168.80.255 dev vxlan0
-# server1
-sudo ip link add name vxlan0 type vxlan id 80 dev ens33 remote 192.168.73.41 local 192.168.73.43 dstport 4789
-sudo ip link set dev vxlan0 up
-sudo ip link set dev vxlan0 address 8a:e0:7a:de:bc:c2
-sudo ip addr add 192.168.80.43/24 broadcast 192.168.80.255 dev vxlan0
-# server1
-sudo ip link add name vxlan0 type vxlan id 80 dev ens33 remote 192.168.73.41 local 192.168.73.44 dstport 4789
-sudo ip link set dev vxlan0 up
-sudo ip link set dev vxlan0 address ea:07:c6:1e:71:5d
-sudo ip addr add 192.168.80.44/24 broadcast 192.168.80.255 dev vxlan0
 
-## create static arp and fdb rules
-# all servers
-sudo arp -i vxlan0 -s 192.168.80.41 be:09:cc:ef:9a:fe
-sudo arp -i vxlan0 -s 192.168.80.42 76:dd:fd:1b:97:ca
-sudo arp -i vxlan0 -s 192.168.80.43 8a:e0:7a:de:bc:c2
-sudo arp -i vxlan0 -s 192.168.80.44 ea:07:c6:1e:71:5d
-sudo bridge fdb add be:09:cc:ef:9a:fe dev vxlan0 dst 192.168.73.41 port 4789 vni 80
-sudo bridge fdb add 76:dd:fd:1b:97:ca dev vxlan0 dst 192.168.73.42 port 4789 vni 80
-sudo bridge fdb add 8a:e0:7a:de:bc:c2 dev vxlan0 dst 192.168.73.43 port 4789 vni 80
-sudo bridge fdb add ea:07:c6:1e:71:5d dev vxlan0 dst 192.168.73.44 port 4789 vni 80
 
-## test connectivity
-# all servers
-ping -c 4 192.168.80.41
-ping -c 4 192.168.80.42
-ping -c 4 192.168.80.43
-ping -c 4 192.168.80.44
+
 
 
 Network Namespaces Playground

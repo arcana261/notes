@@ -1,0 +1,204 @@
+-> assume server1 physical address 192.168.73.41
+-> assume server2 physical address 192.168.73.42
+-> assume router1 physical address 192.168.73.43
+-> assume server3 physical address 192.168.73.44
+-> assume server4 physical address 192.168.73.45
+-> assume router2 physical address 192.168.73.46
+-> assume router3 physical address 192.168.73.47
+--> assume server1 vxlan address 192.168.80.2
+--> assume server2 vxlan address 192.168.80.3
+--> assume router1 vxlan address 192.168.80.1
+--> assume server3 vxlan address 192.168.81.2
+--> assume server4 vxlan address 192.168.81.3
+--> assume router2 vxlan address 192.168.81.1
+--> assume router3 inside "80" network vxlan address 192.168.80.4
+--> assume router3 inside "81" network vxlan address 192.168.81.4
+--> server1	be:09:cc:ef:9a:fe
+--> server2	76:dd:fd:1b:97:ca
+--> router1	8a:e0:7a:de:bc:c2
+--> server3	ea:07:c6:1e:71:5d
+--> server4	9e:de:c5:56:11:a1
+--> router2	9a:b5:99:9c:f2:ea
+--> router3 inside "80" network	ca:a1:fe:ac:eb:38
+--> router3 inside "80" network	3e:6c:ac:f6:b9:3b
+
+
+
+
+
+           ------- Router 3 -------
+           |                      |
+           |                      |
+   --- Router 1 ---        --- Router 2 ---
+   |              |        |              |
+Server1        Server2  Server3        Server4
+
+
+
+Network 1: 192.168.80/24
+           Server1 and Server2 - Router1 - Router3
+
+Network 2: 192.168.81/24
+           Server3 and Server4 - Router 2 - Router3
+
+
+
+
+
+
+##### Setup network1
+
+# connect server 1 to vxlan
+sudo ip link add name vtep1 type vxlan id 80 dev ens33 remote 192.168.73.43 local 192.168.73.41 dstport 4789
+sudo ip link set dev vtep1 address be:09:cc:ef:9a:fe
+sudo ip link set dev vtep1 up
+sudo ip addr add 192.168.80.2/24 broadcast 192.168.80.255 dev vtep1
+
+# connect server 2 to vxlan
+sudo ip link add name vtep1 type vxlan id 80 dev ens33 remote 192.168.73.43 local 192.168.73.42 dstport 4789
+sudo ip link set dev vtep1 address 76:dd:fd:1b:97:ca
+sudo ip link set dev vtep1 up
+sudo ip addr add 192.168.80.3/24 broadcast 192.168.80.255 dev vtep1
+
+# setup vxlan in router 1
+sudo ip link add name vtep1 type vxlan id 80 dev ens33 remote 192.168.73.43 local 192.168.73.43 dstport 4789
+sudo ip link set dev vtep1 address 8a:e0:7a:de:bc:c2
+sudo ip link set dev vtep1 up
+sudo ip addr add 192.168.80.1/24 broadcast 192.168.80.255 dev vtep1
+
+# populate router1 FDB table
+sudo bridge fdb add be:09:cc:ef:9a:fe dev vtep1 dst 192.168.73.41 port 4789 vni 80 via ens33
+sudo bridge fdb add 76:dd:fd:1b:97:ca dev vtep1 dst 192.168.73.42 port 4789 vni 80 via ens33
+
+# populate router1 ARP table
+sudo arp -i vtep1 -s 192.168.80.2 be:09:cc:ef:9a:fe
+sudo arp -i vtep1 -s 192.168.80.3 76:dd:fd:1b:97:ca
+
+# setup PVLAN arp proxying so router can act as a router!
+sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/vtep1/arp_filter"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep1/proxy_arp_pvlan"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep1/forwarding"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+# test network 1
+# execute in server1, server2 and router1
+ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3
+
+
+##### Setup network2
+
+# connect server 3 to vxlan
+sudo ip link add name vtep2 type vxlan id 81 dev ens33 remote 192.168.73.46 local 192.168.73.44 dstport 4789
+sudo ip link set dev vtep2 address ea:07:c6:1e:71:5d
+sudo ip link set dev vtep2 up
+sudo ip addr add 192.168.81.2/24 broadcast 192.168.81.255 dev vtep2
+
+# connect server 4 to vxlan
+sudo ip link add name vtep2 type vxlan id 81 dev ens33 remote 192.168.73.46 local 192.168.73.45 dstport 4789
+sudo ip link set dev vtep2 address 9e:de:c5:56:11:a1
+sudo ip link set dev vtep2 up
+sudo ip addr add 192.168.81.3/24 broadcast 192.168.81.255 dev vtep2
+
+# setup vxlan in router 2
+sudo ip link add name vtep2 type vxlan id 81 dev ens33 remote 192.168.73.46 local 192.168.73.46 dstport 4789
+sudo ip link set dev vtep2 address 9a:b5:99:9c:f2:ea
+sudo ip link set dev vtep2 up
+sudo ip addr add 192.168.81.1/24 broadcast 192.168.81.255 dev vtep2
+
+# populate router2 FDB table
+sudo bridge fdb add ea:07:c6:1e:71:5d dev vtep2 dst 192.168.73.44 port 4789 vni 81 via ens33
+sudo bridge fdb add 9e:de:c5:56:11:a1 dev vtep2 dst 192.168.73.45 port 4789 vni 81 via ens33
+
+# populate router1 ARP table
+sudo arp -i vtep2 -s 192.168.81.2 ea:07:c6:1e:71:5d
+sudo arp -i vtep2 -s 192.168.81.3 9e:de:c5:56:11:a1
+
+# setup PVLAN arp proxying so router can act as a router!
+sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/vtep2/arp_filter"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep2/proxy_arp_pvlan"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep2/forwarding"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+# test network 1
+# execute in server4, server5 and router2
+ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3
+
+
+
+### Setup router3
+
+## connect router3 to network 1
+
+# router 3
+sudo ip link add name vtep1 type vxlan id 80 dev ens33 remote 192.168.73.43 local 192.168.73.47 dstport 4789
+sudo ip link set dev vtep1 address ca:a1:fe:ac:eb:38
+sudo ip link set dev vtep1 up
+sudo ip addr add 192.168.80.4/24 broadcast 192.168.80.255 dev vtep1
+
+# router 1
+sudo bridge fdb add ca:a1:fe:ac:eb:38 dev vtep1 dst 192.168.73.47 port 4789 vni 80 via ens33
+sudo arp -i vtep1 -s 192.168.80.4 ca:a1:fe:ac:eb:38
+
+# test connectivity throughout network 1 and router 3
+ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3 && ping -c 2 192.168.80.4
+
+## connect router3 to network 2
+sudo ip link add name vtep2 type vxlan id 81 dev ens33 remote 192.168.73.46 local 192.168.73.47 dstport 4789
+sudo ip link set dev vtep2 address 3e:6c:ac:f6:b9:3b
+sudo ip link set dev vtep2 up
+sudo ip addr add 192.168.81.4/24 broadcast 192.168.80.255 dev vtep2
+
+# router 2
+sudo bridge fdb add 3e:6c:ac:f6:b9:3b dev vtep2 dst 192.168.73.47 port 4789 vni 81 via ens33
+sudo arp -i vtep2 -s 192.168.81.4 3e:6c:ac:f6:b9:3b
+
+# test connectivity throughout network 2 and router 3
+ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3 && ping -c 2 192.168.81.4
+
+# setup ARP proxy and IP forwarding so that router3 can forward traffic between router1 and router2
+sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/vtep1/arp_filter"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep1/proxy_arp"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep1/forwarding"
+sudo bash -c "echo 0 > /proc/sys/net/ipv4/conf/vtep2/arp_filter"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep2/proxy_arp"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep2/forwarding"
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+# setup router1 routing table
+# and connect it's broadcast to router 3
+# router1
+sudo ip route add 192.168.81/24 via 192.168.80.4
+sudo bridge fdb delete 00:00:00:00:00:00 dev vtep1
+sudo bridge fdb add 00:00:00:00:00:00 dev vtep1 dst 192.168.73.47 port 4789 vni 80 via ens33
+
+# setup router2 routing table
+# and connect it's broadcast to router 3
+# router2
+sudo ip route add 192.168.80/24 via 192.168.81.4
+sudo bridge fdb delete 00:00:00:00:00:00 dev vtep2
+sudo bridge fdb add 00:00:00:00:00:00 dev vtep2 dst 192.168.73.47 port 4789 vni 81 via ens33
+
+# setup gatway inside server1 and server2
+sudo ip route add 192.168.81/24 via 192.168.80.1
+
+# setup gateway inside server3 and server4
+sudo ip route add 192.168.80/24 via 192.168.81.1
+
+# test total connectivity in all nodes
+ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3 && ping -c 2 192.168.80.4 && ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3 && ping -c 2 192.168.81.4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

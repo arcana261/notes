@@ -68,7 +68,7 @@ sudo apt-get autoremove
 sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			xz-utils openssh-server ufw mlocate \
 			uuid-runtime tcpdump man-db \
-			traceroute w3m bridge-utils
+			traceroute w3m bridge-utils iputils-arping
 			
 # configure firewall
 sudo systemctl enable ufw

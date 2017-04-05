@@ -1,0 +1,10 @@
+# install omping
+sudo apt-get install git make gcc
+
+
+cd /usr/local/src
+sudo git clone https://github.com/troglobit/omping.git
+cd omping
+sudo make
+sudo make install
+
