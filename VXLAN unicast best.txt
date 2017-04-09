@@ -102,6 +102,7 @@ sudo ip link set dev veth-server1 up
 sudo ip link set dev peer-server1 netns server1
 sudo ip netns exec server1 bash
 >>>>>>>
+export PS1="(S1) $PS1"
 sudo ip link set dev lo up
 sudo ip addr add 127.0.0.1/8 dev lo
 sudo ip link set dev peer-server1 name eth0
@@ -116,6 +117,7 @@ sudo ip link set dev veth-server2 up
 sudo ip link set dev peer-server2 netns server2
 sudo ip netns exec server2 bash
 >>>>>>>
+export PS1="(S2) $PS1"
 sudo ip link set dev lo up
 sudo ip addr add 127.0.0.1/8 dev lo
 sudo ip link set dev peer-server2 name eth0
@@ -130,6 +132,7 @@ sudo ip link set dev veth-router1 up
 sudo ip link set dev peer-router1 netns router1
 sudo ip netns exec router1 bash
 >>>>>>>
+export PS1="(R1) $PS1"
 sudo ip link set dev lo up
 sudo ip addr add 127.0.0.1/8 dev lo
 sudo ip link set dev peer-router1 name eth0
@@ -144,6 +147,7 @@ sudo ip link set dev veth-server3 up
 sudo ip link set dev peer-server3 netns server3
 sudo ip netns exec server3 bash
 >>>>>>>
+export PS1="(S3) $PS1"
 sudo ip link set dev lo up
 sudo ip addr add 127.0.0.1/8 dev lo
 sudo ip link set dev peer-server3 name eth0
@@ -158,6 +162,7 @@ sudo ip link set dev veth-server4 up
 sudo ip link set dev peer-server4 netns server4
 sudo ip netns exec server4 bash
 >>>>>>>
+export PS1="(S4) $PS1"
 sudo ip link set dev lo up
 sudo ip addr add 127.0.0.1/8 dev lo
 sudo ip link set dev peer-server4 name eth0
@@ -172,6 +177,7 @@ sudo ip link set dev veth-router2 up
 sudo ip link set dev peer-router2 netns router2
 sudo ip netns exec router2 bash
 >>>>>>>
+export PS1="(R2) $PS1"
 sudo ip link set dev lo up
 sudo ip addr add 127.0.0.1/8 dev lo
 sudo ip link set dev peer-router2 name eth0
@@ -186,6 +192,7 @@ sudo ip link set dev veth-router3 up
 sudo ip link set dev peer-router3 netns router3
 sudo ip netns exec router3 bash
 >>>>>>>
+export PS1="(R3) $PS1"
 sudo ip link set dev lo up
 sudo ip addr add 127.0.0.1/8 dev lo
 sudo ip link set dev peer-router3 name eth0
@@ -204,7 +211,6 @@ sudo ip link set dev veth-server3 master br-veth
 sudo ip link set dev veth-server4 master br-veth
 sudo ip link set dev veth-router2 master br-veth
 sudo ip link set dev veth-router3 master br-veth
-sudo ip link set dev veth-dhcp master br-veth
 
 ## setup fabric dhcp server
 sudo vim /tmp/dhcp.hosts
@@ -223,7 +229,7 @@ sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp.pi
 sudo dhclient eth0
 
 ## test connectivity in all namespaces
-ping -c 2 192.168.73.1 && ping -c 2 192.168.73.41 && ping -c 2 192.168.73.42 && ping -c 2 192.168.73.43 && ping -c 2 192.168.73.44 && ping -c 2 192.168.73.45 && ping -c 2 192.168.73.46 && ping -c 2 192.168.73.47
+ping -c 2 192.168.73.41 && ping -c 2 192.168.73.42 && ping -c 2 192.168.73.43 && ping -c 2 192.168.73.44 && ping -c 2 192.168.73.45 && ping -c 2 192.168.73.46 && ping -c 2 192.168.73.47
 
 ## setup ufw to be friendly with ip forwarding
 # enable FORWARDing in ufw firewall
@@ -391,6 +397,11 @@ sudo ip route add 192.168.80/24 via 192.168.81.1 dev vtep2
 ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3 && ping -c 2 192.168.80.4 && ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3 && ping -c 2 192.168.81.4
 
 ################ CLEANUP #################
+
+# execute in all namespaces
+exit
+
+# kill and clean all
 sudo killall -9 dnsmasq
 sudo killall -9 dhclient
 sudo ip netns delete server1

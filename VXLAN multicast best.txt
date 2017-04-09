@@ -1,10 +1,252 @@
-# install omping
-sudo apt-get install git make gcc
+## setup virtual ethernet for server1
+sudo ip netns add server1
+sudo ip link add name veth-server1 type veth peer name peer-server1
+sudo ip link set dev veth-server1 up
+sudo ip link set dev peer-server1 netns server1
+sudo ip netns exec server1 bash
+>>>>>>>
+export PS1="(S1) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-server1 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for server2
+sudo ip netns add server2
+sudo ip link add name veth-server2 type veth peer name peer-server2
+sudo ip link set dev veth-server2 up
+sudo ip link set dev peer-server2 netns server2
+sudo ip netns exec server2 bash
+>>>>>>>
+export PS1="(S2) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-server2 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for router1
+sudo ip netns add router1
+sudo ip link add name veth-router1 type veth peer name peer-router1
+sudo ip link set dev veth-router1 up
+sudo ip link set dev peer-router1 netns router1
+sudo ip netns exec router1 bash
+>>>>>>>
+export PS1="(R1) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-router1 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for server3
+sudo ip netns add server3
+sudo ip link add name veth-server3 type veth peer name peer-server3
+sudo ip link set dev veth-server3 up
+sudo ip link set dev peer-server3 netns server3
+sudo ip netns exec server3 bash
+>>>>>>>
+export PS1="(S3) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-server3 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for server4
+sudo ip netns add server4
+sudo ip link add name veth-server4 type veth peer name peer-server4
+sudo ip link set dev veth-server4 up
+sudo ip link set dev peer-server4 netns server4
+sudo ip netns exec server4 bash
+>>>>>>>
+export PS1="(S4) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-server4 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for router2
+sudo ip netns add router2
+sudo ip link add name veth-router2 type veth peer name peer-router2
+sudo ip link set dev veth-router2 up
+sudo ip link set dev peer-router2 netns router2
+sudo ip netns exec router2 bash
+>>>>>>>
+export PS1="(R2) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-router2 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for router3
+sudo ip netns add router3
+sudo ip link add name veth-router3 type veth peer name peer-router3
+sudo ip link set dev veth-router3 up
+sudo ip link set dev peer-router3 netns router3
+sudo ip netns exec router3 bash
+>>>>>>>
+export PS1="(R3) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer-router3 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## create bridge between veths
+sudo ip link add name br-veth type bridge
+sudo ip link set dev br-veth up
+sudo ip addr add 192.168.73.1/24 broadcast 192.168.73.255 dev br-veth
+sudo ip link set dev veth-server1 master br-veth
+sudo ip link set dev veth-server2 master br-veth
+sudo ip link set dev veth-router1 master br-veth
+sudo ip link set dev veth-server3 master br-veth
+sudo ip link set dev veth-server4 master br-veth
+sudo ip link set dev veth-router2 master br-veth
+sudo ip link set dev veth-router3 master br-veth
+
+## setup fabric dhcp server
+sudo rm -fv /var/run/dnsmasq.dhcp.pid
+sudo rm -fv /tmp/dhcp.lease
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp.pid --interface=br-veth --dhcp-leasefile=/tmp/dhcp.lease --dhcp-range=192.168.73.2,192.168.73.254 --log-dhcp --dhcp-sequential-ip
+
+## refresh ip address inside all namespaces
+sudo dhclient eth0
+
+## test connectivity in all namespaces
+for ip in `cat /tmp/dhcp.lease | awk '{print $3}'`; do ping -c 2 $ip; done
+
+## setup ufw to be friendly with ip forwarding
+# enable FORWARDing in ufw firewall
+sudo vim /etc/default/ufw 
+> DEFAULT_FORWARD_POLICY="ACCEPT"
+
+# enable ufw ipv4 port forwarding
+sudo vim /etc/ufw/sysctl.conf 
+> net.ipv4.ip_forward=1
+
+# re-enable firewall
+sudo ufw disable
+sudo ufw enable
 
 
-cd /usr/local/src
-sudo git clone https://github.com/troglobit/omping.git
-cd omping
-sudo make
-sudo make install
+
+
+
+
+
+
+##### Setup network1
+
+# setup vxlan in router 1
+sudo ip link add name vtep1 type vxlan id 80 dev eth0 group 239.5.5.5 dstport 4789
+sudo ip link set dev vtep1 up
+sudo ip addr add 192.168.80.1/24 broadcast 192.168.80.255 dev vtep1
+
+# setup network1 dhcp server
+sudo rm -fv /var/run/dnsmasq.network1.pid
+sudo rm -fv /tmp/network1.lease
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network1.pid --interface=vtep1 --dhcp-leasefile=/tmp/network1.lease --dhcp-range=192.168.80.2,192.168.80.254 --log-dhcp --dhcp-sequential-ip
+
+# connect server 1 to vxlan
+sudo ip link add name vtep1 type vxlan id 80 dev eth0 group 239.5.5.5 dstport 4789
+sudo ip link set dev vtep1 up
+sudo dhclient vtep1
+
+# connect server 2 to vxlan
+sudo ip link add name vtep1 type vxlan id 80 dev eth0 group 239.5.5.5 dstport 4789
+sudo ip link set dev vtep1 up
+sudo dhclient vtep1
+
+# test network 1
+# execute in server1, server2 and router1
+for ip in `cat /tmp/network1.lease | awk '{print $3}'`; do ping -c 2 $ip; done
+
+##### Setup network2
+
+# setup vxlan in router 2
+sudo ip link add name vtep2 type vxlan id 81 dev eth0 group 239.5.5.6 dstport 4789
+sudo ip link set dev vtep2 up
+sudo ip addr add 192.168.81.1/24 broadcast 192.168.81.255 dev vtep2
+
+# setup network2 dhcp server
+sudo rm -fv /var/run/dnsmasq.network2.pid
+sudo rm -fv /tmp/network2.lease
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network2.pid --interface=vtep2 --dhcp-leasefile=/tmp/network2.lease --dhcp-range=192.168.81.2,192.168.81.254 --log-dhcp --dhcp-sequential-ip
+
+# connect server 3 to vxlan
+sudo ip link add name vtep2 type vxlan id 81 dev eth0 group 239.5.5.6 dstport 4789
+sudo ip link set dev vtep2 up
+sudo dhclient vtep2
+
+# connect server 4 to vxlan
+sudo ip link add name vtep2 type vxlan id 81 dev eth0 group 239.5.5.6 dstport 4789
+sudo ip link set dev vtep2 up
+sudo dhclient vtep2
+
+# test network 2
+# execute in server4, server5 and router2
+for ip in `cat /tmp/network2.lease | awk '{print $3}'`; do ping -c 2 $ip; done
+
+### Setup router3
+
+# connect router3 to network 1
+sudo ip link add name vtep1 type vxlan id 80 dev eth0 group 239.5.5.5 dstport 4789
+sudo ip link set dev vtep1 up
+sudo dhclient vtep1
+
+# connect router3 to network 2
+sudo ip link add name vtep2 type vxlan id 81 dev eth0 group 239.5.5.6 dstport 4789
+sudo ip link set dev vtep2 up
+sudo dhclient vtep2
+
+# create bridge between vtep1 and vtep2 in router3
+sudo ip link add name br-1-2 type bridge
+sudo ip link set dev br-1-2 up
+sudo ip link set dev vtep1 master br-1-2
+sudo ip link set dev vtep2 master br-1-2
+
+# setup router1 routing policy
+sudo ip route add 192.168.81/24 dev vtep1
+
+# setup router2 routing policy
+sudo ip route add 192.168.80/24 dev vtep2
+
+# setup routing in server1, server2
+sudo ip route add 192.168.81/24 via 192.168.80.1 dev vtep1
+
+# setup routing in server3, server4
+sudo ip route add 192.168.80/24 via 192.168.81.1 dev vtep2
+
+# test total connectivity in all nodes
+ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3 && ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3
+
+
+################ CLEANUP #################
+
+# execute in all namespaces
+exit
+
+# kill and clean all
+sudo killall -9 dnsmasq
+sudo killall -9 dhclient
+sudo ip netns delete server1
+sudo ip netns delete server2
+sudo ip netns delete router1
+sudo ip netns delete server3
+sudo ip netns delete server4
+sudo ip netns delete router2
+sudo ip netns delete router3
+sudo ip link delete br-veth
+sudo ip link delete veth-server1
+sudo ip link delete veth-server2
+sudo ip link delete veth-router1
+sudo ip link delete veth-server3
+sudo ip link delete veth-server4
+sudo ip link delete veth-router2
+sudo ip link delete veth-router3
+
 
