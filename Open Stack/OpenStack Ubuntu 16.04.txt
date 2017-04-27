@@ -797,7 +797,6 @@ sudo vim /etc/glance/glance-api.conf
 connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
 
 
-
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -833,6 +832,42 @@ default_store = file
 filesystem_store_datadir = /var/lib/glance/images/
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+sudo vim /etc/glance/glance-registry.conf
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<<<<<<< Comment out or remove any other options in the [keystone_authtoken] section.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+[database]
+...
+connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+[keystone_authtoken]
+...
+auth_uri = http://controller:5000
+auth_url = http://controller:35357
+memcached_servers = controller:11211
+auth_type = password
+project_domain_name = Default
+user_domain_name = Default
+project_name = service
+username = glance
+password = GLANCE_PASS
+
+[paste_deploy]
+...
+flavor = keystone
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
 # populate glance database
 sudo bash
@@ -1225,6 +1260,7 @@ flat_networks = provider
 [ml2_type_vxlan]
 ...
 vni_ranges = 1:1000
+vxlan_group = 232.43.211.234
 
 [securitygroup]
 ...
@@ -1241,6 +1277,7 @@ physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
 enable_vxlan = True
 local_ip = OVERLAY_INTERFACE_IP_ADDRESS
 l2_population = True
+vxlan_group = 232.43.211.234
 
 [securitygroup]
 ...
@@ -1392,6 +1429,7 @@ physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
 [vxlan]
 enable_vxlan = True
 l2_population = True
+vxlan_group = 232.43.211.234
 
 [securitygroup]
 ...
@@ -1663,6 +1701,9 @@ password = CINDER_PASS
 ...
 my_ip = <MANAGEMENT IP ADDRESS>
 
+[DEFAULT]
+...
+glance_api_servers = http://controller.ostack.me:9292
 
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -1736,6 +1777,11 @@ sudo apt-get install cinder-volume
 
 # reboot system
 sudo reboot
+
+# allow iSCSI port through firewall
+sudo ufw reload
+sudo ufw allow 3260/tcp
+sudo ufw reload
 
 # create configuration
 sudo vim /etc/cinder/cinder.conf
@@ -2044,6 +2090,227 @@ sudo ufw enable
 
 # verify masquerade is set
 sudo iptables -t nat -L -v
+
+#########################################
+## >>> controller.ostack.me
+## INSTALL OPENSTACK ORCHESTRATION (heat)
+## IN CONTROLLER NODE
+#########################################
+
+# create database for heat
+sudo mysql -u root -p
+> CREATE DATABASE heat;
+> GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' IDENTIFIED BY 'HEAT_DBPASS';
+> GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'%' IDENTIFIED BY 'HEAT_DBPASS';
+> exit
+
+# load admin environment
+. ~/openstack/admin/admin-openrc
+
+# create credentials for heat in identity
+sudo openstack user create --domain default --password-prompt heat
+sudo openstack role add --project service --user heat admin
+
+# create "heat" and "heat-cfn" service entities
+sudo openstack service create --name heat --description "Orchestration" orchestration
+sudo openstack service create --name heat-cfn --description "Orchestration"  cloudformation
+
+# create orchestration service API endpoints
+sudo openstack endpoint create --region RegionOne orchestration public http://controller:8004/v1/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne orchestration internal http://controller:8004/v1/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne orchestration admin http://controller:8004/v1/%\(tenant_id\)s
+sudo openstack endpoint create --region RegionOne cloudformation public http://controller:8000/v1
+sudo openstack endpoint create --region RegionOne cloudformation internal http://controller:8000/v1
+sudo openstack endpoint create --region RegionOne cloudformation admin http://controller:8000/v1
+
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 8000/tcp
+sudo ufw allow 8004/tcp
+sudo ufw reload
+
+# create "heat" domain that contains projects and users for stacks
+sudo openstack domain create --description "Stack projects and users" heat
+
+# create the heat_domain_admin user to manage projects and users in the heat domain:
+sudo openstack user create --domain heat --password-prompt heat_domain_admin
+sudo openstack role add --domain heat --user-domain heat --user heat_domain_admin admin
+
+# create the heat_stack_owner role:
+sudo openstack role create heat_stack_owner
+sudo openstack role add --project demo --user demo heat_stack_owner
+
+# create the heat_stack_user role:
+sudo openstack role create heat_stack_user
+
+# install heat packages
+sudo apt-get install heat-api heat-api-cfn heat-engine
+
+# configure heat
+sudo vim /etc/heat/heat.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+[database]
+...
+connection = mysql+pymysql://heat:HEAT_DBPASS@controller.ostack.me/heat
+
+
+[DEFAULT]
+...
+rpc_backend = rabbit
+
+[oslo_messaging_rabbit]
+...
+rabbit_host = controller.ostack.me
+rabbit_userid = openstack
+rabbit_password = RABBIT_PASS
+
+
+
+[keystone_authtoken]
+...
+auth_uri = http://controller.ostack.me:5000
+auth_url = http://controller.ostack.me:35357
+memcached_servers = controller.ostack.me:11211
+auth_type = password
+project_domain_name = default
+user_domain_name = default
+project_name = service
+username = heat
+password = HEAT_PASS
+
+[trustee]
+...
+auth_type = password
+auth_url = http://controller.ostack.me:35357
+username = heat
+password = HEAT_PASS
+user_domain_name = default
+
+[clients_keystone]
+...
+auth_uri = http://controller.ostack.me:35357
+
+[ec2authtoken]
+...
+auth_uri = http://controller.ostack.me:5000
+
+
+[DEFAULT]
+...
+heat_metadata_server_url = http://controller.ostack.me:8000
+heat_waitcondition_server_url = http://controller.ostack.me:8000/v1/waitcondition
+
+
+[DEFAULT]
+...
+stack_domain_admin = heat_domain_admin
+stack_domain_admin_password = HEAT_DOMAIN_PASS
+stack_user_domain_name = heat
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# populate orchestration database
+su -s /bin/sh -c "heat-manage db_sync" heat
+
+# finalize heat installation in controller
+sudo systemctl restart heat-api
+sudo systemctl restart heat-api-cfn
+sudo systemctl restart heat-engine
+sudo systemctl enable heat-api
+sudo systemctl enable heat-api-cfn
+sudo systemctl enable heat-engine
+
+#########################################
+## >>> controller.ostack.me
+## VERIFY INSTALLATION
+#########################################
+
+# load admin credentials
+. ~/openstack/admin/admin-openrc
+
+# list services orchestration services
+sudo openstack orchestration service list
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>> EXAMPLE OUTPUT <<<<<<<<<<<<<<<<<<<<<<<<<<<
++----------------------+-------------+--------------------------------------+----------------------+--------+----------------------------+--------+
+| hostname             | binary      | engine_id                            | host                 | topic  | updated_at                 | status |
++----------------------+-------------+--------------------------------------+----------------------+--------+----------------------------+--------+
+| controller.ostack.me | heat-engine | f51c1ddc-b391-4c94-b2a3-e39178d9e325 | controller.ostack.me | engine | 2017-04-08T09:09:57.000000 | up     |
+| controller.ostack.me | heat-engine | 305cdccd-1e45-4436-8c40-f6da1b8eb731 | controller.ostack.me | engine | 2017-04-08T09:09:57.000000 | up     |
+| controller.ostack.me | heat-engine | 48eb7d68-8c86-41a3-be98-eec465448354 | controller.ostack.me | engine | 2017-04-08T09:09:57.000000 | up     |
+| controller.ostack.me | heat-engine | dcf3595d-ebb9-4564-9fb4-cb6820df02b6 | controller.ostack.me | engine | 2017-04-08T09:09:57.000000 | up     |
++----------------------+-------------+--------------------------------------+----------------------+--------+----------------------------+--------+
+>>>>>>>>>>>>>>>>>>>>>>>>> END EXAMPLE OUTPUT <<<<<<<<<<<<<<<<<<<<<<<<<
+
+#########################################
+## >>> controller.ostack.me
+## LAUNCH A TEST STACK
+#########################################
+
+# create a template file with following content
+vim ~/demo-template.yml
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+heat_template_version: 2015-10-15
+description: Launch a basic instance with CirrOS image using the
+             ``m1.tiny`` flavor, ``mykey`` key,  and one network.
+
+parameters:
+  NetID:
+    type: string
+    description: Network ID to use for the instance.
+
+resources:
+  server:
+    type: OS::Nova::Server
+    properties:
+      image: cirros
+      flavor: m1.nano
+      key_name: mykey
+      networks:
+      - network: { get_param: NetID }
+
+outputs:
+  instance_name:
+    description: Name of the instance.
+    value: { get_attr: [ server, name ] }
+  instance_ip:
+    description: IP address of the instance.
+    value: { get_attr: [ server, first_address ] }
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# load demo project credentials
+. ~/openstack/admin/admin-openrc
+
+# list available networks
+sudo openstack network list
+
+# set NET_ID environment variable to ID of network we are using
+export NET_ID=$(openstack network list | awk '/ selfservice / { print $2 }')
+
+# launch the stack
+sudo openstack stack create -t demo-template.yml --parameter "NetID=$NET_ID" stack
+
+# verify creation of stack
+sudo openstack stack list
+
+# show name and IP address of created instances
+sudo openstack stack output show --all stack
+
+# also alternatively we can view just servers
+sudo openstack server list
+
+# finally delete created stack
+sudo openstack stack delete --yes stack
+
+
+
+
+
 
 
 

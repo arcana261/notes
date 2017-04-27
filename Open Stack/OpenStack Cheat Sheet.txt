@@ -8,9 +8,17 @@ DEAMONS TO TURN UNIX WORKSTATION INTO A ROUTER:
 http://freecode.com/projects/mrouted
 http://freecode.com/projects/pimd
 
+OPENSTACK HEAT TEMPLATE GUIDE:
+https://docs.openstack.org/developer/heat/template_guide/index.html
+https://docs.openstack.org/developer/heat/index.html
+
 REMEMBERR: linux bridging acts funny if physical ethernet
 attached to bridge has IP address.. IP address should
 be assigned to bridge instead of ethernet!
+
+
+HEAT NOTE (ORCHESTRATION)
+You must add the heat_stack_owner role to each user that manages stacks.
 
 
 Neutron

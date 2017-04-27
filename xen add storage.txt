@@ -1,0 +1,15 @@
+ xe sr-create name-label=sdd2 shared=false device-config:device=/dev/sdt type=lvm content-type=user
+
+
+REMOVE:
+https://support.citrix.com/article/CTX131328
+
+
+
+
+#mkdir /srv/block-devices
+#xe sr-create name-label=”Block devices” name-description=”Block devices” type=udev content-type=disk device-config:location=/srv/block-devices
+#ln -s /dev/sdb /srv/block-devices/sdb
+#xe sr-scan uuid=
+#xe vdi-list sr-uuid=
+
