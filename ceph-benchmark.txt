@@ -1,0 +1,69 @@
+SIZE =		 				1			2				3		
+min(rados write bandwidth)                   532 MB/s		      284 MB/s			      208 MB/s
+max(rados write bandwidth)                   664 MB/s		      340 MB/s			      232 MB/s
+avg(rados write bandwidth)                   611.24 MB/s	      315.927 MB/s		      217.66 MB/s
+min(rados write iops)                        133                      71			      52
+max(rados write iops)                        166		      85			      58
+avg(rados write iops)                        152		      78			      54
+min(rados write latency)                     0.0216326 s	      0.0451797 s		      0.0971047 s
+max(rados write latency)                     0.331608 s		      0.650051 s		      0.740628 s
+avg(rados write latency)                     0.104551 s		      0.202537 s		      0.292918 s
+avg(rados read seq bandwidth)		     279.206 MB/s	      272.034 MB/s		      225.59 MB/s
+max(rados read seq iops)		     86			      76			      72
+min(rados read seq iops)		     64			      59			      41
+avg(rados read seq iops)		     69			      68			      56
+max(rados read seq latency)		     1.72518 s		      1.27787 s			      2.376 s
+min(rados read seq latency)		     0.0126851 s	      0.0134171 s		      0.00690721 s
+avg(rados read rnd bandwidth)		     307.492 MB/s	      699.573 MB/s		      835.271 MB/s
+avg(rados read seq latency)		     0.227845 s		      0.23389 s			      0.282136 s
+max(rados read rnd iops)		     96			      192			      219
+min(rados read rnd iops)	 	     48			      153			      199
+avg(rados read rnd iops)		     76			      174			      208
+max(rados read rnd latency)		     1.32682 s		      0.818553 s		      0.347944 s
+min(rados read rnd latency)		     0.00751158 s	      0.00819301 s		      0.00917421 s
+avg(rados read rnd latency)		     0.205178 s		      0.0890282 s		      0.0739418 s
+avg(rbd dd write bs=10M xfs 1 thread)	     537 MB/s		      302 MB/s			      225 MB/s
+avg(rbd dd write bs=10M xfs 2 thread)	     285 MB/s		      150.5 MB/s		      114.5 MB/s
+avg(rbd dd write bs=10M xfs 3 thread)	     177 MB/s		      99.7 MB/s			      76.52 MB/s
+avg(rbd dd write bs=10M xfs 4 thread)	     129 MB/s		      75.82 MB/s		      46.22 MB/s
+avg(rbd dd write bs=10M xfs 5 thread)	     109.6 MB/s		      57.28 MB/s		      30.64 MB/s
+avg(rbd dd write bs=10M xfs 6 thread)	     90.45 MB/s		      45.92 MB/s		      23.42 MB/s
+avg(rbd dd write bs=10M xfs 7 thread)	     74.17 MB/s		      40.2 MB/s			      21.94 MB/s
+avg(rbd dd write bs=10M xfs 8 thread)	     63.26 MB/s		      35.02 MB/s		      25.46 MB/s
+avg(rbd dd write bs=4K xfs 1 thread)	         		      321 MB/s			      
+avg(rbd dd write bs=4K xfs 2 thread)	         		      160 MB/s			      
+avg(rbd dd write bs=4K xfs 3 thread)	         		      97.93 MB/s			      
+avg(rbd dd write bs=4K xfs 4 thread)	         		      74.65 MB/s		
+avg(rbd dd write bs=4K xfs 5 thread)	         		      56.4 MB/s		
+avg(rbd dd write bs=4K xfs 6 thread)	         		      46.57 MB/s		
+avg(rbd dd write bs=4K xfs 7 thread)	         		      40.51 MB/s		
+avg(rbd dd write bs=4K xfs 8 thread)	         		      34.66 MB/s		
+avg(rbd dd read bs=10M xfs 1 thread)	     			      47.1 MB/s			      
+avg(rbd dd read bs=10M xfs 2 thread)	     			      55.35 MB/s
+avg(rbd dd read bs=10M xfs 3 thread)	     			      45.4 MB/s
+avg(rbd dd read bs=10M xfs 4 thread)	     			      37.82 MB/s
+avg(rbd dd read bs=10M xfs 5 thread)	     			      31.68 MB/s
+avg(rbd dd read bs=10M xfs 6 thread)	     			      28.08 MB/s
+avg(rbd dd read bs=10M xfs 7 thread)	     			      24.81 MB/s
+avg(rbd fio rnd write bs=4K)		     15.8 MB/s		      10.13 MB/s		      6.74 MB/s
+avg(rbd fio rnd write iops bs=4K)	     3939		      2593			      1724
+avg(rbd fio rnd write bs=10M)		     493 MB/s		      240.56 MB/s		      40.42 MB/s
+avg(rbd fio rnd write iops bs=10M)	     48			      24			      4
+avg(rbd self-test bandwidth)		     140 MB/s		      91.84 MB/s		      36.31 MB/s
+avg(rbd self-test iops)			     35845.02		      23511.33			      9295.16
+avg(cephfs dd write bs=10M 1 thread)				      295 MB/s
+avg(cephfs dd write bs=10M 2 thread)				      117.5 MB/s
+avg(cephfs dd write bs=10M 3 thread)				      72.67 MB/s
+avg(cephfs dd write bs=10M 4 thread)				      61 MB/s
+avg(cephfs dd write bs=10M 5 thread)				      49.74 MB/s
+avg(cephfs dd write bs=10M 6 thread)				      41.88 MB/s
+avg(cephfs dd write bs=10M 7 thread)				      36.27 MB/s
+avg(cephfs dd write bs=10M 8 thread)				      31.59 MB/s
+avg(cephfs dd write bs=4K 1 thread)				      79.4 MB/s
+avg(cephfs dd write bs=4K 2 thread)				      40.1 MB/s
+
+
+
+dd count for each thread [bs = 10M]: (size=1,count=1000, size=2,count=500, size=3,count=250)
+dd count for each thread [bs = 4K]: (size=1,count=2500000, size=2,count=1250000, size=3,count=625000)
+
