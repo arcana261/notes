@@ -1,0 +1,56 @@
+apt-get install open-iscsi
+systemctl restart iscsid open-iscsi
+systemctl status -l iscsid
+systemctl enable iscsid open-iscsi
+iscsiadm -m discovery -t sendtargets -p 192.168.5.226
+
+=======================================================
+====== No AUTH =====
+iscsiadm -m node -T iqn.2017-02.iscsi.ertebat.kaveh:target00 \
+	-p 192.168.5.226 -o update \
+	--name node.session.auth.authmethod --value=None
+
+
+====== CHAP =========
+iscsiadm -m node -T iqn.2017-02.iscsi.ertebat.kaveh:target00 \
+	-p 192.168.5.226 -o update \
+	--name node.session.auth.authmethod --value=CHAP
+iscsiadm -m node -T iqn.2017-02.iscsi.ertebat.kaveh:target00 \
+	-p 192.168.5.226 -o update \
+	--name node.session.auth.username --value=user
+iscsiadm -m node -T iqn.2017-02.iscsi.ertebat.kaveh:target00 \
+	-p 192.168.5.226 -o update \
+	--name node.session.auth.password --value=pass
+=====================================================
+
+=======================================================
+===== AUTOMATIC STARTUP =======
+iscsiadm -m node -T iqn.2017-02.iscsi.ertebat.kaveh:target00 \
+	-p 192.168.5.226 -o update \
+	--name node.startup --value=automatic
+====== MANUAL STARTUP ==========
+iscsiadm -m node -T iqn.2017-02.iscsi.ertebat.kaveh:target00 \
+	-p 192.168.5.226 -o update \
+	--name node.startup --value=manual
+=======================================================
+
+iscsiadm -m node -o show
+
+iscsiadm -m node -T iqn.2017-02.iscsi.ertebat.kaveh:target00 \
+	-p 192.168.5.226 --login
+
+iscsiadm -m session -o show
+iscsiadm -m session -o show -P 3
+
+
+
+===================== TO DELETE =======================
+
+iscsiadm -m node -p 192.168.5.226 -u
+iscsiadm -m node -p 192.168.5.226 -o delete
+
+
+
+
+
+

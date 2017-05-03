@@ -1,0 +1,48 @@
+wget http://mikejung.biz/uploads/8-07-14_MegaCLI.zip
+unzip ..........
+
+
+
+
+
+
+view raid info:
+/opt/MegaRAID/MegaCli/MegaCli64 -LDInfo -Lall -aAll
+/opt/MegaRAID/MegaCli/MegaCli64 -AdpAllInfo -a0
+
+
+
+
+
+
+configure forced write-back cache:
+/opt/MegaRAID/MegaCli/MegaCli64 -LDSetProp -ForcedWB -Immediate -Lall -aAll
+
+
+
+
+
+configure normal write-back cache:
+/opt/MegaRAID/MegaCli/MegaCli64 -LDSetProp -WB -Immediate -Lall -aAll
+
+
+
+
+
+
+
+
+
+
+More INFO:
+https://wiki.mikejung.biz/LSI
+
+
+
+
+
+
+
+
+
+
