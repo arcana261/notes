@@ -1,0 +1,8 @@
+nano -w /etc/lvm/lvm.conf
+
+
+> filter = [ "a|.*/|" ]
+> global_filter = [ "a|.*/|" ]
+> types = [ "fd", 64, "rbd", 64, "nvme", 64, "mtip32xx", 64 ]
+
+

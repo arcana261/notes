@@ -1,0 +1,3 @@
+xe host-list
+xe sr-create content-type=user device-config:device=/dev/sda host-uuid=<host-uuid> name-label="Label" shared=false type=lvm
+
