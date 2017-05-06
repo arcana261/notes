@@ -1,0 +1,9 @@
+--- > allow iperf port through xen server firewall
+
+nano -w /etc/sysconfig/iptables
+
+-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 5001 -j ACCEPT
+
+REBOOT XEN SERVER
+
+

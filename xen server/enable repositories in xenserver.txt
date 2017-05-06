@@ -1,0 +1,28 @@
+IN TARGET XEN SERVER MACHINE
+ENABLE SOME YUM REPOSITORIES
+[base], [extras], [centosplus]
+
+nano -w /etc/yum.repos.d/CentOS-Base.repo
+
+change #baseurl lines of the repo's you want:
+1) uncomment baseurl line (remove #)
+2) replace $releasever with 7.2.1511
+
+enable repo's you want:
+1) change enabled=0 to enabled=1
+
+
+
+INSTALL EPEL REPOSITORIES
+
+yum install epel-release
+
+
+--- > allow iperf port through xen server firewall
+
+nano -w /etc/sysconfig/iptables
+
+-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 5001 -j ACCEPT
+
+REBOOT XEN SERVER
+

@@ -1,0 +1,5 @@
+
+xe sr-probe type=lvmoiscsi device-config:target=127.0.0.1
+xe sr-probe type=lvmoiscsi device-config:target=127.0.0.1 device-config:targetIQN=iqn.2017-05.xenertebat.iscsi.kaveh:storage.target00
+
+xe sr-create name-label="Local Ceph iSCSI" type=lvmoiscsi content-type=user device-config:target=127.0.0.1 device-config:port=3260 device-config:targetIQN=iqn.2017-05.xenertebat.iscsi.kaveh:storage.target00 device-config:SCSIid=36001405269e88fc0de74d05bc68ff354

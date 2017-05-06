@@ -1,0 +1,76 @@
+nano -w /etc/network/interfaces
+
+auto eth1
+iface eth1 inet static
+        address 192.168.5.226
+        netmask 255.255.255.0
+        gateway 192.168.5.247
+        dns-nameservers 4.2.2.4 8.8.8.8
+
+auto eth0
+iface eth0 inet static
+        address 10.0.2.100
+        netmask 255.255.255.0
+        network 10.0.2.0
+        post-up ip route add 192.168.5.220 via 10.0.2.200 dev eth0
+        post-up ip route add 192.168.5.222 via 10.0.2.1 dev eth0
+        post-up ip route add 192.168.5.223 via 10.0.2.2 dev eth0
+        post-up ip route add 192.168.5.224 via 10.0.2.3 dev eth0
+        post-up ip route add 192.168.5.225 via 10.0.2.4 dev eth0
+
+
+CREATE A 1 TB rbd
+
+rbd create --size 1000000 iscsi
+rbd map iscsi
+mkfs.xfs /dev/rbd0
+mkdir -p /iscsi
+
+sudo update-rc.d rbdmap defaults
+nano -w /etc/ceph/rbdmap
+
+     rbd/iscsi               id=admin,keyring=/etc/ceph/ceph.client.admin.keyring
+
+nano /etc/fstab-->/dev/rbd/rbd/iscsi /iscsi xfs defaults,noatime,_netdev 0 0
+
+
+Reeebooooot!
+
+
+
+
+apt-get update
+apt-get install iscsitarget iscsitarget-dkms attr
+reboot
+
+
+CREATE DISK IMAGE FOR ISCSI DAEMON
+FIND DISK FREE PART USING "df -m"
+
+dd if=/dev/zero of=/iscsi/disk00.img count=0 bs=1 seek=998000M
+
+
+nano -w /etc/iet/ietd.conf
+
+# add to the end
+# naming rule : [ iqn.yaer-month.domain:any name ]
+Target iqn.2017-02.iscsi.ertebat.kaveh:target00
+    # provided devicce as a iSCSI target
+    Lun 0 Path=/iscsi/disk00.img,Type=fileio
+    # iSCSI Initiator's IP address you allow to connect
+    # in this case we input Xen Server (Ertebat) IP Address
+    initiator-address 192.168.5.219
+    # authentication info ( set anyone you like for "username", "password" )
+    # incominguser admin admin
+
+
+nano -w /etc/default/iscsitarget
+
+ISCSITARGET_ENABLE=true
+
+
+systemctl enable iscsitarget.service
+systemctl restart iscsitarget.service
+systemctl status iscsitarget.service
+
+

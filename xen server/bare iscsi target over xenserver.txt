@@ -1,0 +1,113 @@
+GUIDE:
+http://blog.mit.bme.hu/meszaros/en/unix/ceph-rbd-client
+
+
+
+yum install http://download.ceph.com/rpm-testing/rhel7/x86_64/kmod-rbd-3.10-0.1.20140702gitdc9ac62.el7.x86_64.rpm http://download.ceph.com/rpm-testing/rhel7/x86_64/kmod-libceph-3.10-0.1.20140702gitdc9ac62.el7.x86_64.rpm
+
+modprobe rbd
+
+lsmod | grep rbd
+
+CREATE A NEW RBD IMAGE USING ADMIN NODE:
+           rbd create --size 1000000 iscsi-xen-ertebat
+          rbd map iscsi-xen-ertebat
+          mkfs.xfs /dev/rbd0
+          rbd unmap iscsi-xen-ertebat
+GET CEPH KEY USING ADMIN NODE:
+           ceph auth get-key client.admin
+
+
+AGAIN BACK ON XEN SERVER:
+
+/bin/echo {ceph_monitor_ip} name={ceph_admin},secret={ceph_key} {ceph_pool} {ceph_image} >/sys/bus/rbd/add
+
+/bin/echo 192.168.5.220 name=admin,secret=AQDYegVZp2W/NBAAXRnNEjNbBO/3RZQBPg5Bhw== rbd iscsi-xen-ertebat >/sys/bus/rbd/add
+
+CHECK
+lsblk | grep rbd
+
+
+BACK IN XEN SERVER:
+mount /dev/rbd0 /mnt
+df -m
+umount /mnt
+
+UNMAP AND FORGET IT!
+
+echo "0" >/sys/bus/rbd/remove
+
+CREATE FOLDER:
+mkdir -p /iscsi
+
+
+SETUP SYSTEMD SERVICE:
+nano -w /etc/systemd/system/rbd-rbd-iscsi-xen-ertebat.service
+
+[Unit]
+Description=RADOS block device mapping for "rbd"/"iscsi-xen-ertebat"
+Conflicts=shutdown.target
+Wants=network-online.target
+# Remove this if you don't have Networkmanager
+After=NetworkManager-wait-online.service
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/modprobe rbd
+ExecStart=/bin/sh -c "/bin/echo 192.168.5.220 name=admin,secret=AQDYegVZp2W/NBAAXRnNEjNbBO/3RZQBPg5Bhw== rbd iscsi-xen-ertebat >/sys/bus/rbd/add"
+                    ExecStart=/bin/sh -c "mount /dev/rbd0 /iscsi"
+                    ExecStop=/bin/sh -c "umount /iscsi"
+ExecStop=/bin/sh -c "bin/echo 0 >/sys/bus/rbd/remove"
+TimeoutSec=0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+WantedBy=remote-fs-pre.target
+
+
+START THE SERVICE:
+
+systemctl daemon-reload
+systemctl start rbd-rbd-iscsi-xen-ertebat.service
+
+CHECK SERVICE STATUS:
+
+systemctl -l status rbd-rbd-iscsi-xen-ertebat.service
+
+IF OK ENABLE IT:
+systemctl enable rbd-rbd-iscsi-xen-ertebat.service
+
+
+SETUP ISCSI TARGET IN XEN SERVER:
+yum -y install targetcli
+
+FIND REMAINING SIZE OF DISK USING "df -m" ALLOW SOME SPACE TO BE LEFT BEHIND FOR FILESYSTEM
+E.G. 996000
+
+targetcli
+> cd backstores/fileio
+> create disk01 /iscsi/disk01.img 996000M
+> cd /iscsi
+> create iqn.2017-05.xenertebat.iscsi.kaveh:storage.target00
+> cd iqn.2017-05.xenertebat.iscsi.kaveh:storage.target00/tpg1/luns
+> create /backstores/fileio/disk01
+> cd ../acls
+> create iqn.2017-05.xenertebat.iscsi.kaveh:www.kaveh.org
+> cd iqn.2017-05.xenertebat.iscsi.kaveh:www.kaveh.org
+> set auth userid=admin
+> set auth password=123
+> exit
+
+
+TO DISABLE AUTHENTICATION:
+> cd /iscsi/iqn.2017-05.xenertebat.iscsi.kaveh:storage.target00/tpg1/
+> set attribute authentication=0
+> set attribute generate_node_acls=1
+
+
+systemctl enable target
+
+CHECK IF TARGET IS UP AND RUNNING:
+ss -napt | grep 3260
+
