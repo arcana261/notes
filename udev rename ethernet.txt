@@ -1,0 +1,8 @@
+udevadm info -a -p /sys/class/net/wlan0
+
+nano -w /etc/udev/rules.d/70-persistent-net.rules
+
+udevadm control --reload-rules && udevadm trigger
+
+cat /var/log/udev
+
