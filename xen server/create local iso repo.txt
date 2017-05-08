@@ -1,0 +1,2 @@
+ xe sr-create name-label="ISORep" type=iso device-config:location=/var/opt/xen/iso_import/ device-config:legacy_mode=true content-type=iso
+
