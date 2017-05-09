@@ -67,3 +67,33 @@ avg(cephfs dd write bs=4K 2 thread)				      40.1 MB/s
 dd count for each thread [bs = 10M]: (size=1,count=1000, size=2,count=500, size=3,count=250)
 dd count for each thread [bs = 4K]: (size=1,count=2500000, size=2,count=1250000, size=3,count=625000)
 
+
+
+==========================================================
+fio write 4k:
+==========================================================
+
+[global]
+ioengine=rbd
+clientname=admin
+pool=rbd
+rbdname=test
+rw=randwrite
+bs=4k
+[rbd_iodepth32]
+iodepth=32
+
+==========================================================
+fio write 10m:
+==========================================================
+
+[global]
+ioengine=rbd
+clientname=admin
+pool=rbd
+rbdname=test
+rw=randwrite
+bs=10m
+[rbd_iodepth32]
+iodepth=32
+
