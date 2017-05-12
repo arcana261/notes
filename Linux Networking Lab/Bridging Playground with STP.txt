@@ -1,0 +1,263 @@
+                                    -------------                                ----------
+(Server1)[peer1] ---- (veth1) ----- |    br0    | ---- (veth5) ---- (peer5) ---- |        |
+(Server2)[peer2] ---- (veth2) ----- |           |                                |        |
+                                    -------------                                |        |
+                                          |                                      |  br2   |
+                                          |                                      |        |
+                                       (veth7)                                   |        |
+                                          |                                      |        |
+                                          |                                      |        |
+                                       (peer7)                                   |        |
+                                          |                                      |        |
+                                          |                                      |        |
+                                    -------------                                |        |
+(Server3)[peer3] ---- (veth3) ----- |    br1    | ---- (veth6) ---- (peer6) ---- |        |
+(Server4)[peer4] ---- (veth4) ----- |           |                                |        |
+                                    -------------                                ----------
+
+
+
+# update system
+sudo apt-get update
+
+# ensure no dead package
+sudo apt-get autoremove
+
+# install some tools
+sudo apt-get install vim nano screen htop psmisc dnsutils wget \
+			xz-utils openssh-server ufw mlocate \
+			uuid-runtime tcpdump man-db \
+			traceroute w3m bridge-utils iputils-arping \
+			dnsmasq iperf
+			
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+# allow vxlan through ufw
+sudo ufw reload
+sudo ufw allow 4789/udp
+sudo ufw reload
+
+# allow dhcp through ufw
+sudo ufw reload
+sudo ufw allow 67/udp
+sudo ufw allow 68/udp
+sudo ufw reload
+
+# allow dns through ufw
+sudo ufw reload
+sudo ufw allow 53/udp
+sudo ufw allow 53/tcp
+sudo ufw reload
+
+
+
+
+
+
+
+## setup virtual ethernet for server1
+sudo ip netns add server1
+sudo ip link add name veth1 type veth peer name peer1
+sudo ip link set dev veth1 up
+sudo ip link set dev peer1 netns server1
+sudo ip netns exec server1 bash
+>>>>>>>
+export PS1="(S1) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer1 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for server2
+sudo ip netns add server2
+sudo ip link add name veth2 type veth peer name peer2
+sudo ip link set dev veth2 up
+sudo ip link set dev peer2 netns server2
+sudo ip netns exec server2 bash
+>>>>>>>
+export PS1="(S2) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer2 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## setup virtual ethernet for server3
+sudo ip netns add server3
+sudo ip link add name veth3 type veth peer name peer3
+sudo ip link set dev veth3 up
+sudo ip link set dev peer3 netns server3
+sudo ip netns exec server3 bash
+>>>>>>>
+export PS1="(S3) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer3 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+
+## setup virtual ethernet for server4
+sudo ip netns add server4
+sudo ip link add name veth4 type veth peer name peer4
+sudo ip link set dev veth4 up
+sudo ip link set dev peer4 netns server4
+sudo ip netns exec server4 bash
+>>>>>>>
+export PS1="(S4) $PS1"
+sudo ip link set dev lo up
+sudo ip addr add 127.0.0.1/8 dev lo
+sudo ip link set dev peer4 name eth0
+sudo ip link set dev eth0 up
+<<<<<<<
+
+## create veths for connecting bridges together
+sudo ip link add name veth5 type veth peer name peer5
+sudo ip link set dev veth5 up
+sudo ip link set dev peer5 up
+sudo ip link add name veth6 type veth peer name peer6
+sudo ip link set dev veth6 up
+sudo ip link set dev peer6 up
+sudo ip link add name veth7 type veth peer name peer7
+sudo ip link set dev veth7 up
+sudo ip link set dev peer7 up
+
+## create bridges
+sudo ip link add name br0 type bridge
+sudo ip link set dev br0 up
+sudo brctl stp br0 on
+sudo ip link set dev veth1 master br0
+sudo ip link set dev veth2 master br0
+sudo ip link set dev veth5 master br0
+sudo ip link set dev veth7 master br0
+
+sudo ip link add name br1 type bridge
+sudo ip link set dev br1 up
+sudo brctl stp br1 on
+sudo ip link set dev veth3 master br1
+sudo ip link set dev veth4 master br1
+sudo ip link set dev veth6 master br1
+sudo ip link set dev peer7 master br1
+
+sudo ip link add name br2 type bridge
+sudo ip link set dev br2 up
+sudo brctl stp br2 on
+sudo ip link set dev peer5 master br2
+sudo ip link set dev peer6 master br2
+
+## view bridge configurations
+sudo brctl show
+
+## view stp status in bridges
+sudo brctl showstp br0
+sudo brctl showstp br1
+sudo brctl showstp br2
+
+#### HINT: IF ROOT IS NOT FOUND AND THERE IS LOOOP
+#### TRY DISABLING/RE-ENABLING BR2
+
+## give IP address to br0 so it can act as gateway
+sudo ip addr flush dev br0
+sudo ip addr add 192.168.200.1/24 broadcast 192.168.200.255 dev br0
+
+## setup DHCP in server1
+sudo ip netns exec server1 ip addr flush dev eth0
+sudo ip netns exec server1 ip addr add 192.168.200.2/24 broadcast 192.168.200.255 dev eth0
+sudo rm -fv /var/run/dnsmasq.network1.pid
+sudo rm -fv /tmp/network1.lease
+sudo ip netns exec server1 dnsmasq --port=53 --listen-address=192.168.200.2 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network1.pid --interface=eth0 --dhcp-leasefile=/tmp/network1.lease --dhcp-range=192.168.200.3,192.168.200.254 --dhcp-option=option:router,192.168.200.1 --server=4.2.2.4 --server=8.8.8.8 --dhcp-sequential-ip --log-dhcp
+
+## configure ip address for server 2
+sudo dhclient eth0&
+
+## configure ip address for server 3
+sudo dhclient eth0&
+
+## configure ip address for server 4
+sudo dhclient eth0&
+
+## test connectivity in all servers
+for ip in `cat /tmp/network1.lease | awk '{print $3}'`; do ping -c 2 $ip; done
+
+## setup masquerading for range 192.168.200/24 in UFW
+# enable FORWARDing in ufw firewall
+sudo vim /etc/default/ufw 
+> DEFAULT_FORWARD_POLICY="ACCEPT"
+
+# enable ufw ipv4 port forwarding
+sudo vim /etc/ufw/sysctl.conf 
+> net.ipv4.ip_forward=1
+
+# setup NAT in ufw
+sudo vim /etc/ufw/before.rules
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # NAT table rules
+> *nat
+> :POSTROUTING ACCEPT [0:0]
+>
+> # Forward traffic through eth0 - Change to match you out-interface
+> -A POSTROUTING -s 192.168.74.0/24 -o <ETHERNET> -j MASQUERADE
+>
+> # don't delete the 'COMMIT' line or these nat table rules won't
+> # be processed
+> COMMIT
+
+# force restart ufw
+sudo ufw disable
+sudo ufw enable
+
+# verify masquerade is set
+sudo iptables -t nat -L -v
+
+################ CLEANUP #################
+
+# execute in all namespaces
+exit
+
+# kill and clean all
+sudo killall -9 dnsmasq
+sudo killall -9 dhclient
+sudo ip netns delete server1
+sudo ip netns delete server2
+sudo ip netns delete server3
+sudo ip netns delete server4
+sudo ip link delete br2
+sudo ip link delete br1
+sudo ip link delete br0
+sudo ip link delete veth7
+sudo ip link delete veth6
+sudo ip link delete veth5
+sudo ip link delete veth4
+sudo ip link delete veth3
+sudo ip link delete veth2
+sudo ip link delete veth1
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,52 @@
+# debug DHCP through tcpdump
+tcpdump -i veth5 -v -e -n port 67 or port 68
+
+# view bridges
+brctl show
+
+# view FDB (forwarding database) on bridge
+bridge fdb show
+
+# view MDB (multicast database) on bridge
+bridge mdb show
+
+# turn on STP
+sudo brctl stp <BRIDGE> on
+
+# view stp details on bridge
+sudo brctl showstp <BRIDGE>
+
+############################ NAT IN UFW #################################
+## setup masquerading for range 192.168.200/24 in UFW
+# enable FORWARDing in ufw firewall
+sudo vim /etc/default/ufw 
+> DEFAULT_FORWARD_POLICY="ACCEPT"
+
+# enable ufw ipv4 port forwarding
+sudo vim /etc/ufw/sysctl.conf 
+> net.ipv4.ip_forward=1
+
+# setup NAT in ufw
+sudo vim /etc/ufw/before.rules
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # add before *filter rules! top of file
+> # NAT table rules
+> *nat
+> :POSTROUTING ACCEPT [0:0]
+>
+> # Forward traffic through eth0 - Change to match you out-interface
+> -A POSTROUTING -s 192.168.74.0/24 -o <ETHERNET> -j MASQUERADE
+>
+> # don't delete the 'COMMIT' line or these nat table rules won't
+> # be processed
+> COMMIT
+
+# force restart ufw
+sudo ufw disable
+sudo ufw enable
+
+# verify masquerade is set
+sudo iptables -t nat -L -v
+#############################################################################

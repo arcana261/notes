@@ -1,0 +1,223 @@
+Linux Guest Configuration:
+	Disk -> VirtIO
+	Network -> VirtIO
+	CDROM -> SCSI
+	Video -> QXL
+
+Windows Guest Configuration:
+	Disk -> IDE
+	CDROM -> IDE
+	Network -> e1000
+	Video -> QXL
+=================================================================
+
+
+# install cpu-checker, we check if we can safely use kvm
+sudo apt-get install cpu-checker
+
+# check if kvm can be used
+kvm-ok
+
+# install libvirt and qemu
+sudo apt-get install qemu-kvm libvirt-bin
+
+# add users to groups
+sudo adduser arcana libvirtd
+sudo adduser arcana libvirt
+sudo adduser root libvirtd
+sudo adduser root libvirt
+
+# reboot
+reboot
+
+# install more libvirt tools
+sudo apt install virtinst virt-viewer virt-manager
+
+# change default networking configuration to allow static ip ranges
+sudo vim /var/lib/libvirt/dnsmasq/default.conf
+> dhcp-range=192.168.122.100,192.168.122.254
+
+# restart services
+sudo systemctl restart libvirtd.service libvirt-guests.service libvirt-bin.service
+
+=====================================================================
+
+# view running instances
+virsh list
+
+# view all configuration of instance
+virsh dumpxml <NAME>
+
+# list qemu instances
+sudo ps aux | grep qemu
+
+# allow for shared cloning
+Base Machine -> Details -> Disk -> Shareable
+
+###### assign static ip address
+virsh net-update default add ip-dhcp-host \
+          "<host mac='52:54:00:00:00:01' name='bob' ip='192.168.122.45' />" \
+          --live --config
+
+################ ENABLE SHARED FOLDER #############################
+
+# first set user/group of qemu instances to local user
+sudo vim /etc/libvirt/qemu.conf
+> user = "arcana"
+> group = "arcana"
+
+# now restart libvirt
+sudo systemctl restart libvirtd.service libvirt-guests.service libvirt-bin.service
+
+### create a new filesystem device in virt-manager
+# Driver -> Default
+# Mode -> Mapped
+# Source Path -> /
+# Target path -> share
+
+## MAP IN GUEST
+sudo mkdir -p /share
+sudo mount -t 9p -o trans=virtio,version=9p2000.L,rw share /share
+## MAP IN GUEST USING FSTAB
+
+# first create directory
+sudo mkdir -p /share
+
+# add modules to initramfs
+sudo vi /etc/initramfs-tools/modules
+> 9p
+> 9pnet
+> 9pnet_virtio
+
+# regenerate initramfs
+sudo update-initramfs -u
+
+share	/share	9p	trans=virtio,version=9p2000.L,rw	0	0
+########################################################################
+
+########################################################################
+########################################################################
+########################################################################
+################ CREATE SAMBA SERVER #############################
+
+## clone a base machine (ubuntu 16.04 xenial) to use it as server
+
+# assign static ip address
+virsh net-update default add ip-dhcp-host \
+          "<host mac='52:54:00:d8:d6:22' name='samba-server' ip='192.168.122.2' />" \
+          --live --config
+
+####### GO TO GUEST CONSOLE
+
+# first update system
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+
+# reboot
+sudo reboot
+
+# install some tools
+sudo apt-get autoremove
+sudo apt-get install vim nano screen htop psmisc dnsutils wget \
+			xz-utils openssh-server ufw mlocate \
+			uuid-runtime tcpdump man-db \
+			traceroute w3m bridge-utils iputils-arping \
+			dnsmasq git
+
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+######## SSH INTO SAMBA SERVER!
+
+# set default editor to vim
+sudo update-alternatives --config editor
+
+# set hostname
+sudo hostnamectl set-hostname samba-server
+sudo vim /etc/hosts
+> 127.0.0.1 samba-server
+
+# reboot
+sudo reboot
+
+######### Install docker
+
+sudo apt-get install apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+sudo bash -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' | tee /etc/apt/sources.list.d/docker.list"
+sudo apt-get update
+# check if docker-engine is in apt cache
+sudo apt-cache policy docker-engine
+# install prerequisities
+sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+# reboot server
+sudo reboot
+# instal docker-engine
+sudo apt-get install docker-engine
+# install privoxy to help docker pull images over sanctions
+sudo apt-get install privoxy
+sudo systemctl enable privoxy
+vim /etc/privoxy/config
+<<<<<<<<<<<<<<<<<<<<
+listen-address	127.0.0.1:8085
+forward-socks5	/		127.0.0.1:8084	.
+>>>>>>>>>>>>>>>>>>>>
+systemctl restart privoxy
+# enable proxy in docker
+mkdir -p /etc/systemd/system/docker.service.d
+vim /etc/systemd/system/docker.service.d/http-proxy.conf
+...
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8085/"
+...
+systemctl daemon-reload
+systemctl enable docker
+systemctl restart docker
+# check if proxy is present
+docker info
+# add user to docker group
+gpasswd -a arcana docker
+# reboot
+reboot
+# you should see under key Http Proxy
+# fireup a SOCKS5 proxy server on localhost:8084
+ssh -D 8084 .....
+# test docker
+docker pull ubuntu:xenial
+docker run --rm -it ubuntu:xenial
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+exit
+<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# install python pip since docker-compose
+# is available to install through pip
+apt-get install python-pip
+# upgrade it
+pip install --upgrade pip
+# install docker-compose
+pip install docker-compose
+# check docker compose
+docker-compose version
+
+docker network create -d bridge ceph.me
+
+########################################################################
+########################################################################
+########################################################################
+

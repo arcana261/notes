@@ -14,7 +14,7 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			xz-utils openssh-server ufw mlocate \
 			uuid-runtime tcpdump man-db \
 			traceroute w3m bridge-utils \
-			default-jdk git
+			default-jdk git rar unrar
 
 # use nvidia driver and proprietary intel drivers
 Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver
