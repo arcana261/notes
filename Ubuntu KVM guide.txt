@@ -1,14 +1,34 @@
 Linux Guest Configuration:
 	Disk -> VirtIO
-	Network -> VirtIO
+	RAM -> 512 MB
+	Network -> VirtIO (20 GB)
 	CDROM -> SCSI
 	Video -> QXL
+	Boot Options ->
+			1. VirtIO Disk
+			2. SCSI CDROM
 
 Windows Guest Configuration:
-	Disk -> IDE
+	RAM -> 3072 MB
+	Disk -> VirtIO (40 GB)
 	CDROM -> IDE
-	Network -> e1000
+	CDROM 2 -> IDE -> VirtIO Drivers ISO
+	Network -> VirtIO
 	Video -> QXL
+	Boot Options ->
+			1. VirtIO Disk
+			2. SCSI CDROM
+
+WINDOWS: DO NOT FORGET TO ADD "virtio" DRIVERS ISO DOWNLOADABLE FROM HERE:
+WINDOWS: LOAD "viostor" DRIVERS! FOR INSTALLATION!
+https://fedoraproject.org/wiki/Windows_Virtio_Drivers
+
+WINDOWS: AFTER INSTALLATION, INSTALL QXL GRAPHICS DRIVER FROM HERE:
+http://people.redhat.com/~vrozenfe/qxlwddm/
+
+WINDOWS: EDIT "video" RAM SIZE USING "virsh edit <VMNAME>" AND INCREASE IT TO
+4 TIMES LARGER THAN VALUES:
+<model type='qxl' ram='262144' vram='262144' vgamem='65536' heads='1'/>
 =================================================================
 
 
@@ -34,16 +54,30 @@ reboot
 sudo apt install virtinst virt-viewer virt-manager
 
 # change default networking configuration to allow static ip ranges
-sudo vim /var/lib/libvirt/dnsmasq/default.conf
-> dhcp-range=192.168.122.100,192.168.122.254
+virsh net-edit default
+> <range start='192.168.122.100' end='192.168.122.254'/>
 
-# restart services
-sudo systemctl restart libvirtd.service libvirt-guests.service libvirt-bin.service
+# restart network
+virsh net-destroy default
+virsh net-start default
+
+sudo apt-get install open-vm-tools
+
+cp /usr/lib/vmware/isoimages/windows.iso ~/KVM\ Virtual\ Machines/windows-vmware.iso
+
+
+http://people.redhat.com/~vrozenfe/qxlwddm/
+https://fedoraproject.org/wiki/Windows_Virtio_Drivers
+
+## ENABLE SHARED FOLDER SUPPORT (view guide below)
 
 =====================================================================
 
 # view running instances
 virsh list
+
+# view all instances
+virsh list --all
 
 # view all configuration of instance
 virsh dumpxml <NAME>
@@ -54,10 +88,22 @@ sudo ps aux | grep qemu
 # allow for shared cloning
 Base Machine -> Details -> Disk -> Shareable
 
+# edit network
+virsh net-edit default
+
+# restart network
+virsh net-destroy default
+virsh net-start default
+
 ###### assign static ip address
 virsh net-update default add ip-dhcp-host \
           "<host mac='52:54:00:00:00:01' name='bob' ip='192.168.122.45' />" \
           --live --config
+
+###### remove static ip address
+virsh net-update default delete ip-dhcp-host \
+      '<host mac="52:54:00:6f:78:f3" ip="192.168.122.222"/>' \
+      --live --config --parent-index
 
 ################ ENABLE SHARED FOLDER #############################
 
@@ -78,8 +124,9 @@ sudo systemctl restart libvirtd.service libvirt-guests.service libvirt-bin.servi
 ## MAP IN GUEST
 sudo mkdir -p /share
 sudo mount -t 9p -o trans=virtio,version=9p2000.L,rw share /share
-## MAP IN GUEST USING FSTAB
+##
 
+## MAP IN GUEST USING FSTAB
 # first create directory
 sudo mkdir -p /share
 
@@ -92,7 +139,9 @@ sudo vi /etc/initramfs-tools/modules
 # regenerate initramfs
 sudo update-initramfs -u
 
-share	/share	9p	trans=virtio,version=9p2000.L,rw	0	0
+# add entry to fstab
+sudo vim /etc/fstab
+> share	/share	9p	trans=virtio,version=9p2000.L,rw	0	0
 ########################################################################
 
 ########################################################################
@@ -100,11 +149,26 @@ share	/share	9p	trans=virtio,version=9p2000.L,rw	0	0
 ########################################################################
 ################ CREATE SAMBA SERVER #############################
 
-## clone a base machine (ubuntu 16.04 xenial) to use it as server
+## clone a machine (ubuntu 16.04 xenial)
+Linux Guest Configuration:
+	Name -> samba-server
+	Memory -> 512 MB
+	Disk -> VirtIO (20 GB)
+	Network -> VirtIO
+	CDROM -> SCSI
+	Video -> QXL
+	Boot Options ->
+			1. VirtIO Disk
+			2. SCSI CDROM
+	Add Hardware -> Filesystem ->
+					Driver -> Default
+					Mode -> Mapped
+					Source Path -> /
+					Target path -> share
 
 # assign static ip address
 virsh net-update default add ip-dhcp-host \
-          "<host mac='52:54:00:d8:d6:22' name='samba-server' ip='192.168.122.2' />" \
+          "<host mac='52:54:00:4b:56:5d' name='samba-server' ip='192.168.122.2' />" \
           --live --config
 
 ####### GO TO GUEST CONSOLE
@@ -123,7 +187,7 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			xz-utils openssh-server ufw mlocate \
 			uuid-runtime tcpdump man-db \
 			traceroute w3m bridge-utils iputils-arping \
-			dnsmasq git
+			dnsmasq git rar unrarsys
 
 # configure firewall
 sudo systemctl enable ufw
@@ -157,6 +221,41 @@ sudo vim /etc/hosts
 # reboot
 sudo reboot
 
+######### Enable shared folder
+---> follow guide on above
+
+
+
+
+
+
+sudo apt-get install samba samba-common python-glade2 
+sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+sudo vim /etc/samba/smb.conf
+
+
+[Public]
+       comment = Public
+       path = /share
+       browsable = yes
+       writable = yes
+       guest ok = yes
+       read only = no
+       force user = arcana
+       force group = arcana
+
+
+sudo systemctl restart smbd
+
+
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 139/tcp
+sudo ufw allow 445/tcp
+sudo ufw reload
+
+
+
 ######### Install docker
 
 sudo apt-get install apt-transport-https ca-certificates
@@ -174,28 +273,28 @@ sudo apt-get install docker-engine
 # install privoxy to help docker pull images over sanctions
 sudo apt-get install privoxy
 sudo systemctl enable privoxy
-vim /etc/privoxy/config
+sudo vim /etc/privoxy/config
 <<<<<<<<<<<<<<<<<<<<
 listen-address	127.0.0.1:8085
 forward-socks5	/		127.0.0.1:8084	.
 >>>>>>>>>>>>>>>>>>>>
-systemctl restart privoxy
+sudo systemctl restart privoxy
 # enable proxy in docker
-mkdir -p /etc/systemd/system/docker.service.d
-vim /etc/systemd/system/docker.service.d/http-proxy.conf
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
 ...
 [Service]
 Environment="HTTP_PROXY=http://127.0.0.1:8085/"
 ...
-systemctl daemon-reload
-systemctl enable docker
-systemctl restart docker
+sudo systemctl daemon-reload
+sudo systemctl enable docker
+sudo systemctl restart docker
 # check if proxy is present
-docker info
+sudo docker info
 # add user to docker group
-gpasswd -a arcana docker
+sudo gpasswd -a arcana docker
 # reboot
-reboot
+sudo reboot
 # you should see under key Http Proxy
 # fireup a SOCKS5 proxy server on localhost:8084
 ssh -D 8084 .....
@@ -207,15 +306,46 @@ exit
 <<<<<<<<<<<<<<<<<<<<<<<<<<<
 # install python pip since docker-compose
 # is available to install through pip
-apt-get install python-pip
+sudo apt-get install python-pip
 # upgrade it
-pip install --upgrade pip
+sudo pip install --upgrade pip
 # install docker-compose
-pip install docker-compose
+sudo pip install docker-compose
 # check docker compose
 docker-compose version
 
-docker network create -d bridge ceph.me
+docker network create -d bridge arcana.me
+
+############ Install SAMBA
+
+# pull required image
+docker pull dperson/samba:latest
+
+# view help
+docker run -it --rm dperson/samba -h
+
+# execute instance
+docker run -itd --restart=always --name share -h share --network arcana.me \
+        -v /share:/mount -p 139:139 -p 445:445 \
+        -u 0:1000 \
+        dperson/samba:latest \
+        -s "public;/mount;yes;no;yes;all"
+	
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 139/tcp
+sudo ufw allow 445/tcp
+sudo ufw reload
+
+# dd
+docker exec -it share bash
+>>>>>>>>>>>>
+apt-get update
+apt-get install nano
+nano /etc/samba/smb.conf
+>   force user = 1000
+>   force group = 1000
+<<<<<<<<<<<<
 
 ########################################################################
 ########################################################################

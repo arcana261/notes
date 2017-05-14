@@ -1,0 +1,21 @@
+# pull required image
+docker pull dperson/samba:latest
+
+# view help
+docker run -it --rm dperson/samba -h
+
+# execute instance
+docker run -itd --restart=always --name share -h share --network arcana.me \
+        -v /share:/mount -p 139:139 -p 445:445 \
+        -u 0:1000 \
+        dperson/samba:latest \
+        -s "public;/mount;yes;no;yes;all"
+	
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 139/tcp
+sudo ufw allow 445/tcp
+sudo ufw reload
+
+
+

@@ -1,0 +1,107 @@
+# first update system
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+
+# reboot
+sudo reboot
+
+# install some tools
+sudo apt-get autoremove
+sudo apt-get install vim nano screen htop psmisc dnsutils wget \
+			xz-utils openssh-server ufw mlocate \
+			uuid-runtime tcpdump man-db \
+			traceroute w3m bridge-utils iputils-arping \
+			dnsmasq git rar unrarsudo 
+
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+######## SSH INTO MACHINE
+
+# set default editor to vim
+sudo update-alternatives --config editor
+
+# set hostname
+sudo hostnamectl set-hostname samba-server
+sudo vim /etc/hosts
+> 127.0.0.1 samba-server
+
+# reboot
+sudo reboot
+
+sudo apt-get install apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+sudo bash -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' | tee /etc/apt/sources.list.d/docker.list"
+sudo apt-get update
+# check if docker-engine is in apt cache
+sudo apt-cache policy docker-engine
+# install prerequisities
+sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+# reboot server
+sudo reboot
+# instal docker-engine
+sudo apt-get install docker-engine
+# install privoxy to help docker pull images over sanctions
+sudo apt-get install privoxy
+sudo systemctl enable privoxy
+sudo vim /etc/privoxy/config
+<<<<<<<<<<<<<<<<<<<<
+listen-address	127.0.0.1:8085
+forward-socks5	/		127.0.0.1:8084	.
+>>>>>>>>>>>>>>>>>>>>
+sudo systemctl restart privoxy
+# enable proxy in docker
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
+...
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8085/"
+...
+sudo systemctl daemon-reload
+sudo systemctl enable docker
+sudo systemctl restart docker
+# check if proxy is present
+sudo docker info
+# add user to docker group
+sudo gpasswd -a arcana docker
+# reboot
+sudo reboot
+# you should see under key Http Proxy
+# fireup a SOCKS5 proxy server on localhost:8084
+ssh -D 8084 .....
+# test docker
+docker pull ubuntu:xenial
+docker run --rm -it ubuntu:xenial
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+exit
+<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# install python pip since docker-compose
+# is available to install through pip
+sudo apt-get install python-pip
+# upgrade it
+sudo pip install --upgrade pip
+# install docker-compose
+sudo pip install docker-compose
+# check docker compose
+docker-compose version
+
+docker network create -d bridge arcana.me
+
+
