@@ -1,0 +1,10 @@
+ceph osd pool create fanava 64 64
+ceph auth get-or-create client.fanava mon 'allow r' osd 'allow rwx pool=fanava' -o ceph.client.fanava.keyring
+
+### SET MAXIMUM SIZE OF 5TB ON POOL
+ceph osd pool set-quota fanava max_bytes 5000000000000
+
+
+### UPDATE CREDENTIALS
+ceph auth ceph.client.fanava.keyring mon 'allow r' osd 'allow rwx pool=fanava'
+

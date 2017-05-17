@@ -1,0 +1,42 @@
+# upgrade system
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+
+# view firewall status
+sudo ufw status
+
+# view fail2ban status
+sudo fail2ban-client status
+
+# scan for rootkits
+sudo chkrootkit
+
+# update and check rootkits using rkhunter
+sudo rkhunter --update
+sudo rkhunter --check
+
+# scan for open ports
+sudo nmap -v -sT localhost
+
+# perform SYN scanning using nmap
+sudo nmap -v -sS localhost
+
+# view logwatch status
+sudo logwatch | less
+
+# OPTIONAL: EMAIL LOGWATCH DIRECTLY!
+sudo logwatch --mailto mail@domain.com --output mail --format html --range 'between -7 days and today' 
+
+# view apparmor status
+sudo apparmor_status
+
+# install tiger to audit system security settings
+sudo apt-get install tiger tripwire
+
+# scan system using tiger
+sudo tiger
+
+# view tiger logs
+sudo less /var/log/tiger/security.report.*
+

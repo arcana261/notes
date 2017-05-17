@@ -1,0 +1,21 @@
+## decompile crush map
+###################################
+
+ceph osd getcrushmap -o my-crush-map
+crushtool -d my-crush-map -o my-crush-map.txt
+
+## compile crush map
+###################################
+
+crushtool -c crushmap.txt -o crushmap-new.bin
+
+## test utilization of custom crush map
+###################################
+crushtool --test -i crushmap-new.bin --show-utilization --rule 0 --num-rep=3
+crushtool --test -i crushmap-new.bin --show-choose-tries --rule 0 --num-rep=3
+crushtool --test -i test-map.bin --show-bad-mappings --rule 0 --num-rep=3
+
+## upload crushmap to cluster
+###################################
+ceph osd setcrushmap -i  {compiled-crushmap-filename}
+

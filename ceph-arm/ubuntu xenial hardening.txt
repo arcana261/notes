@@ -1,3 +1,6 @@
+LINK: https://www.thefanclub.co.za/how-to/how-secure-ubuntu-1604-lts-server-part-1-basics
+LINK: https://www.thefanclub.co.za/how-to/how-secure-ubuntu-1204-lts-server-part-2-gui-installer-script
+
 # upgrade system
 sudo apt-get update
 sudo apt-get upgrade
@@ -28,6 +31,31 @@ sudo ufw reload
 sudo systemctl enable sshd
 sudo systemctl restart sshd
 
+
+#####################################################
+###################### MONITOR
+
+sudo ufw reload
+sudo ufw allow 6789/tcp
+sudo ufw reload
+
+######################  OSD / MDS
+
+sudo ufw reload
+sudo ufw allow 6800:7300/tcp
+sudo ufw reload
+
+###################### iSCSI TARGET
+
+sudo ufw reload
+sudo ufw allow 860/tcp
+sudo ufw allow 3260/tcp
+sudo ufw reload
+
+#####################################################
+
+
+
 # check whether tmpfs is mounted on /dev/shm or /run/shm
 df
 
@@ -40,17 +68,136 @@ sudo nano -w /etc/sysctl.conf
 > # IP Spoofing protection
 > net.ipv4.conf.default.rp_filter=1
 > net.ipv4.conf.all.rp_filter=1
-
+>
 > # Ignore ICMP broadcasts requests
 > net.ipv4.icmp_echo_ignore_broadcasts = 1
-
+>
 > # Do not accept IP source route packets (we are not a router)
 > net.ipv4.conf.all.accept_source_route = 0
 > net.ipv6.conf.all.accept_source_route = 0
 > net.ipv4.conf.default.accept_source_route = 0
 > net.ipv6.conf.default.accept_source_route = 0
-
+>
+> # Ignore send redirects
 > net.ipv4.conf.all.send_redirects = 0
-net.ipv4.conf.default.send_redirects = 0
+> net.ipv4.conf.default.send_redirects = 0
+>
+> # Block SYN attacks
+> net.ipv4.tcp_syncookies = 1
+> net.ipv4.tcp_max_syn_backlog = 2048
+> net.ipv4.tcp_synack_retries = 2
+> net.ipv4.tcp_syn_retries = 5
+>
+> # Log Martians
+> net.ipv4.conf.all.log_martians = 1
+> net.ipv4.icmp_ignore_bogus_error_responses = 1
+>
+> # Ignore ICMP redirects
+> net.ipv4.conf.all.accept_redirects = 0
+> net.ipv6.conf.all.accept_redirects = 0
+> net.ipv4.conf.default.accept_redirects = 0 
+> net.ipv6.conf.default.accept_redirects = 0
+>
+> # Ignore Directed pings
+> net.ipv4.icmp_echo_ignore_all = 1
+
+# reload sysctl
+sudo sysctl -p
+
+
+# prevent ip spoofing
+sudo nano -w /etc/host.conf
+> order bind,hosts
+> nospoof on
+
+# protect su
+sudo groupadd admin
+sudo usermod -a -G admin <YOUR ADMIN USERNAME>
+sudo dpkg-statoverride --update --add root admin 4750 /bin/su
+
+# install denyhosts
+sudo apt-get install denyhosts
+
+# configure denyhosts
+sudo nano -w /etc/denyhosts.conf
+> ADMIN_EMAIL = root@localhost
+> SMTP_HOST = localhost
+> SMTP_PORT = 25
+> #SMTP_USERNAME=foo
+> #SMTP_PASSWORD=bar
+> SMTP_FROM = DenyHosts nobody@localhost
+> #SYSLOG_REPORT=YES 
+
+# configure fail2ban
+sudo apt-get install fail2ban
+
+# configure fail2ban for SSH
+sudo nano -w /etc/fail2ban/jail.conf
+> destemail = root@localhost
+> action = %(action_mwl)s
+>
+> [sshd]
+>
+> enabled  = true
+> port     = <ENTER YOUR SSH PORT NUMBER HERE>
+> filter   = sshd
+> logpath  = /var/log/auth.log
+> maxretry = 3
+
+# start and enable fail2ban
+sudo systemctl restart fail2ban
+sudo systemctl enable fail2ban
+
+# view and verify fail2ban status
+sudo fail2ban-client status
+
+# install PSAD, intrusion detection system
+sudo apt-get install psad
+
+# start and enable psad
+sudo systemctl restart psad
+sudo systemctl enable psad
+
+# install rkhunter and chkrootkit
+sudo apt-get install rkhunter chkrootkit
+
+# scan for rootkits
+sudo chkrootkit
+
+# update and check rootkits using rkhunter
+sudo rkhunter --update
+sudo rkhunter --propupd
+sudo rkhunter --check
+
+# install nmap to scan for open ports
+sudo apt-get install nmap
+
+# scan for open ports
+sudo nmap -v -sT localhost
+
+# perform SYN scanning using nmap
+sudo nmap -v -sS localhost
+
+# install logwatch
+sudo apt-get install logwatch libdate-manip-perl
+
+# view logwatch status
+sudo logwatch | less
+
+# OPTIONAL: EMAIL LOGWATCH DIRECTLY!
+sudo logwatch --mailto mail@domain.com --output mail --format html --range 'between -7 days and today' 
+
+# install apparmor
+sudo apt-get install apparmor apparmor-profiles
+
+# view apparmor status
+sudo apparmor_status
+
+# scan system using tiger
+sudo tiger
+
+# view tiger logs
+sudo less /var/log/tiger/security.report.*
+
 
 

@@ -1,0 +1,17 @@
+auto eth0
+iface eth0 inet static
+	address 192.168.5.83
+	network 192.168.5.0
+	netmask 255.255.255.0
+	broadcast 192.168.5.255
+	dns-nameservers 4.2.2.4 8.8.8.8
+	dns-search kaveh.local
+
+
+auto eth1
+iface eth1 inet dhcp
+
+auto eth2
+iface eth2 inet dhcp
+	dns-nameservers 4.2.2.4 8.8.8.8
+
