@@ -1,0 +1,312 @@
+######### NOTE: VXLAN port is 4789 UDP
+
+
+################# XEN SERVER CONFIG ####################
+########################################################
+
+# Add "IP Address" on private network (10.0.2.0/24)
+# on Xen Server through Xen Center
+# so that Xen Server <-> VMs can communicate with
+# each other.
+#
+# assigned IP Address: 10.0.2.252
+##############
+
+# enable VXLAN port through firewall
+nano -w /etc/sysconfig/iptables
+> -A RH-Firewall-1-INPUT -p udp -m udp --dport 4789 -j ACCEPT
+
+# temporarily add firewall rule
+iptables -I RH-Firewall-1-INPUT -p udp -m udp --dport 4789 -j ACCEPT
+
+# enable ip forwarding
+nano -w /etc/sysctl.conf
+> net.ipv4.ip_forward=1
+> net.ipv4.conf.all.rp_filter=0
+> net.ipv4.conf.default.rp_filter=0
+> net.ipv4.conf.all.accept_source_route=1
+> net.ipv4.conf.default.accept_source_route=1
+
+# reload sysctl
+sysctl -p
+
+# check if is enabled
+sysctl -a | grep forward | more
+
+# create shell script to mount up VXLAN
+nano -w /opt/ifup-vtep1.sh
+...
+#!/bin/bash
+
+ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.5.83 local 192.168.20.162 dstport 4789
+ip link set dev vtep1 up
+ip addr add 192.167.20.162/24 broadcast 192.167.20.255 dev vtep1
+
+ip route add 192.168.5.220 via 10.0.2.200
+ip route add 192.168.5.222 via 10.0.2.1
+ip route add 192.168.5.223 via 10.0.2.2
+ip route add 192.168.5.224 via 10.0.2.3
+ip route add 192.168.5.225 via 10.0.2.4
+ip route add 192.168.5.228 via 10.0.2.254
+ip route add 192.168.5.226 via 10.0.2.100
+ip route add 192.168.5.227 via 10.0.2.101
+ip route add 192.168.5.221 via 10.0.2.253
+...
+chmod +x /opt/ifup-vtep1.sh
+
+# create shell script to destroy VXLAN
+nano -w /opt/ifdown-vtep1.sh
+...
+#!/bin/bash
+
+ip link set dev vtep1 down
+ip link delete vtep1
+
+ip route delete 192.168.5.220
+ip route delete 192.168.5.222
+ip route delete 192.168.5.223
+ip route delete 192.168.5.224
+ip route delete 192.168.5.225
+ip route delete 192.168.5.228
+ip route delete 192.168.5.226
+ip route delete 192.168.5.227
+ip route delete 192.168.5.221
+...
+chmod +x /opt/ifdown-vtep1.sh
+
+# create systemd service
+nano -w /lib/systemd/system/vtep1.service
+...
+[Unit]
+Description=vtep1 vxlan service
+Conflicts=shutdown.target
+Wants=network-online.target
+After=NetworkManager-wait-online.service
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/opt/ifup-vtep1.sh
+ExecStop=/opt/ifdown-vtep1.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+...
+
+# enable service
+systemctl daemon-reload
+systemctl enable vtep1.service
+systemctl restart vtep1.service
+
+################# Linux Gateway Config #################
+########################################################
+
+####### Fedora/CentOS, Allow ports (VXLAN and DHCP)
+sudo firewall-cmd --permanent --add-port=67/udp
+sudo firewall-cmd --permanent --add-port=4789/udp
+sudo firewall-cmd --reload
+
+####### Ubuntu, Allow ports (VXLAN and DHCP)
+sudo ufw reload
+sudo ufw allow 67/udp
+sudo ufw allow 4789/udp
+sudo ufw reload
+
+
+# create shell script to mount up VXLAN
+sudo nano -w /opt/ifup-vtep1.sh
+...
+#!/bin/bash
+
+ip link add name vtep1 type vxlan id 80 dev enp3s0 remote 192.168.20.162 local 192.168.5.83 dstport 4789
+ip link set dev vtep1 up
+ip addr add 192.167.20.83/24 broadcast 192.167.20.255 dev vtep1
+
+ip route add 192.168.5.220 via 192.167.20.162
+ip route add 192.168.5.222 via 192.167.20.162
+ip route add 192.168.5.223 via 192.167.20.162
+ip route add 192.168.5.224 via 192.167.20.162
+ip route add 192.168.5.225 via 192.167.20.162
+ip route add 192.168.5.228 via 192.167.20.162
+ip route add 192.168.5.226 via 192.167.20.162
+ip route add 192.168.5.227 via 192.167.20.162
+ip route add 192.168.5.221 via 192.167.20.162
+
+ip link add name vtep2 type vxlan id 81 dev vtep1 remote 192.167.20.83 local 192.167.20.83 dstport 4789
+ip link set dev vtep2 address 82:28:b1:5f:68:ee
+ip link set dev vtep2 up
+ip addr add 192.167.21.1/24 brd + dev vtep2
+
+sudo rm -fv /var/run/dnsmasq.dhcp-vtep2.pid
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp-vtep2.pid --interface=vtep2 --dhcp-leasefile=/tmp/dhcp-vtep2.lease --dhcp-range=192.167.21.2,192.167.21.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router,192.167.21.1 --server=4.2.2.4 --server=8.8.8.8
+...
+chmod +x /opt/ifup-vtep1.sh
+
+# create shell script to destroy VXLAN
+nano -w /opt/ifdown-vtep1.sh
+...
+#!/bin/bash
+
+ip link set dev vtep2 down
+ip link delete vtep2
+
+ip link set dev vtep1 down
+ip link delete vtep1
+...
+chmod +x /opt/ifdown-vtep1.sh
+
+# create systemd service
+sudo nano -w /lib/systemd/system/vtep1.service
+...
+[Unit]
+Description=vtep1 vxlan service
+Conflicts=shutdown.target
+Wants=network-online.target
+After=NetworkManager-wait-online.service
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/opt/ifup-vtep1.sh
+ExecStop=/opt/ifdown-vtep1.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+...
+
+# enable service
+systemctl daemon-reload
+systemctl enable vtep1.service
+systemctl restart vtep1.service
+
+
+############ Every VM on Private Network ###############
+########################################################
+
+# set router to 10.0.2.252 (Xen Server)
+
+sudo nano -w /etc/network/interfaces
+....
+auto eth2
+iface eth2 inet static
+	address 10.0.2.254
+	netmask 255.255.255.0
+	network 10.0.2.0
+	gateway 10.0.2.252
+....
+
+# create shell script to mount up inet namespace
+sudo nano -w /opt/ifup-inet.sh
+....
+#!/bin/bash
+
+ip route add 192.167.20.83 via 10.0.2.252 src $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//')
+ip link add name vtep2 type vxlan id 81 dev eth2 remote 192.167.20.83 local $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//') dstport 4789
+ip link set dev vtep2 up
+ip link add name br0 type bridge
+ip link set dev br0 up
+ip link set dev vtep2 master br0
+ip link add name veth0 type veth peer name peer0
+ip link set dev veth0 up
+ip link set dev veth0 master br0
+ip netns add inet
+ip link set dev peer0 netns inet
+ip netns exec inet ip link set name eth0 dev peer0
+ip netns exec inet dhclient eth0
+echo "nameserver 4.2.2.4" > /etc/resolv.conf
+....
+chmod +x /opt/ifup-inet.sh
+
+# create shell script to destroy inet namespace
+sudo nano -w /opt/ifdown-inet.sh
+....
+#!/bin/bash
+
+ip netns delete inet
+ip link set dev br0 down
+ip link delete br0
+ip link set dev vtep2 down
+ip link delete vtep2
+ip link delete veth0
+ip route delete 192.167.20.83
+....
+chmod +x /opt/ifdown-inet.sh
+
+# create systemd service
+sudo nano -w /lib/systemd/system/inet.service
+...
+[Unit]
+Description=internet over vxlan
+Conflicts=shutdown.target
+Wants=network-online.target
+# Enable below on Fedora/CentOS only!
+# After=NetworkManager-wait-online.service
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/opt/ifup-inet.sh
+ExecStop=/opt/ifdown-inet.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+...
+
+# enable service
+systemctl daemon-reload
+systemctl enable inet.service
+systemctl restart inet.service
+
+
+############ EVERY TIME TO ENTER NAMESPACE DO:
+ip netns exec inet bash
+
+
+############ ALL OTHER MACHINESSSSSSSSSS ###############
+########################################################
+
+# Linux
+ip route add 192.168.5.220 via 192.168.5.83
+ip route add 192.168.5.222 via 192.168.5.83
+ip route add 192.168.5.223 via 192.168.5.83
+ip route add 192.168.5.224 via 192.168.5.83
+ip route add 192.168.5.225 via 192.168.5.83
+ip route add 192.168.5.228 via 192.168.5.83
+ip route add 192.168.5.226 via 192.168.5.83
+ip route add 192.168.5.227 via 192.168.5.83
+ip route add 192.168.5.221 via 192.168.5.83
+
+# Windows
+route ADD 192.168.5.220 192.168.5.83
+route ADD 192.168.5.222 192.168.5.83
+route ADD 192.168.5.223 192.168.5.83
+route ADD 192.168.5.224 192.168.5.83
+route ADD 192.168.5.225 192.168.5.83
+route ADD 192.168.5.228 192.168.5.83
+route ADD 192.168.5.226 192.168.5.83
+route ADD 192.168.5.227 192.168.5.83
+route ADD 192.168.5.221 192.168.5.83
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

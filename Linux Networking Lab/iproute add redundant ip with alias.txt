@@ -1,0 +1,2 @@
+sudo ip addr del 192.168.100.199/24 brd + dev eth10 label eth10:0
+
