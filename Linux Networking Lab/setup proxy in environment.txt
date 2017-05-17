@@ -1,0 +1,22 @@
+sudo vim /etc/profile.d/proxy.sh
+>>>>>>>>>>>>>>>>>>>>>
+export http_proxy=http://127.0.0.1:8083/
+export socks_proxy=127.0.0.1:8082
+export no_proxy="localhost,127.0.0.1,192.168.20/24"
+
+export HTTP_PROXY=$http_proxy
+export https_proxy=$http_proxy
+export HTTPS_PROXY=$http_proxy
+export ftp_proxy=$http_proxy
+export FTP_PROXY=$http_proxy
+export rsync_proxy=$http_proxy
+export RSYNC_PROXY=$http_proxy
+export NO_PROXY=$no_proxy
+export SOCKS_PROXY=$socks_proxy
+<<<<<<<<<<<<<<<<<<<<<
+
+# reboot system
+sudo reboot
+
+# check
+env | grep PROXY

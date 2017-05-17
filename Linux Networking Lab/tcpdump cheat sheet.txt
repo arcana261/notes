@@ -1,0 +1,6 @@
+# view ICMP
+tcpdump -ve -nni eth0 icmp
+
+# view DHCP
+tcpdump -i br100 -ve -n port 67 or port 68
+

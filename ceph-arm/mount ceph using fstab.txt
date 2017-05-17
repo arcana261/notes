@@ -1,0 +1,17 @@
+CREATE A 1 TB rbd
+
+rbd create --size 1000000 iscsi
+rbd map iscsi
+mkfs.xfs /dev/rbd0
+mkdir -p /iscsi
+
+sudo update-rc.d rbdmap defaults
+nano -w /etc/ceph/rbdmap
+
+     rbd/iscsi               id=admin,keyring=/etc/ceph/ceph.client.admin.keyring
+
+nano /etc/fstab-->/dev/rbd/rbd/iscsi /iscsi xfs defaults,noatime,_netdev 0 0
+
+
+Reeebooooot!
+

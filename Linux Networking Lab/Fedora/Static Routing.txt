@@ -1,0 +1,6 @@
+sudo vim /etc/sysconfig/network-scripts/route-Ethernet_connection_1
+>>>>>>>>>>>>>>>>>>
+192.168.20.0/24 via 192.168.5.1
+<<<<<<<<<<<<<<<<<<
+sudo systemctl restart network
+

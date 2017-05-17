@@ -1,0 +1,21 @@
+# first make sure we have bridge utils
+sudo apt-get install bridge-utils
+
+# edit interfaces file
+sudo vim /etc/network/interfaces
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+iface eth0 inet manual
+iface eth1 inet manual
+
+auto br0
+iface br0 inet static
+	bridge_ports eth0 eth1
+	bridge_stp on
+	address 192.168.10.2
+	netmask 255.255.255.0
+	network 192.168.10.0
+	broadcast 192.168.10.255
+	gateway 192.168.10.1
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>

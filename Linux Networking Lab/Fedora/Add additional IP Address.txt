@@ -1,0 +1,8 @@
+sudo vim /etc/sysconfig/network-scripts/ifcfg-Ethernet_connection_1
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+IPADDR0=192.167.5.83
+PREFIX0=24
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+sudo systemctl restart network
+
+

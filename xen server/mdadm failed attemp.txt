@@ -1,0 +1,133 @@
+Installation Step
+==============================================
+
+# load kernel modules
+modprobe md_mod
+modprobe dm_mod
+modprobe dm_raid
+modprobe dm_mirror
+
+# scan for raid arrays
+mdadm --assemble --scan
+
+# check for found raid arrays
+cat /proc/mdstat
+
+# view detail on found raids
+mdadm --examine
+mdadm --detail /dev/md124
+
+# view disks and partitions
+lsblk
+fdisk -l
+
+After Setup, Fix initramfs
+============================
+
+# load kernel modules
+modprobe md_mod
+modprobe dm_mod
+modprobe dm_raid
+modprobe dm_mirror
+
+# scan for raid arrays
+mdadm --assemble --scan
+
+# check for found raid arrays
+cat /proc/mdstat
+
+# view detail on found raids
+mdadm --examine
+mdadm --detail /dev/md124
+
+# view disks and partitions
+lsblk
+fdisk -l
+
+# create persistent mdadm config
+mkdir -p /etc/mdadm
+mdadm --detail --scan /etc/mdadm/mdadm.conf
+
+# mount and chroot
+# NOTE: xenserver root partition is "p1"
+mount /dev/<RAID DEVICE>p1 /mnt
+mount -t proc proc /mnt/proc
+mount --rbind /dev /mnt/dev
+mount --rbind /sys /mnt/sys
+mount --make-rslave /mnt/dev
+mount --make-rslave /mnt/sys
+mkdir -p /mnt/etc/mdadm
+cp /etc/mdadm/mdadm.conf /mnt/etc/mdadm/
+cp /etc/mdadm/mdadm.conf /mnt/etc/
+chroot /mnt /bin/bash
+export PS1="(chroot) $PS1"
+
+# persistent load raid modules
+vi /etc/modules-load.d/raid
+<<<<<<<<<<<<<<<<<<
+md_mod
+dm_mod
+dm_raid
+dm_mirror
+>>>>>>>>>>>>>>>>>>
+
+# edit fstab, replace LABEL=<LABEL> with /dev/... actual device names
+vi /etc/fstab
+
+# backup old initramfs
+cp /boot/initrd-$(uname -r).img /boot/initrd-$(uname -r).img.bak
+
+# regenerate initramfs
+dracut --mdadmconf \
+	--fstab \
+	--add="mdraid" \
+	--filesystems "ext3 tmpfs devpts sysfs proc" \
+	--add-drivers="raid1 raid456 mdraid1x mdraid09" \
+	--force \
+	/boot/initrd-$(uname -r).img \
+	$(uname -r) \
+	-M
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

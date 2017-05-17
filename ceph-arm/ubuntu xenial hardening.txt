@@ -1,0 +1,56 @@
+# upgrade system
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+
+# reboot machine
+sudo reboot
+
+# install
+sudo apt-get install psmisc nano ufw openssh-server
+
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin prohibit-password
+...
+sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+# check whether tmpfs is mounted on /dev/shm or /run/shm
+df
+
+# change fstab
+sudo nano -w /etc/fstab
+> tmpfs /dev/shm tmpfs defaults,noexec,nosuid 0 0
+
+# protect sysctl
+sudo nano -w /etc/sysctl.conf
+> # IP Spoofing protection
+> net.ipv4.conf.default.rp_filter=1
+> net.ipv4.conf.all.rp_filter=1
+
+> # Ignore ICMP broadcasts requests
+> net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+> # Do not accept IP source route packets (we are not a router)
+> net.ipv4.conf.all.accept_source_route = 0
+> net.ipv6.conf.all.accept_source_route = 0
+> net.ipv4.conf.default.accept_source_route = 0
+> net.ipv6.conf.default.accept_source_route = 0
+
+> net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+
+

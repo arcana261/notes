@@ -1,0 +1,2 @@
+netsh interface ipv4 add address "Local Area Connection" 10.17.30.19 255.255.224.0
+

@@ -1,0 +1,19 @@
+# enable ip forwarding
+sudo nano -w /etc/sysctl.conf
+> net.ipv4.ip_forward=1
+
+# reboot system
+sudo reboot
+
+# check if it is enabled
+sysctl -a | grep forward
+
+# check if it is enabled
+cat /proc/sys/net/ipv4/ip_forward
+
+# add forwarding rule to iptables
+iptables -A FORWARD -i any -o any -j ACCEPT
+
+#### NOTE: to temporarily enable ip forwarding do:
+sudo bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
