@@ -162,7 +162,8 @@ sudo nano -w /lib/systemd/system/vtep1.service
 Description=vtep1 vxlan service
 Conflicts=shutdown.target
 Wants=network-online.target
-After=NetworkManager-wait-online.service
+# Enable below on Fedora/CentOS only!
+# After=NetworkManager-wait-online.service
 [Service]
 Type=simple
 RemainAfterExit=yes

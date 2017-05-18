@@ -224,16 +224,13 @@ sudo reboot
 ######### Enable shared folder
 ---> follow guide on above
 
-
-
-
-
-
+# install samba server
 sudo apt-get install samba samba-common python-glade2 
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+
+# create shared folder configuration
 sudo vim /etc/samba/smb.conf
-
-
+.....
 [Public]
        comment = Public
        path = /share
@@ -243,10 +240,11 @@ sudo vim /etc/samba/smb.conf
        read only = no
        force user = arcana
        force group = arcana
+.....
 
-
+# enable and restart samba service
 sudo systemctl restart smbd
-
+sudo systemctl enable smbd
 
 # allow ports through firewall
 sudo ufw reload
@@ -254,100 +252,4 @@ sudo ufw allow 139/tcp
 sudo ufw allow 445/tcp
 sudo ufw reload
 
-
-
-######### Install docker
-
-sudo apt-get install apt-transport-https ca-certificates
-sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-sudo bash -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' | tee /etc/apt/sources.list.d/docker.list"
-sudo apt-get update
-# check if docker-engine is in apt cache
-sudo apt-cache policy docker-engine
-# install prerequisities
-sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
-# reboot server
-sudo reboot
-# instal docker-engine
-sudo apt-get install docker-engine
-# install privoxy to help docker pull images over sanctions
-sudo apt-get install privoxy
-sudo systemctl enable privoxy
-sudo vim /etc/privoxy/config
-<<<<<<<<<<<<<<<<<<<<
-listen-address	127.0.0.1:8085
-forward-socks5	/		127.0.0.1:8084	.
->>>>>>>>>>>>>>>>>>>>
-sudo systemctl restart privoxy
-# enable proxy in docker
-sudo mkdir -p /etc/systemd/system/docker.service.d
-sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
-...
-[Service]
-Environment="HTTP_PROXY=http://127.0.0.1:8085/"
-...
-sudo systemctl daemon-reload
-sudo systemctl enable docker
-sudo systemctl restart docker
-# check if proxy is present
-sudo docker info
-# add user to docker group
-sudo gpasswd -a arcana docker
-# reboot
-sudo reboot
-# you should see under key Http Proxy
-# fireup a SOCKS5 proxy server on localhost:8084
-ssh -D 8084 .....
-# test docker
-docker pull ubuntu:xenial
-docker run --rm -it ubuntu:xenial
->>>>>>>>>>>>>>>>>>>>>>>>>>>
-exit
-<<<<<<<<<<<<<<<<<<<<<<<<<<<
-# install python pip since docker-compose
-# is available to install through pip
-sudo apt-get install python-pip
-# upgrade it
-sudo pip install --upgrade pip
-# install docker-compose
-sudo pip install docker-compose
-# check docker compose
-docker-compose version
-
-docker network create -d bridge arcana.me
-
-############ Install SAMBA
-
-# pull required image
-docker pull dperson/samba:latest
-
-# view help
-docker run -it --rm dperson/samba -h
-
-# execute instance
-docker run -itd --restart=always --name share -h share --network arcana.me \
-        -v /share:/mount -p 139:139 -p 445:445 \
-        -u 0:1000 \
-        dperson/samba:latest \
-        -s "public;/mount;yes;no;yes;all"
-	
-# allow ports through firewall
-sudo ufw reload
-sudo ufw allow 139/tcp
-sudo ufw allow 445/tcp
-sudo ufw reload
-
-# dd
-docker exec -it share bash
->>>>>>>>>>>>
-apt-get update
-apt-get install nano
-nano /etc/samba/smb.conf
->   force user = 1000
->   force group = 1000
-<<<<<<<<<<<<
-
-########################################################################
-########################################################################
-########################################################################
 

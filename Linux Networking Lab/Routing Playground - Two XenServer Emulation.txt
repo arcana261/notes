@@ -1,0 +1,322 @@
+|-------------------------------------------------------------------------------------
+|Xen Server  | VM     |  Public IP (eth0)| Private IP (eth1)  | Cluster IP (eth2)    |
+|------------------------------------------------------------------------------------|
+|xen 1       | osd1   | 192.168.5.101    | 10.0.2.1           | 192.167.5.101        |
+|            | osd2   | 192.168.5.102    | 10.0.2.2           | 192.167.5.102        |
+|            | osd3   | 192.168.5.103    | 10.0.2.3           | 192.167.5.103        |
+|            | osd4   | 192.168.5.104    | 10.0.2.4           | 192.167.5.104        |
+|            |        |                  | 10.0.2.254         | 192.167.5.254        |
+|------------------------------------------------------------------------------------|
+|xen 2       | osd5   | 192.168.5.105    | 10.0.3.5           | 192.167.5.105        |
+|            | osd6   | 192.168.5.106    | 10.0.3.6           | 192.167.5.106        |
+|            | osd7   | 192.168.5.107    | 10.0.3.7           | 192.167.5.107        |
+|            | osd8   | 192.168.5.108    | 10.0.3.8           | 192.167.5.108        |
+|            |        |                  | 10.0.3.253         | 192.167.5.253        |
+|------------------------------------------------------------------------------------|
+
+
+--------------                                 --------------
+|    XEN1    |         -----------------       |    XEN2    |
+|            |         |               |       |            |
+|  10.0.2/24 |---------|  192.168.5/24 |--------  10.0.3/24 |
+|  |         |         |               |       |  |         |
+|  |- osd1   |         -----------------       |  |- osd5   |
+|  |- osd2   |                                 |  |- osd6   |
+|  |- osd3   |         |---------------|       |  |- osd7   |
+|  |- osd4   |---------|  192.167.5/24 |-------|  |- osd8   |
+|            |         -----------------       |            |
+--------------                                 --------------
+
+
+GOAL: route 192.168.5/24 traffic through private IP and cluster IP!
+
+EXAMPLE: CROSS SERVER:
+	ods1 <--(10.0.2/24)--> XEN1 <--(192.167.5/24)--> XEN2 <--(10.0.3/24)--> osd8
+
+EXAMPLE: INTERNAL SERVER:
+	osd1 <--(10.0.2/24)--> XEN1 <--(10.0.2/24)--> osd2
+
+SOLUTION:
+	osd's relay routing of 192.168.5/24 public network through
+	their respective xen server.
+
+	xen servers act as total routers, routing their osd VM's through
+	their private network IP address individually, and routing other VM's
+	belonging to other XEN servers through their own XEN server.
+
+         ------         ----------          ---------------          --------
+        /      \       /          \        /               \        /        \
+        \ Xen1 /<----->|  Xen1    |<------>|   Xen2        |<------>\  Xen2  /
+        / OSD's\       \ <router> /        \   <router>    /        /  OSD's \
+        \      /        ----------          ---------------         \        /
+        -------                                                      --------
+	
+
+	osd1-4 route 192.168.5/24 through XEN1 Private Network(10.0.2.254)
+	osd5-8 route 192.168.5/24 through XEN2 Private Network(10.0.3.253)
+
+	XEN1 routes osd1(192.168.5.101) through it's private address (10.0.2.1)
+	XEN1 routes osd2(192.168.5.102) through it's private address (10.0.2.2)
+	XEN1 routes osd3(192.168.5.103) through it's private address (10.0.2.3)
+	XEN1 routes osd4(192.168.5.104) through it's private address (10.0.2.4)
+
+	XEN1 routes osd5(192.168.5.105) through XEN2 cluster address (192.167.5.253)
+	XEN1 routes osd6(192.168.5.106) through XEN2 cluster address (192.167.5.253)
+	XEN1 routes osd7(192.168.5.107) through XEN2 cluster address (192.167.5.253)
+	XEN1 routes osd8(192.168.5.108) through XEN2 cluster address (192.167.5.253)
+
+	XEN2 routes osd1(192.168.5.101) through XEN1 cluster address (192.167.5.254)
+	XEN2 routes osd2(192.168.5.102) through XEN1 cluster address (192.167.5.254)
+	XEN2 routes osd3(192.168.5.103) through XEN1 cluster address (192.167.5.254)
+	XEN2 routes osd4(192.168.5.104) through XEN1 cluster address (192.167.5.254)
+
+	XEN2 routes osd5(192.168.5.105) through it's private address (10.0.3.5)
+	XEN2 routes osd6(192.168.5.106) through it's private address (10.0.3.6)
+	XEN2 routes osd7(192.168.5.107) through it's private address (10.0.3.7)
+	XEN2 routes osd8(192.168.5.108) through it's private address (10.0.3.8)
+
+
+###############################################
+## Prepare system
+###############################################
+
+# update system
+sudo apt-get update
+
+# ensure no dead package
+sudo apt-get autoremove
+
+# install some tools
+sudo apt-get install vim nano screen htop psmisc dnsutils wget \
+			xz-utils openssh-server ufw mlocate \
+			uuid-runtime tcpdump man-db \
+			traceroute w3m bridge-utils iputils-arping \
+			dnsmasq iperf
+			
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+# allow vxlan through ufw
+sudo ufw reload
+sudo ufw allow 4789/udp
+sudo ufw reload
+
+# allow dhcp through ufw
+sudo ufw reload
+sudo ufw allow 67/udp
+sudo ufw allow 68/udp
+sudo ufw reload
+
+# allow dns through ufw
+sudo ufw reload
+sudo ufw allow 53/udp
+sudo ufw allow 53/tcp
+sudo ufw reload
+
+###############################################
+## setup for ip forwarding (router)
+###############################################
+
+# enable ip forwarding
+nano -w /etc/sysctl.conf
+> net.ipv4.ip_forward=1
+> net.ipv4.conf.all.rp_filter=0
+> net.ipv4.conf.default.rp_filter=0
+> net.ipv4.conf.all.accept_source_route=1
+> net.ipv4.conf.default.accept_source_route=1
+
+# reload sysctl
+sudo sysctl -p
+
+# enable ip forwarding in ufw
+nano -w /etc/ufw/sysctl.conf
+> net/ipv4/ip_forward=1
+> net/ipv4/conf/default/rp_filter=0
+> net/ipv4/conf/all/rp_filter=0
+> net/ipv4/conf/all/accept_source_route=1
+> net/ipv4/conf/default/accept_source_route=1
+
+# enable FORWARDing in ufw firewall
+sudo vim /etc/default/ufw 
+> DEFAULT_FORWARD_POLICY="ACCEPT"
+
+# reload ufw
+sudo ufw disable
+sudo ufw enable
+
+
+###############################################
+## setup ethernet devices for emulation
+###############################################
+
+sudo ip link add name br-eth0 type bridge
+sudo ip link set dev br-eth0 up
+
+sudo ip link add name br-eth2 type bridge
+sudo ip link set dev br-eth2 up
+
+for i in $(seq 1 2); do \
+	sudo ip link add name br-xen${i}-eth1 type bridge; \
+	sudo ip link set dev br-xen${i}-eth1 up; \
+done
+
+for i in $(seq 1 8); do \
+	sudo ip link add name osd${i}-eth0 type veth peer name osd${i}-eth0-peer; \
+	sudo ip link add name osd${i}-eth1 type veth peer name osd${i}-eth1-peer; \
+	sudo ip link add name osd${i}-eth2 type veth peer name osd${i}-eth2-peer; \
+	sudo ip link set dev osd${i}-eth0 up; \
+	sudo ip link set dev osd${i}-eth1 up; \
+	sudo ip link set dev osd${i}-eth2 up; \
+	sudo ip link set dev osd${i}-eth0 master br-eth0; \
+	sudo ip link set dev osd${i}-eth2 master br-eth2; \
+done
+
+for i in $(seq 1 4); do \
+	sudo ip link set dev osd${i}-eth1 master br-xen1-eth1; \
+done
+
+for i in $(seq 5 8); do \
+	sudo ip link set dev osd${i}-eth1 master br-xen2-eth1; \
+done
+
+for i in $(seq 0 2); do \
+	sudo ip link add name xen1-eth${i} type veth peer name xen1-eth${i}-peer; \
+	sudo ip link add name xen2-eth${i} type veth peer name xen2-eth${i}-peer; \
+	sudo ip link set dev xen1-eth${i} up; \
+	sudo ip link set dev xen2-eth${i} up; \
+done
+
+for i in $(seq 1 2); do \
+	sudo ip link set dev xen${i}-eth0 master br-eth0; \
+	sudo ip link set dev xen${i}-eth2 master br-eth2; \
+	sudo ip link set dev xen${i}-eth1 master br-xen${i}-eth1; \
+done
+
+for i in $(seq 1 8); do \
+	sudo ip netns add osd${i}; \
+	sudo ip link set dev osd${i}-eth0-peer netns osd${i}; \
+	sudo ip link set dev osd${i}-eth1-peer netns osd${i}; \
+	sudo ip link set dev osd${i}-eth2-peer netns osd${i}; \
+	sudo ip netns exec osd${i} ip link set dev osd${i}-eth0-peer name eth0; \
+	sudo ip netns exec osd${i} ip link set dev osd${i}-eth1-peer name eth1; \
+	sudo ip netns exec osd${i} ip link set dev osd${i}-eth2-peer name eth2; \
+	sudo ip netns exec osd${i} ip link set dev eth0 up; \
+	sudo ip netns exec osd${i} ip link set dev eth1 up; \
+	sudo ip netns exec osd${i} ip link set dev eth2 up; \
+	sudo ip netns exec osd${i} ip addr add 192.168.5.10${i}/24 brd + dev eth0; \
+	sudo ip netns exec osd${i} ip addr add 192.167.5.10${i}/24 brd + dev eth2; \
+done
+
+for i in $(seq 1 4); do \
+	sudo ip netns exec osd${i} ip addr add 10.0.2.${i}/24 brd + dev eth1; \
+done
+
+for i in $(seq 5 8); do \
+	sudo ip netns exec osd${i} ip addr add 10.0.3.${i}/24 brd + dev eth1; \
+done
+
+sudo ip netns add xen1
+sudo ip netns add xen2
+
+for i in $(seq 0 2); do \
+	sudo ip link set dev xen1-eth${i}-peer netns xen1; \
+	sudo ip netns exec xen1 ip link set dev xen1-eth${i}-peer name eth${i}; \
+	sudo ip netns exec xen1 ip link set dev eth${i} up; \
+	sudo ip link set dev xen2-eth${i}-peer netns xen2; \
+	sudo ip netns exec xen2 ip link set dev xen2-eth${i}-peer name eth${i}; \
+	sudo ip netns exec xen2 ip link set dev eth${i} up; \
+done
+
+sudo ip netns exec xen1 ip addr add 10.0.2.254/24 brd + dev eth1
+sudo ip netns exec xen1 ip addr add 192.167.5.254/24 brd + dev eth2
+
+sudo ip netns exec xen2 ip addr add 10.0.3.253/24 brd + dev eth1
+sudo ip netns exec xen2 ip addr add 192.167.5.253/24 brd + dev eth2
+
+###############################################
+## setup routing in xen1
+###############################################
+
+for i in $(seq 1 4); do \
+	sudo ip netns exec xen1 ip route add 192.168.5.10${i} via 10.0.2.${i}; \
+done
+
+for i in $(seq 5 8); do \
+	sudo ip netns exec xen1 ip route add 192.168.5.10${i} via 192.167.5.253; \
+done
+
+## setup routing in xen2
+
+for i in $(seq 1 4); do \
+	sudo ip netns exec xen2 ip route add 192.168.5.10${i} via 192.167.5.254; \
+done
+
+for i in $(seq 5 8); do \
+	sudo ip netns exec xen2 ip route add 192.168.5.10${i} via 10.0.3.${i}; \
+done
+
+## setup routing in osds
+
+for i in $(seq 1 4); do \
+	sudo ip netns exec osd${i} ip route delete 192.168.5/24; \
+	sudo ip netns exec osd${i} ip route add 192.168.5/24 via 10.0.2.254 src 192.168.5.10${i}; \
+done
+
+for i in $(seq 5 8); do \
+	sudo ip netns exec osd${i} ip route delete 192.168.5/24; \
+	sudo ip netns exec osd${i} ip route add 192.168.5/24 via 10.0.3.253 src 192.168.5.10${i}; \
+done
+
+###############################################
+## test cross server ping
+###############################################
+
+sudo ip netns exec osd1 ping 192.168.5.108
+sudo ip netns exec osd1 bash -c "tcpdump -ve -nni eth1 icmp"
+sudo ip netns exec xen1 bash -c "tcpdump -ve -nni eth1 icmp"
+sudo ip netns exec xen1 bash -c "tcpdump -ve -nni eth2 icmp"
+sudo ip netns exec xen2 bash -c "tcpdump -ve -nni eth2 icmp"
+sudo ip netns exec xen2 bash -c "tcpdump -ve -nni eth1 icmp"
+sudo ip netns exec osd8 bash -c "tcpdump -ve -nni eth1 icmp"
+
+########################### CLEAN UP ####################################
+
+sudo ip netns delete xen1
+sudo ip netns delete xen2
+
+for i in $(seq 1 8); do \
+	sudo ip netns delete osd${i}; \
+	sudo ip link delete osd${i}-eth0; \
+	sudo ip link delete osd${i}-eth1; \
+	sudo ip link delete osd${i}-eth2; \
+done
+
+for i in $(seq 0 2); do \
+	sudo ip link delete xen1-eth${i}; \
+	sudo ip link delete xen2-eth${i}; \
+done
+
+sudo ip link delete br-eth0
+sudo ip link delete br-eth2
+sudo ip link delete br-xen1-eth1
+sudo ip link delete br-xen2-eth1
+
+
+
+
