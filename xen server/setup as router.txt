@@ -12,12 +12,26 @@
 # assigned IP Address: 10.0.2.252
 ##############
 
-# enable VXLAN port through firewall
+# enable VXLAN, SSH, Ceph, iSCSI and DHCP port through firewall
 nano -w /etc/sysconfig/iptables
 > -A RH-Firewall-1-INPUT -p udp -m udp --dport 4789 -j ACCEPT
+> -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 2122 -j ACCEPT
+> -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 6789 -j ACCEPT
+> -A RH-Firewall-1-INPUT -p tcp -m multiport --dports 6800:7300 -j ACCEPT
+> -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 860 -j ACCEPT
+> -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 3260 -j ACCEPT
+> -A RH-Firewall-1-INPUT -p udp -m udp --dport 67 -j ACCEPT
+> -A RH-Firewall-1-INPUT -p udp -m udp --dport 68 -j ACCEPT
 
 # temporarily add firewall rule
 iptables -I RH-Firewall-1-INPUT -p udp -m udp --dport 4789 -j ACCEPT
+iptables -I RH-Firewall-1-INPUT -p tcp -m tcp --dport 2122 -j ACCEPT
+iptables -I RH-Firewall-1-INPUT -p tcp -m tcp --dport 6789 -j ACCEPT
+iptables -I RH-Firewall-1-INPUT -p tcp -m multiport --dports 6800:7300 -j ACCEPT
+iptables -I RH-Firewall-1-INPUT -p tcp -m tcp --dport 860 -j ACCEPT
+iptables -I RH-Firewall-1-INPUT -p tcp -m tcp --dport 3260 -j ACCEPT
+iptables -I RH-Firewall-1-INPUT -p udp -m udp --dport 67 -j ACCEPT
+iptables -I RH-Firewall-1-INPUT -p udp -m udp --dport 68 -j ACCEPT
 
 # enable ip forwarding
 nano -w /etc/sysctl.conf
@@ -40,6 +54,7 @@ nano -w /opt/ifup-vtep1.sh
 
 ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.5.83 local 192.168.20.162 dstport 4789
 ip link set dev vtep1 up
+ip link set dev vtep1 mtu 1450
 ip addr add 192.167.20.162/24 broadcast 192.167.20.255 dev vtep1
 
 ip route add 192.168.5.220 via 10.0.2.200
@@ -81,7 +96,7 @@ nano -w /lib/systemd/system/vtep1.service
 Description=vtep1 vxlan service
 Conflicts=shutdown.target
 Wants=network-online.target
-After=NetworkManager-wait-online.service
+After=network-online.target openvswitch.service openvswitch-xapi-sync.service NetworkManager-wait-online.service
 [Service]
 Type=simple
 RemainAfterExit=yes
@@ -120,6 +135,7 @@ sudo nano -w /opt/ifup-vtep1.sh
 
 ip link add name vtep1 type vxlan id 80 dev enp3s0 remote 192.168.20.162 local 192.168.5.83 dstport 4789
 ip link set dev vtep1 up
+ip link set dev vtep1 mtu 1450
 ip addr add 192.167.20.83/24 broadcast 192.167.20.255 dev vtep1
 
 ip route add 192.168.5.220 via 192.167.20.162
@@ -135,6 +151,7 @@ ip route add 192.168.5.221 via 192.167.20.162
 ip link add name vtep2 type vxlan id 81 dev vtep1 remote 192.167.20.83 local 192.167.20.83 dstport 4789
 ip link set dev vtep2 address 82:28:b1:5f:68:ee
 ip link set dev vtep2 up
+ip link set dev vtep2 mtu 1400
 ip addr add 192.167.21.1/24 brd + dev vtep2
 
 sudo rm -fv /var/run/dnsmasq.dhcp-vtep2.pid
@@ -163,7 +180,7 @@ Description=vtep1 vxlan service
 Conflicts=shutdown.target
 Wants=network-online.target
 # Enable below on Fedora/CentOS only!
-# After=NetworkManager-wait-online.service
+# After=network-online.target NetworkManager-wait-online.service
 [Service]
 Type=simple
 RemainAfterExit=yes
@@ -204,6 +221,7 @@ sudo nano -w /opt/ifup-inet.sh
 ip route add 192.167.20.83 via 10.0.2.252 src $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//')
 ip link add name vtep2 type vxlan id 81 dev eth2 remote 192.167.20.83 local $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//') dstport 4789
 ip link set dev vtep2 up
+ip link set dev vtep2 mtu 1400
 ip link add name br0 type bridge
 ip link set dev br0 up
 ip link set dev vtep2 master br0
@@ -249,7 +267,7 @@ Description=internet over vxlan
 Conflicts=shutdown.target
 Wants=network-online.target
 # Enable below on Fedora/CentOS only!
-# After=NetworkManager-wait-online.service
+# After=network-online.target NetworkManager-wait-online.service
 [Service]
 Type=simple
 RemainAfterExit=yes

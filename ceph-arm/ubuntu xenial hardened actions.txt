@@ -31,9 +31,6 @@ sudo logwatch --mailto mail@domain.com --output mail --format html --range 'betw
 # view apparmor status
 sudo apparmor_status
 
-# install tiger to audit system security settings
-sudo apt-get install tiger tripwire
-
 # scan system using tiger
 sudo tiger
 

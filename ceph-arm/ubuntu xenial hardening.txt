@@ -27,6 +27,7 @@ sudo ufw reload
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 2122/tcp
+sudo ufw allow 4789/udp
 sudo ufw reload
 sudo systemctl enable sshd
 sudo systemctl restart sshd
@@ -192,6 +193,9 @@ sudo apt-get install apparmor apparmor-profiles
 
 # view apparmor status
 sudo apparmor_status
+
+# install tiger to audit system security settings
+sudo apt-get install tiger tripwire
 
 # scan system using tiger
 sudo tiger
