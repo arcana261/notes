@@ -96,7 +96,7 @@ nano -w /lib/systemd/system/vtep1.service
 Description=vtep1 vxlan service
 Conflicts=shutdown.target
 Wants=network-online.target
-After=network-online.target openvswitch.service openvswitch-xapi-sync.service NetworkManager-wait-online.service
+After=network-online.target openvswitch.service openvswitch-xapi-sync.service xapi-domains.service xapi-storage-script.service xapi.service xcp-networkd.service xen-init-dom0.service xenconsoled.service xsconsole.service xcp-rrdd.service NetworkManager-wait-online.service
 [Service]
 Type=simple
 RemainAfterExit=yes
@@ -215,6 +215,9 @@ iface eth2 inet static
 	gateway 10.0.2.252
 ....
 
+# reboot system
+sudo reboot
+
 # create shell script to mount up inet namespace
 sudo nano -w /opt/ifup-inet.sh
 ....
@@ -240,7 +243,7 @@ echo "nameserver 4.2.2.4" > /etc/resolv.conf
 ip route add 192.168.5.182 via 10.0.2.252 src $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//')
 
 ....
-chmod +x /opt/ifup-inet.sh
+sudo chmod +x /opt/ifup-inet.sh
 
 # create shell script to destroy inet namespace
 sudo nano -w /opt/ifdown-inet.sh
@@ -259,7 +262,7 @@ ip route delete 192.167.20.83
 ip route delete 192.168.5.182
 
 ....
-chmod +x /opt/ifdown-inet.sh
+sudo chmod +x /opt/ifdown-inet.sh
 
 # create systemd service
 sudo nano -w /lib/systemd/system/inet.service

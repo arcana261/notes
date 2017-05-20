@@ -3,8 +3,8 @@ LINK: https://www.thefanclub.co.za/how-to/how-secure-ubuntu-1204-lts-server-part
 
 # upgrade system
 sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
+sudo apt-get -y upgrade
+sudo apt-get -y dist-upgrade
 
 # reboot machine
 sudo reboot
@@ -63,6 +63,9 @@ df
 # change fstab
 sudo nano -w /etc/fstab
 > tmpfs /dev/shm tmpfs defaults,noexec,nosuid 0 0
+
+# reboot system
+sudo reboot
 
 # protect sysctl
 sudo nano -w /etc/sysctl.conf

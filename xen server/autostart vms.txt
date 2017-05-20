@@ -1,0 +1,17 @@
+################### first allow pool to auto start
+
+# get uuid of pool
+xe pool-list
+
+# enable pool to allow auto-start
+xe pool-param-set uuid=UUID other-config:auto_poweron=true
+
+################### set vm to auto start
+
+# get uuid of virtual machine to auto start
+xe vm-list
+
+# set vm to auto start
+xe vm-param-set uuid=UUID other-config:auto_poweron=true
+
+
