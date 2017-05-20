@@ -1,0 +1,52 @@
+## create a script to map and mount
+nano -w /opt/mount-rbd-fanava.sh
+..................
+#!/bin/bash
+
+rbd map fanava/fanava --id fanava
+mount /dev/rbd/fanava/fanava /fanava
+
+..................
+chmod +x /opt/mount-rbd-fanava.sh
+
+## create a script to unmap
+nano -w /opt/umount-rbd-fanava.sh
+..................
+#!/bin/bash
+
+umount /fanava
+rbd unmap /dev/rbd/fanava/fanava
+..................
+chmod +x /opt/umount-rbd-fanava.sh
+
+## create systemd service
+nano -w /lib/systemd/system/mount-rbd-fanava.service
+..................
+[Unit]
+Description=mount rbd device
+Conflicts=shutdown.target
+Wants=network-online.target
+# Enable below on Fedora/CentOS only!
+# After=network-online.target NetworkManager-wait-online.service
+# Enable below on non-Fedora/CentOS only!
+# After=network-online.target
+Before=iscsitarget.service
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/opt/mount-rbd-fanava.sh
+ExecStop=/opt/umount-rbd-fanava.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+..................
+
+# enable service
+systemctl daemon-reload
+systemctl enable mount-rbd-fanava.service
+systemctl restart mount-rbd-fanava.service
+
+
+
+
