@@ -57,6 +57,11 @@ sudo apt install virtinst virt-viewer virt-manager
 virsh net-edit default
 > <range start='192.168.122.100' end='192.168.122.254'/>
 
+# set domain name to "arcana.me"
+# add bellow line below <mac address ....
+virsh net-edit default
+> <domain name="arcana.me"/>
+
 # restart network
 virsh net-destroy default
 virsh net-start default
@@ -168,7 +173,7 @@ Linux Guest Configuration:
 
 # assign static ip address
 virsh net-update default add ip-dhcp-host \
-          "<host mac='52:54:00:4b:56:5d' name='samba-server' ip='192.168.122.2' />" \
+          "<host mac='52:54:00:4b:56:5d' name='samba-server.arcana.me' ip='192.168.122.2' />" \
           --live --config
 
 ####### GO TO GUEST CONSOLE
@@ -209,6 +214,9 @@ sudo systemctl enable sshd
 sudo systemctl restart sshd
 
 ######## SSH INTO SAMBA SERVER!
+
+# update mlocate
+sudo updatedb
 
 # set default editor to vim
 sudo update-alternatives --config editor

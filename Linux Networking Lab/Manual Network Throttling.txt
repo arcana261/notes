@@ -1,0 +1,310 @@
+## setup network
+
+sudo ip link add name br0 type bridge
+sudo ip link set dev br0 up
+
+sudo ip link add name veth0 type veth peer name peer0
+sudo ip link set dev veth0 up
+sudo ip link set dev veth0 master br0
+
+sudo ip link add name veth1 type veth peer name peer1
+sudo ip link set dev veth1 up
+sudo ip link set dev veth1 master br0
+
+## setup server1
+
+sudo ip netns add server1
+sudo ip link set dev peer0 netns server1
+sudo ip netns exec server1 ip link set dev peer0 name eth0
+sudo ip netns exec server1 ip link set dev eth0 up
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev eth0
+
+## setup server2
+
+sudo ip netns add server2
+sudo ip link set dev peer1 netns server2
+sudo ip netns exec server2 ip link set dev peer1 name eth0
+sudo ip netns exec server2 ip link set dev eth0 up
+sudo ip netns exec server2 ip addr add 192.168.80.2/24 brd + dev eth0
+
+## test connectivity
+sudo ip netns exec server1 ping -c 2 192.168.80.2
+sudo ip netns exec server2 ping -c 2 192.168.80.1
+
+## load iperf server on server1
+sudo ip netns exec server1 iperf -s
+
+## test speed
+sudo ip netns exec server2 iperf -c 192.168.80.1
+
+## test ping time
+sudo ip netns exec server2 ping -c 4 192.168.80.1
+
+## set manual delay
+sudo ip netns exec server2 tc qdisc add dev eth0 root netem delay 50ms
+
+## test ping time
+sudo ip netns exec server2 ping -c 4 192.168.80.1
+
+## clear tc rules
+sudo ip netns exec server2 tc qdisc del dev eth0 root
+
+## test ping time
+sudo ip netns exec server2 ping -c 4 192.168.80.1
+
+## manually throttle speec
+sudo ip netns exec server2 tc qdisc add dev eth0 handle 1: root htb default 11
+sudo ip netns exec server2 tc class add dev eth0 parent 1: classid 1:1 htb rate 100mbps
+sudo ip netns exec server2 tc class add dev eth0 parent 1:1 classid 1:11 htb rate 100mbps
+
+## test speed
+sudo ip netns exec server2 iperf -c 192.168.80.1
+
+## clear tc rules
+sudo ip netns exec server2 tc qdisc del dev eth0 root
+
+## test speed
+sudo ip netns exec server2 iperf -c 192.168.80.1
+
+################ CLEANUP #################
+
+sudo ip netns exec server2 iperf -c 192.168.80.1
+sudo ip netns delete server1
+sudo ip netns delete server2
+sudo ip link delete veth0
+sudo ip link delete veth1
+sudo ip link delete br0
+
+
+#######################################################################3
+#######################################################################3
+#######################################################################3
+#######################################################################3
+#######################################################################3
+#######################################################################3
+#######################################################################3
+#######################################################################3
+
+Link: https://serverfault.com/questions/655317/simulate-slow-connection-between-two-ubuntu-server-machines
+
+
+
+
+
+
+
+
+To do this you can make usage of tc alone with u32 filters or combined with iptables marking (maybe more straightforward if you don't want to learn the complex filters syntax). I'll in the following post detail the former solution.
+
+
+Simulating your setup
+
+As an example, let's consider A, B, C and D running 10 Mbit/s virtual interfaces.
+
+You basically want :
+
+    A <==> B : 9 Mbit/s shaping for egress
+    A <==> C : 8 Mbit/s shaping for egress
+
+In order to simulate this I'll create 4 network namespaces and virtual ethernet interfaces plugged into a bridge.
+
+Of course, in your case you will work with real NICs and the bridge will be your gateway or a switch depending on your infrastructure.
+
+So in my simulation we will have the following setup, in a 10.0.0.0/24 network :
+
+                                  10.0.0.254            
+
+                                  +-------+                     
+                                  |       |                     
+                                  |  br0  |                     
+                                  |       |                   
+                                  +---+---+                     
+                                      |                         
+                                      | veth{A..D}.peer        
+                                      |                      
+                  +------------+------+-----+------------+     
+                  |            |            |            |      
+            vethA |      vethB |      vethC |      vethD |      
+              +---+---+    +---+---+    +---+---+    +---+---+  
+              |       |    |       |    |       |    |       |   
+              |   A   |    |   B   |    |   C   |    |   D   |   
+              |       |    |       |    |       |    |       |  
+              +-------+    +-------+    +-------+    +-------+    
+
+              10.0.0.1      10.0.0.2     10.0.0.3     10.0.0.4           
+
+First, the setup phasis so you can understand what it's made of, skip it if you are unfamiliar with it, no big deal. What you must however know is that the command ip netns exec <namespace> <command> allows to execute a command in a network namespace (i.e. in one of the box of the previous draw). This will be used in the next section too.
+
+# Create the bridge
+ip link add br0 type bridge
+
+# Create network namespaces and veth interfaces and plug them into the bridge
+for host in {A..D} ; do 
+    ip link netns add ${host}
+    ip link add veth${host} type veth peer name veth${host}.peer
+    ip link set dev veth${host}.peer master br0
+    ip link set dev veth${host} netns ${host}
+    ip netns exec ${host} ip link set veth${host} up
+done
+
+# Assign IPs
+ip addr add 10.0.0.254/24 dev br0
+ip netns exec A ip addr add 10.0.0.1/24 dev vethA
+ip netns exec B ip addr add 10.0.0.2/24 dev vethB
+ip netns exec C ip addr add 10.0.0.3/24 dev vethC
+ip netns exec D ip addr add 10.0.0.4/24 dev vethD
+
+So at this point we have the setup described previously.
+
+
+Shaping traffic
+
+It's time to get into traffic control in order to get what you want. The tc tool allows you to add queueing disciplines :
+
+    For egress : once the kernel needs to send packets and before accessing the NIC driver.
+    For ingress : after accessing the NIC driver and before the kernel routines are run over the packets received.
+
+It comes with 3 notions : qdisc, classes and filters. Those notions can be used to setup complex packet flow management and priorize traffic based on whatever criterion/criteria you want.
+
+In a nutshell :
+
+    Qdiscs are structures where packets will enventually be enqueued/dequeued.
+    Classes are containers for qdiscs acting with specific behaviours.
+    Filters are ways to route packets between classes, multiple of them can be defined on the same entry point with priorities during processing.
+
+All these usually work as a tree where leaves are qdiscs and classes are nodes. The root of a tree or subtree will be declared as <id>: and children nodes will be declared as <parent_id>:<children_id>. Keep this syntax in mind.
+
+For your case, let's take A and render the tree you would like to set up with tc :
+
+                                     1:
+                                      |
+                                      |
+                                      |
+                                     1:1
+                                   /  |  \
+                                  /   |   \
+                                 /    |    \
+                               1:10  1:20  1:30
+                                |     |     |
+                                |     |     |
+                               :10   :20   :30
+
+Explanation :
+
+    1: is the root qdisc attached to the device vethA, it will be taken explicitely as htb for Hierarchy Token Bucket (the default qdisc of a device is pfifo or pfifo_fast depending on the OS). It's specifically appropriate for bandwith management. Packets not matched by filters defined at this level will go to 1:30 class.
+    1:1 will be a htb class limiting the whole traffic of the device to 10 Mbit/s.
+    1:10 will be a htb class limiting output traffic to 9 Mbit/s (90% of 10 Mbit/s).
+    1:20 will be a htb class limiting output traffic to 8 Mbit/s (80% of 10 Mbit/s).
+    1:30 will be a htb class limiting traffic to 10 Mbit/s (fallback).
+    :10, :20, :30 are sfq qdisc for Stochastic Fairness Queueing. In other words these qdiscs will ensure fairness in transmission schedluding based on flows.
+
+This whole thing is setup by the following commands :
+
+ip netns exec A tc qdisc add dev vethA root handle 1: htb default 30
+ip netns exec A tc class add dev vethA parent 1: classid 1:1 htb rate 10mbit burst 15k
+ip netns exec A tc class add dev vethA parent 1:1 classid 1:10 htb rate 9mbit burst 15k
+ip netns exec A tc class add dev vethA parent 1:1 classid 1:20 htb rate 8mbit burst 15k
+ip netns exec A tc class add dev vethA parent 1:1 classid 1:30 htb rate 10mbit burst 15k
+ip netns exec A tc qdsic add dev vethA parent 1:10 handle 10: sfq perturb 10
+ip netns exec A tc qdisc add dev vethA parent 1:20 handle 20: sfq perturb 10
+ip netns exec A tc qdisc add dev vethA parent 1:30 handle 30: sfq perturb 10
+
+The last thing we need is adding filters so IP packets with destination IP equals B will go to 1:10 class and IP packets with destination IP equals C will go to 1:20 class :
+
+ip netns exec A tc filter add dev vethA parent 1: protocol ip prio 1 u32 match ip dst 10.0.0.2/32 flowid 1:10
+ip netns exec A tc filter add dev vethA parent 1: protocol ip prio 2 u32 match ip dst 10.0.0.3/32 flowid 1:20
+
+Now that you get the idea, you will need to add similar tc rules to B and C so transmissions towards A from these rigs are also shaped.
+
+
+Testing
+
+Now let's test it. For this I'm personnally used to play with iperf, it simply consists of a single binary that can be either run as a client or a server and will automatically send as much traffic as possible between both hosts.
+
+Between A and B :
+
+ $ ip netns exec B iperf -s -p 8001
+  ...
+ $ ip netns exec A iperf -c 10.0.0.2 -p 8001 -t 10 -i 2
+------------------------------------------------------------
+Client connecting to 10.0.0.2, TCP port 8001
+TCP window size: 21.0 KByte (default)
+------------------------------------------------------------
+[  5] local 10.0.0.1 port 58191 connected with 10.0.0.2 port 8001
+[ ID] Interval       Transfer     Bandwidth
+[  5]  0.0- 2.0 sec  2.38 MBytes  9.96 Mbits/sec
+[  5]  2.0- 4.0 sec  2.12 MBytes  8.91 Mbits/sec
+[  5]  4.0- 6.0 sec  2.00 MBytes  8.39 Mbits/sec
+[  5]  6.0- 8.0 sec  2.12 MBytes  8.91 Mbits/sec
+[  5]  8.0-10.0 sec  2.00 MBytes  8.39 Mbits/sec
+[  5]  0.0-10.1 sec  10.8 MBytes  8.91 Mbits/sec
+
+We get our 9 Mbit/s bandwith limit.
+
+Between A and C :
+
+$ ip netns exec C iperf -s -p 8001
+...
+$ ip netns exec A iperf -c 10.0.0.3 -p 8001 -t 10 -i 2
+------------------------------------------------------------
+Client connecting to 10.0.0.3, TCP port 8001
+TCP window size: 21.0 KByte (default)
+------------------------------------------------------------
+[  5] local 10.0.0.1 port 58522 connected with 10.0.0.3 port 8001
+[ ID] Interval       Transfer     Bandwidth
+[  5]  0.0- 2.0 sec  2.25 MBytes  9.44 Mbits/sec
+[  5]  2.0- 4.0 sec  1.75 MBytes  7.34 Mbits/sec
+[  5]  4.0- 6.0 sec  1.88 MBytes  7.86 Mbits/sec
+[  5]  6.0- 8.0 sec  1.88 MBytes  7.86 Mbits/sec
+[  5]  8.0-10.0 sec  1.75 MBytes  7.34 Mbits/sec
+[  5]  0.0-10.1 sec  9.62 MBytes  7.98 Mbits/sec
+
+We get our 8 Mbit/s bandwith limit.
+
+Between A and D :
+
+$ ip netns exec D iperf -s -p 8001
+...
+$ ip netns exec A iperf -c 10.0.0.4 -p 8001 -t 10 -i 2
+------------------------------------------------------------
+Client connecting to 10.0.0.4, TCP port 8001
+TCP window size: 21.0 KByte (default)
+------------------------------------------------------------
+[  5] local 10.0.0.1 port 40614 connected with 10.0.0.4 port 8001
+[ ID] Interval       Transfer     Bandwidth
+[  5]  0.0- 2.0 sec  2.62 MBytes  11.0 Mbits/sec
+[  5]  2.0- 4.0 sec  2.25 MBytes  9.44 Mbits/sec
+[  5]  4.0- 6.0 sec  2.38 MBytes  9.96 Mbits/sec
+[  5]  6.0- 8.0 sec  2.25 MBytes  9.44 Mbits/sec
+[  5]  8.0-10.0 sec  2.38 MBytes  9.96 Mbits/sec
+[  5]  0.0-10.2 sec  12.0 MBytes  9.89 Mbits/sec
+
+Here we have the virtual interface full speed of 10 Mbit/s reached.
+
+Note that the burst of the first measure of each run can be better handled in htb classes by adjusting the adequate parameter.
+
+
+Cleaning up
+
+To remove :
+
+    The filter of priority 1 on 1: : tc filter del dev vethA parent 1: prio 1 u32.
+    All filters on 1: : tc filter del dev vethA parent 1:.
+    Class 1:20 and its children : tc class del dev vethA parent 1:1 classid 
+    1:20.
+    The whole tree : tc qdisc del dev vethA.
+
+To clean up the simulation set :
+
+# Remove veth pairs and network namespaces
+for host in {A..D} ; do
+    ip link del dev veth${host}.peer
+    ip netns del ${host}
+done
+
+# Remove the bridge
+ip link del dev br0
+
+
+
+

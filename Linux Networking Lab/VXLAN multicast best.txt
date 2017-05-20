@@ -153,6 +153,7 @@ sudo ufw enable
 # setup vxlan in router 1
 sudo ip link add name vtep1 type vxlan id 80 dev eth0 group 239.5.5.5 dstport 4789
 sudo ip link set dev vtep1 up
+sudo ip link set dev vtep1 mtu 1450
 sudo ip addr add 192.168.80.1/24 broadcast 192.168.80.255 dev vtep1
 
 # setup network1 dhcp server
@@ -163,11 +164,13 @@ sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network
 # connect server 1 to vxlan
 sudo ip link add name vtep1 type vxlan id 80 dev eth0 group 239.5.5.5 dstport 4789
 sudo ip link set dev vtep1 up
+sudo ip link set dev vtep1 mtu 1450
 sudo dhclient vtep1
 
 # connect server 2 to vxlan
 sudo ip link add name vtep1 type vxlan id 80 dev eth0 group 239.5.5.5 dstport 4789
 sudo ip link set dev vtep1 up
+sudo ip link set dev vtep1 mtu 1450
 sudo dhclient vtep1
 
 # test network 1
@@ -179,6 +182,7 @@ for ip in `cat /tmp/network1.lease | awk '{print $3}'`; do ping -c 2 $ip; done
 # setup vxlan in router 2
 sudo ip link add name vtep2 type vxlan id 81 dev eth0 group 239.5.5.6 dstport 4789
 sudo ip link set dev vtep2 up
+sudo ip link set dev vtep2 mtu 1450
 sudo ip addr add 192.168.81.1/24 broadcast 192.168.81.255 dev vtep2
 
 # setup network2 dhcp server
@@ -189,11 +193,13 @@ sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network
 # connect server 3 to vxlan
 sudo ip link add name vtep2 type vxlan id 81 dev eth0 group 239.5.5.6 dstport 4789
 sudo ip link set dev vtep2 up
+sudo ip link set dev vtep2 mtu 1450
 sudo dhclient vtep2
 
 # connect server 4 to vxlan
 sudo ip link add name vtep2 type vxlan id 81 dev eth0 group 239.5.5.6 dstport 4789
 sudo ip link set dev vtep2 up
+sudo ip link set dev vtep2 mtu 1450
 sudo dhclient vtep2
 
 # test network 2
@@ -205,11 +211,13 @@ for ip in `cat /tmp/network2.lease | awk '{print $3}'`; do ping -c 2 $ip; done
 # connect router3 to network 1
 sudo ip link add name vtep1 type vxlan id 80 dev eth0 group 239.5.5.5 dstport 4789
 sudo ip link set dev vtep1 up
+sudo ip link set dev vtep1 mtu 1450
 sudo dhclient vtep1
 
 # connect router3 to network 2
 sudo ip link add name vtep2 type vxlan id 81 dev eth0 group 239.5.5.6 dstport 4789
 sudo ip link set dev vtep2 up
+sudo ip link set dev vtep2 mtu 1450
 sudo dhclient vtep2
 
 # create bridge between vtep1 and vtep2 in router3

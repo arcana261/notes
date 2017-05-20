@@ -255,6 +255,7 @@ sudo ufw enable
 sudo ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.73.43 local 192.168.73.43 dstport 4789
 sudo ip link set dev vtep1 address 8a:e0:7a:de:bc:c2
 sudo ip link set dev vtep1 up
+sudo ip link set dev vtep1 mtu 1450
 sudo ip addr add 192.168.80.1/24 broadcast 192.168.80.255 dev vtep1
 
 # populate router1 FDB table
@@ -286,12 +287,14 @@ sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network
 sudo ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.73.43 local 192.168.73.41 dstport 4789
 sudo ip link set dev vtep1 address be:09:cc:ef:9a:fe
 sudo ip link set dev vtep1 up
+sudo ip link set dev vtep1 mtu 1450
 sudo dhclient vtep1
 
 # connect server 2 to vxlan
 sudo ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.73.43 local 192.168.73.42 dstport 4789
 sudo ip link set dev vtep1 address 76:dd:fd:1b:97:ca
 sudo ip link set dev vtep1 up
+sudo ip link set dev vtep1 mtu 1450
 sudo dhclient vtep1
 
 # test network 1
@@ -305,6 +308,7 @@ ping -c 2 192.168.80.1 && ping -c 2 192.168.80.2 && ping -c 2 192.168.80.3
 sudo ip link add name vtep2 type vxlan id 81 dev eth0 remote 192.168.73.46 local 192.168.73.46 dstport 4789
 sudo ip link set dev vtep2 address 9a:b5:99:9c:f2:ea
 sudo ip link set dev vtep2 up
+sudo ip link set dev vtep2 mtu 1450
 sudo ip addr add 192.168.81.1/24 broadcast 192.168.81.255 dev vtep2
 
 # populate router2 FDB table
@@ -336,12 +340,14 @@ sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.network
 sudo ip link add name vtep2 type vxlan id 81 dev eth0 remote 192.168.73.46 local 192.168.73.44 dstport 4789
 sudo ip link set dev vtep2 address ea:07:c6:1e:71:5d
 sudo ip link set dev vtep2 up
+sudo ip link set dev vtep2 mtu 1450
 sudo dhclient vtep2
 
 # connect server 4 to vxlan
 sudo ip link add name vtep2 type vxlan id 81 dev eth0 remote 192.168.73.46 local 192.168.73.45 dstport 4789
 sudo ip link set dev vtep2 address 9e:de:c5:56:11:a1
 sudo ip link set dev vtep2 up
+sudo ip link set dev vtep2 mtu 1450
 sudo dhclient vtep2
 
 # test network 2
@@ -356,12 +362,14 @@ ping -c 2 192.168.81.1 && ping -c 2 192.168.81.2 && ping -c 2 192.168.81.3
 sudo ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.73.43 local 192.168.73.47 dstport 4789
 sudo ip link set dev vtep1 address ca:a1:fe:ac:eb:38
 sudo ip link set dev vtep1 up
+sudo ip link set dev vtep1 mtu 1450
 sudo dhclient vtep1
 
 # connect router3 to network 2
 sudo ip link add name vtep2 type vxlan id 81 dev eth0 remote 192.168.73.46 local 192.168.73.47 dstport 4789
 sudo ip link set dev vtep2 address 3e:6c:ac:f6:b9:3b
 sudo ip link set dev vtep2 up
+sudo ip link set dev vtep2 mtu 1450
 sudo dhclient vtep2
 
 # setup ARP proxy and IP forwarding so that router3 can forward traffic between router1 and router2

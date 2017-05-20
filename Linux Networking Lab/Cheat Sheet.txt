@@ -1,5 +1,24 @@
+############################ IP ADDR #################################
+
+# add additional ip address
+ip addr add 192.168.5.8/24 brd + dev eth0
+
+# add additional ip address with label
+ip addr add 192.168.5.8/24 brd + dev eth0 label eth0:0
+
+# get ip address of ethernet device
+ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//'
+
+############################ TCPDUMP #################################
 # debug DHCP through tcpdump
 tcpdump -i veth5 -v -e -n port 67 or port 68
+
+############################ DNSMASQ #################################
+
+# view available dhcp options
+dnsmasq --help dhcp
+
+############################ BRIDGING #################################
 
 # view bridges
 brctl show
@@ -15,6 +34,15 @@ sudo brctl stp <BRIDGE> on
 
 # view stp details on bridge
 sudo brctl showstp <BRIDGE>
+
+# add vxlan entry to FDB
+sudo bridge fdb add <MAC> dev vtep2 dst 192.168.73.47 port 4789 vni 81 via eth0
+
+############################ Firewalls #################################
+
+# firewalld allow port
+sudo firewall-cmd --permanent --add-port=67/udp
+sudo firewall-cmd --reload
 
 ############################ NAT IN UFW #################################
 ## setup masquerading for range 192.168.200/24 in UFW
@@ -37,7 +65,7 @@ sudo vim /etc/ufw/before.rules
 > :POSTROUTING ACCEPT [0:0]
 >
 > # Forward traffic through eth0 - Change to match you out-interface
-> -A POSTROUTING -s 192.168.74.0/24 -o <ETHERNET> -j MASQUERADE
+> -A POSTROUTING -s 192.168.74.0/24 -o <ETHERNET | any> -j MASQUERADE
 >
 > # don't delete the 'COMMIT' line or these nat table rules won't
 > # be processed
@@ -50,3 +78,83 @@ sudo ufw enable
 # verify masquerade is set
 sudo iptables -t nat -L -v
 #############################################################################
+
+############################ NAT IN FIREWALLD #################################
+# install gui firewall tool
+sudo dnf install firewall-config
+
+# enable ip forwarding
+sudo vim /etc/sysctl.conf
+>>>>>>>>>>>>
+net.ipv4.ip_forward = 1
+<<<<<<<<<<<<
+
+# reload sysctl
+sudo sysctl -p
+
+# check if ip forwarding is enabled
+sudo sysctl -a | grep forward
+
+# list zones and bounded interfaces
+sudo firewall-cmd --list-all
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=FedoraWorkstation --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# enable ip masquerading
+sudo firewall-cmd --zone=FedoraWorkstation --permanent --add-masquerade
+
+# to remove ip masquerading
+sudo firewall-cmd --zone=FedoraWorkstation --permanent --remove-masquerade
+#############################################################################
+
+############################ DEBIAN-based Linux Router #################################
+
+# enable ip forwarding
+nano -w /etc/sysctl.conf
+> net.ipv4.ip_forward=1
+> net.ipv4.conf.all.rp_filter=0
+> net.ipv4.conf.default.rp_filter=0
+> net.ipv4.conf.all.accept_source_route=1
+> net.ipv4.conf.default.accept_source_route=1
+
+# reload sysctl
+sudo sysctl -p
+
+# enable ip forwarding in ufw
+nano -w /etc/ufw/sysctl.conf
+> net/ipv4/ip_forward=1
+> net/ipv4/conf/default/rp_filter=0
+> net/ipv4/conf/all/rp_filter=0
+> net/ipv4/conf/all/accept_source_route=1
+> net/ipv4/conf/default/accept_source_route=1
+
+# enable FORWARDing in ufw firewall
+sudo vim /etc/default/ufw 
+> DEFAULT_FORWARD_POLICY="ACCEPT"
+
+# reload ufw
+sudo ufw disable
+sudo ufw enable
+
+#############################################################################
+
+############################ Linux Router #################################
+
+# enable ip forwarding
+nano -w /etc/sysctl.conf
+> net.ipv4.ip_forward=1
+> net.ipv4.conf.all.rp_filter=0
+> net.ipv4.conf.default.rp_filter=0
+> net.ipv4.conf.all.accept_source_route=1
+> net.ipv4.conf.default.accept_source_route=1
+
+# reload sysctl
+sudo sysctl -p
+
+#############################################################################
+
+
+
+
+

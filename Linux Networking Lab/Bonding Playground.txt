@@ -1,0 +1,431 @@
+Where possible 802.3ad is recommended,
+its going to give you the least amount of issues.
+otherwise balance-[alb,tlb] is a good choice,
+followed by balance-rr if connected to a single switch
+or balance-xor if connected to multiple.
+Active-backup is a good choice if you are not concerned
+about bandwidth but more about link failure and finally
+broadcast is very situation specific and
+only recommended if you know you need it.
+
+--------       ------------
+|      |       |          |
+|  S1  |<----->|  bridge  |<-----> S2
+|      |<----->|          |
+|      |<----->|          |<-----> S3
+|      |<----->|          |
+|      |       |          |<-----> S4
+--------       ------------
+
+NOTE: the actual topology is a little more complex
+to allow creation of virtual delay and 10Mbit/s fake
+bandwidth on veths's.
+
+-----------------------------------------------------------------------
+|  Bonding Mode   |  Single    |  Multiple  |  Single    |  Multiple  |
+|                 |  Outgoing  |  Outgoing  |  Incoming  |  Incoming  |
+|-----------------|------------|------------|------------|------------|
+|  balance-rr     |  10.9      |  5.61      |  37.8      |  11.0      |
+|                 |            |  10.9      |            |  11.0      |
+|                 |            |  10.9      |            |  16.1      |
+|-----------------|------------|------------|------------|------------|
+|  balance-xor    |  10.8      |  5.84      |  10.8      |  6.18      |
+|                 |            |  10.7      |            |  5.74      |
+|                 |            |  5.75      |            |  10.1      |
+|-----------------|------------|------------|------------|------------|
+|  balance-tlb    |  10.9      |  10.9      |  10.9      |  4.02      |
+|                 |            |  10.4      |            |  3.77      |
+|                 |            |  10.4      |            |  3.78      |
+|-----------------|------------|------------|------------|------------|
+|  balance-alb    |  10.6      |  10.8      |  10.9      |  10.9      |
+|                 |            |  10.9      |            |  9.78      |
+|                 |            |  10.8      |            |  9.91      |
+|-----------------|------------|------------|------------|------------|
+|  active-backup  |  10.8      |  3.78      |  10.9      |  4.02      |
+|                 |            |  3.75      |            |  3.76      |
+|                 |            |  3.77      |            |  3.78      |
+|-----------------|------------|------------|------------|------------|
+|  brodcast       |  x         |  x         |  x         |  x         |
+|-----------------|------------|------------|------------|------------|
+|  802.3ad        |  N/A       |  N/A       |  N/A       |  N/A       |
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+|  Bonding Mode   |  Single    |  Multiple  |  Single    |  Multiple  |
+|                 |  Outgoing  |  Outgoing  |  Incoming  |  Incoming  |
+|-----------------|------------|------------|------------|------------|
+|  balance-rr     |  NO        |  YES(*,**) |  YES(**)   |  YES(**)   |
+|-----------------|------------|------------|------------|------------|
+|  balance-xor    |  NO        |  YES(*,**) |  NO        |  YES(*,**) |
+|-----------------|------------|------------|------------|------------|
+|  balance-tlb    |  NO        |  YES       |  NO        |  NO        |
+|-----------------|------------|------------|------------|------------|
+|  balance-alb    |  NO        |  YES       |  NO        |  YES       |
+|-----------------|------------|------------|------------|------------|
+|  active-backup  |  NO        |  NO        |  NO        |  NO        |
+|-----------------|------------|------------|------------|------------|
+|  brodcast       |  x         |  x         |  x         |  x         |
+|-----------------|------------|------------|------------|------------|
+|  802.3ad        |  N/A       |  N/A       |  N/A       |  N/A       |
+-----------------------------------------------------------------------
+
+YES(*): Not using all available bandwidth, but partially
+YES(**): Unbalanced traffic rate between links
+
+######################################################
+## load bonding kernel module
+######################################################
+
+# load kernel module
+sudo modprobe bonding
+
+######################################################
+## setup network interfaces
+######################################################
+
+sudo ip link add name br0 type bridge
+sudo ip link set dev br0 up
+
+sudo ip netns add server1
+
+for i in $(seq 0 3); do \
+	sudo ip link add name br-delay-${i} type bridge; \
+	sudo ip link set dev br-delay-${i} up; \
+	sudo ip link add name br-speed-${i} type bridge; \
+	sudo ip link set dev br-speed-${i} up; \
+	sudo ip link add name veth-s1-${i} type veth peer name peer-s1-${i}; \
+	sudo ip link set dev veth-s1-${i} up; \
+	sudo ip link set dev veth-s1-${i} master br-delay-${i}; \
+	sudo ip link set dev peer-s1-${i} netns server1; \
+	sudo ip netns exec server1 ip link set dev peer-s1-${i} name eth${i}; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+	sudo ip link add name veth-s1-${i}-delay type veth peer name peer-s1-${i}-delay; \
+	sudo ip link set dev veth-s1-${i}-delay up; \
+	sudo ip link set dev peer-s1-${i}-delay up; \
+	sudo ip link set dev veth-s1-${i}-delay master br-delay-${i}; \
+	sudo ip link set dev peer-s1-${i}-delay master br-speed-${i}; \
+	sudo tc qdisc add dev veth-s1-${i}-delay root netem delay 100ms; \
+	sudo ip link add name veth-s1-${i}-speed type veth peer name peer-s1-${i}-speed; \
+	sudo ip link set dev veth-s1-${i}-speed up; \
+	sudo ip link set dev peer-s1-${i}-speed up; \
+	sudo ip link set dev veth-s1-${i}-speed master br-speed-${i}; \
+	sudo ip link set dev peer-s1-${i}-speed master br0; \
+	sudo tc qdisc add dev veth-s1-${i}-speed root handle 1: htb default 10; \
+	sudo tc class add dev veth-s1-${i}-speed parent 1: classid 1:1 htb rate 10mbit burst 15k; \
+	sudo tc class add dev veth-s1-${i}-speed parent 1:1 classid 1:10 htb rate 10mbit burst 15k; \
+	sudo tc qdisc add dev veth-s1-${i}-speed parent 1:10 handle 10: sfq perturb 10; \
+	sudo tc filter add dev veth-s1-${i}-speed parent 1: protocol ip prio 1 u32 match ip dst 192.168.80.1/32 flowid 1:10; \
+	sudo tc filter add dev veth-s1-${i}-speed parent 1: protocol ip prio 2 u32 match ip dst 192.168.80.2/32 flowid 1:10; \
+	sudo tc filter add dev veth-s1-${i}-speed parent 1: protocol ip prio 3 u32 match ip dst 192.168.80.3/32 flowid 1:10; \
+	sudo tc filter add dev veth-s1-${i}-speed parent 1: protocol ip prio 4 u32 match ip dst 192.168.80.4/32 flowid 1:10; \
+	sudo tc qdisc add dev peer-s1-${i}-speed root handle 1: htb default 10; \
+	sudo tc class add dev peer-s1-${i}-speed parent 1: classid 1:1 htb rate 10mbit burst 15k; \
+	sudo tc class add dev peer-s1-${i}-speed parent 1:1 classid 1:10 htb rate 10mbit burst 15k; \
+	sudo tc qdisc add dev peer-s1-${i}-speed parent 1:10 handle 10: sfq perturb 10; \
+	sudo tc filter add dev peer-s1-${i}-speed parent 1: protocol ip prio 1 u32 match ip dst 192.168.80.1/32 flowid 1:10; \
+	sudo tc filter add dev peer-s1-${i}-speed parent 1: protocol ip prio 2 u32 match ip dst 192.168.80.2/32 flowid 1:10; \
+	sudo tc filter add dev peer-s1-${i}-speed parent 1: protocol ip prio 3 u32 match ip dst 192.168.80.3/32 flowid 1:10; \
+	sudo tc filter add dev peer-s1-${i}-speed parent 1: protocol ip prio 4 u32 match ip dst 192.168.80.4/32 flowid 1:10; \
+done
+
+for i in $(seq 2 4); do \
+	sudo ip netns add server${i}; \
+	sudo ip link add name veth-s${i} type veth peer name peer-s${i}; \
+	sudo ip link set dev veth-s${i} up; \
+	sudo ip link set dev veth-s${i} master br0; \
+	sudo ip link set dev peer-s${i} netns server${i}; \
+	sudo ip netns exec server${i} ip link set dev peer-s${i} name eth0; \
+	sudo ip netns exec server${i} ip link set dev eth0 up; \
+	sudo ip netns exec server${i} ip addr add 192.168.80.${i}/24 brd + dev eth0; \
+	sudo tc qdisc add dev veth-s${i} root handle 1: htb default 10; \
+	sudo tc class add dev veth-s${i} parent 1: classid 1:1 htb rate 10mbit burst 15k; \
+	sudo tc class add dev veth-s${i} parent 1:1 classid 1:10 htb rate 10mbit burst 15k; \
+	sudo tc qdisc add dev veth-s${i} parent 1:10 handle 10: sfq perturb 10; \
+	sudo tc filter add dev veth-s${i} parent 1: protocol ip prio 1 u32 match ip dst 192.168.80.1/32 flowid 1:10; \
+	sudo tc filter add dev veth-s${i} parent 1: protocol ip prio 2 u32 match ip dst 192.168.80.2/32 flowid 1:10; \
+	sudo tc filter add dev veth-s${i} parent 1: protocol ip prio 3 u32 match ip dst 192.168.80.3/32 flowid 1:10; \
+	sudo tc filter add dev veth-s${i} parent 1: protocol ip prio 4 u32 match ip dst 192.168.80.4/32 flowid 1:10; \
+done
+
+######################################################
+## setup iperf server on server2, server3, server4
+######################################################
+
+sudo ip netns exec server2 iperf -s
+sudo ip netns exec server3 iperf -s
+sudo ip netns exec server4 iperf -s
+
+######################################################
+## test connectivity from server1
+######################################################
+
+# test single streams
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev eth0
+sudo ip netns exec server1 ping -c 2 192.168.80.2
+sudo ip netns exec server1 ping -c 2 192.168.80.3
+sudo ip netns exec server1 ping -c 2 192.168.80.4
+sudo ip netns exec server1 iperf -c 192.168.80.2
+sudo ip netns exec server1 iperf -c 192.168.80.3
+sudo ip netns exec server1 iperf -c 192.168.80.4
+sudo ip netns exec server1 ip addr flush eth0
+
+# test multiple stream
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev eth0
+sudo ip netns exec server1 iperf -c 192.168.80.2&
+sudo ip netns exec server1 iperf -c 192.168.80.3&
+sudo ip netns exec server1 iperf -c 192.168.80.4&
+
+# cleanup
+sudo ip netns exec server1 ip addr flush eth0
+
+######################################################
+## setup balance-rr bonding
+######################################################
+balance-rr: Send packets out each interface sequentially.
+While this does give fault tolerance, if using only one switch
+it will only give Aggregate bandwidth for packets leaving
+via this interface. All incoming packets will be limited to the
+speed of the slowest link in the bond. Also keep in mind that
+this will cause the ARP entries for the machine to bounce between
+interfaces rapidly in the single switch situation. 
+Connecting to multiple upstream switches
+(one for each link in the bond) will not suffer from these affects
+and should receive maximum bandwidth on
+both egressing and ingressing traffic.
+
+
+Outgoing to 1 Server: Aggregated
+Outgoing to N Servers: Aggregated
+Incoming from 1 Server: NOT Aggregated
+Incoming from N Servers: Aggregated
+Fault Tolerance: Tolerant
+
+######################################################
+
+
+# setup bonding
+sudo ip netns exec server1 ip link add name bond0 type bond
+sudo ip netns exec server1 bash -c "echo 'balance-rr' > /sys/class/net/bond0/bonding/mode"
+for i in $(seq 0 3); do \
+	sudo ip netns exec server1 ip addr flush eth${i}; \
+	sudo ip netns exec server1 ip link set dev eth${i} down; \
+	sudo ip netns exec server1 ip link set dev eth${i} master bond0; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+done
+sudo ip netns exec server1 ip link set dev bond0 up
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev bond0
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/mode"
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/slaves"
+
+# test connectivity
+sudo ip netns exec server1 ping -c 2 192.168.80.2
+sudo ip netns exec server1 ping -c 2 192.168.80.3
+sudo ip netns exec server1 ping -c 2 192.168.80.4
+
+# test single outgoing stream
+sudo ip netns exec server1 iperf -c 192.168.80.2
+
+# test multiple outgoing streams
+sudo ip netns exec server1 iperf -c 192.168.80.2&
+sudo ip netns exec server1 iperf -c 192.168.80.3&
+sudo ip netns exec server1 iperf -c 192.168.80.4&
+
+# setup iperf server on server1
+sudo ip netns exec server1 iperf -s
+
+# test single incoming stream
+sudo ip netns exec server2 iperf -c 192.168.80.1
+
+# test multiple incoming streams
+sudo ip netns exec server2 iperf -c 192.168.80.1&
+sudo ip netns exec server3 iperf -c 192.168.80.1&
+sudo ip netns exec server4 iperf -c 192.168.80.1&
+
+######### SET DEIVCES DOWN ONE-BY-ONE IN SERVER1 AND REPEAT TESTS!
+### sudo ip link set dev veth-s1-0 down
+### sudo ip link set dev veth-s1-1 down
+### sudo ip link set dev veth-s1-2 down
+### sudo ip link set dev veth-s1-3 down
+
+# destroy bonding
+for i in $(seq 0 3); do \
+	sudo ip link set dev veth-s1-${i} up; \
+	sudo ip netns exec server1 ip link set dev eth${i} nomaster; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+done
+sudo ip netns exec server1 ip link delete bond0
+
+######################################################
+## setup balance-tlb bonding
+######################################################
+balance-tlb: Attempts to balance outgoing traffic evenly
+over all interfaces and requires no special switch support.
+Provides Load balancing and Aggregate bandwidth.
+
+######################################################
+
+# setup bonding
+sudo ip netns exec server1 ip link add name bond0 type bond
+sudo ip netns exec server1 bash -c "echo 'balance-tlb' > /sys/class/net/bond0/bonding/mode"
+for i in $(seq 0 3); do \
+	sudo ip netns exec server1 ip addr flush eth${i}; \
+	sudo ip netns exec server1 ip link set dev eth${i} down; \
+	sudo ip netns exec server1 ip link set dev eth${i} master bond0; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+done
+sudo ip netns exec server1 ip link set dev bond0 up
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev bond0
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/mode"
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/slaves"
+
+######################################################
+## setup balance-alb bonding
+######################################################
+balance-alb: Same as balance-tlb but also actively updates
+the MAC address table of the switch at the other end by
+using ARP requests to attempt to load balance incoming traffic
+(The difference between the two is that in balance-tlb,
+the MAC entries are passively updated by packets egressing
+the interface while this transmits packets to actively update them).
+
+######################################################
+
+# setup bonding
+sudo ip netns exec server1 ip link add name bond0 type bond
+sudo ip netns exec server1 bash -c "echo 'balance-alb' > /sys/class/net/bond0/bonding/mode"
+for i in $(seq 0 3); do \
+	sudo ip netns exec server1 ip addr flush eth${i}; \
+	sudo ip netns exec server1 ip link set dev eth${i} down; \
+	sudo ip netns exec server1 ip link set dev eth${i} master bond0; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+done
+sudo ip netns exec server1 ip link set dev bond0 up
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev bond0
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/mode"
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/slaves"
+
+######################################################
+## setup balance-xor bonding
+######################################################
+balance-xor: Send packets out based on a configurable
+policy of XORing important filed in the packet before transmission.
+The exact policy can be set with the xmit_hash_policy
+(consult the Linux documentation for more info).
+One advantage of this mode is that packets to the same host
+will be sent out the same interface which may produce
+more predictable traffic patterns.
+Provides Outgoing aggregate bandwidth and Fault Tolerance.
+
+layer2:
+Uses XOR of hardware MAC addresses to generate the hash.
+This algorithm will place all traffic to a particular network peer on the same slave.
+
+layer2+3:
+Uses XOR of hardware MAC addresses and IP addresses to generate the hash.
+This algorithm will place all traffic to a particular network peer on the same slave.
+
+layer3+4:
+This policy uses upper layer protocol information, when available,
+to generate the hash. This allows for traffic to a particular network
+peer to span multiple slaves,
+although a single connection will not span multiple slaves.
+
+encap2+3:
+This policy uses the same formula as layer2+3 but it relies on
+skb_flow_dissect to obtain the header fields which might result
+in the use of inner headers if an encapsulation protocol is used.
+
+encap3+4:
+This policy uses the same formula as layer3+4 but it relies on
+skb_flow_dissect to obtain the header fields which might result
+in the use of inner headers if an encapsulation protocol is used. 
+
+######################################################
+
+# setup bonding
+sudo ip netns exec server1 ip link add name bond0 type bond
+sudo ip netns exec server1 bash -c "echo 'balance-xor' > /sys/class/net/bond0/bonding/mode"
+sudo ip netns exec server1 bash -c "echo 'layer2' > /sys/class/net/bond0/bonding/xmit_hash_policy"
+for i in $(seq 0 3); do \
+	sudo ip netns exec server1 ip addr flush eth${i}; \
+	sudo ip netns exec server1 ip link set dev eth${i} down; \
+	sudo ip netns exec server1 ip link set dev eth${i} master bond0; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+done
+sudo ip netns exec server1 ip link set dev bond0 up
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev bond0
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/mode"
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/slaves"
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/xmit_hash_policy"
+
+######################################################
+## setup active-backup bonding
+######################################################
+active-backup: Only one link in the bond will be used
+at a time with the primary being chosen by the name
+of the interface in /sys/class/net/<interface>/bonding/primary,
+updating the interface in this file will change the
+primary (active) interface.
+This mode only provides fault tolerance.
+
+######################################################
+
+# setup bonding
+sudo ip netns exec server1 ip link add name bond0 type bond
+sudo ip netns exec server1 bash -c "echo 'active-backup' > /sys/class/net/bond0/bonding/mode"
+for i in $(seq 0 3); do \
+	sudo ip netns exec server1 ip addr flush eth${i}; \
+	sudo ip netns exec server1 ip link set dev eth${i} down; \
+	sudo ip netns exec server1 ip link set dev eth${i} master bond0; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+done
+sudo ip netns exec server1 ip link set dev bond0 up
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev bond0
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/mode"
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/slaves"
+
+######################################################
+## setup broadcast bonding
+######################################################
+broadcast: All traffic going out is broadcast on all links,
+most useful in situations where you have 2 mirrors of your
+network that are not connected to each other (fully isolated).
+This mode provides fault tolerance.
+
+######################################################
+
+# setup bonding
+sudo ip netns exec server1 ip link add name bond0 type bond
+sudo ip netns exec server1 bash -c "echo 'broadcast' > /sys/class/net/bond0/bonding/mode"
+for i in $(seq 0 3); do \
+	sudo ip netns exec server1 ip addr flush eth${i}; \
+	sudo ip netns exec server1 ip link set dev eth${i} down; \
+	sudo ip netns exec server1 ip link set dev eth${i} master bond0; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+done
+sudo ip netns exec server1 ip link set dev bond0 up
+sudo ip netns exec server1 ip addr add 192.168.80.1/24 brd + dev bond0
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/mode"
+sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/slaves"
+
+################ CLEANUP #################
+
+for i in $(seq 1 4); do \
+	sudo ip netns delete server${i}; \
+done
+
+for i in $(seq 2 4); do \
+	sudo ip link delete veth-s${i}; \
+done
+
+for i in $(seq 0 3); do \
+	sudo ip link delete br-delay-${i}; \
+	sudo ip link delete br-speed-${i}; \
+	sudo ip link delete veth-s1-${i}; \
+	sudo ip link delete veth-s1-${i}-delay; \
+	sudo ip link delete veth-s1-${i}-speed; \
+done
+
+sudo ip link delete br0
+
+
