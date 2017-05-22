@@ -1,0 +1,31 @@
+# upgrade system
+sudo yum -y update
+
+# view firewall status
+sudo firwall-cmd --list-all
+
+# view and verify fail2ban status
+sudo fail2ban-client status
+
+# update and check rootkits using rkhunter
+sudo rkhunter --update
+sudo rkhunter --check
+
+# scan for open ports
+sudo nmap -v -sT localhost
+
+# perform SYN scanning using nmap
+sudo nmap -v -sS localhost
+
+# view logwatch status
+sudo logwatch | less
+
+# OPTIONAL: EMAIL LOGWATCH DIRECTLY!
+sudo logwatch --mailto mail@domain.com --output mail --format html --range 'between -7 days and today'
+
+# scan system using tripwire
+sudo bash -c "tripwire --check 1> /etc/tripwire/report.txt 2>&1 3>&1"
+
+# reboot system
+sudo reboot
+ 

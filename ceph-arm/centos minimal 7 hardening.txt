@@ -1,0 +1,201 @@
+# upgrade system
+sudo yum -y update
+
+# reboot system
+sudo reboot
+
+# install epel repositories
+sudo yum install epel-release
+
+# install some packages
+sudo yum install psmisc nano vim \
+	policycoreutils-python net-tools wget \
+	curl screen htop bridge-utils iperf \
+	perl mlocate
+
+# configure firewall
+sudo systemctl enable firewalld
+sudo systemctl restart firewalld
+
+# view firewall status
+sudo firwall-cmd --list-all
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=4789/udp
+sudo firewall-cmd --permanent --add-port=2122/tcp
+sudo firewall-cmd --reload
+
+# configure selinux for new ssh port
+sudo semanage port -a -t ssh_port_t -p tcp 2122
+# verify port is changed
+sudo semanage port -l | grep ssh
+
+# enable and restart sshd
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+#####################################################
+###################### MONITOR
+
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=6789/tcp
+sudo firewall-cmd --reload
+
+######################  OSD / MDS
+
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=6800:7300/tcp
+sudo firewall-cmd --reload
+
+###################### iSCSI TARGET
+
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=860/tcp
+sudo firewall-cmd --permanent --add-port=3260/tcp
+sudo firewall-cmd --reload
+
+#####################################################
+
+# check whether tmpfs is mounted on /dev/shm or /run/shm
+df
+
+# change fstab
+sudo nano -w /etc/fstab
+> tmpfs /dev/shm tmpfs defaults,noexec,nosuid 0 0
+
+# reboot system
+sudo reboot
+
+# protect sysctl
+sudo nano -w /etc/sysctl.conf
+> # IP Spoofing protection
+> net.ipv4.conf.default.rp_filter=1
+> net.ipv4.conf.all.rp_filter=1
+>
+> # Ignore ICMP broadcasts requests
+> net.ipv4.icmp_echo_ignore_broadcasts = 1
+>
+> # Do not accept IP source route packets (we are not a router)
+> net.ipv4.conf.all.accept_source_route = 0
+> net.ipv6.conf.all.accept_source_route = 0
+> net.ipv4.conf.default.accept_source_route = 0
+> net.ipv6.conf.default.accept_source_route = 0
+>
+> # Ignore send redirects
+> net.ipv4.conf.all.send_redirects = 0
+> net.ipv4.conf.default.send_redirects = 0
+>
+> # Block SYN attacks
+> net.ipv4.tcp_syncookies = 1
+> net.ipv4.tcp_max_syn_backlog = 2048
+> net.ipv4.tcp_synack_retries = 2
+> net.ipv4.tcp_syn_retries = 5
+>
+> # Log Martians
+> net.ipv4.conf.all.log_martians = 1
+> net.ipv4.icmp_ignore_bogus_error_responses = 1
+>
+> # Ignore ICMP redirects
+> net.ipv4.conf.all.accept_redirects = 0
+> net.ipv6.conf.all.accept_redirects = 0
+> net.ipv4.conf.default.accept_redirects = 0 
+> net.ipv6.conf.default.accept_redirects = 0
+>
+> # Ignore Directed pings
+> net.ipv4.icmp_echo_ignore_all = 1
+
+# reload sysctl
+sudo sysctl -p
+
+# prevent ip spoofing
+sudo nano -w /etc/host.conf
+> order bind,hosts
+> nospoof on
+
+# install denyhosts
+sudo yum install denyhosts
+
+# configure denyhosts
+sudo nano -w /etc/denyhosts.conf
+> ADMIN_EMAIL = root@localhost
+> SMTP_HOST = localhost
+> SMTP_PORT = 25
+> #SMTP_USERNAME=foo
+> #SMTP_PASSWORD=bar
+> SMTP_FROM = DenyHosts nobody@localhost
+> #SYSLOG_REPORT=YES 
+
+# configure fail2ban
+sudo yum install fail2ban
+
+# configure fail2ban for SSH
+sudo nano -w /etc/fail2ban/jail.conf
+> destemail = root@localhost
+> action = %(action_mwl)s
+>
+> [sshd]
+>
+> enabled  = true
+> port     = 2122
+> filter   = sshd
+> logpath  = %(sshd_log)s
+> backend  = %(sshd_backend)s
+> maxretry = 3
+
+# start and enable fail2ban
+sudo systemctl restart fail2ban
+sudo systemctl enable fail2ban
+
+# view and verify fail2ban status
+sudo fail2ban-client status
+
+# install rkhunter and chkrootkit
+sudo yum install rkhunter
+
+# update and check rootkits using rkhunter
+sudo rkhunter --update
+sudo rkhunter --propupd
+sudo rkhunter --check
+
+# install nmap to scan for open ports
+sudo yum install nmap
+
+# scan for open ports
+sudo nmap -v -sT localhost
+
+# perform SYN scanning using nmap
+sudo nmap -v -sS localhost
+
+# install logwatch
+sudo yum install logwatch libdate-manip-perl
+
+# view logwatch status
+sudo logwatch | less
+
+# OPTIONAL: EMAIL LOGWATCH DIRECTLY!
+sudo logwatch --mailto mail@domain.com --output mail --format html --range 'between -7 days and today' 
+
+# install tiger to audit system security settings
+sudo yum install tripwire
+sudo tripwire-setup-keyfiles
+sudo tripwire --init
+
+# scan system using tripwire
+sudo bash -c "tripwire --check 1> /etc/tripwire/report.txt 2>&1 3>&1"
+
+
+
+
+
+
+
+
+
+
+
