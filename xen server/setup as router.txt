@@ -13,6 +13,7 @@
 ##############
 
 # enable VXLAN, SSH, Ceph, iSCSI and DHCP port through firewall
+# NOTEEEE: Add below lines ABOVE "--reject-with icmp-host-prohibited" LINE
 nano -w /etc/sysconfig/iptables
 > -A RH-Firewall-1-INPUT -p udp -m udp --dport 4789 -j ACCEPT
 > -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 2122 -j ACCEPT

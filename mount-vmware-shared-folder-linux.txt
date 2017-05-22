@@ -1,0 +1,65 @@
+# first install openvm tools
+sudo apt-get install open-vm-tools
+sudo reboot
+
+#########################################################
+# using mount
+#########################################################
+mount -t vmhgfs .host:/win7share /mnt/hgfs
+
+#########################################################
+# using fstab
+#########################################################
+.host:/win7share /mnt/hgfs vmhgfs defaults 0 0
+
+#########################################################
+# using systemd and fuse
+#########################################################
+
+sudo mkdir -p /iso-share
+sudo nano -w /opt/mount-vmware.sh
+................
+#!/bin/bash
+
+/usr/bin/vmhgfs-fuse -o auto_unmount .host:/arcana/Downloads/ISO_Library /iso-share
+................
+sudo chmod +x /opt/mount-vmware.sh
+
+sudo nano -w /opt/umount-vmware.sh
+................
+#!/bin/bash
+
+umount /iso-share
+................
+sudo chmod +x /opt/umount-vmware.sh
+
+# create systemd service
+sudo nano -w /lib/systemd/system/mount-vmware.service
+...
+[Unit]
+Description=mount vmware shared folder
+Conflicts=shutdown.target
+Wants=network-online.target
+Before=smbd.service iscsitarget.service
+# Enable below on Fedora/CentOS only!
+# After=network-online.target NetworkManager-wait-online.service
+# Enable below on non-Fedora/CentOS only!
+# After=network-online.target
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/opt/mount-vmware.sh
+ExecStop=/opt/umount-vmware.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+...
+
+# enable service
+sudo systemctl daemon-reload
+sudo systemctl enable mount-vmware.service
+sudo systemctl restart mount-vmware.service
+
+
+
