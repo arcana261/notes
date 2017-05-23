@@ -328,20 +328,27 @@ route ADD 192.168.5.221 192.168.5.83
 ########################################################
 
 # create a new script for target user
-sudo nano -w /sbin/bash-inet-ceph_u
+sudo nano -w /sbin/bash-inet
 .................................................
 #!/bin/bash
 
-/usr/bin/sudo /sbin/ip netns exec inet bash -c "sudo -u ceph_u bash"
+USERNAME=`/usr/bin/whoami`
+
+if test -z "$2"; then
+	/usr/bin/sudo /sbin/ip netns exec inet bash -c "sudo -u ${USERNAME} bash"
+else
+	/usr/bin/sudo /sbin/ip netns exec inet bash -c "sudo -u ${USERNAME} bash -c '$2'"
+fi
+
 .................................................
 
 # make executable
-chmod +x /sbin/bash-inet-ceph_u
+chmod +x /sbin/bash-inet
 
 # change login shell of target user
 sudo nano -w /etc/passwd
 .................................................
-ceph_u: <not important here>  :/sbin/bash-inet-ceph_u
+ceph_u: <not important here>  :/sbin/bash-inet
 .................................................
 
 ================================================
