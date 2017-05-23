@@ -25,7 +25,7 @@ bandwidth on veths's.
 |  Bonding Mode   |  Single    |  Multiple  |  Single    |  Multiple  |
 |                 |  Outgoing  |  Outgoing  |  Incoming  |  Incoming  |
 |-----------------|------------|------------|------------|------------|
-|  balance-rr     |  10.9      |  5.61      |  37.8      |  11.0      |
+|  balance-rr     |  37.8      |  5.61      |  37.8      |  11.0      |
 |                 |            |  10.9      |            |  11.0      |
 |                 |            |  10.9      |            |  16.1      |
 |-----------------|------------|------------|------------|------------|
@@ -54,7 +54,7 @@ bandwidth on veths's.
 |  Bonding Mode   |  Single    |  Multiple  |  Single    |  Multiple  |
 |                 |  Outgoing  |  Outgoing  |  Incoming  |  Incoming  |
 |-----------------|------------|------------|------------|------------|
-|  balance-rr     |  NO        |  YES(*,**) |  YES(**)   |  YES(**)   |
+|  balance-rr     |  YES(*,**) |  YES(*,**) |  YES(**)   |  YES(**)   |
 |-----------------|------------|------------|------------|------------|
 |  balance-xor    |  NO        |  YES(*,**) |  NO        |  YES(*,**) |
 |-----------------|------------|------------|------------|------------|
@@ -104,7 +104,8 @@ for i in $(seq 0 3); do \
 	sudo ip link set dev peer-s1-${i}-delay up; \
 	sudo ip link set dev veth-s1-${i}-delay master br-delay-${i}; \
 	sudo ip link set dev peer-s1-${i}-delay master br-speed-${i}; \
-	sudo tc qdisc add dev veth-s1-${i}-delay root netem delay 100ms; \
+	sudo tc qdisc add dev veth-s1-${i}-delay root netem delay 50ms; \
+	sudo tc qdisc add dev peer-s1-${i}-delay root netem delay 50ms; \
 	sudo ip link add name veth-s1-${i}-speed type veth peer name peer-s1-${i}-speed; \
 	sudo ip link set dev veth-s1-${i}-speed up; \
 	sudo ip link set dev peer-s1-${i}-speed up; \
@@ -137,14 +138,6 @@ for i in $(seq 2 4); do \
 	sudo ip netns exec server${i} ip link set dev peer-s${i} name eth0; \
 	sudo ip netns exec server${i} ip link set dev eth0 up; \
 	sudo ip netns exec server${i} ip addr add 192.168.80.${i}/24 brd + dev eth0; \
-	sudo tc qdisc add dev veth-s${i} root handle 1: htb default 10; \
-	sudo tc class add dev veth-s${i} parent 1: classid 1:1 htb rate 10mbit burst 15k; \
-	sudo tc class add dev veth-s${i} parent 1:1 classid 1:10 htb rate 10mbit burst 15k; \
-	sudo tc qdisc add dev veth-s${i} parent 1:10 handle 10: sfq perturb 10; \
-	sudo tc filter add dev veth-s${i} parent 1: protocol ip prio 1 u32 match ip dst 192.168.80.1/32 flowid 1:10; \
-	sudo tc filter add dev veth-s${i} parent 1: protocol ip prio 2 u32 match ip dst 192.168.80.2/32 flowid 1:10; \
-	sudo tc filter add dev veth-s${i} parent 1: protocol ip prio 3 u32 match ip dst 192.168.80.3/32 flowid 1:10; \
-	sudo tc filter add dev veth-s${i} parent 1: protocol ip prio 4 u32 match ip dst 192.168.80.4/32 flowid 1:10; \
 done
 
 ######################################################
@@ -409,6 +402,13 @@ sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/mode"
 sudo ip netns exec server1 bash -c "cat /sys/class/net/bond0/bonding/slaves"
 
 ################ CLEANUP #################
+
+for i in $(seq 0 3); do \
+	sudo ip link set dev veth-s1-${i} up; \
+	sudo ip netns exec server1 ip link set dev eth${i} nomaster; \
+	sudo ip netns exec server1 ip link set dev eth${i} up; \
+done
+sudo ip netns exec server1 ip link delete bond0
 
 for i in $(seq 1 4); do \
 	sudo ip netns delete server${i}; \
