@@ -1,4 +1,5 @@
 Linux Guest Configuration:
+	CPU -> Copy Host CPU configuration
 	Disk -> VirtIO
 	RAM -> 512 MB
 	Network -> VirtIO (20 GB)
@@ -9,6 +10,7 @@ Linux Guest Configuration:
 			2. SCSI CDROM
 
 Windows Guest Configuration:
+	CPU -> Copy Host CPU configuration
 	RAM -> 3072 MB
 	Disk -> VirtIO (40 GB)
 	CDROM -> IDE
@@ -100,6 +102,14 @@ virsh net-edit default
 virsh net-destroy default
 virsh net-start default
 
+# export VM
+virsh dumpxml > export.xml
+
+# import VM
+# remember that disks should exist
+# so copy them!
+virsh define export.xml
+
 ###### assign static ip address
 virsh net-update default add ip-dhcp-host \
           "<host mac='52:54:00:00:00:01' name='bob' ip='192.168.122.45' />" \
@@ -156,6 +166,7 @@ sudo vim /etc/fstab
 
 ## clone a machine (ubuntu 16.04 xenial)
 Linux Guest Configuration:
+	CPU -> Copy Host CPU configuration
 	Name -> samba-server
 	Memory -> 512 MB
 	Disk -> VirtIO (20 GB)

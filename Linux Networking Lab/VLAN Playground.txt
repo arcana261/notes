@@ -1,0 +1,27 @@
+######################################################
+## setup network topology
+######################################################
+
+sudo ip link add name br0 type bridge
+sudo ip link set dev br0 up
+
+for i in $(seq 1 4); do \
+	sudo ip link add name veth-${i} type veth peer name peer-${i}; \
+	sudo ip link set dev veth-${i} up; \
+	sudo ip link set dev veth-${i} master br0; \
+	sudo ip netns add server${i}; \
+	sudo ip link set dev peer-${i} netns server${i}; \
+	sudo ip netns exec server${i} ip link set dev peer-${i} eth0; \
+	sudo ip netns exec server${i} 
+done
+
+
+
+
+
+
+
+
+
+
+
