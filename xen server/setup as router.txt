@@ -48,15 +48,6 @@ sysctl -p
 # check if is enabled
 sysctl -a | grep forward | more
 
-# generate random vxlan MAC address
-ip link add name vtep-test type vxlan id 80 remote 127.0.0.1 local 127.0.0.1 dstport 4789
-
-# read MAC address
-ip link show
-
-# delete test vxlan
-ip link delete vtep-test
-
 # create shell script to mount up VXLAN
 nano -w /opt/ifup-vtep1.sh
 ...
@@ -64,7 +55,6 @@ nano -w /opt/ifup-vtep1.sh
 
 ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.5.83 local 192.168.20.162 dstport 4789
 ip link set dev vtep1 mtu 1450
-ip link set dev vtep1 address <MAC ADDRESS>
 ip link set dev vtep1 up
 ip addr add 192.167.20.162/24 broadcast 192.167.20.255 dev vtep1
 
@@ -146,6 +136,7 @@ sudo nano -w /opt/ifup-vtep1.sh
 ip link add name vtep1 type vxlan id 80 dev enp3s0 remote 192.168.20.162 local 192.168.5.83 dstport 4789
 ip link set dev vtep1 mtu 1450
 ip link set dev vtep1 up
+ip addr add 192.167.20.83/24 broadcast 192.167.20.255 dev vtep1
 
 ip route add 192.168.5.220 via 192.167.20.162
 ip route add 192.168.5.222 via 192.167.20.162
@@ -157,11 +148,14 @@ ip route add 192.168.5.226 via 192.167.20.162
 ip route add 192.168.5.227 via 192.167.20.162
 ip route add 192.168.5.221 via 192.167.20.162
 
-rm -fv /var/run/dnsmasq.dhcp-vtep1.pid
-rm -fv /tmp/dnsmasq.dhcp-vte1.hosts
-bash -c "echo '<XEN VXLAN MAC ADDRESS>,192.167.20.162,1h' >> /tmp/dnsmasq.dhcp-vte1.hosts"
+ip link add name vtep2 type vxlan id 81 dev vtep1 remote 192.167.20.83 local 192.167.20.83 dstport 4789
+ip link set dev vtep2 address 82:28:b1:5f:68:ee
+ip link set dev vtep2 up
+ip link set dev vtep2 mtu 1400
+ip addr add 192.167.21.1/24 brd + dev vtep2
 
-dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp-vtep1.pid --interface=vtep2 --dhcp-leasefile=/tmp/dhcp-vtep1.lease --dhcp-hostsfile=/tmp/dnsmasq.dhcp-vte1.hosts--dhcp-range=192.167.20.250,192.167.20.254 --log-dhcp --dhcp-sequential-ip
+sudo rm -fv /var/run/dnsmasq.dhcp-vtep2.pid
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp-vtep2.pid --interface=vtep2 --dhcp-leasefile=/tmp/dhcp-vtep2.lease --dhcp-range=192.167.21.2,192.167.21.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router,192.167.21.1 --dhcp-option=option:dns-server,4.2.2.4 --dhcp-option=option:dns-server,8.8.8.8 --dhcp-option=option:mtu,1400
 ...
 chmod +x /opt/ifup-vtep1.sh
 
@@ -172,6 +166,9 @@ nano -w /opt/ifdown-vtep1.sh
 
 ip link set dev vtep1 down
 ip link delete vtep1
+
+ip link set dev vtep2 down
+ip link delete vtep2
 ...
 chmod +x /opt/ifdown-vtep1.sh
 
@@ -197,70 +194,10 @@ Restart=always
 WantedBy=multi-user.target
 ...
 
-
-
-
-# create shell script to mount up VXLAN2
-sudo nano -w /opt/ifup-vtep2.sh
-...
-#!/bin/bash
-ip link add name vtep2 type vxlan id 81 dev vtep1 remote 192.167.20.83 local 192.167.20.83 dstport 4789
-ip link set dev vtep2 address 82:28:b1:5f:68:ee
-ip link set dev vtep2 up
-ip link set dev vtep2 mtu 1400
-ip addr add 192.167.21.1/24 brd + dev vtep2
-
-sudo rm -fv /var/run/dnsmasq.dhcp-vtep2.pid
-sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp-vtep2.pid --interface=vtep2 --dhcp-leasefile=/tmp/dhcp-vtep2.lease --dhcp-range=192.167.21.2,192.167.21.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router,192.167.21.1 --dhcp-option=option:dns-server,4.2.2.4 --dhcp-option=option:dns-server,8.8.8.8 --dhcp-option=option:mtu,1400
-...
-sudo chmod +x /opt/ifup-vtep2.sh
-
-# create shell script to destroy VXLAN
-sudo nano -w /opt/ifdown-vtep2.sh
-...
-#!/bin/bash
-
-ip link set dev vtep2 down
-ip link delete vtep2
-
-...
-sudo chmod +x /opt/ifdown-vtep2.sh
-
-# create systemd service
-sudo nano -w /lib/systemd/system/vtep2.service
-...
-[Unit]
-Description=vtep2 vxlan service
-Conflicts=shutdown.target
-Wants=network-online.target
-# Enable below on Fedora/CentOS only!
-# After=network-online.target NetworkManager-wait-online.service vtep1.service
-# Enable below on non-Fedora/CentOS only!
-# After=network-online.target vtep1.service
-[Service]
-Type=simple
-RemainAfterExit=yes
-ExecStart=/opt/ifup-vtep2.sh
-ExecStop=/opt/ifdown-vtep2.sh
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-...
-
-
-
-
-
-
-
-
 # enable service
 systemctl daemon-reload
 systemctl enable vtep1.service
-systemctl enable vtep2.service
 systemctl restart vtep1.service
-systemctl restart vtep2.service
 
 
 ############ Every VM on Private Network ###############
@@ -383,6 +320,156 @@ route ADD 192.168.5.228 192.168.5.83
 route ADD 192.168.5.226 192.168.5.83
 route ADD 192.168.5.227 192.168.5.83
 route ADD 192.168.5.221 192.168.5.83
+
+############ TEMPORARILY GIVE INTERNET ACCESS ###############
+############ TO A USER LOGGING IN VIA SSH ##################
+############ WITHOUT INVOKING "ip netns" ###################
+############ USEFUL FOR ceph-deploy      ###################
+########################################################
+
+# create a new script for target user
+sudo nano -w /sbin/bash-inet-ceph_u
+.................................................
+#!/bin/bash
+
+/usr/bin/sudo /sbin/ip netns exec inet bash -c "sudo -u ceph_u bash"
+.................................................
+
+# make executable
+chmod +x /sbin/bash-inet-ceph_u
+
+# change login shell of target user
+sudo nano -w /etc/passwd
+.................................................
+ceph_u: <not important here>  :/sbin/bash-inet-ceph_u
+.................................................
+
+================================================
+================================================
+WHEN DONE:
+================================================
+================================================
+
+# change login shell of target user
+sudo nano -w /etc/passwd
+.................................................
+ceph_u: <not important here>  :/bin/bash
+.................................................
+
+
+############ ADDING NEW XEN SERVER ###############
+### Example: Adding XenServer2
+##
+##
+##	vtep1 (vxlan between xenserver and linux gateway)
+##		==> New IP Range
+##		==> New VNI
+##
+##	vtep2 (vxlan between VM's and linux gateway to support internet)
+##		==> New IP Range
+##		==> New VNI
+##
+##
+##	REMEMBER TO CHANGE IP RANGE AND VNI IN ABOVE SCRIPTS!
+##
+## xen-ceph1-> 10.0.2.253
+##			192.168.5.220
+##			192.168.5.222
+##			192.168.5.223
+##			192.168.5.224
+##			192.168.5.225
+##			192.168.5.228
+##			192.168.5.226
+##			192.168.5.227
+##			192.168.5.221
+## xen-ceph2-> 10.0.2.252
+##			192.168.5.232
+##			192.168.5.233
+##			192.168.5.234
+##			192.168.5.235
+########################################################
+
+# route ip's in xenserver1 to xenserver2
+####-> INSIDE xen-ceph1
+
+nano -w /opt/ifup-vtep1.sh
+...............................................
+ip route add 192.168.5.220 via 10.0.2.252
+ip route add 192.168.5.222 via 10.0.2.252
+ip route add 192.168.5.223 via 10.0.2.252
+ip route add 192.168.5.224 via 10.0.2.252
+ip route add 192.168.5.225 via 10.0.2.252
+ip route add 192.168.5.228 via 10.0.2.252
+ip route add 192.168.5.226 via 10.0.2.252
+ip route add 192.168.5.227 via 10.0.2.252
+ip route add 192.168.5.221 via 10.0.2.252
+...............................................
+
+nano -w /opt/ifdown-vtep1.sh
+...............................................
+ip route delete 192.168.5.220
+ip route delete 192.168.5.222
+ip route delete 192.168.5.223
+ip route delete 192.168.5.224
+ip route delete 192.168.5.225
+ip route delete 192.168.5.228
+ip route delete 192.168.5.226
+ip route delete 192.168.5.227
+ip route delete 192.168.5.221
+...............................................
+
+
+# route ip's in xenserver2 to xenserver1
+####-> INSIDE xen-ceph2
+
+nano -w /opt/ifup-vtep1.sh
+...............................................
+ip route add 192.168.5.232 via 10.0.2.251
+ip route add 192.168.5.233 via 10.0.2.251
+ip route add 192.168.5.234 via 10.0.2.251
+ip route add 192.168.5.235 via 10.0.2.251
+...............................................
+
+nano -w /opt/ifdown-vtep1.sh
+...............................................
+ip route delete 192.168.5.232
+ip route delete 192.168.5.233
+ip route delete 192.168.5.234
+ip route delete 192.168.5.235
+...............................................
+
+#### => create vtep1.service inside xen-ceph2
+####	using above guide, remember to apply new
+####	vxlan VNI and vxlan IP range
+
+#### => create vtep2.service inside linux gateway
+####	using above guide, remember to apply new
+####	vxlan VNI and vxlan IP range
+
+#### => add routing to other machines,
+	if linux:
+		ip route add 192.168.5.232 via 192.168.5.83
+		...
+	if windows:
+		route ADD 192.168.5.232 192.168.5.83
+		...
+
+#### => create inet service in other machines
+	using above guide, remember to apply new
+	vxlan VNI and vxlan IP range
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
