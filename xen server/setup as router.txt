@@ -48,15 +48,28 @@ sysctl -p
 # check if is enabled
 sysctl -a | grep forward | more
 
+# generate and save a VXLAN mac address
+ip link add name vtep-test type vxlan id 1 remote 127.0.0.1 local 127.0.0.1 dstport 4789
+
+# read MAC address
+ip link show
+
+# destroy test vxlan
+ip link delete vtep-test
+
 # create shell script to mount up VXLAN
 nano -w /opt/ifup-vtep1.sh
 ...
 #!/bin/bash
 
-ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.5.83 local 192.168.20.162 dstport 4789
-ip link set dev vtep1 up
+ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.20.162 local 192.168.20.162 dstport 4789
 ip link set dev vtep1 mtu 1450
+ip link set dev vtep1 address <MAC>
+ip link set dev vtep1 up
 ip addr add 192.167.20.162/24 broadcast 192.167.20.255 dev vtep1
+
+bridge fdb add f2:ea:01:ef:70:cc dev vtep1 dst 192.168.5.83 port 4789 vni 80 via eth0
+arp -i vtep1 -s 192.167.20.83 f2:ea:01:ef:70:cc
 
 ip route add 192.168.5.220 via 10.0.2.200
 ip route add 192.168.5.222 via 10.0.2.1
@@ -134,10 +147,18 @@ sudo nano -w /opt/ifup-vtep1.sh
 ...
 #!/bin/bash
 
-ip link add name vtep1 type vxlan id 80 dev enp3s0 remote 192.168.20.162 local 192.168.5.83 dstport 4789
-ip link set dev vtep1 up
+ip link add name vtep1 type vxlan id 80 dev enp3s0 remote 192.168.5.83 local 192.168.5.83 dstport 4789
+ip link set dev vtep1 address f2:ea:01:ef:70:cc
 ip link set dev vtep1 mtu 1450
+ip link set dev vtep1 up
 ip addr add 192.167.20.83/24 broadcast 192.167.20.255 dev vtep1
+bridge fdb add <XEN MAC ADDRESS> dev vtep1 dst 192.168.20.162 port 4789 vni 80 via enp3s0
+arp -i vtep1 -s 192.167.20.162 <XEN MAC ADDRESS>
+
+bash -c "echo 0 > /proc/sys/net/ipv4/conf/vtep1/arp_filter"
+bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep1/proxy_arp_pvlan"
+bash -c "echo 1 > /proc/sys/net/ipv4/conf/vtep1/forwarding"
+bash -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
 ip route add 192.168.5.220 via 192.167.20.162
 ip route add 192.168.5.222 via 192.167.20.162
