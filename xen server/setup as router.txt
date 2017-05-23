@@ -48,13 +48,23 @@ sysctl -p
 # check if is enabled
 sysctl -a | grep forward | more
 
+# generate random vxlan MAC address
+ip link add name vtep-test type vxlan id 80 remote 127.0.0.1 local 127.0.0.1 dstport 4789
+
+# read MAC address
+ip link show
+
+# delete test vxlan
+ip link delete vtep-test
+
 # create shell script to mount up VXLAN
 nano -w /opt/ifup-vtep1.sh
 ...
 #!/bin/bash
 
-ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.20.162 local 192.168.20.162 dstport 4789
+ip link add name vtep1 type vxlan id 80 dev eth0 remote 192.168.5.83 local 192.168.20.162 dstport 4789
 ip link set dev vtep1 mtu 1450
+ip link set dev vtep1 address <MAC ADDRESS>
 ip link set dev vtep1 up
 ip addr add 192.167.20.162/24 broadcast 192.167.20.255 dev vtep1
 
@@ -133,16 +143,9 @@ sudo ufw reload
 sudo nano -w /opt/ifup-vtep1.sh
 ...
 #!/bin/bash
-
-ip link add name br-vtep type bridge
-ip link set dev br-vtep mtu 1450
-ip link set dev br-vtep up
-ip addr add 192.167.20.83/24 broadcast 192.167.20.255 dev br-vtep
-
 ip link add name vtep1 type vxlan id 80 dev enp3s0 remote 192.168.20.162 local 192.168.5.83 dstport 4789
 ip link set dev vtep1 mtu 1450
 ip link set dev vtep1 up
-ip link set dev vtep1 master br-vtep
 
 ip route add 192.168.5.220 via 192.167.20.162
 ip route add 192.168.5.222 via 192.167.20.162
@@ -154,14 +157,11 @@ ip route add 192.168.5.226 via 192.167.20.162
 ip route add 192.168.5.227 via 192.167.20.162
 ip route add 192.168.5.221 via 192.167.20.162
 
-ip link add name vtep2 type vxlan id 81 dev vtep1 remote 192.167.20.83 local 192.167.20.83 dstport 4789
-ip link set dev vtep2 address 82:28:b1:5f:68:ee
-ip link set dev vtep2 up
-ip link set dev vtep2 mtu 1400
-ip addr add 192.167.21.1/24 brd + dev vtep2
+rm -fv /var/run/dnsmasq.dhcp-vtep1.pid
+rm -fv /tmp/dnsmasq.dhcp-vte1.hosts
+bash -c "echo '<XEN VXLAN MAC ADDRESS>,192.167.20.162,1h' >> /tmp/dnsmasq.dhcp-vte1.hosts"
 
-sudo rm -fv /var/run/dnsmasq.dhcp-vtep2.pid
-sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp-vtep2.pid --interface=vtep2 --dhcp-leasefile=/tmp/dhcp-vtep2.lease --dhcp-range=192.167.21.2,192.167.21.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router,192.167.21.1 --dhcp-option=option:dns-server,4.2.2.4 --dhcp-option=option:dns-server,8.8.8.8 --dhcp-option=option:mtu,1400
+dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp-vtep1.pid --interface=vtep2 --dhcp-leasefile=/tmp/dhcp-vtep1.lease --dhcp-hostsfile=/tmp/dnsmasq.dhcp-vte1.hosts--dhcp-range=192.167.20.250,192.167.20.254 --log-dhcp --dhcp-sequential-ip
 ...
 chmod +x /opt/ifup-vtep1.sh
 
@@ -169,9 +169,6 @@ chmod +x /opt/ifup-vtep1.sh
 nano -w /opt/ifdown-vtep1.sh
 ...
 #!/bin/bash
-
-ip link set dev vtep2 down
-ip link delete vtep2
 
 ip link set dev vtep1 down
 ip link delete vtep1
@@ -200,10 +197,70 @@ Restart=always
 WantedBy=multi-user.target
 ...
 
+
+
+
+# create shell script to mount up VXLAN2
+sudo nano -w /opt/ifup-vtep2.sh
+...
+#!/bin/bash
+ip link add name vtep2 type vxlan id 81 dev vtep1 remote 192.167.20.83 local 192.167.20.83 dstport 4789
+ip link set dev vtep2 address 82:28:b1:5f:68:ee
+ip link set dev vtep2 up
+ip link set dev vtep2 mtu 1400
+ip addr add 192.167.21.1/24 brd + dev vtep2
+
+sudo rm -fv /var/run/dnsmasq.dhcp-vtep2.pid
+sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp-vtep2.pid --interface=vtep2 --dhcp-leasefile=/tmp/dhcp-vtep2.lease --dhcp-range=192.167.21.2,192.167.21.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router,192.167.21.1 --dhcp-option=option:dns-server,4.2.2.4 --dhcp-option=option:dns-server,8.8.8.8 --dhcp-option=option:mtu,1400
+...
+sudo chmod +x /opt/ifup-vtep2.sh
+
+# create shell script to destroy VXLAN
+sudo nano -w /opt/ifdown-vtep2.sh
+...
+#!/bin/bash
+
+ip link set dev vtep2 down
+ip link delete vtep2
+
+...
+sudo chmod +x /opt/ifdown-vtep2.sh
+
+# create systemd service
+sudo nano -w /lib/systemd/system/vtep2.service
+...
+[Unit]
+Description=vtep2 vxlan service
+Conflicts=shutdown.target
+Wants=network-online.target
+# Enable below on Fedora/CentOS only!
+# After=network-online.target NetworkManager-wait-online.service vtep1.service
+# Enable below on non-Fedora/CentOS only!
+# After=network-online.target vtep1.service
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/opt/ifup-vtep2.sh
+ExecStop=/opt/ifdown-vtep2.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+...
+
+
+
+
+
+
+
+
 # enable service
 systemctl daemon-reload
 systemctl enable vtep1.service
+systemctl enable vtep2.service
 systemctl restart vtep1.service
+systemctl restart vtep2.service
 
 
 ############ Every VM on Private Network ###############
