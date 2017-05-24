@@ -218,6 +218,16 @@ iface eth2 inet static
 # reboot system
 sudo reboot
 
+###### Allow port through ubuntu
+sudo ufw reload
+sudo ufw allow 4789/udp
+sudo ufw reload
+
+###### Allow port through Fedora/CentOS
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=4789/udp
+sudo firewall-cmd --reload
+
 # create shell script to mount up inet namespace
 sudo nano -w /opt/ifup-inet.sh
 ....
@@ -236,7 +246,7 @@ ip link set dev veth0 master br0
 ip netns add inet
 ip link set dev peer0 netns inet
 ip netns exec inet ip link set name eth0 dev peer0
-ip netns exec inet dhclient eth0
+ip netns exec inet dhclient --no-pid eth0
 echo "nameserver 4.2.2.4" > /etc/resolv.conf
 
 # route to other computers on network
@@ -287,9 +297,19 @@ WantedBy=multi-user.target
 ...
 
 # enable service
-systemctl daemon-reload
-systemctl enable inet.service
-systemctl restart inet.service
+# ON NON FEDORA/CENTOS
+sudo systemctl daemon-reload
+sudo systemctl enable inet.service
+sudo systemctl restart inet.service
+
+echo 0 > /selinux/enforce
+# enable service
+# ON FEDORA/CENTOS
+sudo setenforce 0
+sudo systemctl daemon-reload
+sudo systemctl enable inet.service
+sudo systemctl restart inet.service
+sudo setenforce 1
 
 
 ############ EVERY TIME TO ENTER NAMESPACE DO:
@@ -335,9 +355,9 @@ sudo nano -w /sbin/bash-inet
 USERNAME=`/usr/bin/whoami`
 
 if test -z "$2"; then
-	/usr/bin/sudo /sbin/ip netns exec inet bash -c "sudo -u ${USERNAME} bash"
+	/usr/bin/sudo /sbin/ip netns exec inet /bin/bash -c "/usr/bin/sudo -u ${USERNAME} /bin/bash"
 else
-	/usr/bin/sudo /sbin/ip netns exec inet bash -c "sudo -u ${USERNAME} bash -c '$2'"
+	/usr/bin/sudo /sbin/ip netns exec inet /bin/bash -c "/usr/bin/sudo -u ${USERNAME} /bin/bash -c '$2'"
 fi
 
 .................................................
@@ -464,13 +484,6 @@ ip route delete 192.168.5.235
 #### => create inet service in other machines
 	using above guide, remember to apply new
 	vxlan VNI and vxlan IP range
-
-
-
-
-
-
-
 
 
 

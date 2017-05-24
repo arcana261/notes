@@ -97,3 +97,43 @@ bs=10m
 [rbd_iodepth32]
 iodepth=32
 
+
+
+
+
+
+
+=======================================================================================
+http://tracker.ceph.com/projects/ceph/wiki/Benchmark_Ceph_Cluster_Performance
+
+>>>>>> Benchmark RADOS
+
+# create a pool for benchmarking
+ceph osd pool create scbench 100 100
+
+# benchmark write
+rados bench -p scbench 10 write --no-cleanup
+
+# benchmark sequential read
+rados bench -p scbench 10 seq
+
+# benchmark random read
+rados bench -p scbench 10 rand
+
+# cleanup all
+rados -p scbench cleanup
+
+# remove test pool
+ceph osd pool delete scbench scbench --yes-i-really-really-mean-it
+
+>>>>> Benchmark RBD
+
+
+shell> ceph osd pool create rbdbench 100 100
+shell> rbd create image01 --size 1024 --pool rbdbench
+shell> sudo rbd map image01 --pool rbdbench --name client.admin
+shell> sudo /sbin/mkfs.ext4 -m0 /dev/rbd/rbdbench/image01
+shell> sudo mkdir /mnt/ceph-block-device
+shell> sudo mount /dev/rbd/rbdbench/image01 /mnt/ceph-block-device
+shell> rbd bench-write image01 --pool=rbdbench
+

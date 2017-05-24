@@ -1,0 +1,17 @@
+### note: use either PREFIX or NETWORK or NETMASK or (NETWORK and NETMASK)
+###
+
+
+sudo vim /etc/sysconfig/network-scripts/ifcfg-eth0
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR=192.167.5.83
+PREFIX=24
+NETWORK=192.167.5.0
+NETMASK=255.255.255.0
+USERCTL=no
+GATEWAY=192.167.5.1
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+sudo systemctl restart network
+

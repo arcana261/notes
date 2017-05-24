@@ -1,0 +1,20 @@
+# view in flight operations
+# for errors like slow operations
+# slow remappings
+# and stuck peering
+# waiting for peered and etc...
+#
+# in every OSD do: (X means osd id)
+#
+
+ceph daemon osd.X dump_ops_in_flight
+
+# view dump pg's
+ceph pg dump_stuck
+
+# query a pg
+ceph pg <PG> query
+
+##########-> ensure "date" is sync between osd's, monitors, mds's and etc.
+##########-> because ceph.x depends on it gravely!
+

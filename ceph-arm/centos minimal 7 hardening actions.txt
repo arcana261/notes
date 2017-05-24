@@ -29,3 +29,28 @@ sudo bash -c "tripwire --check 1> /etc/tripwire/report.txt 2>&1 3>&1"
 # reboot system
 sudo reboot
  
+=============================
+# view recently denied selinux
+sudo ausearch -m avc --start recent
+
+# find file by inode number
+sudo find / -inum 12353538
+
+# view why an access is denied
+sudo audit2why -a
+
+# allow all denials
+sudo audit2allow -a -M audit-fix
+semodule -i /root/fix-after-update.pp
+
+# allow a portion of deniels copy-pasted inside another file
+sudo audit2allow -i my-audit-log.txt -M audit-fix
+sudo semodule -i /root/fix-after-update.pp
+
+# relabel entire filesystem for SElinux
+sudo touch /.autorelabel
+sudo reboot
+
+# relabel a single file
+sudo restorecon -R -v /usr/bin/bash
+

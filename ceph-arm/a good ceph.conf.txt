@@ -1,0 +1,50 @@
+[global]
+fsid = bd3c273b-4b1e-4bfd-8976-7972e15b7c89
+mon_initial_members = mon1
+mon_host = 192.168.5.220
+auth_cluster_required = cephx
+auth_service_required = cephx
+auth_client_required = cephx
+public_network = 192.168.5.222/24
+cluster_network = 10.0.2.1/24
+osd_pool_default_size = 2
+rbd_default_features = 3
+
+[osd]
+osd_journal_size = 230000
+
+[osd.2]
+public_addr = 192.168.5.222
+cluster_addr = 10.0.2.1
+
+[osd.1]
+public_addr = 192.168.5.223
+cluster_addr = 10.0.2.2
+
+[osd.3]
+public_addr = 192.168.5.224
+cluster_addr = 10.0.2.3
+
+[osd.4]
+public_addr = 192.168.5.225
+cluster_addr = 10.0.2.4
+
+[osd.5]
+public_addr = 192.168.5.232
+cluster_addr = 10.0.2.5
+
+[osd.6]
+public_addr = 192.168.5.233
+cluster_addr = 10.0.2.6
+
+[osd.7]
+public_addr = 192.168.5.234
+cluster_addr = 10.0.2.7
+
+[osd.8]
+public_addr = 192.168.5.235
+cluster_addr = 10.0.2.8
+
+[filestore]
+filestore_max_sync_interval = 20
+

@@ -1,0 +1,4 @@
+1. When grub boots press "TAB"
+2. add "text" at the end of item displayed
+3. press enter!
+

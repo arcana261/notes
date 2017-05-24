@@ -1,9 +1,6 @@
 # upgrade system
 sudo yum -y update
 
-# reboot system
-sudo reboot
-
 # install epel repositories
 sudo yum install epel-release
 
@@ -11,7 +8,31 @@ sudo yum install epel-release
 sudo yum install psmisc nano vim \
 	policycoreutils-python net-tools wget \
 	curl screen htop bridge-utils iperf \
-	perl mlocate
+	perl mlocate deltarpm policycoreutils-python \
+	ntpdate setroubleshoot-server setools-console
+
+# update system date/time
+sudo ntpdate 0.ro.pool.ntp.org  1.ro.pool.ntp.org
+
+# verify system date/time
+date
+
+# relabel entire filesystem for SElinux
+sudo touch /.autorelabel
+
+# verify you can login from another tty
+# if failed, perform following
+#
+#
+# sudo cd /root
+# sudo audit2allow -a -M fix-after-update
+# sudo semodule -i /root/fix-after-update.pp
+#
+#
+>>>>>>>>>> TTY LOGIN
+
+# reboot system
+sudo reboot
 
 # configure firewall
 sudo systemctl enable firewalld
