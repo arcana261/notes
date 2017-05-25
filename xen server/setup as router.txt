@@ -154,8 +154,8 @@ ip link set dev vtep2 up
 ip link set dev vtep2 mtu 1400
 ip addr add 192.167.21.1/24 brd + dev vtep2
 
-sudo rm -fv /var/run/dnsmasq.dhcp-vtep2.pid
-sudo dnsmasq --port=0 --no-hosts --no-daemon --pid-file=/var/run/dnsmasq.dhcp-vtep2.pid --interface=vtep2 --dhcp-leasefile=/tmp/dhcp-vtep2.lease --dhcp-range=192.167.21.2,192.167.21.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router,192.167.21.1 --dhcp-option=option:dns-server,4.2.2.4 --dhcp-option=option:dns-server,8.8.8.8 --dhcp-option=option:mtu,1400
+rm -fv /var/run/dnsmasq.dhcp-vtep2.pid
+dnsmasq --port=0 --no-hosts --pid-file=/var/run/dnsmasq.dhcp-vtep2.pid --interface=vtep2 --bind-interfaces --dhcp-leasefile=/tmp/dhcp-vtep2.lease --dhcp-range=192.167.21.2,192.167.21.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router,192.167.21.1 --dhcp-option=option:dns-server,4.2.2.4,8.8.8.8 --dhcp-option=option:mtu,1400
 ...
 chmod +x /opt/ifup-vtep1.sh
 
@@ -163,6 +163,8 @@ chmod +x /opt/ifup-vtep1.sh
 nano -w /opt/ifdown-vtep1.sh
 ...
 #!/bin/bash
+
+kill -9 `cat /var/run/dnsmasq.dhcp-vtep2.pid`
 
 ip link set dev vtep1 down
 ip link delete vtep1
@@ -198,6 +200,20 @@ WantedBy=multi-user.target
 systemctl daemon-reload
 systemctl enable vtep1.service
 systemctl restart vtep1.service
+
+# enable ip masquerading
+sudo firewall-cmd --zone=FedoraWorkstation --permanent --add-masquerade
+sudo firewall-cmd --reload
+
+# masquerade an ip range
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --add-rich-rule='rule family=ipv4 source address=192.167.21.0/24 masquerade'
+sudo firewall-cmd --reload
+
+# masquerade an ip range using zones
+sudo firewall-cmd --permanent --new-zone=vtep1-zone
+sudo firewall-cmd --permanent --zone=vtep1-zone --add-source=192.167.21.0/24
+sudo firewall-cmd --zone=vtep1-zone --permanent --add-masquerade
+sudo firewall-cmd --reload
 
 
 ############ Every VM on Private Network ###############
@@ -247,7 +263,6 @@ ip netns add inet
 ip link set dev peer0 netns inet
 ip netns exec inet ip link set name eth0 dev peer0
 ip netns exec inet dhclient --no-pid eth0
-echo "nameserver 4.2.2.4" > /etc/resolv.conf
 
 # route to other computers on network
 ip route add 192.168.5.182 via 10.0.2.252 src $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//')

@@ -1,0 +1,206 @@
+###########
+############################
+### CENTOS MACHINE
+###########
+############################
+
+# create an inet account which has access to internet
+sudo useradd -d /home/ceph_u -m ceph_u -G wheel
+
+# temporarily disable selinux
+sudo setenforce 0
+
+# set password
+sudo passwd ceph_u
+
+# create a new script for target user
+sudo nano -w /sbin/bash-inet
+.................................................
+#!/bin/bash
+
+USERNAME=`/usr/bin/whoami`
+
+if test -z "$2"; then
+	/usr/bin/sudo /sbin/ip netns exec inet /bin/bash -c "/usr/bin/sudo -u ${USERNAME} /bin/bash"
+else
+	/usr/bin/sudo /sbin/ip netns exec inet /bin/bash -c "/usr/bin/sudo -u ${USERNAME} /bin/bash -c '$2'"
+fi
+
+.................................................
+
+# make executable
+sudo chmod +x /sbin/bash-inet
+
+# enable password-less sudo
+sudo bash -c 'echo "ceph_u ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ceph_u'
+
+###########
+############################
+### Admin Node
+### RUN AS ceph_u USER!
+###########
+############################
+
+# add to /etc/hosts
+sudo nano -w /etc/hosts
+.................................................
+192.168.5.103   iscsitarget-test
+.................................................
+
+# ensure we are as ceph_u user
+su - ceph_u
+
+# navigate to cluster directory
+cd /home/ceph_u/my-cluster
+
+# add to ssh config
+nano -w /home/ceph_u/.ssh/config
+.................................................
+Host iscsitarget-test
+        Hostname iscsitarget-test
+        User    ceph_u  
+        Port    2122
+.................................................
+
+# copy ssh id of admin to client
+ssh-copy-id iscsitarget-test
+
+###########
+############################
+### CENTOS MACHINE
+###########
+############################
+
+# change login shell of user ceph_u
+sudo chsh -s /sbin/bash-inet ceph_u
+
+###########
+############################
+### Admin Node
+###########
+############################
+
+# install ceph
+ceph-deploy install iscsitarget-test
+
+# make it admin
+ceph-deploy admin iscsitarget-test
+
+###########
+############################
+### CENTOS MACHINE
+###########
+############################
+
+# disable password-less sudo
+sudo rm -f /etc/sudoers.d/ceph_u
+
+# change login shell of user ceph_u
+sudo chsh -s /bin/bash ceph_u
+
+# enable selinux
+sudo setenforce 1
+
+# create shell script to mount rbd device
+sudo nano -w /opt/mount-rbd-iscsi-test.sh
+.................................................
+#!/bin/bash
+
+/bin/mkdir -p /iscsi-test
+/bin/rbd map rbd/iscsi-test
+/bin/mount /dev/rbd/rbd/iscsi-test /iscsi-test
+.................................................
+
+# make it executable
+sudo chmod +x /opt/mount-rbd-iscsi-test.sh
+
+# create shell script to unmount rbd device
+sudo nano -w /opt/umount-rbd-iscsi-test.sh
+.................................................
+#!/bin/bash
+
+/bin/umount /iscsi-test
+/bin/rbd unmap rbd/iscsi-test
+.................................................
+
+# make it executable
+sudo chmod +x /opt/umount-rbd-iscsi-test.sh
+
+# create systemd service
+sudo nano -w /etc/systemd/system/mount-rbd-iscsi-test.service
+.................................................
+[Unit]
+Description=RADOS block device mapping for "rbd"/"iscsi-test"
+Conflicts=shutdown.target
+Wants=network-online.target
+# Remove this if you don't have Networkmanager
+After=NetworkManager-wait-online.service
+Before=target.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/mount-rbd-iscsi-test.sh
+ExecStop=/opt/umount-rbd-iscsi-test.sh
+TimeoutSec=0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+WantedBy=remote-fs-pre.target
+.................................................
+
+# enable service
+sudo systemctl daemon-reload
+sudo systemctl enable mount-rbd-iscsi-test.service
+sudo systemctl restart mount-rbd-iscsi-test.service
+sudo systemctl status mount-rbd-iscsi-test.service
+
+# install iscsi target service
+sudo ip netns exec inet yum install targetcli
+
+
+## FIND REMAINING SIZE OF DISK USING "df -m" ALLOW SOME SPACE TO BE LEFT BEHIND FOR FILESYSTEM
+## E.G. 996000
+df -m
+
+sudo targetcli
+> cd backstores/fileio
+> create disk01 /iscsi-test/disk01.img 996000M
+> cd /iscsi
+> create iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
+> cd iqn.2017-05.centos-test.iscsi.kaveh:storage.target00/tpg1/luns
+> create /backstores/fileio/disk01
+> cd ../acls
+> create iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
+> cd iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
+> set auth userid=admin
+> set auth password=123
+> exit
+
+
+TO DISABLE AUTHENTICATION:
+> cd /iscsi/iqn.2017-05.xenertebat.iscsi.kaveh:storage.target00/tpg1/
+> set attribute authentication=0
+> set attribute generate_node_acls=1
+
+# enable service
+sudo systemctl enable target
+sudo systemctl restart target
+sudo systemctl status target
+
+# add rule to firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=860/tcp
+sudo firewall-cmd --permanent --add-port=3260/tcp
+sudo firewall-cmd --reload
+
+# reboot
+sudo reboot
+
+
+
+
+
+
+
+

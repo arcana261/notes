@@ -21,8 +21,20 @@ sudo firewall-cmd --zone=FedoraWorkstation --query-masquerade && echo "enabled" 
 
 # enable ip masquerading
 sudo firewall-cmd --zone=FedoraWorkstation --permanent --add-masquerade
+sudo firewall-cmd --reload
 
 # to remove ip masquerading
 sudo firewall-cmd --zone=FedoraWorkstation --permanent --remove-masquerade
+sudo firewall-cmd --reload
+
+# masquerade an ip range using rich rule
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --add-rich-rule='rule family=ipv4 source address=192.168.1.0/24 masquerade'
+sudo firewall-cmd --reload
+
+# masquerade an ip range using zones
+sudo firewall-cmd --permanent --new-zone=masquerade-zone
+sudo firewall-cmd --permanent --zone=masquerade-zone --add-source=192.0.2.4/32
+sudo firewall-cmd --zone=masquerade-zone --permanent --add-masquerade
+sudo firewall-cmd --reload
 
 

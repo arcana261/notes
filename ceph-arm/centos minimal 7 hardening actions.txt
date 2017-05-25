@@ -54,3 +54,7 @@ sudo reboot
 # relabel a single file
 sudo restorecon -R -v /usr/bin/bash
 
+# temporarily disable selinux
+sudo setenforce 0
+
+

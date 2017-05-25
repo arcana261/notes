@@ -9,7 +9,12 @@ sudo yum install psmisc nano vim \
 	policycoreutils-python net-tools wget \
 	curl screen htop bridge-utils iperf \
 	perl mlocate deltarpm policycoreutils-python \
-	ntpdate setroubleshoot-server setools-console
+	ntpdate setroubleshoot-server setools-console \
+	bind-utils tcpdump python-pip \
+	yum-plugin-priorities
+
+# update pip
+sudo pip install --upgrade pip
 
 # update system date/time
 sudo ntpdate 0.ro.pool.ntp.org  1.ro.pool.ntp.org
@@ -20,7 +25,7 @@ date
 # relabel entire filesystem for SElinux
 sudo touch /.autorelabel
 
-# verify you can login from another tty
+# verify you can login from another tty/ssh
 # if failed, perform following
 #
 #
@@ -31,6 +36,10 @@ sudo touch /.autorelabel
 #
 >>>>>>>>>> TTY LOGIN
 
+# ensure hostname is set in /etc/hosts
+sudo nano -w /etc/hosts
+> 127.0.0.1 my-host-name
+
 # reboot system
 sudo reboot
 
@@ -39,7 +48,7 @@ sudo systemctl enable firewalld
 sudo systemctl restart firewalld
 
 # view firewall status
-sudo firwall-cmd --list-all
+sudo firewall-cmd --list-all
 
 # configure ssh
 sudo vim /etc/ssh/sshd_config
@@ -93,6 +102,11 @@ sudo nano -w /etc/fstab
 # reboot system
 sudo reboot
 
+# check whether following file exists:
+sudo ll /etc/selinux/targeted/contexts/files/file_contexts.local
+# if it does not exist, create it
+sudo touch /etc/selinux/targeted/contexts/files/file_contexts.local
+
 # protect sysctl
 sudo nano -w /etc/sysctl.conf
 > # IP Spoofing protection
@@ -136,7 +150,7 @@ sudo sysctl -p
 
 # prevent ip spoofing
 sudo nano -w /etc/host.conf
-> order bind,hosts
+> order hosts,bind
 > nospoof on
 
 # install denyhosts

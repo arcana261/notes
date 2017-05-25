@@ -3,11 +3,10 @@ http://blog.mit.bme.hu/meszaros/en/unix/ceph-rbd-client
 
 
 
-yum install http://download.ceph.com/rpm-testing/rhel7/x86_64/kmod-rbd-3.10-0.1.20140702gitdc9ac62.el7.x86_64.rpm http://download.ceph.com/rpm-testing/rhel7/x86_64/kmod-libceph-3.10-0.1.20140702gitdc9ac62.el7.x86_64.rpm
+sudo yum install http://download.ceph.com/rpm-testing/rhel7/x86_64/kmod-rbd-3.10-0.1.20140702gitdc9ac62.el7.x86_64.rpm http://download.ceph.com/rpm-testing/rhel7/x86_64/kmod-libceph-3.10-0.1.20140702gitdc9ac62.el7.x86_64.rpm
 
-modprobe rbd
-
-lsmod | grep rbd
+sudo modprobe rbd
+sudo lsmod | grep rbd
 
 CREATE A NEW RBD IMAGE USING ADMIN NODE:
            rbd create --size 1000000 iscsi-xen-ertebat

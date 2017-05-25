@@ -128,12 +128,124 @@ ceph osd pool delete scbench scbench --yes-i-really-really-mean-it
 
 >>>>> Benchmark RBD
 
+# initiate benchmark
+ceph osd pool create rbdbench 100 100
+rbd create image01 --size 1024 --pool rbdbench
+sudo rbd map image01 --pool rbdbench --name client.admin
+sudo /sbin/mkfs.ext4 -m0 /dev/rbd/rbdbench/image01
+sudo mkdir /mnt/ceph-block-device
+sudo mount /dev/rbd/rbdbench/image01 /mnt/ceph-block-device
+rbd bench-write image01 --pool=rbdbench
 
-shell> ceph osd pool create rbdbench 100 100
-shell> rbd create image01 --size 1024 --pool rbdbench
-shell> sudo rbd map image01 --pool rbdbench --name client.admin
-shell> sudo /sbin/mkfs.ext4 -m0 /dev/rbd/rbdbench/image01
-shell> sudo mkdir /mnt/ceph-block-device
-shell> sudo mount /dev/rbd/rbdbench/image01 /mnt/ceph-block-device
-shell> rbd bench-write image01 --pool=rbdbench
+# cleanup
+sudo umount /mnt/ceph-block-device
+sudo rm -rfv /mnt/ceph-block-device
+rbd unmap /dev/rbd/rbdbench/image01
+rbd rm rbdbench/image01
+ceph osd pool delete rbdbench rbdbench --yes-i-really-really-mean-it
+
+>>>>>> Benchmark DD
+
+# initialize image
+rbd create test_image --size 102400
+rbd map test_image
+mkfs.xfs /dev/rbd/rbd/test_image
+mount /dev/rbd/rbd/test_image /mnt
+
+# benchmark 1 stream
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000
+
+# benchmark 2 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000
+
+# benchmark 3 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test3.dat bs=1M count=2000
+
+# benchmark 4 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test3.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test4.dat bs=1M count=2000
+
+# benchmark 5 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test3.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test4.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test5.dat bs=1M count=2000
+
+# benchmark 6 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test3.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test4.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test5.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test6.dat bs=1M count=2000
+
+# benchmark 7 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test3.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test4.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test5.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test6.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test7.dat bs=1M count=2000
+
+# benchmark 8 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test3.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test4.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test5.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test6.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test7.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test8.dat bs=1M count=2000
+
+# benchmark 9 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test3.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test4.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test5.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test6.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test7.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test8.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test9.dat bs=1M count=2000
+
+# benchmark 10 streams
+sudo dd if=/dev/zero of=/mnt/test1.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test2.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test3.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test4.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test5.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test6.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test7.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test8.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test9.dat bs=1M count=2000&
+sudo dd if=/dev/zero of=/mnt/test10.dat bs=1M count=2000
+
+# cleanup
+sudo umount /mnt
+rbd unmap /dev/rbd/rbd/test_image
+rbd rm test_image
+
+>>>>>> Benchmark fio
+
+# setup
+rbd create test --size 10240
+rbd map test
+mkfs.xfs /dev/rbd/rbd/test
+
+# test random write using 4k block
+sudo fio fio-write-4k.cfg
+
+# test random write using 10m block
+sudo fio fio-write-10m.cfg
+
+# cleanup
+rbd unmap /dev/rbd/rbd/test
+rbd rm rbd/test
 
