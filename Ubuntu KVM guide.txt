@@ -68,10 +68,6 @@ virsh net-edit default
 virsh net-destroy default
 virsh net-start default
 
-sudo apt-get install open-vm-tools
-
-cp /usr/lib/vmware/isoimages/windows.iso ~/KVM\ Virtual\ Machines/windows-vmware.iso
-
 
 http://people.redhat.com/~vrozenfe/qxlwddm/
 https://fedoraproject.org/wiki/Windows_Virtio_Drivers
@@ -270,5 +266,197 @@ sudo ufw reload
 sudo ufw allow 139/tcp
 sudo ufw allow 445/tcp
 sudo ufw reload
+
+
+################ ENABLE GPU PASSTHROUGH (nvidia) #############################
+###### REMEMBER TO HAVE 2 HDMI CARDS: ONE FOR "intel"
+###### WHICH WILL BE USED ON LINUX DESKTOP
+###### ONE CONNECTED TO GPU WHICH WILL BE PASSED THROUGH
+###### TO WINDOWS VM.
+# guide: https://scottlinux.com/2016/08/28/gpu-passthrough-with-kvm-and-debian-linux/
+# guide: https://www.pugetsystems.com/labs/articles/Multiheaded-NVIDIA-Gaming-using-Ubuntu-14-04-KVM-585/
+# guide: https://bbs.archlinux.org/viewtopic.php?id=162768
+# guide: https://ycnrg.org/vga-passthrough-with-ovmf-vfio/
+
+# add iommu support to GRUB_CMDLINE_LINUX_DEFAULT
+# for intel: intel_iommu=on
+# for amd: amd_iommu=on
+sudo nano -w /etc/default/grub
+....................................
+GRUB_CMDLINE_LINUX_DEFAULT+="intel_iommu=on vfio_iommu_type1.allow_unsafe_interrupts=1 nogpumanager modprobe.blacklist=nouveau,radeon,amdgpu,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset blacklist=nouveau,radeon,amdgpu,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset nomodeset"
+GRUB_CMDLINE_LINUX+="intel_iommu=on vfio_iommu_type1.allow_unsafe_interrupts=1 nogpumanager modprobe.blacklist=nouveau,radeon,amdgpu,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset blacklist=nouveau,radeon,amdgpu,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset nomodeset"
+GRUB_GFXMODE=1920x1080
+GRUB_GFXPAYLOAD_LINUX=keep
+....................................
+
+# regenerate grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# blacklist nvidia driver
+sudo nano -w /etc/modprobe.d/blacklist.conf
+....................................
+# used for KVM passthrough
+blacklist nouveau
+blacklist radeon
+blacklist amdgpu
+blacklist nvidia
+blacklist nvidia_drm
+blacklist nvidia_uvm
+blacklist nvidia_modeset
+
+remove nvidia rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia
+
+install nouveau /bin/false
+install radeon /bin/false
+install amdgpu /bin/false
+install nvidia /bin/false
+install nvidia_drm /bin/false
+install nvidia_uvm /bin/false
+install nvidia_modeset /bin/false
+....................................
+
+# comment nvidia drivers
+sudo vim /etc/modprobe.d/nvidia-graphics-drivers.conf
+....................................
+# {comment all lines}
+....................................
+
+# load some necessary drivers
+sudo nano -w /etc/modules
+....................................
+pci_stub
+vfio
+vfio_iommu_type1
+vfio_pci
+kvm
+kvm_intel 
+vfio_virqfd
+....................................
+
+# get device ids (inside bracets []) from lscpi
+lspci -nn | grep NV
+######## SAMPLE OUTPUT:
+## 01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GK104 [GeForce GTX 660 Ti] [10de:1183] (rev a1)
+## 01:00.1 Audio device [0403]: NVIDIA Corporation GK104 HDMI Audio Controller [10de:0e0a] (rev a1)
+##
+## in this case we are interested in [10de:1183] and [10de:0e0a]
+########
+
+# blacklist nvidia drivers using pci stub
+sudo nano -w /etc/initramfs-tools/modules 
+....................................
+pci_stub ids=10de:1183,10de:0e0a
+....................................
+
+#####################################################################################
+# restore drivers using:
+# sudo cp -rfv /home/arcana/nvidia-backup/$(uname -r)/* /lib/modules/$(uname -r)/updates/dkms/
+#####################################################################################
+# verify where nvidia kernel modules are located
+ll /lib/modules/$(uname -r)/updates/dkms/
+
+# backup nvidia drivers
+mkdir -p ~/nvidia-backup/$(uname -r)
+cp -rfv /lib/modules/$(uname -r)/updates/dkms/nvidia* ~/nvidia-backup/$(uname -r)/
+
+# remove nvidia drivers
+sudo rm -rfv /lib/modules/$(uname -r)/updates/dkms/nvidia*
+#####################################################################################
+
+# regenerate initramfs
+sudo update-initramfs -u
+
+#####################################################################################
+# verify initramfs no longer contains nvidia drivers
+lsinitramfs /boot/initrd.img-$(uname -r) | grep nv
+#####################################################################################
+
+# also add pci stubs to bootloader
+sudo nano -w /etc/default/grub
+....................................
+GRUB_CMDLINE_LINUX_DEFAULT+="pci-stub.ids=10de:1183,10de:0e0a"
+GRUB_CMDLINE_LINUX+="pci-stub.ids=10de:1183,10de:0e0a"
+....................................
+
+# regenerate grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# disable nvidia services
+sudo systemctl disable nvidia-persistenced.service 
+sudo systemctl disable nvidia-prime.service
+sudo systemctl mask nvidia-persistenced.service 
+sudo systemctl mask nvidia-prime.service
+sudo systemctl stop nvidia-persistenced.service 
+sudo systemctl stop nvidia-prime.service
+sudo systemctl disable gpu-manager.service
+sudo systemctl stop gpu-manager.service
+
+# edit xorg.conf
+sudo vim /etc/X11/xorg.conf
+....................................
+# change {Inactive "intel"} to {Inactive "nvidia"}
+# change {Screen 0 "nvidia"} to {Screen 0 "intel"}
+# comment all "nvidia" stuff
+....................................
+
+# set primary display to intel
+sudo prime-select intel
+
+# reboot system
+sudo reboot
+
+# change primary display in BIOS
+# mine is "Asys Z87 Pro"
+Advanced -> System Agent Configuration ->
+	Graphics Configuration -> Primary Display -> iGPU
+
+# verify nvidia is not loaded
+sudo lsmod | grep nvidia
+
+# check if IOMMU is enabled
+dmesg | grep -e DMAR -e IOMMU
+
+# check iommu groups
+ll /sys/kernel/iommu_groups/
+
+# check devices claimed by stub
+dmesg | grep stub
+
+# add pci ids to vfio.conf
+sudo nano -w /etc/modprobe.d/vfio.conf
+....................................
+options vfio-pci ids=10de:1183,10de:0e0a
+....................................
+
+# regenerate initramfs
+sudo update-initramfs -u
+
+# enable OVMF support
+sudo nano -w /etc/libvirt/qemu.conf
+....................................
+nvram = [    "/usr/share/OVMF/OVMF_CODE.fd:/usr/share/OVMF/OVMF_VARS.fd",
+"/usr/share/AAVMF/AAVMF_CODE.fd:/usr/share/AAVMF/AAVMF_VARS.fd"
+]
+
+user = "root"
+
+group = "root"
+....................................
+
+# reboot system
+sudo reboot
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
