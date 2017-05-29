@@ -40,6 +40,12 @@ sudo touch /.autorelabel
 sudo nano -w /etc/hosts
 > 127.0.0.1 my-host-name
 
+# allow icmp (ping)
+sudo nano -w /etc/sysctl.conf
+>>>>>>>>>>>>>>>>>>>>>>
+net.ipv4.icmp_echo_ignore_all = 0
+<<<<<<<<<<<<<<<<<<<<<<
+
 # reboot system
 sudo reboot
 
@@ -143,7 +149,7 @@ sudo nano -w /etc/sysctl.conf
 > net.ipv6.conf.default.accept_redirects = 0
 >
 > # Ignore Directed pings
-> net.ipv4.icmp_echo_ignore_all = 1
+> net.ipv4.icmp_echo_ignore_all = 0
 
 # reload sysctl
 sudo sysctl -p

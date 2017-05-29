@@ -119,6 +119,7 @@ sudo nano -w /opt/umount-rbd-iscsi-test.sh
 .................................................
 #!/bin/bash
 
+/bin/systemctl stop target.service
 /bin/umount /iscsi-test
 /bin/rbd unmap rbd/iscsi-test
 .................................................
@@ -127,14 +128,14 @@ sudo nano -w /opt/umount-rbd-iscsi-test.sh
 sudo chmod +x /opt/umount-rbd-iscsi-test.sh
 
 # create systemd service
-sudo nano -w /etc/systemd/system/mount-rbd-iscsi-test.service
+sudo nano -w /lib/systemd/system/mount-rbd-iscsi-test.service
 .................................................
 [Unit]
 Description=RADOS block device mapping for "rbd"/"iscsi-test"
 Conflicts=shutdown.target
 Wants=network-online.target
 # Remove this if you don't have Networkmanager
-After=NetworkManager-wait-online.service
+After=network-online.target NetworkManager-wait-online.service
 Before=target.service
 
 [Service]
@@ -145,8 +146,7 @@ TimeoutSec=0
 RemainAfterExit=yes
 
 [Install]
-WantedBy=multi-user.target
-WantedBy=remote-fs-pre.target
+WantedBy=network-online.target
 .................................................
 
 # enable service
@@ -179,9 +179,10 @@ sudo targetcli
 
 
 TO DISABLE AUTHENTICATION:
-> cd /iscsi/iqn.2017-05.xenertebat.iscsi.kaveh:storage.target00/tpg1/
+> cd /iscsi/iqn.2017-05.centos-test.iscsi.kaveh:storage.target00/tpg1/
 > set attribute authentication=0
 > set attribute generate_node_acls=1
+> set attribute demo_mode_write_protect=0
 
 # enable service
 sudo systemctl enable target
