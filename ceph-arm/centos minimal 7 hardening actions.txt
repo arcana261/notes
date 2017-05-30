@@ -7,6 +7,12 @@ sudo firwall-cmd --list-all
 # view and verify fail2ban status
 sudo fail2ban-client status
 
+# view SSH banned ips
+sudo fail2ban-client status sshd
+
+# unban ip
+sudo fail2ban-client set sshd unbanip 192.168.5.228
+
 # update and check rootkits using rkhunter
 sudo rkhunter --update
 sudo rkhunter --check
