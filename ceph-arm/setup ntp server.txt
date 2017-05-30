@@ -23,6 +23,8 @@ sudo firewall-cmd --add-service=ntp --permanent
 sudo firewall-cmd --reload
 
 # enable ntp service
+sudo systemctl disable chronyd
+sudo systemctl stop chronyd
 sudo systemctl restart ntpd
 sudo systemctl enable ntpd
 sudo systemctl status ntpd

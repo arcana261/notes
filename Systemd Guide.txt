@@ -1,0 +1,20 @@
+# plot system startup sequence
+sudo systemd-analyze plot > Documents/test.svg
+
+# list dependencies between services in a graph
+sudo systemctl list-dependencies
+
+# list installed services
+sudo systemctl list-unit-files
+
+# view entire last boot log
+sudo journalctl -b
+
+# list all system boots
+sudo journalctl --list-boots
+
+# view logs in a certain boot
+sudo journalctl -b <id>
+
+
+

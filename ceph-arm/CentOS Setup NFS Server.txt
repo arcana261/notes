@@ -1,6 +1,8 @@
-GUIIDEEEEEEEEEEEEEEE:
-http://atodorov.org/blog/2015/04/07/how-to-configure-iscsi-target-on-red-hat-enterprise-linux-7/
-
+Ubuntu Guides:
+	https://help.ubuntu.com/community/NFSv4Howto
+	https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-16-04
+	https://www.server-world.info/en/note?os=Ubuntu_16.04&p=nfs
+========================================================================================================
 
 ###########
 ############################
@@ -111,47 +113,62 @@ sudo chsh -s /bin/bash ceph_u
 # enable selinux
 sudo setenforce 1
 
+# create rbd image to use
+sudo rbd create --size 1000000 nfs-test
+sudo rbd map rbd/nfs-test
+sudo mkfs.xfs /dev/rbd/rbd/nfs-test
+sudo rbd unmap rbd/nfs-test
+
 # create shell script to mount rbd device
-sudo nano -w /opt/mount-rbd-iscsi-test.sh
+sudo nano -w /opt/mount-rbd-nfs-test.sh
 .................................................
 #!/bin/bash
 
-/bin/mkdir -p /iscsi-test
-/bin/rbd map rbd/iscsi-test
-/bin/mount /dev/rbd/rbd/iscsi-test /iscsi-test
+/bin/mkdir -p /nfs-test
+
+#######################################
+# the following is only necessary
+# because we are creating an NFS
+# share.
+chmod -R 777 /nfs-test
+chown -R nobody:nogroup /nfs-test
+#######################################
+
+/bin/rbd map rbd/nfs-test
+/bin/mount /dev/rbd/rbd/nfs-test /nfs-test
+
 .................................................
 
 # make it executable
-sudo chmod +x /opt/mount-rbd-iscsi-test.sh
+sudo chmod +x /opt/mount-rbd-nfs-test.sh
 
 # create shell script to unmount rbd device
-sudo nano -w /opt/umount-rbd-iscsi-test.sh
+sudo nano -w /opt/umount-rbd-nfs-test.sh
 .................................................
 #!/bin/bash
 
-/bin/systemctl stop target.service
-/bin/umount /iscsi-test
-/bin/rbd unmap rbd/iscsi-test
+/bin/umount /nfs-test
+/bin/rbd unmap rbd/nfs-test
 .................................................
 
 # make it executable
-sudo chmod +x /opt/umount-rbd-iscsi-test.sh
+sudo chmod +x /opt/umount-rbd-nfs-test.sh
 
 # create systemd service
-sudo nano -w /lib/systemd/system/mount-rbd-iscsi-test.service
+sudo nano -w /lib/systemd/system/mount-rbd-nfs-test.service
 .................................................
 [Unit]
-Description=RADOS block device mapping for "rbd"/"iscsi-test"
+Description=RADOS block device mapping for "rbd"/"nfs-test"
 Conflicts=shutdown.target
 Wants=network-online.target
 # Remove this if you don't have Networkmanager
 After=network-online.target NetworkManager-wait-online.service
-Before=target.service
+Before=rpcbind.service nfs-server.service nfs-lock.service nfs-idmap.service
 
 [Service]
 Type=oneshot
-ExecStart=/opt/mount-rbd-iscsi-test.sh
-ExecStop=/opt/umount-rbd-iscsi-test.sh
+ExecStart=/opt/mount-rbd-nfs-test.sh
+ExecStop=/opt/umount-rbd-nfs-test.sh
 TimeoutSec=0
 RemainAfterExit=yes
 
@@ -161,52 +178,63 @@ WantedBy=network-online.target
 
 # enable service
 sudo systemctl daemon-reload
-sudo systemctl enable mount-rbd-iscsi-test.service
-sudo systemctl restart mount-rbd-iscsi-test.service
-sudo systemctl status mount-rbd-iscsi-test.service
+sudo systemctl enable mount-rbd-nfs-test.service
+sudo systemctl restart mount-rbd-nfs-test.service
+sudo systemctl status mount-rbd-nfs-test.service
 
-# install iscsi target service
-sudo ip netns exec inet yum install targetcli
+#############################################################################
+## Install NFS Server
+#############################################################################
 
+# install necessary packages
+sudo yum install nfs-utils
 
-## FIND REMAINING SIZE OF DISK USING "df -m" ALLOW SOME SPACE TO BE LEFT BEHIND FOR FILESYSTEM
-## E.G. 996000
-df -m
+# create an NFS share
+sudo nano -w /etc/exports
+.................................................
+/nfs-test    192.168.5.96(rw,sync,no_root_squash,no_all_squash)
+.................................................
 
-sudo targetcli
-> cd backstores/fileio
-> create disk01 /iscsi-test/disk01.img 996000M
-> cd /iscsi
-> create iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
-> cd iqn.2017-05.centos-test.iscsi.kaveh:storage.target00/tpg1/luns
-> create /backstores/fileio/disk01
-> cd ../acls
-> create iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
-> cd iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
-> set auth userid=admin
-> set auth password=123
-> exit
+# enable and start services
+sudo systemctl enable rpcbind
+sudo systemctl enable nfs-server
+sudo systemctl enable nfs-lock
+sudo systemctl enable nfs-idmap
+sudo systemctl restart rpcbind
+sudo systemctl restart nfs-server
+sudo systemctl restart nfs-lock
+sudo systemctl restart nfs-idmap
+sudo systemctl status rpcbind
+sudo systemctl status nfs-server
+sudo systemctl status nfs-lock
+sudo systemctl status nfs-idmap
 
-
-TO DISABLE AUTHENTICATION:
-> cd /iscsi/iqn.2017-05.centos-test.iscsi.kaveh:storage.target00/tpg1/
-> set attribute authentication=0
-> set attribute generate_node_acls=1
-> set attribute demo_mode_write_protect=0
-
-# enable service
-sudo systemctl enable target
-sudo systemctl restart target
-sudo systemctl status target
-
-# add rule to firewall
+# enable service through firewall
 sudo firewall-cmd --reload
-sudo firewall-cmd --permanent --add-port=860/tcp
-sudo firewall-cmd --permanent --add-port=3260/tcp
+sudo firewall-cmd --permanent --add-service=nfs
 sudo firewall-cmd --reload
 
-# reboot
-sudo reboot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
