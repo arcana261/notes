@@ -100,8 +100,25 @@ iodepth=32
 
 
 
+==========================================================
+fio independent random IO test:
 
+fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=/fanava/test --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75
 
+==========================================================
+fio independent random read test:
+
+fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=64 --size=4G --readwrite=randread
+
+==========================================================
+fio independent random write test:
+
+fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=test --bs=4k --iodepth=64 --size=4G --readwrite=randwrite
+
+==========================================================
+bonnie++ benchmark
+
+bonnie++ -d /fanava/ -r 4096 -u root
 
 =======================================================================================
 http://tracker.ceph.com/projects/ceph/wiki/Benchmark_Ceph_Cluster_Performance
@@ -248,4 +265,5 @@ sudo fio fio-write-10m.cfg
 # cleanup
 rbd unmap /dev/rbd/rbd/test
 rbd rm rbd/test
+
 

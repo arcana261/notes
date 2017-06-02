@@ -11,7 +11,7 @@ sudo yum install psmisc nano vim \
 	perl mlocate deltarpm \
 	ntpdate setroubleshoot-server setools-console \
 	bind-utils tcpdump python-pip \
-	yum-plugin-priorities
+	yum-plugin-priorities w3m
 
 # update pip
 sudo pip install --upgrade pip
