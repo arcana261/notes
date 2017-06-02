@@ -246,6 +246,9 @@ sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
 # create shared folder configuration
 sudo vim /etc/samba/smb.conf
 .....
+[general]
+       map to guest = bad user
+
 [Public]
        comment = Public
        path = /share

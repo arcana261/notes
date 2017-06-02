@@ -19,3 +19,10 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 # use nvidia driver and proprietary intel drivers
 Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver
 						       -> Use Processor microcode firmware for intel CPUs from intel-microcode
+
+# free up /boot by deleting old kernels
+sudo apt-get purge $(for tag in "linux-image" "linux-headers"; do dpkg-query -W -f'${Package}\n' "$tag-[0-9]*.[0-9]*.[0-9]*" | sort -V | awk 'index($0,c){exit} //' c=$(uname -r | cut -d- -f1,2); done)
+
+# remove crash logs to make it's window disapear
+sudo rm -rfv /var/crash/*
+

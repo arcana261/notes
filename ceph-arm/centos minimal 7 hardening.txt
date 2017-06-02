@@ -8,7 +8,7 @@ sudo yum install epel-release
 sudo yum install psmisc nano vim \
 	policycoreutils-python net-tools wget \
 	curl screen htop bridge-utils iperf \
-	perl mlocate deltarpm policycoreutils-python \
+	perl mlocate deltarpm \
 	ntpdate setroubleshoot-server setools-console \
 	bind-utils tcpdump python-pip \
 	yum-plugin-priorities
@@ -29,6 +29,7 @@ sudo touch /.autorelabel
 # if failed, perform following
 #
 #
+# sudo ausearch -m avc --start recent
 # sudo cd /root
 # sudo audit2allow -a -M fix-after-update
 # sudo semodule -i /root/fix-after-update.pp
@@ -109,7 +110,7 @@ sudo nano -w /etc/fstab
 sudo reboot
 
 # check whether following file exists:
-sudo ll /etc/selinux/targeted/contexts/files/file_contexts.local
+sudo ls -la /etc/selinux/targeted/contexts/files/file_contexts.local
 # if it does not exist, create it
 sudo touch /etc/selinux/targeted/contexts/files/file_contexts.local
 
