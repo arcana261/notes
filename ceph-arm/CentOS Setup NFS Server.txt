@@ -2,6 +2,7 @@ Ubuntu Guides:
 	https://help.ubuntu.com/community/NFSv4Howto
 	https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-16-04
 	https://www.server-world.info/en/note?os=Ubuntu_16.04&p=nfs
+	https://www.certdepot.net/rhel7-use-kerberos-control-access-nfs-network-shares/
 ========================================================================================================
 
 ###########
@@ -195,6 +196,12 @@ sudo nano -w /etc/exports
 /nfs-test    192.168.5.96(rw,sync,no_root_squash,no_all_squash)
 .................................................
 
+# export new configuration
+sudo exportfs -avr
+
+# verify exports
+sudo showmount -e localhost
+
 # enable and start services
 sudo systemctl enable rpcbind
 sudo systemctl enable nfs-server
@@ -214,32 +221,316 @@ sudo firewall-cmd --reload
 sudo firewall-cmd --permanent --add-service=nfs
 sudo firewall-cmd --reload
 
+#############################################################################
+## Setup Kerberos Server
+#############################################################################
 
+# ensure hostname contains the domain name
+sudo hostnamectl set-hostname kerberosserver.kstorage1.org
 
+# add it to /etc/hosts
+sudo vim /etc/hosts
+> 127.0.0.1           kerberosserver
+> 127.0.0.1           kerberosserver.kstorage1.org
 
+# reboot system
+sudo reboot
 
+# install required packages
+sudo yum install krb5-server krb5-workstation pam_krb5 haveged rsh
 
+# edit configuration and set domain name
+sudo vim /etc/krb5.conf
+>>> set "EXAMPLE.COM" to "KSTORAGE1.ORG"
+>>> set "kerberos.example.com" to "kerberosserver.kstorage1.org"
+>>> set "example.com" to "kstorage1.org"
+.....................................................................
+# Configuration snippets may be placed in this directory as well
+includedir /etc/krb5.conf.d/
 
+[logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ admin_server = FILE:/var/log/kadmind.log
 
+[libdefaults]
+ dns_lookup_realm = false
+ ticket_lifetime = 24h
+ renew_lifetime = 7d
+ forwardable = true
+ rdns = false
+ default_realm = KSTORAGE1.ORG
+ default_ccache_name = KEYRING:persistent:%{uid}
 
+[realms]
+KSTORAGE1.ORG = {
+ kdc = kerberosserver.kstorage1.org
+ admin_server = kerberosserver.kstorage1.org
+}
 
+[domain_realm]
+.kstorage1.org = KSTORAGE1.ORG
+kstorage1.org = KSTORAGE1.ORG
+.....................................................................
 
+# edit configuration and set domain name
+sudo vim /var/kerberos/krb5kdc/kadm5.acl
+>>> set "EXAMPLE.COM" to "KSTORAGE1.ORG"
+>>> set "kerberos.example.com" to "kerberosserver.kstorage1.org"
+>>> set "example.com" to "kstorage1.org"
+.....................................................................
+*/admin@KSTORAGE1.ORG	*
+.....................................................................
 
+# enable kerberos through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=kerberos
+sudo firewall-cmd --permanent --add-port=749/tcp
+sudo firewall-cmd --reload
 
+# enable entropy generation tool "haveged"
+sudo systemctl restart haveged
+sudo systemctl enable haveged
+sudo systemctl status haveged
 
+# check available system entropy
+sudo cat /proc/sys/kernel/random/entropy_avail
 
+# create database for realm
+sudo kdb5_util create -s
 
+#.... CREATE SOME ENTROPY ON SYSTEM!
+#.... IN ANOTHER TERMINAL DO:
+#.... ping -f localhost
 
+# enable and start services
+sudo systemctl enable krb5kdc
+sudo systemctl enable kadmin
+sudo systemctl enable nfs-secure 
+sudo systemctl restart krb5kdc
+sudo systemctl restart kadmin
+sudo systemctl restart nfs-secure 
+sudo systemctl status krb5kdc kadmin nfs-secure 
 
+# create admin principal for root
+# add kerberos server to database
+# add NFS server and client to database
+sudo kadmin.local
+> addprinc root/admin
+> addprinc -randkey kadmin/kerberosserver.kstorage1.org@KSTORAGE1.ORG
+> addprinc -randkey host/kerberosserver.kstorage1.org
+> addprinc -randkey host/nfsserver.kstorage1.org
+> addprinc -randkey host/nfsclient.kstorage1.org
+> addprinc -randkey nfs/nfsserver.kstorage1.org
+> addprinc -randkey nfs/nfsclient.kstorage1.org
+> quit
 
+# obtain and cache Kerberos ticket-granting ticket for root/admin
+sudo kinit root/admin
 
+# verify ticket is created
+sudo klist
 
+# create keytab file and store principals that are allowed to use kerberos authentication
+sudo kadmin.local
+> ktadd kadmin/kerberosserver.kstorage1.org@KSTORAGE1.ORG
+> ktadd host/kerberosserver.kstorage1.org
+> ktadd host/nfsserver.kstorage1.org
+> ktadd host/nfsclient.kstorage1.org
+> ktadd nfs/nfsserver.kstorage1.org
+> ktadd nfs/nfsclient.kstorage1.org
+> quit
 
+#############################################################################
+## Setup NFS Server to use with Kerberos
+##
+## Note1:
+##	 The sec option accepts four different values:
+##		 sec=sys (no Kerberos use),
+##		 sec=krb5 (Kerberos user authentication only),
+##		 sec=krb5i (Kerberos user authentication and integrity checking),
+##		 sec=krb5p (Kerberos user authentication, integrity checking and NFS traffic encryption).
+##	 The higher the level, the more you consume resources.
+##
+## Note2: If you want to use sec=sys (no Kerberos use), you also need to run setsebool -P nfsd_anon_write 1
+#############################################################################
 
+# ensure hostname contains the domain name
+sudo hostnamectl set-hostname nfsserver.kstorage1.org
 
+# add it to /etc/hosts
+sudo vim /etc/hosts
+> 127.0.0.1           nfsserver
+> 127.0.0.1           nfsserver.kstorage1.org
 
+# reboot system
+sudo reboot
 
+# install required packages
+sudo yum install -y krb5-workstation pam_krb5 haveged rsh
 
+# import kerberos configuration from kerberos server:
+sudo vim /etc/krb5.conf
+>>> set "EXAMPLE.COM" to "KSTORAGE1.ORG"
+>>> set "kerberos.example.com" to "kerberosserver.kstorage1.org"
+>>> set "example.com" to "kstorage1.org"
+.....................................................................
+# Configuration snippets may be placed in this directory as well
+includedir /etc/krb5.conf.d/
 
+[logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+ dns_lookup_realm = false
+ ticket_lifetime = 24h
+ renew_lifetime = 7d
+ forwardable = true
+ rdns = false
+ default_realm = KSTORAGE1.ORG
+ default_ccache_name = KEYRING:persistent:%{uid}
+
+[realms]
+KSTORAGE1.ORG = {
+ kdc = kerberosserver.kstorage1.org
+ admin_server = kerberosserver.kstorage1.org
+}
+
+[domain_realm]
+.kstorage1.org = KSTORAGE1.ORG
+kstorage1.org = KSTORAGE1.ORG
+.....................................................................
+
+# enable entropy generation tool "haveged"
+sudo systemctl restart haveged
+sudo systemctl enable haveged
+sudo systemctl status haveged
+
+# check available system entropy
+sudo cat /proc/sys/kernel/random/entropy_avail
+
+# enable kerberos through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=kerberos
+sudo firewall-cmd --reload
+
+# open kadmin to server
+sudo bash -c "env KRB5_TRACE=/dev/stdout kadmin -p root/admin@KSTORAGE1.ORG -r KSTORAGE1.ORG"
+> ktadd host/nfsserver.kstorage1.org
+> ktadd nfs/nfsserver.kstorage1.org
+> exit
+
+# verify existing keys
+sudo klist -e -k /etc/krb5.keytab
+
+# create an NFS share
+sudo nano -w /etc/exports
+.................................................
+/nfs-test    nfsclient.kstorage1.org(rw,no_root_squash,sec=krb5)
+.................................................
+
+# export new configuration
+sudo exportfs -avr
+
+# verify exports
+sudo showmount -e localhost
+
+# start secure NFS service
+sudo systemctl enable nfs-secure nfs-secure-server 
+sudo systemctl disable gssproxy
+sudo systemctl stop gssproxy
+sudo systemctl restart nfs-secure nfs-secure-server
+sudo systemctl status nfs-secure nfs-secure-server
+
+#############################################################################
+## Setup NFS Client to use with Kerberos
+#############################################################################
+
+# ensure hostname contains the domain name
+sudo hostnamectl set-hostname nfsclient.kstorage1.org
+
+# add it to /etc/hosts
+sudo vim /etc/hosts
+> 127.0.0.1           nfsclient
+> 127.0.0.1           nfsclient.kstorage1.org
+
+# reboot system
+sudo reboot
+
+# install required packages
+sudo yum install -y krb5-workstation pam_krb5 haveged rsh
+
+# import kerberos configuration from kerberos server:
+sudo vim /etc/krb5.conf
+>>> set "EXAMPLE.COM" to "KSTORAGE1.ORG"
+>>> set "kerberos.example.com" to "kerberosserver.kstorage1.org"
+>>> set "example.com" to "kstorage1.org"
+.....................................................................
+# Configuration snippets may be placed in this directory as well
+includedir /etc/krb5.conf.d/
+
+[logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+ dns_lookup_realm = false
+ ticket_lifetime = 24h
+ renew_lifetime = 7d
+ forwardable = true
+ rdns = false
+ default_realm = KSTORAGE1.ORG
+ default_ccache_name = KEYRING:persistent:%{uid}
+
+[realms]
+KSTORAGE1.ORG = {
+ kdc = kerberosserver.kstorage1.org
+ admin_server = kerberosserver.kstorage1.org
+}
+
+[domain_realm]
+.kstorage1.org = KSTORAGE1.ORG
+kstorage1.org = KSTORAGE1.ORG
+.....................................................................
+
+# enable entropy generation tool "haveged"
+sudo systemctl restart haveged
+sudo systemctl enable haveged
+sudo systemctl status haveged
+
+# check available system entropy
+sudo cat /proc/sys/kernel/random/entropy_avail
+
+# enable kerberos through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=kerberos
+sudo firewall-cmd --reload
+
+# open kadmin to server
+sudo bash -c "env KRB5_TRACE=/dev/stdout kadmin -p root/admin@KSTORAGE1.ORG -r KSTORAGE1.ORG"
+> ktadd host/nfsclient.kstorage1.org
+> ktadd nfs/nfsclient.kstorage1.org
+> exit
+
+# verify existing keys
+sudo klist -e -k /etc/krb5.keytab
+
+# enable services
+sudo systemctl disable gssproxy
+sudo systemctl stop gssproxy
+sudo systemctl enable nfs-secure
+sudo systemctl enable nfs-client.target
+sudo systemctl restart nfs-secure
+sudo systemctl restart nfs-client.target
+sudo systemctl status nfs-secure nfs-client.target
+
+# mount using mount command
+sudo mount -t nfs4 -o sec=krb5 nfsserver.kstorage1.org:/nfs-test /mnt
+
+# mount using fstab
+nfsserver.kstorage1.org:/nfs-test /mnt nfs4 sec=krb5
 
 
