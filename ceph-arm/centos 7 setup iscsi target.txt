@@ -183,8 +183,8 @@ sudo targetcli
 > cd ../acls
 > create iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
 > cd iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
-> set auth userid=admin
-> set auth password=123
+> set auth userid=iqn.2017-05.centos-test.iscsi.kaveh:storage.target00
+> set auth password=<SOME PASS>
 > exit
 
 
@@ -207,6 +207,87 @@ sudo firewall-cmd --reload
 
 # reboot
 sudo reboot
+
+
+#################################################################################
+SETUP CHAP AUTHENTICATION ON TARGET
+
+NOTE: CLIENT ID SHOULD BE A VALID IQN
+NOTE: CLIENT PASSWORD SHOULD BE 12 CHARACTERS LONG
+NOTE: CLIENT PASSWORD SHOULD NOT CONTAIN "/" "\" or "!" CHARACTERS!
+#################################################################################
+
+# choose client id
+# iqn.2017-05.org.kaveh:client-578
+
+# choose client password
+# @@tessszztt@
+
+# enter targetcli
+sudo targetcli
+> cd /iscsi
+> cd iqn.2017-05.centos-test.iscsi.kaveh:storage.target00/tpg1
+> set attribute authentication=1
+> set auth userid=iqn.2017-05.org.kaveh:client-578
+> set auth password=@@tessszztt@
+> set auth mutual_userid=
+> set auth mutual_password=
+> cd acls
+> create iqn.2017-05.org.kaveh:client-578
+> cd iqn.2017-05.org.kaveh:client-578
+> set auth userid=iqn.2017-05.org.kaveh:client-578
+> set auth password=@@tessszztt@
+> set auth mutual_userid=
+> set auth mutual_password=
+> exit
+
+# restart target service
+sudo systemctl restart target.service
+
+#################################################################################
+SETUP CHAP AUTHENTICATION ON DISCOVERY
+
+NOTE: CLIENT ID SHOULD BE A VALID IQN
+NOTE: CLIENT PASSWORD SHOULD BE 12 CHARACTERS LONG
+NOTE: CLIENT PASSWORD SHOULD NOT CONTAIN "/" "\" or "!" CHARACTERS!
+#################################################################################
+
+# choose client id
+# iqn.2017-05.org.kaveh:client-0
+
+# choose client password
+# @@tessszztt@
+
+# enter targetcli
+sudo targetcli
+> cd /iscsi
+> set discovery_auth enable=1
+> set discovery_auth userid=iqn.2017-05.org.kaveh:client-0
+> set discovery_auth password=@@tessszztt@
+> set discovery_auth mutual_userid=
+> set discovery_auth mutual_password=
+> exit
+
+# restart target service
+sudo systemctl restart target.service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
