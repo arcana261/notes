@@ -2,7 +2,23 @@ apt-get install open-iscsi
 systemctl restart iscsid open-iscsi
 systemctl status -l iscsid
 systemctl enable iscsid open-iscsi
+
+=======================================================
+====== No AUTH =====
 iscsiadm -m discovery -t sendtargets -p 192.168.5.226
+
+====== CHAP =========
+sudo vim /etc/iscsi/iscsid.conf
+...........
+discovery.sendtargets.auth.authmethod = CHAP
+discovery.sendtargets.auth.username = <CLIENT ID>
+discovery.sendtargets.auth.password = <CLIENT ADDRESS>
+...........
+sudo systemctl restart iscsid open-iscsi
+
+iscsiadm -m discovery -t sendtargets -p 192.168.5.226
+
+=======================================================
 
 =======================================================
 ====== No AUTH =====

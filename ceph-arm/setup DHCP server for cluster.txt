@@ -1,0 +1,165 @@
+### install dnsmasq
+
+sudo apt-get install dnsmasq
+
+### Setup static IP address for DHCP server ethernets
+
+sudo nano -w /etc/network/interfaces
+
+auto eth3
+iface eth3 inet static
+        address 192.168.5.2
+        netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+        address 10.0.2.98
+        netmask 255.255.255.0
+        network 10.0.2.0
+        gateway 10.0.2.252
+
+### reboot the system
+
+sudo reboot
+
+### configure dnsmasq
+
+sudo nano -w /etc/dnsmasq.conf
+
+dhcp-range=set:pub,192.168.5.3,192.168.5.180,72h
+dhcp-range=set:priv,10.0.2.120,10.0.2.200,72h
+dhcp-optsfile=/etc/dnsmasq-opts.conf
+dhcp-hostsfile=/etc/dnsmasq-hosts.conf
+log-dhcp
+domain-needed
+domain=kstorage1.org
+
+
+sudo nano -w /etc/dnsmasq-opts.conf
+
+tag:priv,option:router,10.0.2.252
+tag:priv,option:dns-server,192.168.5.2,4.2.2.4,8.8.8.7
+tag:pub,option:ntp-server,192.168.5.99
+tag,pub,option:dns-server,192.168.5.2,4.2.2.4,8.8.8.8
+tag:pub,option:domain-name,kstorage1.org
+tag:pub,option:domain-search,kstorage1.org
+tag:xen1,option:router,10.0.2.252
+tag:xen2,option:router,10.0.2.251
+tag:xen3,option:router,10.0.2.250
+
+
+sudo nano -w /etc/dnsmasq-hosts.conf
+
+
+46:9e:2b:93:3b:06,set:xen1,10.0.2.254,infinite
+3a:6b:94:5f:3f:cd,set:xen1,192.168.5.228,admin.kstorage1.org,infinite
+
+
+### enable and start dnsmasq service
+
+sudo systemctl enable dnsmasq
+sudo systemctl restart dnsmasq
+
+### enable port through firewall
+sudo ufw reload
+sudo ufw allow 53/tcp
+sudo ufw allow 53/udp
+sudo ufw reload
+
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+XEN SERVER MACHINE
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+
+### allow DNS port through firewall
+
+sudo nano -w /etc/sysconfig/iptables
+
+-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 53 -j ACCEPT
+-A RH-Firewall-1-INPUT -p udp -m udp --dport 53 -j ACCEPT
+
+### enable rules on firewall right away
+
+-I RH-Firewall-1-INPUT -p tcp -m tcp --dport 53 -j ACCEPT
+-I RH-Firewall-1-INPUT -p udp -m udp --dport 53 -j ACCEPT
+
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+CLIENT MACHINE
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+
+### setup to use use DHCP IP
+
+nano -w /etc/network/interfaces
+
+auto eth2
+iface eth2 inet dhcp
+
+auto eth3
+iface eth3 inet dhcp
+
+
+### MODIFY /opt/ifup-inet.sh AND REMOVE "echo 4.2.2.4 > /etc/resolv.conf" LINE
+
+nano -w /opt/ifup-inet.sh
+
+
+### reboot
+
+sudo reboot
+
+### verify assigned ips
+
+ifconfig eth2
+ifconfig eth3
+
+### verify DNS entries
+### 192.168.5.2
+### search kstorage1.org
+
+cat /etc/resolv.conf
+
+### verify route table
+
+ip route show
+
+### verify DNS server
+
+nslookup admin.kstorage1.org 192.168.5.2
+nslookup admin 192.168.5.2
+
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+Linux Gateway (Mehdi PC)
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+
+### remove dns server config from VXLAN bootstrap scripts
+
+nano -w /opt/ifup-vtep1.sh
+REMOVEEEEEEEEE: "--dhcp-option=dns-server,4.2.2.4,8.8.8.8"
+
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+HELP ON DNSMASQ
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+
+### view dnsmasq logs
+
+sudo systemctl status dnsmasq
+sudo journalctl -u dnsmasq
+
+### view DHCP leases
+cat `locate dnsmasq.leases`
+
+### modify DHCP leases
+nano -w `locate dnsmasq.leases`
+sudo systemctl restart dnsmasq
+
+###  remove DHCP leases
+rm -f `locate dnsmasq.leases`
+sudo systemctl restart dnsmasq
+
