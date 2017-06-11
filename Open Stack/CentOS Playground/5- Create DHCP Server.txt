@@ -1,0 +1,78 @@
+Clone: cluster-vm
+Name: dhcp-server
+
+====================================================================
+
+# assign static IP address to eth1
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+....................
+BOOTPROTO="none"
+ONBOOT="yes"
+IPADDR="192.168.200.1"
+PREFIX="24"
+....................
+
+# assign static IP address to eth2
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+....................
+BOOTPROTO="none"
+ONBOOT="yes"
+IPADDR="10.0.2.1"
+PREFIX="24"
+....................
+
+# reboot
+sudo reboot
+
+# set ip address in hosts
+sudo nano -w /etc/hosts
+....................
+192.168.200.1        dhcp-server.ostack.me
+....................
+
+# configure dnsmasq
+
+sudo nano -w /etc/dnsmasq.conf
+...........................................
+dhcp-range=set:pub,192.168.200.100,192.168.200.254,72h
+dhcp-range=set:priv,10.0.2.100,10.0.2.254,72h
+dhcp-optsfile=/etc/dnsmasq-opts.conf
+dhcp-hostsfile=/etc/dnsmasq-hosts.conf
+log-dhcp
+domain-needed
+domain=ostack.me
+...........................................
+
+sudo touch /etc/dnsmasq-opts.conf
+sudo touch /etc/dnsmasq-hosts.conf
+
+### enable and start dnsmasq service
+
+sudo systemctl enable dnsmasq
+sudo systemctl restart dnsmasq
+sudo systemctl status dnsmasq
+
+### enable port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=53/tcp
+sudo firewall-cmd --permanent --add-port=53/udp
+sudo firewall-cmd --permanent --add-port=67/udp
+sudo firewall-cmd --permanent --add-port=68/udp
+sudo firewall-cmd --reload
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

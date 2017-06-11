@@ -40,7 +40,7 @@ sudo nano -w /etc/dnsmasq-opts.conf
 tag:priv,option:router,10.0.2.252
 tag:priv,option:dns-server,192.168.5.2,4.2.2.4,8.8.8.7
 tag:pub,option:ntp-server,192.168.5.99
-tag,pub,option:dns-server,192.168.5.2,4.2.2.4,8.8.8.8
+tag:pub,option:dns-server,192.168.5.2,4.2.2.4,8.8.8.8
 tag:pub,option:domain-name,kstorage1.org
 tag:pub,option:domain-search,kstorage1.org
 tag:xen1,option:router,10.0.2.252

@@ -1,0 +1,28 @@
+Clone: centos7-hardened
+Name: cluster-vm
+
+====================================================================
+
+# remove network "eth0" from VM
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
+.................
+ONBOOT="no"
+.................
+
+# ensure eth1 and eth2 are set to DHCP
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+.................
+BOOTPROTO=dhcp
+ONBOOT=yes
+.................
+
+# ensure eth1 and eth2 are set to DHCP
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+.................
+BOOTPROTO=dhcp
+ONBOOT=yes
+.................
+
+# reboot
+sudo reboot
+

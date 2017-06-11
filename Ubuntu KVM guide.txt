@@ -1,5 +1,5 @@
 Linux Guest Configuration:
-	CPU -> Copy Host CPU configuration
+	CPU -> [] DO NOT Copy Host CPU configuration
 	Disk -> VirtIO
 	RAM -> 512 MB
 	Network -> VirtIO (20 GB)

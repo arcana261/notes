@@ -1,3 +1,20 @@
+Network Range: 192.168.80/24
+	Server0 -> As DHCP Server
+	Server1
+	Server2
+	Server3
+	Server4
+
+VLAN1 Range: 192.168.81/24
+	Server0 -> As DHCP Server
+	Server1
+	Server2
+
+VLAN2 Range: 192.168.82/24
+	Server0 -> As DHCP Server
+	Server3
+	Server4
+
 ######################################################
 ## setup network topology
 ######################################################
@@ -5,20 +22,122 @@
 sudo ip link add name br0 type bridge
 sudo ip link set dev br0 up
 
+sudo ip link add name veth-0 type veth peer name peer-0
+sudo ip link set dev veth-0 up
+sudo ip link set dev veth-0 master br0
+sudo ip netns add server0
+sudo ip link set dev peer-0 netns server0
+sudo ip netns exec server0 ip link set dev peer-0 name eth0
+sudo ip netns exec server0 ip link set dev eth0 up
+sudo ip netns exec server0 ip addr add 192.168.80.1/24 broadcast 192.168.80.255 dev eth0
+sudo rm -fv /var/run/dnsmasq.dhcp-net0.pid
+sudo ip netns exec server0 dnsmasq --port=0 --no-hosts --pid-file=/var/run/dnsmasq.dhcp-net0.pid --interface=eth0 --bind-interfaces --dhcp-leasefile=/tmp/dnsmasq.dhcp-net0.lease --dhcp-range=192.168.80.2,192.168.80.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router --dhcp-option=option:dns-server&
+
 for i in $(seq 1 4); do \
 	sudo ip link add name veth-${i} type veth peer name peer-${i}; \
 	sudo ip link set dev veth-${i} up; \
 	sudo ip link set dev veth-${i} master br0; \
 	sudo ip netns add server${i}; \
 	sudo ip link set dev peer-${i} netns server${i}; \
-	sudo ip netns exec server${i} ip link set dev peer-${i} eth0; \
-	sudo ip netns exec server${i} 
+	sudo ip netns exec server${i} ip link set dev peer-${i} name eth0; \
+	sudo ip netns exec server${i} ip link set dev eth0 up; \
+	sudo rm -fv /var/run/dhclient.server${i}.pid; \
+	sudo ip netns exec server${i} dhclient -pf /var/run/dhclient.server${i}.pid -lf /var/run/dhclient.server${i}.lease eth0; \
+	sudo ip netns exec server${i} ifconfig eth0; \
+done
+
+######################################################
+## setup vlan1 and vlan2 in server0 and dhcp server for both
+######################################################
+
+for i in $(seq 1 2); do \
+	sudo ip netns exec server0 ip link add link eth0 name eth0.${i} type vlan id ${i}; \
+	sudo ip netns exec server0 ip link set dev eth0.${i} up; \
+	sudo ip netns exec server0 ip link set dev eth0.${i} mtu 1450; \
+	sudo ip netns exec server0 ip addr add 192.168.8${i}.1/24 broadcast 192.168.8${i}.255 dev eth0.${i}; \
+	sudo rm -fv /var/run/dnsmasq.dhcp-net${i}.pid; \
+	sudo ip netns exec server0 dnsmasq --port=0 --no-hosts --pid-file=/var/run/dnsmasq.dhcp-net${i}.pid --interface=eth0.${i} --bind-interfaces --dhcp-leasefile=/tmp/dnsmasq.dhcp-net${i}.lease --dhcp-range=192.168.8${i}.2,192.168.8${i}.254 --log-dhcp --dhcp-sequential-ip --dhcp-option=option:router --dhcp-option=option:dns-server --dhcp-option=option:mtu,1450; \
 done
 
 
+######################################################
+## setup vlan1
+######################################################
 
+for i in $(seq 1 2); do \
+	sudo ip netns exec server${i} ip link add link eth0 name eth0.1 type vlan id 1; \
+	sudo ip netns exec server${i} ip link set dev eth0.1 up; \
+	sudo rm -fv /var/run/dhclient.server${i}-vlan1.pid; \
+	sudo ip netns exec server${i} dhclient -pf /var/run/dhclient.server${i}-vlan1.pid -lf /var/run/dhclient.server${i}-vlan1.lease eth0.1; \
+	sudo ip netns exec server${i} ifconfig eth0.1; \
+done
 
+######################################################
+## setup vlan2
+######################################################
 
+for i in $(seq 3 4); do \
+	sudo ip netns exec server${i} ip link add link eth0 name eth0.2 type vlan id 2; \
+	sudo ip netns exec server${i} ip link set dev eth0.2 up; \
+	sudo rm -fv /var/run/dhclient.server${i}-vlan2.pid; \
+	sudo ip netns exec server${i} dhclient -pf /var/run/dhclient.server${i}-vlan2.pid -lf /var/run/dhclient.server${i}-vlan2.lease eth0.2; \
+	sudo ip netns exec server${i} ifconfig eth0.2; \
+done
+
+######################################################
+######################################################
+######################################################
+######################################################
+## Cleanup
+######################################################
+######################################################
+######################################################
+######################################################
+
+sudo kill -9 `cat /var/run/dnsmasq.dhcp-net0.pid`
+sudo kill -9 `cat /var/run/dnsmasq.dhcp-net1.pid`
+sudo kill -9 `cat /var/run/dnsmasq.dhcp-net2.pid`
+sudo ip netns exec server0 ip link delete eth0.1
+sudo ip netns exec server0 ip link delete eth0.2
+
+sudo kill -9 `cat /var/run/dhclient.server1.pid`
+sudo kill -9 `cat /var/run/dhclient.server2.pid`
+sudo kill -9 `cat /var/run/dhclient.server3.pid`
+sudo kill -9 `cat /var/run/dhclient.server4.pid`
+sudo rm -fv /var/run/dhclient.server1.lease
+sudo rm -fv /var/run/dhclient.server2.lease
+sudo rm -fv /var/run/dhclient.server3.lease
+sudo rm -fv /var/run/dhclient.server4.lease
+
+sudo kill -9 `cat /var/run/dhclient.server1-vlan1.pid`
+sudo kill -9 `cat /var/run/dhclient.server2-vlan1.pid`
+sudo kill -9 `cat /var/run/dhclient.server3-vlan2.pid`
+sudo kill -9 `cat /var/run/dhclient.server4-vlan2.pid`
+sudo rm -fv /var/run/dhclient.server1-vlan1.lease
+sudo rm -fv /var/run/dhclient.server2-vlan1.lease
+sudo rm -fv /var/run/dhclient.server3-vlan2.lease
+sudo rm -fv /var/run/dhclient.server4-vlan2.lease
+
+for i in $(seq 1 2); do \
+	sudo ip netns exec server${i} ip link delete eth0.1; \
+done
+
+for i in $(seq 3 4); do \
+	sudo ip netns exec server${i} ip link delete eth0.2; \
+done
+
+for i in $(seq 1 4); do \
+	sudo ip netns delete server${i}; \
+	sudo ip link delete veth-${i}; \
+done
+
+sudo ip netns delete server0
+sudo ip link delete veth-0
+sudo ip link delete br0
+
+sudo rm -fv /tmp/dnsmasq.dhcp-net0.lease
+sudo rm -fv /tmp/dnsmasq.dhcp-net1.lease
+sudo rm -fv /tmp/dnsmasq.dhcp-net2.lease
 
 
 

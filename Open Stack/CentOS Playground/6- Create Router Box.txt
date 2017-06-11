@@ -1,0 +1,156 @@
+Clone: cluster-vm
+Name: router
+
+====================================================================
+KVM
+====================================================================
+
+# assign static ip address to router's eth0
+
+virsh net-update default add ip-dhcp-host "<host mac='52:54:00:85:83:a7' name='router.arcana.me' ip='192.168.122.2' />" --live --config
+
+====================================================================
+dhcp-server.ostack.me
+====================================================================
+
+# assing static ip address for router box
+sudo nano -w /etc/dnsmasq-hosts.conf
+..............
+52:54:00:86:66:7a,set:router,192.168.200.2,router.ostack.me,infinite
+52:54:00:7f:c5:c0,set:router,10.0.2.2,router.ostack.me,infinite
+..............
+
+# set as default gateway
+sudo nano -w /etc/dnsmasq-opts.conf
+..............
+tag:pub,option:router,192.168.200.2
+tag:priv,option:router
+tag:router,option:router
+..............
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq
+
+# change gateway of eth1
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+..............
+GATEWAY="192.168.200.2"
+DNS1="4.2.2.4"
+DNS2="8.8.8.8"
+..............
+
+# reboot
+sudo reboot
+
+====================================================================
+
+# set eth0 to static IP
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
+..............
+BOOTPROTO="none"
+ONBOOT="yes"
+IPADDR="192.168.122.2"
+PREFIX="24"
+GATEWAY="192.168.122.1"
+..............
+
+# reboot
+sudo reboot
+
+====================================================================
+KVM
+====================================================================
+
+# set static ip address in hosts
+sudo nano -w /etc/hosts
+..............
+192.168.122.2       router.ostack.me
+..............
+
+# create SSH config
+nano -w $HOME/.ssh/config
+..............
+Host *.ostack.me
+	User arcana
+	Port 2122
+..............
+
+# create SSH-less login
+ssh-copy-id router.ostack.me
+
+====================================================================
+
+# enable ip forwarding
+sudo nano -w /etc/sysctl.conf
+> # as router ip forwarding
+> net.ipv4.ip_forward=1
+> net.ipv4.conf.all.rp_filter=0
+> net.ipv4.conf.default.rp_filter=0
+> net.ipv4.conf.all.accept_source_route=1
+> net.ipv4.conf.default.accept_source_route=1
+
+# reload sysctl
+sudo sysctl -p
+
+# check if is enabled
+sysctl -a | grep forward | more
+sysctl -a | grep rp_filter | more
+
+# list zones and bounded interfaces
+sudo firewall-cmd --list-all
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# enable ip masquerading
+sudo firewall-cmd --zone=public --permanent --add-masquerade
+sudo firewall-cmd --reload
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# create ssh config AS "arcana" (non-root)
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+touch $HOME/.ssh/config
+chmod 600 $HOME/.ssh/config
+ssh-keygen -t rsa
+
+# create SSH config for dhcp server
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+nano -w $HOME/.ssh/config
+..............
+Host *.ostack.me
+	User arcana
+	Port 2122
+..............
+
+# copy ssh id to dhcp-server
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+ssh-copy-id dhcp-server.ostack.me
+
+====================================================================
+KVM
+====================================================================
+
+# create routing configuration
+
+sudo ip route add 192.168.200/24 via 192.168.122.2
+sudo ip route add 10.0.2/24 via 192.168.122.2
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,62 @@
+Clone: cluster-vm
+Name: ssh
+
+====================================================================
+dhcp-server.ostack.me
+====================================================================
+
+# assing static ip address for ntp server
+sudo nano -w /etc/dnsmasq-hosts.conf
+..............
+52:54:00:4d:9b:a6,192.168.200.3,ssh.ostack.me,infinite
+52:54:00:59:da:5d,10.0.2.3,ssh.ostack.me,infinite
+..............
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq
+
+
+====================================================================
+KVM
+====================================================================
+
+# set static ip address in hosts
+sudo nano -w /etc/hosts
+..............
+192.168.200.3       ssh.ostack.me
+..............
+
+# create SSH-less login
+ssh-copy-id ssh.ostack.me
+
+====================================================================
+
+# create ssh config AS "arcana" (non-root)
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+touch $HOME/.ssh/config
+chmod 600 $HOME/.ssh/config
+ssh-keygen -t rsa
+
+# create SSH config for dhcp server
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+nano -w $HOME/.ssh/config
+..............
+Host *.ostack.me
+	User arcana
+	Port 2122
+..............
+
+# copy ssh id to dhcp-server
+#### RUN FOLLOWING AS NON-ROOT!
+#### RUN FOLLOWING AS NON-ROOT!
+ssh-copy-id dhcp-server.ostack.me
+ssh-copy-id router.ostack.me
+
+
+
+

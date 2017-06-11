@@ -1,0 +1,10 @@
+KVM
+=====================================
+
+1. Have 3 networks prepared
+
+	default: "NAT"
+	public: "no ipv4 or ipv6 configured" -> Isolated Network
+	private: "no ipv4 or ipv6 configured" -> Isolated Network
+
+	

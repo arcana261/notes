@@ -1,0 +1,144 @@
+Linux Guest Configuration:
+	Name -> CentOS7-Base
+	CPU -> 1 [] DO NOT Copy Host CPU configuration, Hypervisor Default
+	Disk -> VirtIO
+	RAM -> 512 MB
+	Network -> VirtIO (8 GB)
+	CDROM -> IDE
+	Video -> QXL
+	Boot Options ->
+			1. VirtIO Disk
+			2. SCSI CDROM
+
+
+========================================================
+
+1. When grub boots press "TAB"
+2. add "text" at the end of item displayed
+3. press enter!
+
+
+# upgrade system
+sudo yum -y update
+
+# install epel repositories
+sudo yum install epel-release
+
+# install some packages
+sudo yum install psmisc nano vim \
+	policycoreutils-python net-tools wget \
+	curl screen htop bridge-utils iperf \
+	perl mlocate deltarpm \
+	ntpdate setroubleshoot-server setools-console \
+	bind-utils tcpdump python-pip \
+	yum-plugin-priorities w3m \
+	bash-completion strace dnsmasqe \
+	git
+
+# update pip
+sudo pip install --upgrade pip
+
+# update system date/time
+sudo ntpdate 0.ro.pool.ntp.org  1.ro.pool.ntp.org
+
+# verify system date/time
+date
+
+# relabel entire filesystem for SElinux
+sudo touch /.autorelabel
+
+# verify you can login from another tty/ssh
+# if failed, perform following
+#
+#
+# sudo ausearch -m avc --start recent
+# sudo cd /root
+# sudo audit2allow -a -M fix-after-update
+# sudo semodule -i /root/fix-after-update.pp
+#
+#
+>>>>>>>>>> TTY LOGIN
+
+# ensure hostname is set in /etc/hosts
+sudo nano -w /etc/hosts
+> 127.0.0.1 my-host-name
+
+# allow icmp (ping)
+sudo nano -w /etc/sysctl.conf
+>>>>>>>>>>>>>>>>>>>>>>
+net.ipv4.icmp_echo_ignore_all = 0
+<<<<<<<<<<<<<<<<<<<<<<
+
+# reload sysctl
+sudo sysctl -p
+
+# update mlocate
+sudo updatedb
+
+# set default editor to vim
+nano -w /etc/environment
+.............
+EDITOR=/bin/vim
+.............
+
+# reboot system
+sudo reboot
+
+===========================================================================
+## Install OVS
+===========================================================================
+
+# install some dependencies
+sudo yum install gcc make python-devel openssl-devel kernel-devel graphviz \
+    kernel-debug-devel autoconf automake rpm-build redhat-rpm-config \
+    libtool checkpolicy selinux-policy-devel wget
+
+# download latest version of OVS
+pushd /usr/src
+sudo wget http://openvswitch.org/releases/openvswitch-2.5.2.tar.gz
+sudo tar xvf openvswitch-2.5.2.tar.gz
+cd openvswitch-2.5.2
+
+# make dist tarball
+sudo ./boot.sh
+sudo ./configure
+sudo make dist
+
+# copy dist tarball to rpmbuild home dir
+sudo mkdir -p $HOME/rpmbuild/SOURCES
+sudo cp openvswitch-2.5.2.tar.gz $HOME/rpmbuild/SOURCES/
+
+# extract dist tarball and go to it's folder
+sudo tar xvf openvswitch-2.5.2.tar.gz
+cd openvswitch-2.5.2 
+
+# build RPM
+sudo rpmbuild -bb --without check rhel/openvswitch.spec
+sudo rpmbuild -bb rhel/openvswitch-dkms.spec
+
+# install OVS
+sudo yum localinstall $HOME/rpmbuild/RPMS/x86_64/openvswitch-2.5.2-1.x86_64.rpm
+sudo yum localinstall $HOME/rpmbuild/RPMS/x86_64/openvswitch-dkms-2.5.2-1.el7.centos.x86_64.rpm
+
+# test OVS version
+sudo ovs-vsctl -V
+
+# test kernel modules
+sudo modprobe openvswitch
+
+# set kernel module to load on boot
+sudo nano -w /etc/modules-load.d/openvswitch.conf
+..................
+openvswitch
+..................
+
+# reboot
+sudo reboot
+
+# check if module is loaded
+sudo bash -c "lsmod | grep openvswitch"
+
+# verify daemon is loaded
+sudo systemctl status openvswitch.service
+
+

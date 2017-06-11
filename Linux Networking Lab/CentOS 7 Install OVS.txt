@@ -1,0 +1,63 @@
+Tutorials on OVS:
+	http://wiki.flav.com/wiki/Open_vSwitch_Tutorial
+
+===========================================================================
+
+# install some dependencies
+sudo yum install gcc make python-devel openssl-devel kernel-devel graphviz \
+    kernel-debug-devel autoconf automake rpm-build redhat-rpm-config \
+    libtool checkpolicy selinux-policy-devel wget
+
+# download latest version of OVS
+pushd /usr/src
+sudo wget http://openvswitch.org/releases/openvswitch-2.5.2.tar.gz
+sudo tar xvf openvswitch-2.5.2.tar.gz
+cd openvswitch-2.5.2
+
+# make dist tarball
+sudo ./boot.sh
+sudo ./configure
+sudo make dist
+
+# copy dist tarball to rpmbuild home dir
+sudo mkdir -p $HOME/rpmbuild/SOURCES
+sudo cp openvswitch-2.5.2.tar.gz $HOME/rpmbuild/SOURCES/
+
+# extract dist tarball and go to it's folder
+sudo tar xvf openvswitch-2.5.2.tar.gz
+cd openvswitch-2.5.2 
+
+# build RPM
+sudo rpmbuild -bb --without check rhel/openvswitch.spec
+sudo rpmbuild -bb rhel/openvswitch-dkms.spec
+
+# install OVS
+sudo yum localinstall $HOME/rpmbuild/RPMS/x86_64/openvswitch-2.5.2-1.x86_64.rpm
+sudo yum localinstall $HOME/rpmbuild/RPMS/x86_64/openvswitch-dkms-2.5.2-1.el7.centos.x86_64.rpm
+
+# test OVS version
+sudo ovs-vsctl -V
+
+# test kernel modules
+sudo modprobe openvswitch
+
+# set kernel module to load on boot
+sudo nano -w /etc/modules-load.d/openvswitch.conf
+..................
+openvswitch
+..................
+
+# reboot
+sudo reboot
+
+# check if module is loaded
+sudo bash -c "lsmod | grep openvswitch"
+
+# verify daemon is loaded
+sudo systemctl status openvswitch.service
+
+
+
+
+
+

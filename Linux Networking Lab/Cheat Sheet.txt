@@ -1,3 +1,38 @@
+############################ OVS #################################
+
+# print version
+ovs-vsctl -V
+
+# create bridge
+ovs-vsctl add-br br0
+
+# delete bridge
+ovs-vsctl del-br br0
+
+# view created bridges
+ovs-vsctl show
+
+# add interface to bridge
+ovs-vsctl add-port br0 veth-0
+
+# remove interface from bridge
+ovs-vsctl del-port br0 veth-0
+
+# enable RSTP (Rapid STP) on bridge
+ovs-vsctl set bridge br0 rstp_enable=true 
+
+# enable STP on bridge
+ovs-vsctl set bridge br0 stp_enable=true 
+
+# dump ovs configs
+ovsdb-client dump | less
+
+# view FDB on bridge
+ovs-appctl fdb/show br0
+
+# view flow on bridge
+ovs-ofctl show somebr
+
 ############################ IP ADDR #################################
 
 # add additional ip address

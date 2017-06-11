@@ -1,0 +1,94 @@
+Clone: cluster-vm
+Name: ntp0-server
+Name: ntp1-server
+
+====================================================================
+dhcp-server.ostack.me
+====================================================================
+
+# assing static ip address for ntp server
+sudo nano -w /etc/dnsmasq-hosts.conf
+..............
+52:54:00:af:50:80,set:ntp-server,192.168.200.4,ntp0-server.ostack.me,infinite
+52:54:00:20:fe:1d,set:ntp-server,10.0.2.4,ntp0-server.ostack.me,infinite
+52:54:00:48:1f:ea,set:ntp-server,192.168.200.5,ntp1-server.ostack.me,infinite
+52:54:00:fd:23:12,set:ntp-server,10.0.2.5,ntp1-server.ostack.me,infinite
+..............
+
+# set as default ntp server
+sudo nano -w /etc/dnsmasq-opts.conf
+..............
+tag:pub,option:ntp-server,192.168.200.4,192.168.200.5
+tag:priv,option:ntp-server,10.0.2.4,10.0.2.5
+tag:ntp-server,option:ntp-server
+..............
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq
+
+====================================================================
+SSH-Box
+====================================================================
+
+# create SSH-less login
+ssh-copy-id ntp0-server.ostack.me
+ssh-copy-id ntp1-server.ostack.me
+
+====================================================================
+
+# install ntp server package
+sudo yum install ntp
+
+# edit configuration file
+# > set external ntp servers
+# > allow ip ranges to access our ntp server
+sudo nano -w /etc/ntp.conf
+....................................................
+server 0.asia.pool.ntp.org iburst
+server 1.asia.pool.ntp.org iburst
+server 2.asia.pool.ntp.org iburst
+server 3.asia.pool.ntp.org iburst
+
+restrict 192.168.200.0 netmask 255.255.255.0 nomodify notrap
+restrict 10.0.2.0 netmask 255.255.255.0 nomodify notrap
+....................................................
+
+# allow ntp port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --add-service=ntp --permanent
+sudo firewall-cmd --reload
+
+# enable ntp service
+sudo systemctl disable chronyd
+sudo systemctl stop chronyd
+sudo systemctl restart ntpd
+sudo systemctl enable ntpd
+sudo systemctl status ntpd
+
+# check if service is synchronizing time with time servers
+sudo ntpq -p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
