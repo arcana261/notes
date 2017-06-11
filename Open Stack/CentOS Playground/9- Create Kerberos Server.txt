@@ -15,9 +15,6 @@ sudo yum install krb5-server krb5-workstation pam_krb5 haveged rsh
 
 # edit configuration and set domain name
 sudo nano -w /etc/krb5.conf
->>> set "EXAMPLE.COM" to "KSTORAGE1.ORG"
->>> set "kerberos.example.com" to "kerberosserver.kstorage1.org"
->>> set "example.com" to "kstorage1.org"
 .....................................................................
 # Configuration snippets may be placed in this directory as well
 includedir /etc/krb5.conf.d/
@@ -34,7 +31,8 @@ includedir /etc/krb5.conf.d/
  forwardable = true
  rdns = false
  default_realm = OSTACK.ME
- default_ccache_name = KEYRING:persistent:%{uid}
+ # comment to prevent bug with HADOOP
+ # default_ccache_name = KEYRING:persistent:%{uid}
 
 [realms]
 OSTACK.ME = {
@@ -49,12 +47,28 @@ ostack.me = OSTACK.ME
 
 # edit configuration and set domain name
 sudo vim /var/kerberos/krb5kdc/kadm5.acl
->>> set "EXAMPLE.COM" to "KSTORAGE1.ORG"
->>> set "kerberos.example.com" to "kerberosserver.kstorage1.org"
->>> set "example.com" to "kstorage1.org"
 .....................................................................
 */admin@OSTACK.ME	*
 .....................................................................
+
+# edit KDC config file
+sudo nano -w /var/kerberos/krb5kdc/kdc.conf
+.....................................................................
+[kdcdefaults]
+ kdc_ports = 88
+ kdc_tcp_ports = 88
+
+[realms]
+ OSTACK.ME = {
+  #master_key_type = aes256-cts
+  acl_file = /var/kerberos/krb5kdc/kadm5.acl
+  dict_file = /usr/share/dict/words
+  admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
+  key_stash_file = /var/kerberos/krb5kdc/.k5.OSTACK.ME
+  supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal cam$
+ }
+.....................................................................
+
 
 # enable kerberos through firewall
 sudo firewall-cmd --reload
@@ -80,11 +94,9 @@ sudo kdb5_util create -s
 # enable and start services
 sudo systemctl enable krb5kdc
 sudo systemctl enable kadmin
-sudo systemctl enable nfs-secure 
 sudo systemctl restart krb5kdc
 sudo systemctl restart kadmin
-sudo systemctl restart nfs-secure 
-sudo systemctl status krb5kdc kadmin nfs-secure 
+sudo systemctl status krb5kdc kadmin
 
 # create admin principal for root
 # add kerberos server to database
@@ -112,6 +124,25 @@ ktadd kadmin/kerberos-server.ostack.me@OSTACK.ME
 ktadd host/kerberos-server.ostack.me
 quit
 .............................................
+
+# create keytab for our server
+sudo kadmin.local
+.............................................
+ktadd -k /etc/server.keytab host/kerberos-server.ostack.me
+quit
+.............................................
+
+# merge keytabs
+sudo ktutil
+.............................................
+read_kt /etc/krb5.keytab
+read_kt /etc/server.keytab
+write_kt /etc/krb5.keytab
+quit
+.............................................
+
+# verify key is imported and merged
+sudo klist -k
 
 # create ssh config
 nano -w $HOME/.ssh/config
@@ -163,15 +194,16 @@ scp /etc/krb5.conf router.ostack.me:~
 scp /etc/krb5.conf ntp0-server.ostack.me:~
 scp /etc/krb5.conf ntp1-server.ostack.me:~
 
-ssh -t ssh.ostack.me sudo cp -fv ~/krb5.conf /etc/
-ssh -t router.ostack.me sudo cp -fv ~/krb5.conf /etc/
-ssh -t ntp0-server.ostack.me sudo cp -fv ~/krb5.conf /etc/
-ssh -t ntp1-server.ostack.me sudo cp -fv ~/krb5.conf /etc/
+ssh -t ssh.ostack.me sudo mv -fv ~/krb5.conf /etc/
+ssh -t router.ostack.me sudo mv -fv ~/krb5.conf /etc/
+ssh -t ntp0-server.ostack.me sudo mv -fv ~/krb5.conf /etc/
+ssh -t ntp1-server.ostack.me sudo mv -fv ~/krb5.conf /etc/
 
 ====================================================================
 SSH Box
 ====================================================================
 
+sudo chown root:root /etc/krb5.conf
 sudo kadmin -p root/admin
 .............................................
 addprinc -randkey host/ssh.ostack.me
@@ -183,6 +215,7 @@ quit
 Router
 ====================================================================
 
+sudo chown root:root /etc/krb5.conf
 sudo kadmin -p root/admin
 .............................................
 addprinc -randkey host/router.ostack.me
@@ -194,6 +227,7 @@ quit
 ntp0-server
 ====================================================================
 
+sudo chown root:root /etc/krb5.conf
 sudo kadmin -p root/admin
 .............................................
 addprinc -randkey host/ntp0-server.ostack.me
@@ -205,6 +239,7 @@ quit
 ntp1-server
 ====================================================================
 
+sudo chown root:root /etc/krb5.conf
 sudo kadmin -p root/admin
 .............................................
 addprinc -randkey host/ntp0-server.ostack.me
@@ -216,6 +251,7 @@ quit
 SSH-Box
 NTP Servers
 Router
+Kerberos Server
 ====================================================================
 
 # enable kerberos login in ssh
@@ -241,6 +277,10 @@ Host *.ostack.me
 
 # get credentials
 kinit
+
+# copy ssh config to root
+sudo mkdir -p /root/.ssh
+sudo cp -rfv $HOME/.ssh/* /root/.ssh
 
 
 

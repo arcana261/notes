@@ -1,0 +1,67 @@
+Clone: cluster-vm
+Name: kerberos-client
+
+====================================================================
+SSH-Box
+====================================================================
+
+# create SSH-less login
+ssh-copy-id kerberos-client.ostack.me
+
+====================================================================
+
+# install required packages
+sudo yum install -y krb5-workstation pam_krb5 haveged rsh
+
+# enable entropy generation tool "haveged"
+sudo systemctl restart haveged
+sudo systemctl enable haveged
+sudo systemctl status haveged
+
+# check available system entropy
+sudo cat /proc/sys/kernel/random/entropy_avail
+
+# enable kerberos through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=kerberos
+sudo firewall-cmd --reload
+
+====================================================================
+Kerberos Server
+====================================================================
+
+# create SSH-less login
+ssh-copy-id kerberos-client.ostack.me
+
+# copy kerberos config
+scp /etc/krb5.conf kerberos-client.ostack.me:~
+ssh -t kerberos-client.ostack.me sudo mv -fv ~/krb5.conf /etc/
+
+====================================================================
+
+# change owner
+sudo chown root:root /etc/krb5.conf
+
+# enable kerberos login in ssh
+sudo nano -w /etc/ssh/sshd_config
+.............................................
+KerberosAuthentication yes
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials yes
+.............................................
+
+# restart SSH service
+sudo systemctl restart sshd
+sudo systemctl status sshd
+
+# enable kerberos SSH cient
+nano -w $HOME/.ssh/config
+.............................................
+Host *.ostack.me
+	Port 2122
+	GSSAPIAuthentication yes
+	GSSAPIDelegateCredentials yes
+.............................................
+
+
+

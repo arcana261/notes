@@ -1,0 +1,23 @@
+Clone: kerberos-client
+Name: zabbix-server
+
+====================================================================
+
+# generate kerberos host key
+sudo kadmin
+.............................................
+addprinc -randkey host/zabbix-server.ostack.me
+ktadd host/zabbix-server.ostack.me
+quit
+.............................................
+
+# initialize token and SSH via kerberos
+kinit -p arcana
+
+
+
+
+
+
+
+

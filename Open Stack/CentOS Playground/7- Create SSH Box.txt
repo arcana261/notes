@@ -57,6 +57,22 @@ Host *.ostack.me
 ssh-copy-id dhcp-server.ostack.me
 ssh-copy-id router.ostack.me
 
+# copy ssh config to root
+sudo mkdir -p /root/.ssh
+sudo cp -rfv $HOME/.ssh/* /root/.ssh/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
