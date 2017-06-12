@@ -1,0 +1,51 @@
+Clone: sshclient.ostack.me
+Name: vm-ntp.ostack.me
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname vm-ntp.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+====================================================================
+
+# install ntp server package
+sudo yum install ntp
+
+# edit configuration file
+# > set external ntp servers
+# > allow ip ranges to access our ntp server
+sudo nano -w /etc/ntp.conf
+....................................................
+server 0.asia.pool.ntp.org iburst
+server 1.asia.pool.ntp.org iburst
+server 2.asia.pool.ntp.org iburst
+server 3.asia.pool.ntp.org iburst
+
+restrict 192.168.200.0 netmask 255.255.255.0 nomodify notrap
+restrict 10.0.2.0 netmask 255.255.255.0 nomodify notrap
+....................................................
+
+# allow ntp port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --add-service=ntp --permanent
+sudo firewall-cmd --reload
+
+# enable ntp service
+sudo systemctl disable chronyd
+sudo systemctl stop chronyd
+sudo systemctl restart ntpd
+sudo systemctl enable ntpd
+sudo systemctl status ntpd
+
+# check if service is synchronizing time with time servers
+sudo ntpq -p
+
+
+
