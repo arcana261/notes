@@ -1,0 +1,25 @@
+Clone: clustervm.ostack.me
+Name: sshclient.ostack.me
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname sshclient.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+====================================================================
+ssh.ostack.me
+====================================================================
+
+# copy ssh id to existing servers
+ssh-copy-id sshclient.ostack.me
+
+
+
+
