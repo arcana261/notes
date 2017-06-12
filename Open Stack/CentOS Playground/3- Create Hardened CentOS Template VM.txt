@@ -1,7 +1,18 @@
-Clone: centos7-base
-Name: centos7-hardened
+Clone: centos7.ostack.me
+Name: hardened.ostack.me
 
 ====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname hardened.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
 # configure firewall
 sudo systemctl enable firewalld
 sudo systemctl restart firewalld
@@ -14,7 +25,6 @@ sudo vim /etc/ssh/sshd_config
 ...
 Port 2122
 PermitRootLogin no
-UseDNS no
 ...
 sudo firewall-cmd --reload
 sudo firewall-cmd --permanent --add-port=2122/tcp
@@ -70,7 +80,7 @@ sudo nano -w /etc/sysctl.conf
 > net.ipv4.tcp_syn_retries = 5
 >
 > # Log Martians
-> net.ipv4.conf.all.log_martians = 1
+> net.ipv4.conf.all.log_martians = 0
 > net.ipv4.icmp_ignore_bogus_error_responses = 1
 >
 > # Ignore ICMP redirects
@@ -119,10 +129,19 @@ sudo nano -w /etc/fail2ban/jail.conf
 > logpath  = %(sshd_log)s
 > backend  = %(sshd_backend)s
 > maxretry = 3
+>
+> [sshd-ddos]
+> 
+> enabled = true
+> port    = 2122
+> logpath = %(sshd_log)s
+> backend = %(sshd_backend)s
+>
 
 # start and enable fail2ban
 sudo systemctl restart fail2ban
 sudo systemctl enable fail2ban
+sudo systemctl status fail2ban
 
 # view and verify fail2ban status
 sudo fail2ban-client status
@@ -159,10 +178,10 @@ sudo tripwire-setup-keyfiles
 sudo tripwire --init
 
 # scan system using tripwire
-sudo bash -c "tripwire --check 1> /etc/tripwire/report.txt 2>&1 3>&1"
+sudo bash -c "tripwire --check 2>&1 3>&1 | tee /etc/tripwire/report.txt"
 
 # view tripwire log
-less /etc/tripwire/report.txt
+sudo less /etc/tripwire/report.txt
 
 
 

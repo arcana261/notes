@@ -1,9 +1,11 @@
 Linux Guest Configuration:
-	Name -> CentOS7-Base
+	Name -> centos7.ostack.me
 	CPU -> 1 [] DO NOT Copy Host CPU configuration, Hypervisor Default
-	Disk -> VirtIO
+	Disk -> VirtIO (6 GB)
 	RAM -> 512 MB
-	Network -> VirtIO (8 GB)
+	Network -> VirtIO [default]
+	Network -> VirtIO [public]
+	Network -> VirtIO [private]
 	CDROM -> IDE
 	Video -> QXL
 	Boot Options ->
@@ -19,7 +21,17 @@ Linux Guest Configuration:
 
 
 # upgrade system
-sudo yum -y update
+sudo yum update
+
+# WARNING!
+# WARNING!
+# WARNING!
+# verify you can login from another tty/ssh
+# if failed,
+# DO NOT REBOOT!
+#
+# reboot
+sudo reboot
 
 # install epel repositories
 sudo yum install epel-release
@@ -32,8 +44,12 @@ sudo yum install psmisc nano vim \
 	ntpdate setroubleshoot-server setools-console \
 	bind-utils tcpdump python-pip \
 	yum-plugin-priorities w3m \
-	bash-completion strace dnsmasqe \
-	git
+	bash-completion strace dnsmasq \
+	git unar zip unzip gcc make python-devel \
+	openssl-devel kernel-devel graphviz \
+	kernel-debug-devel autoconf automake rpm-build \
+	redhat-rpm-config libtool checkpolicy \
+	selinux-policy-devel
 
 # update pip
 sudo pip install --upgrade pip
@@ -59,13 +75,10 @@ sudo touch /.autorelabel
 #
 >>>>>>>>>> TTY LOGIN
 
-# ensure hostname is set in /etc/hosts
-sudo nano -w /etc/hosts
-> 127.0.0.1 my-host-name
-
 # allow icmp (ping)
 sudo nano -w /etc/sysctl.conf
 >>>>>>>>>>>>>>>>>>>>>>
+# allow ping
 net.ipv4.icmp_echo_ignore_all = 0
 <<<<<<<<<<<<<<<<<<<<<<
 
@@ -76,7 +89,7 @@ sudo sysctl -p
 sudo updatedb
 
 # set default editor to vim
-nano -w /etc/environment
+sudo nano -w /etc/environment
 .............
 EDITOR=/bin/vim
 .............
@@ -84,17 +97,18 @@ EDITOR=/bin/vim
 # reboot system
 sudo reboot
 
+# install nux repo
+sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+
+# install unrar tool
+sudo yum install unrar
+
 ===========================================================================
 ## Install OVS
 ===========================================================================
 
-# install some dependencies
-sudo yum install gcc make python-devel openssl-devel kernel-devel graphviz \
-    kernel-debug-devel autoconf automake rpm-build redhat-rpm-config \
-    libtool checkpolicy selinux-policy-devel wget
-
 # download latest version of OVS
-pushd /usr/src
+cd /usr/src
 sudo wget http://openvswitch.org/releases/openvswitch-2.5.2.tar.gz
 sudo tar xvf openvswitch-2.5.2.tar.gz
 cd openvswitch-2.5.2
@@ -103,10 +117,13 @@ cd openvswitch-2.5.2
 sudo ./boot.sh
 sudo ./configure
 sudo make dist
+sudo mkdir /usr/src/dist
+sudo mv openvswitch-2.5.2.tar.gz /usr/src/dist/
+cd /usr/src/dist
 
 # copy dist tarball to rpmbuild home dir
-sudo mkdir -p $HOME/rpmbuild/SOURCES
-sudo cp openvswitch-2.5.2.tar.gz $HOME/rpmbuild/SOURCES/
+sudo mkdir -p /root/rpmbuild/SOURCES
+sudo cp openvswitch-2.5.2.tar.gz /root/rpmbuild/SOURCES/
 
 # extract dist tarball and go to it's folder
 sudo tar xvf openvswitch-2.5.2.tar.gz
@@ -117,8 +134,8 @@ sudo rpmbuild -bb --without check rhel/openvswitch.spec
 sudo rpmbuild -bb rhel/openvswitch-dkms.spec
 
 # install OVS
-sudo yum localinstall $HOME/rpmbuild/RPMS/x86_64/openvswitch-2.5.2-1.x86_64.rpm
-sudo yum localinstall $HOME/rpmbuild/RPMS/x86_64/openvswitch-dkms-2.5.2-1.el7.centos.x86_64.rpm
+sudo yum localinstall /root/rpmbuild/RPMS/x86_64/openvswitch-2.5.2-1.x86_64.rpm
+sudo yum localinstall /root/rpmbuild/RPMS/x86_64/openvswitch-dkms-2.5.2-1.el7.centos.x86_64.rpm
 
 # test OVS version
 sudo ovs-vsctl -V
@@ -140,5 +157,45 @@ sudo bash -c "lsmod | grep openvswitch"
 
 # verify daemon is loaded
 sudo systemctl status openvswitch.service
+
+# generate SSH keys
+ssh-keygen -t rsa
+
+# generate SSH keys for root
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+
+# generate empty ssh config
+touch ~/.ssh/config
+chmod 600 ~/.ssh/config
+sudo touch /root/.ssh/config
+sudo chmod 600 /root/.ssh/config
+
+# make small configuration to ssh
+sudo vim /etc/ssh/sshd_config
+..................
+UseDNS no
+..................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

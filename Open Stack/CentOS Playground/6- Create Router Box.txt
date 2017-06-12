@@ -1,5 +1,5 @@
-Clone: cluster-vm
-Name: router
+Clone: clustervm.ostack.me
+Name: router.ostack.me
 
 ====================================================================
 KVM
@@ -17,7 +17,6 @@ dhcp-server.ostack.me
 sudo nano -w /etc/dnsmasq-hosts.conf
 ..............
 52:54:00:86:66:7a,set:router,192.168.200.2,router.ostack.me,infinite
-52:54:00:7f:c5:c0,set:router,10.0.2.2,router.ostack.me,infinite
 ..............
 
 # set as default gateway
@@ -44,6 +43,17 @@ sudo reboot
 
 ====================================================================
 
+# first-run config
+sudo hostnamectl set-hostname router.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+
 # set eth0 to static IP
 sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
 ..............
@@ -54,8 +64,17 @@ PREFIX="24"
 GATEWAY="192.168.122.1"
 ..............
 
+# disable eth2
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
+..............
+ONBOOT=no
+..............
+
 # reboot
 sudo reboot
+
+# verify ip addresses
+ifconfig -a
 
 ====================================================================
 KVM
@@ -75,6 +94,9 @@ Host *.ostack.me
 	Port 2122
 ..............
 
+# set correct permission
+chmod 600 $HOME/.ssh/config
+
 # create SSH-less login
 ssh-copy-id router.ostack.me
 
@@ -93,8 +115,9 @@ sudo nano -w /etc/sysctl.conf
 sudo sysctl -p
 
 # check if is enabled
-sysctl -a | grep forward | more
-sysctl -a | grep rp_filter | more
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.forwarding" | more
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.rp_filter" | more
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.accept_source_route" | more
 
 # list zones and bounded interfaces
 sudo firewall-cmd --list-all
@@ -109,30 +132,8 @@ sudo firewall-cmd --reload
 # check if masquerading is enabled
 sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
 
-# create ssh config AS "arcana" (non-root)
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-touch $HOME/.ssh/config
-chmod 600 $HOME/.ssh/config
-ssh-keygen -t rsa
-
-# create SSH config for dhcp server
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-nano -w $HOME/.ssh/config
-..............
-Host *.ostack.me
-	User arcana
-	Port 2122
-..............
-
 # copy ssh id to dhcp-server
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-ssh-copy-id dhcp-server.ostack.me
+ssh-copy-id dhcp.ostack.me
 
 ====================================================================
 KVM
@@ -141,7 +142,7 @@ KVM
 # create routing configuration
 
 sudo ip route add 192.168.200/24 via 192.168.122.2
-sudo ip route add 10.0.2/24 via 192.168.122.2
+
 
 
 

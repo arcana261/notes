@@ -1,20 +1,44 @@
-Clone: cluster-vm
-Name: ssh
+Clone: clustervm.ostack.me
+Name: ssh.ostack.me
 
 ====================================================================
-dhcp-server.ostack.me
+dhcp.ostack.me
 ====================================================================
 
 # assing static ip address for ntp server
 sudo nano -w /etc/dnsmasq-hosts.conf
 ..............
 52:54:00:4d:9b:a6,192.168.200.3,ssh.ostack.me,infinite
-52:54:00:59:da:5d,10.0.2.3,ssh.ostack.me,infinite
+52:54:00:39:d0:83,10.0.2.3,ssh.ostack.me,infinite
 ..............
 
 # restart dnsmasq
 sudo systemctl restart dnsmasq
 
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname ssh.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+====================================================================
+router.ostack.me
+====================================================================
+
+# create login-less ssh
+ssh-copy-id ssh.ostack.me
+
+====================================================================
+
+# copy ssh id to existing servers
+ssh-copy-id dhcp.ostack.me
+ssh-copy-id router.ostack.me
 
 ====================================================================
 KVM
@@ -28,41 +52,6 @@ sudo nano -w /etc/hosts
 
 # create SSH-less login
 ssh-copy-id ssh.ostack.me
-
-====================================================================
-
-# create ssh config AS "arcana" (non-root)
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-touch $HOME/.ssh/config
-chmod 600 $HOME/.ssh/config
-ssh-keygen -t rsa
-
-# create SSH config for dhcp server
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-nano -w $HOME/.ssh/config
-..............
-Host *.ostack.me
-	User arcana
-	Port 2122
-..............
-
-# copy ssh id to dhcp-server
-#### RUN FOLLOWING AS NON-ROOT!
-#### RUN FOLLOWING AS NON-ROOT!
-ssh-copy-id dhcp-server.ostack.me
-ssh-copy-id router.ostack.me
-
-# copy ssh config to root
-sudo mkdir -p /root/.ssh
-sudo cp -rfv $HOME/.ssh/* /root/.ssh/
-
-
-
 
 
 

@@ -1,12 +1,24 @@
-Clone: centos7-hardened
-Name: cluster-vm
+Clone: hardened.ostack.me
+Name: clustervm.ostack.me
 
 ====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname clustervm.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
 
 # remove network "eth0" from VM
 sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
 .................
 ONBOOT="no"
+IPV6INIT="no"
+IPV6_AUTOCONF="no"
 .................
 
 # ensure eth1 and eth2 are set to DHCP
@@ -14,6 +26,8 @@ sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
 .................
 BOOTPROTO=dhcp
 ONBOOT=yes
+IPV6INIT=no
+IPV6_AUTOCONF=no
 .................
 
 # ensure eth1 and eth2 are set to DHCP
@@ -21,8 +35,42 @@ sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
 .................
 BOOTPROTO=dhcp
 ONBOOT=yes
+IPV6INIT=no
+IPV6_AUTOCONF=no
 .................
+
+# disable IPv6 completely
+sudo nano -w /etc/sysctl.conf
+.................
+# Disable IPv6
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.autoconf = 0
+net.ipv6.conf.all.autoconf = 0
+.................
+
+# reload sysctl
+sudo sysctl -p
+
+# create ssh config AS "arcana" (non-root)
+nano -w $HOME/.ssh/config
+..............
+Host *.ostack.me
+	User arcana
+	Port 2122
+..............
+
+# create ssh config AS "arcana" (root)
+sudo nano -w /root/.ssh/config
+..............
+Host *.ostack.me
+	User arcana
+	Port 2122
+..............
 
 # reboot
 sudo reboot
+
+# check network config
+ifconfig -a
 

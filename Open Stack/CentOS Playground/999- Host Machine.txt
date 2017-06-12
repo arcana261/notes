@@ -1,0 +1,4 @@
+# create routing configuration
+
+sudo ip route add 192.168.200/24 via 192.168.122.2
+
