@@ -1,0 +1,35 @@
+Clone: sshclient.ostack.me
+Name: vm-kdc.ostack.me
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname vm-kdc.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+# install required packages
+sudo yum install krb5-server krb5-workstation pam_krb5 haveged rsh
+
+# enable kerberos through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=kerberos
+sudo firewall-cmd --reload
+
+# enable entropy generation tool "haveged"
+sudo systemctl restart haveged
+sudo systemctl enable haveged
+sudo systemctl status haveged
+
+# check available system entropy
+sudo cat /proc/sys/kernel/random/entropy_avail
+
+# create folder to store keytabs
+sudo mkdir -p /etc/keytabs
+sudo chmod 600 /etc/keytabs
+

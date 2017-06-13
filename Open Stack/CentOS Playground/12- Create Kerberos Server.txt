@@ -1,17 +1,17 @@
-Clone: cluster-vm
-Name: kerberos-server
-
-====================================================================
-SSH-Box
-====================================================================
-
-# create SSH-less login
-ssh-copy-id kerberos-server.ostack.me
+Clone: vm-kdc.ostack.me
+Name: kdc.ostack.me
 
 ====================================================================
 
-# install required packages
-sudo yum install krb5-server krb5-workstation pam_krb5 haveged rsh
+# first-run config
+sudo hostnamectl set-hostname kdc.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
 
 # edit configuration and set domain name
 sudo nano -w /etc/krb5.conf
@@ -36,8 +36,8 @@ includedir /etc/krb5.conf.d/
 
 [realms]
 OSTACK.ME = {
- kdc = kerberos-server.ostack.me
- admin_server = kerberos-server.ostack.me
+ kdc = kdc.ostack.me
+ admin_server = kdc.ostack.me
 }
 
 [domain_realm]
@@ -46,7 +46,7 @@ ostack.me = OSTACK.ME
 .....................................................................
 
 # edit configuration and set domain name
-sudo vim /var/kerberos/krb5kdc/kadm5.acl
+sudo nano -w /var/kerberos/krb5kdc/kadm5.acl
 .....................................................................
 */admin@OSTACK.ME	*
 .....................................................................
@@ -59,7 +59,7 @@ sudo nano -w /var/kerberos/krb5kdc/kdc.conf
  kdc_tcp_ports = 88
 
 [realms]
- OSTACK.ME = {
+ ostack.me = {
   #master_key_type = aes256-cts
   acl_file = /var/kerberos/krb5kdc/kadm5.acl
   dict_file = /usr/share/dict/words
@@ -69,27 +69,8 @@ sudo nano -w /var/kerberos/krb5kdc/kdc.conf
  }
 .....................................................................
 
-
-# enable kerberos through firewall
-sudo firewall-cmd --reload
-sudo firewall-cmd --permanent --add-service=kerberos
-sudo firewall-cmd --permanent --add-port=749/tcp
-sudo firewall-cmd --reload
-
-# enable entropy generation tool "haveged"
-sudo systemctl restart haveged
-sudo systemctl enable haveged
-sudo systemctl status haveged
-
-# check available system entropy
-sudo cat /proc/sys/kernel/random/entropy_avail
-
 # create database for realm
 sudo kdb5_util create -s
-
-#.... CREATE SOME ENTROPY ON SYSTEM!
-#.... IN ANOTHER TERMINAL DO:
-#.... ping -f localhost
 
 # enable and start services
 sudo systemctl enable krb5kdc
@@ -102,15 +83,15 @@ sudo systemctl status krb5kdc kadmin
 # add kerberos server to database
 sudo kadmin.local
 .............................................
-addprinc root/admin
+addprinc arcana/admin
 addprinc arcana
-addprinc -randkey kadmin/kerberos-server.ostack.me@OSTACK.ME
-addprinc -randkey host/kerberos-server.ostack.me
+addprinc -randkey kadmin/kdc.ostack.me
+addprinc -randkey host/kdc.ostack.me
 quit
 .............................................
 
 # obtain and cache Kerberos ticket-granting ticket for root/admin
-sudo kinit root/admin
+sudo kinit -p arcana/admin
 
 # verify ticket is created
 sudo klist
@@ -120,23 +101,21 @@ sudo kadmin.local
 .............................................
 ktadd kadmin/admin
 ktadd kadmin/changepw
-ktadd kadmin/kerberos-server.ostack.me@OSTACK.ME
-ktadd host/kerberos-server.ostack.me
+ktadd kadmin/kdc.ostack.me
 quit
 .............................................
 
 # create keytab for our server
 sudo kadmin.local
 .............................................
-ktadd -k /etc/server.keytab host/kerberos-server.ostack.me
+ktadd -k /etc/keytabs/kdc.ostack.me host/kdc.ostack.me
 quit
 .............................................
 
 # merge keytabs
 sudo ktutil
 .............................................
-read_kt /etc/krb5.keytab
-read_kt /etc/server.keytab
+read_kt /etc/keytabs/kdc.ostack.me
 write_kt /etc/krb5.keytab
 quit
 .............................................
@@ -144,24 +123,15 @@ quit
 # verify key is imported and merged
 sudo klist -k
 
-# create ssh config
-nano -w $HOME/.ssh/config
-..............
-Host *.ostack.me
-	User arcana
-	Port 2122
-..............
-
-# set correct permission
-chmod 600 $HOME/.ssh/config
-
-# generate rsa key
-ssh-keygen -t rsa
+# enable kadmin through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=749/tcp
+sudo firewall-cmd --reload
 
 # set login-less ssh
 ssh-copy-id ssh.ostack.me
-ssh-copy-id ntp0-server.ostack.me
-ssh-copy-id ntp1-server.ostack.me
+ssh-copy-id 0-ntp.ostack.me
+ssh-copy-id 1-ntp.ostack.me
 ssh-copy-id router.ostack.me
 
 ====================================================================
@@ -171,7 +141,7 @@ Router
 ====================================================================
 
 # install required packages
-sudo yum install -y krb5-workstation pam_krb5 haveged rsh
+sudo yum install krb5-workstation pam_krb5 haveged rsh
 
 # enable entropy generation tool "haveged"
 sudo systemctl restart haveged
@@ -181,30 +151,23 @@ sudo systemctl status haveged
 # check available system entropy
 sudo cat /proc/sys/kernel/random/entropy_avail
 
-# enable kerberos through firewall
-sudo firewall-cmd --reload
-sudo firewall-cmd --permanent --add-service=kerberos
-sudo firewall-cmd --reload
-
 ====================================================================
 
 # copy config to servers
 scp /etc/krb5.conf ssh.ostack.me:~
 scp /etc/krb5.conf router.ostack.me:~
-scp /etc/krb5.conf ntp0-server.ostack.me:~
-scp /etc/krb5.conf ntp1-server.ostack.me:~
-
-ssh -t ssh.ostack.me sudo mv -fv ~/krb5.conf /etc/
-ssh -t router.ostack.me sudo mv -fv ~/krb5.conf /etc/
-ssh -t ntp0-server.ostack.me sudo mv -fv ~/krb5.conf /etc/
-ssh -t ntp1-server.ostack.me sudo mv -fv ~/krb5.conf /etc/
+scp /etc/krb5.conf 0-ntp.ostack.me:~
+scp /etc/krb5.conf 1-ntp.ostack.me:~
 
 ====================================================================
 SSH Box
 ====================================================================
 
+sudo mv -fv $HOME/krb5.conf /etc/
 sudo chown root:root /etc/krb5.conf
-sudo kadmin -p root/admin
+sudo chmod 644 /etc/krb5.conf
+sudo restorecon -R -v /etc/krb5.conf
+sudo kadmin -p arcana/admin
 .............................................
 addprinc -randkey host/ssh.ostack.me
 ktadd host/ssh.ostack.me
@@ -215,8 +178,11 @@ quit
 Router
 ====================================================================
 
+sudo mv -fv $HOME/krb5.conf /etc/
 sudo chown root:root /etc/krb5.conf
-sudo kadmin -p root/admin
+sudo chmod 644 /etc/krb5.conf
+sudo restorecon -R -v /etc/krb5.conf
+sudo kadmin -p arcana/admin
 .............................................
 addprinc -randkey host/router.ostack.me
 ktadd host/router.ostack.me
@@ -224,26 +190,32 @@ quit
 .............................................
 
 ====================================================================
-ntp0-server
+0-ntp.ostack.me
 ====================================================================
 
+sudo mv -fv $HOME/krb5.conf /etc/
 sudo chown root:root /etc/krb5.conf
-sudo kadmin -p root/admin
+sudo chmod 644 /etc/krb5.conf
+sudo restorecon -R -v /etc/krb5.conf
+sudo kadmin -p arcana/admin
 .............................................
-addprinc -randkey host/ntp0-server.ostack.me
-ktadd host/ntp0-server.ostack.me
+addprinc -randkey host/0-ntp.ostack.me
+ktadd host/0-ntp.ostack.me
 quit
 .............................................
 
 ====================================================================
-ntp1-server
+1-ntp.ostack.me
 ====================================================================
 
+sudo mv -fv $HOME/krb5.conf /etc/
 sudo chown root:root /etc/krb5.conf
-sudo kadmin -p root/admin
+sudo chmod 644 /etc/krb5.conf
+sudo restorecon -R -v /etc/krb5.conf
+sudo kadmin -p arcana/admin
 .............................................
-addprinc -randkey host/ntp0-server.ostack.me
-ktadd host/ntp1-server.ostack.me
+addprinc -randkey host/1-ntp.ostack.me
+ktadd host/1-ntp.ostack.me
 quit
 .............................................
 
@@ -275,12 +247,17 @@ Host *.ostack.me
 	GSSAPIDelegateCredentials yes
 .............................................
 
+# enable kerberos SSH cient for root
+sudo nano -w /root/.ssh/config
+.............................................
+Host *.ostack.me
+	Port 2122
+	GSSAPIAuthentication yes
+	GSSAPIDelegateCredentials yes
+.............................................
+
 # get credentials
 kinit
-
-# copy ssh config to root
-sudo mkdir -p /root/.ssh
-sudo cp -rfv $HOME/.ssh/* /root/.ssh
 
 
 

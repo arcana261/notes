@@ -1,17 +1,20 @@
-Clone: cluster-vm
-Name: kerberos-client
+Clone: sshclient.ostack.me
+Name: kerberosclient.ostack.me
 
 ====================================================================
-SSH-Box
-====================================================================
 
-# create SSH-less login
-ssh-copy-id kerberos-client.ostack.me
-
-====================================================================
+# first-run config
+sudo hostnamectl set-hostname kerberosclient.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
 
 # install required packages
-sudo yum install -y krb5-workstation pam_krb5 haveged rsh
+sudo yum install krb5-workstation pam_krb5 haveged rsh
 
 # enable entropy generation tool "haveged"
 sudo systemctl restart haveged
@@ -21,26 +24,31 @@ sudo systemctl status haveged
 # check available system entropy
 sudo cat /proc/sys/kernel/random/entropy_avail
 
-# enable kerberos through firewall
-sudo firewall-cmd --reload
-sudo firewall-cmd --permanent --add-service=kerberos
-sudo firewall-cmd --reload
-
 ====================================================================
 Kerberos Server
 ====================================================================
 
 # create SSH-less login
-ssh-copy-id kerberos-client.ostack.me
+ssh-copy-id kerberosclient.ostack.me
 
 # copy kerberos config
-scp /etc/krb5.conf kerberos-client.ostack.me:~
-ssh -t kerberos-client.ostack.me sudo mv -fv ~/krb5.conf /etc/
+scp /etc/krb5.conf kerberosclient.ostack.me:~
 
 ====================================================================
 
-# change owner
+# correct permissions
+sudo mv -fv $HOME/krb5.conf /etc/
 sudo chown root:root /etc/krb5.conf
+sudo chmod 644 /etc/krb5.conf
+sudo restorecon -R -v /etc/krb5.conf
+
+# create a new key
+sudo kadmin -p arcana/admin
+.............................................
+addprinc -randkey host/kerberosclient.ostack.me
+ktadd host/kerberosclient.ostack.me
+quit
+.............................................
 
 # enable kerberos login in ssh
 sudo nano -w /etc/ssh/sshd_config
@@ -63,5 +71,16 @@ Host *.ostack.me
 	GSSAPIDelegateCredentials yes
 .............................................
 
+# enable kerberos SSH cient for root
+sudo nano -w /root/.ssh/config
+.............................................
+Host *.ostack.me
+	Port 2122
+	GSSAPIAuthentication yes
+	GSSAPIDelegateCredentials yes
+.............................................
+
+# get credentials
+kinit
 
 

@@ -4,107 +4,76 @@ Guide:
 	https://kb.iu.edu/d/aumh#combine
 
 
-Clone: cluster-vm
-Name: kerberos-server-2
-
-====================================================================
-SSH-Box
-====================================================================
-
-# create SSH-less login
-ssh-copy-id kerberos-server-2.ostack.me
+Clone: vm-kdc.ostack.me
+Name: slave-kdc.ostack.me
 
 ====================================================================
 
-# install required packages
-sudo yum install krb5-server krb5-workstation pam_krb5 haveged rsh
-
-# enable kerberos through firewall
-sudo firewall-cmd --reload
-sudo firewall-cmd --permanent --add-service=kerberos
-sudo firewall-cmd --permanent --add-port=749/tcp
-sudo firewall-cmd --reload
-
-# enable entropy generation tool "haveged"
-sudo systemctl restart haveged
-sudo systemctl enable haveged
-sudo systemctl status haveged
-
-# check available system entropy.
-sudo cat /proc/sys/kernel/random/entropy_avail
+# first-run config
+sudo hostnamectl set-hostname slave-kdc.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
 
 ====================================================================
 Kerberos Server
 ====================================================================
 
-# create SSH-less login to slave
-ssh-copy-id kerberos-server-2.ostack.me
-
-# create principal for slave
+# create keytab file
 sudo kadmin.local
 .............................................
-addprinc -randkey host/kerberos-server-2.ostack.me
-ktadd -k /etc/slave-2.keytab host/kerberos-server-2.ostack.me
+addprinc -randkey host/slave-kdc.ostack.me
+ktadd -k /etc/keytabs/slave-kdc.ostack.me host/slave-kdc.ostack.me
 quit
 .............................................
 
-# merge master key
+# merge slave key
 sudo ktutil
 .............................................
-read_kt /etc/slave-2.keytab
-read_kt /etc/krb5.keytab
+read_kt /etc/keytabs/slave-kdc.ostack.me
 write_kt /etc/krb5.keytab
 quit
 .............................................
 
-# merge master key
-sudo ktutil
-.............................................
-read_kt /etc/slave-2.keytab
-read_kt /etc/server.keytab
-write_kt /tmp/kerberos-server-2.ostack.me.keytab
-quit
-.............................................
-
-# verify key is imported and merged
-sudo klist -k /tmp/kerberos-server-2.ostack.me.keytab
-
-# install keytab
-sudo chmod 644 /tmp/kerberos-server-2.ostack.me.keytab
-scp /tmp/kerberos-server-2.ostack.me.keytab kerberos-server-2.ostack.me:~
-ssh -t kerberos-server-2.ostack.me sudo mv -fv ~/kerberos-server-2.ostack.me.keytab /etc/krb5.keytab
-ssh -t kerberos-server-2.ostack.me sudo chown -R root:root /etc/krb5.keytab
-
-# copy SSH keys to root
-sudo mkdir -p /root/.ssh
-sudo cp -rfv $HOME/.ssh/* /root/.ssh/
+# create ssh-less login
+ssh-copy-id slave-kdc.ostack.me
+sudo ssh-copy-id arcana@slave-kdc.ostack.me
 
 # install other files of kerberos
-sudo scp /etc/krb5.conf arcana@kerberos-server-2.ostack.me:~
-sudo scp /var/kerberos/krb5kdc/kdc.conf arcana@kerberos-server-2.ostack.me:~
-sudo scp /var/kerberos/krb5kdc/kadm5.acl arcana@kerberos-server-2.ostack.me:~
-sudo scp /var/kerberos/krb5kdc/.k5.OSTACK.ME arcana@kerberos-server-2.ostack.me:~
-
-ssh -t kerberos-server-2.ostack.me sudo mv -fv ~/krb5.conf /etc/
-ssh -t kerberos-server-2.ostack.me sudo mv -fv ~/kdc.conf /var/kerberos/krb5kdc/
-ssh -t kerberos-server-2.ostack.me sudo mv -fv ~/kadm5.acl /var/kerberos/krb5kdc/
-ssh -t kerberos-server-2.ostack.me sudo mv -fv ~/.k5.OSTACK.ME /var/kerberos/krb5kdc/
-
-ssh -t kerberos-server-2.ostack.me sudo chown -R root:root /etc/krb5.conf
-ssh -t kerberos-server-2.ostack.me sudo chown -R root:root /var/kerberos/krb5kdc/
+sudo scp /etc/keytabs/kdc.ostack.me arcana@slave-kdc.ostack.me:~
+sudo scp /etc/keytabs/slave-kdc.ostack.me arcana@slave-kdc.ostack.me:~
+sudo scp /etc/krb5.conf arcana@slave-kdc.ostack.me:~
+sudo scp /var/kerberos/krb5kdc/kdc.conf arcana@slave-kdc.ostack.me:~
+sudo scp /var/kerberos/krb5kdc/kadm5.acl arcana@slave-kdc.ostack.me:~
+sudo scp /var/kerberos/krb5kdc/.k5.OSTACK.ME arcana@slave-kdc.ostack.me:~
 
 ====================================================================
 
-# set who can propagate database
-sudo nano -w /var/kerberos/krb5kdc/kpropd.acl
-.............................................
-host/kerberos-server.ostack.me@OSTACK.ME
-.............................................
+# move files to their appropriate location
+sudo mv -fv $HOME/kdc.ostack.me /etc/keytabs/
+sudo mv -fv $HOME/slave-kdc.ostack.me /etc/keytabs/
+sudo mv -fv $HOME/krb5.conf /etc/
+sudo mv -fv $HOME/kdc.conf /var/kerberos/krb5kdc/
+sudo mv -fv $HOME/kadm5.acl /var/kerberos/krb5kdc/
+sudo mv -fv $HOME/.k5.OSTACK.ME /var/kerberos/krb5kdc/
 
-# enable propagation through firewall
-sudo firewall-cmd --reload
-sudo firewall-cmd --permanent --add-port=754/tcp
-sudo firewall-cmd --reload
+# set correct owners
+sudo chown -R root:root /etc/keytabs/kdc.ostack.me
+sudo chown -R root:root /etc/keytabs/slave-kdc.ostack.me
+sudo chown -R root:root /etc/krb5.conf
+sudo chown -R root:root /var/kerberos/krb5kdc/
+
+# set correct permissions
+sudo chmod 600 /etc/keytabs/kdc.ostack.me
+sudo chmod 600 /etc/keytabs/slave-kdc.ostack.me
+sudo chmod 644 /etc/krb5.conf
+sudo chmod 600 /var/kerberos/krb5kdc/kdc.conf
+sudo chmod 600 /var/kerberos/krb5kdc/kadm5.acl
+sudo chmod 600 /var/kerberos/krb5kdc/.k5.OSTACK.ME
 
 # restore selinux on files
 sudo restorecon -R -v /etc/krb5.keytab
@@ -113,19 +82,36 @@ sudo restorecon -R -v /var/kerberos/krb5kdc/kdc.conf
 sudo restorecon -R -v /var/kerberos/krb5kdc/kadm5.acl
 sudo restorecon -R -v /var/kerberos/krb5kdc/.k5.OSTACK.ME
 
-# create empty database with same password
-sudo kdb5_util create -s
+# merge keytabs
+sudo ktutil
+.............................................
+read_kt /etc/keytabs/kdc.ostack.me
+read_kt /etc/keytabs/slave-kdc.ostack.me
+write_kt /etc/krb5.keytab
+quit
+.............................................
 
-# enable and start services
-sudo systemctl enable krb5kdc
+# restore selinux on keytab
+sudo restorecon -R -v /etc/krb5.keytab
+
+# verify keys
+sudo klist -k
+
+# set who can propagate database
+sudo nano -w /var/kerberos/krb5kdc/kpropd.acl
+.............................................
+host/kdc.ostack.me@OSTACK.ME
+.............................................
+
+# enable propagation through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=754/tcp
+sudo firewall-cmd --reload
+
+# enable and start propagation service
 sudo systemctl enable kprop
-sudo systemctl restart krb5kdc
 sudo systemctl restart kprop
-sudo systemctl status krb5kdc kprop
-
-# disable kadmin on slave
-sudo systemctl disable kadmin
-sudo systemctl stop kadmin
+sudo systemctl status kprop
 
 ====================================================================
 Kerberos Server
@@ -136,7 +122,7 @@ sudo kdb5_util dump /var/kerberos/krb5kdc/slave_datatrans
 sudo chmod 644 /var/kerberos/krb5kdc/slave_datatrans
 
 # test propagation
-sudo kprop kerberos-server-2.ostack.me
+sudo kprop slave-kdc.ostack.me
 
 # create script to automate procedure
 sudo nano -w /opt/clone-kdbc.sh
@@ -146,7 +132,7 @@ sudo nano -w /opt/clone-kdbc.sh
 /sbin/kdb5_util dump /var/kerberos/krb5kdc/slave_datatrans
 /bin/chmod 644 /var/kerberos/krb5kdc/slave_datatrans
 /bin/date >> /var/log/clone-kdbc.log
-/sbin/kprop kerberos-server-2.ostack.me | /bin/tee -a /var/log/clone-kdbc.log
+/sbin/kprop slave-kdc.ostack.me | /bin/tee -a /var/log/clone-kdbc.log
 .............................................
 
 # make it executable
@@ -158,7 +144,12 @@ sudo crontab -e
 0 * * * * /opt/clone-kdbc.sh
 .............................................
 
+====================================================================
 
+# start KDC server on slave
+sudo systemctl enable krb5kdc
+sudo systemctl restart krb5kdc
+sudo systemctl status krb5kdc
 
 
 
