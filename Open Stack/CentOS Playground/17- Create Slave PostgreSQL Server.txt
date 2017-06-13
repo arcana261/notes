@@ -1,0 +1,124 @@
+Clone: vm-postgres.ostack.me
+Name: slave-postgres.ostack.me
+
+====================================================================
+dhcp.ostack.me
+====================================================================
+
+# assign static IP address for master server
+sudo nano -w /etc/dnsmasq-hosts.conf
+....................
+52:54:00:b9:eb:f5,192.168.200.7,slave-postgres.ostack.me,infinite
+52:54:00:27:6f:c2,10.0.2.7,slave-postgres.ostack.me,infinite
+....................
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname slave-postgres.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+# create a new key
+sudo kadmin -p arcana/admin
+.............................................
+addprinc -randkey host/slave-postgres.ostack.me
+ktadd host/slave-postgres.ostack.me
+quit
+.............................................
+
+# login to postgresql shell and perform commands
+su - postgres
+.............................................
+# get backup from Master Server
+pg_basebackup -h postgres.ostack.me -U replica -D /var/lib/pgsql/data -P --xlog 
+
+# enable hot standby
+nano -w /var/lib/pgsql/data/postgresql.conf 
+*********************************************
+hot_standby = on
+*********************************************
+
+# enable recovery in configuration
+cp /usr/share/pgsql/recovery.conf.sample /var/lib/pgsql/data/recovery.conf 
+nano -w /var/lib/pgsql/data/recovery.conf 
+*********************************************
+restore_command = 'scp postgres.ostack.me:/var/lib/pgsql/archive/%f %p'
+standby_mode = on
+primary_conninfo = 'host=postgres.ostack.me port=5432 user=replica password=password application_name=slave-postgres.ostack.me' 
+*********************************************
+
+# quit
+exit
+.............................................
+
+# enable and start services
+sudo systemctl enable postgresql
+sudo systemctl restart postgresql
+sudo systemctl status postgresql
+
+====================================================================
+postgres.ostack.me
+====================================================================
+
+# check streaming state
+su - postgres
+.............................................
+psql -c "select application_name, state, sync_priority, sync_state from pg_stat_replication;" 
+exit
+.............................................
+
+# test replication
+su - postgres
+.............................................
+psql
+*********************************************
+CREATE DATABASE test;
+\c test
+CREATE TABLE test(value VARCHAR(40));
+INSERT INTO test VALUES('hello');
+INSERT INTO test VALUES('konnichiwa');
+\q
+*********************************************
+exit
+.............................................
+
+====================================================================
+
+# test replication
+su - postgres
+.............................................
+psql
+*********************************************
+\c test
+SELECT * FROM test;
+\q
+*********************************************
+exit
+.............................................
+
+====================================================================
+postgres.ostack.me
+====================================================================
+
+# delete test database
+su - postgres
+.............................................
+psql
+*********************************************
+DROP DATABASE test;
+\q
+*********************************************
+exit
+.............................................
+
+
+

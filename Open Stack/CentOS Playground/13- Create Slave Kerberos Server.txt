@@ -138,6 +138,12 @@ sudo nano -w /opt/clone-kdbc.sh
 # make it executable
 sudo chmod +x /opt/clone-kdbc.sh
 
+# test script
+sudo /opt/clone-kdbc.sh
+
+# view it's log
+cat /var/log/clone-kdbc.log
+
 # add cron job
 sudo crontab -e
 .............................................

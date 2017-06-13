@@ -1,0 +1,92 @@
+Clone: kerberosclient.ostack.me
+Name: vm-postgres.ostack.me
+
+
+----> GIVE ADDITIONAL 10GB Hard Disk (Create A New Disk)
+
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname vm-postgres.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+# create a new key
+sudo kadmin -p arcana/admin
+.............................................
+addprinc -randkey host/vm-postgres.ostack.me
+ktadd host/vm-postgres.ostack.me
+quit
+.............................................
+
+# check which disk is the new disk
+lsblk
+
+# create label and a new partition on disk
+sudo parted /dev/vda
+..................
+mklabel gpt
+mkpart primary 1M 100%
+set 1 lvm on
+quit
+..................
+
+# check created disk
+lsblk
+
+# create lvm physical volume
+sudo pvcreate /dev/vda1
+
+# check physical volume creation
+sudo pvdisplay
+
+# view current volume group
+sudo vgdisplay
+
+# extend volume group with new physical volume
+sudo vgextend cl /dev/vda1
+
+# recheck if volume group is extended
+sudo vgdisplay
+
+# find name of root logical volume
+sudo lvdisplay
+
+# increase size of root partition
+sudo lvextend -l +100%FREE /dev/cl/root
+
+# verify size is extened
+sudo lvdisplay
+lsblk
+
+# check root filesystem type
+cat /etc/mtab | grep " / "
+
+# for XFS filesystem, grow root filesystem
+sudo xfs_growfs /
+
+# check filesystem is grown
+df -m
+
+# reboot
+sudo reboot
+
+# install postgresql
+sudo yum install postgresql-server postgresql-contrib
+
+# allow postgresql port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --add-service=postgresql --permanent 
+sudo firewall-cmd --reload
+
+# set postgres user password
+sudo passwd postgres
+
+
+

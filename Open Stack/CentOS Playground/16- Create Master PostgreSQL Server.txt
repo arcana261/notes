@@ -1,0 +1,98 @@
+Clone: vm-postgres.ostack.me
+Name: postgres.ostack.me
+
+
+====================================================================
+dhcp.ostack.me
+====================================================================
+
+# assign static IP address for master server
+sudo nano -w /etc/dnsmasq-hosts.conf
+....................
+52:54:00:7a:a6:59,192.168.200.6,postgres.ostack.me,infinite
+52:54:00:f5:64:bc,10.0.2.6,postgres.ostack.me,infinite
+....................
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname postgres.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+# create a new key
+sudo kadmin -p arcana/admin
+.............................................
+addprinc -randkey host/postgres.ostack.me
+ktadd host/postgres.ostack.me
+quit
+.............................................
+
+# initialize database
+sudo postgresql-setup initdb 
+
+# set database configuration
+sudo nano -w /var/lib/pgsql/data/postgresql.conf
+.............................................
+listen_addresses = '*'
+wal_level = hot_standby
+
+#
+# set slave synchronization mode
+#
+# on => sync
+# remote_write => memory sync
+# local => slave is asynchronous
+# off => asynchronous
+#
+
+archive_mode = on
+archive_command = 'cp %p /var/lib/pgsql/archive/%f'
+
+#
+# set maximum slaves (slave servers + 1)
+#
+max_wal_senders = 2
+
+wal_keep_segments = 10
+synchronous_standby_names = 'slave-postgres.ostack.me'
+.............................................
+
+# set authentication mechanism for replication
+sudo nano -w /var/lib/pgsql/data/pg_hba.conf
+.............................................
+host    replication     replica          127.0.0.1/32                md5
+host    replication     replica          192.168.200.6/32            md5
+host    replication     replica          10.0.2.6/32                 md5
+host    replication     replica          192.168.200.7/32            md5
+host    replication     replica          10.0.2.7/32                 md5
+.............................................
+
+# enable and start services
+sudo systemctl enable postgresql
+sudo systemctl restart postgresql
+sudo systemctl status postgresql
+
+# create new user for postgres
+su - postgres
+.............................................
+createuser --replication -P replica 
+exit
+.............................................
+
+
+
+
+
+
+
+
+

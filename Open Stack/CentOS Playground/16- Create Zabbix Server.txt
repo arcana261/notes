@@ -1,5 +1,5 @@
-Clone: kerberos-client
-Name: zabbix-server
+Clone: vm-zabbix.ostack.me
+Name: zserver.ostack.me
 
 ====================================================================
 
