@@ -1,0 +1,14 @@
+====================================================================
+KVM
+====================================================================
+
+# open following URL in browser
+http://zpanel.ostack.me/zabbix
+
+# login
+User: "Admin"
+Password: "zabbix"
+
+# enable a host
+Configuration -> Hosts -> x Enable
+

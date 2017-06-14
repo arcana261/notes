@@ -1,21 +1,6 @@
 Clone: vm-postgres.ostack.me
 Name: postgres.ostack.me
 
-
-====================================================================
-dhcp.ostack.me
-====================================================================
-
-# assign static IP address for master server
-sudo nano -w /etc/dnsmasq-hosts.conf
-....................
-52:54:00:7a:a6:59,192.168.200.6,postgres.ostack.me,infinite
-52:54:00:f5:64:bc,10.0.2.6,postgres.ostack.me,infinite
-....................
-
-# restart dnsmasq
-sudo systemctl restart dnsmasq
-
 ====================================================================
 
 # first-run config
@@ -69,11 +54,9 @@ synchronous_standby_names = 'slave-postgres.ostack.me'
 # set authentication mechanism for replication
 sudo nano -w /var/lib/pgsql/data/pg_hba.conf
 .............................................
-host    replication     replica          127.0.0.1/32                md5
-host    replication     replica          192.168.200.6/32            md5
-host    replication     replica          10.0.2.6/32                 md5
-host    replication     replica          192.168.200.7/32            md5
-host    replication     replica          10.0.2.7/32                 md5
+host    replication     replica          127.0.0.1/32                        md5
+host    replication     replica          postgres.ostack.me                  md5
+host    replication     replica          slave-postgres.ostack.me            md5
 .............................................
 
 # enable and start services

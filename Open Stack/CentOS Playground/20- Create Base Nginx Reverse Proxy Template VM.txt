@@ -1,0 +1,108 @@
+Clone: kerberosclient.ostack.me
+Name: vm-nginx.ostack.me
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname vm-nginx.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+# create a new key
+sudo kadmin -p arcana/admin
+.............................................
+addprinc -randkey host/vm-nginx.ostack.me
+ktadd host/vm-nginx.ostack.me
+quit
+.............................................
+
+# install nginx
+sudo yum install nginx
+
+# configure nginx
+sudo mkdir -p /etc/nginx/sites-{available,enabled}
+sudo mkdir -p /etc/nginx/ssl
+sudo nano -w /etc/nginx/nginx.conf
+.............................................
+>>> remove default server tag
+
+server_names_hash_bucket_size 64;
+include /etc/nginx/sites-enabled/*;
+.............................................
+
+# create default server
+sudo nano -w /etc/nginx/sites-available/default
+.............................................
+    server {
+	listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location / {
+        }
+
+	error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+	error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+.............................................
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# enable and restart nginx service
+sudo systemctl enable nginx
+sudo systemctl restart nginx
+sudo systemctl status nginx
+
+# enable ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo firewall-cmd --reload
+
+# test installation
+w3m http://localhost
+
+# enable some services on fail2ban
+sudo nano -w /etc/fail2ban/jail.conf 
+.............................................
+[nginx-http-auth]
+
+enabled = true
+port    = http,https
+logpath = %(nginx_error_log)s
+
+
+
+[nginx-limit-req]
+
+enabled	= true
+port    = http,https
+logpath = %(nginx_error_log)s
+.............................................
+
+# restart fail2ban
+sudo systemctl restart fail2ban
+sudo systemctl status fail2ban
+
+# view fail2ban status
+sudo fail2ban-client status
+
+
+
+
+
+
+

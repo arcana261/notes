@@ -88,5 +88,29 @@ sudo firewall-cmd --reload
 # set postgres user password
 sudo passwd postgres
 
+# disable eth2 so server always runs on eth1
+# and DHCP name service is correctly set
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+..................
+ONBOOT=no
+..................
+
+# reboot
+sudo reboot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

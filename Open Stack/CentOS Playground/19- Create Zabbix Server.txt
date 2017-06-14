@@ -3,16 +3,139 @@ Name: zserver.ostack.me
 
 ====================================================================
 
+# first-run config
+sudo hostnamectl set-hostname zserver.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
 # generate kerberos host key
-sudo kadmin
+sudo kadmin -p arcana/admin
 .............................................
-addprinc -randkey host/zabbix-server.ostack.me
-ktadd host/zabbix-server.ostack.me
+addprinc -randkey host/zserver.ostack.me
+ktadd host/zserver.ostack.me
 quit
 .............................................
 
-# initialize token and SSH via kerberos
-kinit -p arcana
+# install postgresql client tools
+sudo yum install postgresql
+
+# disable eth2 so server always runs on eth1
+# and DHCP name service is correctly set
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+..................
+ONBOOT=no
+..................
+
+# reboot
+sudo reboot
+
+====================================================================
+postgres.ostack.me
+====================================================================
+
+# create a new user for zabbix
+sudo adduser zabbix
+sudo passwd zabbix
+
+# login to postgresql shell and create database/user pair
+su - postgres
+.............................................
+psql
+**************************
+CREATE USER zabbix WITH PASSWORD 'myPassword';
+CREATE DATABASE zabbix;
+GRANT ALL PRIVILEGES ON DATABASE zabbix to zabbix;
+\q
+**************************
+exit
+.............................................
+
+# allow remote authentication
+sudo nano -w /var/lib/pgsql/data/pg_hba.conf
+.............................................
+host    zabbix	        zabbix	         zserver.ostack.me	     md5
+.............................................
+
+# restart postgresql service
+sudo systemctl restart postgresql
+sudo systemctl status postgresql
+
+====================================================================
+
+# test connection to database
+psql -h postgres.ostack.me -U zabbix zabbix
+.............................................
+\q
+.............................................
+
+# install zabbix server packages
+sudo yum install zabbix-server-pgsql zabbix-web-pgsql
+
+# import initial database
+zcat /usr/share/doc/zabbix-server-pgsql-3.0.9/create.sql.gz | psql -h postgres.ostack.me -U zabbix zabbix
+
+# configure database
+sudo nano -w /etc/zabbix/zabbix_server.conf
+.............................................
+DBHost=postgres.ostack.me
+DBName=zabbix
+DBUser=zabbix
+DBPassword=<username_password>
+.............................................
+
+# configure selinux for zabbix server
+sudo setsebool -P httpd_can_connect_zabbix on
+sudo setsebool -P httpd_can_network_connect_db on
+
+# start zabbix server process
+sudo systemctl restart zabbix-server
+sudo systemctl enable zabbix-server
+sudo systemctl status zabbix-server
+
+## IF start of service failed
+## it is possible to be because of selinux
+## fix this by running following:
+cd /usr/src
+sudo bash -c "ausearch -c 'zabbix_server' --raw | audit2allow -M my-zabbixserver"
+sudo semodule -i my-zabbixserver.pp
+sudo systemctl restart zabbix-server
+sudo systemctl enable zabbix-server
+sudo systemctl status zabbix-server
+
+# set PHP configuration
+sudo nano -w /etc/httpd/conf.d/zabbix.conf
+.............................................
+php_value date.timezone Asia/Tehran
+.............................................
+
+# start apache
+sudo systemctl restart httpd
+sudo systemctl enable httpd
+sudo systemctl status httpd
+
+# allow ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo firewall-cmd --reload
+
+# allow zabbix client port through
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=10050/tcp
+sudo firewall-cmd --reload
+
+
+
+
+
+
+
+
 
 
 

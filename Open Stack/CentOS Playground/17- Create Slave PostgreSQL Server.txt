@@ -2,20 +2,6 @@ Clone: vm-postgres.ostack.me
 Name: slave-postgres.ostack.me
 
 ====================================================================
-dhcp.ostack.me
-====================================================================
-
-# assign static IP address for master server
-sudo nano -w /etc/dnsmasq-hosts.conf
-....................
-52:54:00:b9:eb:f5,192.168.200.7,slave-postgres.ostack.me,infinite
-52:54:00:27:6f:c2,10.0.2.7,slave-postgres.ostack.me,infinite
-....................
-
-# restart dnsmasq
-sudo systemctl restart dnsmasq
-
-====================================================================
 
 # first-run config
 sudo hostnamectl set-hostname slave-postgres.ostack.me

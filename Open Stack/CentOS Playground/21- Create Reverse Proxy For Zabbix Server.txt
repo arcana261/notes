@@ -1,0 +1,90 @@
+Clone: vm-nginx.ostack.me
+Name: zpanel.ostack.me
+
+====================================================================
+dhcp.ostack.me
+====================================================================
+
+# assign static ip address for zpanel eth1
+sudo nano -w /etc/dnsmasq-hosts.conf
+.............................................
+52:54:00:e1:62:83,192.168.200.6,zpanel.ostack.me,infinite
+.............................................
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname zpanel.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+# create a new key
+sudo kadmin -p arcana/admin
+.............................................
+addprinc -randkey host/zpanel.ostack.me
+ktadd host/zpanel.ostack.me
+quit
+.............................................
+
+# disable default site
+sudo rm -f /etc/nginx/sites-enabled/default
+
+# create a new configuration
+sudo nano -w /etc/nginx/sites-available/zpanel.ostack.me
+.............................................
+server {
+  listen 80;
+  server_name zpanel.ostack.com;
+
+  server_tokens off;
+  client_max_body_size 10M;
+  client_body_buffer_size 128K;
+  gzip off;
+
+  location / {
+    proxy_pass http://zserver.ostack.me:80;
+    proxy_pass_header Set-Cookie;
+    proxy_pass_header P3P;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_set_header host zpanel.ostack.me;
+
+    proxy_buffer_size          128k;
+    proxy_buffers              4 256k;
+    proxy_busy_buffers_size    256k;
+  }
+}
+.............................................
+
+# enable configuration
+sudo ln -s /etc/nginx/sites-available/zpanel.ostack.me /etc/nginx/sites-enabled/zpanel.ostack.me
+
+# restart nginx
+sudo systemctl restart nginx
+sudo systemctl status nginx
+
+====================================================================
+KVM
+====================================================================
+
+# add zpanel to hosts
+sudo nano -w /etc/hosts
+.............................................
+192.168.200.6		zpanel.ostack.me
+.............................................
+
+
+
+
+
+
