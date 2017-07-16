@@ -88,6 +88,10 @@ sudo vim /etc/default/ufw
 # enable ufw ipv4 port forwarding
 sudo vim /etc/ufw/sysctl.conf 
 > net.ipv4.ip_forward=1
+> net.ipv4.conf.all.rp_filter=0
+> net.ipv4.conf.default.rp_filter=0
+> net.ipv4.conf.all.accept_source_route=1
+> net.ipv4.conf.default.accept_source_route=1
 
 # setup NAT in ufw
 sudo vim /etc/ufw/before.rules
@@ -100,6 +104,7 @@ sudo vim /etc/ufw/before.rules
 > :POSTROUTING ACCEPT [0:0]
 >
 > # Forward traffic through eth0 - Change to match you out-interface
+> -A FORWARD -o any -j ACCEPT
 > -A POSTROUTING -s 192.168.74.0/24 -o <ETHERNET | any> -j MASQUERADE
 >
 > # don't delete the 'COMMIT' line or these nat table rules won't

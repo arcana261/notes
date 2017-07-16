@@ -14,11 +14,39 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			xz-utils openssh-server ufw mlocate \
 			uuid-runtime tcpdump man-db \
 			traceroute w3m bridge-utils \
-			default-jdk git rar unrar
+			default-jdk git rar unrar \
+			iputils-arping network-manager-openvpn-gnome \
+			iperf docky
 
 # use nvidia driver and proprietary intel drivers
 Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver
 						       -> Use Processor microcode firmware for intel CPUs from intel-microcode
+
+# disable networkmanager's dnsmasq forwarding
+# comment dns=dnsmasq
+sudo nano -w /etc/NetworkManager/NetworkManager.conf
+>>>>>>>>>>>
+#dns=dnsmasq
+<<<<<<<<<<<
+
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
 
 # free up /boot by deleting old kernels
 sudo apt-get purge $(for tag in "linux-image" "linux-headers"; do dpkg-query -W -f'${Package}\n' "$tag-[0-9]*.[0-9]*.[0-9]*" | sort -V | awk 'index($0,c){exit} //' c=$(uname -r | cut -d- -f1,2); done)
