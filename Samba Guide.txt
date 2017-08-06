@@ -1,0 +1,114 @@
+# install samba server
+sudo apt-get install samba samba-common python-glade2 
+sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+
+# config samba
+mkdir -p ~/junk
+sudo vim /etc/samba/smb.conf
+.....
+.....
+.....
+
+# enable and restart samba service
+sudo systemctl restart smbd
+sudo systemctl enable smbd
+
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 139/tcp
+sudo ufw allow 445/tcp
+sudo ufw reload
+
+# create user for samba
+sudo adduser --no-create-home --disabled-password --disabled-login sambausername
+sudo smbpasswd -a sambausername
+
+# access control options
+Option			Parameters			Function							Default		Scope
+admin users		string (list of usernames)	Users who can perform operations as root			None		Share
+valid users		string (list of usernames)	Users who can connect to a share				None		Share
+invalid users		string (list of usernames)	Users who will be denied access to a share			None		Share
+read list		string (list of usernames)	Users who have read-only access to a writable share		None		Share
+write list		string (list of usernames)	Users who have read/write access to a read-only share		None		Share
+max connections		numeric				Maximum number of connections for a share at a given time	0		Share
+guest only (only guest)	Boolean				If yes, allows only guest access				no		Share
+guest account		string (name of account)	Unix account that will be used for guest access			nobody		Share
+
+# specifying valid/invalid users/groups
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+If a name is prefixed by an at sign (@), it is interpreted as a group name—with NIS groups searched before Unix groups. If the name is prefixed by a plus sign (+), it is interpreted as the name of a Unix group, and NIS is not searched. If the name is prefixed by an ampersand (&), it is interpreted as an NIS group name rather than as a Unix group name.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+[database]
+    valid users = mary ellen sue &sales +marketing @dbadmin
+    invalid users = gavin syd dana &techies +&helpdesk
+
+# public share to use with everyone! (writeable)
+[general]
+       map to guest = bad user
+
+[junk]
+       comment = junk
+       path = /home/arcana/junk
+       browsable = yes
+       writable = yes
+       guest ok = yes
+       read only = no
+       force user = arcana
+       force group = arcana
+
+# public readonly share to use with everyone! (readonly)
+[general]
+       map to guest = bad user
+
+[junk]
+       comment = junk
+       path = /home/arcana/junk
+       browsable = yes
+       writable = no
+       guest ok = yes
+       read only = yes
+       force user = arcana
+       force group = arcana
+
+# create a read/write share for specific users with administrators
+[sales]
+        path = /home/sales
+        comment = Sedona Real Estate Sales Data
+        writable = yes
+        valid users = sofie shelby adilia
+        admin users = mike
+
+# create a readonly share that only specific users can write to
+[sales]
+        path = /home/sales
+        comment = Sedona Real Estate Sales Data
+        read only = yes
+        write list = sofie shelby
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

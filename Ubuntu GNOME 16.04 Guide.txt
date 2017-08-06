@@ -93,6 +93,38 @@ sudo nano -w /opt/ifup-net.sh
 
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# install samba server
+sudo apt-get install samba samba-common python-glade2 
+sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+
+# create shared folder configuration
+mkdir -p ~/junk
+sudo vim /etc/samba/smb.conf
+.....
+[general]
+       map to guest = bad user
+
+[junk]
+       comment = junk
+       path = /home/arcana/junk
+       browsable = yes
+       writable = yes
+       guest ok = yes
+       read only = no
+       force user = arcana
+       force group = arcana
+.....
+
+# enable and restart samba service
+sudo systemctl restart smbd
+sudo systemctl enable smbd
+
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 139/tcp
+sudo ufw allow 445/tcp
+sudo ufw reload
+
 # free up /boot by deleting old kernels
 sudo apt-get purge $(for tag in "linux-image" "linux-headers"; do dpkg-query -W -f'${Package}\n' "$tag-[0-9]*.[0-9]*.[0-9]*" | sort -V | awk 'index($0,c){exit} //' c=$(uname -r | cut -d- -f1,2); done)
 
