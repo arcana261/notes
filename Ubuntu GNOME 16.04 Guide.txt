@@ -54,6 +54,45 @@ sudo update-alternatives --config editor
 # install "n" (node version manager)
 curl -L https://git.io/n-install | bash
 
+# create a mechanism of changing network after boot
+sudo nano -w /opt/ifup-net.sh
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#!/bin/bash
+
+/sbin/ip link set dev enp3s0 down
+/sbin/ip addr flush dev enp3s0
+/sbin/ip link add name br-enp3s0 type bridge
+/sbin/ip link set dev enp3s0 master br-enp3s0
+/sbin/ip link set dev br-enp3s0 up
+/sbin/ip link set dev enp3s0 up
+
+/sbin/ip addr flush dev enp3s0
+/sbin/ip link set dev br-enp3s0 address e0:3f:49:a1:6a:96
+/sbin/dhclient br-enp3s0
+/sbin/ip addr flush dev enp3s0
+
+# additional IP addresses
+/sbin/ip addr add 192.167.5.83/24 broadcast 192.167.5.255 dev br-enp3s0 label br-enp3s0:0
+/sbin/ip addr add 192.167.20.83/24 broadcast 192.167.5.255 dev br-enp3s0 label br-enp3s0:1
+
+# additional routes
+/sbin/ip route add 192.168.20/24 via 192.168.5.1
+/sbin/ip route add 192.168.21/24 via 192.168.5.1
+/sbin/ip route delete default via 192.168.5.1
+
+# new v-eth to use with KVM and other stuff
+/sbin/ip link add name v-enp3s0 type veth peer name p-enp3s0
+/sbin/ip link set dev v-enp3s0 master br-enp3s0
+/sbin/ip link set dev v-enp3s0 up
+/sbin/ip link set dev p-enp3s0 up
+
+# additional network scripts
+/opt/ifup-xen-ceph1.sh
+/opt/ifup-xen-ceph2.sh
+/opt/ifup-xen-ceph3.sh
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 # free up /boot by deleting old kernels
 sudo apt-get purge $(for tag in "linux-image" "linux-headers"; do dpkg-query -W -f'${Package}\n' "$tag-[0-9]*.[0-9]*.[0-9]*" | sort -V | awk 'index($0,c){exit} //' c=$(uname -r | cut -d- -f1,2); done)
 

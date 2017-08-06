@@ -1,6 +1,13 @@
 # ssh config file example
 # ~/.ssh/config
 
+Host vpn
+	Hostname 178.162.207.98
+	Port 22
+	User root
+	DynamicForward 8084
+
+
 Host ertebat-local
 	Hostname 192.168.20.155
 	Port	2125

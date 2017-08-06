@@ -69,6 +69,9 @@ sudo reboot
 
 # protect sysctl
 sudo nano -w /etc/sysctl.conf
+> # enable IP forwarding
+> net.ipv4.ip_forward=0
+>
 > # IP Spoofing protection
 > net.ipv4.conf.default.rp_filter=1
 > net.ipv4.conf.all.rp_filter=1
@@ -150,6 +153,7 @@ sudo nano -w /etc/fail2ban/jail.conf
 
 # start and enable fail2ban
 sudo systemctl restart fail2ban
+sudo systemctl status fail2ban
 sudo systemctl enable fail2ban
 
 # view and verify fail2ban status
@@ -160,6 +164,7 @@ sudo apt-get install psad
 
 # start and enable psad
 sudo systemctl restart psad
+sudo systemctl status psad
 sudo systemctl enable psad
 
 # install rkhunter and chkrootkit

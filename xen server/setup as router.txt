@@ -249,8 +249,8 @@ sudo nano -w /opt/ifup-inet.sh
 ....
 #!/bin/bash
 
-ip route add 192.167.20.83 via 10.0.2.252 src $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//')
-ip link add name vtep2 type vxlan id 81 dev eth2 remote 192.167.20.83 local $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//') dstport 4789
+ip route add 192.167.20.83 via 10.0.2.252 src $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//' | head -1)
+ip link add name vtep2 type vxlan id 81 dev eth2 remote 192.167.20.83 local $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//' | head -1) dstport 4789
 ip link set dev vtep2 up
 ip link set dev vtep2 mtu 1400
 ip link add name br0 type bridge
@@ -265,7 +265,7 @@ ip netns exec inet ip link set name eth0 dev peer0
 ip netns exec inet dhclient --no-pid eth0
 
 # route to other computers on network
-ip route add 192.168.5.182 via 10.0.2.252 src $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//')
+ip route add 192.168.5.182 via 10.0.2.252 src $(ip addr show eth3 | grep 'inet ' | awk '{print $2}' | sed 's/\/24//' | head -1)
 
 ....
 sudo chmod +x /opt/ifup-inet.sh
