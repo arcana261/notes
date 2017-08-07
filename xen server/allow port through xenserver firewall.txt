@@ -1,8 +1,13 @@
 --- > allow iperf port through xen server firewall
 
-nano -w /etc/sysconfig/iptables
-
+sudo nano -w /etc/sysconfig/iptables
+######################
+# add before line "REJECT --reject-with icmp-host-prohibited"
 -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 5001 -j ACCEPT
+######################
+
+# temporarily allow port without reboot
+sudo iptables -I RH-Firewall-1-INPUT -p tcp -m tcp --dport 139 -j ACCEPT
 
 REBOOT XEN SERVER
 

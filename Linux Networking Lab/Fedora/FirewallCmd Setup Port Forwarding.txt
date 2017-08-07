@@ -1,0 +1,29 @@
+# enable ip forwarding
+sudo nano -w /etc/sysctl.conf
+> net.ipv4.ip_forward=1
+
+# reload sysctl
+sudo sysctl -p
+
+# check if is enabled
+sudo bash -c "sysctl -a | grep forward | more"
+
+# allow ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=139/tcp
+sudo firewall-cmd --permanent --add-port=445/tcp
+sudo firewall-cmd --reload
+
+# list zones
+sudo firewall-cmd --list-all
+
+# forward ports
+sudo firewall-cmd --zone=public --add-masquerade --permanent
+sudo firewall-cmd --zone=public --permanent --add-forward-port=port=139:proto=tcp:toport=139:toaddr=10.0.2.40
+sudo firewall-cmd --zone=public --permanent --add-forward-port=port=445:proto=tcp:toport=445:toaddr=10.0.2.40
+sudo firewall-cmd --reload
+
+# verify ports are forwarded
+sudo firewall-cmd --list-all
+
+

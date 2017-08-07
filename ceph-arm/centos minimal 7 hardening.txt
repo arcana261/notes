@@ -23,13 +23,11 @@ sudo ntpdate 0.ro.pool.ntp.org  1.ro.pool.ntp.org
 # verify system date/time
 date
 
-# relabel entire filesystem for SElinux
-sudo touch /.autorelabel
-
 # verify you can login from another tty/ssh
 # if failed, perform following
 #
 #
+# sudo touch /.autorelabel
 # sudo ausearch -m avc --start recent
 # sudo cd /root
 # sudo audit2allow -a -M fix-after-update
@@ -66,6 +64,8 @@ sudo vim /etc/ssh/sshd_config
 ...
 Port 2122
 PermitRootLogin no
+UseDNS no
+GSSAPIAuthentication no
 ...
 sudo firewall-cmd --reload
 sudo firewall-cmd --permanent --add-port=4789/udp

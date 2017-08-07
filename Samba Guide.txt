@@ -1,17 +1,24 @@
-# install samba server
-sudo apt-get install samba samba-common python-glade2 
-sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+# install samba server(ubuntu)
+	sudo apt-get install samba samba-common python-glade2 
+	sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+
+# install samba server(centos)
+	sudo yum install samba samba-client samba-common
+	sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
 
 # config samba
-mkdir -p ~/junk
 sudo vim /etc/samba/smb.conf
 .....
 .....
 .....
 
-# enable and restart samba service
-sudo systemctl restart smbd
-sudo systemctl enable smbd
+# enable and restart samba service (ubuntu)
+	sudo systemctl restart smbd
+	sudo systemctl enable smbd
+# enable and restart samba service (centos)
+	sudo systemctl restart smb.service nmb.service
+	sudo systemctl enable smb.service nmb.service
+
 
 # allow ports through firewall
 sudo ufw reload
@@ -19,9 +26,18 @@ sudo ufw allow 139/tcp
 sudo ufw allow 445/tcp
 sudo ufw reload
 
-# create user for samba
-sudo adduser --no-create-home --disabled-password --disabled-login sambausername
-sudo smbpasswd -a sambausername
+# create user for samba (ubuntu)
+	sudo adduser --no-create-home --disabled-password --disabled-login sambausername
+	sudo smbpasswd -a sambausername
+
+# create user for samba (centos)
+	sudo useradd --no-create-home metanol-admin
+	sudo usermod -s /sbin/nologin metanol-admin
+	sudo smbpasswd -a metanol-admin
+
+
+# set  SELinux to allow folder to be shared (centos)
+	sudo chcon -t samba_share_t /rbd-metanol-metanol
 
 # access control options
 Option			Parameters			Function							Default		Scope
@@ -44,8 +60,21 @@ If a name is prefixed by an at sign (@), it is interpreted as a group name—wit
     invalid users = gavin syd dana &techies +&helpdesk
 
 # public share to use with everyone! (writeable)
-[general]
-       map to guest = bad user
+
+[global]
+        security = user
+        passdb backend = tdbsam
+        printing = cups
+        printcap name = cups
+        load printers = no
+        cups options = raw
+        dns proxy = no
+        map to guest = bad user
+        log level = 3
+        max log size = 10000
+        workgroup = WORKGROUP
+        server role = standalone server
+
 
 [junk]
        comment = junk
@@ -56,6 +85,19 @@ If a name is prefixed by an at sign (@), it is interpreted as a group name—wit
        read only = no
        force user = arcana
        force group = arcana
+
+[metanol-backup]
+        comment = metanol backup
+        path = /rbd-metanol-metanol
+        browsable = yes
+        writable = yes
+        read only = yes
+        valid users = metanol metanol-admin
+        write list = metanol-admin
+        admin users = metanol-admin
+        guest ok = no
+        force group = metanol
+        force user = metanol
 
 # public readonly share to use with everyone! (readonly)
 [general]
