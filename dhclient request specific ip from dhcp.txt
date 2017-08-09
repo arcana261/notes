@@ -1,0 +1,4 @@
+sudo nano -w /etc/dhcp/dhclient.conf
+>>>>>>>>>>>>>>>>>>>>>>
+send dhcp-requested-address <IP>;
+<<<<<<<<<<<<<<<<<<<<<<

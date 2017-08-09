@@ -1,0 +1,27 @@
+# ssh config file example
+# ~/.ssh/config
+
+Host vpn
+	Hostname 178.162.207.98
+	Port 22
+	User root
+	DynamicForward 8084
+
+
+Host ertebat-local
+	Hostname 192.168.20.155
+	Port	2125
+	User	ertebat
+	LocalForward	3306	127.0.0.1:3306
+	LocalForward	6380	127.0.0.1:6380
+
+# copy ssh id so to enable password-less login
+ssh-copy-id ertebat-local
+
+# enable password-less sudo
+sudo bash -c 'echo "ertebat ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ertebat'
+
+# enable password-less sudo for certain commands
+sudo bash -c 'echo "ertebat ALL = (root) NOPASSWD: /sbin/shutdown" | sudo tee /etc/sudoers.d/ertebat'
+
+

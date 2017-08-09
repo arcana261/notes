@@ -69,6 +69,9 @@ sudo reboot
 
 # protect sysctl
 sudo nano -w /etc/sysctl.conf
+> # enable IP forwarding
+> net.ipv4.ip_forward=0
+>
 > # IP Spoofing protection
 > net.ipv4.conf.default.rp_filter=1
 > net.ipv4.conf.all.rp_filter=1
@@ -93,7 +96,7 @@ sudo nano -w /etc/sysctl.conf
 > net.ipv4.tcp_syn_retries = 5
 >
 > # Log Martians
-> net.ipv4.conf.all.log_martians = 1
+> net.ipv4.conf.all.log_martians = 0
 > net.ipv4.icmp_ignore_bogus_error_responses = 1
 >
 > # Ignore ICMP redirects
@@ -145,11 +148,12 @@ sudo nano -w /etc/fail2ban/jail.conf
 > enabled  = true
 > port     = <ENTER YOUR SSH PORT NUMBER HERE>
 > filter   = sshd
-> logpath  = /var/log/auth.log
+> logpath  = %(sshd_log)s
 > maxretry = 3
 
 # start and enable fail2ban
 sudo systemctl restart fail2ban
+sudo systemctl status fail2ban
 sudo systemctl enable fail2ban
 
 # view and verify fail2ban status
@@ -160,6 +164,7 @@ sudo apt-get install psad
 
 # start and enable psad
 sudo systemctl restart psad
+sudo systemctl status psad
 sudo systemctl enable psad
 
 # install rkhunter and chkrootkit
@@ -205,6 +210,16 @@ sudo tiger
 
 # view tiger logs
 sudo less /var/log/tiger/security.report.*
+
+
+################### FIX PERL LOCALE WARNING #############################
+
+sudo locale-gen en_US
+sudo locale-gen en_US.UTF-8
+sudo dpkg-reconfigure locales
+sudo update-locale LANG=en_US.UTF-8
+sudo update-locale LANG="en_US.UTF-8" LANGUAGE="en_US" LC_ALL="en_US"
+sudo dpkg-reconfigure locales
 
 
 
