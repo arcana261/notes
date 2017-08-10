@@ -1,0 +1,8 @@
+yum install sysbench
+
+sysbench --test=cpu --cpu-max-prime=10000 run
+sysbench --test=mutex --mutex-num=1 --mutex-locks=50000000 --mutex-loops=1 run
+sysbench --test=memory --memory-total-size=512M run
+sysbench --test=threads --num-threads=128 --max-time=10s run
+
+

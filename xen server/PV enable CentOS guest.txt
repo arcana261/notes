@@ -1,0 +1,178 @@
+# GUIDE:
+# https://xen.crc.id.au/support/guides/install/
+# https://serverfault.com/questions/238412/xenserver-converting-hvm-to-paravirtualised
+# https://discussions.citrix.com/topic/385840-centos-7-convert-from-hvm-to-pv/
+#
+# https://support.citrix.com/article/CTX121875
+# https://discussions.citrix.com/topic/282684-xenserver-converting-hvm-to-pv/
+
+# find which version of xen is running
+xe host-dmesg | more
+
+===============================================
+
+####
+PV mode can not boot from XFS partitioned boot drive
+since pygrub does not support it. so boot partition
+should be partitioned in EXT3. So during CentOS
+installation we have to manually partition the disk
+to make it EXT3. There is a problem though, XEN installation
+can only be started in text mode in Xen Server and
+we don't have custom partitioning there. So we have
+to install CentOS on other places (like KVM in qcow2 format)
+and export it to Xen. Such a hassle!
+####
+
+# install a fresh minimal CentOS 7 in KVM
+# RAM: 1 GB
+# HDD: 8 GB
+# 
+# 1 GB boot (ext3)
+# 1 GB swap
+# 8 GB root (XFS)
+
+# convert qcow2 image to VHD
+qemu-img convert -f qcow2 -O vpc ~/KVM_Virtual_Machines/centos7-pv.qcow2 ~/KVM_Virtual_Machines/centos7-pv.vhd
+
+## IMPORT .VHD file in Xen Server
+
+########### BEGIN FIXUP ###############
+## START VM in "rescue" MODE
+## install Xen guest tools
+##
+## MOUNT "guest-tools.iso" in VM
+mount /dev/cdrom /mnt
+cd /mnt/Linux
+./install.sh
+## set theme to non-graphical
+plymouth-set-default-theme details
+dracut -f
+## reboot
+reboot
+########### END FIXUP ###################
+
+# upgrade system
+sudo yum update
+
+# reboot
+sudo reboot
+
+# install epel repositories
+sudo yum install epel-release
+
+# install some packages
+sudo yum install psmisc nano vim \
+	policycoreutils-python net-tools wget \
+	curl screen htop bridge-utils iperf \
+	perl mlocate deltarpm \
+	ntpdate setroubleshoot-server setools-console \
+	bind-utils tcpdump python-pip \
+	yum-plugin-priorities w3m \
+	bash-completion strace \
+	NetworkManager-tui \
+	sysbench
+
+# update pip
+sudo pip install --upgrade pip
+
+# update system date/time
+sudo ntpdate 0.ro.pool.ntp.org  1.ro.pool.ntp.org
+
+# verify system date/time
+date
+
+# ensure hostname is set in /etc/hosts
+sudo nano -w /etc/hosts
+> 127.0.0.1 my-host-name
+
+# allow icmp (ping)
+sudo nano -w /etc/sysctl.conf
+>>>>>>>>>>>>>>>>>>>>>>
+net.ipv4.icmp_echo_ignore_all = 0
+<<<<<<<<<<<<<<<<<<<<<<
+
+# reload sysctl
+sudo sysctl -p
+
+# reboot system
+sudo reboot
+
+# configure firewall
+sudo systemctl enable firewalld
+sudo systemctl restart firewalld
+sudo systemctl status firewalld
+
+# view firewall status
+sudo firewall-cmd --list-all
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+PermitRootLogin no
+UseDNS no
+GSSAPIAuthentication no
+...
+
+# enable and restart sshd
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+sudo systemctl status sshd
+
+# reboot system
+sudo reboot
+	
+# install xen pack
+yum install centos-release-xen
+
+# update system again
+yum update
+
+# remove xenstore if installed by guest utilities
+yum remove xe-guest-utilities-xenstore
+
+# install xen
+yum install xen
+
+# change grub timeout to 30 seconds
+vim /etc/default/grub
+> GRUB_TIMEOUT=30
+
+# regenerate grub config
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
+# reboot
+# NOTE: DO NOT BOOT WITH "with Xen Hypervisor" OPTION!
+reboot
+	
+# see if xen HVM is detected?
+xen-detect
+	
+# copy and remember kernel/initramfs name from grub
+nano -w /boot/grub2/grub.cfg
+# in this case:
+#
+# /vmlinuz-4.9.39-29.el7.x86_64
+# /initramfs-4.9.39-29.el7.x86_64.img
+
+# copy and remember UUID for root partition
+blkid /dev/mapper/cl-root
+
+# power off
+poweroff
+
+--------------------------------------------------
+XEN SERVER
+--------------------------------------------------
+	
+# list available vms
+xe vm-list
+
+# get vbd (virtual block device) uuid
+xe vbd-list
+
+xe vm-param-set uuid=25df2af4-93d7-ab09-d4a5-981ed717a88f HVM-boot-policy=""
+xe vm-param-set uuid=25df2af4-93d7-ab09-d4a5-981ed717a88f PV-bootloader=pygrub 
+xe vm-param-set uuid=25df2af4-93d7-ab09-d4a5-981ed717a88f PV-bootloader-args="--kernel /vmlinuz-4.9.39-29.el7.x86_64 --ramdisk /initramfs-4.9.39-29.el7.x86_64.img"
+xe vm-param-set uuid=25df2af4-93d7-ab09-d4a5-981ed717a88f PV-args="rd.lvm.lv=cl/root rd.lvm.lv=cl/swap root=UUID=c0cd3a89-eae1-4489-b150-fef80800caf9 quiet console=hvc0"
+xe vbd-param-set uuid=58997132-0e24-2a19-6499-b51f0bddc90a bootable=true
+

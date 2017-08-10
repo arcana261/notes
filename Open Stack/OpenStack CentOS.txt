@@ -1,0 +1,83 @@
+# OpenStack Newton Installation
+# https://docs.openstack.org/newton/install-guide-rdo/
+
+### NOTE: ENSURE VM's NETWORK INTERFACES ARE IN PROMISCOUS MODE!
+### NOTE: OPENSTACK INSTANCES REQUIRE NTP TO WORK PROPERLY
+
+###########################
+### SECTION: /etc/hosts ###
+### OR USE DNS SERVICE  ###
+192.168.21.56 controller-ostack-mehdi
+###########################
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VM: controller
+CPU: 1
+RAM: 8GB
+Clone: A hardened CentOS7 with Ceph and OVS pre-installed
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# ensure static IP addresses are setup
+# on network interfaces
+# OR assign static ip addresses to them
+# via DHCP
+sudo vim /etc/sysconfig/network-scripts/ifcfg-ethXXX
+> BOOTPROTO="none"
+> ONBOOT="yes"
+> IPADDR="xxxxx"
+> NETMASK="xxxxx"
+> GATEWAY="xxxxx"
+
+# ensure hosts is correctly setup
+# or use values assigned from DNS
+sudo vim /etc/hosts
+
+###########################
+### install chrony (as NTP server)
+### on controller node, or use
+### NTP server provided by DHCP on
+### each instance
+
+# install chrony
+sudo yum install chrony
+
+# IF organization provides custom NTP server use it
+sudo vim /etc/chrony.conf
+> server NTP_SERVER iburst
+
+# allow others to connect
+sudo vim /etc/chrony.conf
+> allow 10.0.0.0/24
+
+# enable and restart services
+sudo systemctl enable chronyd.service
+sudo systemctl start chronyd.service
+sudo systemctl status chronyd.service
+
+
+### END INSTALL CHRONY
+###########################
+
+# disable epel repository
+sudo yum remove epel-release
+
+# install centos release packages
+sudo yum install centos-release-openstack-newton
+
+# finalize installation
+sudo yum upgrade
+
+!>!>!>>! "server controller iburst" in other VM's
+
+
+
+
+
+
+
+
+
+
+
+
+

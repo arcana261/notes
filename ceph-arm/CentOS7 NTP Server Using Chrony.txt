@@ -1,0 +1,21 @@
+# install chrony
+sudo yum install chrony
+
+################
+## IF organization provides custom NTP server
+## use it
+sudo vim /etc/chrony.conf
+> server NTP_SERVER iburst
+################
+
+# allow others to connect
+sudo vim /etc/chrony.conf
+> allow 10.0.0.0/24
+
+# enable and restart services
+sudo systemctl enable chronyd.service
+sudo systemctl start chronyd.service
+sudo systemctl status chronyd.service
+
+# verify chrony sources
+sudo chronyc sources

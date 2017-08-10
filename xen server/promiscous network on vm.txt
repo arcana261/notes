@@ -1,0 +1,30 @@
+# NOTE: PIF -> Physical InterFace
+# NOTE: VIF -> Virtual InterFace
+
+# list available pif's and get UUID
+xe pif-list
+
+# enable promiscous mode on pif
+xe pif-param-set uuid=ac90662f-b582-9182-3160-13d0bb44b56d other-config:promiscuous="true"
+
+# verify that promiscous mode is active on pif
+xe pif-param-list uuid=ac90662f-b582-9182-3160-13d0bb44b56d
+
+# get VM uuid
+xe vm-list
+
+# get vif uuid
+xe vif-list vm-uuid=3f1351d4-d261-2c2a-e4a3-a99304f5f303
+
+# enable promiscous mode on vif
+xe vif-param-set uuid=8195d192-f465-a482-41d8-e4d15d121fac other-config:promiscuous="true"
+
+# verify promiscous mode is enabled
+xe vif-param-list uuid=8195d192-f465-a482-41d8-e4d15d121fac
+
+### poweroff VM
+
+# unplug and re-plug vif
+xe vif-unplug uuid=8195d192-f465-a482-41d8-e4d15d121fac
+xe vif-plug uuid=8195d192-f465-a482-41d8-e4d15d121fac
+

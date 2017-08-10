@@ -55,6 +55,10 @@ guest account		string (name of account)	Unix account that will be used for guest
 If a name is prefixed by an at sign (@), it is interpreted as a group name—with NIS groups searched before Unix groups. If the name is prefixed by a plus sign (+), it is interpreted as the name of a Unix group, and NIS is not searched. If the name is prefixed by an ampersand (&), it is interpreted as an NIS group name rather than as a Unix group name.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# open smbclient shell in linux (Ubuntu)
+apt-get install samba-common smbclient cifs-utils
+smbclient //<HOST>/<SHARE> -U <username>
+
 [database]
     valid users = mary ellen sue &sales +marketing @dbadmin
     invalid users = gavin syd dana &techies +&helpdesk

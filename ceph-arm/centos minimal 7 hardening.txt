@@ -1,6 +1,9 @@
 # upgrade system
 sudo yum -y update
 
+# reboot
+sudo reboot
+
 # install epel repositories
 sudo yum install epel-release
 
@@ -12,7 +15,9 @@ sudo yum install psmisc nano vim \
 	ntpdate setroubleshoot-server setools-console \
 	bind-utils tcpdump python-pip \
 	yum-plugin-priorities w3m \
-	bash-completion strace
+	bash-completion strace \
+	NetworkManager-tui \
+	sysbench chrony
 
 # update pip
 sudo pip install --upgrade pip
@@ -55,6 +60,7 @@ sudo reboot
 # configure firewall
 sudo systemctl enable firewalld
 sudo systemctl restart firewalld
+sudo systemctl status firewalld
 
 # view firewall status
 sudo firewall-cmd --list-all
@@ -80,6 +86,7 @@ sudo semanage port -l | grep ssh
 # enable and restart sshd
 sudo systemctl enable sshd
 sudo systemctl restart sshd
+sudo systemctl status sshd
 
 #####################################################
 ###################### MONITOR
@@ -197,6 +204,7 @@ sudo nano -w /etc/fail2ban/jail.conf
 # start and enable fail2ban
 sudo systemctl restart fail2ban
 sudo systemctl enable fail2ban
+sudo systemctl status fail2ban
 
 # view and verify fail2ban status
 sudo fail2ban-client status
