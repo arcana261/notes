@@ -1,0 +1,26 @@
+Clone: kerberosclient.ostack.me
+Name: vm-zabbix.ostack.me
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname vm-zabbix.ostack.me
+ssh-keygen -t rsa
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+sudo reboot
+
+# create a new key
+sudo kadmin -p arcana/admin
+.............................................
+addprinc -randkey host/vm-zabbix.ostack.me
+ktadd host/vm-zabbix.ostack.me
+quit
+.............................................
+
+# install zabbix repository
+sudo rpm -ivh http://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm
+
