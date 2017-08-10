@@ -1,0 +1,17 @@
+# GUIDE: 
+# http://www.frederickding.com/posts/2015/07/using-openstack-images-on-xenserver-fedora-22-centos-7-062411/
+
+# information on virtualization spectrum
+# https://wiki.xen.org/wiki/Virtualization_Spectrum
+
+# download centos 7 cloud image
+# https://cloud.centos.org/centos/7/images/
+
+# uncompress qcow2c image
+qemu-img convert -f qcow2 -O qcow2 CentOS-7-x86_64-GenericCloud-1707.qcow2c  CentOS-7-x86_64-GenericCloud-1707.qcow2 
+
+# convert qcow2 to VHD
+qemu-img convert -f qcow2 -O vpc CentOS-7-x86_64-GenericCloud-1707.qcow2 CentOS-7-x86_64-GenericCloud-1707.vhd
+
+# import VHD into xen center
+
