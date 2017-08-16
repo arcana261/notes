@@ -51,6 +51,18 @@ sudo systemctl restart sshd
 # set default editor to vim
 sudo update-alternatives --config editor
 
+# install other restricted areas
+sudo apt-get install ubuntu-restricted-extras
+
+# install smplayer
+sudo apt-get install smplayer
+
+# install mplayer2
+sudo apt-get install mplayer2
+
+# install vlc
+sudo apt-get install vlc vlc-data browser-plugin-vlc
+
 # install "n" (node version manager)
 curl -L https://git.io/n-install | bash
 

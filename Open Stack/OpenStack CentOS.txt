@@ -1,17 +1,56 @@
 # OpenStack Newton Installation
 # https://docs.openstack.org/newton/install-guide-rdo/
+# https://docs.openstack.org/ha-guide/
+# https://wiki.openstack.org/wiki/XenServer
+# http://docs.ceph.com/docs/hammer/rbd/libvirt/
+
+
+### IMAGE PROPERTIES
+### 
+### We recommend to use the following properties for your images:
+### 
+### hw_scsi_model=virtio-scsi: add the virtio-scsi controller and get better performance and support for discard operation
+### hw_disk_bus=scsi: connect every cinder block devices to that controller
+### hw_qemu_guest_agent=yes: enable the QEMU guest agent
+### os_require_quiesce=yes: send fs-freeze/thaw calls through the QEMU guest agent
 
 ### NOTE: ENSURE VM's NETWORK INTERFACES ARE IN PROMISCOUS MODE!
 ### NOTE: OPENSTACK INSTANCES REQUIRE NTP TO WORK PROPERLY
+
+### DIFFERENT REQUIRED NETWORKS:
+### 1. Management Network (it is defined by key "my_ip" in openstack configuration files)
+### 2. Provider Network (Physical Network which allows VM's to communicate with outside world)
+### 3. Overlay Network (=== Management Network, Network which will transfer traffic of overlays)
 
 ###########################
 ### SECTION: /etc/hosts ###
 ### OR USE DNS SERVICE  ###
 192.168.21.56 controller-ostack-mehdi
+192.168.5.29  compute-ostack-mehdi
 ###########################
 
+##########################################
+### SECTION: PASSWORDS                 ###
+Title           | Username     | Password
+------------------------------------------
+MariaDB         | root         | P@ssw0rd
+RABBIT_PASS     | openstack    | 123
+KEYSTONE_DBPASS | keystone     | 123
+ADMIN_PASS      | admin        | 123
+DEMO_PASS       | demo         | 123
+GLANCE_DBPASS   | glance       | 123
+GLANCE_PASS     | glance       | 123
+CINDER_DBPASS   | cinder       | 123
+CINDER_PASS     | cinder       | 123
+NOVA_DBPASS     | nova         | 123
+NOVA_PASS       | nova         | 123
+NEUTRON_DBPASS  | neutron      | 123
+NEUTRON_PASS    | neutron      | 123
+METADATA_SECRET | N/A          | P@ssw0rd
+##########################################
+
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-VM: controller
+VM: Open Stack Base
 CPU: 1
 RAM: 8GB
 Clone: A hardened CentOS7 with Ceph and OVS pre-installed
@@ -32,14 +71,34 @@ sudo vim /etc/sysconfig/network-scripts/ifcfg-ethXXX
 # or use values assigned from DNS
 sudo vim /etc/hosts
 
+# disable epel repository
+sudo yum remove epel-release
+
+# install centos release packages
+sudo yum install centos-release-openstack-newton
+
+# finalize installation
+sudo yum upgrade
+
+# install openstack client
+sudo yum install python-openstackclient
+
+# install selinux policies for openstack
+sudo yum install openstack-selinux
+
+# install chrony
+sudo yum install chrony
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VM: Open Stack Controller
+Clone: Open Stack Base
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 ###########################
 ### install chrony (as NTP server)
 ### on controller node, or use
 ### NTP server provided by DHCP on
 ### each instance
-
-# install chrony
-sudo yum install chrony
 
 # IF organization provides custom NTP server use it
 sudo vim /etc/chrony.conf
@@ -54,20 +113,986 @@ sudo systemctl enable chronyd.service
 sudo systemctl start chronyd.service
 sudo systemctl status chronyd.service
 
+# add port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=ntp
+sudo firewall-cmd --reload
 
 ### END INSTALL CHRONY
 ###########################
 
-# disable epel repository
-sudo yum remove epel-release
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VM: Open Stack Base with NTP
+Clone: Open Stack Base
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-# install centos release packages
-sudo yum install centos-release-openstack-newton
+###########################
+### install chrony (as NTP server)
+### on controller node, or use
+### NTP server provided by DHCP on
+### each instance
 
-# finalize installation
-sudo yum upgrade
+# use controller node as NTP server
+sudo vim /etc/chrony.conf
+> server <CONTROLLER NODE> iburst
+
+# enable and restart services
+sudo systemctl enable chronyd.service
+sudo systemctl start chronyd.service
+sudo systemctl status chronyd.service
+
+# verify chrony sources
+sudo chronyc sources
+
+### END INSTALL CHRONY
+###########################
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	-- CONTINUE INSTALL --
+	VM: Open Stack Controller
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+###########################
+### Install and configure
+### SQL database. This can be
+### setup on controller node
+### or some dedicated node
+
+# install database
+sudo yum install mariadb mariadb-server python2-PyMySQL
+
+# configure maria db
+sudo vim /etc/my.cnf.d/openstack.cnf
+>>>>>>>>>>>>>>
+[mysqld]
+bind-address = <CONTROLLER MANAGEMENT IP>
+
+default-storage-engine = innodb
+innodb_file_per_table
+max_connections = 4096
+collation-server = utf8_general_ci
+character-set-server = utf8
+<<<<<<<<<<<<<<
+
+# enable and start services
+sudo systemctl enable mariadb.service
+sudo systemctl restart mariadb.service
+sudo systemctl status mariadb.service
+
+# secure mysql installation
+# and choose password
+sudo mysql_secure_installation
+
+# open port throgh firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=3306/tcp
+sudo firewall-cmd --reload
+
+### END INSTALL SQL DATABASE
+###########################
+
+###########################
+### Install and configure
+### Message Queue (RabbitMQ).
+### This can be
+### setup on controller node
+### or some dedicated node
+
+# install package
+sudo yum install rabbitmq-server
+
+# enable and start services
+sudo systemctl enable rabbitmq-server.service
+sudo systemctl start rabbitmq-server.service
+sudo systemctl status rabbitmq-server.service
+
+# add openstack user and set password
+sudo rabbitmqctl add_user openstack <RABBIT_PASS>
+
+# set permission for openstack user
+sudo rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+
+# add ports throgh firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=5672/tcp
+sudo firewall-cmd --permanent --add-port=5671/tcp
+sudo firewall-cmd --reload
+
+### END INSTALL MESSAGE QUEUE
+###########################
+
+###########################
+### Install and configure
+### MemCached.
+### This can be
+### setup on controller node
+### or some dedicated node
+
+# install package
+sudo yum install memcached python-memcached
+
+# config memcached
+sudo vim /etc/sysconfig/memcached
+>>>>>>>>>>>>>>
+OPTIONS="-l <MANAGEMENT IP>"
+<<<<<<<<<<<<<<
+
+# start and enable memcached service
+sudo systemctl enable memcached.service
+sudo systemctl restart memcached.service
+sudo systemctl status memcached.service
+
+# allow port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=11211/tcp
+sudo firewall-cmd --reload
+
+### END INSTALL MEMCACHED
+###########################
+
+
+###########################
+### Install and configure
+### KeyStone.
+### This can be
+### setup on controller node
+### or some dedicated node
+
+# connect to database
+mysql -u root -p
+>>>>>>>>>>>>>>>>
+	# create keystone database
+	CREATE DATABASE keystone;
+	
+	# grant proper access to the keystone database
+	GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'KEYSTONE_DBPASS';
+	GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'KEYSTONE_DBPASS';
+	
+	# exit
+	exit
+<<<<<<<<<<<<<<<<
+
+# install required package
+sudo yum install openstack-keystone httpd mod_wsgi
+
+# configure keystone
+sudo vim /etc/keystone/keystone.conf
+>>>>>>>>>>>>>>>>>>>>
+[database]
+	connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
+[token]
+	provider = fernet
+<<<<<<<<<<<<<<<<<<<<
+
+# populate identity service database
+su -s /bin/sh -c "keystone-manage db_sync" keystone
+
+# initialize fernet key repositories
+sudo keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+sudo keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+
+# bootstrap identity service
+keystone-manage bootstrap --bootstrap-password ADMIN_PASS \
+  --bootstrap-admin-url http://controller:35357/v3/ \
+  --bootstrap-internal-url http://controller:35357/v3/ \
+  --bootstrap-public-url http://controller:5000/v3/ \
+  --bootstrap-region-id RegionOne
+
+# configure apache
+sudo vim /etc/httpd/conf/httpd.conf
+>>>>>>>>>>>>>>>>>>>
+ServerName controller
+<<<<<<<<<<<<<<<<<<<
+
+# create a link to keystone configuration file
+sudo ln -s /usr/share/keystone/wsgi-keystone.conf /etc/httpd/conf.d/
+  
+# install and enable apache
+sudo systemctl enable httpd.service
+sudo systemctl restart httpd.service
+sudo systemctl status httpd.service
+  
+# open ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=5000/tcp
+sudo firewall-cmd --permanent --add-port=35357/tcp
+sudo firewall-cmd --reload
+
+# create user for openstack
+sudo adduser ostack
+sudo passwd ostack
+sudo usermod -aG wheel ostack
+  
+# switch to new ostack user
+su - ostack
+
+# create directory for credentials
+mkdir ~/credentials
+  
+# create script to spawn environment
+nano -w ~/credentials/admin.sh
+>>>>>>>>>>>>>>>>>>>>
+export OS_USERNAME=admin
+export OS_PASSWORD=ADMIN_PASS
+export OS_PROJECT_NAME=admin
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_AUTH_URL=http://controller:35357/v3
+export OS_IDENTITY_API_VERSION=3
+<<<<<<<<<<<<<<<<<<<<
+  
+# run it
+source ~/credentials/admin.sh
+  
+# create an administrative "service" project
+openstack project create --domain default --description "Service Project" service
+  
+# create a demo non-administrative project
+openstack project create --domain default --description "Demo Project" demo
+
+# create demo user for demo project
+# when promted, enter DEMO_PASS
+openstack user create --domain default --password-prompt demo
+  
+# create a user role
+openstack role create user
+  
+# add user role to demo project and user
+openstack role add --project demo --user demo user
+  
+# for security reasons, disable the temporary authentication token mechanism
+sudo vim /etc/keystone/keystone-paste.ini
+>>> REMOVE admin_token_auth from "[pipeline:public_api]"
+>>> REMOVE admin_token_auth from "[pipeline:admin_api]"
+>>> REMOVE admin_token_auth from "[pipeline:api_v3]"
+
+# unset some things in environment
+# so we can test and verify operations
+unset OS_AUTH_URL OS_PASSWORD
+  
+# request an authentication token for "admin" user
+openstack --os-auth-url http://controller:35357/v3 \
+  --os-project-domain-name Default --os-user-domain-name Default \
+  --os-project-name admin --os-username admin token issue
+  
+# request an authentication token for "demo" user
+openstack --os-auth-url http://controller:5000/v3 \
+  --os-project-domain-name Default --os-user-domain-name Default \
+  --os-project-name demo --os-username demo token issue
+
+# update client configuration for user "admin"
+vim ~/credentials/admin.sh
+>>>>>>>>>>>>>>>>>
+export OS_IMAGE_API_VERSION=2
+<<<<<<<<<<<<<<<<<
+
+# create client configuration for user "demo"
+vim ~/credentials/demo.sh
+>>>>>>>>>>>>>>>>>>
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=demo
+export OS_USERNAME=demo
+export OS_PASSWORD=DEMO_PASS
+export OS_AUTH_URL=http://controller:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+<<<<<<<<<<<<<<<<<<
+
+# test admin credentials
+source ~/credentials/admin.sh
+openstack token issue
+
+# test demo credentials
+source ~/credentials/demo.sh
+openstack token issue
+  
+# reload admin credentials
+source ~/credentials/admin.sh
+openstack token issue
+  
+### END INSTALL KEYSTONE
+###########################
+
+###########################
+### Install and configure
+### Glance.
+### This can be
+### setup on controller node
+### or some dedicated node
+
+# install python rbd
+sudo yum install python-rbd ceph-common
+
+# create a ceph pool and credentials
+# on the ceph admin node
+ceph osd pool create openstack-images 32 32
+ceph osd pool set-quota openstack-images max_bytes 100000000000
+ceph auth get-or-create client.glance mon 'allow r' osd 'allow rwx pool=openstack-images' -o ceph.client.glance.keyring
+
+# connect to database
+mysql -u root -p
+>>>>>>>>>>>>>>>>
+	# create keystone database
+	CREATE DATABASE glance;
+	
+	# grant proper access to the glance database
+	GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'GLANCE_DBPASS';
+	GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'GLANCE_DBPASS';
+	
+	# exit
+	exit
+<<<<<<<<<<<<<<<<
+
+# load admin credentials
+source ~/credentials/admin.sh
+
+# create "glance" user
+# when prompted, enter "GLANCE_PASS"
+openstack user create --domain default --password-prompt glance
+
+# add "admin" role to the "glance" user
+openstack role add --project service --user glance admin
+
+# create glance service entity
+openstack service create --name glance \
+  --description "OpenStack Image" image
+  
+# create image service API endpoints
+openstack endpoint create --region RegionOne \
+  image public http://controller:9292
+openstack endpoint create --region RegionOne \
+  image internal http://controller:9292
+openstack endpoint create --region RegionOne \
+  image admin http://controller:9292
+
+# install package
+sudo yum install openstack-glance
+
+# configure glance
+sudo cp /etc/glance/glance-api.conf /etc/glance/glance-api.conf.org
+sudo vim /etc/glance/glance-api.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :%s/^#.*//g
+# :g/^$/d
+[DEFAULT]
+	show_multiple_locations = True
+	show_image_direct_url = True
+[database]
+	connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
+[keystone_authtoken]
+	auth_uri = http://controller:5000
+	auth_url = http://controller:35357
+	memcached_servers = controller:11211
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	project_name = service
+	username = glance
+	password = GLANCE_PASS
+[paste_deploy]
+	flavor = keystone
+[glance_store]
+	stores = rbd
+	default_store = rbd
+	rbd_store_pool = openstack-images
+	rbd_store_user = admin
+	rbd_store_ceph_conf = /etc/ceph/ceph.conf
+	rbd_store_chunk_size = 8
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+sudo chown glance:glance /etc/glance/glance-api.conf
+
+# configure glance registry
+sudo cp /etc/glance/glance-registry.conf /etc/glance/glance-registry.conf.org
+sudo vim /etc/glance/glance-registry.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :%s/^#.*//g
+# :g/^$/d
+[database]
+	connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
+[keystone_authtoken]
+	auth_uri = http://controller:5000
+	auth_url = http://controller:35357
+	memcached_servers = controller:11211
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	project_name = service
+	username = glance
+	password = GLANCE_PASS
+[paste_deploy]
+	flavor = keystone
+<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  
+# populate glance database
+# IGNORE DEPRECATION WARNINGS!
+sudo su -s /bin/sh -c "glance-manage db_sync" glance
+
+# allow port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=9292/tcp
+sudo firewall-cmd --permanent --add-port=9191/tcp
+sudo firewall-cmd --reload
+
+# start and enable services
+sudo systemctl enable openstack-glance-api.service openstack-glance-registry.service
+sudo systemctl restart openstack-glance-api.service openstack-glance-registry.service
+sudo systemctl status openstack-glance-api.service openstack-glance-registry.service
+  
+# load admin environment
+source ~/credentials/admin.sh
+
+# download cirros image
+wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+
+# verify downloaded image is qcow2
+qemu-img info cirros-0.3.4-x86_64-disk.img
+
+# convert image to raw format
+qemu-img convert -f qcow2 -O raw cirros-0.3.4-x86_64-disk.img cirros-0.3.4-x86_64-disk.raw
+
+# create image in glance
+# NOTE: RBD with glance only supports "raw" image format
+openstack image create "cirros" --file cirros-0.3.4-x86_64-disk.raw \
+	--disk-format raw --container-format bare --public
+	
+# verify image is present
+openstack image list
+  
+### END INSTALL GLANCE
+###########################
+
+###########################
+### Install and configure
+### Nova [Compute] (Controller Part).
+### This can be
+### setup on controller node
+### or some dedicated node
+### 
+### control services include:
+### * nova-api
+### * nova-consoleauth
+### * nova-scheduler
+### * nova-conductor
+### * nova-novncproxy
+###
+
+# connect to database
+mysql -u root -p
+>>>>>>>>>>>>>>>>
+	# create keystone database
+	CREATE DATABASE nova_api;
+	CREATE DATABASE nova;
+	
+	# grant proper access to the glance database
+	GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';
+	GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';
+	GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';
+	GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';
+	
+	# exit
+	exit
+<<<<<<<<<<<<<<<<
+
+# load admin credentials
+source ~/credentials/admin.sh
+
+# create user for nova
+# when prompted, enter NOVA_PASS entry
+openstack user create --domain default --password-prompt nova
+openstack role add --project service --user nova admin
+
+# create service entity for nova
+openstack service create --name nova --description "OpenStack Compute" compute
+
+# create compute service API endpoints
+openstack endpoint create --region RegionOne compute public http://controller:8774/v2.1/%\(tenant_id\)s
+openstack endpoint create --region RegionOne compute internal http://controller:8774/v2.1/%\(tenant_id\)s
+openstack endpoint create --region RegionOne compute admin http://controller:8774/v2.1/%\(tenant_id\)s
+
+# install required packages
+sudo yum install openstack-nova-api openstack-nova-conductor \
+  openstack-nova-console openstack-nova-novncproxy \
+  openstack-nova-scheduler
+
+# configure nova
+sudo cp /etc/nova/nova.conf /etc/nova/nova.conf.org
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[DEFAULT]
+	enabled_apis = osapi_compute,metadata
+	transport_url = rabbit://openstack:RABBIT_PASS@controller
+	auth_strategy = keystone
+	my_ip = 192.168.21.56
+	use_neutron = True
+	firewall_driver = nova.virt.firewall.NoopFirewallDriver
+[api_database]
+	connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova_api
+[database]
+	connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
+[keystone_authtoken]
+	auth_uri = http://controller:5000
+	auth_url = http://controller:35357
+	memcached_servers = controller:11211
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	project_name = service
+	username = nova
+	password = NOVA_PASS
+[vnc]
+	vncserver_listen = $my_ip
+	vncserver_proxyclient_address = $my_ip
+[glance]
+	api_servers = http://controller:9292
+[oslo_concurrency]
+	lock_path = /var/lib/nova/tmp
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+# populate glance database
+# IGNORE DEPRECATION WARNINGS!
+sudo su -s /bin/sh -c "nova-manage api_db sync" nova
+sudo su -s /bin/sh -c "nova-manage db sync" nova
+
+# enable and start services
+sudo systemctl enable openstack-nova-api.service \
+  openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+  openstack-nova-conductor.service openstack-nova-novncproxy.service
+sudo systemctl restart openstack-nova-api.service \
+  openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+  openstack-nova-conductor.service openstack-nova-novncproxy.service
+sudo systemctl status openstack-nova-api.service \
+  openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+  openstack-nova-conductor.service openstack-nova-novncproxy.service
+
+# open ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=8774/tcp
+sudo firewall-cmd --permanent --add-port=6080/tcp
+sudo firewall-cmd --reload
+
+### END INSTALL NOVA (Controller Part)
+###########################
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VM: Base Open Stack Compute
+Clone: Open Stack Base with NTP
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# install package
+sudo yum install openstack-nova-compute
+
+# configure nova
+sudo cp /etc/nova/nova.conf /etc/nova/nova.conf.org
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[DEFAULT]
+	enabled_apis = osapi_compute,metadata
+	transport_url = rabbit://openstack:RABBIT_PASS@controller
+	auth_strategy = keystone
+	my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+	use_neutron = True
+	firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+[keystone_authtoken]
+	auth_uri = http://controller:5000
+	auth_url = http://controller:35357
+	memcached_servers = controller:11211
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	project_name = service
+	username = nova
+	password = NOVA_PASS
+
+[vnc]
+	enabled = True
+	vncserver_listen = 0.0.0.0
+	vncserver_proxyclient_address = $my_ip
+	novncproxy_base_url = http://controller:6080/vnc_auto.html
+
+[glance]
+	api_servers = http://controller:9292
+
+[oslo_concurrency]
+	lock_path = /var/lib/nova/tmp
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VM: Open Stack Compute
+Clone: Base Open Stack Compute
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+###########################
+### Install and configure
+### Nova [Compute] (Compute Node Part).
+
+# configure nova
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+[DEFAULT]
+	my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# determine whether compute node supports virtualization
+# following command should return 1 or more
+egrep -c '(vmx|svm)' /proc/cpuinfo
+
+# enable and start services
+sudo systemctl enable libvirtd.service openstack-nova-compute.service
+sudo systemctl restart libvirtd.service openstack-nova-compute.service
+sudo systemctl status libvirtd.service openstack-nova-compute.service
+
+## ADMIN_NODE
+## verify operations
+
+# load credentials
+source ~/credentials/admin.sh
+
+# list compute services
+openstack compute service list
+
+### END INSTALL NOVA (Compute Node Part)
+###########################
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+###########################
+### Install and configure
+### Neutron.
+### setup on controller node
+### or some dedicated node
+
+# connect to database
+mysql -u root -p
+>>>>>>>>>>>>>>>>
+	# create keystone database
+	CREATE DATABASE neutron;
+	
+	# grant proper access to the glance database
+	GRANT ALL PRIVILEGES ON neutron.* TO 'nova'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';
+	GRANT ALL PRIVILEGES ON neutron.* TO 'nova'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';
+	
+	# exit
+	exit
+<<<<<<<<<<<<<<<<
+
+# load admin credentials
+source ~/credentials/admin.sh
+
+# create a user for neutron
+# when prompted, enter NEUTRON_PASS
+openstack user create --domain default --password-prompt neutron
+openstack role add --project service --user neutron admin
+
+# create neutron service entry
+openstack service create --name neutron --description "OpenStack Networking" network
+
+# create neutron service endpoints
+openstack endpoint create --region RegionOne network public http://controller:9696
+openstack endpoint create --region RegionOne network internal http://controller:9696
+openstack endpoint create --region RegionOne network admin http://controller:9696
+
+# allow ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=9696/tcp
+sudo firewall-cmd --reload
+
+# install additional packages for self service networking
+sudo yum install openstack-neutron openstack-neutron-ml2 openstack-neutron-linuxbridge ebtables
+
+# configure neutron
+sudo cp /etc/neutron/neutron.conf /etc/neutron/neutron.conf.org
+sudo vim /etc/neutron/neutron.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[DEFAULT]
+	core_plugin = ml2
+	service_plugins = router
+	allow_overlapping_ips = True
+	transport_url = rabbit://openstack:RABBIT_PASS@controller
+	auth_strategy = keystone
+	notify_nova_on_port_status_changes = True
+	notify_nova_on_port_data_changes = True
+
+[database]
+	connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
+
+[keystone_authtoken]
+	auth_uri = http://controller:5000
+	auth_url = http://controller:35357
+	memcached_servers = controller:11211
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	project_name = service
+	username = neutron
+	password = NEUTRON_PASS
+
+[nova]
+	auth_url = http://controller:35357
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	region_name = RegionOne
+	project_name = service
+	username = nova
+	password = NOVA_PASS
+
+[oslo_concurrency]
+	lock_path = /var/lib/neutron/tmp
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure ML2 plugin
+sudo cp /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini.org
+sudo vim /etc/neutron/plugins/ml2/ml2_conf.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[ml2]
+	type_drivers = flat,vlan,vxlan
+	tenant_network_types = vxlan
+	mechanism_drivers = linuxbridge,l2population
+	extension_drivers = port_security
+
+[ml2_type_flat]
+	flat_networks = provider
+
+[ml2_type_vxlan]
+	vni_ranges = 1:1000
+
+[securitygroup]
+	enable_ipset = True
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure linuxbridge agent
+sudo cp /etc/neutron/plugins/ml2/linuxbridge_agent.ini /etc/neutron/plugins/ml2/linuxbridge_agent.ini.org
+sudo vim /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[linux_bridge]
+	physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
+
+[vxlan]
+	enable_vxlan = True
+	local_ip = OVERLAY_INTERFACE_IP_ADDRESS
+	l2_population = True
+
+[securitygroup]
+	enable_security_group = True
+	firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure layer-3 agent
+sudo cp /etc/neutron/l3_agent.ini /etc/neutron/l3_agent.ini.org
+sudo vim /etc/neutron/l3_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[DEFAULT]
+	interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+# configure DHCP agent
+sudo cp /etc/neutron/dhcp_agent.ini /etc/neutron/dhcp_agent.ini.org
+sudo vim /etc/neutron/dhcp_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[DEFAULT]
+	interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+	dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
+	enable_isolated_metadata = True
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# open required ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=53/tcp
+sudo firewall-cmd --permanent --add-port=53/udp
+sudo firewall-cmd --permanent --add-port=67/udp
+sudo firewall-cmd --permanent --add-port=68/udp
+sudo firewall-cmd --reload
+
+# configure metadata agent
+# NOTE: don't forget to replace METADATA_SECRET
+sudo cp /etc/neutron/metadata_agent.ini /etc/neutron/metadata_agent.ini.org
+sudo vim /etc/neutron/metadata_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[DEFAULT]
+	nova_metadata_ip = controller
+	metadata_proxy_shared_secret = METADATA_SECRET
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure compute service
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+[neutron]
+	url = http://controller:9696
+	auth_url = http://controller:35357
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	region_name = RegionOne
+	project_name = service
+	username = neutron
+	password = NEUTRON_PASS
+	service_metadata_proxy = True
+	metadata_proxy_shared_secret = METADATA_SECRET
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+### END INSTALL Neutron
+###########################
+
+
+###########################
+### Install and configure
+### Cinder using Ceph backend.
+### This can be
+### setup on controller node
+### or some dedicated node
+
+# install ceph tools
+sudo yum install python-rbd ceph-common
+
+# create a ceph pool and credentials
+# on the ceph admin node
+ceph osd pool create openstack-volumes 32 32
+ceph osd pool create openstack-backups 32 32
+ceph osd pool set-quota openstack-volumes max_bytes 100000000000
+ceph osd pool set-quota openstack-backups max_bytes 100000000000
+ceph auth get-or-create client.cinder mon 'allow r' osd 'allow rwx pool=openstack-volumes' -o ceph.client.cinder.keyring
+ceph auth get-or-create client.cinder-backup mon 'profile rbd' osd 'profile rbd pool=openstack-backups' -o ceph.client.cinder-backup.keyring
+
+# connect to database
+mysql -u root -p
+>>>>>>>>>>>>>>>>
+	# create keystone database
+	CREATE DATABASE cinder;
+	
+	# grant proper access to the cinder database
+	GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY 'CINDER_DBPASS';
+	GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY 'CINDER_DBPASS';
+	
+	# exit
+	exit
+<<<<<<<<<<<<<<<<
+
+# load admin credentials
+source ~/credentials/admin.sh
+
+# create "cinder" user
+# when prompted, enter CINDER_PASS
+openstack user create --domain default --password-prompt cinder
+
+# add admin role to the cinder user
+openstack role add --project service --user cinder admin
+
+# create "cinder" and "cinderv2" service entities
+openstack service create --name cinder \
+  --description "OpenStack Block Storage" volume
+openstack service create --name cinderv2 \
+  --description "OpenStack Block Storage" volumev2
+  
+# create block storage service API endpoints
+openstack endpoint create --region RegionOne \
+  volume public http://controller:8776/v1/%\(tenant_id\)s
+openstack endpoint create --region RegionOne \
+  volume internal http://controller:8776/v1/%\(tenant_id\)s
+openstack endpoint create --region RegionOne \
+  volume admin http://controller:8776/v1/%\(tenant_id\)s
+
+# create block storage service API endpoints for v2
+openstack endpoint create --region RegionOne \
+  volumev2 public http://controller:8776/v2/%\(tenant_id\)s
+openstack endpoint create --region RegionOne \
+  volumev2 internal http://controller:8776/v2/%\(tenant_id\)s
+openstack endpoint create --region RegionOne \
+  volumev2 admin http://controller:8776/v2/%\(tenant_id\)s
+  
+# install package
+sudo yum install openstack-cinder
+
+# configure cinder
+sudo vim /etc/cinder/cinder.conf
+>>>>>>>>>>>>>>>>>>
+[database]
+	connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
+[DEFAULT]
+	transport_url = rabbit://openstack:RABBIT_PASS@controller
+	auth_strategy = keystone
+	my_ip = 192.168.21.56
+	enabled_backends = ceph
+[keystone_authtoken]
+	auth_uri = http://controller:5000
+	auth_url = http://controller:35357
+	memcached_servers = controller:11211
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	project_name = service
+	username = cinder
+	password = CINDER_PASS
+[oso_concurrency]
+	lock_path = /var/lib/cinder/tmp
+[ceph]
+	volume_driver = cinder.volume.drivers.rbd.RBDDriver
+	volume_backend_name = ceph
+	rbd_pool = openstack-volumes
+	rbd_ceph_conf = /etc/ceph/ceph.conf
+	rbd_flatten_volume_from_snapshot = false
+	rbd_max_clone_depth = 5
+	rbd_store_chunk_size = 4
+	rados_connect_timeout = -1
+	glance_api_version = 2
+	rbd_user = cinder
+	rbd_secret_uuid = AQA
+<<<<<<<<<<<<<<<<<<
+  
+### END INSTALL CINDER
+###########################
+
+###########################
+### IF we don't use NTP server
+### provided
 
 !>!>!>>! "server controller iburst" in other VM's
+
 
 
 

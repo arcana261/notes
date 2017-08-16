@@ -8,6 +8,108 @@ about bandwidth but more about link failure and finally
 broadcast is very situation specific and
 only recommended if you know you need it.
 
+
+
+
+
+balance-rr, active-backup, balance-tlb and balance-alb don't need switch support.
+
+balance-rr augments performance at the price of fragmentation, performs poorly with some protocols (CIFS) and with more than 2 interfaces.
+
+balance-alb and balance-tlb may not work properly with all switches; there are often some arp problems (some machines may fail to connect to each other for instance). You may need to tweak various settings (miimon, updelay) to get stable networking.
+
+balance-xor may or may not require switch configuration. You need to set up an interface group (not LACP) on HP and Cisco switches, but apparently it's not necessary on D-Link, Netgear and Fujitsu switches.
+
+802.3ad absolutely requires an LACP group on the switch side. It's the best supported option overall for augmenting performance.
+
+Note: whatever you do, one network connection always go through one and only one physical link. So when aggregating GigE interfaces, a file transfer from machine A to machine B can't top 1 gigabit/s, even if each machine has 4 aggregated GigE interfaces (whatever the bonding mode in use).
+
+
+
+
+
+
+
+
+
+
+   balance-rr or 0
+       Round-robin policy: Transmit packets in sequential
+       order from the first available slave through the
+       last. This mode provides load balancing and fault
+       tolerance. 
+
+
+   active-backup or 1
+       Active-backup policy: Only one slave in the bond is
+       active.  A different slave becomes active if, and only
+       if, the active slave fails. The bond's MAC address is
+       externally visible on only one port (network adapter)
+       to avoid confusing the switch.
+
+       This mode provides fault tolerance. The "primary"
+       option affects the behavior of this mode.
+
+   balance-xor or 2
+       XOR policy: Transmit based on the selected transmit
+       hash policy.  The default policy is a simple [(source
+       MAC address XOR'd with destination MAC address) modulo
+       slave count].  Alternate transmit policies may be
+       selected via the xmit_hash_policy option.
+
+       This mode provides load balancing and fault tolerance.
+
+   broadcast or 3
+       Broadcast policy: transmits everything on all slave
+       interfaces.  This mode provides fault tolerance.
+
+   802.3ad or 4
+       IEEE 802.3ad Dynamic link aggregation.  Creates
+       aggregation groups that share the same speed and
+       duplex settings.  Utilizes all slaves in the active
+       aggregator according to the 802.3ad specification.
+
+       Slave selection for outgoing traffic is done according
+       to the transmit hash policy, which may be changed from
+       the default simple XOR policy via the xmit_hash_policy
+       option. Note that not all transmit policies may be 802.3ad
+       compliant, particularly inregards to the packet mis-ordering
+       requirements of section 43.2.4 of the 802.3ad standard.
+       Differing peer implementations will have varying tolerances for
+       noncompliance.
+
+       Note: Most switches will require some type of configuration
+       to enable 802.3ad mode.
+
+   balance-tlb or 5
+       Adaptive transmit load balancing: channel bonding that
+       does not require any special switch support.  The
+       outgoing traffic is distributed according to the
+       current load (computed relative to the speed) on each
+       slave.  Incoming traffic is received by the current
+       slave.  If the receiving slave fails, another slave
+       takes over the MAC address of the failed receiving
+       slave.
+
+   balance-alb or 6
+       Adaptive load balancing: includes balance-tlb plus
+       receive load balancing (rlb) for IPV4 traffic, and
+       does not require any special switch support.
+
+       When a link is reconnected or a new slave joins the
+       bond the receive traffic is redistributed among all
+       active slaves in the bond by initiating ARP Replies
+       with the selected MAC address to each of the
+       clients. The updelay parameter must
+       be set to a value equal or greater than the switch's
+       forwarding delay so that the ARP Replies sent to the
+       peers will not be blocked by the switch.
+
+
+
+
+
+
 --------       ------------
 |      |       |          |
 |  S1  |<----->|  bridge  |<-----> S2

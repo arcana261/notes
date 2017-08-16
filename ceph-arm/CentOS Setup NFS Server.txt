@@ -191,6 +191,8 @@ sudo systemctl status mount-rbd-nfs-test.service
 sudo yum install nfs-utils
 
 # create an NFS share
+# NOTE: multiple entries per share can be specified (e.g.
+# /share 192.168.89.1/24(rw,no_root_squash,async)  192.168.92.0/24(rw,no_root_squash,async)
 sudo nano -w /etc/exports
 .................................................
 /nfs-test    192.168.5.96(rw,sync,no_root_squash,no_all_squash)

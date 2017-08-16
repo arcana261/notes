@@ -1,0 +1,16 @@
+vi /etc/network/interfaces
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+auto lo
+iface lo inet loopback
+
+auto vmbr0
+iface vmbr0 inet dhcp
+#   address 192.168.1.201
+#   netmask 255.255.255.0
+#   gateway 192.168.1.1
+    bridge_ports eth0
+    bridge_stp off
+    bridge_fd 0 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+

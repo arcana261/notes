@@ -1,0 +1,72 @@
+#### GUIDE: https://pve.proxmox.com/wiki/Cluster_Manager
+####
+
+# create cluster
+pvecm create <CLUSTER_NAME>
+
+# check status
+pvecm status
+
+# add another node to cluster
+### NOTE: DO THIS ON THE OTHER MACHINE
+### NOTE: CREATE PRE-REQUISITIES FOR STORAGE's
+### BUT ADD THEM BY EDITING THE ORIGINAL ON
+### THE MASTER NODE, AND ADD NEW SERVER TO IT
+
+# prepare to add new node
+pvecm expected 1
+
+# add new node
+# Login via ssh to the other Proxmox VE nodes.
+# Please note, each nodes can't hold SAME VM ID,
+# if yes you will get conflicts with identical VMID´s
+# (to workaround, use vzdump to backup and to restore to a different VMID).
+pvecm add IP-ADDRESS-CLUSTER
+
+# ensure /etc/hosts is updated on all servers (nodes)
+nano /etc/hosts
+>>>>>>>>>>>>>>>>>>>>>>>>
+192.167.5.244 proxmox-mehdi.kaveh.local proxmox-mehdi pvelocalhost
+192.167.5.245 proxmox-mehdi2.kaveh.local proxmox-mehdi2 
+192.167.5.246 proxmox-mehdi3.kaveh.local proxmox-mehdi3
+<<<<<<<<<<<<<<<<<<<<<<<<
+
+# check status
+pvecm status
+
+# reboot new node
+reboot
+
+
+####################################################################################
+Remove Node from Cluster
+####################################################################################
+
+on master node
+---------------------
+
+### set priority of to remove node to zero (0)
+
+# prepare to remove nodes
+pvecm expected 1
+
+# get list of nodes
+pvecm nodes
+
+# remove desired node
+pvecm delnode proxmox-mehdi2
+
+on desired node
+----------------------
+systemctl stop pve-cluster
+systemctl stop corosync
+pmxcfs -l
+rm /etc/pve/corosync.conf
+rm /etc/corosync/*
+killall pmxcfs
+systemctl start pve-cluster
+rm /var/lib/corosync/*
+
+
+
+

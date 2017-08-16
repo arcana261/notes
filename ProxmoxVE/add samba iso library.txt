@@ -1,0 +1,19 @@
+mkdir -p /srv/iso/{private,root,dump,images,template}
+mkdir -p /srv/iso/template/{cache,iso,qemu}
+vi /etc/fstab
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//192.168.5.138/iso  /srv/iso/template/iso  cifs  username=root,password=123,iocharset=utf8,sec=ntlm  0  0
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+reboot
+
+-------
+
+Datacenter -> Storage -> Add -> Directory ->
+						ID -> some-name
+						Directory -> /srv/iso
+						Content -> ISO Image
+						Nodes -> <Some Node>
+
+
+

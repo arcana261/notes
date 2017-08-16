@@ -19,3 +19,8 @@ sudo systemctl status chronyd.service
 
 # verify chrony sources
 sudo chronyc sources
+
+# add port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=ntp
+sudo firewall-cmd --reload

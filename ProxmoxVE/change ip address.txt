@@ -1,0 +1,21 @@
+# change /etc/network/interfaces
+nano /etc/network/interfaces
+>>>>>>>>>
+	address 192.167.5.244
+<<<<<<<<<
+
+# change /etc/hosts
+>>>>>>>>>
+192.167.5.244	proxmox-mehdi.kaveh.local	proxmox-mehdi	pvelocalhost
+<<<<<<<<<
+
+# change corosync conf
+pvecm expected 1
+nano /etc/pve/corosync.conf
+>>>>>>>>>
+totem {
+	interface {
+		bindnetaddr: 192.167.5.244
+	}
+}
+<<<<<<<<<

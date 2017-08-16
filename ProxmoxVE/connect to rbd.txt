@@ -1,0 +1,31 @@
+###
+### copy "ceph.conf" and "ceph.client.admin.keyring" from admin node
+### to /etc/ceph/
+###
+
+# test ceph
+ceph -s
+
+# create a new pool (100GB)
+ceph osd pool create proxmox-mehdi 32 32
+ceph osd pool set-quota fanava max_bytes 100000000000
+
+###
+### choose a name for new shared storage
+### e.g. "shared-rbd"
+###
+
+# copy keyring for proxmox to understand
+mkdir -p /etc/pve/priv/ceph/
+cp /etc/ceph/ceph.client.admin.keyring /etc/pve/priv/ceph/<NAME>.keyring
+
+# add new storage
+Datacenter -> Storage -> Add -> RBD -> 
+					ID: <NAME>
+					Pool: <POOL>
+					Monirors(s): "192.168.5.220 192.168.5.201 192.168.5.202"
+					Username: admin
+					Nodes: proxmox-mehdi
+					KRBD: true
+
+
