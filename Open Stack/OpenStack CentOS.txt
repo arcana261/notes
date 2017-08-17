@@ -3,6 +3,7 @@
 # https://docs.openstack.org/ha-guide/
 # https://wiki.openstack.org/wiki/XenServer
 # http://docs.ceph.com/docs/hammer/rbd/libvirt/
+# http://docs.ceph.com/docs/master/rbd/rbd-openstack/
 
 
 ### IMAGE PROPERTIES
@@ -729,6 +730,59 @@ sudo vim /etc/nova/nova.conf
 	lock_path = /var/lib/nova/tmp
 <<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# install python rbd
+sudo yum install python-rbd ceph-common
+
+# create a ceph pool and credentials
+# on the ceph admin node
+ceph osd pool create openstack-vms 32 32
+ceph osd pool create openstack-volumes 32 32
+ceph osd pool set-quota openstack-vms max_bytes 100000000000
+ceph osd pool set-quota openstack-volumes max_bytes 100000000000
+ceph auth get-or-create client.cinder mon 'allow r' osd 'allow rwx pool=openstack-vms, allow rwx pool=openstack-volumes, allow rwx pool=openstack-images' -o ceph.client.cinder.keyring
+ceph auth get-key client.cinder | tee ceph.client.cinder.key
+
+# generate a new UUID for libvirt secret
+# e.g. "ddf3dd76-c387-4121-9be0-b55be6957ba6"
+uuidgen
+
+# create a secret xml configuration file
+sudo vim /etc/libvirt/cinder.secret.xml
+>>>>>>>>>>>>>>>>>>>>>>>>>
+<secret ephemeral='no' private='no'>
+  <uuid>ddf3dd76-c387-4121-9be0-b55be6957ba6</uuid>
+  <usage type='ceph'>
+    <name>client.cinder secret</name>
+  </usage>
+</secret>
+<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# define new secret in virsh
+sudo virsh secret-define --file /etc/libvirt/cinder.secret.xml
+sudo virsh secret-set-value --secret ddf3dd76-c387-4121-9be0-b55be6957ba6 --base64 $(cat /etc/ceph/ceph.client.cinder.key) 
+
+# configure nova to attach to rbd
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>
+[libvirt]
+	rbd_user = cinder
+	rbd_secret_uuid = ddf3dd76-c387-4121-9be0-b55be6957ba6
+<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure ceph client to use with nova
+sudo vim /etc/ceph/ceph.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>
+[client]
+    rbd cache = true
+    rbd cache writethrough until flush = true
+    admin socket = /var/run/ceph/guests/$cluster-$type.$id.$pid.$cctid.asok
+    log file = /var/log/qemu/qemu-guest-$pid.log
+    rbd concurrent management ops = 20
+<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure paths used by ceph client
+sudo mkdir -p /var/run/ceph/guests/ /var/log/qemu/
+sudo chown qemu:qemu /var/run/ceph/guests /var/log/qemu/
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 VM: Open Stack Compute
@@ -775,6 +829,8 @@ openstack compute service list
 ### Neutron.
 ### setup on controller node
 ### or some dedicated node
+### (Controller Part)
+###
 
 # connect to database
 mysql -u root -p
@@ -783,8 +839,8 @@ mysql -u root -p
 	CREATE DATABASE neutron;
 	
 	# grant proper access to the glance database
-	GRANT ALL PRIVILEGES ON neutron.* TO 'nova'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';
-	GRANT ALL PRIVILEGES ON neutron.* TO 'nova'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';
+	GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';
+	GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';
 	
 	# exit
 	exit
@@ -975,9 +1031,174 @@ sudo vim /etc/nova/nova.conf
 	metadata_proxy_shared_secret = METADATA_SECRET
 <<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# create symbolic link to ml2 plugin
+sudo ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
 
-### END INSTALL Neutron
+# populate database
+sudo su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
+  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+
+# enable and start services
+sudo systemctl restart openstack-nova-api.service neutron-server.service \
+  neutron-linuxbridge-agent.service neutron-dhcp-agent.service \
+  neutron-metadata-agent.service \
+  neutron-l3-agent.service
+sudo systemctl enable openstack-nova-api.service neutron-server.service \
+  neutron-linuxbridge-agent.service neutron-dhcp-agent.service \
+  neutron-metadata-agent.service \
+  neutron-l3-agent.service
+sudo systemctl status openstack-nova-api.service neutron-server.service \
+  neutron-linuxbridge-agent.service neutron-dhcp-agent.service \
+  neutron-metadata-agent.service \
+  neutron-l3-agent.service
+
+
+### END INSTALL Neutron (Controller Part)
 ###########################
+
+###########################
+### Install and configure
+### Neutron
+### (Compute Node Part)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VM: Base Open Stack Compute
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VM: Open Stack Compute
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# install packages
+sudo yum install openstack-neutron-linuxbridge ebtables ipset
+
+# configure neutron
+sudo cp /etc/neutron/neutron.conf /etc/neutron/neutron.conf.org
+sudo vim /etc/neutron/neutron.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[DEFAULT]
+	transport_url = rabbit://openstack:RABBIT_PASS@controller
+	auth_strategy = keystone
+
+[keystone_authtoken]
+	auth_uri = http://controller:5000
+	auth_url = http://controller:35357
+	memcached_servers = controller:11211
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	project_name = service
+	username = neutron
+	password = NEUTRON_PASS
+
+[oslo_concurrency]
+	lock_path = /var/lib/neutron/tmp
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure linux bridge agent
+sudo cp /etc/neutron/plugins/ml2/linuxbridge_agent.ini /etc/neutron/plugins/ml2/linuxbridge_agent.ini.org
+sudo vim /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+# remove comment lines in vim
+# :g/^#.*/d
+# :g/^$/d
+
+[linux_bridge]
+	physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
+
+[vxlan]
+	enable_vxlan = True
+	local_ip = OVERLAY_INTERFACE_IP_ADDRESS
+	l2_population = True
+
+[securitygroup]
+	enable_security_group = True
+	firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# configure compute to use networking service
+sudo vim /etc/nova/nova.conf
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+[neutron]
+	url = http://controller:9696
+	auth_url = http://controller:35357
+	auth_type = password
+	project_domain_name = Default
+	user_domain_name = Default
+	region_name = RegionOne
+	project_name = service
+	username = neutron
+	password = NEUTRON_PASS
+<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# enable and start services
+sudo systemctl restart openstack-nova-compute.service neutron-linuxbridge-agent.service
+sudo systemctl enable openstack-nova-compute.service neutron-linuxbridge-agent.service
+sudo systemctl status openstack-nova-compute.service neutron-linuxbridge-agent.service
+
+!!!!!! verify operations on admin node
+# load credentials on admin node
+source ~/credentials/admin.sh
+
+# verify existence of neutron
+neutron ext-list
+
+# verify existence of L3 services
+openstack network agent list
+
+### END INSTALL Neutron (Compute Node Part)
+###########################
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!! LAUNCH INSTANCE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# load admin credentials
+source ~/credentials/admin.sh
+
+# create provider network
+openstack network create  --share --external \
+  --provider-physical-network provider \
+  --provider-network-type flat provider
+
+# create subnet on network
+### Example:
+### openstack subnet create --network provider \
+###	--allocation-pool start=192.167.200.2,end=192.167.200.254 \
+###	--dns-nameserver 4.2.2.4 \
+### 	--gateway 192.167.200.1 --subnet-range 192.167.200.0/24 provider
+###
+openstack subnet create --network provider \
+  --allocation-pool start=START_IP_ADDRESS,end=END_IP_ADDRESS \
+  --dns-nameserver DNS_RESOLVER --gateway PROVIDER_NETWORK_GATEWAY \
+  --subnet-range PROVIDER_NETWORK_CIDR provider
+
+# create self-service network
+openstack network create selfservice
+
+# create a new subnet on network
+### Example:
+### openstack subnet create --network selfservice \
+###	--dns-nameserver 4.2.2.4 --gateway 192.167.201.1 \
+###	--subnet-range 192.167.201.0/24 selfservice
+###
+openstack subnet create --network selfservice \
+  --dns-nameserver DNS_RESOLVER --gateway SELFSERVICE_NETWORK_GATEWAY \
+  --subnet-range SELFSERVICE_NETWORK_CIDR selfservice
+
+# create a router
+openstack router create router
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!! END LAUNCH INSTANCE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 ###########################

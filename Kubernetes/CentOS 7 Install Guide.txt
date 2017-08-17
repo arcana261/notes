@@ -1,0 +1,38 @@
+## GUIDE: https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
+##
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!! VM: Kubernetes Base
+!! Clone: CentOS 7 Hardened with Ceph and OVS pre-installed
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+################################
+## Install Docker
+##
+##
+
+# install privoxy
+sudo yum install privoxy
+
+# configure privoxy
+sudo vim /etc/privoxy/config
+>>>>>>>>>>>>>>>
+listen-address		127.0.0.1:8118
+forward-socks5	/	127.0.0.1:8084	.
+<<<<<<<<<<<<<<<
+
+# install required packages
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+
+# enable stable repository
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+
+##
+## END INSTALL DOCKER
+#################################
+
