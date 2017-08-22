@@ -1,0 +1,102 @@
+Clone: clustervm
+Name: bare-ssh.arcana.me
+Options: Start at boot : Yes
+
+====================================================================
+KVM
+====================================================================
+
+###### assign static ip address
+virsh net-update default add ip-dhcp-host \
+          "<host mac='76:B5:F7:CB:03:E5' name='bare-ssh.arcana.me' ip='192.168.122.6' />" \
+          --live --config
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname bare-ssh.arcana.me
+sudo reboot
+
+# enable eth0 to gain access to internet
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
+..............
+BOOTPROTO="none"
+ONBOOT="yes"
+IPADDR="192.168.122.6"
+PREFIX="24"
+..............
+
+# reboot
+sudo reboot
+
+# verify network config
+ifconfig -a
+ip route show
+cat /etc/resolv.conf
+
+# create ssh config
+vim ~/.ssh/config
+..............
+Host proxmox1
+	Hostname proxmox1
+	User root
+	Port 22
+
+Host proxmox2
+	Hostname proxmox1
+	User root
+	Port 22
+
+Host proxmox3
+	Hostname proxmox1
+	User root
+	Port 22
+
+Host *.arcana.me
+	User arcana
+	Port 2122
+..............
+chmod 600 ~/.ssh/config
+
+# copy ssh keys to machines
+ssh-copy-id promox1
+ssh-copy-id promox2
+ssh-copy-id promox3
+ssh-copy-id bare-dhcp.arcana.me
+ssh-copy-id bare-router.arcana.me
+
+====================================================================
+KVM
+====================================================================
+
+# create ssh config to access ssh box
+vim ~/.ssh/config
+.....................
+Host bare-ssh.arcana.me
+        Hostname 192.168.122.6
+        User arcana
+        Port 2122
+.....................
+
+# copy ssh id
+ssh-copy-id bare-ssh.arcana.me
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

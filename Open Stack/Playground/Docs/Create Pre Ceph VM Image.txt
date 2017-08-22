@@ -1,0 +1,15 @@
+Clone: clustervm
+Name: precephvm
+
+====================================================================
+
+# create a user for ceph installation
+sudo useradd -d /home/ceph_u -m ceph_u
+sudo passwd ceph_u
+
+# make ceph installtion user
+# sudo without password
+echo "ceph_u ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ceph_u
+sudo chmod 0440 /etc/sudoers.d/ceph_u
+
+

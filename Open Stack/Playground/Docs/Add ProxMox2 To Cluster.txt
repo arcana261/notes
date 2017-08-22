@@ -1,0 +1,22 @@
+!!! PERFORM FROM ProxMox1 !!!
+
+# ssh into proxmox2
+ssh root@proxmox2
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	# edit hosts file
+	vim /etc/hosts
+	>>>>>>>>>>>>>>>
+	10.0.2.1	proxmox1.arcana.me proxmox1 
+	10.0.2.2	proxmox2.arcana.me proxmox2 pvelocalhost
+	10.0.2.3	proxmox3.arcana.me proxmox3
+	<<<<<<<<<<<<<<<
+
+	# add to cluster
+	pvecm add proxmox1
+
+	# reboot
+	reboot
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+

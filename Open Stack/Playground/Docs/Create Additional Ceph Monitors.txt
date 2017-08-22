@@ -1,0 +1,122 @@
+Clone: cephmonvm
+Name: cephmon2.arcana.me
+Options: Start at boot : Yes
+Location: ProxMox2
+
+
+Clone: cephmonvm
+Name: cephmon3.arcana.me
+Options: Start at boot : Yes
+Location: ProxMox3
+
+====================================================================
+bare-dhcp.arcana.me
+====================================================================
+
+# assign static ip address to cephmon1
+sudo vim /etc/dnsmasq.hosts.arcana.me.conf
+........................
+2A:06:E0:9C:E7:86,10.0.2.55,cephmon2.arcana.me,infinite
+E6:22:77:26:82:11,10.0.2.56,cephmon3.arcana.me,infinite
+........................
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq.service
+
+====================================================================
+cephmon2.arcana.me
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname cephmon2.arcana.me
+sudo reboot
+
+====================================================================
+cephmon3.arcana.me
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname cephmon3.arcana.me
+sudo reboot
+
+
+====================================================================
+cephadm.arcana.me
+====================================================================
+
+# switch to user ceph installation user
+su - ceph_u
+..........................
+	cd my-cluster
+
+	# add cephmon2,3 to ssh config
+	vim ~/.ssh/config
+	>>>>>>>>>>>>>>>>>>>>>>
+	Host cephmon2
+		Hostname cephmon2.arcana.me
+		User ceph_u
+		Port 2122
+
+	Host cephmon3
+		Hostname cephmon3.arcana.me
+		User ceph_u
+		Port 2122
+	<<<<<<<<<<<<<<<<<<<<<<
+
+	# edit ceph configuration
+	vim ceph.conf
+	>>>>>>>>>>>>>>>>>>>>>>
+	## REMOVE mon_host DIRECTIVE
+
+	[global]
+	mon_initial_members = cephmon1, cephmon2, cephmon3
+
+	[mon.cephmon1]
+	mon host = cephmon1
+	mon addr = 10.0.2.54:6789
+
+	[mon.cephmon2]
+	mon host = cephmon2
+	mon addr = 10.0.2.55:6789
+
+	[mon.cephmon3]
+	mon host = cephmon3
+	mon addr = 10.0.2.56:6789
+	<<<<<<<<<<<<<<<<<<<<<<
+
+	# push new configuration to nodes
+	ceph-deploy --overwrite-conf config push bare-cephadm cephmon1
+
+	# restart previous monitor
+	ssh cephmon1 sudo systemctl restart ceph-mon.target
+
+	# add monitor 2
+	ceph-deploy mon add cephmon2
+
+	# add monitor 3
+	ceph-deploy mon add cephmon3
+
+	# check if monitors are running
+	ceph -s
+..........................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -70,6 +70,10 @@ virsh net-edit default
 virsh net-destroy default
 virsh net-start default
 
+# stop kvm temporarily
+sudo lsmod | grep kvm
+sudo rmmod kvm_intel
+sudo rmmod kvm
 
 http://people.redhat.com/~vrozenfe/qxlwddm/
 https://fedoraproject.org/wiki/Windows_Virtio_Drivers

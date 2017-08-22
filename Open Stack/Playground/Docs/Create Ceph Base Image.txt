@@ -1,0 +1,40 @@
+Clone: precephvm
+Name: cephvm.arcana.me
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname cephvm.arcana.me
+sudo reboot
+
+====================================================================
+cephadm.arcana.me
+====================================================================
+
+# switch to user ceph installation user
+su - ceph_u
+..........................
+	cd my-cluster
+
+	# add cephmon1 to ssh config
+	vim ~/.ssh/config
+	>>>>>>>>>>>>>>>>>>>>>>
+	Host cephvm
+		Hostname cephvm.arcana.me
+		User ceph_u
+		Port 2122
+	<<<<<<<<<<<<<<<<<<<<<<
+	
+	# copy ssh id
+	ssh-copy-id cephvm
+
+	# install ceph packages
+	ceph-deploy install cephvm
+..........................
+
+
+
+
+
+
+

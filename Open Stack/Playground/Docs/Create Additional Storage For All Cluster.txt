@@ -1,0 +1,3 @@
+Data Center -> Storage ->
+				extra1 -> Nodes -> proxmox1, proxmox2, proxmox3
+				iso -> Nodes -> proxmox1, proxmox2, proxmox3

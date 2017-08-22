@@ -1,0 +1,95 @@
+====================================================================
+ProxMox1
+====================================================================
+
+# install sudo
+apt-get install sudo
+
+# create a user for ceph installation
+useradd -d /home/ceph_u -m ceph_u
+passwd ceph_u
+
+# make it password-less sudo
+echo "ceph_u ALL = (root) NOPASSWD:ALL" | tee /etc/sudoers.d/ceph_u
+chmod 0440 /etc/sudoers.d/ceph_u
+
+
+====================================================================
+cephadm.arcana.me
+====================================================================
+
+# switch to user ceph installation user
+su - ceph_u
+..........................
+	cd my-cluster
+
+	# add proxmox1,2,3 to ssh config
+	vim ~/.ssh/config
+	>>>>>>>>>>>>>>>>>>>>>>
+	Host proxmox1
+		Hostname proxmox1.arcana.me
+		User ceph_u
+		Port 22
+
+	Host proxmox2
+		Hostname proxmox2.arcana.me
+		User ceph_u
+		Port 22
+
+	Host proxmox3
+		Hostname proxmox3.arcana.me
+		User ceph_u
+		Port 22
+	<<<<<<<<<<<<<<<<<<<<<<
+
+	# copy ssh keys
+	ssh-copy-id proxmox1
+	ssh-copy-id proxmox2
+	ssh-copy-id proxmox3
+
+	# copy configuration files to proxmox1
+	scp ceph.conf proxmox1:~
+	ssh proxmox1 sudo mv ~/ceph.conf /etc/ceph/
+	scp ceph.client.admin.keyring proxmox1:~
+	ssh proxmox1 sudo mv ~/ceph.client.admin.keyring /etc/ceph/
+	ssh proxmox1 sudo mkdir -p /etc/pve/priv/ceph/
+	ssh proxmox1 sudo cp /etc/ceph/ceph.client.admin.keyring /etc/pve/priv/ceph/rbd.keyring
+
+	# copy configuration files to proxmox2
+	scp ceph.conf proxmox2:~
+	ssh proxmox2 sudo mv ~/ceph.conf /etc/ceph/
+	scp ceph.client.admin.keyring proxmox2:~
+	ssh proxmox2 sudo mv ~/ceph.client.admin.keyring /etc/ceph/
+	ssh proxmox2 sudo mkdir -p /etc/pve/priv/ceph/
+	ssh proxmox2 sudo cp /etc/ceph/ceph.client.admin.keyring /etc/pve/priv/ceph/rbd.keyring
+
+	# copy configuration files to proxmox3
+	scp ceph.conf proxmox3:~
+	ssh proxmox3 sudo mv ~/ceph.conf /etc/ceph/
+	scp ceph.client.admin.keyring proxmox3:~
+	ssh proxmox3 sudo mv ~/ceph.client.admin.keyring /etc/ceph/
+	ssh proxmox3 sudo mkdir -p /etc/pve/priv/ceph/
+	ssh proxmox3 sudo cp /etc/ceph/ceph.client.admin.keyring /etc/pve/priv/ceph/rbd.keyring
+..........................
+
+# add new storage
+Datacenter -> Storage -> Add -> RBD -> 
+					ID: rbd
+					Pool: rbd
+					Monirors(s): "10.0.2.54 10.0.2.55 10.0.2.56"
+					Username: admin
+					Nodes: proxmox1, proxmox2, proxmox3
+					Content: Disk Image, Container
+					KRBD: false
+
+
+
+
+
+
+
+
+
+
+
+

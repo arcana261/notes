@@ -1,0 +1,74 @@
+## enable KVM nested virtualization
+## https://wiki.archlinux.org/index.php/KVM#Nested_virtualization
+
+	# install required tools
+	sudo apt-get update
+	sudo apt-get install sysfsutils
+
+	# create a configuration file for kvm
+	sudo nano /etc/modprobe.d/kvm_intel.conf
+	>>>>>>>>>>>>
+	options kvm_intel nested=1
+	<<<<<<<<<<<<
+
+	# reboot
+	sudo reboot
+
+	# verify it is enabled
+	systool -m kvm_intel -v | grep nested
+
+## create two Isolated networks
+
+	* cluster1 -> No IPv4 Configuration -> Isolated Network
+	* cluster2 -> No IPv4 Configuration -> Isolated Network
+
+## enable promisc mode
+	sudo ifconfig virbr0 promisc
+	sudo ifconfig virbr1 promisc
+	sudo ifconfig virbr2 promisc
+
+## create a samba share for iso's
+	# install samba server
+	sudo apt-get update
+	sudo apt-get install samba samba-common python-glade2 
+	sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+
+	# create shared folder configuration
+	sudo vim /etc/samba/smb.conf
+	.....
+	[general]
+	       map to guest = bad user
+
+	[Iso]
+	       comment = Iso
+	       path = /home/arcana/Iso_Library
+	       browsable = yes
+	       writable = yes
+	       guest ok = yes
+	       read only = no
+	       force user = arcana
+	       force group = arcana
+	.....
+
+	# enable and restart samba service
+	sudo systemctl restart smbd nmbd
+	sudo systemctl enable smbd nmbd
+	sudo systemctl status smbd nmbd
+
+	# allow ports through firewall
+	sudo ufw reload
+	sudo ufw allow 139/tcp
+	sudo ufw allow 445/tcp
+	sudo ufw reload
+
+
+## reboot host
+	sudo reboot
+
+
+
+
+
+
+
+

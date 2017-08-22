@@ -1,0 +1,103 @@
+Clone: precephvm
+Name: cephmon1.arcana.me
+Options: Start at boot : Yes
+Location: ProxMox1
+Memory: 1 GB
+
+====================================================================
+bare-dhcp.arcana.me
+====================================================================
+
+# assign static ip address to cephmon1
+sudo vim /etc/dnsmasq.hosts.arcana.me.conf
+........................
+D2:CB:03:8C:C9:46,10.0.2.54,cephmon1.arcana.me,infinite
+........................
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq.service
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname cephmon1.arcana.me
+sudo reboot
+
+====================================================================
+cephadm.arcana.me
+====================================================================
+
+# switch to user ceph installation user
+su - ceph_u
+..........................
+	cd my-cluster
+
+	# add cephmon1 to ssh config
+	vim ~/.ssh/config
+	>>>>>>>>>>>>>>>>>>>>>>
+	Host cephmon1
+		Hostname cephmon1.arcana.me
+		User ceph_u
+		Port 2122
+
+	Host bare-cephadm
+		Hostname bare-cephadm.arcana.me
+		User ceph_u
+		Port 2122
+	<<<<<<<<<<<<<<<<<<<<<<
+	
+	# copy ssh id
+	ssh-copy-id cephmon1 bare-cephadm
+
+	# create a new cluster
+	ceph-deploy new cephmon1
+
+	# configure ceph.conf
+	>>>>>>>>>>>>>>>>>>>>>>
+	[global]
+
+	osd_pool_default_size = 2
+	osd_pool_default_min_size = 1
+	rbd_default_features = 3
+	osd_pool_default_pg_num = 256
+	osd_pool_default_pgp_num = 256
+	public_network = 10.0.2.0/24
+	<<<<<<<<<<<<<<<<<<<<<<
+
+	# install ceph packages
+	ceph-deploy install cephmon1 bare-cephadm
+
+	# create initial monitor
+	ceph-deploy mon create-initial
+
+	# make the admin node
+	ceph-deploy admin bare-cephadm
+	sudo chmod 644 /etc/ceph/ceph.client.admin.keyring
+..........................
+
+====================================================================
+cephmon1.arcana.me
+====================================================================
+
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=ceph-mon
+sudo firewall-cmd --reload
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

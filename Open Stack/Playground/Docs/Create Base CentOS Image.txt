@@ -1,0 +1,123 @@
+## CPU: 1
+## RAM: 512 MB
+## HDD: 8 GB
+
+# upgrade system
+sudo yum update
+
+# reboot
+sudo reboot
+
+# install epel repositories
+sudo yum install epel-release
+
+# install some packages
+sudo yum install psmisc nano vim \
+	policycoreutils-python net-tools wget \
+	curl screen htop bridge-utils iperf \
+	perl mlocate deltarpm \
+	ntpdate setroubleshoot-server setools-console \
+	bind-utils tcpdump python-pip \
+	yum-plugin-priorities w3m \
+	bash-completion strace dnsmasq \
+	git unar zip unzip gcc make python-devel \
+	openssl-devel kernel-devel graphviz \
+	kernel-debug-devel autoconf automake rpm-build \
+	redhat-rpm-config libtool checkpolicy \
+	selinux-policy-devel \
+	NetworkManager-tui \
+	sysbench chrony
+
+# update pip
+sudo pip install --upgrade pip
+
+# install nux repo
+sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+
+# install unrar tool
+sudo yum install unrar
+
+# reboot
+sudo reboot
+
+# update system date/time
+sudo ntpdate 0.pool.ntp.org  1.pool.ntp.org
+
+# verify system date/time
+date
+
+# allow icmp (ping)
+sudo nano -w /etc/sysctl.conf
+>>>>>>>>>>>>>>>>>>>>>>
+# allow ping
+net.ipv4.icmp_echo_ignore_all = 0
+<<<<<<<<<<<<<<<<<<<<<<
+
+# reload sysctl
+sudo sysctl -p
+
+# update mlocate
+sudo updatedb
+
+# set default editor to vim
+sudo nano -w /etc/environment
+.............
+EDITOR=/bin/vim
+.............
+
+# reboot system
+sudo reboot
+
+# configure firewall
+sudo systemctl enable firewalld
+sudo systemctl restart firewalld
+sudo systemctl status firewalld
+
+# view firewall status
+sudo firewall-cmd --list-all
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+UseDNS no
+GSSAPIAuthentication no
+...
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=22/tcp
+sudo firewall-cmd --reload
+
+# enable and restart sshd
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+sudo systemctl status sshd
+
+# generate SSH keys
+ssh-keygen -t rsa
+
+# generate SSH keys for root
+su -
+..................
+ssh-keygen -t rsa
+exit
+..................
+
+# add additional records to hosts
+sudo nano -w /etc/hosts
+..................
+10.0.2.1 proxmox1 proxmox1.arcana.me
+10.0.2.2 proxmox2 proxmox2.arcana.me
+10.0.2.3 proxmox3 proxmox3.arcana.me
+..................
+
+
+
+
+
+
+
+
+
+
+
+
+

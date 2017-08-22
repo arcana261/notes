@@ -1,0 +1,81 @@
+Clone: centos7-hardened-ovs
+Name: dhcp.arcana.me
+Options: Start at boot : Yes
+DataCenter -> HA -> Resources -> Add (max_restart=10, max_relocate=10, state=started)
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname dhcp.arcana.me
+sudo reboot
+
+# assign static IP address to eth1
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+....................
+BOOTPROTO="none"
+ONBOOT="yes"
+IPADDR="10.0.2.50"
+PREFIX="24"
+GATEWAY="10.0.2.52"
+DNS1="4.2.2.4"
+DNS2="8.8.8.8"
+....................
+
+# disable NAT eth0
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
+....................
+ONBOOT="no"
+....................
+
+# reboot
+sudo reboot
+
+# verify IP addresses
+ifconfig -a'
+ip route show
+cat /etc/resolv.conf
+
+# set ip address in hosts
+# this enables self DNS lookups
+sudo nano -w /etc/hosts
+....................
+10.0.2.51        dhcp.arcana.me
+....................
+
+# copy configuration from bare dhcp server
+sudo scp -P 2122 arcana@10.0.2.51:/etc/dnsmasq.d/arcana.me.conf /etc/dnsmasq.d/
+sudo scp -P 2122 arcana@10.0.2.51:/etc/dnsmasq.opts.arcana.me.conf /etc/
+sudo scp -P 2122 arcana@10.0.2.51:/etc/dnsmasq.hosts.arcana.me.conf /etc/
+sudo scp -P 2122 arcana@10.0.2.51:/var/lib/dnsmasq/dnsmasq.leases /var/lib/dnsmasq/
+
+### enable port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=53/tcp
+sudo firewall-cmd --permanent --add-port=53/udp
+sudo firewall-cmd --permanent --add-port=67/udp
+sudo firewall-cmd --permanent --add-port=68/udp
+sudo firewall-cmd --reload
+
+====================================================================
+** SHUTDOWN AND REMOVE bare-dhcp.arcana.me
+====================================================================
+
+# revert back IP address
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+....................
+IPADDR="10.0.2.51"
+....................
+
+# reboot
+sudo reboot
+
+### enable and start dnsmasq service
+
+sudo systemctl enable dnsmasq
+sudo systemctl restart dnsmasq
+sudo systemctl status dnsmasq
+
+
+
+
+

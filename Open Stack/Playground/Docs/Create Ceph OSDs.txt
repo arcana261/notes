@@ -1,0 +1,114 @@
+Clone: cephosdvm
+Name: cephosd1.arcana.me
+Options: Start at boot : Yes
+Location: ProxMox1
+
+Clone: cephosdvm
+Name: cephosd2.arcana.me
+Options: Start at boot : Yes
+Location: ProxMox2
+
+Clone: cephosdvm
+Name: cephosd3.arcana.me
+Options: Start at boot : Yes
+Location: ProxMox3
+
+====================================================================
+cephosd1.arcana.me
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname cephosd1.arcana.me
+sudo reboot
+
+====================================================================
+cephosd2.arcana.me
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname cephosd2.arcana.me
+sudo reboot
+
+
+====================================================================
+cephosd3.arcana.me
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname cephosd3.arcana.me
+sudo reboot
+
+====================================================================
+cephadm.arcana.me
+====================================================================
+
+# switch to user ceph installation user
+su - ceph_u
+..........................
+	cd my-cluster
+
+	# add cephosd1,2,3 to ssh config
+	vim ~/.ssh/config
+	>>>>>>>>>>>>>>>>>>>>>>
+	Host cephosd1
+		Hostname cephosd1.arcana.me
+		User ceph_u
+		Port 2122
+
+	Host cephosd2
+		Hostname cephosd2.arcana.me
+		User ceph_u
+		Port 2122
+
+	Host cephosd3
+		Hostname cephosd3.arcana.me
+		User ceph_u
+		Port 2122
+	<<<<<<<<<<<<<<<<<<<<<<
+
+	# list osd disks
+	ceph-deploy disk list cephosd1
+	ceph-deploy disk list cephosd2
+	ceph-deploy disk list cephosd3
+
+	# add first OSD
+	ceph-deploy osd prepare cephosd1:/dev/vdb:/dev/vdc
+	ceph-deploy osd activate cephosd1:/dev/vdb1
+	ceph -s
+
+	# add second OSD
+	ceph-deploy osd prepare cephosd2:/dev/vdb:/dev/vdc
+	ceph-deploy osd activate cephosd2:/dev/vdb1
+	ceph -s
+
+	# add third OSD
+	ceph-deploy osd prepare cephosd3:/dev/vdb:/dev/vdc
+	ceph-deploy osd activate cephosd3:/dev/vdb1
+	ceph -s
+
+..........................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

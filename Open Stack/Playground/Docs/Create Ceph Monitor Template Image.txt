@@ -1,0 +1,12 @@
+Clone: cephvm.arcana.me
+Name: cephmonvm
+Memory: 1 GB
+
+====================================================================
+
+# enable port throgh firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=ceph-mon
+sudo firewall-cmd --reload
+
+

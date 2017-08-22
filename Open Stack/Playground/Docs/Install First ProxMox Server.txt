@@ -1,0 +1,100 @@
+## Create first instance of ProxMox
+
+	Template: Debian Jessie
+	CPU: 1 processor, 1 core
+		[*] Copy Host CPU Configuration
+	RAM: 6144 MB
+	HDD: 40 GB (virtio) [name=proxmox1]
+	HDD: 40 GB (virtio) [name=proxmox1-data]
+	Network (all virtio):
+		default (nat)
+		vmnet1 (isolated)
+		vmnet2 (isolated)
+
+
+## assign static ip address
+virsh net-update default add ip-dhcp-host \
+          "<host mac='52:54:00:78:78:de' name='proxmox1.arcana.me' ip='192.168.122.3' />" \
+          --live --config
+
+
+## Install first instance of ProxMox
+
+	Target Harddisk: 40GB vda, xfs filesystem
+	Management Interface: ens3 (default)
+	Hostname: proxmox1.arcana.me
+	IP Address: 192.168.122.3
+	Gateway: 192.168.122.1
+	DNS Server: 192.168.122.1
+
+## Configure Networking after installing instance
+
+: Create a Linux Bond
+	Name: bond0
+	IP address: -
+	Subnet: -
+	Gateway: -
+	Slaves: ens10(cluster1) ens11(cluster2)
+	Mode: balance-xor
+
+: Create a Linux Bridge
+	Name: vmbr2
+	IP address: 10.0.2.1
+	Subnet: 255.255.255.0
+	Gateway: -
+	Bridge ports: bond0
+
+: reboot
+
+: install additional package
+	apt-get update
+	apt-get install vim nano net-tools
+
+: enable iso repo over smb
+	mkdir -p /srv/iso/{private,root,dump,images,template}
+	mkdir -p /srv/iso/template/{cache,iso,qemu}
+	vim /etc/fstab
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//192.168.122.1/iso  /srv/iso/template/iso  cifs  username=root,password=123,iocharset=utf8,sec=ntlm  0  0
+	<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+	reboot
+
+	-------
+
+	Datacenter -> Storage -> Add -> Directory ->
+							ID -> iso
+							Directory -> /srv/iso
+							Content -> ISO Image
+							Nodes -> proxmox1
+
+: enable thin pool on secondary HDD
+	# find secondary HDD
+	lsblk
+
+	# create a PV (physical volume)
+	pvcreate /dev/vdb
+
+	# create a VG (volume group)
+	vgcreate extra1 /dev/vdb
+
+	# create a thin pool
+	lvcreate -l 100%FREE -T extra1/data
+
+: create a new LVM-Thin storage
+	Datacenter -> Storage -> Add -> LVM-Thin ->
+							ID -> extra1
+							Volume group -> extra1
+							Thin Pool -> data
+							Content -> Disk Image, Container
+							Nodes -> proxmox1
+
+
+
+
+
+
+
+
+
+

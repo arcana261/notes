@@ -1,0 +1,31 @@
+Clone: precephvm
+Name: bare-cephadm.arcana.me
+Options: Start at boot : Yes
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname bare-cephadm.arcana.me
+sudo reboot
+
+# install ceph-deploy
+sudo pip install ceph-deploy
+
+# switch to user ceph installation user
+su - ceph_u
+..........................
+	# create cluster directory
+	mkdir my-cluster
+	cd my-cluster
+
+	# create new ssh keys
+	ssh-keygen
+
+	# create ssh config
+	touch ~/.ssh/config
+	chmod 600 ~/.ssh/config
+..........................
+
+
+
+

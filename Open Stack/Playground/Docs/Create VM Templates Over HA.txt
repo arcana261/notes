@@ -1,0 +1,20 @@
+01. Create Base CentOS Image.txt
+	* Name: ha-centos7-base
+	* Choose RBD for storage
+	* POST INSTALLATION:
+	* Remove ISO image
+	* Remove "centos7-base" VM
+
+02. Create Hardened CentOS Image.txt
+	* Name: ha-centos7-hardened
+	* POST INSTALLATION:
+	* Remove "centos7-hardened" VM
+
+03. Create Hardened CentOS with OVS Image.txt
+	* Name: ha-centos7-hardened-ovs
+	* POST INSTALLATION:
+	* Remove "centos7-hardened-ovs" VM
+
+
+
+
