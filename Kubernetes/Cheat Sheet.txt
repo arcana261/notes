@@ -1,0 +1,2 @@
+# open a busybox shell
+kubectl run -i --tty busybox --image=busybox --rm --generator="run-pod/v1"

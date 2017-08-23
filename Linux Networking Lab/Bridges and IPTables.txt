@@ -1,0 +1,19 @@
+
+    bridge-nf-call-arptables - pass bridged ARP traffic to arptables' FORWARD chain.
+    bridge-nf-call-iptables - pass bridged IPv4 traffic to iptables' chains.
+    bridge-nf-call-ip6tables - pass bridged IPv6 traffic to ip6tables' chains.
+    bridge-nf-filter-vlan-tagged - pass bridged vlan-tagged ARP/IP traffic to arptables/iptables.
+    net.bridge.bridge-nf-filter-pppoe-tagged - pass bridged pppoe-tagged IP/IPv6 traffic to {ip,ip6}tables
+
+
+
+ Since Linux 3.18, the functionality where iptables handles packets from the bridge can be disabled by not loading the br_netfilter module. Not having the module loaded also means that there is no /proc/sys/net/bridge/ entry. – Lekensteyn Aug 20 '16 at 15:10 
+
+
+
+# sysctl -w net.bridge.bridge-nf-call-iptables=0
+# sysctl -w net.bridge.bridge-nf-call-ip6tables=0
+
+
+
+

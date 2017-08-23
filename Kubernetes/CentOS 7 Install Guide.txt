@@ -1,5 +1,17 @@
 ## GUIDE: https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
+##        https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/
 ##
+
+## NOTE: hostname, MAC address and product_uuid
+## should be unique among nodes
+##
+## cat sudo cat /sys/class/dmi/id/product_uuid
+##
+
+
+SYSTEM REQUIREMENTS:
+	Controller: 2GB RAM
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!
@@ -9,9 +21,67 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ################################
+## Ensure working /etc/hosts
+## OR USE DNS
+##
+
+sudo vim /etc/hosts
+...............
+192.168.21.56 kubemaster
+192.168.21.57 kubeworker1
+192.168.21.58 kubeworker2
+...............
+
+##
+## END ENSURE WORKING /etc/hosts
+#################################
+
+################################
+## Create admin User
+##
+
+# create admin user for kube and login via that account
+sudo useradd -d /home/kube -m kube
+sudo passwd kube
+sudo gpasswd -a kube wheel
+
+##
+## END CREATE ADMIN USER
+#################################
+
+################################
 ## Install Docker
 ##
 ##
+
+# install required packages
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+
+# create a new ssh key
+ssh-keygen -t rsa
+
+# create a ssh config to quickly access socks5 proxy
+touch ~/.ssh/config
+chmod 600 ~/.ssh/config
+vim ~/.ssh/config
+..................
+Host vpn
+	Hostname 178.162.207.98
+	Port 22
+	User root
+	DynamicForward 8084
+..................
+
+# copy ssh id
+ssh-copy-id vpn
+
+# open screen to open a new ssh proxy connection
+screen
+.................
+ssh vpn
+
+>>> Press Ctrl + D TO DETACH <<<
+.................
 
 # install privoxy
 sudo yum install privoxy
@@ -19,20 +89,565 @@ sudo yum install privoxy
 # configure privoxy
 sudo vim /etc/privoxy/config
 >>>>>>>>>>>>>>>
-listen-address		127.0.0.1:8118
+# search below, duplicate
+# listen-address will cause
+# privoxy to fail
+listen-address		0.0.0.0:8118
+
+
 forward-socks5	/	127.0.0.1:8084	.
+forward         192.168.*.*/     .
+forward         192.168.*.*:*/     .
+forward            10.*.*.*/     .
+forward            10.*.*.*:*/     .
+forward           127.*.*.*/     .
+forward           127.*.*.*:*/     .
 <<<<<<<<<<<<<<<
 
-# install required packages
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+# enable and start privoxy
+sudo systemctl enable privoxy
+sudo systemctl restart privoxy
+sudo systemctl status privoxy
+
+# open port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=8118/tcp
+sudo firewall-cmd --reload
+
+# tell sudo to keep proxy config
+sudo visudo
+.................
+Defaults    env_keep += "http_proxy HTTP_PROXY https_proxy HTTPS_PROXY"
+.................
+
+# create a source script to set environments
+vim ~/proxy.source
+.................
+export http_proxy="http://192.168.21.56:8118/"
+export HTTP_PROXY=$http_proxy
+export https_proxy=$http_proxy
+export HTTPS_PROXY=$http_proxy
+.................
+
+# load proxy environment
+source ~/proxy.source
 
 # enable stable repository
 sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 
+# update yum package index
+sudo yum makecache fast
+
+# install docker
+sudo yum install docker-ce
+
+# create config for docker http proxy
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf 
+.................
+[Service]
+Environment="HTTP_PROXY=http://192.168.21.56:8118/"
+.................
+
+# reload systemd
+sudo systemctl daemon-reload
+
+# enable and start docker service
+sudo systemctl enable docker.service
+sudo systemctl restart docker.service
+sudo systemctl status docker.service
+
+# ensure that docker is up and running
+sudo docker run hello-world
+
+# create a source script to un-set environments
+vim ~/no-proxy.source
+.................
+unset http_proxy
+unset HTTP_PROXY
+unset https_proxy
+unset HTTPS_PROXY
+.................
+
+# load no proxy environment
+source ~/no-proxy.source
+
+# add our regular user to docker group
+sudo gpasswd -a kube docker
+
+# reboot
+sudo reboot
 
 ##
 ## END INSTALL DOCKER
 #################################
+
+
+################################
+## Install Kubectl
+## (Required only by master node??)
+##
+
+# load proxy environment
+source ~/proxy.source
+
+# donwload latest version of kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+
+# make the binary executable
+chmod +x ./kubectl
+
+# move the binary to the path
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+# enable shell completion of kubectl
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+source <(kubectl completion bash)
+
+# load no proxy environment
+source ~/no-proxy.source
+
+##
+## END INSTALL KUBECTL
+#################################
+
+################################
+## Install kubelet and kubeadm
+##
+
+# disable SELinux
+# Disabling SELinux by running setenforce 0
+# is required to allow containers to access
+# the host filesystem, which is required
+# by pod networks for example. You have
+# to do this until SELinux support is improved
+# in the kubelet.
+sudo setenforce 0
+sudo vim /etc/sysconfig/selinux
+.................
+SELINUX=disabled
+.................
+
+# reboot
+sudo reboot
+
+# create a new repository
+sudo vim /etc/yum.repos.d/kubernetes.repo
+.................
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+.................
+
+# load proxy environment
+source ~/proxy.source
+
+# install kubelet and kubeadm
+sudo yum install -y kubelet kubeadm
+
+
+## FIX FOR BEING STUCK (see journalctl -u kubelet.service) for more info
+# change cgroup driver to cgroupfs
+sudo vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+.................
+Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs"
+.................
+sudo systemctl daemon-reload
+
+
+## FIX DNS PROBLEM WITH FLONNEL
+# change DNS address of kube-dns into flunnel's CIDR
+sudo vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+.................
+Environment="KUBELET_DNS_ARGS=--cluster-dns=10.244.0.10 --cluster-domain=cluster.local"
+.................
+sudo systemctl daemon-reload
+
+
+# enable and start services
+sudo systemctl enable kubelet
+sudo systemctl restart kubelet
+sudo systemctl status kubelet
+
+# load no proxy environment
+source ~/no-proxy.source
+
+##
+## END INSTALL kubelet and kubeadm
+#################################
+
+################################
+## Open VXLAN ports through firewall
+##
+
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=4789/udp
+sudo firewall-cmd --permanent --add-port=8472/tcp
+sudo firewall-cmd --permanent --add-port=8472/udp
+sudo firewall-cmd --reload
+
+##
+## END OPEN VXLAN PORTS
+#################################
+
+################################
+## Enable firewall masquerading and forwarding policy
+##
+
+sudo firewall-cmd --reload
+sudo firewall-cmd --zone=public --permanent --add-masquerade
+sudo firewall-cmd --reload
+
+sudo iptables -P FORWARD ACCEPT
+
+##
+## END ENABLE FIREWALL FORWARDING POLICY
+#################################
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!! VM: Kubernetes Master
+!! Clone: Kubernetes Base
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# post install
+# set hostname
+sudo hostname-ctl set-hostname kubemaster
+
+# reboot
+sudo reboot
+
+################################
+## Initialize Kubernetes Cluster
+##
+
+# open firewall ports
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=6443/tcp
+sudo firewall-cmd --permanent --add-port=2379/tcp
+sudo firewall-cmd --permanent --add-port=2380/tcp
+sudo firewall-cmd --permanent --add-port=10250/tcp
+sudo firewall-cmd --permanent --add-port=10251/tcp
+sudo firewall-cmd --permanent --add-port=10252/tcp
+sudo firewall-cmd --permanent --add-port=10255/tcp
+sudo firewall-cmd --reload
+
+# load proxy environment
+source ~/proxy.source
+
+# initialize cluster and record it's output
+sudo kubeadm init --apiserver-advertise-address=192.168.21.56 --pod-network-cidr=10.244.0.0/16 --service-cidr=10.244.0.0/16
+
+# wait until all containers are created and downloaded
+# kube-scheduler
+# kube-controller
+# kube-apiserver
+# etcd
+sudo docker ps
+
+## record output of kubeadm
+# Your Kubernetes master has initialized successfully!
+# 
+# To start using your cluster, you need to run (as a regular user):
+#
+#  mkdir -p $HOME/.kube
+#  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+#  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+#
+# You should now deploy a pod network to the cluster.
+# Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+#   http://kubernetes.io/docs/admin/addons/
+#
+# You can now join any number of machines by running the following on each node
+# as root:
+#
+#   kubeadm join --token 420cc9.d6dc009e99f0ec52 192.168.21.56:6443
+##
+
+# make our regular user admin of kube
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+###
+### HINT: CREATE A SNAPSHOT OF MASTER VM HERE!
+###
+
+# install flannel networking plugin
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel-rbac.yml
+
+# verify flannel is applied
+kubectl get serviceaccount --all-namespaces
+kubectl get configmap --all-namespaces 
+kubectl get daemonset --all-namespaces
+kubectl get clusterrole
+kubectl get clusterrolebinding
+
+## wait for docker-dns to be ready
+# by checking following command:
+# if it does not start and
+# systemctl status -l kubelet.service
+# keeps complaining about CNI
+# not being ready, check existence of
+# flannel images by running
+# "sudo docker images"
+# if images are not there,
+# load above .yml files and pull respective
+# images by hand:
+#
+# sudo docker pull quay.io/coreos/flannel:v0.8.0-amd64
+#
+kubectl get pods --all-namespaces
+
+###
+### HINT: CREATE A SNAPSHOT OF MASTER VM HERE!
+###
+
+## ! WARNING !
+## FOLLOWING COMMAND IS FOR TEST CLUSTERS ONLY
+## DO NOT EMPLOY IN PRODUCTION!
+# allow scheduler to schedule on the master node
+kubectl taint nodes --all node-role.kubernetes.io/master-
+##
+##
+##
+
+# load no proxy environment
+source ~/no-proxy.source
+
+##
+## END INSTALL Kubernetes cluster
+#################################
+
+################################
+## TEAR DOWN CLUSTER AND START AGAIN
+##
+
+kubectl drain <node name> --delete-local-data --force --ignore-daemonsets
+kubectl delete node <node name>
+kubeadm reset
+
+##
+## END TEAR DOWN CLUSTER
+#################################
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!! VM: Kubernetes Worker Base
+!! Clone: Kubernetes Base
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=10250/tcp
+sudo firewall-cmd --permanent --add-port=10255/tcp
+sudo firewall-cmd --permanent --add-port=30000-32767/tcp
+sudo firewall-cmd --reload
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!! VM: Kubernetes Worker
+!! Clone: Kubernetes Worker Base
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# post install
+# set hostname
+sudo hostname-ctl set-hostname kubeworker
+
+# reboot
+sudo reboot
+
+################################
+## Join a Cluster
+##
+
+# get join token from master node
+sudo kubeadm token list
+
+# join worker to master
+sudo kubeadm join --token 420cc9.d6dc009e99f0ec52 192.168.21.56:6443
+
+# watch until node becomes ready on MASTER!
+kubectl get nodes
+
+##
+## END JOIN CLUSTER
+#################################
+
+################################
+## Deploy Sample Application
+##
+
+# deploy sample application to kubernetes
+kubectl create namespace sock-shop
+kubectl apply -n sock-shop -f "https://github.com/microservices-demo/microservices-demo/blob/master/deploy/kubernetes/complete-demo.yaml?raw=true"
+
+# find the port in which sample application is hosted
+kubectl -n sock-shop get svc front-end
+
+# find status of container creation
+kubectl get pods -n sock-shop
+
+##
+## END DEPLOY SAMPLE CLUSTER
+#################################
+
+################################
+## Install Heapster and Grafana
+## for monitoring cluster
+##
+
+# ensure git is installed
+sudo yum install git
+
+# clone heapster repository to enable monitoring information
+# made available through influxdb
+cd /usr/local/src
+sudo git clone https://github.com/kubernetes/heapster.git
+cd heapster
+
+# list available versions
+git tag -l
+
+# switch to desired version
+sudo git checkout tags/v1.3.0 -b install
+
+# configure grafana, make it's service type
+# to "NodePort" so it can be externally
+# visible from outside.
+# uncomment line
+# 
+#   type: NodePort
+#
+sudo vim deploy/kube-config/influxdb/grafana-service.yaml 
+........................
+  type: NodePort
+........................
+sudo vim deploy/kube-config/influxdb/influxdb-service.yaml
+........................
+  type: NodePort
+........................
+
+# commit changes
+sudo git add .
+sudo git commit
+
+# install heapster
+kubectl create -f deploy/kube-config/influxdb/
+
+# enable rbac
+sudo git checkout .
+sudo git checkout master
+kubectl create -f deploy/kube-config/rbac/heapster-rbac.yaml
+
+# wait until following pods become online
+#
+# heapster
+# monitoring-grafana
+# monitoring-influxdb
+#
+kubectl get pods --namespace=kube-system
+
+# get the NodePort which influxdb currently resides in
+# monitoring-influxdb    10.244.240.55    <nodes>       8086:32614/TCP   1h
+kubectl get services --namespace=kube-system | grep influxdb
+
+# get the NodePort which grafana currently resides in
+# monitoring-grafana     10.244.166.82    <nodes>       80:32198/TCP    3m
+kubectl get services --namespace=kube-system | grep grafana
+
+# add required permission to heapster
+kubectl create clusterrolebinding add-on-cluster-admin \
+    --clusterrole=cluster-admin \
+    --serviceaccount=kube-system:default
+
+##>>
+##>> Open http://192.168.21.56:32198 in browser
+##>> Login using "admin"/"admin"
+##>> 
+
+##
+## END INSTALL HEAPSTER GRAFANA
+#################################
+
+################################
+## Install Kubernetes Dashboard
+##
+
+# check if dashboard is already installed
+kubectl get pods --all-namespaces | grep dashboard
+
+
+# load proxy environment
+source ~/proxy.source
+
+# install dashboard
+kubectl create -f https://git.io/kube-dashboard
+
+# wait until kubernetes-dashboard becomes online
+kubectl get pods --all-namespaces | grep dashboard
+
+kubectl edit service --namespace=kube-system kubernetes-dashboard
+
+  type: NodePort
+
+
+ClusterIP
+##
+## END INSTALL KUBERNETES DASHBOARD
+#################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
