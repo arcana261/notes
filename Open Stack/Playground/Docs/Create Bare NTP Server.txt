@@ -1,0 +1,81 @@
+Clone: clustervm
+Name: bare-ntp.arcana.me
+Options: Start at boot : Yes
+
+====================================================================
+bare-dhcp.arcana.me
+====================================================================
+
+# assign static ip address
+sudo vim /etc/dnsmasq.hosts.arcana.me.conf
+.................
+76:7F:F9:DC:83:70,set:ntp,10.0.2.53,bare-ntp.arcana.me,infinite
+.................
+sudo vim /etc/dnsmasq.opts.arcana.me.conf
+.................
+tag:cluster,option:ntp-server,10.0.2.53
+
+tag:router,option:ntp-server,10.0.2.53
+
+tag:ntp,option:router,10.0.2.52
+tag:ntp,option:ntp-server
+.................
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq.service
+sudo systemctl status dnsmasq.service
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname bare-ntp.arcana.me
+sudo reboot
+
+# hard assign ip address
+# to prevent mess caused by
+# dhcp-assigned ip address
+# interfering with chrony
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+.................
+BOOTPROTO=none
+IPADDR=10.0.2.53
+PREFIX=24
+GATEWAY=10.0.2.52
+DNS1=10.0.2.51
+.................
+
+# install chrony
+sudo yum install chrony
+
+# configure chrony
+sudo vim /etc/chrony.conf
+.................
+server 0.asia.pool.ntp.org iburst
+server 1.asia.pool.ntp.org iburst
+server 2.asia.pool.ntp.org iburst
+server 3.asia.pool.ntp.org iburst
+allow 10.0.2.0/24
+local stratum 10
+.................
+
+# disable modification of chrony by dhcp
+sudo mv /etc/dhcp/dhclient.d/chrony.sh /home/arcana
+sudo mv /usr/libexec/chrony-helper /usr/libexec/.chrony-helper
+sudo bash -c 'echo "#!/bin/bash" > /usr/libexec/chrony-helper'
+sudo chown root:root /usr/libexec/chrony-helper
+sudo chmod 755 /usr/libexec/chrony-helper
+
+# enable and restart services
+sudo systemctl enable chronyd.service
+sudo systemctl start chronyd.service
+sudo systemctl status chronyd.service
+
+# verify chrony sources
+sudo chronyc sources
+
+# add port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=ntp
+sudo firewall-cmd --reload
+
+

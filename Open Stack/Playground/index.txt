@@ -1,0 +1,48 @@
+sudo ifconfig virbr0 promisc
+sudo ifconfig virbr1 promisc
+sudo ifconfig virbr2 promisc
+
+
+fixup:
+	* give proxmox primary hdd 50 GB of space
+	* proxmox1, proxmox2, proxmox3 should only appear in /etc/hosts
+	  of dhcp server
+
+
+001. Prepare Environment.txt
+002. Install First ProxMox Server.txt
+003. Install Second ProxMox Server.txt
+004. Install Third ProxMox Server.txt
+005. Initialize ProxMox Cluster on ProxMox1
+006. Add ProxMox2 To Cluster.txt
+007. Add ProxMox3 To Cluster.txt
+008. Create Additional Storage For All Cluster.txt
+009. Create Base CentOS Image.txt
+010. Create Hardened CentOS Image.txt
+011. Create Hardened CentOS with OVS Image.txt
+012. Create Bare DHCP Server.txt
+013. Create Cluster VM Image.txt
+014. Create Bare Router Box.txt
+015. Create Bare SSH Box.txt
+016. Create Bare NTP Server.txt
+017. Create Pre Ceph VM Image.txt
+018. Create Bare Ceph Admin Node.txt
+019. Create Ceph Monitor 1 VM.txt
+020. Create Ceph Base Image.txt
+021. Create Ceph Monitor Template Image.txt
+022. Create Additional Ceph Monitors.txt
+023. Create Base Ceph OSD VM Image.txt
+024. Create Ceph OSDs.txt
+025. Connect ProxMox to Ceph Cluster.txt
+026. Create HA Resource Group in ProxMox.txt
+027. Create VM Templates Over HA.txt
+028. Create HA DHCP Server.txt
+
+
+
+
+
+
+
+
+

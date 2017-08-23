@@ -1,0 +1,78 @@
+Clone: centos7-hardened-ovs
+Name: bare-dhcp.arcana.me
+Options: Start at boot : Yes
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname bare-dhcp.arcana.me
+sudo reboot
+
+# assign static IP address to eth1
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+....................
+BOOTPROTO="none"
+ONBOOT="yes"
+IPADDR="10.0.2.51"
+PREFIX="24"
+....................
+
+# disable NAT eth0
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
+....................
+ONBOOT="no"
+....................
+
+# reboot
+sudo reboot
+
+# verify IP addresses
+ifconfig -a
+
+# set ip address in hosts
+# this enables self DNS lookups
+sudo nano -w /etc/hosts
+....................
+10.0.2.51        bare-dhcp.arcana.me
+....................
+
+# configure dnsmasq
+
+sudo nano -w /etc/dnsmasq.d/arcana.me.conf
+...........................................
+dhcp-range=set:cluster,10.0.2.101,10.0.2.254,24h
+dhcp-optsfile=/etc/dnsmasq.opts.arcana.me.conf
+dhcp-hostsfile=/etc/dnsmasq.hosts.arcana.me.conf
+log-dhcp
+domain-needed
+domain=arcana.me
+...........................................
+
+sudo touch /etc/dnsmasq.opts.arcana.me.conf
+sudo touch /etc/dnsmasq.hosts.arcana.me.conf
+
+### enable and start dnsmasq service
+
+sudo systemctl enable dnsmasq
+sudo systemctl restart dnsmasq
+sudo systemctl status dnsmasq
+
+### enable port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=53/tcp
+sudo firewall-cmd --permanent --add-port=53/udp
+sudo firewall-cmd --permanent --add-port=67/udp
+sudo firewall-cmd --permanent --add-port=68/udp
+sudo firewall-cmd --reload
+
+
+
+
+
+
+
+
+
+
+
+

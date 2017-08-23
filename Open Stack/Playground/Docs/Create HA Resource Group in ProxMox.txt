@@ -1,0 +1,8 @@
+Data Center -> HA -> Groups -> Create ->
+	ID: default
+	Nodes: proxmox1: 1, proxmox2: 1, proxmox3: 1
+
+
+
+
+

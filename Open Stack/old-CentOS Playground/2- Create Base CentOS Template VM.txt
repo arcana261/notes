@@ -49,7 +49,9 @@ sudo yum install psmisc nano vim \
 	openssl-devel kernel-devel graphviz \
 	kernel-debug-devel autoconf automake rpm-build \
 	redhat-rpm-config libtool checkpolicy \
-	selinux-policy-devel
+	selinux-policy-devel \
+	NetworkManager-tui \
+	sysbench chrony
 
 # update pip
 sudo pip install --upgrade pip

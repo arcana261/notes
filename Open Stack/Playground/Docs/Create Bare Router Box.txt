@@ -1,0 +1,113 @@
+Clone: clustervm
+Name: bare-router.arcana.me
+Options: Start at boot: Yes
+
+====================================================================
+dhcp-server.ostack.me
+====================================================================
+
+# assing static ip address for router box
+sudo nano -w /etc/dnsmasq.hosts.arcana.me.conf
+..............
+12:00:BF:42:E9:8A,set:router,10.0.2.52,bare-router.arcana.me,infinite
+..............
+
+# set as default gateway
+sudo nano -w /etc/dnsmasq.opts.arcana.me.conf
+..............
+tag:cluster,option:router,10.0.2.52
+tag:router,option:router
+..............
+
+# restart dnsmasq
+sudo systemctl restart dnsmasq
+sudo systemctl status dnsmasq
+
+# change gateway of eth1
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+..............
+GATEWAY="10.0.2.52"
+DNS1="4.2.2.4"
+DNS2="8.8.8.8"
+..............
+
+# reboot
+sudo reboot
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname bare-router.arcana.me
+sudo reboot
+
+# verify network config
+ifconfig -a
+ip route show
+
+# enable eth0 to gain access to internet
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
+..............
+ONBOOT=yes
+..............
+
+# reboot
+sudo reboot
+
+# verify network config
+ifconfig -a
+ip route show
+
+# enable ip forwarding
+sudo nano -w /etc/sysctl.conf
+> # as router ip forwarding
+> net.ipv4.ip_forward=1
+> net.ipv4.conf.all.rp_filter=0
+> net.ipv4.conf.default.rp_filter=0
+> net.ipv4.conf.eth0.rp_filter=0
+> net.ipv4.conf.eth1.rp_filter=0
+> net.ipv4.conf.all.accept_source_route=1
+> net.ipv4.conf.default.accept_source_route=1
+> net.ipv4.conf.eth0.accept_source_route=1
+> net.ipv4.conf.eth1.accept_source_route=1
+
+# reload sysctl
+sudo sysctl -p
+
+# check if is enabled
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.forwarding" | more
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.rp_filter" | more
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.accept_source_route" | more
+
+# list zones and bounded interfaces
+sudo firewall-cmd --list-all
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# enable ip masquerading
+sudo firewall-cmd --zone=public --permanent --add-masquerade
+sudo firewall-cmd --reload
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# reboot
+sudo reboot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
