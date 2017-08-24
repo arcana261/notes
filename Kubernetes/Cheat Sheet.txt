@@ -1,2 +1,17 @@
 # open a busybox shell
 kubectl run -i --tty busybox --image=busybox --rm --generator="run-pod/v1"
+
+# get status of deployment rollout
+kubectl rollout status deployment --namespace=sock-shop front-end
+
+# scale up deployment
+kubectl scale deployment --replicas=3 --namespace=sock-shop front-end
+
+# view pod in detail
+kubectl describe pod --namespace=kube-system monitoring-influxdb-1957622127-rwwdl
+
+# top commands for kubernetes
+kubectl top pod
+kubectl top node
+
+

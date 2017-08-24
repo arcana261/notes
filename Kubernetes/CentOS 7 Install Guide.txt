@@ -1,5 +1,6 @@
 ## GUIDE: https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 ##        https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/
+##        https://github.com/kubernetes/ingress/tree/master/examples/deployment/haproxy
 ##
 
 ## NOTE: hostname, MAC address and product_uuid
