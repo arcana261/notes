@@ -1,0 +1,85 @@
+Clone: centos7-hardened-ovs
+Name: bare-proxy.arcana.me
+Options: Start at boot: Yes
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname bare-proxy.arcana.me
+sudo reboot
+
+# enable static ip on eth1
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+..............
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR="10.0.3.1"
+NETMASK="255.255.240.0"
+..............
+
+# reboot
+sudo reboot
+
+# verify network config
+ifconfig -a
+
+# create a ssh config to quickly access socks5 proxy
+touch ~/.ssh/config
+chmod 600 ~/.ssh/config
+vim ~/.ssh/config
+..................
+Host vpn
+	Hostname 178.162.207.98
+	Port 22
+	User root
+	DynamicForward 8084
+..................
+
+# copy ssh id
+ssh-copy-id vpn
+
+# open screen to open a new ssh proxy connection
+screen
+.................
+ssh vpn
+
+>>> Press Ctrl + D TO DETACH <<<
+.................
+
+# install privoxy
+sudo yum install privoxy
+
+# configure privoxy
+sudo vim /etc/privoxy/config
+>>>>>>>>>>>>>>>
+# search below, duplicate
+# listen-address will cause
+# privoxy to fail
+listen-address		0.0.0.0:8118
+
+
+forward-socks5	/	127.0.0.1:8084	.
+forward         192.168.*.*/     .
+forward         192.168.*.*:*/     .
+forward            10.*.*.*/     .
+forward            10.*.*.*:*/     .
+forward           127.*.*.*/     .
+forward           127.*.*.*:*/     .
+<<<<<<<<<<<<<<<
+
+# enable and start privoxy
+sudo systemctl enable privoxy
+sudo systemctl restart privoxy
+sudo systemctl status privoxy
+
+# open port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=8118/tcp
+sudo firewall-cmd --reload
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+Clone: base-router
+Name: proxmox1-router.arcana.me
+Options: Start at boot: Yes
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname proxmox1-router.arcana.me
+sudo reboot
+
+# enable static ip on eth1
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+..............
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR="10.0.9.1"
+NETMASK="255.255.240.0"
+..............
+
+# reboot
+sudo reboot
+
+# verify network config
+ifconfig -a
+ip route show
+

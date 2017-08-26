@@ -4,8 +4,8 @@
 	CPU: 1 processor, 1 core
 		[*] Copy Host CPU Configuration
 	RAM: 6144 MB
-	HDD: 40 GB (virtio) [name=proxmox1]
-	HDD: 40 GB (virtio) [name=proxmox1-data]
+	HDD: 60 GB (virtio) [name=proxmox1]
+	HDD: 40 GB SSD (virtio) [name=proxmox1-data]
 	Network (all virtio):
 		default (nat)
 		vmnet1 (isolated)
@@ -14,16 +14,16 @@
 
 ## assign static ip address
 virsh net-update default add ip-dhcp-host \
-          "<host mac='52:54:00:78:78:de' name='proxmox1.arcana.me' ip='192.168.122.3' />" \
+          "<host mac='52:54:00:3a:27:68' name='proxmox1.arcana.me' ip='192.168.122.2' />" \
           --live --config
 
 
 ## Install first instance of ProxMox
 
-	Target Harddisk: 40GB vda, xfs filesystem
+	Target Harddisk: 60GB vda, xfs filesystem
 	Management Interface: ens3 (default)
 	Hostname: proxmox1.arcana.me
-	IP Address: 192.168.122.3
+	IP Address: 192.168.122.2
 	Gateway: 192.168.122.1
 	DNS Server: 192.168.122.1
 
@@ -38,9 +38,9 @@ virsh net-update default add ip-dhcp-host \
 	Mode: balance-xor
 
 : Create a Linux Bridge
-	Name: vmbr2
-	IP address: 10.0.2.1
-	Subnet: 255.255.255.0
+	Name: vmbr1
+	IP address: 10.0.6.1
+	Subnet: 255.255.240.0
 	Gateway: -
 	Bridge ports: bond0
 
@@ -51,8 +51,7 @@ virsh net-update default add ip-dhcp-host \
 	apt-get install vim nano net-tools
 
 : enable iso repo over smb
-	mkdir -p /srv/iso/{private,root,dump,images,template}
-	mkdir -p /srv/iso/template/{cache,iso,qemu}
+	mkdir -p /srv/iso/{private,root,dump,images,template/{cache,iso,qemu}}
 	vim /etc/fstab
 	>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//192.168.122.1/iso  /srv/iso/template/iso  cifs  username=root,password=123,iocharset=utf8,sec=ntlm  0  0

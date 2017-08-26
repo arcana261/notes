@@ -1,0 +1,40 @@
+Clone: centos7-hardened-ovs
+Name: base-router
+
+====================================================================
+
+# enable ip forwarding
+sudo vim /etc/sysctl.conf
+> # as router ip forwarding
+> net.ipv4.ip_forward=1
+> net.ipv4.conf.all.rp_filter=0
+> net.ipv4.conf.default.rp_filter=0
+> net.ipv4.conf.eth0.rp_filter=0
+> net.ipv4.conf.eth1.rp_filter=0
+> net.ipv4.conf.all.accept_source_route=1
+> net.ipv4.conf.default.accept_source_route=1
+> net.ipv4.conf.eth0.accept_source_route=1
+> net.ipv4.conf.eth1.accept_source_route=1
+
+# reload sysctl
+sudo sysctl -p
+
+# check if is enabled
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.forwarding" | more
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.rp_filter" | more
+sudo sysctl -a | grep "ipv[4,6]\\.conf\\.\\w*\\.accept_source_route" | more
+
+# list zones and bounded interfaces
+sudo firewall-cmd --list-all
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# enable ip masquerading
+sudo firewall-cmd --zone=public --permanent --add-masquerade
+sudo firewall-cmd --reload
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+

@@ -1,6 +1,7 @@
 ## CPU: 1
 ## RAM: 512 MB
 ## HDD: 8 GB
+## Name: centos7-base
 
 # upgrade system
 sudo yum update
@@ -13,20 +14,20 @@ sudo yum install epel-release
 
 # install some packages
 sudo yum install psmisc nano vim \
-	policycoreutils-python net-tools wget \
-	curl screen htop bridge-utils iperf \
-	perl mlocate deltarpm \
-	ntpdate setroubleshoot-server setools-console \
-	bind-utils tcpdump python-pip \
-	yum-plugin-priorities w3m \
-	bash-completion strace dnsmasq \
-	git unar zip unzip gcc make python-devel \
-	openssl-devel kernel-devel graphviz \
-	kernel-debug-devel autoconf automake rpm-build \
-	redhat-rpm-config libtool checkpolicy \
-	selinux-policy-devel \
-	NetworkManager-tui \
-	sysbench chrony
+policycoreutils-python net-tools wget \
+curl screen htop bridge-utils iperf \
+perl mlocate deltarpm \
+ntpdate setroubleshoot-server setools-console \
+bind-utils tcpdump python-pip \
+yum-plugin-priorities w3m \
+bash-completion strace dnsmasq \
+git unar zip unzip gcc make python-devel \
+openssl-devel kernel-devel graphviz \
+kernel-debug-devel autoconf automake rpm-build \
+redhat-rpm-config libtool checkpolicy \
+selinux-policy-devel \
+NetworkManager-tui \
+sysbench chrony
 
 # update pip
 sudo pip install --upgrade pip
@@ -101,13 +102,6 @@ ssh-keygen -t rsa
 exit
 ..................
 
-# add additional records to hosts
-sudo nano -w /etc/hosts
-..................
-10.0.2.1 proxmox1 proxmox1.arcana.me
-10.0.2.2 proxmox2 proxmox2.arcana.me
-10.0.2.3 proxmox3 proxmox3.arcana.me
-..................
 
 
 
