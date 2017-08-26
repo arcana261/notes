@@ -1,0 +1,16 @@
+$ journal_uuid=$(sudo cat /var/lib/ceph/osd/ceph-0/journal_uuid)
+$ sudo sgdisk --new=1:0:+20480M --change-name=1:'ceph journal' --partition-guid=1:$journal_uuid --typecode=1:45b0969e-9b03-4f30-b4c6-b4b80ceff106 --mbrtogpt -- /dev/sdk
+
+
+
+
+$ sudo ceph-osd --mkjournal -i 20
+$ sudo service ceph start osd.20
+
+
+
+
+
+
+
+
