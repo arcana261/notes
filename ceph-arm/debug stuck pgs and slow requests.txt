@@ -1,0 +1,70 @@
+# first see status of unhealthy cluster
+ceph -s
+
+=====================================================================
+    cluster bd3c273b-4b1e-4bfd-8976-7972e15b7c89
+     health HEALTH_ERR
+            101 pgs are stuck inactive for more than 300 seconds
+            101 pgs peering
+            101 pgs stuck inactive
+            101 pgs stuck unclean
+            86 requests are blocked > 32 sec
+            too many PGs per OSD (471 > max 300)
+     monmap e3: 3 mons at {mon1=192.168.5.220:6789/0,mon2=192.168.5.201:6789/0,mon3=192.168.5.202:6789/0}
+            election epoch 180, quorum 0,1,2 mon2,mon3,mon1
+      fsmap e181: 1/1/1 up {0=mds1=up:active}
+     osdmap e2611: 12 osds: 12 up, 12 in; 95 remapped pgs
+            flags sortbitwise,require_jewel_osds
+      pgmap v3762601: 2828 pgs, 27 pools, 2645 GB data, 1402 kobjects
+            5283 GB used, 256 TB / 261 TB avail
+                2727 active+clean
+                  95 remapped+peering
+                   6 peering
+=====================================================================
+
+
+# ON EACH OSD SEE THE PENDING OPS
+
+ceph daemon osd.{n} help
+ceph daemon osd.{n} ops
+
+# alternatively on each monitor
+# you can do
+vim /var/log/ceph/ceph.log
+>>> search for "slow request"
+
+# view health detail
+ceph health detail
+
+=====================================================================
+pg 27.ea is remapped+peering, acting [5]
+pg 30.f6 is remapped+peering, acting [5]
+pg 28.fe is remapped+peering, acting [5]
+pg 27.fb is remapped+peering, acting [5]
+pg 26.fc is remapped+peering, acting [5]
+pg 30.fa is remapped+peering, acting [5]
+49 ops are blocked > 524.288 sec on osd.5
+25 ops are blocked > 262.144 sec on osd.5
+12 ops are blocked > 131.072 sec on osd.5
+6 ops are blocked > 65.536 sec on osd.5
+3 ops are blocked > 32.768 sec on osd.5
+1 osds have slow requests
+too many PGs per OSD (471 > max 300)
+=====================================================================
+
+
+# query PG's to see why they are stuck
+ceph pg 30.fa query
+
+# authoriztion failure: possible cause: clock skew
+
+---> Solution 1 (if difference is small)
+chronyc -a 'burst 4/4'
+
+---> Solution 2 (if difference is large)
+chronyc -a 'burst 4/4'
+sleep 10
+chronyc -a makestep
+
+
+

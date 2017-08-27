@@ -9,6 +9,10 @@
 ## cat sudo cat /sys/class/dmi/id/product_uuid
 ##
 
+## 
+## chronyd -q 'server pool.ntp.org iburst'
+##
+
 
 SYSTEM REQUIREMENTS:
 	Controller: 2GB RAM
@@ -744,13 +748,87 @@ curl -i 127.0.0.1:31470 -H 'Host: sample.com'
 # to receive HTTP 400 Not Found
 curl -i 127.0.0.1:31470 -H 'Host: non-existent.com'
 
+# destroy test resources
+kubectl delete -f ~/ingress-test.yaml
+kubectl delete service http-svc
+kubectl delete pod http-svc-220007766-zqfrz
+
 ##
 ## END INSTALL HAPROXY INGRESS CONTROLLER
 #################################
 
+################################
+## Test RBD Integration
+##
+
+# ensure /etc/ceph is acessible
+# on all nodes
+sudo chmod 755 /etc/ceph/
+sudo chmod -R 644 /etc/ceph/*
+
+# create ext4 image
+rbd create kube-test --size 5000
+sudo rbd map kube-test
+sudo mkfs.ext4 /dev/rbd/rbd/kube-test
+sudo mount /dev/rbd/rbd/kube-test /mnt
+sudo bash -c 'echo "salam!" > /mnt/a.txt'
+sudo umount /mnt
+sudo rbd unmap kube-test
+
+# create a yaml file to bring up sample
+vim ~/rbd-test.yaml
+................................
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rbd-test
+spec:
+  containers:
+    - image: nginx
+      name: rbd-test
+      volumeMounts:
+      - name: rbdpd
+        mountPath: /mnt
+  volumes:
+    - name: rbdpd
+      rbd:
+        monitors:
+        - '192.168.5.220:6789'
+        - '192.168.5.201:6789'
+        - '192.168.5.202:6789'
+        pool: rbd
+        image: kube-test
+        fsType: ext4
+        readOnly: false
+        user: admin
+        keyring: /etc/ceph/ceph.client.admin.keyring
+        imageformat: "2"
+        imagefeatures: "layering"
+................................
+
+# create actual pod
+kubectl create -f rbd-test.yaml
+
+# watch until our pod comes online
+kubectl describe pod rbd-test
+
+# open up a bash
+kubectl exec -it rbd-test bash
+...................
+	# test to see our "salam!"
+	cat /mnt/a.txt
+
+	# exit
+	exit
+...................
+
+# delete our test image
+kubectl delete -f rbd-test.yaml
 
 
-
+##
+## END TEST RBD INTEGRATION
+#################################
 
 
 
