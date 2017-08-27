@@ -2,24 +2,61 @@ sudo ifconfig virbr0 promisc
 sudo ifconfig virbr1 promisc
 sudo ifconfig virbr2 promisc
 
+10.0.0.0/20
+255.255.240.0 <-> 20
+
+0: HA Core services
+1: Ceph Monitors
+2: Ceph OSDs
+3: Bare Core Services
+4: Static IP Range
+5: Dynamic IP Range
+6: ProxMox Servers
+7: Bare Metal Servers
+8: Ceph MDS's
+9: Router per ProxMox server
+10: docker swarm node
+
+------------
+
+10.0.3.1: bare-proxy.arcana.me
+10.0.3.2: base-docker
+
 
 fixup:
-	* give proxmox primary hdd 50 GB of space
+	* give proxmox primary hdd 60 GB of space
 	* proxmox1, proxmox2, proxmox3 should only appear in /etc/hosts
-	  of dhcp server
+	  of dhcp server and ssh box
+	* bring up dhcp server before proxmox cluster
+	  so that proxmox hosts are resolved by dnsmasq
 
 
 001. Prepare Environment.txt
 002. Install First ProxMox Server.txt
+003. Create Base CentOS Image.txt
+004. Create Hardened CentOS Image.txt
+005. Create Hardened CentOS with OVS Image.txt
+006. Create Base Router Image.txt
+007. Create ProxMox1 Router.txt
+008. Create Bare Proxy Server.txt
+009. Create Proxy Client Base Image.txt
+010. Create Base Bare Docker Image.txt
+
+
+
+
+
+
 003. Install Second ProxMox Server.txt
 004. Install Third ProxMox Server.txt
 005. Initialize ProxMox Cluster on ProxMox1
 006. Add ProxMox2 To Cluster.txt
 007. Add ProxMox3 To Cluster.txt
 008. Create Additional Storage For All Cluster.txt
-009. Create Base CentOS Image.txt
-010. Create Hardened CentOS Image.txt
-011. Create Hardened CentOS with OVS Image.txt
+
+
+
+
 012. Create Bare DHCP Server.txt
 013. Create Cluster VM Image.txt
 014. Create Bare Router Box.txt
