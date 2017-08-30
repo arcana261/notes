@@ -1,0 +1,89 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Prepare Environment"
+content: '''
+  # Prepare Environment
+  
+  ## Enable KVM Nested Virtualization
+  
+  From this [guide](https://wiki.archlinux.org/index.php/KVM#Nested_virtualization)
+  
+  Install required tools
+  ```bash
+  sudo apt-get update
+  sudo apt-get install sysfsutils
+  ```
+  Create a configuration file for kvm
+  ```bash
+  sudo nano -w /etc/modprobe.d/kvm_intel.conf
+  ```
+  ```
+  options kvm_intel nested=1
+  ```
+  Reboot
+  ```bash
+  sudo reboot
+  ```
+  Verify it is enabled
+  ```bash
+  systool -m kvm_intel -v | grep nested
+  ```
+  
+  ## Create Required networks
+  
+  * __management__:  192.168.200.0/24, 192.168.200.100-192.168.200.254, Isolated virtual Network
+  * __provider__: 192.168.201.0/24, 192.168.201.100-192.168.201.254
+  * __cluster1__: No IPv4 Configuration -> Isolated Network
+  * __cluster2__: No IPv4 Configuration -> Isolated Network
+  
+  ## Create a Samba Share for ISO's
+  
+  Install samba server
+  ```bash
+  sudo apt-get update
+  sudo apt-get install samba samba-common python-glade2 
+  sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+  ```
+  Create shared folder configuration
+  ```bash
+  sudo vim /etc/samba/smb.conf
+  ```
+  ```
+  [general]
+         map to guest = bad user
+  
+  [Iso]
+         comment = Iso
+         path = /home/arcana/Iso_Library
+         browsable = yes
+         writable = yes
+         guest ok = yes
+         read only = no
+         force user = arcana
+         force group = arcana
+  ```
+  Enable and restart samba service
+  ```bash
+  sudo systemctl restart smbd nmbd
+  sudo systemctl enable smbd nmbd
+  sudo systemctl status smbd nmbd
+  ```
+  Allow ports through firewall
+  ```bash
+  sudo ufw reload
+  sudo ufw allow 139/tcp
+  sudo ufw allow 445/tcp
+  sudo ufw reload
+  ```
+  Reboot Host
+  ```bash
+  sudo reboot
+  ```
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-08-30T10:36:54.115Z"
+updatedAt: "2017-08-30T10:37:22.517Z"
