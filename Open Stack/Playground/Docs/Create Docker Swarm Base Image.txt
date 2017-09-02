@@ -1,0 +1,48 @@
+Clone: base-docker
+Name: base-swarm
+
+====================================================================
+
+# configure network
+sudo vim /etc/sysconfig/network-scripts/ifcfg-eth1
+...............
+IPADDR=10.0.11.4
+...............
+
+# reboot
+sudo reboot
+
+# open ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --add-port=2376/tcp --permanent
+sudo firewall-cmd --add-port=2377/tcp --permanent
+sudo firewall-cmd --add-port=7946/tcp --permanent
+sudo firewall-cmd --add-port=7946/udp --permanent
+sudo firewall-cmd --add-port=4789/udp --permanent
+sudo firewall-cmd --reload
+
+# add us to insecure registries
+sudo nano -w /usr/lib/systemd/system/docker.service
+...
+#ExecStart=/usr/bin/dockerd 
+ExecStart=/usr/bin/dockerd --insecure-registry=10.0.3.2:5000
+...
+
+# don't use proxy for registry
+sudo nano -w /etc/systemd/system/docker.service.d/no-proxy.conf
+..................
+[Service]
+Environment="NO_PROXY=10.0.3.2"
+..................
+
+# restart daemon
+sudo systemctl daemon-reload
+sudo systemctl enable docker
+sudo systemctl restart docker
+
+# verify no proxy is set
+# verify insecure registry is set
+docker info
+
+
+

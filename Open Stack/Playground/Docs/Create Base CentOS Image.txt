@@ -1,7 +1,18 @@
-## CPU: 1
-## RAM: 512 MB
-## HDD: 8 GB
-## Name: centos7-base
+VM: centos7-base
+Clone: centos7-new
+
+=====================================================================
+
+# configure network
+sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1
+..........................
+GATEWAY=10.0.3.1
+DNS1=4.2.2.4
+DNS2=8.8.8.8
+..........................
+
+# reboot
+sudo reboot
 
 # upgrade system
 sudo yum update
@@ -42,7 +53,16 @@ sudo yum install unrar
 sudo reboot
 
 # update system date/time
-sudo ntpdate 0.pool.ntp.org  1.pool.ntp.org
+sudo ntpdate 0.centos.pool.ntp.org  1.centos.pool.ntp.org
+
+# enable chronyd
+sudo systemctl enable chronyd
+sudo systemctl restart chronyd
+sudo systemctl status chronyd
+sudo chronyc -a 'burst 4/4'
+sudo sleep 10
+sudo chronyc -a makestep
+sudo chronyc sources -v
 
 # verify system date/time
 date

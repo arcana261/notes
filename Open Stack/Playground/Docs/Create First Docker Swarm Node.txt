@@ -1,0 +1,27 @@
+Clone: base-swarm
+Name: proxmox1-swarm.arcana.me
+Options: Start At Boot: yes
+
+====================================================================
+
+# first config
+sudo hostnamectl set-hostname proxmox1-swarm.arcana.me
+sudo reboot
+
+# configure network
+sudo vim /etc/sysconfig/network-scripts/ifcfg-eth1
+...............
+IPADDR=10.0.10.1
+...............
+
+# reboot 
+sudo reboot
+
+# initialize swarm
+# docker swarm join-token manager+
+docker swarm init --advertise-addr 10.0.10.1
+
+# view swarm nodes
+docker node ls
+
+

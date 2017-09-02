@@ -1,4 +1,4 @@
-Clone: centos7-hardened-ovs
+Clone: centos7-with-internet
 Name: proxy-client
 
 ====================================================================
@@ -27,4 +27,10 @@ sudo visudo
 .................
 Defaults    env_keep += "http_proxy HTTP_PROXY https_proxy HTTPS_PROXY"
 .................
+
+====================================================================
+ProxMox1
+====================================================================
+
+[x] Delete "centos7-with-internet"
 
