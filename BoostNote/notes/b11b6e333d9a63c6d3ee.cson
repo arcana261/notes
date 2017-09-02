@@ -1,0 +1,28 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "NETWORK CONFIGURATION"
+content: '''
+  # NETWORK CONFIGURATION
+  
+  * __Network__: 10.0.0.0/20
+  * __Subnet__: 255.255.240.0
+  
+  Subnet | Assignment
+  --- | ---
+  0 | HA core services
+  1 | Ceph monitors
+  2 | Ceph OSDs
+  3 | Bare Core Services
+  4 | Static IP Range
+  5 | Dynamic IP Range
+  6 | ProxMox Servers
+  7 | Bare Metal Servers
+  8 | Ceph MDS
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-08-30T10:44:13.330Z"
+updatedAt: "2017-08-30T10:46:48.813Z"
