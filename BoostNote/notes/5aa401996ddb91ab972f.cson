@@ -1,0 +1,189 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create Base CentOS Image"
+content: '''
+  # Create Base CentOS Image
+  
+  Property | Value
+  --- | ---
+  Name | centos7-base
+  Clone | centos7-new
+  
+  # Configure Network
+  
+  ```bash
+  sudo vi /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  GATEWAY=10.0.3.1
+  DNS1=4.2.2.4
+  DNS2=8.8.8.8
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  # Perform initialization
+  
+  upgrade system
+  ```bash
+  sudo yum update
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  install epel repositories
+  ```bash
+  sudo yum install epel-release
+  ```
+  
+  install some packages
+  ```bash
+  sudo yum install psmisc nano vim \\
+  policycoreutils-python net-tools wget \\
+  curl screen htop bridge-utils iperf \\
+  perl mlocate deltarpm \\
+  ntpdate setroubleshoot-server setools-console \\
+  bind-utils tcpdump python-pip \\
+  yum-plugin-priorities w3m \\
+  bash-completion strace dnsmasq \\
+  git unar zip unzip gcc make python-devel \\
+  openssl-devel kernel-devel graphviz \\
+  kernel-debug-devel autoconf automake rpm-build \\
+  redhat-rpm-config libtool checkpolicy \\
+  selinux-policy-devel \\
+  NetworkManager-tui \\
+  sysbench chrony
+  ```
+  
+  update pip
+  ```bash
+  sudo pip install --upgrade pip
+  ```
+  
+  install nux repo for unrar
+  ```bash
+  sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+  ```
+  
+  install unrar
+  ```bash
+  sudo yum install unrar
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  update system date/time
+  ```bash
+  sudo ntpdate 0.centos.pool.ntp.org  1.centos.pool.ntp.org
+  ```
+  
+  enable chrony
+  ```bash
+  sudo systemctl enable chronyd
+  sudo systemctl restart chronyd
+  sudo systemctl status chronyd
+  sudo chronyc -a 'burst 4/4'
+  sudo sleep 10
+  sudo chronyc -a makestep
+  sudo chronyc sources -v
+  ```
+  
+  verify system date/time
+  ```bash
+  date
+  ```
+  
+  allow ICMP (ping)
+  ```bash
+  sudo nano -w /etc/sysctl.conf
+  ```
+  ```
+  # allow ping
+  net.ipv4.icmp_echo_ignore_all = 0
+  ```
+  
+  reload sysctl
+  ```bash
+  sudo sysctl -p
+  ```
+  
+  update mlocate
+  ```bash
+  sudo updatedb
+  ```
+  
+  set default editor to vim
+  ```bash
+  sudo nano -w /etc/environment
+  ```
+  ```
+  EDITOR=/bin/vim
+  ```
+  
+  reboot system
+  ```bash
+  sudo reboot
+  ```
+  
+  configure system firewall
+  ```bash
+  sudo systemctl enable firewalld
+  sudo systemctl restart firewalld
+  sudo systemctl status firewalld
+  ```
+  
+  view firewall status
+  ```bash
+  sudo firewall-cmd --list-all
+  ```
+  
+  configure ssh
+  ```bash
+  sudo vim /etc/ssh/sshd_config
+  ```
+  ```
+  UseDNS no
+  GSSAPIAuthentication no
+  ```
+  
+  enable ssh through firewall
+  ```bash
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-port=22/tcp
+  sudo firewall-cmd --reload
+  ```
+  
+  enable and start sshd
+  ```bash
+  sudo systemctl enable sshd
+  sudo systemctl restart sshd
+  sudo systemctl status sshd
+  ```
+  
+  generate ssh key
+  ```bash
+  ssh-keygen -t rsa
+  ```
+  
+  generate ssh key for root
+  ```bash
+  su -
+  > ssh-keygen -t rsa
+  > exit
+  ```
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-02T19:51:29.806Z"
+updatedAt: "2017-09-02T20:03:25.906Z"

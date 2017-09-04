@@ -18,11 +18,30 @@ content: '''
   6 | ProxMox Servers
   7 | Bare Metal Servers
   8 | Ceph MDS
+  9 | VM Templates
   
+  ## IP List
   
+  IP | Name
+  --- | ---
+  10.0.0.1 | cephadm.arcana.me
+  10.0.1.1 | cephmon1.arcana.me
+  10.0.2.1 | cephosd1.arcana.me
+  10.0.3.1 | bare-router.arcana.me
+   | router.arcana.me
+  10.0.3.2 | ntp.arcana.me
+  10.0.6.1 | proxmox1.arcana.me
+  10.0.9.1 | centos7-new
+   | centos7-base
+   | centos7-hardened
+   | centos7-hardened-ovs
+  10.0.9.2 | centos7-preceph
+   | centos7-ceph
+   | centos7-cephmon
+   | centos7-cephosd
 '''
 tags: []
-isStarred: false
+isStarred: true
 isTrashed: false
 createdAt: "2017-08-30T10:44:13.330Z"
-updatedAt: "2017-08-30T10:46:48.813Z"
+updatedAt: "2017-09-04T21:21:10.992Z"

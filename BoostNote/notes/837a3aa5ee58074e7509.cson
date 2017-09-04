@@ -1,0 +1,182 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create Ceph Admin Node"
+content: '''
+  # Create Ceph Admin Node
+  
+  Property | Value
+  --- | ---
+  Name | cephadm.arcana.me
+  Clone | centos7-preceph
+  Start At Boot | Yes
+  
+  ## set hostname
+  
+  ```bash
+  sudo hostnamectl set-hostname cephadm.arcana.me
+  sudo reboot
+  ```
+  
+  ## configure network
+  
+  change ip address
+  ```bash
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  IPADDR=10.0.0.1
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  ## configure node
+  
+  install ceph-deploy
+  ```bash
+  sudo pip install ceph-deploy
+  ```
+  
+  switch to user ceph installation user
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+    # create cluster directory
+    mkdir my-cluster
+  	cd my-cluster
+  
+  	# create new ssh keys
+  	ssh-keygen
+  ```
+  ```bash
+  	# create ssh config
+  	touch ~/.ssh/config
+  	chmod 600 ~/.ssh/config
+  ```
+  
+  ## configure some scripts for administration
+  
+  add self to hosts
+  ```bash
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.0.1    cephadm
+  ```
+  
+  create script to populate ssh config
+  ```bash
+  vim ~/my-cluster/populate-ssh-config.sh
+  ```
+  ```
+  #!/bin/bash
+  
+  rm -f ~/.ssh/config
+  touch ~/.ssh/config
+  chmod 600 ~/.ssh/config
+  
+  while read -r line; do
+          arr=($line)
+          ip=${arr[0]}
+          host=${arr[1]}
+          echo "Host ${host}" >> ~/.ssh/config
+          echo "    Hostname ${ip}" >> ~/.ssh/config
+          echo '    User ceph_u' >> ~/.ssh/config
+          echo '    Port 2122' >> ~/.ssh/config
+          echo ' ' >> ~/.ssh/config
+  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  ```
+  ```bash
+  chmod +x ~/my-cluster/populate-ssh-config.sh
+  ~/my-cluster/populate-ssh-config.sh
+  ```
+  
+  create script to copy ssh ids
+  ```bash
+  vim ~/my-cluster/copy-ssh-id.sh
+  ```
+  ```
+  #!/bin/bash
+  
+  ~/my-cluster/populate-ssh-config.sh
+  
+  while read -r line; do
+          arr=($line)
+          host=${arr[1]}
+          ssh-copy-id ${host}
+  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  ```
+  ```bash
+  chmod +x ~/my-cluster/copy-ssh-id.sh
+  ~/my-cluster/copy-ssh-id.sh
+  ```
+  
+  create script to copy hosts
+  ```bash
+  vim ~/my-cluster/copy-hosts.sh
+  ```
+  ```
+  #!/bin/bash
+  
+  ~/my-cluster/copy-ssh-id.sh
+  
+  while read -r line; do
+          arr=($line)
+          host=${arr[1]}
+          scp /etc/hosts ${host}:~
+          ssh ${host} 'sudo mv -fv ~/hosts /etc/hosts' < /dev/null
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm)')"
+  ```
+  ```bash
+  chmod +x ~/my-cluster/copy-hosts.sh
+  ```
+  
+  create script to restart cluster
+  ```bash
+  vim ~/my-cluster/restart-cluster.sh
+  ```
+  ```
+  #!/bin/bash
+  
+  ~/my-cluster/copy-ssh-id.sh
+  
+  while read -r line; do
+          arr=($line)
+          host=${arr[1]}
+          ssh ${host} 'sudo systemctl restart ceph.target' < /dev/null
+  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  ```
+  ```bash
+  chmod +x ~/my-cluster/restart-cluster.sh
+  ```
+  
+  create script to push config to cluster
+  ```bash
+  vim ~/my-cluster/push-config.sh
+  ```
+  ```
+  #!/bin/bash
+  
+  ~/my-cluster/copy-ssh-id.sh
+  
+  while read -r line; do
+          arr=($line)
+          host=${arr[1]}
+          ceph-deploy config push ${host}
+  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  
+  ~/my-cluster/restart-cluster.sh
+  ```
+  ```bash
+  chmod +x ~/my-cluster/push-config.sh
+  ```
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-04T18:04:14.575Z"
+updatedAt: "2017-09-04T22:03:18.783Z"

@@ -4,11 +4,26 @@ title: "Index"
 content: '''
   # Index
   
-  - [ ] Prepare Environment
-  - [ ] Install First ProxMox Server
+  - [x] Prepare Environment
+  - [x] Install First ProxMox Server
+  - [x] Install a New CentOS 7
+  - [x] Create Bare Router
+  - [x] Create Base CentOS Image
+  - [x] Create Hardened CentOS Image
+  - [x] Create Hardened CentOS with OVS
+  - [ ] Create Router Server
+  - [ ] Create NTP Server
+  - [ ] Create Pre Ceph VM Image
+  - [ ] Create Ceph Admin Node
+  - [ ] Create First Ceph Monitor
+  - [ ] Create Ceph Base Image
+  - [ ] Create Ceph Monitor Template Image
+  - [ ] Create Ceph OSD Template Image
+  - [ ] Create First Ceph OSD
+  - [ ] Connect First ProxMox Server To RBD
 '''
 tags: []
-isStarred: false
+isStarred: true
 isTrashed: false
 createdAt: "2017-08-30T09:38:45.981Z"
-updatedAt: "2017-08-30T10:39:35.789Z"
+updatedAt: "2017-09-04T22:05:12.945Z"

@@ -1,0 +1,111 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create First Ceph Monitor"
+content: '''
+  # Create First Ceph Monitor
+  
+  Property | Value
+  --- | ---
+  Name | cephmon1.arcana.me
+  Clone | centos7-preceph
+  Memory | 1 GB
+  Start At Boot | Yes
+  
+  ## set hostname
+  
+  ```bash
+  sudo hostnamectl set-hostname cephmon1.arcana.me
+  sudo reboot
+  ```
+  
+  ## configure network
+  
+  change ip address
+  ```bash
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  IPADDR=10.0.1.1
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  ## Ceph Admin Node
+  
+  perform these on ceph user
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  cd ~/my-cluster
+  
+  # add monitor to hosts
+  sudo vim /etc/hosts
+  ```
+  ```
+  10.0.1.1    cephmon1
+  ```
+  ```bash
+  # copy ssh id
+  ~/my-cluster/copy-ssh-id.sh
+  ```
+  ```bash
+  # copy hosts
+  ~/my-cluster/copy-hosts.sh
+  ```
+  ```bash
+  # create a new cluster
+  ceph-deploy new cephmon1
+  
+  # configure ceph.conf
+  vim ~/my-cluster/ceph.conf
+  ```
+  ```
+  [global]
+  
+  osd_pool_default_size = 2
+  osd_pool_default_min_size = 1
+  rbd_default_features = 3
+  osd_pool_default_pg_num = 256
+  osd_pool_default_pgp_num = 256
+  public_network = 10.0.0.0/20
+  ```
+  ```bash
+  # install ceph packages
+  ceph-deploy install cephadm cephmon1
+  ```
+  ```bash
+  # create initial monitor
+  ceph-deploy mon create-initial
+  ```
+  ```bash
+  # make us the admin node
+  ceph-deploy admin cephadm
+  sudo chmod 644 /etc/ceph/ceph.client.admin.keyring
+  ```
+  
+  ## Configure Ceph Monitor
+  
+  configure firewall
+  
+  ```bash
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-service=ceph-mon
+  sudo firewall-cmd --reload
+  ```
+  
+  ## Back to Ceph Admin Node
+  
+  check whether monitor is up
+  ```bash
+  ceph -s
+  ```
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-04T19:27:23.022Z"
+updatedAt: "2017-09-04T20:18:43.891Z"

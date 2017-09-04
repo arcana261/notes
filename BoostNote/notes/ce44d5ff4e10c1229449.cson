@@ -1,0 +1,48 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create Pre Ceph VM Image"
+content: '''
+  # Create Pre Ceph VM Image
+  
+  Property | Value
+  --- | ---
+  Name | centos7-preceph
+  Clone | centos7-hardened-ovs
+  
+  ## configure network
+  
+  change ip address
+  ```bash
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  IPADDR=10.0.9.2
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  ## configure vm image
+  
+  create a user for ceph installation
+  ```bash
+  sudo useradd -d /home/ceph_u -m ceph_u
+  sudo passwd ceph_u
+  ```
+  
+  make ceph installtion user sudo without password
+  ```bash
+  echo "ceph_u ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ceph_u
+  sudo chmod 0440 /etc/sudoers.d/ceph_u
+  ```
+  
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-04T17:56:23.803Z"
+updatedAt: "2017-09-04T17:58:10.318Z"

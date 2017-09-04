@@ -1,0 +1,82 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create NTP Server"
+content: '''
+  # Create NTP Server
+  
+  Property | Value
+  --- | ---
+  Name | ntp.arcana.me
+  Clone | centos7-hardened-ovs
+  Start at Boot | Yes
+  
+  ## set hostname
+  
+  ```bash
+  sudo hostnamectl set-hostname ntp.arcana.me
+  sudo reboot
+  ```
+  
+  ## configure network
+  
+  configure static ip on cluster network
+  ```bash
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  IPADDR=10.0.3.2
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  ## configure chrony
+  ```bash
+  sudo vim /etc/chrony.conf
+  ```
+  ```
+  server 0.centos.pool.ntp.org iburst
+  server 1.centos.pool.ntp.org iburst
+  server 2.centos.pool.ntp.org iburst
+  server 3.centos.pool.ntp.org iburst
+  allow 10.0.0.0/20
+  local stratum 10
+  ```
+  
+  ## disable modification of chrony by dhcp
+  ```bash
+  sudo mv /etc/dhcp/dhclient.d/chrony.sh /home/arcana
+  sudo mv /usr/libexec/chrony-helper /usr/libexec/.chrony-helper
+  sudo bash -c 'echo "#!/bin/bash" > /usr/libexec/chrony-helper'
+  sudo chown root:root /usr/libexec/chrony-helper
+  sudo chmod 755 /usr/libexec/chrony-helper
+  ```
+  
+  ## enable and restart services
+  ```bash
+  sudo systemctl enable chronyd.service
+  sudo systemctl start chronyd.service
+  sudo systemctl status chronyd.service
+  ```
+  
+  ## verify chrony sources
+  ```bash
+  sudo chronyc sources
+  ```
+  
+  ## add port through firewall
+  ```bash
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-service=ntp
+  sudo firewall-cmd --reload
+  ```
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-04T17:45:49.512Z"
+updatedAt: "2017-09-04T17:51:48.913Z"

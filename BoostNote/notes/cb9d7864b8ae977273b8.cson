@@ -1,0 +1,94 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create Hardened CentOS with OVS"
+content: '''
+  # Create Hardened CentOS with OVS
+  
+  Property | Value
+  --- | ---
+  Name | centos7-hardened-ovs
+  Clone | centos7-hardened
+  
+  download latest version of OVS
+  ```bash
+  cd /usr/src
+  sudo wget http://openvswitch.org/releases/openvswitch-2.5.2.tar.gz
+  sudo tar xvf openvswitch-2.5.2.tar.gz
+  cd openvswitch-2.5.2
+  ```
+  
+  make dist tarball
+  ```bash
+  sudo ./boot.sh
+  sudo ./configure
+  sudo make dist
+  sudo mkdir /usr/src/dist
+  sudo mv openvswitch-2.5.2.tar.gz /usr/src/dist/
+  cd /usr/src/dist
+  ```
+  
+  copy dist tarball to rpmbuild home dir
+  ```bash
+  sudo mkdir -p /root/rpmbuild/SOURCES
+  sudo cp openvswitch-2.5.2.tar.gz /root/rpmbuild/SOURCES/
+  ```
+  
+  extract dist tarball and go to it's folder
+  ```bash
+  sudo tar xvf openvswitch-2.5.2.tar.gz
+  cd openvswitch-2.5.2 
+  ```
+  
+  build RPM
+  ```bash
+  sudo rpmbuild -bb --without check rhel/openvswitch.spec
+  sudo rpmbuild -bb rhel/openvswitch-dkms.spec
+  ```
+  
+  install OVS
+  ```bash
+  sudo yum localinstall /root/rpmbuild/RPMS/x86_64/openvswitch-2.5.2-1.x86_64.rpm
+  ```
+  ```bash
+  sudo yum localinstall /root/rpmbuild/RPMS/x86_64/openvswitch-dkms-2.5.2-1.el7.centos.x86_64.rpm
+  ```
+  
+  test OVS version
+  ```bash
+  sudo ovs-vsctl -V
+  ```
+  
+  test kernel modules
+  ```bash
+  sudo modprobe openvswitch
+  ```
+  
+  set kernel module to load on boot
+  ```bash
+  sudo nano -w /etc/modules-load.d/openvswitch.conf
+  ```
+  ```
+  openvswitch
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  check if module is loaded
+  ```bash
+  sudo bash -c "lsmod | grep openvswitch"
+  ```
+  
+  verify daemon is loaded
+  ```bash
+  sudo systemctl status openvswitch.service
+  ```
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-03T19:56:21.164Z"
+updatedAt: "2017-09-04T17:32:59.280Z"
