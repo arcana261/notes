@@ -66,6 +66,15 @@ sudo apt-get install vlc vlc-data browser-plugin-vlc
 # install "n" (node version manager)
 curl -L https://git.io/n-install | bash
 
+# create a good vimrc
+vim ~/.vimrc
+.................
+set smartindent
+set shiftwidth=2
+set expandtab
+set tabstop=2
+.................
+
 # create a mechanism of changing network after boot
 sudo nano -w /opt/ifup-net.sh
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -142,4 +151,12 @@ sudo apt-get purge $(for tag in "linux-image" "linux-headers"; do dpkg-query -W 
 
 # remove crash logs to make it's window disapear
 sudo rm -rfv /var/crash/*
+
+# set proxy for APT
+sudo vim /etc/apt/apt.conf.d/99proxy
+...............
+Acquire::http::Proxy "http://192.168.5.138:8118";
+Acquire::https::Proxy "http://192.168.5.138:8118";
+...............
+
 

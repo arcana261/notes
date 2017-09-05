@@ -1,0 +1,9 @@
+# list users
+radosgw-admin metadata list user
+
+# view user info
+radosgw-admin user info --uid=saina
+
+# create a new user (S3 interface)
+radosgw-admin user create --uid={username} --display-name="{display-name}" [--email={email}]
+
