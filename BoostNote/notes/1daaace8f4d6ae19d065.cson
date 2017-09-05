@@ -97,6 +97,59 @@ content: '''
   sudo firewall-cmd --reload
   ```
   
+  disconnect from internet
+  ```bash
+  sudo vim /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  [ x ] GATEWAY
+  [ x ] DNS1
+  [ x ] DNS2
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  configure NTP
+  ```bash
+  sudo vim /etc/chrony.conf
+  ```
+  ```
+  server 10.0.3.2 iburst
+  # server 0.centos.pool.ntp.org iburst
+  # server 1.centos.pool.ntp.org iburst
+  # server 2.centos.pool.ntp.org iburst
+  # server 3.centos.pool.ntp.org iburst
+  ```
+  
+  disable modification of chrony by dhcp
+  ```bash
+  sudo mv /etc/dhcp/dhclient.d/chrony.sh /home/arcana
+  sudo mv /usr/libexec/chrony-helper /usr/libexec/.chrony-helper
+  sudo bash -c 'echo "#!/bin/bash" > /usr/libexec/chrony-helper'
+  sudo chown root:root /usr/libexec/chrony-helper
+  sudo chmod 755 /usr/libexec/chrony-helper
+  ```
+  
+  enable and restart services
+  ```bash
+  sudo systemctl enable chronyd.service
+  sudo systemctl start chronyd.service
+  sudo systemctl status chronyd.service
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  verify chrony sources
+  ```bash
+  sudo chronyc sources -v
+  ```
+  
   ## Back to Ceph Admin Node
   
   check whether monitor is up
@@ -108,4 +161,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T19:27:23.022Z"
-updatedAt: "2017-09-04T20:18:43.891Z"
+updatedAt: "2017-09-05T20:27:51.463Z"

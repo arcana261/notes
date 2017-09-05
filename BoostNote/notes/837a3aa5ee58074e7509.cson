@@ -127,7 +127,10 @@ content: '''
           arr=($line)
           host=${arr[1]}
           scp /etc/hosts ${host}:~
-          ssh ${host} 'sudo mv -fv ~/hosts /etc/hosts' < /dev/null
+          ssh ${host} 'sudo bash -c "cat /home/ceph_u/hosts >> /etc/hosts"' < /dev/null
+          ssh ${host} 'sudo bash -c "sort -u /etc/hosts > /etc/hosts.new"' < /dev/null
+          ssh ${host} 'sudo mv -fv /etc/hosts.new /etc/hosts' < /dev/null
+          ssh ${host} 'rm -fv ~/hosts' < /dev/null
   done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm)')"
   ```
   ```bash
@@ -179,4 +182,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T18:04:14.575Z"
-updatedAt: "2017-09-04T22:03:18.783Z"
+updatedAt: "2017-09-05T21:10:14.004Z"
