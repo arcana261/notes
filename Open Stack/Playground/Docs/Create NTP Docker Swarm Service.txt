@@ -1,0 +1,19 @@
+
+====================================================================
+proxmox1-swarm.arcana.me
+====================================================================
+
+# pull required image
+docker pull centos:latest
+
+# push centos image to our registry
+docker tag centos:latest 10.0.3.2:5000/centos:latest
+docker push 10.0.3.2:5000/centos:latest
+
+
+docker run -it --rm --privileged -v /etc/hosts:/etc/hosts centos:latest bash
+
+yum install -y chrony
+echo "allow 0.0.0.0/0" >> /etc/chrony.conf
+echo "local stratum 10" >> /etc/chrony.conf
+/usr/sbin/chronyd -d

@@ -10,11 +10,13 @@
 		default (nat)
 		vmnet1 (isolated)
 		vmnet2 (isolated)
+	OS Type: Linux
+	Version: Debian Jessie
 
 
 ## assign static ip address
 virsh net-update default add ip-dhcp-host \
-          "<host mac='52:54:00:3a:27:68' name='proxmox1.arcana.me' ip='192.168.122.2' />" \
+          "<host mac='52:54:00:d8:a2:cf' name='proxmox1.arcana.me' ip='192.168.122.2' />" \
           --live --config
 
 
@@ -26,6 +28,17 @@ virsh net-update default add ip-dhcp-host \
 	IP Address: 192.168.122.2
 	Gateway: 192.168.122.1
 	DNS Server: 192.168.122.1
+
+## create SSH config in KVM host
+	vim ~/.ssh/config
+	................
+	Host proxmox1.arcana.me
+		Hostname 192.168.122.2
+		Port 22
+		User root
+	................
+	chmod 600 ~/.ssh/config
+	ssh-copy-id proxmox1.arcana.me
 
 ## Configure Networking after installing instance
 
@@ -48,7 +61,24 @@ virsh net-update default add ip-dhcp-host \
 
 : install additional package
 	apt-get update
-	apt-get install vim nano net-tools
+	apt-get install vim nano net-tools chrony ntpdate
+	reboot
+
+: setup NTP
+	ntpdate 0.centos.pool.ntp.org  1.centos.pool.ntp.org
+
+	systemctl enable chrony
+	systemctl restart chrony
+	systemctl status chrony
+	systemctl stop ntp ntpd
+	systemctl disable ntp ntpd
+
+	chronyc -a 'burst 4/4'
+	sleep 10
+	chronyc -a makestep
+	chronyc sources -v
+
+
 
 : enable iso repo over smb
 	mkdir -p /srv/iso/{private,root,dump,images,template/{cache,iso,qemu}}

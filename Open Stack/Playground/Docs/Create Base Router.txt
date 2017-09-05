@@ -1,0 +1,97 @@
+VM: base-router.arcana.me
+Clone: centos7-new
+Options: Start at boot: Yes
+
+=================================================
+KVM Host
+=================================================
+
+# assign static ip address
+virsh net-update default add ip-dhcp-host \
+          "<host mac='9A:1F:20:37:0A:56' name='base-router.arcana.me' ip='192.168.122.5' />" \
+          --live --config
+
+=================================================
+
+
+# first-run config
+sudo hostnamectl set-hostname base-router.arcana.me
+sudo reboot
+
+# configure eth0
+sudo vi /etc/sysconfig/network-scripts/ifcfg-eth0
+..............
+BOOTPROTO=dhcp
+ONBOOT=yes
+..............
+
+# configure eth1
+sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1
+..............
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR=10.0.3.1
+PREFIX=20
+..............
+
+# reboot
+sudo reboot
+
+# configure sysctl
+sudo vi /etc/sysctl.conf
+..............................
+# allow ping
+net.ipv4.icmp_echo_ignore_all = 0
+
+# as router ip forwarding
+net.ipv4.ip_forward=1
+net.ipv4.conf.all.rp_filter=0
+net.ipv4.conf.default.rp_filter=0
+net.ipv4.conf.eth0.rp_filter=0
+net.ipv4.conf.eth1.rp_filter=0
+net.ipv4.conf.all.accept_source_route=1
+net.ipv4.conf.default.accept_source_route=1
+net.ipv4.conf.eth0.accept_source_route=1
+net.ipv4.conf.eth1.accept_source_route=1
+..............................
+
+# reload sysctl
+sudo sysctl -p
+
+# check if is enabled
+sudo sysctl -a | grep "ipv4\\.conf\\.\\w*\\.forwarding" | more
+sudo sysctl -a | grep "ipv4\\.conf\\.\\w*\\.rp_filter" | more
+sudo sysctl -a | grep "ipv4\\.conf\\.\\w*\\.accept_source_route" | more
+
+# enable firewalld
+sudo systemctl enable firewalld
+sudo systemctl restart firewalld
+sudo systemctl status firewalld
+
+# allow ssh
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-service=ssh
+sudo firewall-cmd --reload
+
+# list zones and bounded interfaces
+sudo firewall-cmd --list-all
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# enable ip masquerading
+sudo firewall-cmd --zone=public --permanent --add-masquerade
+sudo firewall-cmd --reload
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# reboot
+sudo reboot
+
+
+
+
+
+
+

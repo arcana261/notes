@@ -1,0 +1,36 @@
+## CPU: 1
+## RAM: 512 MB
+## HDD: 8 GB VirtIO
+## Name: centos7-new
+## NETWORK: virtio, vmbr0
+## NETWORK: virtio, vmbr1
+
+## DISABLE NETWORK eth0
+## ENABLE NETWORK eth1 WITH
+	IP: 10.0.11.1
+	NETMASK: 255.255.240.0
+## Security: Standard System Security Profile
+## Hostname: centos7.arcana.me
+
+## REMEMBER TO REMOVE ISO CD IMAGE
+
+====================================================================
+
+# enable eth1 to on boot
+sudo vi /etc/sysconfig/network-scripts/ifcfg-eth1
+...............
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR=10.0.11.1
+PREFIX=20
+...............
+
+# reboot
+sudo reboot
+
+====================================================================
+
+
+
+
+

@@ -32,7 +32,7 @@ content: '''
   ## Create Required networks
   
   * __management__:  192.168.200.0/24, 192.168.200.100-192.168.200.254, Isolated virtual Network
-  * __provider__: 192.168.201.0/24, 192.168.201.100-192.168.201.254
+  * __provider__: 192.168.201.0/24, 192.168.201.100-192.168.201.254 -> NAT
   * __cluster1__: No IPv4 Configuration -> Isolated Network
   * __cluster2__: No IPv4 Configuration -> Isolated Network
   
@@ -86,4 +86,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-08-30T10:36:54.115Z"
-updatedAt: "2017-08-30T10:37:22.517Z"
+updatedAt: "2017-09-02T17:55:13.153Z"

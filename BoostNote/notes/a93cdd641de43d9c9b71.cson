@@ -1,0 +1,47 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Install a New CentOS 7"
+content: '''
+  # Install a New CentOS 7
+  
+  Property | Value
+  --- | ---
+  CPU | 1
+  RAM | 512 MB
+  HDD | 8 GB VirtIO (Local LVM)
+  Name | centos7-new
+  Network | virtio, vmbr0
+  Network | virtio, vmbr1
+  Network | virtio, vmbr2
+  
+  Property | Value
+  --- | ---
+  eth0 | __disabled__
+  eth1 | __disabled__
+  eth2 | 10.0.9.1 / 255.255.240.0
+  Security | Standard System Security Profile
+  Hostname | centos7.arcana.me
+  
+  # Remove CD Image
+  
+  # Configure Network
+  
+  ```bash
+  sudo vi /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  BOOTPROTO=none
+  ONBOOT=yes
+  IPADDR=10.0.9.1
+  PREFIX=20
+  ```
+  ```bash
+  sudo reboot
+  ```
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-02T18:40:44.923Z"
+updatedAt: "2017-09-02T19:30:48.364Z"

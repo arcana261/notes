@@ -1,0 +1,70 @@
+Clone: base-docker
+Name: bare-docker-registry.arcana.me
+Options: Start At Boot: Yes
+
+====================================================================
+
+# first-run config
+sudo hostnamectl set-hostname bare-docker-registry.arcana.me
+sudo reboot
+
+# enable static ip on eth1
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
+..............
+IPADDR="10.0.3.2"
+..............
+
+# reboot
+sudo reboot
+
+# don't use proxy for registry
+sudo nano -w /etc/systemd/system/docker.service.d/no-proxy.conf
+..................
+[Service]
+Environment="NO_PROXY=10.0.3.2"
+..................
+
+# restart daemon
+sudo systemctl daemon-reload
+sudo systemctl enable docker
+sudo systemctl restart docker
+
+# verify no proxy is set
+docker info
+
+# pull required image
+docker pull registry:2
+
+# start registry
+docker run -td --name docker-registry.arcana.me -h docker-registry.arcana.me -p 5000:5000 --restart=always registry:2
+
+# open port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=5000/tcp
+sudo firewall-cmd --reload
+
+# add us to insecure registries
+sudo nano -w /usr/lib/systemd/system/docker.service
+...
+#ExecStart=/usr/bin/dockerd 
+ExecStart=/usr/bin/dockerd --insecure-registry=10.0.3.2:5000
+...
+sudo systemctl daemon-reload
+sudo systemctl enable docker
+sudo systemctl restart docker
+
+# check if insecure registry is present
+docker info
+
+# push registry to it self
+docker tag registry:2 10.0.3.2:5000/registry:2
+docker push 10.0.3.2:5000/registry:2
+
+
+
+
+
+
+
+
+

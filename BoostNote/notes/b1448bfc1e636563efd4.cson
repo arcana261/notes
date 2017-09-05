@@ -1,0 +1,79 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create First Ceph OSD"
+content: '''
+  # Create First Ceph OSD
+  
+  Property | Value
+  --- | ---
+  Name | cephosd1.arcana.me
+  Clone | centos7-cephosd
+  Start At Boot | Yes
+  
+  ## set hostname
+  
+  ```bash
+  sudo hostnamectl set-hostname cephosd1.arcana.me
+  sudo reboot
+  ```
+  
+  ## configure network
+  
+  change ip address
+  ```bash
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  IPADDR=10.0.2.1
+  ```
+  
+  reboot
+  ```bash
+  sudo reboot
+  ```
+  
+  ## Ceph Admin Node
+  
+  perform these on ceph user
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  cd ~/my-cluster
+  
+  # add monitor to hosts
+  sudo vim /etc/hosts
+  ```
+  ```
+  10.0.2.1    cephosd1
+  ```
+  ```bash
+  # copy ssh id
+  ~/my-cluster/copy-ssh-id.sh
+  ```
+  ```bash
+  # copy hosts
+  ~/my-cluster/copy-hosts.sh
+  ```
+  ```bash
+  # list osd disks
+  ceph-deploy disk list cephosd1
+  ```
+  ```bash
+  # OR: add OSD via seperate journal
+  ceph-deploy osd prepare cephosd1:/dev/vdb:/dev/vdc
+  ceph-deploy osd activate cephosd1:/dev/vdb1
+  ceph -s
+  ```
+  ```bash
+  # OR: add OSD via single journal
+  ceph-deploy osd prepare cephosd1:/dev/vdb
+  ceph-deploy osd activate cephosd1:/dev/vdb1
+  ceph -s
+  ```
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-04T21:21:19.679Z"
+updatedAt: "2017-09-04T21:36:39.536Z"

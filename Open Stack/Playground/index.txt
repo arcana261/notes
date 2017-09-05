@@ -15,12 +15,20 @@ sudo ifconfig virbr2 promisc
 7: Bare Metal Servers
 8: Ceph MDS's
 9: Router per ProxMox server
-10: docker swarm node
+10: Docker Swarm Node
+11: IP's used for VM templates
 
 ------------
 
+10.0.11.1: base-router.arcana.me
+10.0.11.2: proxy-client.arcana.me
+10.0.11.3: base-docker.arcana.me
+10.0.11.4: base-swarm.arcana.me
+
 10.0.3.1: bare-proxy.arcana.me
-10.0.3.2: base-docker
+10.0.3.2: bare-docker-registry.arcana.me
+10.0.9.1: proxmox1-router.arcana.me
+10.0.10.1: proxmox1-swarm.arcana.me
 
 
 fixup:
@@ -33,16 +41,21 @@ fixup:
 
 001. Prepare Environment.txt
 002. Install First ProxMox Server.txt
-003. Create Base CentOS Image.txt
-004. Create Hardened CentOS Image.txt
-005. Create Hardened CentOS with OVS Image.txt
-006. Create Base Router Image.txt
-007. Create ProxMox1 Router.txt
-008. Create Bare Proxy Server.txt
-009. Create Proxy Client Base Image.txt
-010. Create Base Bare Docker Image.txt
-
-
+003. Install A New Bare CentOS.txt
+004. Create Base Router.txt
+005. Create Base CentOS Image.txt
+006. Create Hardened CentOS Image.txt
+007. Create Hardened CentOS with OVS Image.txt
+008. Create Base Router Image.txt
+009. Create ProxMox1 Router.txt
+010. Create CentOS7 with Internet Base Image.txt
+011. Create Bare Proxy Server.txt
+012. Create Proxy Client Base Image.txt
+013. Create Base Bare Docker Image.txt
+014. Create Docker Registry.txt
+015. Create Docker Swarm Base Image.txt
+016. Create First Docker Swarm Node.txt
+017. Create NTP Docker Swarm Service.txt
 
 
 

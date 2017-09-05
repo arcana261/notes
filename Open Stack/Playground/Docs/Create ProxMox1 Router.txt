@@ -3,10 +3,26 @@ Name: proxmox1-router.arcana.me
 Options: Start at boot: Yes
 
 ====================================================================
+KVM HOST
+====================================================================
+
+# assign static ip address
+virsh net-update default add ip-dhcp-host \
+          "<host mac='0A:84:22:2B:DA:9D' name='proxmox1-router.arcana.me' ip='192.168.122.6' />" \
+          --live --config
+
+====================================================================
 
 # first-run config
 sudo hostnamectl set-hostname proxmox1-router.arcana.me
 sudo reboot
+
+# enable interface eth0
+sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth0
+..............
+BOOTPROTO=dhcp
+ONBOOT=yes
+..............
 
 # enable static ip on eth1
 sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth1
@@ -15,6 +31,9 @@ BOOTPROTO=none
 ONBOOT=yes
 IPADDR="10.0.9.1"
 NETMASK="255.255.240.0"
+[x] DNS1
+[x] DNS2
+[x] GATEWAY
 ..............
 
 # reboot
@@ -23,4 +42,13 @@ sudo reboot
 # verify network config
 ifconfig -a
 ip route show
+
+
+
+
+
+
+
+
+
 

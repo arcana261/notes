@@ -42,50 +42,54 @@ sudo ls -la /etc/selinux/targeted/contexts/files/file_contexts.local
 sudo touch /etc/selinux/targeted/contexts/files/file_contexts.local
 
 # protect sysctl
-sudo vim /etc/sysctl.conf
-> # IP Spoofing protection
-> net.ipv4.conf.default.rp_filter=1
-> net.ipv4.conf.all.rp_filter=1
->
-> # Ignore ICMP broadcasts requests
-> net.ipv4.icmp_echo_ignore_broadcasts = 1
->
-> # Do not accept IP source route packets (we are not a router)
-> net.ipv4.conf.all.accept_source_route = 0
-> net.ipv6.conf.all.accept_source_route = 0
-> net.ipv4.conf.default.accept_source_route = 0
-> net.ipv6.conf.default.accept_source_route = 0
->
-> # Ignore send redirects
-> net.ipv4.conf.all.send_redirects = 0
-> net.ipv4.conf.default.send_redirects = 0
->
-> # Block SYN attacks
-> net.ipv4.tcp_syncookies = 1
-> net.ipv4.tcp_max_syn_backlog = 2048
-> net.ipv4.tcp_synack_retries = 2
-> net.ipv4.tcp_syn_retries = 5
->
-> # Log Martians
-> net.ipv4.conf.all.log_martians = 1
-> net.ipv4.icmp_ignore_bogus_error_responses = 1
->
-> # Ignore ICMP redirects
-> net.ipv4.conf.all.accept_redirects = 0
-> net.ipv6.conf.all.accept_redirects = 0
-> net.ipv4.conf.default.accept_redirects = 0 
-> net.ipv6.conf.default.accept_redirects = 0
->
-> # Ignore Directed pings
-> net.ipv4.icmp_echo_ignore_all = 0
+sudo nano -w /etc/sysctl.conf
+.......................................
+# IP Spoofing protection
+net.ipv4.conf.default.rp_filter=1
+net.ipv4.conf.all.rp_filter=1
+
+# Ignore ICMP broadcasts requests
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+# Do not accept IP source route packets (we are not a router)
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv6.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv6.conf.default.accept_source_route = 0
+
+# Ignore send redirects
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+
+# Block SYN attacks
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_syn_backlog = 2048
+net.ipv4.tcp_synack_retries = 2
+net.ipv4.tcp_syn_retries = 5
+
+# Log Martians
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+
+# Ignore ICMP redirects
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0 
+net.ipv6.conf.default.accept_redirects = 0
+
+# Ignore Directed pings
+net.ipv4.icmp_echo_ignore_all = 0
+.......................................
 
 # reload sysctl
 sudo sysctl -p
 
 # prevent ip spoofing
 sudo nano -w /etc/host.conf
-> order hosts,bind
-> nospoof on
+................
+order hosts,bind
+nospoof on
+................
 
 # install denyhosts
 sudo yum install denyhosts
