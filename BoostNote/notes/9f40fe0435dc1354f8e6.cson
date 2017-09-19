@@ -22,9 +22,13 @@ content: '''
   - [x] Create Ceph OSD Template Image
   - [x] Create First Ceph OSD
   - [ ] Connect First ProxMox Server To RBD
+  - [ ] Create HA (over RBD) versions of VM's
+  - [ ] Create DHCP Server
+  - [ ] Create SSH Box
+  - [ ] Create pre-kerberos VM image
 '''
 tags: []
 isStarred: true
 isTrashed: false
 createdAt: "2017-08-30T09:38:45.981Z"
-updatedAt: "2017-09-05T20:57:44.844Z"
+updatedAt: "2017-09-18T18:26:14.274Z"

@@ -9,6 +9,7 @@ content: '''
   Name | cephosd1.arcana.me
   Clone | centos7-cephosd
   Start At Boot | Yes
+  Boot Order | order=2,up=120,down=120
   
   ## set hostname
   
@@ -76,4 +77,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T21:21:19.679Z"
-updatedAt: "2017-09-04T21:36:39.536Z"
+updatedAt: "2017-09-19T03:00:45.038Z"

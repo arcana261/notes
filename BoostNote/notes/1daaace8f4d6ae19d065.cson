@@ -10,6 +10,7 @@ content: '''
   Clone | centos7-preceph
   Memory | 1 GB
   Start At Boot | Yes
+  Boot Order | order=1,up=120,down=120
   
   ## set hostname
   
@@ -161,4 +162,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T19:27:23.022Z"
-updatedAt: "2017-09-05T20:27:51.463Z"
+updatedAt: "2017-09-19T03:00:38.514Z"

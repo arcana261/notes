@@ -1,0 +1,62 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create Kerberos Server"
+content: '''
+  # Create Kerberos Server
+  
+  Property | Value
+  --- | ---
+  Name | kdc.arcana.me
+  Clone | centos7-pre-kdc
+  Location | RBD
+  Start at Boot | Yes
+  Boot Order | order=6,up=10,down=10
+  
+  ## Assign static IP
+  
+  ```bash
+  sudo nano -w /etc/dnsmasq.arcana.me.hosts
+  ```
+  ```
+  8A:2A:15:E4:80:E7,set:cluster,10.0.3.3,kdc.arcana.me,infinite
+  ```
+  ```bash
+  sudo systemctl restart dnsmasq.service
+  ```
+  
+  ## Configure VM
+  
+  ```bash
+  sudo hostnamectl set-hostname kdc.arcana.me
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  BOOTPROTO=dhcp
+  [ x ] IPADDR
+  [ x ] PREFIX
+  [ x ] GATEWAY
+  [ x ] DNS1
+  [ x ] DNS2
+  ```
+  ```bash
+  sudo reboot
+  ```
+  
+  ## Continue configuring KDC
+  
+  ```bash
+  sudo yum install krb5-server 
+  # enable kerberos through firewall
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-service=kerberos
+  sudo firewall-cmd --reload
+  # create folder to store keytabs
+  sudo mkdir -p /etc/keytabs
+  sudo chmod 600 /etc/keytabs
+  ```
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-18T18:32:40.835Z"
+updatedAt: "2017-09-18T19:05:15.764Z"
