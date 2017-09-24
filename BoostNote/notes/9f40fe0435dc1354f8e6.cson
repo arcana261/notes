@@ -11,19 +11,24 @@ content: '''
   - [x] Create Base CentOS Image
   - [x] Create Hardened CentOS Image
   - [x] Create Hardened CentOS with OVS
-  - [ ] Create Router Server
-  - [ ] Create NTP Server
-  - [ ] Create Pre Ceph VM Image
-  - [ ] Create Ceph Admin Node
-  - [ ] Create First Ceph Monitor
-  - [ ] Create Ceph Base Image
-  - [ ] Create Ceph Monitor Template Image
-  - [ ] Create Ceph OSD Template Image
-  - [ ] Create First Ceph OSD
+  - [x] Create Router Server
+  - [x] Create NTP Server
+  - [x] Create Pre Ceph VM Image
+  - [x] Create Ceph Admin Node
+  - [x] Create First Ceph Monitor
+  - [x] Create Ceph Base Image
+  - [x] Post Configure Ceph Admin Node (NTP)
+  - [x] Create Ceph Monitor Template Image
+  - [x] Create Ceph OSD Template Image
+  - [x] Create First Ceph OSD
   - [ ] Connect First ProxMox Server To RBD
+  - [ ] Create HA (over RBD) versions of VM's
+  - [ ] Create DHCP Server
+  - [ ] Create SSH Box
+  - [ ] Create pre-kerberos VM image
 '''
 tags: []
 isStarred: true
 isTrashed: false
 createdAt: "2017-08-30T09:38:45.981Z"
-updatedAt: "2017-09-04T22:05:12.945Z"
+updatedAt: "2017-09-18T18:26:14.274Z"

@@ -25,6 +25,7 @@ content: '''
   IP | Name
   --- | ---
   10.0.0.1 | cephadm.arcana.me
+  10.0.0.2 | dhcp.arcana.me
   10.0.1.1 | cephmon1.arcana.me
   10.0.2.1 | cephosd1.arcana.me
   10.0.3.1 | bare-router.arcana.me
@@ -44,4 +45,4 @@ tags: []
 isStarred: true
 isTrashed: false
 createdAt: "2017-08-30T10:44:13.330Z"
-updatedAt: "2017-09-04T21:21:10.992Z"
+updatedAt: "2017-09-08T06:58:30.975Z"

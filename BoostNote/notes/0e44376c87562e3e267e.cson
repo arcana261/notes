@@ -1,0 +1,46 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create pre-kerberos VM image"
+content: '''
+  # Create pre-kerberos VM image
+  
+  Property | Value
+  --- | ---
+  Name | centos7-pre-kdc
+  Clone | centos7-hardened-ovs-ssh
+  
+  ## Create DNS entry in dhcp.arcana.me
+  
+  ```bash
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.9.1    centos7-pre-kdc.arcana.me
+  ```
+  ```bash
+  sudo systemctl restart dnsmasq.service
+  ```
+  
+  ## install required packages
+  
+  ```bash
+  sudo yum install krb5-workstation pam_krb5 haveged rsh
+  ```
+  
+  ## enable entropy generation tool "haveged"
+  ```bash
+  sudo systemctl restart haveged
+  sudo systemctl enable haveged
+  sudo systemctl status haveged
+  ```
+  
+  ## check available system entropy
+  ```bash
+  sudo cat /proc/sys/kernel/random/entropy_avail
+  ```
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-18T18:24:53.675Z"
+updatedAt: "2017-09-18T18:31:56.886Z"

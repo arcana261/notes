@@ -1,9 +1,143 @@
 type: "MARKDOWN_NOTE"
 folder: "115ff3f5d3b29d825305"
 title: "Connect First ProxMox Server To RBD"
-content: "# Connect First ProxMox Server To RBD"
+content: '''
+  # Connect First ProxMox Server To RBD
+  
+  ## Configure Network
+  
+  configure vmbr2 to access internet
+  
+  Property | Value
+  --- | ---
+  IP | 10.0.6.1
+  Subnet | 255.255.240.0
+  Gateway | 10.0.3.1
+  
+  configure resolv.conf
+  ```bash
+  vi /etc/resolv.conf
+  ```
+  ```
+  search arcana.me
+  nameserver 4.2.2.4
+  nameserver 8.8.8.8
+  ```
+  
+  ## Reboot
+  
+  ## install additional package
+  ```bash
+  apt-get update
+  apt-get install vim nano net-tools chrony ntpdate sudo
+  ```
+  
+  ## Configure NTP
+  
+  force time update
+  ```bash
+  ntpdate 10.0.3.2
+  ```
+  
+  configure ntp
+  ```bash
+  sudo vim /etc/chrony/chrony.conf
+  ```
+  ```
+  # pool 2.debian.pool.ntp.org iburst
+  server 10.0.3.2 iburst
+  ```
+  
+  ## Reboot
+  
+  verify time synchronization
+  ```bash
+  sudo chronyc sources -v
+  ```
+  
+  ## configure ceph_u administration user
+  
+  create a user for ceph installation
+  ```bash
+  sudo useradd -d /home/ceph_u -m ceph_u
+  sudo passwd ceph_u
+  ```
+  
+  make ceph installtion user sudo without password
+  ```bash
+  echo "ceph_u ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ceph_u
+  sudo chmod 0440 /etc/sudoers.d/ceph_u
+  ```
+  
+  ## change ssh port
+  
+  ```bash
+  sudo vim /etc/ssh/sshd_config
+  ```
+  ```
+  Port 2122
+  ```
+  
+  ## Change SSH Config in KVM Host
+  
+  ```bash
+  vim ~/.ssh/config
+  ```
+  ```
+  Host proxmox1.arcana.me
+    Hostname 192.168.200.2
+    Port 2122
+    User root
+  ```
+  
+  ## Ceph Admin Node
+  
+  perform these on ceph user
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  cd ~/my-cluster
+  
+  # add to hosts
+  sudo vim /etc/hosts
+  ```
+  ```
+  10.0.6.1    hv-proxmox1
+  ```
+  ```bash
+  # copy ssh id
+  ~/my-cluster/copy-ssh-id.sh
+  ```
+  ```bash
+  # copy hosts
+  ~/my-cluster/copy-hosts.sh
+  ```
+  ```bash
+  # copy ceph config
+  ceph-deploy admin hv-proxmox1
+  ```
+  
+  ## Create Configurations for RBD
+  
+  ```bash
+  sudo mkdir -p /etc/pve/priv/ceph/
+  sudo cp /etc/ceph/ceph.client.admin.keyring /etc/pve/priv/ceph/rbd.keyring
+  ```
+  
+  # add new storage
+  Datacenter -> Storage -> Add -> RBD -> 
+  					ID: rbd
+  					Pool: rbd
+  					Monirors(s): "10.0.1.1"
+  					Username: admin
+  					Nodes: proxmox1
+  					Content: Disk Image, Container
+  					KRBD: false
+            
+'''
 tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T22:04:57.236Z"
-updatedAt: "2017-09-04T22:05:07.047Z"
+updatedAt: "2017-09-05T21:54:21.330Z"

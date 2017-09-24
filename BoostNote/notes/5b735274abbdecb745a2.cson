@@ -1,0 +1,37 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create HA (over RBD) versions of VM's"
+content: '''
+  # Create HA (over RBD) versions of VM's
+  
+  
+  ## Migrate router
+  
+  1. Shutdown router.arcana.me
+  2. Clone (name = ha-router.arcana.me, target = rbd)
+  3. Disable Start at Boot from router.arcana.me
+  4. Power on ha-router.arcana.me
+  5. Boot Order = order=3,up=10,down=10
+  
+  ## Migrate NTP server
+  
+  1. Shutdown ntp.arcana.me
+  2. Clone (name = ha-ntp.arcana.me, target = rbd)
+  3. Disable Start at Boot from ntp.arcana.me
+  4. Power on ha-ntp.arcana.me
+  5. Boot Order = order=4,up=10,down=10
+  
+  ## Migrate Ceph Admin Node
+  
+  1. Shutdown cephadm.arcana.me
+  2. Clone (name = ha-cephadm.arcana.me, target = rbd)
+  3. DELETE VM cephadm.arcana.me
+  4. RENAME ha-cephadm.arcana.me to cephadm.arcana.me
+  5. Power on cephadm.arcana.me
+  6. Boot Order = order=100,up=10,down=10
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-05T21:56:31.709Z"
+updatedAt: "2017-09-18T18:50:14.609Z"

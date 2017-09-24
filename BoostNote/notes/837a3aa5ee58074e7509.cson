@@ -127,8 +127,37 @@ content: '''
           arr=($line)
           host=${arr[1]}
           scp /etc/hosts ${host}:~
-          ssh ${host} 'sudo mv -fv ~/hosts /etc/hosts' < /dev/null
-  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm)')"
+          ssh ${host} 'sudo bash -c "cat /home/ceph_u/hosts >> /etc/hosts"' < /dev/null
+          ssh ${host} 'sudo bash -c "sort -u /etc/hosts > /etc/hosts.new"' < /dev/null
+          ssh ${host} 'sudo mv -fv /etc/hosts.new /etc/hosts' < /dev/null
+          ssh ${host} 'rm -fv ~/hosts' < /dev/null
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|dhcp.arcana.me)')"
+  
+  rm -f ~/hosts.dhcp
+  
+  while read -r line; do
+          arr=($line)
+          ip=${arr[0]}
+          host=${arr[1]}
+  
+          if [[ "$host" =~ ^.*.arcana.me$ ]]; then
+                  echo "${ip}    ${host}" >> ~/hosts.dhcp
+          else
+                  echo "${ip}    ${host}.arcana.me" >> ~/hosts.dhcp
+          fi
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost)')"
+  
+  while read -r line; do
+          arr=($line)
+          host=${arr[1]}
+          scp ~/hosts.dhcp ${host}:~/hosts
+          ssh ${host} 'sudo bash -c "cat /home/ceph_u/hosts >> /etc/hosts"' < /dev/null
+          ssh ${host} 'sudo bash -c "sort -u /etc/hosts > /etc/hosts.new"' < /dev/null
+          ssh ${host} 'sudo mv -fv /etc/hosts.new /etc/hosts' < /dev/null
+          ssh ${host} 'rm -fv ~/hosts' < /dev/null
+  done <<< "$(cat /etc/hosts | grep -E 'dhcp.arcana.me')"
+  
+  rm -fv ~/hosts.dhcp
   ```
   ```bash
   chmod +x ~/my-cluster/copy-hosts.sh
@@ -179,4 +208,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T18:04:14.575Z"
-updatedAt: "2017-09-04T22:03:18.783Z"
+updatedAt: "2017-09-08T07:27:14.028Z"

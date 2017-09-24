@@ -11,7 +11,7 @@ content: '''
   Template | Debian Jessie
   CPU | 1 processor, 1 core
    | Copy Host CPU Configuration
-  RAM | 6144 MB
+  RAM | 8192 MB
   HDD | 80 GB (virtio) (name=proxmox1)
    | 40 GB SSD (virtio) (name=proxmox1-data)
   Network | management (virtio)
@@ -138,4 +138,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-08-30T10:39:50.333Z"
-updatedAt: "2017-09-04T21:24:24.498Z"
+updatedAt: "2017-09-16T18:51:53.596Z"

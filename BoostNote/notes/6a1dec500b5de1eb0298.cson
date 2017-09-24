@@ -1,54 +1,8 @@
 type: "MARKDOWN_NOTE"
 folder: "115ff3f5d3b29d825305"
-title: "Create Ceph Base Image"
+title: "Post Configure Ceph Admin Node (NTP)"
 content: '''
-  # Create Ceph Base Image
-  
-  Property | Value
-  --- | ---
-  Name | centos7-ceph
-  Clone | centos7-preceph
-  
-  ## Ceph Admin Node
-  
-  perform these on ceph user
-  ```bash
-  su - ceph_u
-  ```
-  ```bash
-  cd ~/my-cluster
-  
-  # add to hosts
-  sudo vim /etc/hosts
-  ```
-  ```
-  10.0.9.2    centos7-ceph
-  ```
-  ```bash
-  # copy ssh id
-  ~/my-cluster/copy-ssh-id.sh
-  ```
-  ```bash
-  # copy hosts
-  ~/my-cluster/copy-hosts.sh
-  ```
-  ```bash
-  # install ceph packages
-  ceph-deploy install centos7-ceph
-  ```
-  ```bash
-  # remove from hosts
-  sudo vim /etc/hosts
-  ```
-  ```
-  [ x ] 10.0.9.2    centos7-ceph
-  ```
-  ```bash
-  # copy hosts
-  ~/my-cluster/copy-hosts.sh
-  ```
-  
-  ## Configure VM
+  # Post Configure Ceph Admin Node (NTP)
   
   disconnect from internet
   ```bash
@@ -102,9 +56,10 @@ content: '''
   ```bash
   sudo chronyc sources -v
   ```
+  
 '''
 tags: []
 isStarred: false
 isTrashed: false
-createdAt: "2017-09-04T20:06:04.697Z"
-updatedAt: "2017-09-05T20:41:45.684Z"
+createdAt: "2017-09-05T20:44:35.133Z"
+updatedAt: "2017-09-05T20:45:18.504Z"
