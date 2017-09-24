@@ -7,3 +7,17 @@ radosgw-admin user info --uid=saina
 # create a new user (S3 interface)
 radosgw-admin user create --uid={username} --display-name="{display-name}" [--email={email}]
 
+# list zones
+radosgw-admin zone list
+
+# get a zone
+radosgw-admin zone get --rgw-zone=default
+
+# apply quota
+radosgw-admin quota set --quota-scope=user --uid=saina --max-size=1T
+radosgw-admin quota enable --quota-scope=user --uid=saina
+
+# view user stats
+radosgw-admin user stats --uid=saina
+radosgw-admin user stats --uid=occc --sync-stats
+
