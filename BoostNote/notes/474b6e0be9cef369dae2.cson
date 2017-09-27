@@ -1,0 +1,165 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Setup NFS Service"
+content: '''
+  # Setup NFS Service
+  
+  Property | Value
+  --- | ---
+  Name | nfs.arcana.me
+  Clone | centos7-hardened-ovs-ssh-krb-ldp
+  Location | RBD
+  Start at Boot | Yes
+  Boot Order | order=8,up=10,down=10
+  
+  ## Assign static IP
+  
+  ```bash
+  sudo nano -w /etc/dnsmasq.arcana.me.hosts
+  ```
+  ```
+  CA:78:0F:E9:92:1F,set:cluster,10.0.0.5,nfs.arcana.me,infinite
+  ```
+  ```bash
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.0.5    nfs.arcana.me
+  ```
+  ```bash
+  sudo systemctl restart dnsmasq.service
+  ```
+  
+  ## Configure VM
+  
+  ```bash
+  sudo hostnamectl set-hostname nfs.arcana.me
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  BOOTPROTO=dhcp
+  [ x ] IPADDR
+  [ x ] PREFIX
+  [ x ] GATEWAY
+  [ x ] DNS1
+  [ x ] DNS2
+  ```
+  ```bash
+  sudo reboot
+  ```
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/nfs.arcana.me
+  ktadd host/nfs.arcana.me
+  quit
+  ```
+  
+  ## Install required packages
+  
+  ```bash
+  sudo yum install nfs-utils
+  ```
+  
+  ## Export Home Directory
+  
+  ```bash
+  sudo vim /etc/exports
+  ```
+  ```
+  /home    *(rw,sync)
+  ```
+  
+  ## Enable and start NFS
+  
+  ```bash
+  sudo systemctl enable rpcbind
+  sudo systemctl restart rpcbind
+  sudo systemctl status rpcbind
+  sudo systemctl enable nfs-server
+  sudo systemctl restart nfs-server
+  sudo systemctl status nfs-server
+  ```
+  
+  ## Open ports through firewall
+  
+  ```bash
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-service=nfs
+  sudo firewall-cmd --reload
+  ```
+  
+  ## Verify exports
+  
+  ```bash
+  showmount -e localhost
+  ```
+  
+  ## Create home directories
+  
+  ```bash
+  sudo mkdir -p /home/ceph_u
+  sudo cp -fv /home/arcana/.bash_history /home/ceph_u/
+  sudo cp -fv /home/arcana/.bash_logout /home/ceph_u/
+  sudo cp -fv /home/arcana/.bash_profile /home/ceph_u/
+  sudo cp -fv /home/arcana/.bashrc /home/ceph_u/
+  sudo cp -rfv /home/arcana/.ssh /home/ceph_u/
+  sudo chown -R ceph_u:ceph_u /home/ceph_u
+  sudo chmod 700 /home/ceph_u
+  ```
+  ```bash
+  sudo mkdir -p /home/cluster_u
+  sudo cp -fv /home/arcana/.bash_history /home/cluster_u/
+  sudo cp -fv /home/arcana/.bash_logout /home/cluster_u/
+  sudo cp -fv /home/arcana/.bash_profile /home/cluster_u/
+  sudo cp -fv /home/arcana/.bashrc /home/cluster_u/
+  sudo cp -rfv /home/arcana/.ssh /home/cluster_u/
+  sudo chown -R cluster_u:cluster_u /home/cluster_u
+  sudo chmod 700 /home/cluster_u
+  ```
+  
+  ## Export Cluster Configuration from cephadm.arcana.me
+  
+  ```bash
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.0.5    nfs.arcana.me
+  ```
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  ~/my-cluster/populate-ssh-config.sh
+  ```
+  ```bash
+  ~/my-cluster/copy-ssh-id.sh
+  ```
+  ```bash
+  ~/my-cluster/copy-hosts.sh
+  ```
+  ```bash
+  cd ~
+  tar cvpf my_cluster.tar.gz my-cluster/
+  scp ~/my_cluster.tar.gz nfs.arcana.me
+  ```
+  
+  ## Extract cluster configuration in nfs.arcana.me
+  
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  cd ~
+  tar xvpf my_cluster.tar.gz
+  rm -f my_cluster.tar.gz
+  exit
+  ```
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-23T21:08:12.835Z"
+updatedAt: "2017-09-25T22:58:18.203Z"

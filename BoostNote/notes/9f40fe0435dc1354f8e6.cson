@@ -21,14 +21,22 @@ content: '''
   - [x] Create Ceph Monitor Template Image
   - [x] Create Ceph OSD Template Image
   - [x] Create First Ceph OSD
-  - [ ] Connect First ProxMox Server To RBD
-  - [ ] Create HA (over RBD) versions of VM's
-  - [ ] Create DHCP Server
-  - [ ] Create SSH Box
-  - [ ] Create pre-kerberos VM image
+  - [x] Connect First ProxMox Server To RBD
+  - [x] Create HA (over RBD) versions of VM's
+  - [x] Create DHCP Server
+  - [x] Create SSH Box
+  - [x] Create Kerberos Server
+  - [x] Connect Existing VMs to Kerberos
+  - [x] Create Kerberos Enabled Template VMs
+  - [ ] Connect ProxMox1 to Kerberos Server
+  - [ ] Create LDAP Server
+  - [ ] Create LDAP Enabled Template VMs
+  - [ ] Setup NFS Service
+  - [ ] Connect Existing VM's to NFS
+  - [ ] Fix Ceph Admin Node with new Mechanisms
 '''
 tags: []
 isStarred: true
 isTrashed: false
 createdAt: "2017-08-30T09:38:45.981Z"
-updatedAt: "2017-09-18T18:26:14.274Z"
+updatedAt: "2017-09-26T22:32:07.093Z"

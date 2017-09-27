@@ -54,6 +54,18 @@ content: '''
   ssh-copy-id ssh.arcana.me
   ```
   
+  ## Generate new SSH keys
+  
+  ```bash
+  ssh-keygen -t rsa
+  ```
+  ```bash
+  su -
+  ```
+  ```bash
+  ssh-keygen -t rsa
+  ```
+  
   ## Copy SSH id's to known VMs
   ```bash
   nano -w ~/.ssh/config
@@ -207,4 +219,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-08T14:47:34.274Z"
-updatedAt: "2017-09-18T18:49:03.556Z"
+updatedAt: "2017-09-26T22:17:33.316Z"

@@ -1,0 +1,158 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create Kerberos Enabled Template VMs"
+content: '''
+  # Create Kerberos Enabled Template VMs
+  
+  Property | Value
+  --- | ---
+  Name | centos7-hardened-ovs-ssh-krb
+  Clone | centos7-hardened-ovs-ssh
+  Location | LVM
+  
+  Property | Value
+  --- | ---
+  Name | centos7-ceph-ssh-krb
+  Clone | centos7-ceph-ssh
+  Location | LVM
+  
+  Property | Value
+  --- | ---
+  Name | centos7-cephmon-ssh-krb
+  Clone | centos7-cephmon-ssh
+  Location | LVM
+  
+  Property | Value
+  --- | ---
+  Name | centos7-cephosd-ssh-krb
+  Clone | centos7-cephosd-ssh
+  Location | LVM
+  
+  ## set in dhcp
+  
+  ```bash
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.9.1    centos7-hardened-ovs-ssh-krb.arcana.me
+  10.0.9.2    centos7-ceph-ssh-krb.arcana.me
+  10.0.9.2    centos7-cephmon-ssh-krb.arcana.me
+  10.0.9.2    centos7-cephosd-ssh-krb.arcana.me
+  ```
+  ```bash
+  sudo systemctl restart dnsmasq.service
+  ```
+  
+  ## Propagate krb5.conf from SSH machine to existing VMs
+  
+  ```bash
+  scp /etc/krb5.conf centos7-hardened-ovs-ssh-krb.arcana.me:~
+  scp /etc/krb5.conf centos7-ceph-ssh-krb.arcana.me:~
+  scp /etc/krb5.conf centos7-cephmon-ssh-krb.arcana.me:~
+  scp /etc/krb5.conf centos7-cephosd-ssh-krb.arcana.me:~
+  ```
+  
+  ## ONLY centos7-ceph, centos7-cephmon, centos7-cephosd
+  
+  ```bash
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.0.3    kdc.arcana.me
+  ```
+  
+  ## Configure VM
+  
+  **ALLOW centos7-ceph-ssh-krb, centos7-cephmon-ssh-krb and centos7-cephosd-ssh-krb temporary access to internet:**
+  
+  ```bash
+  sudo ip route add default via 10.0.3.1
+  sudo bash -c "echo nameserver 10.0.0.2 > /etc/resolv.conf"
+  ```
+  
+  **CLEANUP:**
+  
+  ```bash
+  sudo ip route delete default
+  sudo bash -c "echo search arcana.me > /etc/resolv.conf"
+  ```
+  
+  **scripts:**
+  
+  ```bash
+  # install required packages
+  sudo yum install krb5-workstation pam_krb5 haveged rsh
+  ```
+  ```bash
+  # enable entropy generation tool "haveged"
+  sudo systemctl restart haveged
+  sudo systemctl enable haveged
+  sudo systemctl status haveged
+  
+  # check available system entropy
+  sudo cat /proc/sys/kernel/random/entropy_avail
+  
+  # move krb5.conf to appropriate location
+  sudo mv -fv $HOME/krb5.conf /etc/
+  sudo chown root:root /etc/krb5.conf
+  sudo chmod 644 /etc/krb5.conf
+  sudo restorecon -R -v /etc/krb5.conf
+  
+  # enable kerberos login in ssh
+  sudo nano -w /etc/ssh/sshd_config
+  ```
+  ```
+  KerberosAuthentication yes
+  GSSAPIAuthentication yes
+  GSSAPICleanupCredentials yes
+  ```
+  ```bash
+  # restart SSH service
+  sudo systemctl restart sshd
+  sudo systemctl status sshd
+  
+  # enable kerberos SSH cient
+  nano -w ~/.ssh/config
+  ```
+  ```
+  Host *.arcana.me
+  	Port 2122
+  	GSSAPIAuthentication yes
+  	GSSAPIDelegateCredentials yes
+  ```
+  ```bash
+  chmod 600 ~/.ssh/config
+  ```
+  
+  ## Upgrade non-HA version of router
+  
+  ### Delete "router.arcana.me"
+  
+  ### Clone ha-router.arcana.me
+  
+  Property | Value
+  --- | ---
+  Name | router.arcana.me
+  Clone | ha-router.arcana.me
+  Location | LVM
+  Start at Boot | No
+  
+  ## Upgrade non-HA version of NTP server
+  
+  ### Delete "ntp.arcana.me"
+  
+  ### Clone ha-ntp.arcana.me
+  
+  Property | Value
+  --- | ---
+  Name | ntp.arcana.me
+  Clone | ha-ntp.arcana.me
+  Location | LVM
+  Start at Boot | No
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-19T19:59:54.400Z"
+updatedAt: "2017-09-23T19:01:24.769Z"

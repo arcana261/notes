@@ -1,0 +1,257 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create LDAP Enabled Template VMs"
+content: '''
+  # Create LDAP Enabled Template VMs
+  
+  Property | Value
+  --- | ---
+  Name | centos7-hardened-ovs-ssh-krb-ldp
+  Clone | centos7-hardened-ovs-ssh-krb
+  Location | LVM
+  
+  Property | Value
+  --- | ---
+  Name | centos7-ceph-ssh-krb-ldp
+  Clone | centos7-ceph-ssh-krb
+  Location | LVM
+  
+  Property | Value
+  --- | ---
+  Name | centos7-cephmon-ssh-krb-ldp
+  Clone | centos7-cephmon-ssh-krb
+  Location | LVM
+  
+  Property | Value
+  --- | ---
+  Name | centos7-cephosd-ssh-krb-ldp
+  Clone | centos7-cephosd-ssh-krb
+  Location | LVM
+  
+  ## set in dhcp
+  
+  ```bash
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.9.1    centos7-hardened-ovs-ssh-krb-ldp.arcana.me
+  10.0.9.2    centos7-ceph-ssh-krb-ldp.arcana.me
+  10.0.9.2    centos7-cephmon-ssh-krb-ldp.arcana.me
+  10.0.9.2    centos7-cephosd-ssh-krb-ldp.arcana.me
+  ```
+  ```bash
+  sudo systemctl restart dnsmasq.service
+  ```
+  
+  ## SET DIFFERENT HOSTNAME FOR centos7-ceph
+  
+  ```bash
+  sudo hostnamectl set-hostname centos7-ceph.arcana.me
+  sudo reboot
+  ```
+  
+  ## SET DIFFERENT HOSTNAME FOR centos7-cephmon
+  
+  ```bash
+  sudo hostnamectl set-hostname centos7-cephmon.arcana.me
+  sudo reboot
+  ```
+  
+  ## SET DIFFERENT HOSTNAME FOR centos7-cephosd
+  
+  ```bash
+  sudo hostnamectl set-hostname centos7-cephosd.arcana.me
+  sudo reboot
+  ```
+  
+  ## Configure VM (EXCEPT centos7-ceph, centos7-cephmon, centos7-cephosd)
+  
+  ```bash
+  # set DNS to 10.0.0.2
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  [ x ] DNS1
+  [ x ] DNS2
+  DNS1=10.0.0.2
+  ```
+  ```bash
+  sudo reboot
+  ```
+  
+  ## Configure Kerberos
+  
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  
+  ## CHOICE: centos7 machine
+  
+  ```
+  addprinc -randkey host/centos7.arcana.me
+  ktadd host/centos7.arcana.me
+  quit
+  ```
+  
+  ## CHOICE: centos7-ceph machine
+  
+  ```
+  addprinc -randkey host/centos7-ceph.arcana.me
+  ktadd host/centos7-ceph.arcana.me
+  quit
+  ```
+  ```bash
+  sudo ip route add default via 10.0.3.1
+  sudo bash -c 'echo "nameserver 4.2.2.4" >> /etc/resolv.conf'
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.0.4    ldp.arcana.me
+  ```
+  
+  ## CHOICE: centos7-cephmon machine
+  
+  ```
+  addprinc -randkey host/centos7-cephmon.arcana.me
+  ktadd host/centos7-cephmon.arcana.me
+  quit
+  ```
+  ```bash
+  sudo ip route add default via 10.0.3.1
+  sudo bash -c 'echo "nameserver 4.2.2.4" >> /etc/resolv.conf'
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.0.4    ldp.arcana.me
+  ```
+  
+  ## CHOICE: centos7-cephosd machine
+  
+  ```
+  addprinc -randkey host/centos7-cephosd.arcana.me
+  ktadd host/centos7-cephosd.arcana.me
+  quit
+  ```
+  ```bash
+  sudo ip route add default via 10.0.3.1
+  sudo bash -c 'echo "nameserver 4.2.2.4" >> /etc/resolv.conf'
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  10.0.0.4    ldp.arcana.me
+  ```
+  
+  ## END CHOICE
+  
+  ## STEP TAKES FOR OTHER MACHINES AS WELL
+  
+  ```bash
+  sudo yum install nss-pam-ldapd openldap-clients
+  ```
+  ```bash
+  scp ldp.arcana.me:/etc/openldap/cacerts/ca-bundle.crt ~
+  ```
+  ```bash
+  sudo cp /home/arcana/ca-bundle.crt /etc/openldap/certs/
+  sudo mkdir -p /etc/openldap/cacerts/
+  sudo cp /home/arcana/ca-bundle.crt /etc/openldap/cacerts/
+  sudo authconfig-tui
+  ```
+  ```
+  User Information -> Use LDAP
+  User Authentication -> 
+    Use Shadow Passwords
+    Use Kerberos
+    Local authorization is sufficient
+    
+  [  ] Use TLS
+  Server: ldap://ldp.arcana.me/
+  Base DN: dc=arcana,dc=me
+  
+  [ x ] Use DNS to resolve hosts to realms
+  [ ] Use DNS to locate KDCs for realms
+  ```
+  ```bash
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-service=ldap
+  sudo firewall-cmd --permanent --add-service=ldaps
+  sudo firewall-cmd --reload
+  
+  sudo bash -c 'echo "TLS_REQCERT allow" >> /etc/openldap/ldap.conf'
+  sudo bash -c 'echo "tls_reqcert allow" >> /etc/nslcd.conf'
+  ```
+  ```bash
+  # test non-TLS connectivity
+  sudo ldapsearch -H ldap://ldp.arcana.me/ -d8 -b dc=arcana,dc=me -x
+  
+  # test TLS connectivity
+  sudo ldapsearch -H ldaps://ldp.arcana.me/ -d8 -b dc=arcana,dc=me -x
+  ```
+  ```bash
+  sudo systemctl restart nslcd
+  sudo systemctl enable nslcd
+  sudo systemctl status nslcd
+  ```
+  ```bash
+  # test connectivity
+  id cluster_u
+  ```
+  ```bash
+  # add to wheel
+  sudo gpasswd -a ceph_u wheel
+  sudo gpasswd -a cluster_u wheel
+  ```
+  
+  ## Connect other VMS to LDAP Using Procedure above
+  
+  These VMs
+  
+  1. ssh.arcana.me
+  2. cephadm.arcana.me (temporarily add default route via 10.0.3.1, temporarily add 4.2.2.4 to /etc/resolv.conf, add 10.0.0.4 ldp.arcana.me to /etc/hosts, reboot afterwards)
+  3. ntp.arcana.me (add 10.0.0.4 ldp.arcana.me to /etc/hosts)
+  4. router.arcana.me (add 10.0.0.4 ldp.arcana.me to /etc/hosts)
+  5. kdc.arcana.me
+  6. dhcp.arcana.me
+  7. ldp.arcana.me
+  8. cephmon1.arcana.me (temporarily add default route via 10.0.3.1, temporarily add 4.2.2.4 to /etc/resolv.conf, add 10.0.0.4 ldp.arcana.me to /etc/hosts) (cleanup: remove 4.2.2.4 from /etc/resolv.conf, ip route delete default)
+  9. cephosd1.arcana.me (temporarily add default route via 10.0.3.1, temporarily add 4.2.2.4 to /etc/resolv.conf, add 10.0.0.4 ldp.arcana.me to /etc/hosts) (cleanup: remove 4.2.2.4 from /etc/resolv.conf, ip route delete default)
+  
+  ## Upgrade non-HA version of router
+  
+  ### Delete "router.arcana.me"
+  
+  ### Clone ha-router.arcana.me
+  
+  Property | Value
+  --- | ---
+  Name | router.arcana.me
+  Clone | ha-router.arcana.me
+  Location | LVM
+  Start at Boot | No
+  
+  ## Upgrade non-HA version of NTP server
+  
+  ### Delete "ntp.arcana.me"
+  
+  ### Clone ha-ntp.arcana.me
+  
+  Property | Value
+  --- | ---
+  Name | ntp.arcana.me
+  Clone | ha-ntp.arcana.me
+  Location | LVM
+  Start at Boot | No
+  
+  ## Clear Authorized keys on ssh.arcana.me To Allow centeralized login after adding LDAP
+  
+  ```bash
+  truncate -s 0 ~/.ssh/authorized_keys
+  ```
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-22T12:54:23.272Z"
+updatedAt: "2017-09-26T22:27:18.894Z"

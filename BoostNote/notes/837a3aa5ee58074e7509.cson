@@ -17,6 +17,18 @@ content: '''
   sudo reboot
   ```
   
+  ## Generate new SSH keys
+  
+  ```bash
+  ssh-keygen -t rsa
+  ```
+  ```bash
+  su -
+  ```
+  ```bash
+  ssh-keygen -t rsa
+  ```
+  
   ## configure network
   
   change ip address
@@ -87,7 +99,7 @@ content: '''
           echo '    User ceph_u' >> ~/.ssh/config
           echo '    Port 2122' >> ~/.ssh/config
           echo ' ' >> ~/.ssh/config
-  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm)')"
   ```
   ```bash
   chmod +x ~/my-cluster/populate-ssh-config.sh
@@ -107,7 +119,7 @@ content: '''
           arr=($line)
           host=${arr[1]}
           ssh-copy-id ${host}
-  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|kdc.arcana.me|ldp.arcana.me|nfs.arcana.me)')"
   ```
   ```bash
   chmod +x ~/my-cluster/copy-ssh-id.sh
@@ -131,7 +143,7 @@ content: '''
           ssh ${host} 'sudo bash -c "sort -u /etc/hosts > /etc/hosts.new"' < /dev/null
           ssh ${host} 'sudo mv -fv /etc/hosts.new /etc/hosts' < /dev/null
           ssh ${host} 'rm -fv ~/hosts' < /dev/null
-  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|dhcp.arcana.me)')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|dhcp.arcana.me|kdc.arcana.me|ldp.arcana.me|nfs.arcana.me)')"
   
   rm -f ~/hosts.dhcp
   
@@ -176,7 +188,7 @@ content: '''
           arr=($line)
           host=${arr[1]}
           ssh ${host} 'sudo systemctl restart ceph.target' < /dev/null
-  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|dhcp.arcana.me|kdc.arcana.me|ldp.arcana.me|nfs.arcana.me)')"
   ```
   ```bash
   chmod +x ~/my-cluster/restart-cluster.sh
@@ -195,7 +207,7 @@ content: '''
           arr=($line)
           host=${arr[1]}
           ceph-deploy config push ${host}
-  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|dhcp.arcana.me|kdc.arcana.me|ldp.arcana.me|nfs.arcana.me)')"
   
   ~/my-cluster/restart-cluster.sh
   ```
@@ -208,4 +220,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T18:04:14.575Z"
-updatedAt: "2017-09-08T07:27:14.028Z"
+updatedAt: "2017-09-26T22:19:13.795Z"
