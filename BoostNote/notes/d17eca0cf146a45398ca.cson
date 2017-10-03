@@ -9,6 +9,7 @@ content: '''
   Name | router.arcana.me
   Clone | centos7-hardened-ovs
   Start at Boot | Yes
+  Order | order=1, up=20, down=20
   
   ## -> Delete bare-router.arcana.me
   
@@ -106,6 +107,18 @@ content: '''
   sudo reboot
   ```
   
+  ## Connect ProxMox1 to Internet
+  
+  ProxMox1 -> System -> Network -> vmbr0
+  
+  [ x ] Gateway
+  
+  ProxMox1 -> System -> Network -> vmbr2 -> Gateway -> 10.0.3.1
+  
+  ProxMox1 -> System -> DNS -> 4.2.2.4, 8.8.8.8
+  
+  Reboot ProxMox1
+  
   
   
 '''
@@ -113,4 +126,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T17:31:44.595Z"
-updatedAt: "2017-09-04T17:49:03.517Z"
+updatedAt: "2017-09-30T12:10:10.428Z"

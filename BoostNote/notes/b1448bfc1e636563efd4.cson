@@ -7,9 +7,11 @@ content: '''
   Property | Value
   --- | ---
   Name | cephosd1.arcana.me
-  Clone | centos7-cephosd
+  Clone | centos7-hardened-ovs-ntp-ceph
   Start At Boot | Yes
-  Boot Order | order=2,up=120,down=120
+  Boot Order | order=5,up=120,down=120
+  Memory | 2 GB
+  HDD | Secondary VirtIO HDD from "extra" LVM-Thin Storage
   
   ## set hostname
   
@@ -31,6 +33,14 @@ content: '''
   reboot
   ```bash
   sudo reboot
+  ```
+  
+  ## enable port through firewall
+  
+  ```bash
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-service=ceph
+  sudo firewall-cmd --reload
   ```
   
   ## Ceph Admin Node
@@ -77,4 +87,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T21:21:19.679Z"
-updatedAt: "2017-09-19T03:00:45.038Z"
+updatedAt: "2017-09-30T15:05:06.468Z"

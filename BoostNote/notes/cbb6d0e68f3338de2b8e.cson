@@ -7,28 +7,10 @@ content: '''
   Property | Value
   --- | ---
   Name | ldp.arcana.me
-  Clone | centos7-hardened-ovs-ssh-krb
+  Clone | centos7-hardened-ovs-ntp-ceph-dns-ssh-krb
   Location | RBD
   Start at Boot | Yes
-  Boot Order | order=7,up=10,down=10
-  
-  ## Assign static IP
-  
-  ```bash
-  sudo nano -w /etc/dnsmasq.arcana.me.hosts
-  ```
-  ```
-  0A:4A:27:E6:7E:D1,set:cluster,10.0.0.4,ldp.arcana.me,infinite
-  ```
-  ```bash
-  sudo nano -w /etc/hosts
-  ```
-  ```
-  10.0.0.4    ldp.arcana.me
-  ```
-  ```bash
-  sudo systemctl restart dnsmasq.service
-  ```
+  Boot Order | order=12,up=20,down=20
   
   ## Configure VM
   
@@ -43,6 +25,7 @@ content: '''
   [ x ] GATEWAY
   [ x ] DNS1
   [ x ] DNS2
+  [ x ] DNS3
   ```
   ```bash
   sudo reboot
@@ -87,7 +70,7 @@ content: '''
   olcRootPW: {SSHA}xxxxxxxxxxxxxxxxxxxxxxxx
   ```
   ```bash
-  sudo ldapadd -Y EXTERNAL -H ldapi:/// -f chrootpw.ldif 
+  sudo ldapadd -Y EXTERNAL -H ldapi:/// -f ~/chrootpw.ldif 
   ```
   
   ## Import basic schemas
@@ -192,13 +175,6 @@ content: '''
   ## NOTE
   
   sudo ldapadd -x -D cn=Manager,dc=arcana,dc=me -W -f ~/basedomain.ldif 
-  
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
   ```
   
   ## Open ports through firewall
@@ -287,9 +263,7 @@ content: '''
   
   ```bash
   # create a dummy account for ceph
-  sudo useradd ceph_u
   sudo useradd cluster_u
-  sudo gpasswd -a ceph_u wheel
   sudo gpasswd -a cluster_u wheel
   
   # configure migration tools
@@ -340,13 +314,6 @@ content: '''
   ## NOTE
   
   sudo ldapadd -x -D cn=Manager,dc=arcana,dc=me -W -f ~/export-groups.ldif 
-  
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
   ```
   ```bash
   # import ldif files to ldap
@@ -360,22 +327,14 @@ content: '''
   ## NOTE
   
   sudo ldapadd -x -D cn=Manager,dc=arcana,dc=me -W -f ~/export-users.ldif 
-  
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
-  ## NOTE
   ```
   
-  ## Create Principals for Users on kdc.arcana.me
+  ## Create Principals for Users
   
   ```bash
-  sudo kadmin.local
+  sudo kadmin -p arcana/admin
   ```
   ```
-  addprinc ceph_u
   addprinc cluster_u
   quit
   ```
@@ -384,4 +343,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-22T08:45:33.931Z"
-updatedAt: "2017-09-25T22:34:36.423Z"
+updatedAt: "2017-09-30T21:11:43.159Z"

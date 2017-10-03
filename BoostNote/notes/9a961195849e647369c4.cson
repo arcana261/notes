@@ -7,10 +7,10 @@ content: '''
   Property | Value
   --- | ---
   Name | ssh.arcana.me
-  Clone | centos7-hardened-ovs
+  Clone | centos7-hardened-ovs-ntp-ceph-dns
   Location | RBD
   Start at Boot | Yes
-  Boot Order | order=100,up=10,down=10
+  Boot Order | order=10,up=20,down=20
   
   ## first-run config
   
@@ -34,6 +34,7 @@ content: '''
   [ x ] GATEWAY
   [ x ] DNS1
   [ x ] DNS2
+  [ x ] DNS3
   ```
   ```bash
   sudo reboot
@@ -64,6 +65,14 @@ content: '''
   ```
   ```bash
   ssh-keygen -t rsa
+  exit
+  ```
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  ssh-keygen -t rsa
+  exit
   ```
   
   ## Copy SSH id's to known VMs
@@ -79,7 +88,7 @@ content: '''
   chmod 600 ~/.ssh/config
   ```
   ```bash
-  for host in $(echo router ntp cephadm cephmon1 cephosd1 dhcp); do \\
+  for host in $(echo router ntp cephadm cephmon1 cephosd1 dhcp ssh); do \\
       ssh-copy-id ${host}.arcana.me; \\
   done
   ```
@@ -114,109 +123,19 @@ content: '''
   
   Property | Value
   --- | ---
-  Name | centos7-ceph-ssh
-  Clone | centos7-ceph
+  Name | centos7-hardened-ovs-ntp-ceph-dns-ssh
+  Clone | centos7-hardened-ovs-ntp-ceph-dns
   Location | LVM
-  
-  ### add ip address to dhcp (on dhcp machine)
-  
-  ```bash
-  sudo nano -w /etc/hosts
-  ```
-  ```
-  10.0.9.2    centos7-ceph-ssh.arcana.me
-  ```
-  ```bash
-  sudo systemctl restart dnsmasq.service
-  ```
   
   ### copy ssh id
   
   ```bash
-  ssh-copy-id centos7-ceph-ssh.arcana.me
+  ssh-copy-id centos7.arcana.me
   ```
-  
-  ## Create SSH-aware centos7 cephmon image
-  
-  Property | Value
-  --- | ---
-  Name | centos7-cephmon-ssh
-  Clone | centos7-cephmon
-  Location | LVM
-  
-  ### add ip address to dhcp (on dhcp machine)
-  
-  ```bash
-  sudo nano -w /etc/hosts
-  ```
-  ```
-  10.0.9.2    centos7-cephmon-ssh.arcana.me
-  ```
-  ```bash
-  sudo systemctl restart dnsmasq.service
-  ```
-  
-  ### copy ssh id
-  
-  ```bash
-  ssh-copy-id centos7-cephmon-ssh.arcana.me
-  ```
-  
-  ## Create SSH-aware centos7 cephosd image
-  
-  Property | Value
-  --- | ---
-  Name | centos7-cephosd-ssh
-  Clone | centos7-cephosd
-  Location | LVM
-  
-  ### add ip address to dhcp (on dhcp machine)
-  
-  ```bash
-  sudo nano -w /etc/hosts
-  ```
-  ```
-  10.0.9.2    centos7-cephosd-ssh.arcana.me
-  ```
-  ```bash
-  sudo systemctl restart dnsmasq.service
-  ```
-  
-  ### copy ssh id
-  
-  ```bash
-  ssh-copy-id centos7-cephosd-ssh.arcana.me
-  ```
-  
-  ## Upgrade non-HA version of router
-  
-  ### Delete "router.arcana.me"
-  
-  ### Clone ha-router.arcana.me
-  
-  Property | Value
-  --- | ---
-  Name | router.arcana.me
-  Clone | ha-router.arcana.me
-  Location | LVM
-  Start at Boot | No
-  
-  ## Upgrade non-HA version of NTP server
-  
-  ### Delete "ntp.arcana.me"
-  
-  ### Clone ha-ntp.arcana.me
-  
-  Property | Value
-  --- | ---
-  Name | ntp.arcana.me
-  Clone | ha-ntp.arcana.me
-  Location | LVM
-  Start at Boot | No
   
 '''
 tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-08T14:47:34.274Z"
-updatedAt: "2017-09-26T22:17:33.316Z"
+updatedAt: "2017-09-30T18:22:18.027Z"

@@ -7,28 +7,10 @@ content: '''
   Property | Value
   --- | ---
   Name | nfs.arcana.me
-  Clone | centos7-hardened-ovs-ssh-krb-ldp
+  Clone | centos7-hardened-ovs-ntp-ceph-dns-ssh-krb-ldp
   Location | RBD
   Start at Boot | Yes
-  Boot Order | order=8,up=10,down=10
-  
-  ## Assign static IP
-  
-  ```bash
-  sudo nano -w /etc/dnsmasq.arcana.me.hosts
-  ```
-  ```
-  CA:78:0F:E9:92:1F,set:cluster,10.0.0.5,nfs.arcana.me,infinite
-  ```
-  ```bash
-  sudo nano -w /etc/hosts
-  ```
-  ```
-  10.0.0.5    nfs.arcana.me
-  ```
-  ```bash
-  sudo systemctl restart dnsmasq.service
-  ```
+  Boot Order | order=13,up=20,down=20
   
   ## Configure VM
   
@@ -45,9 +27,6 @@ content: '''
   [ x ] DNS2
   ```
   ```bash
-  sudo reboot
-  ```
-  ```bash
   # create keytab
   sudo kadmin -p arcana/admin
   ```
@@ -55,6 +34,9 @@ content: '''
   addprinc -randkey host/nfs.arcana.me
   ktadd host/nfs.arcana.me
   quit
+  ```
+  ```bash
+  sudo reboot
   ```
   
   ## Install required packages
@@ -123,12 +105,6 @@ content: '''
   ## Export Cluster Configuration from cephadm.arcana.me
   
   ```bash
-  sudo nano -w /etc/hosts
-  ```
-  ```
-  10.0.0.5    nfs.arcana.me
-  ```
-  ```bash
   su - ceph_u
   ```
   ```bash
@@ -143,7 +119,7 @@ content: '''
   ```bash
   cd ~
   tar cvpf my_cluster.tar.gz my-cluster/
-  scp ~/my_cluster.tar.gz nfs.arcana.me
+  scp ~/my_cluster.tar.gz nfs.arcana.me:~
   ```
   
   ## Extract cluster configuration in nfs.arcana.me
@@ -162,4 +138,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-23T21:08:12.835Z"
-updatedAt: "2017-09-25T22:58:18.203Z"
+updatedAt: "2017-09-30T23:44:16.977Z"

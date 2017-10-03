@@ -13,13 +13,9 @@ content: '''
   - [x] Create Hardened CentOS with OVS
   - [x] Create Router Server
   - [x] Create NTP Server
-  - [x] Create Pre Ceph VM Image
+  - [x] Create Ceph Template Image
   - [x] Create Ceph Admin Node
   - [x] Create First Ceph Monitor
-  - [x] Create Ceph Base Image
-  - [x] Post Configure Ceph Admin Node (NTP)
-  - [x] Create Ceph Monitor Template Image
-  - [x] Create Ceph OSD Template Image
   - [x] Create First Ceph OSD
   - [x] Connect First ProxMox Server To RBD
   - [x] Create HA (over RBD) versions of VM's
@@ -28,15 +24,15 @@ content: '''
   - [x] Create Kerberos Server
   - [x] Connect Existing VMs to Kerberos
   - [x] Create Kerberos Enabled Template VMs
-  - [ ] Connect ProxMox1 to Kerberos Server
-  - [ ] Create LDAP Server
-  - [ ] Create LDAP Enabled Template VMs
-  - [ ] Setup NFS Service
-  - [ ] Connect Existing VM's to NFS
-  - [ ] Fix Ceph Admin Node with new Mechanisms
+  - [x] Create LDAP Server
+  - [x] Create LDAP Enabled Template VMs
+  - [x] Setup NFS Service
+  - [x] Connect Existing VM's to NFS
+  - [ ] Create Mail Server for Cluster
+  
 '''
 tags: []
 isStarred: true
 isTrashed: false
 createdAt: "2017-08-30T09:38:45.981Z"
-updatedAt: "2017-09-26T22:32:07.093Z"
+updatedAt: "2017-10-01T12:27:07.698Z"

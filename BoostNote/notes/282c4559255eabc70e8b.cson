@@ -7,10 +7,10 @@ content: '''
   Property | Value
   --- | ---
   Name | dhcp.arcana.me
-  Clone | centos7-preceph
+  Clone | centos7-hardened-ovs-ntp-ceph
   Location | RBD
   Start at Boot | Yes
-  Boot Order | order=5,up=10,down=10
+  Boot Order | order=9,up=20,down=20
   
   ## first-run config
   
@@ -42,38 +42,7 @@ content: '''
   10.0.3.1    router.arcana.me
   10.0.3.2    ntp.arcana.me
   10.0.6.1    proxmox1.arcana.me
-  10.0.9.1    centos7-new.arcana.me
-  10.0.9.1    centos7-base.arcana.me
-  10.0.9.1    centos7-hardened.arcana.me
-  10.0.9.1    centos7-hardened-ovs.arcana.me
-  10.0.9.2    centos7-preceph.arcana.me
-  10.0.9.2    centos7-ceph.arcana.me
-  10.0.9.2    centos7-cephmon.arcana.me
-  10.0.9.2    centos7-cephosd.arcana.me
-  ```
-  
-  ## Ceph Admin Node
-  
-  perform these on ceph user
-  ```bash
-  su - ceph_u
-  ```
-  ```bash
-  cd ~/my-cluster
-  
-  # add to hosts
-  sudo vim /etc/hosts
-  ```
-  ```
-  10.0.0.2    dhcp.arcana.me
-  ```
-  ```bash
-  # copy ssh id
-  ~/my-cluster/copy-ssh-id.sh
-  ```
-  ```bash
-  # copy hosts
-  ~/my-cluster/copy-hosts.sh
+  10.0.9.1    centos7.arcana.me
   ```
   
   ## configure dnsmasq
@@ -85,6 +54,7 @@ content: '''
   dhcp-range=set:cluster,10.0.5.1,10.0.5.254,24h
   dhcp-optsfile=/etc/dnsmasq.arcana.me.opts
   dhcp-hostsfile=/etc/dnsmasq.arcana.me.hosts
+  resolv-file=/etc/dnsmasq.arcana.me.resolv
   log-dhcp
   domain-needed
   domain=arcana.me
@@ -101,6 +71,12 @@ content: '''
   ```
   ```bash
   sudo touch /etc/dnsmasq.arcana.me.hosts
+  sudo nano -w /etc/dnsmasq.arcana.me.resolv
+  ```
+  ```
+  search arcana.me
+  nameserver 4.2.2.4
+  nameserver 8.8.8.8
   ```
   
   ## enable and start dnsmasq service
@@ -121,9 +97,89 @@ content: '''
   sudo firewall-cmd --reload
   ```
   
+  ## Connect ProxMox1 to DHCP Server
+  
+  **System -> DNS -> 10.0.0.2, 4.2.2.4, 8.8.8.8**
+  
+  **Reboot ProxMox1**
+  
+  ## Disable outside DNS on eth1 on router.arcana.me
+  
+  ```bash
+  sudo vim /etc/sysconfig/network-scripts/ifcfg-eth1
+  ```
+  ```
+  [ x ] DNS1
+  [ x ] DNS2
+  ```
+  ```bash
+  sudo reboot
+  ```
+  
+  ## Connect other VM's to DHCP Server
+  
+  For these VMs
+  
+  1. router.arcana.me
+  2. ntp.arcana.me
+  3. cephadm.arcana.me
+  4. cephmon1.arcana.me
+  5. cephosd1.arcana.me
+  6. dhcp.arcana.me
+  
+  **procedure:**
+  
+  ```bash
+  sudo vim /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  DNS1=10.0.0.2
+  DNS2=4.2.2.4
+  DNS3=8.8.8.8
+  ```
+  ```bash
+  sudo reboot
+  ```
+  
+  ## Create DNS-enabled Template VM
+  
+  Property | Value
+  --- | ---
+  Name | centos7-hardened-ovs-ntp-ceph-dns
+  Clone | centos7-hardened-ovs-ntp-ceph
+  
+  **Perform procedure as above**
+  
+  ## Ceph Admin Node
+  
+  perform these on ceph user
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  cd ~/my-cluster
+  ```
+  ```bash
+  # copy ssh id
+  ~/my-cluster/copy-ssh-id.sh
+  ```
+  ```bash
+  # copy hosts
+  ~/my-cluster/copy-hosts.sh
+  ```
+  
+  ## DHCP Node
+  
+  **Reboot dnsmasq service**
+  
+  ```bash
+  sudo systemctl enable dnsmasq
+  sudo systemctl restart dnsmasq
+  sudo systemctl status dnsmasq
+  ```
 '''
 tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-08T06:53:07.793Z"
-updatedAt: "2017-09-18T18:49:20.400Z"
+updatedAt: "2017-09-30T19:10:59.599Z"

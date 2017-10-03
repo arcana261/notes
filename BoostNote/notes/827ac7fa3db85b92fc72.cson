@@ -7,22 +7,10 @@ content: '''
   Property | Value
   --- | ---
   Name | kdc.arcana.me
-  Clone | centos7-hardened-ovs-ssh
+  Clone | centos7-hardened-ovs-ntp-ceph-dns-ssh
   Location | RBD
   Start at Boot | Yes
-  Boot Order | order=6,up=10,down=10
-  
-  ## Assign static IP
-  
-  ```bash
-  sudo nano -w /etc/dnsmasq.arcana.me.hosts
-  ```
-  ```
-  8A:2A:15:E4:80:E7,set:cluster,10.0.0.3,kdc.arcana.me,infinite
-  ```
-  ```bash
-  sudo systemctl restart dnsmasq.service
-  ```
+  Boot Order | order=11,up=20,down=20
   
   ## Configure VM
   
@@ -37,6 +25,7 @@ content: '''
   [ x ] GATEWAY
   [ x ] DNS1
   [ x ] DNS2
+  [ x ] DNS3
   ```
   ```bash
   sudo reboot
@@ -64,6 +53,8 @@ content: '''
   
   ```bash
   sudo yum install krb5-server 
+  ```
+  ```bash
   # enable kerberos through firewall
   sudo firewall-cmd --reload
   sudo firewall-cmd --permanent --add-service=kerberos
@@ -150,6 +141,7 @@ content: '''
   ```
   ```
   addprinc arcana
+  addprinc ceph_u
   ```
   ```
   addprinc -randkey kadmin/kdc.arcana.me
@@ -193,6 +185,9 @@ content: '''
   ```
   ```bash
   chmod 600 ~/.ssh/config
+  sudo mkdir -p /home/ceph_u/.ssh
+  sudo cp ~/.ssh/config /home/ceph_u/.ssh/
+  sudo chown ceph_u:ceph_u /home/ceph_u/.ssh/config
   ```
   ```bash
   # enable kerberos login in ssh
@@ -214,4 +209,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-18T18:32:40.835Z"
-updatedAt: "2017-09-22T20:37:02.429Z"
+updatedAt: "2017-09-30T18:44:46.708Z"

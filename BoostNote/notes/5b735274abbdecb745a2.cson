@@ -11,7 +11,7 @@ content: '''
   2. Clone (name = ha-router.arcana.me, target = rbd)
   3. Disable Start at Boot from router.arcana.me
   4. Power on ha-router.arcana.me
-  5. Boot Order = order=3,up=10,down=10
+  5. Boot Order = order=6,up=20,down=20
   
   ## Migrate NTP server
   
@@ -19,7 +19,7 @@ content: '''
   2. Clone (name = ha-ntp.arcana.me, target = rbd)
   3. Disable Start at Boot from ntp.arcana.me
   4. Power on ha-ntp.arcana.me
-  5. Boot Order = order=4,up=10,down=10
+  5. Boot Order = order=7,up=20,down=20
   
   ## Migrate Ceph Admin Node
   
@@ -28,10 +28,10 @@ content: '''
   3. DELETE VM cephadm.arcana.me
   4. RENAME ha-cephadm.arcana.me to cephadm.arcana.me
   5. Power on cephadm.arcana.me
-  6. Boot Order = order=100,up=10,down=10
+  6. Boot Order = order=8,up=20,down=20
 '''
 tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-05T21:56:31.709Z"
-updatedAt: "2017-09-18T18:50:14.609Z"
+updatedAt: "2017-09-30T15:20:45.450Z"

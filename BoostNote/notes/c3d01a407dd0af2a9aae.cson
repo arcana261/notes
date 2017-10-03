@@ -4,57 +4,6 @@ title: "Connect First ProxMox Server To RBD"
 content: '''
   # Connect First ProxMox Server To RBD
   
-  ## Configure Network
-  
-  configure vmbr2 to access internet
-  
-  Property | Value
-  --- | ---
-  IP | 10.0.6.1
-  Subnet | 255.255.240.0
-  Gateway | 10.0.3.1
-  
-  configure resolv.conf
-  ```bash
-  vi /etc/resolv.conf
-  ```
-  ```
-  search arcana.me
-  nameserver 4.2.2.4
-  nameserver 8.8.8.8
-  ```
-  
-  ## Reboot
-  
-  ## install additional package
-  ```bash
-  apt-get update
-  apt-get install vim nano net-tools chrony ntpdate sudo
-  ```
-  
-  ## Configure NTP
-  
-  force time update
-  ```bash
-  ntpdate 10.0.3.2
-  ```
-  
-  configure ntp
-  ```bash
-  sudo vim /etc/chrony/chrony.conf
-  ```
-  ```
-  # pool 2.debian.pool.ntp.org iburst
-  server 10.0.3.2 iburst
-  ```
-  
-  ## Reboot
-  
-  verify time synchronization
-  ```bash
-  sudo chronyc sources -v
-  ```
-  
   ## configure ceph_u administration user
   
   create a user for ceph installation
@@ -72,7 +21,7 @@ content: '''
   ## change ssh port
   
   ```bash
-  sudo vim /etc/ssh/sshd_config
+  sudo nano -w /etc/ssh/sshd_config
   ```
   ```
   Port 2122
@@ -89,6 +38,8 @@ content: '''
     Port 2122
     User root
   ```
+  
+  ## Reboot ProxMox1
   
   ## Ceph Admin Node
   
@@ -140,4 +91,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T22:04:57.236Z"
-updatedAt: "2017-09-05T21:54:21.330Z"
+updatedAt: "2017-09-30T15:09:26.530Z"
