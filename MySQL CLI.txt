@@ -1,0 +1,17 @@
+mysql -U <user> -p
+mysql -U <user> -p <database>
+
+.............................
+
+
+show databases;
+connect <database>;
+
+
+show tables;
+show columns from <table>;
+show index from <table>;
+show create table <table>;
+describe <table>;
+
+
