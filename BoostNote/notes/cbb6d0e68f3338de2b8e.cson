@@ -1,0 +1,346 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create LDAP Server"
+content: '''
+  # Create LDAP Server
+  
+  Property | Value
+  --- | ---
+  Name | ldp.arcana.me
+  Clone | centos7-hardened-ovs-ntp-ceph-dns-ssh-krb
+  Location | RBD
+  Start at Boot | Yes
+  Boot Order | order=12,up=20,down=20
+  
+  ## Configure VM
+  
+  ```bash
+  sudo hostnamectl set-hostname ldp.arcana.me
+  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
+  ```
+  ```
+  BOOTPROTO=dhcp
+  [ x ] IPADDR
+  [ x ] PREFIX
+  [ x ] GATEWAY
+  [ x ] DNS1
+  [ x ] DNS2
+  [ x ] DNS3
+  ```
+  ```bash
+  sudo reboot
+  ```
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/ldp.arcana.me
+  ktadd host/ldp.arcana.me
+  quit
+  ```
+  
+  ## Install required packages
+  
+  ```bash
+  sudo yum install openldap* migrationtools
+  ```
+  ```bash
+  sudo cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+  sudo chown ldap. /var/lib/ldap/DB_CONFIG
+  sudo systemctl enable slapd 
+  sudo systemctl restart slapd
+  sudo systemctl status slapd 
+  ```
+  
+  ## Set openlap admin password
+  
+  ```bash
+  sudo bash -c "slappasswd -h {SSHA} >> /home/arcana/chrootpw.ldif"
+  ```
+  ```bash
+  sudo chown arcana:arcana ~/chrootpw.ldif
+  sudo chmod 644 ~/chrootpw.ldif
+  vim ~/chrootpw.ldif
+  ```
+  ```
+  dn: olcDatabase={0}config,cn=config
+  changetype: modify
+  add: olcRootPW
+  olcRootPW: {SSHA}xxxxxxxxxxxxxxxxxxxxxxxx
+  ```
+  ```bash
+  sudo ldapadd -Y EXTERNAL -H ldapi:/// -f ~/chrootpw.ldif 
+  ```
+  
+  ## Import basic schemas
+  
+  ```bash
+  sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif 
+  sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif 
+  sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif 
+  ```
+  
+  ## Set domain name
+  
+  **NOTE: for a domain name of example.com the correct specification is dc=example,dc=com so now that our domain is arcana.me we specify dc=arcana,dc=me**
+  
+  **NOTE: do not forget to replace {SSHA}xxxxxxxxxxxxx PART!**
+  
+  ```bash
+  sudo bash -c "slappasswd -h {SSHA} >> /home/arcana/chdomain.ldif"
+  ```
+  ```bash
+  sudo chown arcana:arcana ~/chdomain.ldif
+  sudo chmod 644 ~/chdomain.ldif
+  vim ~/chdomain.ldif
+  ```
+  ```
+  :%s/dc=example,dc=com/dc=arcana,dc=me/g
+  ```
+  ```
+  dn: olcDatabase={1}monitor,cn=config
+  changetype: modify
+  replace: olcAccess
+  olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth"
+    read by dn.base="cn=Manager,dc=example,dc=com" read by * none
+  
+  dn: olcDatabase={2}hdb,cn=config
+  changetype: modify
+  replace: olcSuffix
+  olcSuffix: dc=example,dc=com
+  
+  dn: olcDatabase={2}hdb,cn=config
+  changetype: modify
+  replace: olcRootDN
+  olcRootDN: cn=Manager,dc=example,dc=com
+  
+  dn: olcDatabase={2}hdb,cn=config
+  changetype: modify
+  add: olcRootPW
+  olcRootPW: {SSHA}xxxxxxxxxxxxxxxxxxxxxxxx
+  
+  dn: olcDatabase={2}hdb,cn=config
+  changetype: modify
+  add: olcAccess
+  olcAccess: {0}to attrs=userPassword,shadowLastChange by
+    dn="cn=Manager,dc=example,dc=com" write by anonymous auth by self write by * none
+  olcAccess: {1}to dn.base="" by * read
+  olcAccess: {2}to * by dn="cn=Manager,dc=example,dc=com" write by * read
+  ```
+  ```bash
+  sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f ~/chdomain.ldif 
+  
+  # verify operation by ldapsearch
+  sudo ldapsearch -H ldapi:// -LLL -Q -Y EXTERNAL -b "cn=config" "(olcRootDN=*)" dn olcRootDN olcRootPW
+  
+  # verify operation by cat
+  sudo cat /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif
+  ```
+  ```bash
+  vim ~/basedomain.ldif 
+  ```
+  ```
+  :%s/dc=example,dc=com/dc=arcana,dc=me/g
+  :%s/dc: example/dc: arcana/g
+  ```
+  ```
+  dn: dc=example,dc=com
+  objectClass: top
+  objectClass: dcObject
+  objectclass: organization
+  o: Server World
+  dc: example
+  
+  dn: cn=Manager,dc=example,dc=com
+  objectClass: organizationalRole
+  cn: Manager
+  description: Directory Manager
+  
+  dn: ou=People,dc=example,dc=com
+  objectClass: organizationalUnit
+  ou: People
+  
+  dn: ou=Group,dc=example,dc=com
+  objectClass: organizationalUnit
+  ou: Group
+  ```
+  ```bash
+  ## NOTE
+  ## NOTE
+  ## NOTE
+  ## REPLACE dc=arcana,dc=me WITH APPROPRIATE DOMAIN NAME
+  ## NOTE
+  ## NOTE
+  ## NOTE
+  
+  sudo ldapadd -x -D cn=Manager,dc=arcana,dc=me -W -f ~/basedomain.ldif 
+  ```
+  
+  ## Open ports through firewall
+  
+  ```bash
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-service=ldap
+  sudo firewall-cmd --reload
+  ```
+  
+  ## Generate certificate for LDAP
+  
+  ```bash
+  cd /etc/pki/tls/certs
+  sudo make server.key
+  ```
+  ```bash
+  # remove passphrase from private key
+  sudo openssl rsa -in server.key -out server.key 
+  ```
+  ```bash
+  sudo make server.csr 
+  ```
+  ```bash
+  sudo openssl x509 -in server.csr -out server.crt -req -signkey server.key -days 3650
+  cd ~
+  ```
+  
+  ## Configure LDAP to use certificates
+  
+  ```bash
+  sudo cp /etc/pki/tls/certs/server.key /etc/openldap/certs/
+  sudo cp /etc/pki/tls/certs/server.crt /etc/openldap/certs/
+  sudo cp /etc/pki/tls/certs/ca-bundle.crt /etc/openldap/certs/
+  sudo mkdir -p /etc/openldap/cacerts/
+  sudo cp /etc/pki/tls/certs/ca-bundle.crt /etc/openldap/cacerts/
+  
+  vim ~/mod_ssl.ldif 
+  ```
+  ```
+  dn: cn=config
+  changetype: modify
+  add: olcTLSCACertificateFile
+  olcTLSCACertificateFile: /etc/openldap/certs/ca-bundle.crt
+  -
+  replace: olcTLSCertificateFile
+  olcTLSCertificateFile: /etc/openldap/certs/server.crt
+  -
+  replace: olcTLSCertificateKeyFile
+  olcTLSCertificateKeyFile: /etc/openldap/certs/server.key
+  ```
+  ```bash
+  sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f ~/mod_ssl.ldif 
+  ```
+  ```bash
+  sudo vim /etc/sysconfig/slapd 
+  ```
+  ```
+  SLAPD_URLS="ldapi:/// ldap:/// ldaps:///" 
+  ```
+  ```bash
+  sudo systemctl restart slapd 
+  sudo systemctl status slapd 
+  ```
+  
+  ## Open LDAPS port through firewall
+  
+  ```bash
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-service=ldaps
+  sudo firewall-cmd --reload
+  ```
+  
+  ## Configure LDAP client for TLS connection
+  
+  ```bash
+  sudo bash -c 'echo "TLS_REQCERT allow" >> /etc/openldap/ldap.conf'
+  sudo bash -c 'echo "tls_reqcert allow" >> /etc/nslcd.conf'
+  sudo authconfig --enableldaptls --update 
+  ```
+  ```bash
+  sudo reboot
+  ```
+  
+  ## Migrate users to LDAP
+  
+  ```bash
+  # create a dummy account for ceph
+  sudo useradd cluster_u
+  sudo gpasswd -a cluster_u wheel
+  
+  # configure migration tools
+  sudo vim /usr/share/migrationtools/migrate_common.ph 
+  ```
+  ```
+  # Default DNS domain
+  $DEFAULT_MAIL_DOMAIN = "arcana.me";
+  
+  # Default base 
+  $DEFAULT_BASE = "dc=arcana,dc=me";
+  
+  # turn this on to support more general object clases
+  # such as person.
+  $EXTENDED_SCHEMA = 1;
+  ```
+  ```
+  # seperate target users
+  grep arcana /etc/passwd >> ~/export-users
+  grep ceph_u /etc/passwd >> ~/export-users
+  grep cluster_u /etc/passwd >> ~/export-users
+  
+  # seperate target groups
+  grep arcana /etc/group >> ~/export-groups
+  grep ceph_u /etc/group >> ~/export-groups
+  grep cluster_u /etc/group >> ~/export-groups
+  
+  # uniqe export groups
+  sort -u ~/export-groups > ~/export-groups.new
+  rm -fv ~/export-groups
+  mv -fv ~/export-groups.new ~/export-groups
+  
+  # create user migration ldif
+  /usr/share/migrationtools/migrate_passwd.pl ~/export-users ~/export-users.ldif
+  
+  # create group migration ldif
+  /usr/share/migrationtools/migrate_group.pl ~/export-groups ~/export-groups.ldif
+  ```
+  ```bash
+  # import ldif files to ldap
+  
+  ## NOTE
+  ## NOTE
+  ## NOTE
+  ## REPLACE dc=arcana,dc=me WITH APPROPRIATE DOMAIN NAME
+  ## NOTE
+  ## NOTE
+  ## NOTE
+  
+  sudo ldapadd -x -D cn=Manager,dc=arcana,dc=me -W -f ~/export-groups.ldif 
+  ```
+  ```bash
+  # import ldif files to ldap
+  
+  ## NOTE
+  ## NOTE
+  ## NOTE
+  ## REPLACE dc=arcana,dc=me WITH APPROPRIATE DOMAIN NAME
+  ## NOTE
+  ## NOTE
+  ## NOTE
+  
+  sudo ldapadd -x -D cn=Manager,dc=arcana,dc=me -W -f ~/export-users.ldif 
+  ```
+  
+  ## Create Principals for Users
+  
+  ```bash
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc cluster_u
+  quit
+  ```
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-22T08:45:33.931Z"
+updatedAt: "2017-09-30T21:11:43.159Z"

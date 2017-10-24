@@ -1,0 +1,145 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Create LDAP Enabled Template VMs"
+content: '''
+  # Create LDAP Enabled Template VMs
+  
+  Property | Value
+  --- | ---
+  Name | centos7-hardened-ovs-ntp-ceph-dns-ssh-krb-ldp
+  Clone | centos7-hardened-ovs-ntp-ceph-dns-ssh-krb
+  Location | LVM
+  
+  These VMs
+  
+  1. ssh.arcana.me
+  2. cephadm.arcana.me
+  3. ntp.arcana.me
+  4. router.arcana.me
+  5. kdc.arcana.me
+  6. dhcp.arcana.me
+  7. ldp.arcana.me
+  8. cephmon1.arcana.me
+  9. cephosd1.arcana.me
+  
+  ## STEP TAKES FOR OTHER MACHINES AS WELL
+  
+  ```bash
+  sudo yum install nss-pam-ldapd openldap-clients
+  ```
+  ```bash
+  scp ldp.arcana.me:/etc/openldap/cacerts/ca-bundle.crt ~
+  ```
+  ```bash
+  sudo cp /home/arcana/ca-bundle.crt /etc/openldap/certs/
+  sudo mkdir -p /etc/openldap/cacerts/
+  sudo cp /home/arcana/ca-bundle.crt /etc/openldap/cacerts/
+  sudo authconfig-tui
+  ```
+  ```
+  User Information -> Use LDAP
+  User Authentication -> 
+    Use Shadow Passwords
+    Use Kerberos
+    Local authorization is sufficient
+    
+  [  ] Use TLS
+  Server: ldap://ldp.arcana.me/
+  Base DN: dc=arcana,dc=me
+  
+  [ x ] Use DNS to resolve hosts to realms
+  [ ] Use DNS to locate KDCs for realms
+  ```
+  ```bash
+  sudo bash -c 'echo "TLS_REQCERT allow" >> /etc/openldap/ldap.conf'
+  sudo bash -c 'echo "tls_reqcert allow" >> /etc/nslcd.conf'
+  ```
+  ```bash
+  # test non-TLS connectivity
+  sudo ldapsearch -H ldap://ldp.arcana.me/ -d8 -b dc=arcana,dc=me -x
+  
+  # test TLS connectivity
+  sudo ldapsearch -H ldaps://ldp.arcana.me/ -d8 -b dc=arcana,dc=me -x
+  ```
+  ```bash
+  sudo systemctl restart nslcd
+  sudo systemctl enable nslcd
+  sudo systemctl status nslcd
+  ```
+  ```bash
+  # test connectivity
+  id cluster_u
+  ```
+  ```bash
+  # add to wheel
+  sudo gpasswd -a ceph_u wheel
+  sudo gpasswd -a cluster_u wheel
+  
+  # clear authorized keys
+  rm -f /home/arcana/.ssh/authorized_keys
+  rm -f /home/ceph_u/.ssh/authorized_keys
+  rm -f /root/.ssh/authorized_keys
+  ```
+  
+  ## Connect ProxMox1 To LDAP
+  
+  ```bash
+  sudo apt-get update
+  sudo apt-get install libpam-ldapd
+  ```
+  ```
+  [ x ] passwd
+  [ x ] group
+  [ x ] shadow
+  [ x ] netgroup
+  ```
+  ```bash
+  # review nss config
+  sudo cat /etc/nsswitch.conf
+  
+  # update PAM
+  sudo pam-auth-update
+  ```
+  ```bash
+  # check if user information is queries
+  id cluster_u
+  ```
+  ```bash
+  # add to wheel
+  sudo gpasswd -a ceph_u wheel
+  sudo gpasswd -a cluster_u wheel
+  
+  # clear authorized keys
+  rm -f /home/arcana/.ssh/authorized_keys
+  rm -f /home/ceph_u/.ssh/authorized_keys
+  rm -f /root/.ssh/authorized_keys
+  ```
+  
+  ## Configure SSH of KVM Host
+  
+  ```bash
+  vim ~/.ssh/config
+  ```
+  ```
+  Host proxmox1.arcana.me
+    Hostname 192.168.200.2
+    Port 2122
+    User arcana
+  ```
+  
+  ## Post-Configure CephAdm
+  
+  Remove hv-proxmox1 entry from /etc/hosts, since it's IP doesnt match that of hostname and it fails to delegate GSSAPI credentials
+  
+  ```bash
+  sudo nano -w /etc/hosts
+  ```
+  ```
+  [ x ] 10.0.6.1    hv-proxmox1
+  ```
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-22T12:54:23.272Z"
+updatedAt: "2017-09-30T23:30:09.892Z"

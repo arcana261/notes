@@ -1,0 +1,285 @@
+type: "MARKDOWN_NOTE"
+folder: "115ff3f5d3b29d825305"
+title: "Connect Existing VMs to Kerberos"
+content: '''
+  # Connect Existing VMs to Kerberos
+  
+  ## Copy krb5.conf from SSH machine
+  
+  ```bash
+  scp kdc.arcana.me:/etc/krb5.conf ~
+  ```
+  
+  ## Propagate krb5.conf from SSH machine to existing VMs
+  
+  ```bash
+  scp ~/krb5.conf cephmon1.arcana.me:~
+  scp ~/krb5.conf cephosd1.arcana.me:~
+  scp ~/krb5.conf router.arcana.me:~
+  scp ~/krb5.conf ntp.arcana.me:~
+  scp ~/krb5.conf dhcp.arcana.me:~
+  scp ~/krb5.conf cephadm.arcana.me:~
+  ```
+  
+  ## Install kerberos packages on these machines:
+  
+  1. cephmon1.arcana.me
+  2. cephosd1.arcana.me
+  3. router.arcana.me
+  4. ntp.arcana.me
+  5. dhcp.arcana.me
+  6. cephadm.arcana.me
+  7. ssh.arcana.me
+  
+  ```bash
+  # install required packages
+  sudo yum install krb5-workstation pam_krb5 haveged rsh
+  ```
+  ```bash
+  # enable entropy generation tool "haveged"
+  sudo systemctl restart haveged
+  sudo systemctl enable haveged
+  sudo systemctl status haveged
+  
+  # check available system entropy
+  sudo cat /proc/sys/kernel/random/entropy_avail
+  
+  # move krb5.conf to appropriate location
+  sudo mv -fv $HOME/krb5.conf /etc/
+  sudo chown root:root /etc/krb5.conf
+  sudo chmod 644 /etc/krb5.conf
+  sudo restorecon -R -v /etc/krb5.conf
+  ```
+  
+  ## Connect cephmon1.arcana.me To kerberos
+  
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/cephmon1.arcana.me
+  ktadd host/cephmon1.arcana.me
+  quit
+  ```
+  
+  ## Connect cephosd1.arcana.me To kerberos
+  
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/cephosd1.arcana.me
+  ktadd host/cephosd1.arcana.me
+  quit
+  ```
+  
+  ## Connect router.arcana.me To kerberos
+  
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/router.arcana.me
+  ktadd host/router.arcana.me
+  quit
+  ```
+  
+  ## Connect ntp.arcana.me To kerberos
+  
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/ntp.arcana.me
+  ktadd host/ntp.arcana.me
+  quit
+  ```
+  
+  ## Connect dhcp.arcana.me To kerberos
+  
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/dhcp.arcana.me
+  ktadd host/dhcp.arcana.me
+  quit
+  ```
+  
+  ## Connect cephadm.arcana.me To kerberos
+  
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/cephadm.arcana.me
+  ktadd host/cephadm.arcana.me
+  quit
+  ```
+  
+  ## Connect ssh.arcana.me To kerberos
+  
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/ssh.arcana.me
+  ktadd host/ssh.arcana.me
+  quit
+  ```
+  
+  ## Install Kerberos on ProxMox1
+  
+  ```bash
+  sudo apt-get update
+  sudo apt-get install krb5-user
+  ```
+  ```bash
+  # create keytab
+  sudo kadmin -p arcana/admin
+  ```
+  ```
+  addprinc -randkey host/proxmox1.arcana.me
+  addprinc -randkey host/proxmox1
+  addprinc -randkey host/hv-proxmox1.arcana.me
+  addprinc -randkey host/hv-proxmox1
+  ktadd host/proxmox1.arcana.me
+  ktadd host/proxmox1
+  ktadd host/hv-proxmox1.arcana.me
+  ktadd host/hv-proxmox1
+  quit
+  ```
+  
+  ## Enable kerberos SSH in these machines
+  
+  1. cephmon1.arcana.me
+  2. cephosd1.arcana.me
+  3. router.arcana.me
+  4. ntp.arcana.me
+  5. dhcp.arcana.me
+  6. cephadm.arcana.me
+  7. ssh.arcana.me
+  8. proxmox1.arcana.me
+  
+  ```bash
+  # enable kerberos login in ssh
+  sudo nano -w /etc/ssh/sshd_config
+  ```
+  ```
+  KerberosAuthentication yes
+  GSSAPIAuthentication yes
+  GSSAPICleanupCredentials yes
+  ```
+  ```bash
+  # restart SSH service
+  sudo systemctl restart sshd
+  sudo systemctl status sshd
+  
+  # enable kerberos SSH cient
+  nano -w ~/.ssh/config
+  ```
+  ```
+  Host *.arcana.me
+  	Port 2122
+  	GSSAPIAuthentication yes
+  	GSSAPIDelegateCredentials yes
+  ```
+  ```bash
+  chmod 600 ~/.ssh/config
+  sudo mkdir -p /home/ceph_u/.ssh
+  sudo cp ~/.ssh/config /home/ceph_u/.ssh/
+  sudo chown ceph_u:ceph_u /home/ceph_u/.ssh/config
+  ```
+  ```bash
+  # get a ticket
+  kinit
+  ```
+  ```bash
+  # view tickets
+  klist
+  ```
+  
+  ## Upgrade cephadm SSH'ing mechanism
+  
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  cd ~/my-cluster
+  vim ~/my-cluster/populate-ssh-config.sh
+  ```
+  ```
+  #!/bin/bash
+  
+  rm -f ~/.ssh/config
+  touch ~/.ssh/config
+  chmod 600 ~/.ssh/config
+  
+  while read -r line; do
+          arr=($line)
+          ip=${arr[0]}
+          host=${arr[1]/hv-/}
+          echo "Host ${host}" >> ~/.ssh/config
+          echo "    Hostname ${ip}" >> ~/.ssh/config
+          echo '    GSSAPIAuthentication yes' >> ~/.ssh/config
+          echo '    GSSAPIDelegateCredentials yes' >> ~/.ssh/config
+          echo '    Port 2122' >> ~/.ssh/config
+          echo ' ' >> ~/.ssh/config
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|^\\s*$)')"
+  
+  echo "Host dhcp.arcana.me" >> ~/.ssh/config
+  echo "    Hostname dhcp.arcana.me" >> ~/.ssh/config
+  echo '    Port 2122' >> ~/.ssh/config
+  echo '    GSSAPIAuthentication yes' >> ~/.ssh/config
+  echo '    GSSAPIDelegateCredentials yes' >> ~/.ssh/config
+  echo ' ' >> ~/.ssh/config
+  
+  echo "Host *.arcana.me" >> ~/.ssh/config
+  echo '    Port 2122' >> ~/.ssh/config
+  echo '    GSSAPIAuthentication yes' >> ~/.ssh/config
+  echo '    GSSAPIDelegateCredentials yes' >> ~/.ssh/config
+  echo ' ' >> ~/.ssh/config
+  ```
+  ```bash
+  vim ~/my-cluster/copy-ssh-id.sh
+  ```
+  ```
+  #!/bin/bash
+  
+  ~/my-cluster/populate-ssh-config.sh
+  
+  kinit
+  klist
+  ```
+  
+  ## Get Credentials
+  
+  ```bash
+  kinit
+  ```
+  
+  **on proxmox1 provide username**
+  ```bash
+  kinit -p arcana
+  ```
+  
+  ## View Tickets
+  
+  ```bash
+  klist
+  ```
+  
+  
+'''
+tags: []
+isStarred: false
+isTrashed: false
+createdAt: "2017-09-19T19:11:17.082Z"
+updatedAt: "2017-09-30T23:41:40.691Z"

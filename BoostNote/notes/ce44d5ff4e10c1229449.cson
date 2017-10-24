@@ -1,28 +1,13 @@
 type: "MARKDOWN_NOTE"
 folder: "115ff3f5d3b29d825305"
-title: "Create Pre Ceph VM Image"
+title: "Create Ceph Template Image"
 content: '''
-  # Create Pre Ceph VM Image
+  # Create Ceph Template Image
   
   Property | Value
   --- | ---
-  Name | centos7-preceph
-  Clone | centos7-hardened-ovs
-  
-  ## configure network
-  
-  change ip address
-  ```bash
-  sudo nano -w /etc/sysconfig/network-scripts/ifcfg-eth2
-  ```
-  ```
-  IPADDR=10.0.9.2
-  ```
-  
-  reboot
-  ```bash
-  sudo reboot
-  ```
+  Name | centos7-hardened-ovs-ntp-ceph
+  Clone | centos7-hardened-ovs-ntp
   
   ## configure vm image
   
@@ -38,11 +23,29 @@ content: '''
   sudo chmod 0440 /etc/sudoers.d/ceph_u
   ```
   
+  ## install ceph packages
   
+  ```bash
+  sudo pip install ceph-deploy
+  nano -w ~/.ssh/config
+  ```
+  ```
+  Host localhost
+    Hostname localhost
+    User ceph_u
+    Port 2122
+  ```
+  ```bash
+  chmod 600 ~/.ssh/config
+  ssh-copy-id localhost
+  ```
+  ```bash
+  ceph-deploy install localhost
+  ```
   
 '''
 tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T17:56:23.803Z"
-updatedAt: "2017-09-04T17:58:10.318Z"
+updatedAt: "2017-09-30T14:14:34.403Z"

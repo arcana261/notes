@@ -41,6 +41,6 @@ content: '''
 '''
 tags: []
 isStarred: false
-isTrashed: false
+isTrashed: true
 createdAt: "2017-09-18T18:24:53.675Z"
-updatedAt: "2017-09-18T18:31:56.886Z"
+updatedAt: "2017-09-19T19:26:21.672Z"

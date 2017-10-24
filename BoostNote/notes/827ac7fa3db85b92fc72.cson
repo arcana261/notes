@@ -7,22 +7,10 @@ content: '''
   Property | Value
   --- | ---
   Name | kdc.arcana.me
-  Clone | centos7-pre-kdc
+  Clone | centos7-hardened-ovs-ntp-ceph-dns-ssh
   Location | RBD
   Start at Boot | Yes
-  Boot Order | order=6,up=10,down=10
-  
-  ## Assign static IP
-  
-  ```bash
-  sudo nano -w /etc/dnsmasq.arcana.me.hosts
-  ```
-  ```
-  8A:2A:15:E4:80:E7,set:cluster,10.0.3.3,kdc.arcana.me,infinite
-  ```
-  ```bash
-  sudo systemctl restart dnsmasq.service
-  ```
+  Boot Order | order=11,up=20,down=20
   
   ## Configure VM
   
@@ -37,15 +25,36 @@ content: '''
   [ x ] GATEWAY
   [ x ] DNS1
   [ x ] DNS2
+  [ x ] DNS3
   ```
   ```bash
   sudo reboot
+  ```
+  
+  ## install required packages
+  
+  ```bash
+  sudo yum install krb5-workstation pam_krb5 haveged rsh
+  ```
+  
+  ## enable entropy generation tool "haveged"
+  ```bash
+  sudo systemctl restart haveged
+  sudo systemctl enable haveged
+  sudo systemctl status haveged
+  ```
+  
+  ## check available system entropy
+  ```bash
+  sudo cat /proc/sys/kernel/random/entropy_avail
   ```
   
   ## Continue configuring KDC
   
   ```bash
   sudo yum install krb5-server 
+  ```
+  ```bash
   # enable kerberos through firewall
   sudo firewall-cmd --reload
   sudo firewall-cmd --permanent --add-service=kerberos
@@ -53,10 +62,151 @@ content: '''
   # create folder to store keytabs
   sudo mkdir -p /etc/keytabs
   sudo chmod 600 /etc/keytabs
+  # edit configuration and set domain name
+  sudo nano -w /etc/krb5.conf
   ```
+  ```
+  # Configuration snippets may be placed in this directory as well
+  includedir /etc/krb5.conf.d/
+  
+  [logging]
+   default = FILE:/var/log/krb5libs.log
+   kdc = FILE:/var/log/krb5kdc.log
+   admin_server = FILE:/var/log/kadmind.log
+  
+  [libdefaults]
+   dns_lookup_realm = false
+   ticket_lifetime = 24h
+   renew_lifetime = 7d
+   forwardable = true
+   rdns = false
+   default_realm = ARCANA.ME
+   # comment to prevent bug with HADOOP
+   # default_ccache_name = KEYRING:persistent:%{uid}
+  
+  [realms]
+  ARCANA.ME = {
+   kdc = kdc.arcana.me
+   admin_server = kdc.arcana.me
+  }
+  
+  [domain_realm]
+  .arcana.me = ARCANA.ME
+  arcana.me = ARCANA.ME
+  ```
+  ```bash
+  # edit configuration and set domain name
+  sudo nano -w /var/kerberos/krb5kdc/kadm5.acl
+  ```
+  ```
+  */admin@ARCANA.ME	*
+  ```
+  ```bash
+  # edit KDC config file
+  sudo nano -w /var/kerberos/krb5kdc/kdc.conf
+  ```
+  ```
+  [kdcdefaults]
+   kdc_ports = 88
+   kdc_tcp_ports = 88
+  
+  [realms]
+   arcana.me = {
+    #master_key_type = aes256-cts
+    acl_file = /var/kerberos/krb5kdc/kadm5.acl
+    dict_file = /usr/share/dict/words
+    admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
+    key_stash_file = /var/kerberos/krb5kdc/.k5.ARCANA.ME
+    supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal cam$
+   }
+  ```
+  ```bash
+  # create database for realm
+  sudo kdb5_util create -s
+  ```
+  ```bash
+  # enable and start services
+  sudo systemctl enable krb5kdc
+  sudo systemctl enable kadmin
+  sudo systemctl restart krb5kdc
+  sudo systemctl restart kadmin
+  sudo systemctl status krb5kdc kadmin
+  
+  # create admin principal for root
+  # add kerberos server to database
+  sudo kadmin.local
+  ```
+  ```
+  addprinc arcana/admin
+  ```
+  ```
+  addprinc arcana
+  addprinc ceph_u
+  ```
+  ```
+  addprinc -randkey kadmin/kdc.arcana.me
+  addprinc -randkey host/kdc.arcana.me
+  quit
+  ```
+  ```bash
+  # create keytab for our server
+  sudo kadmin.local
+  ```
+  ```
+  ktadd -k /etc/keytabs/kdc.arcana.me host/kdc.arcana.me
+  quit
+  ```
+  ```bash
+  # merge keytabs
+  sudo ktutil
+  ```
+  ```
+  read_kt /etc/keytabs/kdc.arcana.me
+  write_kt /etc/krb5.keytab
+  quit
+  ```
+  ```bash
+  # verify key is imported and merged
+  sudo klist -k
+  
+  # enable kadmin through firewall
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --permanent --add-port=749/tcp
+  sudo firewall-cmd --reload
+  
+  # enable kerberos SSH cient
+  nano -w ~/.ssh/config
+  ```
+  ```
+  Host *.arcana.me
+  	Port 2122
+  	GSSAPIAuthentication yes
+  	GSSAPIDelegateCredentials yes
+  ```
+  ```bash
+  chmod 600 ~/.ssh/config
+  sudo mkdir -p /home/ceph_u/.ssh
+  sudo cp ~/.ssh/config /home/ceph_u/.ssh/
+  sudo chown ceph_u:ceph_u /home/ceph_u/.ssh/config
+  ```
+  ```bash
+  # enable kerberos login in ssh
+  sudo nano -w /etc/ssh/sshd_config
+  ```
+  ```
+  KerberosAuthentication yes
+  GSSAPIAuthentication yes
+  GSSAPICleanupCredentials yes
+  ```
+  ```bash
+  # restart SSH service
+  sudo systemctl restart sshd
+  sudo systemctl status sshd
+  ```
+  
 '''
 tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-18T18:32:40.835Z"
-updatedAt: "2017-09-18T19:05:15.764Z"
+updatedAt: "2017-09-30T18:44:46.708Z"

@@ -9,6 +9,7 @@ content: '''
   Name | ntp.arcana.me
   Clone | centos7-hardened-ovs
   Start at Boot | Yes
+  Order | order=2, up=20, down=20
   
   ## set hostname
   
@@ -41,7 +42,7 @@ content: '''
   server 1.centos.pool.ntp.org iburst
   server 2.centos.pool.ntp.org iburst
   server 3.centos.pool.ntp.org iburst
-  allow 0/0
+  allow 10.0.0.0/20
   local stratum 10
   ```
   
@@ -73,10 +74,65 @@ content: '''
   sudo firewall-cmd --reload
   ```
   
+  ## Connect ProxMox1 to our NTP Server
+  
+  ```bash
+  apt-get update
+  apt-get install sudo chronyd
+  ```
+  ```
+  sudo nano -w /etc/chrony/chrony.conf
+  ```
+  ```
+  server 10.0.3.2 iburst
+  ```
+  ```bash
+  sudo systemctl enable chrony
+  sudo systemctl restart chrony
+  sudo chronyc -a 'burst 4/4'
+  sudo sleep 10
+  sudo chronyc -a makestep
+  sudo chronyc sources -v
+  ```
+  
+  ## Connect router.arcana.me to our NTP server
+  
+  ```bash
+  sudo vim /etc/chrony.conf
+  ```
+  ```
+  server 10.0.3.2 iburst
+  ```
+  ```bash
+  sudo mv /etc/dhcp/dhclient.d/chrony.sh /home/arcana
+  sudo mv /usr/libexec/chrony-helper /usr/libexec/.chrony-helper
+  sudo bash -c 'echo "#!/bin/bash" > /usr/libexec/chrony-helper'
+  sudo chown root:root /usr/libexec/chrony-helper
+  sudo chmod 755 /usr/libexec/chrony-helper
+  
+  sudo systemctl enable chronyd.service
+  sudo systemctl restart chronyd.service
+  sudo systemctl status chronyd.service
+  
+  sudo chronyc -a 'burst 4/4'
+  sudo sleep 10
+  sudo chronyc -a makestep
+  sudo chronyc sources -v
+  ```
+  
+  ## Create centos7-hardened-ovs-ntp Template Image
+  
+  Property | Value
+  --- | ---
+  Name | centos7-hardened-ovs-ntp
+  Clone | centos7-hardened-ovs
+  
+  **Perform exactly same procedure as above for router**
+  
   
 '''
 tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T17:45:49.512Z"
-updatedAt: "2017-09-05T20:39:44.457Z"
+updatedAt: "2017-09-30T14:01:57.338Z"

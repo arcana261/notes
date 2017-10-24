@@ -7,14 +7,35 @@ content: '''
   Property | Value
   --- | ---
   Name | cephadm.arcana.me
-  Clone | centos7-preceph
+  Clone | centos7-hardened-ovs-ntp-ceph
   Start At Boot | Yes
+  Order | order=3, up=20, down=20
   
   ## set hostname
   
   ```bash
   sudo hostnamectl set-hostname cephadm.arcana.me
   sudo reboot
+  ```
+  
+  ## Generate new SSH keys
+  
+  ```bash
+  ssh-keygen -t rsa
+  ```
+  ```bash
+  su -
+  ```
+  ```bash
+  ssh-keygen -t rsa
+  exit
+  ```
+  ```bash
+  su - ceph_u
+  ```
+  ```bash
+  ssh-keygen -t rsa
+  exit
   ```
   
   ## configure network
@@ -34,11 +55,6 @@ content: '''
   
   ## configure node
   
-  install ceph-deploy
-  ```bash
-  sudo pip install ceph-deploy
-  ```
-  
   switch to user ceph installation user
   ```bash
   su - ceph_u
@@ -47,9 +63,6 @@ content: '''
     # create cluster directory
     mkdir my-cluster
   	cd my-cluster
-  
-  	# create new ssh keys
-  	ssh-keygen
   ```
   ```bash
   	# create ssh config
@@ -81,13 +94,20 @@ content: '''
   while read -r line; do
           arr=($line)
           ip=${arr[0]}
-          host=${arr[1]}
+          host=${arr[1]/hv-/}
           echo "Host ${host}" >> ~/.ssh/config
           echo "    Hostname ${ip}" >> ~/.ssh/config
           echo '    User ceph_u' >> ~/.ssh/config
           echo '    Port 2122' >> ~/.ssh/config
           echo ' ' >> ~/.ssh/config
-  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|^\\s*$)')"
+  
+  echo "Host dhcp.arcana.me" >> ~/.ssh/config
+  echo "    Hostname dhcp.arcana.me" >> ~/.ssh/config
+  echo '    User ceph_u' >> ~/.ssh/config
+  echo '    Port 2122' >> ~/.ssh/config
+  echo ' ' >> ~/.ssh/config
+  
   ```
   ```bash
   chmod +x ~/my-cluster/populate-ssh-config.sh
@@ -105,9 +125,12 @@ content: '''
   
   while read -r line; do
           arr=($line)
-          host=${arr[1]}
+          host=${arr[1]/hv-/}
           ssh-copy-id ${host}
-  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|^\\s*$)')"
+  
+  ssh-copy-id dhcp.arcana.me
+  
   ```
   ```bash
   chmod +x ~/my-cluster/copy-ssh-id.sh
@@ -125,42 +148,39 @@ content: '''
   
   while read -r line; do
           arr=($line)
-          host=${arr[1]}
+          host=${arr[1]/hv-/}
           scp /etc/hosts ${host}:~
           ssh ${host} 'sudo bash -c "cat /home/ceph_u/hosts >> /etc/hosts"' < /dev/null
           ssh ${host} 'sudo bash -c "sort -u /etc/hosts > /etc/hosts.new"' < /dev/null
           ssh ${host} 'sudo mv -fv /etc/hosts.new /etc/hosts' < /dev/null
           ssh ${host} 'rm -fv ~/hosts' < /dev/null
-  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|dhcp.arcana.me)')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|^\\s*$)')"
   
   rm -f ~/hosts.dhcp
   
   while read -r line; do
           arr=($line)
           ip=${arr[0]}
-          host=${arr[1]}
+          host=${arr[1]/hv-/}
   
           if [[ "$host" =~ ^.*.arcana.me$ ]]; then
                   echo "${ip}    ${host}" >> ~/hosts.dhcp
           else
                   echo "${ip}    ${host}.arcana.me" >> ~/hosts.dhcp
           fi
-  done <<< "$(cat /etc/hosts | grep -E -v '(localhost)')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|^\\s*$)')"
   
-  while read -r line; do
-          arr=($line)
-          host=${arr[1]}
-          scp ~/hosts.dhcp ${host}:~/hosts
-          ssh ${host} 'sudo bash -c "cat /home/ceph_u/hosts >> /etc/hosts"' < /dev/null
-          ssh ${host} 'sudo bash -c "sort -u /etc/hosts > /etc/hosts.new"' < /dev/null
-          ssh ${host} 'sudo mv -fv /etc/hosts.new /etc/hosts' < /dev/null
-          ssh ${host} 'rm -fv ~/hosts' < /dev/null
-  done <<< "$(cat /etc/hosts | grep -E 'dhcp.arcana.me')"
+  scp ~/hosts.dhcp dhcp.arcana.me:~/hosts
+  ssh dhcp.arcana.me 'sudo bash -c "cat /home/ceph_u/hosts >> /etc/hosts"' < /dev/null
+  ssh dhcp.arcana.me 'sudo bash -c "sort -u /etc/hosts > /etc/hosts.new"' < /dev/null
+  ssh dhcp.arcana.me 'sudo mv -fv /etc/hosts.new /etc/hosts' < /dev/null
+  ssh dhcp.arcana.me 'rm -fv ~/hosts' < /dev/null
   
   rm -fv ~/hosts.dhcp
   ```
   ```bash
   chmod +x ~/my-cluster/copy-hosts.sh
+  ~/my-cluster/copy-hosts.sh
   ```
   
   create script to restart cluster
@@ -174,12 +194,13 @@ content: '''
   
   while read -r line; do
           arr=($line)
-          host=${arr[1]}
+          host=${arr[1]/hv-/}
           ssh ${host} 'sudo systemctl restart ceph.target' < /dev/null
-  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|^\\s*$)')"
   ```
   ```bash
   chmod +x ~/my-cluster/restart-cluster.sh
+  ~/my-cluster/restart-cluster.sh
   ```
   
   create script to push config to cluster
@@ -193,19 +214,19 @@ content: '''
   
   while read -r line; do
           arr=($line)
-          host=${arr[1]}
+          host=${arr[1]/hv-/}
           ceph-deploy config push ${host}
-  done <<< "$(cat /etc/hosts | grep -v 'localhost')"
+  done <<< "$(cat /etc/hosts | grep -E -v '(localhost|cephadm|^\\s*$)')"
   
   ~/my-cluster/restart-cluster.sh
   ```
   ```bash
   chmod +x ~/my-cluster/push-config.sh
+  ~/my-cluster/push-config.sh
   ```
-  
 '''
 tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-09-04T18:04:14.575Z"
-updatedAt: "2017-09-08T07:27:14.028Z"
+updatedAt: "2017-09-30T23:23:19.779Z"

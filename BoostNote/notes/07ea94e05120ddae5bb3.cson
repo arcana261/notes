@@ -11,9 +11,9 @@ content: '''
   Template | Debian Jessie
   CPU | 1 processor, 1 core
    | Copy Host CPU Configuration
-  RAM | 8192 MB
-  HDD | 80 GB (virtio) (name=proxmox1)
-   | 40 GB SSD (virtio) (name=proxmox1-data)
+  RAM | 10240 MB
+  HDD | 100 GB (virtio) (name=proxmox1)
+   | 60 GB SSD (virtio) (name=proxmox1-data)
   Network | management (virtio)
    | provider (virtio)
    | cluster1 (virtio)
@@ -28,13 +28,13 @@ content: '''
   
   Property | Value
   --- | ---
-  Target HDD | 60GB data, xfs filesystem
+  Target HDD | 100GB data, xfs filesystem
   Management Interface | ens3 (management)
   Hostname | proxmox1.arcana.me
   IP | 192.168.200.2
   Netmask | 255.255.255.0
-  Gateway | -
-  DNS | -
+  Gateway | 192.168.200.1
+  DNS | 192.168.200.1
   
   ## Create SSH config in KVM host
   
@@ -138,4 +138,4 @@ tags: []
 isStarred: false
 isTrashed: false
 createdAt: "2017-08-30T10:39:50.333Z"
-updatedAt: "2017-09-16T18:51:53.596Z"
+updatedAt: "2017-09-30T09:17:25.459Z"
