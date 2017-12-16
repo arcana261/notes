@@ -325,7 +325,7 @@ public class MultiCountryAddressValidator implements Constraint<Address> {
 * -> [return-type] is Entity
 ** -> [return-type] is Stream<Entity>
 *** -> [return-type] could be List<Entity>, Page<Entity> or Slice<Entity>
-otherwise [return-type] is List<Entity>
+otherwise [return-type] is List<Entity> or Entity
 
 #query -->
 
