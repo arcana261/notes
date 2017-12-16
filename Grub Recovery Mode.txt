@@ -1,0 +1,16 @@
+## CentOS 6.5
+# add to end of kernel command line
+........................
+single
+........................
+
+
+## CentOS 7.3
+# add to end of kernel command line
+........................
+systemd.unit=emergency.target
+........................
+
+
+
+

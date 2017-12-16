@@ -88,6 +88,11 @@ sudo systemctl enable sshd
 sudo systemctl restart sshd
 sudo systemctl status sshd
 
+# add non-root user
+sudo useradd arcana
+sudo passwd arcana
+sudo usermod -aG wheel arcana
+
 #####################################################
 ###################### MONITOR
 
@@ -162,9 +167,26 @@ sudo nano -w /etc/sysctl.conf
 >
 > # Ignore Directed pings
 > net.ipv4.icmp_echo_ignore_all = 0
+>
+> # allow large file handles
+> fs.file-max = 4000000
+>
 
 # reload sysctl
 sudo sysctl -p
+
+# configure security limits
+sudo vim /etc/security/limits.conf
+...........................
+*	soft	nofile	1000000
+*	soft	nproc	1000000
+*	hard	nofile	1000000
+*	hard	nproc	1000000
+root	soft	nofile	1000000
+root	soft	nproc	1000000
+root	hard	nofile	1000000
+root	hard	nproc	1000000
+...........................
 
 # prevent ip spoofing
 sudo nano -w /etc/host.conf

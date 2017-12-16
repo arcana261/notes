@@ -43,6 +43,60 @@ sudo firewall-cmd --permanent --add-port=8000/tcp
 sudo firewall-cmd --reload
 
 
+#######################################################################
+Linux Client Configuration
+#######################################################################
+
+# create configuration
+sudo vim ~/.config/shadowsocks.json
+
+..............................
+{
+  "server":"178.162.203.161",
+  "server_port":8000,
+  "local_port":1080,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"aes-256-cfb"
+}
+..............................
+
+
+# start proxy
+sslocal -c ~/.config/shadowsocks.json
+
+# install privoxy
+||| sudo yum install privoxy
+||| sudo apt-get install privoxy
+
+# configure privoxy
+sudo vim /etc/privoxy/config
+>>>>>>>>>>>>>>>
+# search below, duplicate
+# listen-address will cause
+# privoxy to fail
+listen-address		0.0.0.0:8118
+
+
+forward-socks5	/	127.0.0.1:1080	.
+forward         192.168.*.*/     .
+forward         192.168.*.*:*/     .
+forward            10.*.*.*/     .
+forward            10.*.*.*:*/     .
+forward           127.*.*.*/     .
+forward           127.*.*.*:*/     .
+forward           172.*.*.*/     .
+forward           172.*.*.*:*/     .
+<<<<<<<<<<<<<<<
+
+# enable and start privoxy services
+sudo systemctl restart privoxy
+sudo systemctl enable privoxy
+sudo systemctl status privoxy
+
+
+
+
 
 
 
