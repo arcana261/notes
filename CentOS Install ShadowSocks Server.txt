@@ -1,0 +1,48 @@
+# install shadow socks
+sudo pip install shadowsocks
+
+# create configuration
+sudo vim /etc/shadowsocks.json
+
+..............................
+{
+  "server":"178.162.203.161",
+  "server_port":8000,
+  "local_port":1080,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"aes-256-cfb"
+}
+..............................
+
+# create systemd service
+sudo vim /etc/systemd/system/shadowsocks-server.service
+
+...............................
+[Unit]
+Description=Shadowsocks Server
+After=network.target
+
+[Service]
+ExecStart=/bin/ssserver -c /etc/shadowsocks.json
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# enable and start service
+sudo systemctl start shadowsocks-server
+sudo systemctl enable shadowsocks-server
+sudo systemctl status shadowsocks-server
+
+
+# open port in firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=8000/tcp
+sudo firewall-cmd --reload
+
+
+
+
+
