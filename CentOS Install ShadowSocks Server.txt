@@ -12,8 +12,13 @@ UDP RELAY IS SUPPORTED
 #######################################################################
 
 # installation of pre-requisities
+###################################
+###### CENTOS
 yum install epel-release -y
 yum install git gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto c-ares-devel libev-devel -y
+###### UBUNTU/DEBIAN
+sudo apt-get install --no-install-recommends git gettext build-essential autoconf libtool libpcre3-dev asciidoc xmlto libev-dev libc-ares-dev automake
+###################################
 
 # clone source code
 cd /usr/local/src
@@ -125,6 +130,7 @@ sudo systemctl status shadowsocks-server
 # open port in firewall
 sudo firewall-cmd --reload
 sudo firewall-cmd --permanent --add-port=8000/tcp
+sudo firewall-cmd --permanent --add-port=8000/udp
 sudo firewall-cmd --reload
 
 # protect against brute forcers
@@ -229,9 +235,24 @@ Restart=on-abort
 [Install]
 WantedBy=multi-user.target
 ...............................
+...............................
+[Unit]
+Description=Shadowsocks Client
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/ss-local.pid
+ExecStart=/usr/local/bin/ss-local -c /etc/shadowsocks.json -u -v -f /var/run/ss-local.pid
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
 
 # enable and start service
-sudo systemctl start shadowsocks-client
+sudo systemctl daemon-reload
+sudo systemctl restart shadowsocks-client
 sudo systemctl enable shadowsocks-client
 sudo systemctl status shadowsocks-client
 
@@ -326,6 +347,13 @@ Connect to OpenVPN over Shadowsocks
 .....................................
 socks-proxy 127.0.0.1 1080
 route SHADOWSOCKS_SERVER_IP 255.255.255.255 net_gateway
+script-security 2                                                                                                       
+dhcp-option DNS 4.2.2.4
+dhcp-option DOMAIN arcana.me
+
+# Only on ubuntu client, you also need following directives:                                                              
+up /etc/openvpn/update-resolv-conf                                                                                      
+down /etc/openvpn/update-resolv-conf  
 .....................................
 
 # ensure these packages are installed on client
