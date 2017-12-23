@@ -21,4 +21,17 @@ server {
   }
 }
 
+===========================
+SELinux
+===========================
+
+
+# install semanage if you don't already have it:
+yum install policycoreutils-python
+
+# give the directory a new default context. The part at the end is a regex.
+semanage fcontext -a -t httpd_sys_rw_content_t "/path/to/directory(/.*)?"
+
+# apply the default context to the directory
+restorecon -R /path/to/directory
 

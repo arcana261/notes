@@ -169,7 +169,11 @@ sudo nano -w /etc/sysctl.conf
 > net.ipv4.icmp_echo_ignore_all = 0
 >
 > # allow large file handles
-> fs.file-max = 4000000
+> fs.aio-max-nr = 1048576
+> fs.file-max = 6815744
+>
+> # prevent port exhaustion
+> net.ipv4.ip_local_port_range = 1000 65535
 >
 
 # reload sysctl
