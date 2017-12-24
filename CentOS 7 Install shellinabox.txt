@@ -11,7 +11,7 @@ sudo htpasswd -c /etc/nginx/conf.d/sh.ucoder.ir.htpasswd arcana
 
 # create nginx reverse proxy configuration
 # DO NOT FORGET TO REPLACE HIDDEN DIRECTORY URL!
-vim /etc/nginx/conf.d/sh.ucoder.ir.conf
+sudo vim /etc/nginx/conf.d/sh.ucoder.ir.conf
 ...............................
 server {
   listen 80;
@@ -86,10 +86,18 @@ sudo systemctl restart fail2ban.service
 sudo systemctl status fail2ban.service
 sudo fail2ban-client status
 
+#######################################
+OPTIONAL:
+Add More Security By Customizing DHPARAM
+#######################################
 
+sudo mkdir -p /etc/ssh/sh.ucoder.ir
+sudo openssl dhparam -out /etc/nginx/ssl/sh.ucoder.ir/dhparam.pem 4096
 
-
-
+sudo vim /etc/nginx/conf.d/sh.ucoder.ir.conf
+...............................
+ssl_dhparam /etc/nginx/ssl/sh.ucoder.ir/dhparam.pem
+...............................
 
 
 
