@@ -1,0 +1,47 @@
+# use proxy in gradle
+# gradle.properties
+..............................................
+systemProp.http.proxyHost=127.0.0.1
+systemProp.https.proxyHost=127.0.0.1
+systemProp.http.proxyPort=8118
+systemProp.https.proxyPort=8118
+..............................................
+
+# enable WAR (web archive) output
+..............................................
+apply plugin: 'war'
+..............................................
+
+# enable jar output (java archive)
+..............................................
+apply plugin: 'java'
+
+jar {
+    baseName = 'gs-rest-service'
+    version =  '0.1.0'
+}
+..............................................
+
+# Setup Spring Web Services
+..............................................
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+..............................................
+
+

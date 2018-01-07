@@ -1,0 +1,19 @@
+# list devices
+adb devices
+
+# allow write-able SD Card in emulator
+adb -d -s <DEVICE> shell
+> su
+> mount -o rw,remount rootfs /
+> chmod 777 /mnt/sdcard
+> exit
+> exit
+
+# pull sqlite database
+# e.g. for package:
+# com.example.arcana.rahansazeh
+adb -d -s <DEVICE> shell "run-as <PACKAGE> ls /data/data/<PACKAGE>/databases"
+adb -d -s <DEVICE> shell "run-as <PACKAGE> cat /data/data/<PACKAGE>/databases/<DB> > /sdcard/<DB>.sqlite"
+adb -d -s <DEVIVE> pull "/sdcard/<DB>.sqlite"
+
+
