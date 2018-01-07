@@ -9,6 +9,9 @@ sudo apt-get distupgrade
 sudo do-release-upgrade
 sudo reboot
 
+# ensure gnome is installed
+sudo apt-get install ubuntu-gnome-desktop
+
 # install some base packages
 sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			xz-utils openssh-server ufw mlocate \

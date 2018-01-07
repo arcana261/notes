@@ -119,6 +119,20 @@ sudo ufw enable
 sudo iptables -t nat -L -v
 #############################################################################
 
+
+############################ NOTES ABOUT UFW NAT #################################
+
+# sometimes chain FORWARD does not exist by default in "nat" table
+> -N FORWARD
+> -A FORWARD -o any -j ACCEPT
+> -A POSTROUTING -s 192.168.74.0/24 -o <ETHERNET | any> -j MASQUERADE
+
+
+# prevent MASQUERADE from interfering with local ips
+> -A POSTROUTING -s 192.168.11.0/24 ! -d 192.168.11.246 -o eno1 -j MASQUERADE
+
+#############################################################################
+
 ############################ NAT IN FIREWALLD #################################
 # install gui firewall tool
 sudo dnf install firewall-config
