@@ -417,5 +417,18 @@ net.ipv4.tcp_congestion_control = hybla
 # for low-latency network, use cubic instead
 # net.ipv4.tcp_congestion_control = cubic
 
+########################################################
+Setting proxy for apt
+########################################################
+
+sudo nano /etc/apt/apt.conf
+.........................................
+Acquire::http::Proxy "http://127.0.0.1:8118";
+Acquire::https::Proxy "http://127.0.0.1:8118";
+.........................................
+
+
+
+
 
 

@@ -9,6 +9,9 @@ sudo apt-get distupgrade
 sudo do-release-upgrade
 sudo reboot
 
+# ensure gnome is installed
+sudo apt-get install ubuntu-gnome-desktop
+
 # install some base packages
 sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			xz-utils openssh-server ufw mlocate \
@@ -16,7 +19,7 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			traceroute w3m bridge-utils \
 			default-jdk git rar unrar \
 			iputils-arping network-manager-openvpn-gnome \
-			iperf docky curl
+			iperf docky curl uget gnome-tweak-tool
 
 # use nvidia driver and proprietary intel drivers
 Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver
