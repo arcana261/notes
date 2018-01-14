@@ -33,6 +33,15 @@ ovs-appctl fdb/show br0
 # view flow on bridge
 ovs-ofctl show somebr
 
+# persistent iptables rules
+sudo dpkg-reconfigure iptables-persistent
+
+# dealing with sysctl.d
+sudo vim /etc/sysctl.d/99-sysctl.conf
+.......
+.......
+sudo systemctl restart systemd-sysctl.service
+
 ############################ IP ADDR #################################
 
 # add additional ip address
@@ -80,6 +89,10 @@ sudo firewall-cmd --permanent --add-port=67/udp
 sudo firewall-cmd --reload
 
 ############################ NAT IN UFW #################################
+
+## making a destination address exception
+# -A POSTROUTING -s 192.168.11.0/24 ! -d 192.168.11.246 -o eno1 -j MASQUERADE
+
 ## setup masquerading for range 192.168.200/24 in UFW
 # enable FORWARDing in ufw firewall
 sudo vim /etc/default/ufw 
