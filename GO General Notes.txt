@@ -1,3 +1,5 @@
+## https://golang.org/pkg/builtin
+
 # install go
 cd /usr/local/src
 source ~/proxy.source
@@ -219,6 +221,87 @@ s := []struct {
 # A nil slice has a length and capacity of 0 and has no underlying array.
 if s == nil {
 	fmt.Println("nil!")
+}
+
+# creating slices with make
+b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+b = b[:cap(b)] // len(b)=5, cap(b)=5
+b = b[1:]      // len(b)=4, cap(b)=4
+
+# Appending to a slice
+s = append(s, 2, 3, 4)
+
+# range
+var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
+func main() {
+	for i, v := range pow {
+		fmt.Printf("2**%d = %d\n", i, v)
+	}
+}
+
+# range skipping
+func main() {
+	pow := make([]int, 10)
+	for i := range pow {
+		pow[i] = 1 << uint(i) // == 2**i
+	}
+	for _, value := range pow {
+		fmt.Printf("%d\n", value)
+	}
+}
+
+# maps
+m = make(map[string]Vertex)
+m["Bell Labs"] = Vertex{
+	40.68433, -74.39967,
+}
+var m map[string]Vertex
+
+# map literals
+var m = map[string]Vertex{
+	"Bell Labs": Vertex{
+		40.68433, -74.39967,
+	},
+	"Google": Vertex{
+		37.42202, -122.08408,
+	},
+}
+
+# ONLY FOR STRUCTS
+var m = map[string]Vertex{
+	"Bell Labs": {40.68433, -74.39967},
+	"Google":    {37.42202, -122.08408},
+}
+
+# delete element
+delete(m, key)
+
+# test element exists
+elem, ok = m[key]
+
+# function values
+func compute(fn func(float64, float64) float64) float64 {
+	return fn(3, 4)
+}
+hypot := func(x, y float64) float64 {
+	return math.Sqrt(x*x + y*y)
+}
+
+# methods
+type Vertex struct {
+	X, Y float64
+}
+func (v Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+# pointer receivers
+# Since methods often need to modify their receiver, pointer receivers are more common than value receivers.
+# The second is to avoid copying the value on each method call. This can be more efficient if the receiver is a large struct, for example.
+# In general, all methods on a given type should have either value or pointer receivers, but not a mixture of both.
+func (v *Vertex) Scale(f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
 }
 
 
