@@ -1,0 +1,224 @@
+# install go
+cd /usr/local/src
+source ~/proxy.source
+sudo wget https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
+sudo vim /etc/environment
+....................................
+PATH+="/usr/local/go/bin"
+....................................
+vim ~/.profile
+....................................
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin
+....................................
+
+# reboot
+sudo reboot
+
+# check go version
+go version
+
+# source file locations
+~/go/src/<PACKAGE>
+
+# hello world app
+....................................
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Printf("hello, world\n")
+}
+....................................
+
+# build helloworld app
+cd ~/go/src/helloworld
+go build
+./helloworld
+
+##############################################
+int: int64 on 64bit systems
+float32, float64
+rune -> int32
+
+%T prints type
+%g, %G good for floating points (scientific for large values)
+
+import "fmt"
+import "math/rand"
+
+->
+
+import (
+  "fmt"
+  "math/rand"
+)
+
+func add(x int, y int) int {
+  return x + y
+}
+
+func add(x, y int) int {
+  return x + y
+}
+
+func swap(x, y string) (string, string) {
+  return y, x
+}
+
+a, b := swap("hello", "world")
+
+# named return value
+# naked return
+# good for short functions because it hurts readability
+func split(sum int) (x, y int) {
+	x = sum * 4 / 9
+	y = sum - x
+	return
+}
+
+# variable declaration
+# we have global declarations
+# Variables declared without an explicit initial value are given their zero value.
+# 0 for numeric types,
+# false for the boolean type, and
+# "" (the empty string) for strings.
+var x int
+var x, y int
+var i, j int = 1, 2
+
+var (
+  i int
+  j string
+)
+
+# type conversion
+i := 42
+f := float64(i)
+
+# constants
+# Constants cannot be declared using the := syntax.
+# Numeric constants are high-precision values.
+# An untyped constant takes the type needed by its context.
+const Pi = 3.14
+
+for i := 0; i < 10; i++ {
+	sum += i
+}
+
+# For is Go's "while"
+for sum < 1000 {
+	sum += sum
+}
+
+# Forever
+for {
+}
+
+# If with a short statement
+if v := math.Pow(x, n); v < lim {
+	return v
+}
+
+# switch
+# -> IT DOES NOT NEED TO BE CONSTANTS
+# -> NO BREAK
+# -> COULD BE STRING OR ANYTHING!
+
+import (
+	"fmt"
+	"runtime"
+)
+
+switch os := runtime.GOOS; os {
+case "darwin":
+	fmt.Println("OS X.")
+case "linux":
+	fmt.Println("Linux.")
+default:
+	// freebsd, openbsd,
+	// plan9, windows...
+	fmt.Printf("%s.", os)
+}
+
+
+# Switch with no condition
+# This construct can be a clean way to write long if-then-else chains.
+switch {
+case t.Hour() < 12:
+	fmt.Println("Good morning!")
+case t.Hour() < 17:
+	fmt.Println("Good afternoon.")
+default:
+	fmt.Println("Good evening.")
+}
+
+# defer
+# Stacking defers
+defer fmt.Println("world")
+fmt.Println("hello")
+
+# pointers
+# Unlike C, Go has no pointer arithmetic.
+var p *int
+p := &i 
+*p = *p / 37
+
+# struct
+
+type Vertex struct {
+	X int
+	Y int
+}
+Vertex{1, 2}
+
+v1 = Vertex{1, 2}  // has type Vertex
+v2 = Vertex{X: 1}  // Y:0 is implicit
+v3 = Vertex{}      // X:0 and Y:0
+p  = &Vertex{1, 2} // has type *Vertex
+
+# pointer to struct
+p := &v
+p.X = 1e9
+
+# arrays
+# SHOULD HAVE CONSTANT BOUNDARY
+var a [10]int
+primes := [6]int{2, 3, 5, 7, 11, 13}
+# array slice
+# A slice does not store any data, it just describes a section of an underlying array.
+a[low : high]
+# slice defaults
+a[0:10]
+a[:10]
+a[0:]
+a[:]
+# A slice literal is like an array literal without the length.
+[]int{2, 3, 5, 7, 11, 13}
+
+func printSlice(s []int) {
+	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+}
+
+s := []struct {
+	i int
+	b bool
+}{
+	{2, true},
+	{3, false},
+	{5, true},
+	{7, true},
+	{11, false},
+	{13, true},
+}
+
+# nil slice
+# The zero value of a slice is nil.
+# A nil slice has a length and capacity of 0 and has no underlying array.
+if s == nil {
+	fmt.Println("nil!")
+}
+
+
