@@ -258,6 +258,12 @@ sudo systemctl status shadowsocks-client
 
 ################################################
 
+# install haveged to increase entropy
+sudo apt-get install haveged
+sudo systemctl restart haveged
+sudo systemctl enable haveged
+sudo systemctl status haveged
+
 # install privoxy
 ||| sudo yum install privoxy
 ||| sudo apt-get install privoxy
