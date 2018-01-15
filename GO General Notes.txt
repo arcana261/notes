@@ -47,6 +47,7 @@ rune -> int32
 
 %T prints type
 %g, %G good for floating points (scientific for large values)
+%v the value in a default format when printing structs, the plus flag (%+v) adds field names
 
 import "fmt"
 import "math/rand"
@@ -303,5 +304,52 @@ func (v *Vertex) Scale(f float64) {
 	v.X = v.X * f
 	v.Y = v.Y * f
 }
+
+# interfaces
+# interface implementation is implicit
+type APerson interface {
+	getName() string
+}
+
+type Person struct {
+	name string
+}
+
+## OPTION1: USING VALUE RECEIVER
+func (p *Person) getName() string {
+	return p.name
+}
+var p APerson
+p = &Person{name: "mehdi"}
+
+## OPTION2: USING POINTER RECEIVER
+func (p Person) getName() string {
+	return p.name
+}
+var p APerson
+p = Person{name: "mehdi"}
+
+# Under the covers, interface values can be thought of as a tuple of a value and a concrete type:
+# (value, type)
+
+# In some languages this would trigger a null pointer exception, but in Go it is common to write methods that gracefully handle being called with a nil receiver (as with the method M in this example.)
+
+-> SO (nil, type) CAN BE HANDLED USING INTERFACES
+-> BUT STILL (nil, nil) IS RUNTIME EXCEPTION
+
+# empty interface
+interface{}
+# An empty interface may hold values of any type. (Every type implements at least zero methods.)
+# Empty interfaces are used by code that handles values of unknown type. For example, fmt.Print takes any number of arguments of type interface{}.
+
+# type assertion
+# triggers PANIC
+t := i.(T)
+
+# type testing
+# DOES NOT TRIGGER PANIC
+t, ok := i.(T)
+
+
 
 
