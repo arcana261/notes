@@ -350,6 +350,44 @@ t := i.(T)
 # DOES NOT TRIGGER PANIC
 t, ok := i.(T)
 
+# type switch
+func do(i interface{}) {
+	switch v := i.(type) {
+	case int:
+		fmt.Printf("Twice %v is %v\n", v, v*2)
+	case string:
+		fmt.Printf("%q is %v bytes long\n", v, len(v))
+	default:
+		fmt.Printf("I don't know about type %T!\n", v)
+	}
+}
+
+# Stringer interface
+type Stringer interface {
+    String() string
+}
+
+# working with times (basic)
+imprort "time"
+var t time.Time
+t := time.Now()
+
+# errors
+type error interface {
+    Error() string
+}
+func run() error {
+ ...
+}
+
+# error example
+i, err := strconv.Atoi("42")
+if err != nil {
+    fmt.Printf("couldn't convert number: %v\n", err)
+    return
+}
+fmt.Println("Converted integer:", i)
+
 
 
 

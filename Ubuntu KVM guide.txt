@@ -70,6 +70,17 @@ virsh net-edit default
 virsh net-destroy default
 virsh net-start default
 
+# add nested virtualization support
+sudo vim /etc/modprobe.d/qemu-system-x86.conf
+................
+options kvm_intel nested=1
+................
+sudo vim /etc/modprobe.d/kvm_intel.conf
+................
+options kvm_intel nested=1
+................
+
+===================================================================
 # stop kvm temporarily
 sudo lsmod | grep kvm
 sudo rmmod kvm_intel
