@@ -34,6 +34,7 @@ ovs-appctl fdb/show br0
 ovs-ofctl show somebr
 
 # persistent iptables rules
+sudo apt-get install iptables-persistent
 sudo dpkg-reconfigure iptables-persistent
 
 # dealing with sysctl.d
