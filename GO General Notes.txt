@@ -48,6 +48,7 @@ rune -> int32
 %T prints type
 %g, %G good for floating points (scientific for large values)
 %v the value in a default format when printing structs, the plus flag (%+v) adds field names
+%q	a single-quoted character literal safely escaped with Go syntax.
 
 import "fmt"
 import "math/rand"
@@ -388,6 +389,22 @@ if err != nil {
 }
 fmt.Println("Converted integer:", i)
 
+# Reader interface
+func (T) Read(b []byte) (n int, err error)
 
+# reader example
+func main() {
+	r := strings.NewReader("Hello, Reader!")
+
+	b := make([]byte, 8)
+	for {
+		n, err := r.Read(b)
+		fmt.Printf("n = %v err = %v b = %v\n", n, err, b)
+		fmt.Printf("b[:n] = %q\n", b[:n])
+		if err == io.EOF {
+			break
+		}
+	}
+}
 
 
