@@ -162,4 +162,20 @@ Acquire::http::Proxy "http://192.168.5.138:8118";
 Acquire::https::Proxy "http://192.168.5.138:8118";
 ...............
 
+## create iso from cd/dvd
+# find block size
+isoinfo -d -i /dev/cdrom | grep -i -E 'block size|volume size' 
+# start copying iso
+dd if=/dev/cdrom of=test.iso bs=<block size from above> count=<volume size from above>
+# send progress signal from another terminal
+watch -n 1 killall -USR1 dd
+
+## create new LVM
+sudo pvcreate /dev/sdc1
+sudo vgcreate vg-ssd /dev/sdc1
+sudo lvcreate -l 100%FREE -n ssd vg-ssd
+
+# reload fstab
+sudo mount -a
+
 

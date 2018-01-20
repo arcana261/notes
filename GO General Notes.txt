@@ -407,4 +407,10 @@ func main() {
 	}
 }
 
-
+# image package
+package image
+type Image interface {
+    ColorModel() color.Model
+    Bounds() Rectangle
+    At(x, y int) color.Color
+}

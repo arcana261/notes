@@ -81,6 +81,10 @@ options kvm_intel nested=1
 ................
 
 ===================================================================
+
+# increase size of image
+qemu-img resize /var/lib/libvirt/images/web.qcow2 +2G
+
 # stop kvm temporarily
 sudo lsmod | grep kvm
 sudo rmmod kvm_intel
