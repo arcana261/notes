@@ -558,3 +558,161 @@ type B struct {
   c int
 }
 
+# string literal for holding " ' etc.
+# using grave character
+str := `{"a":b}`
+
+# remember duration type
+time.Duration
+
+# function taking infinite arguments
+func sum(args ...int) (result int) {
+  fmt.Println(len(args))
+  for _, v := range args {
+    result += v
+  }
+  return
+}
+
+### Using condition variable
+m := sync.Mutex{}
+cond := sync.NewCond(&m)
+func() {
+	cond.L.Lock()
+	defer cond.L.Unlock()
+
+	cond.Signal()
+}()
+func() {
+	cond.L.Lock()
+	defer cond.L.Unlock()
+
+	cond.Wait()
+}()
+
+
+## REMEMBER: PRODUCERS SHOULD ALWAYS CLOSE THEIR OUTPUT CHANNELS!
+
+## BEGIN EXAMPLE PRODUCER ##
+type producer struct {
+	ch chan int
+}
+
+func NewProducer() *producer {
+	return &producer{
+		ch: make(chan int),
+	}
+}
+
+func (p *producer) start(d time.Duration) <-chan int {
+	go func() {
+		next := 0
+		ch := p.ch
+		var sleep <-chan time.Time
+
+		for {
+			select {
+			case ch <- next:
+				next++
+				ch = nil
+				sleep = time.After(d)
+			case <-sleep:
+				ch = p.ch
+			case v := <-p.ch:
+				if v == -1 {
+					close(p.ch)
+					return
+				}
+			}
+		}
+	}()
+
+	return p.ch
+}
+
+func (p *producer) close() {
+	p.ch <- -1
+}
+## END EXAMPLE PRODUCER ##
+
+## BEGIN MERGER ##
+func merge(chs ...<-chan int) <-chan int {
+	wg := sync.WaitGroup{}
+	result := make(chan int)
+	read := func (ch <-chan int) {
+		for x := range ch {
+			result <- x
+		}
+		wg.Done()
+	}
+
+	wg.Add(len(chs))
+	for _, ch := range chs {
+		go read(ch)
+	}
+
+	go func() {
+		wg.Wait()
+		close(result)
+	}()
+
+	return result
+}
+## END MERGER ##
+
+## IMPORTANT NOTE!
+## IMPORTANT NOTE!
+channels when closed, they do not get closed immediately,
+but after their data was read successfuly, so all data
+can be consumed safely while channel was marked to be closed
+## IMPORTANT NOTE!
+## IMPORTANT NOTE!
+
+## Worker Example
+func worker(n int, ch <-chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	c := ch
+	var sleep <-chan time.Time
+
+	for {
+		select {
+		case v, t := <-c:
+			if t {
+				fmt.Println("worker", n, v)
+				c = nil
+				sleep = time.After(time.Duration(rand.Intn(200) + 100) * time.Millisecond)
+			} else {
+				return
+			}
+		case <-sleep:
+			c = ch
+		}
+	}
+}
+
+# unit testing
+
+1. name file xxx_test.go, e.g. sum.go and sum_test.go
+2. import "testing"
+3. unit tests start with Test e.g. func TestSum
+4. unit tests take 1 parameter of type *testing.T e.g.
+func TestSum(t *testing.T) {
+5. use t.Error, t.Errorf, t.Log, t.Logf, t.Fail
+6. Use table testing pattern
+	tables := []struct {x, y, sum int}{
+		{1,2, 3},
+		{5, 6, 11},
+	}
+	
+	for _, table := range tables {
+		actual := Sum(table.x, table.y)
+		if table.sum != actual {
+			t.Errorf("Sum(%v,%v) expected %v actual %v\n", table.x, table.y, table.sum, actual)
+		}
+	}
+7. run tests "go test"
+8. coverage with "go test -cover"
+go test -cover -coverprofile=c.out
+go tool cover -html=c.out -o coverage.html
+

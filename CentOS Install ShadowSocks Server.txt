@@ -296,7 +296,7 @@ sudo systemctl status privoxy
 # tell sudo to keep proxy config
 sudo visudo
 .................
-Defaults    env_keep += "http_proxy HTTP_PROXY https_proxy HTTPS_PROXY"
+Defaults    env_keep += "http_proxy HTTP_PROXY https_proxy HTTPS_PROXY socks_proxy SOCKS_PROXY no_proxy NO_PROXY all_proxy ALL_PROXY"
 .................
 
 # create a source script to set environments
@@ -310,6 +310,8 @@ export socks_proxy="socks5://127.0.0.1:1080/"
 export SOCKS_PROXY=$socks_proxy
 export no_proxy="localhost,127.0.0.0/8,::1,192.168.0.0/16,10.0.0.0/8,172.0.0.0/8"
 export NO_PROXY=$no_proxy
+export all_proxy=$socks_proxy
+export all_proxy=$all_proxy
 .................
 
 # create a source script to un-set environments
@@ -323,6 +325,8 @@ unset socks_proxy
 unset SOCKS_PROXY
 unset no_proxy
 unset NO_PROXY
+unset all_proxy
+unset ALL_PROXY
 .................
 
 ########################################################
