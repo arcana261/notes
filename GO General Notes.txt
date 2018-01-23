@@ -414,3 +414,147 @@ type Image interface {
     Bounds() Rectangle
     At(x, y int) color.Color
 }
+
+# sleep in ms
+time.Sleep(100 * time.Millisecond)
+
+# goroutine
+go f(x, y, z)
+
+# make channel
+ch := make(chan int)
+
+# send and receive data
+c <- sum // send sum to c
+x, y := <-c, <-c // receive from c
+
+# buffered channel
+ch := make(chan int, 100)
+cap(ch)
+
+# close channel by sender
+close(c)
+
+# test if channel is still open
+v, ok := <-ch
+
+# use range operator on channels which can be closed
+c := make(chan int, 10)
+go fibonacci(cap(c), c)
+for i := range c {
+	fmt.Println(i)
+}
+func fibonacci(n int, c chan int) {
+	x, y := 0, 1
+	for i := 0; i < n; i++ {
+		c <- x
+		x, y = y, x+y
+	}
+	close(c)
+}
+
+# select operator
+func fibonacci(c, quit chan int) {
+	x, y := 0, 1
+	for {
+		select {
+		case c <- x:
+			x, y = y, x+y
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			fmt.Println("wtf!")
+		}
+	}
+}
+
+# mutex
+mux = sync.Mutex{}
+mux.Lock()
+defer mux.Unlock()
+
+# new for structs
+# will return *TYPE
+type Ball struct {hits int}
+b := new(Ball)
+
+# cause panic
+panic("message")
+
+# timeout
+time.AfterFunc(3 * time.Second, func() {
+})
+
+# function that returns a receive only channel
+func() <-chan int {
+}
+
+# golang race detector
+go run -race myProg.go
+
+# channel of channels can be used for RPC to goroutines
+func incLoop(val chan chan int) {
+  for {
+    v := <-val
+    v<- (<-v) + 1
+  }
+}
+
+func main() {
+  ch := make(chan chan int)
+  go incLoop(ch)
+
+  ch2 := make(chan int)
+  ch<- ch2
+  ch2 <- 5
+
+  fmt.Println(<-ch2)
+}
+
+# nil channels always block!
+# can be used together with select statements
+for {
+  var first Item
+  var updates chan Item
+  if len(pending) > 0 {
+    first = s.updates[0]
+    updates = s.updates
+  }
+
+  select {
+    case updates <- first:
+      pending = pending[1:]
+  }
+}
+
+# timeout with channels, good for
+# using with select statement
+# and also prevents leaks!
+
+startFetch := time.After(fetchDelay)
+
+select {
+  case <-startFetch:
+}
+
+# concatting arrays
+  a := []int{1, 2, 3}
+  b := []int{4, 5, 6}
+
+  a = append(a, b...)
+
+  for _, v := range a {
+    fmt.Println(v)
+  }
+
+# composition
+type A struct {
+  a, b int
+}
+
+type B struct {
+  A
+  c int
+}
+
