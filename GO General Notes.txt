@@ -691,7 +691,7 @@ func worker(n int, ch <-chan int, wg *sync.WaitGroup) {
 	}
 }
 
-# unit testing
+## unit testing
 
 1. name file xxx_test.go, e.g. sum.go and sum_test.go
 2. import "testing"
@@ -715,4 +715,16 @@ func TestSum(t *testing.T) {
 8. coverage with "go test -cover"
 go test -cover -coverprofile=c.out
 go tool cover -html=c.out -o coverage.html
+
+## godoc providing examples
+## provide examples in file xxx_test.go
+## Example<Type>
+## Example<Type>_<Label>
+## e.g. for below in doc.go
+## type Examples int
+# file: doc_test.go
+func ExampleExamples() {
+func ExampleExamples_other() {
+
+
 
