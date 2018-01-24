@@ -726,5 +726,6 @@ go tool cover -html=c.out -o coverage.html
 func ExampleExamples() {
 func ExampleExamples_other() {
 
-
+# start godoc in server mode,
+godoc -html -index -http :6060
 
