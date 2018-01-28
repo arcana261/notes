@@ -184,6 +184,10 @@ sudo watch -n 1 killall -USR1 dd
 ## use test disk to recover files and lost partitions
 sudo apt-get install testdisk
 sudo testdisk
+## reload partition table
+sudo partprobe
+## use photorec to recover deleted files
+sudo photorec
 
 ## create new LVM
 sudo pvcreate /dev/sdc1

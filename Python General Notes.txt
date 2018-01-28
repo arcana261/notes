@@ -1,0 +1,78 @@
+# use argv
+import sys
+sys.argv[0] -> empty, -c or fullname of the located module
+
+# if
+the_world_is_flat = True
+if the_world_is_flat:
+	print("Be careful not to fall off!")
+
+# are comments
+# e.g.
+
+# Hi i'm a comment
+
+# Note
+text = "# This is not a comment because it's inside quotes."
+
+# IMPORTANT NOTE!
+Division (/) always returns a float. 
+17 / 3  # classic division returns a float
+17 // 3  # floor division discards the fractional part
+
+# power operator
+>>> 5 ** 2  # 5 squared
+25
+
+# complex numbers in python
+3+5j
+
+# strings
+'spam eggs'  # single quotes
+"doesn't"  # ...or use double quotes instead
+r'C:\some\name' # raw strings, note the r before the quote
+
+# multiline strings
+print("""\
+Usage: thingy [OPTIONS]
+     -h                        Display this usage message
+     -H hostname               Hostname to connect to
+""")
+
+# Strings can be concatenated (glued together) with the + operator, and repeated with *:
+>>> # 3 times 'un', followed by 'ium'
+>>> 3 * 'un' + 'ium'
+
+# Two or more string literals (i.e. the ones enclosed between quotes) next to each other are automatically concatenated.
+>>> 'Py' 'thon'
+>>> text = ('Put several strings within parentheses '
+...         'to have them joined together.')
+
+# Strings can be indexed (subscripted), with the first character having index 0. There is no separate character type; a character is simply a string of size one:
+>>> word = 'Python'
+>>> word[0]  # character in position 0
+'P'
+>>> word[5]  # character in position 5
+'n'
+>>> word[-1]  # last character
+'n'
+>>> word[-2]  # second-last character
+'o'
+>>> word[-6]
+'P'
+
+# slicing
+word[0:2]
+word[:2] + word[2:]
+
+# IMPORTANT!
+# Operator [] does not work for out of range, but works for slices!
+
+# string length
+>>> s = 'hello'
+>>> len(s)
+
+
+
+
+

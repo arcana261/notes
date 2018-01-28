@@ -1,0 +1,80 @@
+# have pip for python3 installed
+sudo apt-get install python3-pip
+sudo pip3 install --upgrade pip
+
+# install django
+pip3 install Django==2.0.1
+
+# check if django is installed
+python3 -m django --version
+
+# create a new project
+django-admin startproject mysite
+
+# run applicaito
+python3 manage.py runserver
+
+# migrate database
+python3 manage.py migrate
+
+# create django admin user
+python3 manage.py createsuperuser
+
+# create a new app in django project
+python3 manage.py startapp polls
+
+# add app in top level settings.py
+INSTALLED_APPS = [
+	'polls.apps.PollsConfig',
+]
+
+# make migrations for app
+python3 manage.py makemigrations polls
+
+# peek database migrations
+python3 manage.py sqlmigrate polls 0001
+
+# create a sample view
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+
+# create urls file (urls.py)
+urlpatterns = [
+    path('', views.index),
+]
+
+# add top level url to project
+path('polls/', include('polls.urls'))
+
+# define models
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+# make model modifiable in admin
+# admin.py
+admin.site.register(Question)
+
+# create tostring effect
+class Question(models.Model):
+    # ...
+    def __str__(self):
+        return self.question_text
+
+# create a new instance of question
+q = Question(question_text="What's new?", pub_date=timezone.now())
+q.save()
+q.id
+
+# get all objects
+Question.objects.all()
+
+# delete object
+c.delete()
+
