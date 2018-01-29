@@ -86,6 +86,216 @@ word[:2] + word[2:]
 >>> s = 'hello'
 >>> len(s)
 
+# lists
+>>> squares = [1, 4, 9, 16, 25]
+# shallow copy
+>>> squares[:]
+# shallow copy another method
+list.copy()
+# concatenation
+>>> squares + [36, 49, 64, 81, 100]
+# append
+cubes.append(216)
+# append another method
+a[len(a):] = [x]
+# insert at
+words.insert(0, w)
+# splice remove
+>>> letters[2:5] = []
+# clear
+letters[:] = []
+# clear another method
+list.clear()
+# sorting
+pairs.sort(key=lambda pair: pair[1])
+# sorting (more)
+list.sort(key=None, reverse=False)
+# extend list
+list.extend(iterable)
+# extend list another method
+a[len(a):] = iterable
+# remove first occurance of item
+# IT IS ERROR IF THERE IS NO SUCH ITEM!
+list.remove(x)
+# remove last element and RETURN IT!
+removedItem = list.pop()
+# remove item at specific index and RETURN IT!
+removedItem = list.pop(index)
+# find index of item
+# IT IS "ValueError" IF ITEM IS NOT FOUND!
+list.index(x[, start[, end]])
+# find number of times an item appears in list
+list.count(x)
+# reverse a list
+list.reverse()
+
+## deque (doubly ended queue)
+from collections import deque
+queue = deque(["Eric", "John", "Michael"])
+queue.append("Terry")
+queue.popleft()
+
+# multiple assignment
+a, b = 0, 1
+
+# while
+while a < 10:
+	<DO>
+
+# if
+if x < 0:
+ ...
+elif x == 0:
+ ...
+else:
+ ...
+
+# if with "in" operator
+if ok in ('y', 'ye', 'yes'):
+
+# foreach
+for w in myList:
+for i in range(5): #0,1,2,3,4
+range(5,10)
+range(0,10,3)
+ ...
+
+# ATTENTION!
+# else: on for loops
+#  and a loop’s else clause runs when no break occurs.
+...........................
+>>> for n in range(2, 10):
+...     for x in range(2, n):
+...         if n % x == 0:
+...             print(n, 'equals', x, '*', n//x)
+...             break
+...     else:
+...         # loop fell through without finding a factor
+...         print(n, 'is a prime number')
+...........................
+
+# creating a new list from iterable
+>>> list(range(5))
+[0, 1, 2, 3, 4]
+
+# nop pass statement
+......................................................
+>>> while True:
+...     pass
+
+>>> class MyEmptyClass:
+...     pass
+
+>>> def initlog(*args):
+...     pass   # Remember to implement this!
+......................................................
+
+# defining functions
+def fib(n):
+  ....
+
+# function as values
+def func():
+ ...
+
+f = func
+f()
+
+# ATTENTION!
+# python has "None" for void
+# much like JS it is referencable!
+# in this sense python does not have procedures,
+# but it has functions that return None
+# much like empty return statement which is shortened for
+# return None
+
+# raise ValueError
+raise ValueError('invalid user response')
+
+# default arguements for functions
+def ask_ok(prompt, retries=4, reminder='Please try again!'):
+
+i = 5
+def f(arg=i):
+    print(arg)
+
+def f(a, L=[]):
+    L.append(a)
+    return L
+
+# keyword arguments
+# passing named arguments
+parrot(action='VOOOOOM', voltage=1000000)
+
+# keywords continued
+def cheeseshop(kind, *arguments, **keywords):
+..................
+cheeseshop("Limburger", "It's very runny, sir.",
+           "It's really very, VERY runny, sir.",
+           shopkeeper="Michael Palin",
+           client="John Cleese",
+           sketch="Cheese Shop Sketch")
+
+# unpacking argument list
+>>> args = [3, 6]
+>>> list(range(*args)) 
+
+>>> d = {"voltage": "four million", "state": "bleedin' demised", "action": "VOOM"}
+>>> parrot(**d)
+
+# tuples
+x = (1, 'one')
+x[0]
+x[1]
+
+# lambdas
+y = lambda x: x + n
+
+# docstring
+>>> def my_function():
+...     """Do nothing, but document it.
+...
+...     No, really, it doesn't do anything.
+...     """
+...     pass
+
+# print docstring at runtime
+>>> print(my_function.__doc__)
+
+# annotations
+# -> parameter annotations
+# -> return annotations
+# __annotations__ attribute
+>>> def f(ham: str, eggs: str = 'eggs') -> str:
+...     print("Annotations:", f.__annotations__)
+...     print("Arguments:", ham, eggs)
+...     return ham + ' and ' + eggs
+...
+>>> f('spam')
+Annotations: {'ham': <class 'str'>, 'return': <class 'str'>, 'eggs': <class 'str'>}
+
+# coding style considerations
+# Every Python developer should read it at some point
+# the convention is to use CamelCase for classes and lower_case_with_underscores for functions and methods.
+# Always use self as the name for the first method argument
+https://www.python.org/dev/peps/pep-0008/
+
+### MAP, FILTER AND REDUCE! ###
+
+# map
+>>> list(map(lambda x: x **2, range(1,6)))
+[1, 4, 9, 16, 25]
+
+# filter
+>>> list( filter((lambda x: x < 0), range(-5,5)))
+[-5, -4, -3, -2, -1]
+
+## See more at
+## https://docs.python.org/3/library/itertools.html
+## containing accumulate, zip and other cool stuff!
+
+###############################
+
 
 
 
