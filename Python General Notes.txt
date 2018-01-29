@@ -1,3 +1,17 @@
+# writing dependencies to a file
+sudo pip install -r confs/pip/commons.txt
+....................
+# comment
+<PACKAGE>
+<PACKAGE>==<VERSION>
+....................
+
+# query package versions in pip
+sudo pip install <PACKAGE>==
+
+# pip uninstall package
+sudo pip uninstall <PACKAGE>
+
 # use argv
 import sys
 sys.argv[0] -> empty, -c or fullname of the located module
