@@ -19,7 +19,10 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			traceroute w3m bridge-utils \
 			default-jdk git rar unrar \
 			iputils-arping network-manager-openvpn-gnome \
-			iperf docky curl uget gnome-tweak-tool
+			iperf docky curl uget gnome-tweak-tool python-pip python3-pip \
+			p7zip-full p7zip
+sudo pip install --upgrade pip
+sudo pip3 install --upgrade pip
 
 # use nvidia driver and proprietary intel drivers
 Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver
@@ -142,6 +145,7 @@ sudo vim /etc/samba/smb.conf
 # enable and restart samba service
 sudo systemctl restart smbd
 sudo systemctl enable smbd
+sudo systemctl status smbd
 
 # allow ports through firewall
 sudo ufw reload
@@ -193,5 +197,12 @@ sudo lvcreate -l 100%FREE -n ssd vg-ssd
 # reload fstab
 sudo mount -a
 
+# create desktop to url
+[Desktop Entry]
+Encoding=UTF-8
+Name=Link to Ask Ubuntu
+Type=Link
+URL=http://www.askubuntu.com/
+Icon=text-html
 
 
