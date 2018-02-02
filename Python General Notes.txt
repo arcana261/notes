@@ -833,8 +833,29 @@ pprint.pprint(x, width=30)
 import textwrap
 textwrap.fill(doc, width=30)
 
+# binary data record layouts
+import struct
+fields = struct.unpack('<IIIHH', data)
+< means little endian
+I means 4 byte unsigned integer
+H means 2 byte unsigned integer
 
+# multithreading
+import threading
+class AsyncTask(threading.Thread)
+  def __init__(self):
+    threading.Thread.__init__(self)
 
+  def run(self):
+    ...
+
+t = AsyncTask()
+t.start()
+t.join()
+
+# logging
+import logging
+logging.[debug|info|warning|error|critical](...)
 
 
 
