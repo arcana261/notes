@@ -60,6 +60,8 @@ Usage: thingy [OPTIONS]
 'o'
 >>> word[-6]
 'P'
+# formatting strings
+'this {0} is like {1}'.format(a,b)
 
 # slicing
 word[0:2]
@@ -71,6 +73,25 @@ word[:2] + word[2:]
 # string length
 >>> s = 'hello'
 >>> len(s)
+
+# type conversion
+float('NaN')
+int('314')
+
+# replace
+'str'.replace('a','b')
+
+# define byte array from string literal!
+p = b'hello, world!'
+
+# comparisions
+ -> in, not in -> a value occurs in sequence
+ -> is, not is -> two objects are same
+ -> chaining -> a < b == c
+ -> boolean: and or not
+ -> =, !=
+ -> if x -> if x is not None
+ -> lexographic on sequences (TypeError is not same sequence type)
 
 # lists
 >>> squares = [1, 4, 9, 16, 25]
@@ -88,10 +109,14 @@ a[len(a):] = [x]
 words.insert(0, w)
 # splice remove
 >>> letters[2:5] = []
+# splice remove another method
+del a[2:4]
 # clear
 letters[:] = []
 # clear another method
 list.clear()
+# clear yet another method
+del list[:]
 # sorting
 pairs.sort(key=lambda pair: pair[1])
 # sorting (more)
@@ -114,12 +139,68 @@ list.index(x[, start[, end]])
 list.count(x)
 # reverse a list
 list.reverse()
+# remove index from list
+del list[0]
 
 ## deque (doubly ended queue)
 from collections import deque
 queue = deque(["Eric", "John", "Michael"])
 queue.append("Terry")
 queue.popleft()
+
+## tuple
+## IMPORTANT! TUPLES ARE IMMUTABLE!
+>>> t = 12345, 54321, 'hello!'
+>>> t[0]
+>>> empty = ()
+>>> singleton = 'hello',
+>>> len(t)
+## tuple packing
+t = 12345, 54321, 'hello!'
+## tuple unpacking
+>>> x, y, z = t
+
+## sets
+# create
+>>> s = {1, 2, 3}
+# create via sequences
+>>> s = set(range(3))
+# membership
+>>> 5 in s
+# in a not in b
+>>> a - b
+# in a or in b or in both
+>>> a | b
+# in a and in b
+>>> a & b
+# in a and in b but not both
+>>> a ^ b
+# comprehension
+>>> {x for x in 'abcdefg' if not x in 'abc'}
+
+## dictionaries
+# key?
+-> string
+-> number
+-> tuple of
+	-> string
+	-> number
+	-> tuple
+# create
+>>> tel = {'jack': 4098, 'sape': 4139}
+# create another method
+>>> dict([('sape', 4139), ('guido', 4127), ('jack', 4098)])
+# assignment
+a[key] = value
+# delete key
+del a[key]
+# sequence of keys
+a.keys()
+# sequence of (key,value) tuple
+a.items()
+# looping
+for k, v in dictionary.items():
+ ...
 
 # multiple assignment
 a, b = 0, 1
@@ -276,11 +357,476 @@ https://www.python.org/dev/peps/pep-0008/
 >>> list( filter((lambda x: x < 0), range(-5,5)))
 [-5, -4, -3, -2, -1]
 
+# zip
+>>> list(zip([1,2],[3,4]))
+[(1, 3), (2, 4)]
+
+# sort
+>>> sorted('dbca')
+['a', 'b', 'c', 'd']
+
+# make indexed
+# enumerate
+>>> list(enumerate('abc'))
+[(0, 'a'), (1, 'b'), (2, 'c')]
+
+# reversed
+>>> list(reversed(range(3))
+
+# max
+max(...)
+
+# min
+min(...)
+
+# sum
+sum(...)
+
 ## See more at
 ## https://docs.python.org/3/library/itertools.html
 ## containing accumulate, zip and other cool stuff!
 
 ###############################
+
+### Comprehension ###
+
+[x**2 for x in range(10)]
+
+[(x,y) for x in [1,2,3] for y in [3,1,4] if x != y]
+
+# set
+{x for x in 'abcdefg' if not x in 'abc'}
+
+# dictionary
+{x: x**2 for x in (2, 4, 6)}
+
+###############################
+
+# modules
+-> REMEMBER INITIALIZATION!
+-> REMEMBER "_" at the beginning of symbol is for private!
+import <MODULE>
+from <MODULE> import <SYMBOL>
+from <MODULE> import *
+
+--> __dict__ is the dictionary in each module's namespace
+
+-> ImportError
+
+# reload (to reload module initialization)
+importlib.reload()
+importlib.reload(modulename)
+
+# REMEMBER!
+import <MODULE>
+dir(MODULE) -> lists all module functions
+help(MODULE) -> returns manual page for module
+
+# checking if module is launched as script
+if __name__ == "__main__":
+    import sys
+    fib(int(sys.argv[1]))
+
+-> sys.path
+-> dir(module) -> array of defined names in a module
+-> parent dir.. parent dirs!
+-> dir() -> array of names defined in current module
+-> dir(builtins)
+
+# packages
+ -> __init__.py
+   -> can be empty
+   -> can contain initialization code for package
+   -> __all__ = [...] explicitly indicate which submodules to load for import *
+   -> __path__ -> list containing the name of the directory holding the package's __init__.py
+ -> sub-package
+
+###############################
+
+sys.stdout --> standard file for output
+
+str(v) -> convert to string human readable
+repr(v) -> convert to string parseable by interpreter
+
+"xxx".rjust(2) -> width spaces to right (optional fill character as second argument)
+"xxx".ljust(2) -> width spaces to left (optional fill character as second argument)
+"xxx".center(2) -> width spaces to keep centered (optional fill character as second argument)
+
+>>> for x in range(1, 11):
+...     print('{0:2d} {1:3d} {2:4d}'.format(x, x*x, x*x*x))
+
+
+>>> '12'.zfill(5)
+'00012'
+
+>>> print('We are the {} who say "{}!"'.format('knights', 'Ni'))
+We are the knights who say "Ni!"
+
+>>> print('{0} and {1}'.format('spam', 'eggs'))
+spam and eggs
+
+>>> print('This {food} is {adjective}.'.format(
+...       food='spam', adjective='absolutely horrible'))
+
+..............
+{!a} ascii() {!s} str() {!r} repr()
+{0} {} {named}
+{0:10} {0:10d} {0:.3f}
+{0[key]:d} given dictionary table ----> also can be done using ** operator
+..............
+
+% FORMATTING OPERATOR IS THE OLD STYLE!
+
+>>> import math
+>>> print('The value of PI is approximately %5.3f.' % math.pi)
+
+## Opening file
+>>> f = open('workfile', 'w')
+w, r, a, r+, b
+
+>>> with open('workfile') as f:
+...     read_data = f.read()
+>>> f.closed
+True
+
+f.read() -> total file
+f.read(size) -> returns empty string '' if EOF
+f.readLine() -> returns '\n' for empty lines, empty string '' if EOF
+f.write(str) -> returns number of characters written
+f.tell()
+f.seek(offset, from_what) -> 0: beginning, 1: current, 2: end of file
+
+>>> for line in f:
+...     print(line, end='')
+
+## JSON!
+
+>>> import json
+>>> json.dumps([1, 'simple', 'list'])
+'[1, "simple", "list"]'
+json.dump(x, f)
+x = json.load(f)
+
+REMEMBER: !!!!!!!!
+pickle -> them module to work with serialization/deserialization of python specific objects!
+REMEMBER: !!!!!!!!
+
+EXCEPTIONS!
+
+ZeroDivisionError: division by zero
+NameError: name 'spam' is not defined
+TypeError: Can't convert 'int' object tValueErroro str implicitly
+ValueError:
+RuntimeError:
+OSError:
+StopIteration: -> for iterators
+
+try:
+ ....
+except ValueError:
+ ....
+
+except (RuntimeError, TypeError, NameError):
+ pass
+
+except:
+    print("Unexpected error:", sys.exc_info()[0])
+    raise
+
+except OSError as err:
+
+class B(Exception):
+    pass
+
+raise ValueError()
+
+for arg in sys.argv[1:]:
+    try:
+        f = open(arg, 'r')
+    except OSError:
+        print('cannot open', arg)
+    else:
+        print(arg, 'has', len(f.readlines()), 'lines')
+        f.close()
+
+raise Exception('spam', 'eggs')
+... except Exception as inst:
+...     print(inst.args)     # arguments stored in .args
+...     x, y = inst.args     # unpack args
+
+raise ValueError  # shorthand for 'raise ValueError()'
+
+>>> def divide(x, y):
+...     try:
+...         result = x / y
+...     except ZeroDivisionError:
+...         print("division by zero!")
+...     else:
+...         print("result is", result)
+...     finally:
+...         print("executing finally clause")
+
+---> nonlocal variable definition:
+nonlocal a
+a = "hello"
+
+---> global variable definition:
+global a
+a = "hello"
+
+########### CLASSES ! #################
+
+-> Class objects support two kinds of operations: attribute references and instantiation.
+
+class MyClass:
+    """A simple example class"""
+    i = 12345
+
+    def f(self):
+        return 'hello world'
+
+-> then MyClass.i and MyClass.f are valid attribute references, returning an integer and a function object, respectively.
+-> NOTE:! class variables are shared by all instances
+
+x = MyClass()
+
+def __init__(self):
+    self.data = []
+
+-> Data attributes need not be declared; like local variables, they spring into existence when they are first assigned to. 
+
+-> method objects
+xf = x.f
+while True:
+    print(xf())
+
+# inheritance
+class DerivedClassName(BaseClassName):
+
+# python 2.7
+class ChildB(Base):
+    def __init__(self):
+        super(ChildB, self).__init__()
+
+# python 3
+class ChildB(Base):
+    def __init__(self):
+        super().__init__()
+
+# without using super
+ Base.__init__(self) # Avoid this.
+
+# isinstance()
+# issubclass()
+
+# multiple inheritance
+class DerivedClassName(Base1, Base2, Base3):
+
+-> rember: dynamic ordering, left to right
+
+# private
+_score
+
+# name mangling to prevent accidents
+# of overrides
+class Mapping:
+    def __init__(self, iterable):
+        self.items_list = []
+        self.__update(iterable)
+
+    def update(self, iterable):
+        for item in iterable:
+            self.items_list.append(item)
+
+    __update = update   # private copy of original update() method
+
+
+---> instance methods
+__self__
+__func__
+
+## NOTE
+## NOTE
+## Behind the scenes, the for statement calls iter() on the container object. 
+
+# create iter object manually
+it = iter(s)
+next(it)
+
+# custom iterator!
+# __iter__ and __next__ methods
+# StopIteration exception
+class Reverse:
+    """Iterator for looping over a sequence backwards."""
+    def __init__(self, data):
+        self.data = data
+        self.index = len(data)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index == 0:
+            raise StopIteration
+        self.index = self.index - 1
+        return self.data[self.index]
+
+
+# generators!
+
+
+def reverse(data):
+    for index in range(len(data)-1, -1, -1):
+        yield data[index]
+
+>>> for char in reverse('golf'):
+...     print(char)
+
+# generator expressions
+sum(i*i for i in range(10))
+max((student.gpa, student.name) for student in graduates)
+sum(x*y for x,y in zip(xvec, yvec))
+
+###########################################
+os module
+###########################################
+
+import os
+os.getcwd()      # Return the current working directory
+os.chdir('/server/accesslogs')   # Change current working directory
+os.system('mkdir today')   # Run the command mkdir in the system shell
+
+import shutil
+shutil.copyfile(source, dest)
+shutil.move(source, dest)
+
+# file wildcards
+import glob
+glob.glob('*.py') -> array of file names (relative)
+-> better argument processing -> getopt module
+-> better better argument processing -> argparser module
+
+# argv
+import sys
+sys.argv -> array of arguments ([0] is main file)
+
+# error redirection
+sys.stderr.write(...)
+sys.exit()
+
+# regular expression
+import re
+re.findall(r'<REGEX>', str) -> array of matches
+re.sub(r'<REGEX>', str) -> substituted string
+re.match(r'<REGEX>', str) -> first match or None
+re.finditer(r'<REGEX>', str) -> iterator to matches
+
+# mathematics
+import math
+math.pi
+math.cos()
+math.sin()
+math.log()
+
+# random
+import random
+random.choice([1, 2, 3])
+random.sample(range(100), 10)
+random.random() -> random float
+random.randrange(6) -> random integer
+
+# statistics
+import statistics
+statistics.mean([1,2,3])
+statistics.median([1,2,3])
+statistics.variance([1,2,3])
+
+# request url
+from urllib.request import urlopen
+with urlopen('URL') as response:
+	for line in response:
+
+# send main
+import smtplib
+server = smtplib.SMTP('localhost')
+server.sendmail('TO', 'FROM',
+"""To: <>
+From: <>
+
+Message!
+""")
+server.quit()
+
+# date/time
+from datetime import date
+now = datetime.now()
+datetime.date(2003, 12, 2)
+>>> now.strftime("%m-%d-%y. %d %b %Y is a %A on the %d day of %B.")
+'12-02-03. 02 Dec 2003 is a Tuesday on the 02 day of December.'
+dt = d1 - d2
+dt.days
+
+# compression
+-> zlib, gzip, bz2, lzma, zipfile and tarfile modules!
+import zlib
+s = b'hey!'
+t = zlib.compress(s)
+zlib.decompress(t)
+zlib.crc32(s)
+
+# performance measurement!
+-> timeit
+-> profile
+-> pstats
+
+from timeit import Timer
+Timer('<eval expression>').timeit()
+
+# doctest! test through pydocs
+def average(values):
+    """Computes the arithmetic mean of a list of numbers.
+
+    >>> print(average([20, 30, 70]))
+    40.0
+    """
+    return sum(values) / len(values)
+
+import doctest
+doctest.testmod()   # automatically validate the embedded tests
+
+# write unit tests
+import unittest
+
+class TestStatisticalFunctions(unittest.TestCase):
+
+    def test_average(self):
+        self.assertEqual(average([20, 30, 70]), 40.0)
+        self.assertEqual(round(average([1, 5, 7]), 1), 4.3)
+        with self.assertRaises(ZeroDivisionError):
+            average([])
+        with self.assertRaises(TypeError):
+            average(20, 30, 70)
+
+unittest.main()  # Calling from the command line invokes all tests
+
+# output formatting!
+import reprlib
+reprlib.repr(...)
+
+import pprint
+pprint.pprint(x, width=30)
+
+import textwrap
+textwrap.fill(doc, width=30)
+
+
+
+
+
+
+
+
+
 
 
 
