@@ -20,7 +20,7 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			default-jdk git rar unrar \
 			iputils-arping network-manager-openvpn-gnome \
 			iperf docky curl uget gnome-tweak-tool python-pip python3-pip \
-			p7zip-full p7zip
+			p7zip-full p7zip net-tools
 sudo pip install --upgrade pip
 sudo pip3 install --upgrade pip
 
