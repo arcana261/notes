@@ -534,6 +534,7 @@ ValueError:
 RuntimeError:
 OSError:
 StopIteration: -> for iterators
+KeyError: -> for dictionaries
 
 try:
  ....
@@ -701,6 +702,13 @@ sum(i*i for i in range(10))
 max((student.gpa, student.name) for student in graduates)
 sum(x*y for x,y in zip(xvec, yvec))
 
+######## REMEMBERRRRRRRRRR! SPECIAL METHODS DEFINED ON CLASS ##############
+__init__
+__str__
+__repr__
+__iter__
+__len__
+
 ###########################################
 os module
 ###########################################
@@ -857,10 +865,69 @@ t.join()
 import logging
 logging.[debug|info|warning|error|critical](...)
 
+# weak referencing
+import weakref
+d = weakref.WeakValueDictionary()
+d['key'] = obj
+d['key'] -> KeyError
 
+# compact arrays
+>>> from array import array
+>>> a = array('H', [4000, 10, 700, 22222])
 
+# heap
+>>> from heapq import heapify, heappop, heappush
+>>> data = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+>>> heapify(data)                      # rearrange the list into heap order
+>>> heappush(data, -5)                 # add a new entry
+>>> [heappop(data) for i in range(3)]  # fetch the three smallest entries
 
+# decimal module
+>>> from decimal import *
+>>> round(Decimal('0.70') * Decimal('1.05'), 2)
 
+# control precision
+>>> getcontext().prec = 36
+>>> Decimal(1) / Decimal(7)
+Decimal('0.142857142857142857142857142857142857')
+
+##########################################################33
+pipenv
+##########################################################33
+
+# install pipenv
+pip install --user pipenv
+
+# create a new project on python2
+pipenv --python 2
+# or be more specific about version
+pipenv --python 2.7.14
+# or python 3
+pipenv --python 3
+
+pipenv install <PACKAGE>
+pipenv install <PACKAGE> --dev
+pipenv install
+pipenv install --dev
+pipenv shell <-- activate venv
+pipenv run <FILE> <-- execute file in venv
+
+set required python version
+--------------------------
+[requires]
+python_version = "3.2"
+--------------------------
+
+# specify a package for windows only!
+
+[packages]
+requests = "*"
+pywinusb = {version = "*", os_name = "== 'windows'"}
+
+# specify package versions
+==2.1.3
+>=2.1.3
+>=2.1.3,<3.0
 
 
 
