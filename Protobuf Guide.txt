@@ -1,6 +1,7 @@
 ## https://developers.google.com/protocol-buffers/docs/pythontutorial
 ## https://developers.google.com/protocol-buffers/docs/proto
 ## https://developers.google.com/protocol-buffers/docs/proto3
+## https://github.com/google/protobuf/blob/master/src/google/protobuf/api.proto
 ## https://grpc.io/
 
 # types
@@ -95,6 +96,14 @@ message ErrorStatus {
   repeated google.protobuf.Any details = 2;
 }
 
+# timstamp
+# has "int64 seconds" and "int32 nanos"
+import "google/protobuf/timestamp.proto";
+
+# duration
+# has "int64 seconds" and "int32 nanos"
+import "google/protobuf/duration.proto";
+
 # oneof!
 # CAN NOT USE REPEATED!
 #Be careful when adding or removing oneof fields. If checking the value of a oneof returns None/NOT_SET, it could mean that the oneof has not been set or it has been set to a field in a different version of the oneof. 
@@ -154,6 +163,19 @@ any_message.Pack(message)
 any_message.Unpack(message)
 assert any_message.Is(message.DESCRIPTOR)
 
+# timestamp
+msg.ToJsonString()
+msg.FromJsonString(str)
+msg.ToDatetime()
+msg.FromDatetime(dt)
+msg.To{Seconds,Milliseconds,Microseconds,Nanoseconds}
+msg.From{Seconds,Milliseconds,Microseconds,Nanoseconds}
 
-
+# duration
+msg.ToJsonString()
+msg.FromJsonString(str)
+msg.ToDatetime()
+msg.FromDatetime(dt)
+msg.To{Seconds,Milliseconds,Microseconds,Nanoseconds}
+msg.From{Seconds,Milliseconds,Microseconds,Nanoseconds}
 
