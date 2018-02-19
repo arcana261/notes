@@ -1,0 +1,159 @@
+## https://developers.google.com/protocol-buffers/docs/pythontutorial
+## https://developers.google.com/protocol-buffers/docs/proto
+## https://developers.google.com/protocol-buffers/docs/proto3
+## https://grpc.io/
+
+# types
+bool, int32, float, double, string
+
+(required|optional|repeated) (type|<enum>|<message>) (<name>) = (<tag>) (([default = <value>]))
+
+
+.................................................................
+syntax = "proto2";
+
+package tutorial;
+
+// comment
+/*
+multi line comment
+*/
+
+message Person {
+  required string name = 1;
+  required int32 id = 2;
+  optional string email = 3;
+
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+  message PhoneNumber {
+    required string number = 1;
+    optional PhoneType type = 2 [default = HOME];
+  }
+
+  repeated PhoneNumber phones = 4;
+}
+
+message AddressBook {
+  repeated Person people = 1;
+}
+.................................................................
+.................................................................
+
+# call compiler
+protoc -I=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/addressbook.proto
+
+# standard message methods
+	IsInitialized()
+	__str__()
+	CopyFrom(other_msg)
+	Clear()
+
+# static methods
+	SerializeToString()
+	ParseFromString(data)
+	FromString(str)
+
+
+
+####################################################################
+
+# reserving fields
+message Foo {
+  reserved 2, 15, 9 to 11;
+  reserved "foo", "bar";
+}
+
+# enums
+## REMEMBER: the first value should be 0
+enum EnumAllowingAlias {
+  option allow_alias = true;
+  UNKNOWN = 0;
+  STARTED = 1;
+  RUNNING = 1;
+}
+
+enum Foo {
+  reserved 2, 15, 9 to 11, 40 to max;
+  reserved "FOO", "BAR";
+}
+
+# importing definitions
+import "myproject/other_protos.proto";
+# importing and re-exporting definitions (forwarded importing!)
+import public "new.proto";
+
+# any!
+# for example, in Java, the Any type will have special pack() and unpack() accessors, while in C++ there are PackFrom() and UnpackTo() methods
+import "google/protobuf/any.proto";
+message ErrorStatus {
+  string message = 1;
+  repeated google.protobuf.Any details = 2;
+}
+
+# oneof!
+# CAN NOT USE REPEATED!
+#Be careful when adding or removing oneof fields. If checking the value of a oneof returns None/NOT_SET, it could mean that the oneof has not been set or it has been set to a field in a different version of the oneof. 
+message SampleMessage {
+  oneof test_oneof {
+    string name = 4;
+    SubMessage sub_message = 9;
+  }
+}
+
+# maps!
+# key type should be scalar or string, NOT enum!
+# value can not be map!
+# can not be repeated!
+map<string, Project> projects = 3;
+# is backward compatible with a hack!
+message MapFieldEntry {
+  key_type key = 1;
+  value_type value = 2;
+}
+repeated MapFieldEntry map_field = N;
+
+# service declaration
+service SearchService {
+  rpc Search (SearchRequest) returns (SearchResponse);
+}
+
+############################################
+Updating proto
+############################################
+
+you must not change the tag numbers of any existing fields.
+you must not add or delete any required fields.
+you may delete optional or repeated fields.
+you may add new optional or repeated fields but you must use fresh tag numbers (i.e. tag numbers that were never used in this protocol buffer, not even by deleted fields).
+
+you may change default value of optional
+
+optional can be converted to extension while tag and type remains same
+
+optional is compatible with repeated
+
+Compatible types:
+{int32,uint32,int64,uint64,bool}
+{sint32,sint64}
+{fixed32,sfixed32}
+{fixed64,sfixed64}
+{string,bytes}
+{enum -> int32, uint32, int64, uint64}
+
+############################################
+PYTHON GUIDE
+############################################
+
+# any!
+any_message.Pack(message)
+any_message.Unpack(message)
+assert any_message.Is(message.DESCRIPTOR)
+
+
+
+
