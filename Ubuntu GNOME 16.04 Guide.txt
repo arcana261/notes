@@ -162,8 +162,8 @@ sudo rm -rfv /var/crash/*
 # set proxy for APT
 sudo vim /etc/apt/apt.conf.d/99proxy
 ...............
-Acquire::http::Proxy "http://192.168.5.138:8118";
-Acquire::https::Proxy "http://192.168.5.138:8118";
+Acquire::http::Proxy "http://127.0.0.1:8118";
+Acquire::https::Proxy "http://127.0.0.1:8118";
 ...............
 
 ## create iso from cd/dvd

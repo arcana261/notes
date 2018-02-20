@@ -2,17 +2,23 @@
 sudo apt-get install python3-pip
 sudo pip3 install --upgrade pip
 
+# install pipenv
+pip install --user pipenv
+
+# prepare folder
+pipenv --three
+
 # install django
-pip3 install Django==2.0.1
+pipenv install Django
 
 # check if django is installed
-python3 -m django --version
+pipenv run python -m django --version
 
 # create a new project
-django-admin startproject mysite
+pipenv run django-admin startproject mysite
 
 # run applicaito
-python3 manage.py runserver
+pipenv run python mysite/manage.py runserver
 
 # migrate database
 python3 manage.py migrate

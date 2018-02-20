@@ -904,6 +904,8 @@ pipenv --python 2
 pipenv --python 2.7.14
 # or python 3
 pipenv --python 3
+# or (PREFERRED)
+pipenv --three
 
 pipenv install <PACKAGE>
 pipenv install <PACKAGE> --dev
@@ -929,7 +931,16 @@ pywinusb = {version = "*", os_name = "== 'windows'"}
 >=2.1.3
 >=2.1.3,<3.0
 
+#############################################3
 
+interactive environments
+
+ipython -> jupyter notebook
+bpython
+
+pip install bpython
+OR
+apt-get install bpython
 
 
 
