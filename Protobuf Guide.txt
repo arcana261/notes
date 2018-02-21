@@ -2,12 +2,22 @@
 ## https://developers.google.com/protocol-buffers/docs/proto
 ## https://developers.google.com/protocol-buffers/docs/proto3
 ## https://github.com/google/protobuf/blob/master/src/google/protobuf/api.proto
+## https://github.com/grpc-ecosystem/grpc-gateway/blob/master/examples/examplepb/a_bit_of_everything.proto
 ## https://grpc.io/
+
+# install protoc
+cd ~/Downloads
+curl -OL https://github.com/google/protobuf/releases/download/v3.5.1/protoc-3.5.1-linux-x86_64.zip
+unzip protoc-3.5.1-linux-x86_64.zip -d protoc3
+sudo mv protoc3/bin/* /usr/local/bin/
+sudo mv protoc3/include/* /usr/local/include/
+rm -rfv protoc3
+
 
 # types
 bool, int32, float, double, string
 
-(required|optional|repeated) (type|<enum>|<message>) (<name>) = (<tag>) (([default = <value>]))
+(repeated) (type|<enum>|<message>) (<name>) = (<tag>) (([default = <value>]))
 
 
 .................................................................
@@ -21,9 +31,9 @@ multi line comment
 */
 
 message Person {
-  required string name = 1;
-  required int32 id = 2;
-  optional string email = 3;
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
 
   enum PhoneType {
     MOBILE = 0;
@@ -32,21 +42,28 @@ message Person {
   }
 
   message PhoneNumber {
-    required string number = 1;
-    optional PhoneType type = 2 [default = HOME];
+    string number = 1;
+    PhoneType type = 2 [default = HOME];
   }
 
-  repeated PhoneNumber phones = 4;
+  PhoneNumber phones = 4;
 }
 
 message AddressBook {
-  repeated Person people = 1;
+  Person people = 1;
 }
 .................................................................
 .................................................................
 
 # call compiler
 protoc -I=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/addressbook.proto
+# install python dependencies
+
+# using pipenv
+pipenv install protobuf
+pipenv install grpcio
+pipenv install grpcio-tools --dev
+pipenv run python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. helloworld.proto
 
 # standard message methods
 	IsInitialized()
@@ -178,4 +195,28 @@ msg.ToDatetime()
 msg.FromDatetime(dt)
 msg.To{Seconds,Milliseconds,Microseconds,Nanoseconds}
 msg.From{Seconds,Milliseconds,Microseconds,Nanoseconds}
+
+############################################
+GRPC SERVER
+############################################
+
+class Greeter(helloworld_pb2_grpc.GreeterServicer):
+    def SayHello(self, request, context):
+        return helloworld_pb2.HelloReply(message='Hello, %s!' % request.name)
+
+def serve():
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    helloworld_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+    server.add_insecure_port('[::]:50051')
+    server.start()
+
+if __name__ == '__main__':
+    serve()
+
+
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+
+
+
 
