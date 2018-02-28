@@ -107,6 +107,8 @@ forward            10.*.*.*/     .
 forward            10.*.*.*:*/     .
 forward           127.*.*.*/     .
 forward           127.*.*.*:*/     .
+forward           172.*.*.*/     .
+forward           172.*.*.*:*/     .
 <<<<<<<<<<<<<<<
 
 # enable and start privoxy
@@ -128,10 +130,16 @@ Defaults    env_keep += "http_proxy HTTP_PROXY https_proxy HTTPS_PROXY"
 # create a source script to set environments
 vim ~/proxy.source
 .................
-export http_proxy="http://192.168.21.56:8118/"
+export http_proxy="http://127.0.0.1:8118/"
 export HTTP_PROXY=$http_proxy
 export https_proxy=$http_proxy
 export HTTPS_PROXY=$http_proxy
+export socks_proxy="socks5://127.0.0.1:1080/"
+export SOCKS_PROXY=$socks_proxy
+export no_proxy="localhost,127.0.0.0/8,::1,192.168.0.0/16,10.0.0.0/8,172.0.0.0/8"
+export NO_PROXY=$no_proxy
+export all_proxy=$socks_proxy
+export all_proxy=$all_proxy
 .................
 
 # load proxy environment
@@ -153,7 +161,12 @@ sudo mkdir -p /etc/systemd/system/docker.service.d
 sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf 
 .................
 [Service]
-Environment="HTTP_PROXY=http://192.168.21.56:8118/"
+Environment="http_proxy=http://172.17.0.1:8118/"
+Environment="HTTP_PROXY=http://172.17.0.1:8118/"
+Environment="https_proxy=http://172.17.0.1:8118/"
+Environment="HTTPS_PROXY=http://172.17.0.1:8118/"
+Environment="no_proxy=localhost,127.0.0.0/8,::1,192.168.0.0/16,10.0.0.0/8,172.0.0.0/8"
+Environment="NO_PROXY=localhost,127.0.0.0/8,::1,192.168.0.0/16,10.0.0.0/8,172.0.0.0/8"
 .................
 
 # reload systemd
@@ -174,6 +187,12 @@ unset http_proxy
 unset HTTP_PROXY
 unset https_proxy
 unset HTTPS_PROXY
+unset socks_proxy
+unset SOCKS_PROXY
+unset no_proxy
+unset NO_PROXY
+unset all_proxy
+unset ALL_PROXY
 .................
 
 # load no proxy environment

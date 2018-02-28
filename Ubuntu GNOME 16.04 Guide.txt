@@ -54,6 +54,15 @@ sudo ufw reload
 sudo systemctl enable sshd
 sudo systemctl restart sshd
 
+# configure sysctl
+sudo vim /etc/sysctl.conf
+..........................................
+fs.inotify.max_user_watches = 524288
+..........................................
+
+# reload sysctl
+sudo sysctl -p --system
+
 # set default editor to vim
 sudo update-alternatives --config editor
 

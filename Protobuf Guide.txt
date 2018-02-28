@@ -1,8 +1,10 @@
 ## https://developers.google.com/protocol-buffers/docs/pythontutorial
 ## https://developers.google.com/protocol-buffers/docs/proto
 ## https://developers.google.com/protocol-buffers/docs/proto3
+## https://developers.google.com/protocol-buffers/docs/reference/python-generated
 ## https://github.com/google/protobuf/blob/master/src/google/protobuf/api.proto
 ## https://github.com/grpc-ecosystem/grpc-gateway/blob/master/examples/examplepb/a_bit_of_everything.proto
+## https://github.com/grpc/grpc/tree/master/examples
 ## https://grpc.io/
 
 # install protoc
@@ -70,10 +72,19 @@ pipenv run python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. he
 	__str__()
 	CopyFrom(other_msg)
 	Clear()
+	SerializeToString()
+	HasField(field_name)
+	ClearField(field_name)
+	ListFields() -> array of (field_name, value)
+	WhichOneof(oneof_group) -> returns name of field set by oneof group
+	ByteSize()
+
+# standard message fields
+	DESCRIPTOR.full_name
 
 # static methods
 	SerializeToString()
-	ParseFromString(data)
+	ParseFromString(data) OR ParseFromString(bytearray(data, 'ascii'))
 	FromString(str)
 
 
@@ -180,6 +191,9 @@ any_message.Pack(message)
 any_message.Unpack(message)
 assert any_message.Is(message.DESCRIPTOR)
 
+from google.protobuf.any_pb2 import Any
+
+
 # timestamp
 msg.ToJsonString()
 msg.FromJsonString(str)
@@ -195,6 +209,31 @@ msg.ToDatetime()
 msg.FromDatetime(dt)
 msg.To{Seconds,Milliseconds,Microseconds,Nanoseconds}
 msg.From{Seconds,Milliseconds,Microseconds,Nanoseconds}
+
+# repeated!
+.append(x)
+.extend([x,y])
+[0] = x
+print([0])
+[:] = [x, y]
+del [:]
+for x in ...:
+  print(x)
+
+# maps
+print (f[3])
+f[3] = 5
+for key in f:
+  print f[key]
+if key in f:
+  pass
+del f[key]
+f.get_or_create(key)
+dict(f)
+
+# enum
+self.assertEqual('VALUE_A', myproto_pb2.SomeEnum.Name(myproto_pb2.VALUE_A))
+self.assertEqual(5, myproto_pb2.SomeEnum.Value('VALUE_B'))
 
 ############################################
 GRPC SERVER
@@ -213,10 +252,92 @@ def serve():
 if __name__ == '__main__':
     serve()
 
+############################################
+GRPC CLIENT
+############################################
 
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
+def run():
+    channel = grpc.insecure_channel('app:8000')
+    stub = MathServiceStub(channel)
+
+    try:
+        print(stub.add(AddRequest(x=3, y=6)))
+    except Exception as e:
+        code = e.code()
+        details = e.details()
+        print(e)
 
 
+if __name__ == '__main__':
+    run()
+
+############################################
+
+# Raise exception and handing
+@@@ Server
+class MathService(MathServiceServicer):
+    def add(self, request, context):
+        raise Exception("Msg1", "Msg2")
+@@@ Client
+    try:
+        print(stub.add(AddRequest(x=3, y=6)))
+    except Exception as e:
+        code = e.code()
+        details = e.details()
+@@@ Values:::
+code = grpc.StatusCode.UNKNOWN
+details = 'Exception calling application: (\\'Msg1\\', \\'Msg2\\')'
+
+# Return Status code and details
+@@@ Server
+class MathService(MathServiceServicer):
+    def add(self, request, context):
+        context.set_code(grpc.StatusCode.NOT_FOUND)
+        context.set_details("nop!")
+@@@ Client
+    try:
+        print(stub.add(AddRequest(x=3, y=6)))
+    except Exception as e:
+        code = e.code()
+        details = e.details()
+@@@ Values:::
+code = grpc.StatusCode.NOT_FOUND
+details = 'nop!'
+
+# Return Custom object with status code and details
+@@@ Server
+class MathService(MathServiceServicer):
+    def add(self, request, context):
+        context.set_code(grpc.StatusCode.UNAVAILABLE)
+        context.set_details(MathError(message="salam!").SerializeToString())
+@@@ Client
+    try:
+        print(stub.add(AddRequest(x=3, y=6)))
+    except Exception as e:
+        code = e.code()
+        details = MathError.FromString(bytearray(e.details(), 'ascii'))
+
+# Return custom error object with Any
+@@@ Server
+from google.protobuf.any_pb2 import Any
+class MathService(MathServiceServicer):
+    def add(self, request, context):
+        details = Any()
+        details.Pack(MathError(message="salam!"))
+        context.set_code(grpc.StatusCode.UNAVAILABLE)
+        context.set_details(details.SerializeToString())
+@@@ Client
+    try:
+        print(stub.add(AddRequest(x=3, y=6)))
+    except Exception as e:
+        code = e.code()
+        details = Any.FromString(bytearray(e.details(), 'ascii'))
+
+        if (details.Is(MathError.DESCRIPTOR)):
+            math_error = MathError()
+            details.Unpack(math_error)
+            print(math_error)
+        else:
+            print(e)
 
 
