@@ -7,6 +7,9 @@
 ## https://github.com/grpc/grpc/tree/master/examples
 ## https://grpc.io/
 
+## grpc testing!
+## https://github.com/grpc/grpc/tree/master/src/python/grpcio_tests/tests/testing
+
 # install protoc
 cd ~/Downloads
 curl -OL https://github.com/google/protobuf/releases/download/v3.5.1/protoc-3.5.1-linux-x86_64.zip
@@ -297,6 +300,11 @@ if __name__ == '__main__':
 
 ############################################
 
+## NOTE:
+## connection failed is an exception
+### -> code -> grpc.StatusCode.UNAVAILABLE
+### -> details -> 'Connect Failed'
+
 # Raise exception and handing
 @@@ Server
 class MathService(MathServiceServicer):
@@ -363,5 +371,35 @@ class MathService(MathServiceServicer):
             print(math_error)
         else:
             print(e)
+
+
+####################################################
+HAPROXY LOAD BALANCING
+####################################################
+global
+  tune.ssl.default-dh-param 1024
+ 
+defaults
+  timeout connect 10000ms
+  timeout client 60000ms
+  timeout server 60000ms
+ 
+frontend fe_http
+  mode http
+  bind *:8000
+  # Redirect to https
+  redirect scheme https code 301
+ 
+frontend fe_https
+  mode tcp
+  bind *:8443 npn spdy/2 alpn h2,http/1.1
+  default_backend be_grpc
+
+# gRPC servers running on port 8083-8084
+backend be_grpc
+  mode tcp
+  balance roundrobin
+  server srv01 127.0.0.1:8083
+  server srv02 127.0.0.1:8084
 
 
