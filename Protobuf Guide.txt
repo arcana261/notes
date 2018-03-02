@@ -124,6 +124,14 @@ message ErrorStatus {
   repeated google.protobuf.Any details = 2;
 }
 
+# struct!
+# to hold unstructured data like JSON and dicts
+# value of a key could be: struct, listvalue, bool, string, double, null
+import "google/protobuf/struct.proto";
+message MyMessage {
+  google.protobuf.Struct more = 1;
+}
+
 # timstamp
 # has "int64 seconds" and "int32 nanos"
 import "google/protobuf/timestamp.proto";
@@ -234,6 +242,22 @@ dict(f)
 # enum
 self.assertEqual('VALUE_A', myproto_pb2.SomeEnum.Name(myproto_pb2.VALUE_A))
 self.assertEqual(5, myproto_pb2.SomeEnum.Value('VALUE_B'))
+
+# struct
+from google.protobuf.struct_pb2 import Struct
+msg["key"] = None
+msg["key"] = True
+msg["key"] = 5.0
+msg["key"] = "hello"
+msg.get_or_create_struct("key")
+msg.get_or_create_list("list")
+
+list.extend([1, "hello", True])
+list.append("omg!")
+len(list)
+list[0]
+list.add_struct()
+list.add_list()
 
 ############################################
 GRPC SERVER
