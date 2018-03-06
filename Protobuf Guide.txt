@@ -373,6 +373,29 @@ class MathService(MathServiceServicer):
             print(e)
 
 
+# Client -> Server streaming
+@@@ Proto
+rpc add(stream Value) returns (Result);
+@@@ Server
+    def add(self, request_iterator, context):
+        result = 0.0
+        for request in request_iterator:
+            if not context.is_active():
+                break
+            result = result + request.value
+        return Result(result=result)
+@@@ Client
+    try:
+        print(stub.add(iter([Value(value=x) for x in range(10)])))
+    except Exception as e:
+        print(e)
+@@@ Node Client (grpcc)
+MathService@app:8000> ch = client.add(pr)
+MathService@app:8000> ch.write(2)
+MathService@app:8000> ch.write(5)
+MathService@app:8000> ch.end()
+
+
 ####################################################
 HAPROXY LOAD BALANCING
 ####################################################

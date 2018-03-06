@@ -909,6 +909,34 @@ class AbstractClassExample(ABC):
     def do_something(self):
         pass
 
+# custom iterator protocol
+class _Pipe(object):
+
+    def __init__(self):
+        self._condition = threading.Condition()
+        self._values = []
+        self._open = True
+
+    def __iter__(self):
+        return self
+
+    def _next(self):
+        with self._condition:
+            while True:
+                if self._values:
+                    return self._values.pop(0)
+                elif not self._open:
+                    raise StopIteration()
+                else:
+                    self._condition.wait()
+
+    def __next__(self):  # (Python 3 Iterator Protocol)
+        return self._next()
+
+    def next(self):  # (Python 2 Iterator Protocol)
+        return self._next()
+
+
 ##########################################################33
 pipenv
 ##########################################################33
