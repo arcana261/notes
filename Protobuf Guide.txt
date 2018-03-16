@@ -10,6 +10,10 @@
 ## grpc testing!
 ## https://github.com/grpc/grpc/tree/master/src/python/grpcio_tests/tests/testing
 
+## node grpc
+## https://github.com/grpc/grpc/issues/8339
+## https://github.com/grpc/grpc-node/pull/204
+
 # install protoc
 cd ~/Downloads
 curl -OL https://github.com/google/protobuf/releases/download/v3.5.1/protoc-3.5.1-linux-x86_64.zip
@@ -164,6 +168,12 @@ message MapFieldEntry {
   value_type value = 2;
 }
 repeated MapFieldEntry map_field = N;
+
+# empty!
+import "google/protobuf/empty.proto";
+service SomeService {
+  rpc ParamLess (google.protobuf.Empty) returns (Something);
+}
 
 # service declaration
 service SearchService {
@@ -394,6 +404,70 @@ MathService@app:8000> ch = client.add(pr)
 MathService@app:8000> ch.write(2)
 MathService@app:8000> ch.write(5)
 MathService@app:8000> ch.end()
+
+# Client <-> Server streaming
+@@@ Proto
+rpc fibonachi_stream(stream More) returns (stream Result);
+@@@ Server
+    def fibonachi_stream(self, request_iterator, context):
+        a, b = 0, 1
+        logger.info('fibonachi stream called!')
+        for request in request_iterator:
+            if not context.is_active():
+                break
+            logger.info('request to write {}!'.format(request.count))
+            for _ in range(request.count):
+                if not context.is_active():
+                    break
+                logger.info('returning result: {}'.format(a))
+                yield Result(result=a)
+                a, b = b, a + b
+        logger.info('end fibonachi stream!')
+@@@ Client
+@@@ Node Client (grpcc)
+Math@app:8000> x = client.fibonachiStream()
+EventEmitter {}
+Math@app:8000> x.on('data', sr)
+EventEmitter {}
+Math@app:8000> x.write({count:3})
+true
+Math@app:8000> 
+{
+  "result": 0
+}
+Math@app:8000> 
+{
+  "result": 1
+}
+Math@app:8000> 
+{
+  "result": 1
+}
+Math@app:8000> x.write({count:2})
+true
+Math@app:8000> 
+{
+  "result": 2
+}
+Math@app:8000> 
+{
+  "result": 3
+}
+Math@app:8000> x.write({count:3})
+true
+Math@app:8000> 
+{
+  "result": 5
+}
+Math@app:8000> 
+{
+  "result": 8
+}
+Math@app:8000> 
+{
+  "result": 13
+}
+Math@app:8000> x.end()
 
 
 ####################################################
