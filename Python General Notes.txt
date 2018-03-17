@@ -909,7 +909,6 @@ class AbstractClassExample(ABC):
     def do_something(self):
         pass
 
-
 # common header format (for __init__.py)
 # "Prototype", "Development", or "Production"
 
@@ -922,6 +921,33 @@ __version__ = "1.0.1"
 __maintainer__ = "Rob Knight"
 __email__ = "rob@spot.colorado.edu"
 __status__ = "Production"
+
+# custom iterator protocol
+class _Pipe(object):
+
+    def __init__(self):
+        self._condition = threading.Condition()
+        self._values = []
+        self._open = True
+
+    def __iter__(self):
+        return self
+
+    def _next(self):
+        with self._condition:
+            while True:
+                if self._values:
+                    return self._values.pop(0)
+                elif not self._open:
+                    raise StopIteration()
+                else:
+                    self._condition.wait()
+
+    def __next__(self):  # (Python 3 Iterator Protocol)
+        return self._next()
+
+    def next(self):  # (Python 2 Iterator Protocol)
+        return self._next()
 
 
 ##########################################################33
