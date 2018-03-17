@@ -1,10 +1,10 @@
 ## https://golang.org/pkg/builtin
 
 # install go
-cd /usr/local/src
+cd ~/Downloads
 source ~/proxy.source
-sudo wget https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz
+tar -C ~/.local -xzf go1.9.2.linux-amd64.tar.gz
 sudo vim /etc/environment
 ....................................
 PATH+="/usr/local/go/bin"
@@ -12,6 +12,7 @@ PATH+="/usr/local/go/bin"
 vim ~/.profile
 ....................................
 export GOPATH=$HOME/go
+export GOROOT=$HOME/.local/go
 export PATH=$PATH:$GOROOT/bin
 ....................................
 

@@ -1,11 +1,14 @@
 ## https://developers.google.com/protocol-buffers/docs/pythontutorial
 ## https://developers.google.com/protocol-buffers/docs/proto
 ## https://developers.google.com/protocol-buffers/docs/proto3
-## https://developers.google.com/protocol-buffers/docs/reference/python-generated
 ## https://github.com/google/protobuf/blob/master/src/google/protobuf/api.proto
 ## https://github.com/grpc-ecosystem/grpc-gateway/blob/master/examples/examplepb/a_bit_of_everything.proto
 ## https://github.com/grpc/grpc/tree/master/examples
 ## https://grpc.io/
+##
+##
+## https://developers.google.com/protocol-buffers/docs/reference/python-generated
+##
 
 # install protoc
 cd ~/Downloads
@@ -142,6 +145,23 @@ message SampleMessage {
   }
 }
 
+# extend
+extend google.protobuf.FieldOptions {
+    MyFieldOptions my_field = 1000;
+}
+
+# custom options
+import "google/protobuf/descriptor.proto";
+message MyFieldOptions {
+	bool nullable = 4;
+}
+extend google.protobuf.FieldOptions {
+    MyFieldOptions my_field = 1000;
+}
+message MyMessage {
+    string token = 1 [(my_field).nullable = true];
+}
+
 # maps!
 # key type should be scalar or string, NOT enum!
 # value can not be map!
@@ -219,6 +239,7 @@ print([0])
 del [:]
 for x in ...:
   print(x)
+len(field)
 
 # maps
 print (f[3])
@@ -273,6 +294,8 @@ if __name__ == '__main__':
 
 ############################################
 
+### REMEMBER! ALWAYS RETURN EMPTY DEFAULT RESULT WHEN USING set_code AND set_details FOR RETURNING ERRORS!
+
 # Raise exception and handing
 @@@ Server
 class MathService(MathServiceServicer):
@@ -294,6 +317,7 @@ class MathService(MathServiceServicer):
     def add(self, request, context):
         context.set_code(grpc.StatusCode.NOT_FOUND)
         context.set_details("nop!")
+	return AddResponse()
 @@@ Client
     try:
         print(stub.add(AddRequest(x=3, y=6)))
@@ -310,6 +334,7 @@ class MathService(MathServiceServicer):
     def add(self, request, context):
         context.set_code(grpc.StatusCode.UNAVAILABLE)
         context.set_details(MathError(message="salam!").SerializeToString())
+	return AddResponse()
 @@@ Client
     try:
         print(stub.add(AddRequest(x=3, y=6)))
@@ -326,6 +351,7 @@ class MathService(MathServiceServicer):
         details.Pack(MathError(message="salam!"))
         context.set_code(grpc.StatusCode.UNAVAILABLE)
         context.set_details(details.SerializeToString())
+	return AddResponse()
 @@@ Client
     try:
         print(stub.add(AddRequest(x=3, y=6)))

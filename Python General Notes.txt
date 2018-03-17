@@ -909,6 +909,21 @@ class AbstractClassExample(ABC):
     def do_something(self):
         pass
 
+
+# common header format (for __init__.py)
+# "Prototype", "Development", or "Production"
+
+__author__ = "Rob Knight, Gavin Huttley, and Peter Maxwell"
+__copyright__ = "Copyright 2007, The Cogent Project"
+__credits__ = ["Rob Knight", "Peter Maxwell", "Gavin Huttley",
+                    "Matthew Wakefield"]
+__license__ = "GPL"
+__version__ = "1.0.1"
+__maintainer__ = "Rob Knight"
+__email__ = "rob@spot.colorado.edu"
+__status__ = "Production"
+
+
 ##########################################################33
 pipenv
 ##########################################################33
@@ -949,7 +964,7 @@ pywinusb = {version = "*", os_name = "== 'windows'"}
 >=2.1.3
 >=2.1.3,<3.0
 
-#############################################3
+#############################################
 
 interactive environments
 
@@ -959,7 +974,5 @@ bpython
 pip install bpython
 OR
 apt-get install bpython
-
-
 
 
