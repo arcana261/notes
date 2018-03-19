@@ -1,0 +1,58 @@
+# install kubectl
+sudo snap install kubectl --classic
+
+# check kubectl version
+kubectl version
+
+##
+## copy config file to ~/.kube/config
+##
+
+# get cluster info
+kubectl cluster-info
+
+# enable bash completion
+mkdir -p ~/bash_completions
+kubectl completion bash > ~/bash_completion/kubectl
+vim ~/.bashrc
+.................................
+source $HOME/bash_completion/kubectl
+.................................
+
+##
+## Install helm client
+##
+
+mkdir -p ~/Downloads/helm
+tar -xvf helm-v2.8.2-linux-amd64.tar.gz -C ~/Downloads/helm
+cp -fv helm/linux-amd64/helm ~/.local/bin/
+
+# get name of default service account
+kubectl get sa
+
+# initialize helm
+helm init --service-account default --tiller-namespace divar-review
+
+# put namespace in environment
+vim ~/.profile
+...............................
+export TILLER_NAMESPACE=divar-review
+...............................
+
+# update repo
+helm repo update
+
+# enable bash completion
+mkdir -p ~/bash_completions
+helm completion bash > ~/bash_completion/helm
+vim ~/.bashrc
+.................................
+source $HOME/bash_completion/helm
+.................................
+
+................
+
+
+# uninstall helm
+kubectl delete deployment tiller-deploy
+

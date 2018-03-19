@@ -14,4 +14,40 @@ kubectl describe pod --namespace=kube-system monitoring-influxdb-1957622127-rwwd
 kubectl top pod
 kubectl top node
 
+# get everything!
+kubectl get all
+
+# get kube events
+kubectl get events
+
+# get service accounts for namespace
+kubectl get sa
+
+# initialize helm on context
+helm init --service-account default --tiller-namespace divar-review
+
+# uninstall helm
+kubectl delete deployment tiller-deploy
+kubectl delete service tiller-deploy
+
+# debug helm (view yaml)
+helm *blah* --dry-run --debug
+
+# install package from helm
+helm repo update
+helm install --name rabbitmq stable/rabbitmq
+helm install --name rabbitmq stable/rabbitmq-ha
+
+# force delete pod
+kubectl delete pods rabbitmq-rabbitmq-ha-0 --grace-period=0 --force
+
+# get quotas
+kubectl describe quota
+kubectl describe limitrange
+
+# delete release
+helm delete rabbitmq
+# WITH PURGE
+helm delete --purge rabbitmq
+
 

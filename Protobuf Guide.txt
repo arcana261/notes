@@ -77,6 +77,9 @@ pipenv install grpcio
 pipenv install grpcio-tools --dev
 pipenv run python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. helloworld.proto
 
+# using go
+go get google.golang.org/grpc
+
 # standard message methods
 	IsInitialized()
 	__str__()
@@ -285,6 +288,7 @@ msg["key"] = 5.0
 msg["key"] = "hello"
 msg.get_or_create_struct("key")
 msg.get_or_create_list("list")
+dict(msg)
 
 list.extend([1, "hello", True])
 list.append("omg!")
@@ -337,6 +341,35 @@ if __name__ == '__main__':
 ## connection failed is an exception
 ### -> code -> grpc.StatusCode.UNAVAILABLE
 ### -> details -> 'Connect Failed'
+
+
+############################################
+@enum.unique
+class StatusCode(enum.Enum):
+    """Mirrors grpc_status_code in the gRPC Core."""
+    OK = (_cygrpc.StatusCode.ok, 'ok')
+    CANCELLED = (_cygrpc.StatusCode.cancelled, 'cancelled')
+    UNKNOWN = (_cygrpc.StatusCode.unknown, 'unknown')
+    INVALID_ARGUMENT = (_cygrpc.StatusCode.invalid_argument, 'invalid argument')
+    DEADLINE_EXCEEDED = (_cygrpc.StatusCode.deadline_exceeded,
+                         'deadline exceeded')
+    NOT_FOUND = (_cygrpc.StatusCode.not_found, 'not found')
+    ALREADY_EXISTS = (_cygrpc.StatusCode.already_exists, 'already exists')
+    PERMISSION_DENIED = (_cygrpc.StatusCode.permission_denied,
+                         'permission denied')
+    RESOURCE_EXHAUSTED = (_cygrpc.StatusCode.resource_exhausted,
+                          'resource exhausted')
+    FAILED_PRECONDITION = (_cygrpc.StatusCode.failed_precondition,
+                           'failed precondition')
+    ABORTED = (_cygrpc.StatusCode.aborted, 'aborted')
+    OUT_OF_RANGE = (_cygrpc.StatusCode.out_of_range, 'out of range')
+    UNIMPLEMENTED = (_cygrpc.StatusCode.unimplemented, 'unimplemented')
+    INTERNAL = (_cygrpc.StatusCode.internal, 'internal')
+    UNAVAILABLE = (_cygrpc.StatusCode.unavailable, 'unavailable')
+    DATA_LOSS = (_cygrpc.StatusCode.data_loss, 'data loss')
+    UNAUTHENTICATED = (_cygrpc.StatusCode.unauthenticated, 'unauthenticated')
+############################################
+
 
 # Raise exception and handing
 @@@ Server

@@ -1,0 +1,18 @@
+# create service account (that can deploy)
+kubectl create sa divar-review-tiller
+
+# get secret of service account
+SECRET=$(kubectl get sa divar-review-tiller -o json | jq -r .secrets[].name)
+echo $SECRET
+
+# extract ca.crt from secret
+# NOTE THIS STEP IS NOT REQUIRED IF CA IS IN KUBE CONFIG FILE
+kubectl get secret ${SECRET} -o json | jq -r '.data["ca.crt"]' | base64 -d > ca.crt
+
+# get user token
+USER_TOKEN=$(kubectl get secret ${SECRET} -o json | jq -r '.data["token"]' | base64 -d)
+echo $USER_TOKEN
+
+
+helm init --service-account divar-review --tiller-namespace divar-review
+
