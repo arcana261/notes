@@ -1,0 +1,92 @@
+## https://docs.snapcraft.io/build-snaps/get-started-snapcraft
+##
+
+# install snapd
+sudo apt-get install snapd
+
+# install snapcraft
+sudo snap install snapcraft --classic
+
+# check version of snapcraft
+snapcraft --version
+
+# install lxd
+sudo snap install lxd
+sudo lxd init
+sudo usermod -g lxd ${USER}
+
+# login again
+.....
+
+# test lxd
+lxc launch ubuntu:16.04 test
+
+# test a container build
+mkdir test-snapcraft
+cd test-snapcraft
+snapcraft init
+snapcraft cleanbuild
+
+###### HELLO WORLD APP
+######################
+
+# grade and confinement
+grade: stable
+confinement: strict
+
+# app
+apps:
+  hello:
+    command: hello
+
+# part
+parts:
+  gnu-hello:
+    plugin: autotools
+    source: http://ftp.gnu.org/gnu/hello/hello-2.10.tar.gz
+
+######################
+######################
+
+# install snap
+# dangerous is used because it is not signed!
+sudo snap install hello_2.10_*.snap --dangerous
+
+###################################################################
+
+# run snapcraft from docker
+sudo docker pull snapcore/snapcraft
+sudo docker run -v $PWD:$PWD -w $PWD snapcore/snapcraft snapcraft
+
+# grade
+grade: stable or devel
+
+# confinement
+# if strict security policies should be enforced
+confinement: strict or devmode or classic
+### NOTE:
+### to install devmode, append "--devmode" to CLI
+### sudo snap install python36_3.6.4_amd64.snap --dangerous --devmode
+### NOTE:
+### to install classic confinement, append "--classic" to CLI
+### sudo snap install python36_3.6.4_amd64.snap --dangerous --classic
+
+# list snap interfaces
+snap interfaces
+
+# debug confinement
+# app must be in devmode
+sudo snap install snappy-debug
+sudo /snap/bin/snappy-debug.security scanlog
+
+### Environment variables
+
+SNAP: /snap/hello-world/27
+SNAP_COMMON: /var/snap/hello-world/common
+SNAP_DATA: /var/snap/hello-world/27
+SNAP_USER_COMMON: /home/zyga/snap/hello-world/common
+SNAP_USER_DATA: /home/zyga/snap/hello-world/27
+
+
+
+
