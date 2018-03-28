@@ -5,7 +5,7 @@ Activities -> Software & Updates -> Ubuntu Software -> Download from: -> Main Se
 sudo apt-get update
 sudo apt-get autoremove
 sudo apt-get upgrade
-sudo apt-get distupgrade
+sudo apt-get dist-upgrade
 sudo do-release-upgrade
 sudo reboot
 
@@ -20,9 +20,21 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			default-jdk git rar unrar \
 			iputils-arping network-manager-openvpn-gnome \
 			iperf docky curl uget gnome-tweak-tool python-pip python3-pip \
-			p7zip-full p7zip net-tools
+			p7zip-full p7zip net-tools pulseaudio snapd \
+			gksu
 sudo pip install --upgrade pip
 sudo pip3 install --upgrade pip
+
+sudo pip install pysocks
+sudo pip3 install pysocks
+
+# create bash completion for pip
+mkdir -p ~/bash_completions
+pip3 completion --bash > ~/bash_completions/pip3
+vim ~/.bashrc
+............................
+source $HOME/bash_completions/pip3
+............................
 
 # use nvidia driver and proprietary intel drivers
 Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver

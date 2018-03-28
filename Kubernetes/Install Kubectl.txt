@@ -13,10 +13,10 @@ kubectl cluster-info
 
 # enable bash completion
 mkdir -p ~/bash_completions
-kubectl completion bash > ~/bash_completion/kubectl
+kubectl completion bash > ~/bash_completions/kubectl
 vim ~/.bashrc
 .................................
-source $HOME/bash_completion/kubectl
+source $HOME/bash_completions/kubectl
 .................................
 
 ##
@@ -44,10 +44,10 @@ helm repo update
 
 # enable bash completion
 mkdir -p ~/bash_completions
-helm completion bash > ~/bash_completion/helm
+helm completion bash > ~/bash_completions/helm
 vim ~/.bashrc
 .................................
-source $HOME/bash_completion/helm
+source $HOME/bash_completions/helm
 .................................
 
 ................

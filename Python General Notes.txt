@@ -1,3 +1,7 @@
+##
+## https://github.com/python/mypy
+##
+
 # writing dependencies to a file
 sudo pip install -r confs/pip/commons.txt
 ....................
