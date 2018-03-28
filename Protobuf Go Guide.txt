@@ -1,0 +1,32 @@
+## https://developers.google.com/protocol-buffers/docs/reference/go-generated
+##
+
+# install required things
+go get -u google.golang.org/grpc
+go get -u github.com/golang/protobuf/protoc-gen-go
+
+# unmarshal message from []byte
+import "github.com/golang/protobuf/proto"
+err := proto.Unmarshal(msg.Body, &request);
+
+# marshal message to []byte
+import "github.com/golang/protobuf/proto"
+data, err := proto.Marshal(comp)
+
+# oneof
+message Msg {
+  oneof grp {
+    A some_a = 1;
+    B some_b = 2;
+  }
+}
+
+switch x := msg.grp.(type) {
+case *pkg.Msg_Some_A:
+  printLn(x.Some_A.field)
+case *pkg.MSg_Some_B:
+  printLn(x.Some_B.field)
+case nil:
+default:
+}
+

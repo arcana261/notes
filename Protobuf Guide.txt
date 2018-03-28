@@ -528,6 +528,13 @@ Math@app:8000>
 }
 Math@app:8000> x.end()
 
+####################################################
+
+# Python iterate over fields
+for desc in msg.DESCRIPTOR.fields:
+  options = desc.GetOptions()
+  type = desc.type
+  name = desc.name
 
 ####################################################
 HAPROXY LOAD BALANCING
