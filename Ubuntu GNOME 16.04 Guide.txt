@@ -28,6 +28,8 @@ sudo pip3 install --upgrade pip
 sudo pip install pysocks
 sudo pip3 install pysocks
 
+sudo snap refresh
+
 # create bash completion for pip
 mkdir -p ~/bash_completions
 pip3 completion --bash > ~/bash_completions/pip3
