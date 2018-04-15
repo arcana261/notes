@@ -38,6 +38,13 @@ vim ~/.bashrc
 source $HOME/bash_completions/pip3
 ............................
 
+# remap CAPSLOCK to ctrl key
+sudo vim /etc/default/keyboard
+...................................
+XKBOPTIONS="ctrl:swapcaps"
+...................................
+sudo dpkg-reconfigure keyboard-configuration
+
 # use nvidia driver and proprietary intel drivers
 Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver
 						       -> Use Processor microcode firmware for intel CPUs from intel-microcode

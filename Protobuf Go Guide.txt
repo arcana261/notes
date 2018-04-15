@@ -2,8 +2,8 @@
 ##
 
 # install required things
-go get -u google.golang.org/grpc
-go get -u github.com/golang/protobuf/protoc-gen-go
+go get -u -v google.golang.org/grpc
+go get -u -v github.com/golang/protobuf/protoc-gen-go
 
 # unmarshal message from []byte
 import "github.com/golang/protobuf/proto"
