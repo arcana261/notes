@@ -1,0 +1,132 @@
+## https://github.com/leblancd/vim-go-ide
+##
+
+# install vim-gnome
+sudo apt-get install vim-gnome
+
+# change default editor
+sudo update-alternatives --config editor
+
+# install ctags
+cd ~/.local/src
+wget https://sourceforge.net/projects/ctags/files/ctags/5.8/ctags-5.8.tar.gz
+tar -xzf ctags-5.8.tar.gz
+cd ctags-5.8
+./configure
+make
+sudo make install
+
+# check if ctags is ok
+ctags --version | grep Exuberant
+
+# install vim ide
+git clone https://github.com/diverdane/vim-go-ide.git ~/.vim_runtime
+~/.vim_runtime/install.sh
+
+# ensure all dependencies are installed
+:GoInstallBinaries
+:GoUpdateBinaries
+
+
+#####################################################
+
+## vim windows
+
+# horizontal split current buffer
+:split
+Ctrl-w s
+
+# horizontal split new buffer
+Ctrl-w n
+
+# horizontal split filename
+:split <FILENAME>
+
+# vertical split current buffer
+:vsplit
+Ctrl-w v
+
+# vertical split filename
+:vsplit <FILENAME>
+
+
+# closing
+Ctrl-w c -> close current window
+Ctrl-w o -> close all other windows except this one
+
+# navigation
+Ctrl-w w -> next window
+Ctrl-w p -> previous window
+Ctrl-w UP
+Ctrl-w LEFT
+Ctrl-w DOWN
+Ctrl-w RIGHT		
+
+
+## vim tabs
+
+# create tab
+:tabnew
+:tabedit <FILENAME>
+
+# navigation
+:tabn -> next tab
+:tabp -> previous tab
+
+# closing
+:tabc -> close current tab
+:tabo -> close all other tabs except currently open
+
+#############################################################################
+
+#### function key mappings ####
+<F2>      Directory tree window (open/close)
+<F3>      Line numbering (on/off)
+<F4>      Go to definition for a Go function, struct, etc.
+<F5>      Show callers for a Go function
+<S-F5>    Set scope (top directory) for Go callers search
+<F6>      Show callstack(s) for a Go function
+<F7>      Show this function key mapping info
+<F8>      Tag bar window (open/close)
+<F9>      Show Go snippets
+<F10>     Show Go key mappings
+<F11>     Maximize/minimize window
+<F12>     Scroll through installed Vim colorschemes
+############################################################
+
+ 
+#### nerd tree ####
+o: open at cursor
+O: open recursively
+
+### GO commands ####
+
+# documentation
+,kk
+
+# refactoring
+,e
+
+# definitions
+,dd -> jump to
+,ds -> jump to horizontal split
+,dv -> jump to vertical split
+,dt -> jump to in new tab
+
+# directory tree
+,T -> show current file in directory tree
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

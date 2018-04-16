@@ -1,0 +1,144 @@
+##
+## session management
+## 
+
+# create session
+tmux new
+tmux new -s session-name
+
+# attach
+tmux a
+tmux a -t session-name
+
+# detach
+tmux detach
+Ctrl-b d
+
+# kill session
+tmux kill-session -t session-name
+
+# rename session
+Ctrl-b $
+
+# list sessions
+Ctrl-b s
+tmux ls
+
+
+##
+## utilities
+##
+
+# show help
+Ctrl-b ?
+
+# show time
+Ctrl-b t
+
+##
+## Window management
+##
+
+# create window
+Ctrl-b c
+
+# rename window
+Ctrl-b ,
+
+# list window
+Ctrl-b w
+
+# next window
+Ctrl-b n
+
+# previous window
+Ctrl-b p
+
+# switch to window number
+Ctrl-b [0-9]
+
+##
+## Panel management
+##
+
+# split vertically ---
+Ctrl-b "
+
+# split horizontally |
+Ctrl-b %
+
+# moving to panes in vim mode
+Ctrl-b j -> move up
+Ctrl-b k -> move down
+Ctrl-b h -> move left
+Ctrl-b l -> move right
+
+# toggle between panes
+Ctrl-b o
+
+# swap with next pane
+Ctrl-b }
+
+# swap with previous pane
+Ctrl-b {
+
+# turn pane into window
+Ctrl-b !
+
+# kill pane
+Ctrl-b x
+
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+
+# good tmux config
+vim ~/.tmux.conf
+
+##############################################################################
+##############################################################################
+##############################################################################
+##############################################################################
+
+# Tmux settings
+
+# Set XTerm key bindings
+setw -g xterm-keys on
+
+# Set colors
+set-option -g default-terminal "screen-256color"
+
+# Set reload key to r
+bind r source-file ~/.tmux.conf
+
+# Count sessions start at 1
+set -g base-index 1
+
+# Use vim bindings
+setw -g mode-keys vi
+
+# Remap window navigation to vim
+unbind-key j
+bind-key j select-pane -D 
+unbind-key k
+bind-key k select-pane -U
+unbind-key h
+bind-key h select-pane -L
+unbind-key l
+bind-key l select-pane -R
+
+# Set the title bar
+set -g set-titles on
+set -g set-titles-string '#(whoami) :: #h :: #(curl ipecho.net/plain;echo)'
+
+# Set status bar
+set -g status-utf8 on
+set -g status-bg black
+set -g status-fg white
+set -g status-interval 5 
+set -g status-left-length 90
+set -g status-right-length 60
+set -g status-left "#[fg=Green]#(whoami)#[fg=white]::#[fg=blue]#(hostname -s)#[fg=white]::#[fg=yellow]#(curl ipecho.net/plain;echo)"
+set -g status-justify left
+set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
