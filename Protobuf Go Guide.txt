@@ -30,3 +30,6 @@ case nil:
 default:
 }
 
+# struct
+editRequest.Data.Fields["category"] = &structpb.Value{Kind:
+			&structpb.Value_StringValue{StringValue: request.ChangeCategory.DestinationCategory}}
