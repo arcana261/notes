@@ -311,7 +311,7 @@ export SOCKS_PROXY=$socks_proxy
 export no_proxy="localhost,127.0.0.0/8,::1,192.168.0.0/16,10.0.0.0/8,172.0.0.0/8"
 export NO_PROXY=$no_proxy
 export all_proxy=$socks_proxy
-export all_proxy=$all_proxy
+export ALL_PROXY=$all_proxy
 .................
 
 # create a source script to un-set environments

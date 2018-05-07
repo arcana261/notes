@@ -1,0 +1,109 @@
+#######################################################################
+Server Installation
+https://github.com/txthinking/brook
+#######################################################################
+
+cd /usr/local/src
+sudo wget https://github.com/txthinking/brook/releases/download/v20180401/brook
+sudo chmod +x brook
+sudo mv brook /usr/bin
+
+# create systemd service
+sudo vim /etc/systemd/system/brook-server.service
+...............................
+[Unit]
+Description=Brook Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/brook server -l :3001 -p <PASSWORD>
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# enable and start service
+sudo systemctl daemon-reload
+sudo systemctl restart brook-server
+sudo systemctl enable brook-server
+sudo systemctl status brook-server
+
+# verify brook is listening
+sudo netstat -nap | grep 3001
+
+# open port in firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=3001/tcp
+sudo firewall-cmd --permanent --add-port=3001/udp
+sudo firewall-cmd --reload
+
+
+#######################################################################
+Client Installation
+#######################################################################
+
+# create systemd service
+sudo vim /etc/systemd/system/brook-client.service
+...............................
+[Unit]
+Description=Brook Client
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/brook client -l 127.0.0.1:1081 -i 127.0.0.1 -s brk.ucoder.ir:3001 -p <PASSWORD>
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# enable and start service
+sudo systemctl daemon-reload
+sudo systemctl restart brook-client
+sudo systemctl enable brook-client
+sudo systemctl status brook-client
+
+# verify brook client is up
+sudo netstat -nap | grep 1081
+
+# create systemd service for http
+sudo vim /etc/systemd/system/brook-client-http.service
+...............................
+[Unit]
+Description=Brook HTTP Client
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/brook socks5tohttp -l 127.0.0.1:8119 -s 127.0.0.1:1081
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# enable and start service
+sudo systemctl daemon-reload
+sudo systemctl restart brook-client-http
+sudo systemctl enable brook-client-http
+sudo systemctl status brook-client-http
+
+# verify brook client is up
+sudo netstat -nap | grep 8119
+
+# create a source script to set environments
+vim ~/brook.source
+.................
+export http_proxy="http://127.0.0.1:8119/"
+export HTTP_PROXY=$http_proxy
+export https_proxy=$http_proxy
+export HTTPS_PROXY=$http_proxy
+export socks_proxy="socks5://127.0.0.1:1081/"
+export SOCKS_PROXY=$socks_proxy
+export no_proxy="localhost,127.0.0.0/8,::1,192.168.0.0/16,10.0.0.0/8,172.0.0.0/8"
+export NO_PROXY=$no_proxy
+export all_proxy=$socks_proxy
+export ALL_PROXY=$all_proxy
+.................
+
+
