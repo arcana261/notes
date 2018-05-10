@@ -78,6 +78,7 @@ sudo vim /etc/shadowsocks.json
   "password":"<PASSWORD>",
   "timeout":600,
   "method":"aes-256-cfb"
+  "method":"xchacha20-ietf-poly1305"
 }
 ..............................
 
@@ -446,6 +447,17 @@ Acquire::https::Proxy "http://127.0.0.1:8118";
 .........................................
 
 
+
+# More security
+# https://www.tipsforchina.com/how-to-setup-a-fast-shadowsocks-server-on-vultr-vps-the-easy-way.html
+
+Password: testing
+Port: 443
+cipher: chacha20
+protocol: origin
+obfs: http_simple_compatible
+    "fast_open":true,
+    "workers":1
 
 
 
