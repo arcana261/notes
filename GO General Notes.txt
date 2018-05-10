@@ -1,5 +1,9 @@
 ## https://golang.org/pkg/builtin
 
+# Using gitlab personal access token
+git config --global credential.helper store
+echo "https://oauth2:XXXXXXXXXX@git.cafebazaar.ir" >> ~/.git-credentials
+
 # install go
 cd ~/Downloads
 source ~/proxy.source
@@ -22,6 +26,9 @@ sudo reboot
 
 # check go version
 go version
+
+# install dep
+curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
 # source file locations
 ~/go/src/<PACKAGE>

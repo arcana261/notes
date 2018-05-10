@@ -22,7 +22,7 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			iputils-arping network-manager-openvpn-gnome \
 			iperf docky curl uget gnome-tweak-tool python-pip python3-pip \
 			p7zip-full p7zip net-tools pulseaudio snapd \
-			gksu
+			gksu clang
 sudo pip install --upgrade pip
 sudo pip3 install --upgrade pip
 
@@ -44,6 +44,13 @@ vim ~/.profile
 ............................
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 ............................
+
+# remap CAPSLOCK to ctrl key
+sudo vim /etc/default/keyboard
+...................................
+XKBOPTIONS="ctrl:swapcaps"
+...................................
+sudo dpkg-reconfigure keyboard-configuration
 
 # use nvidia driver and proprietary intel drivers
 Activities -> Software & Updates -> Additional Drivers -> NVIDIA binary driver
