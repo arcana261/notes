@@ -1005,4 +1005,20 @@ pip install bpython
 OR
 apt-get install bpython
 
+##########################################################33
+Manual venv (python 2.x)
+##########################################################33
+
+pip install --user virtualenv
+mkdir -p ~/.local/share/virtualenvs/<PROJECT>
+virtualenv -p $(which python2) ~/.local/share/virtualenvs/<PROJECT>
+
+# activate
+source ~/.local/share/virtualenvs/<PROJECT>/bin/activate
+
+# deactivate
+deactivate
+
+# delete venv
+rm -rfv ~/.local/share/virtualenvs/<PROJECT>
 
