@@ -68,8 +68,7 @@ END INSTALLATION
 #######################################################################
 
 # create configuration
-sudo vim /etc/shadowsocks.json
-
+sudo vim /etc/shadowsocks-aes-256-cfb.json
 ..............................
 {
   "server":"178.162.203.161",
@@ -80,9 +79,31 @@ sudo vim /etc/shadowsocks.json
   "method":"aes-256-cfb"
 }
 ..............................
+sudo vim /etc/shadowsocks-chacha20.json
+..............................
+{
+  "server":"178.162.203.161",
+  "server_port":3000,
+  "local_port":1081,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"chacha20"
+}
+..............................
+sudo vim /etc/shadowsocks-salsa20.json
+..............................
+{
+  "server":"178.162.203.161",
+  "server_port":4000,
+  "local_port":1082,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"salsa20"
+}
+..............................
 
 # create systemd service
-sudo vim /etc/systemd/system/shadowsocks-server.service
+sudo vim /etc/systemd/system/shadowsocks-server@.service
 
 #######################################################################
 CHOICE1: EASY INSTALLATION
@@ -93,7 +114,7 @@ Description=Shadowsocks Server
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks-%i.json
 Restart=on-abort
 
 [Install]
@@ -104,13 +125,13 @@ CHOICE2: SOURCE INSTALLATION
 #######################################################################
 ...............................
 [Unit]
-Description=Shadowsocks Server
+Description=Shadowsocks Server %i
 After=network.target
 
 [Service]
 Type=forking
-PIDFile=/var/run/ss-server.pid
-ExecStart=/usr/local/bin/ss-server -c /etc/shadowsocks.json -u -v -f /var/run/ss-server.pid
+PIDFile=/var/run/ss-server-%i.pid
+ExecStart=/usr/local/bin/ss-server -c /etc/shadowsocks-%i.json -u -v -f /var/run/ss-server-%i.pid
 Restart=on-abort
 
 [Install]
@@ -122,15 +143,27 @@ END CHOICE
 
 # enable and start service
 sudo systemctl daemon-reload
-sudo systemctl restart shadowsocks-server
-sudo systemctl enable shadowsocks-server
-sudo systemctl status shadowsocks-server
 
+sudo systemctl restart shadowsocks-server@aes-256-cfb.service
+sudo systemctl enable shadowsocks-server@aes-256-cfb.service
+sudo systemctl status shadowsocks-server@aes-256-cfb.service
+
+sudo systemctl restart shadowsocks-server@chacha20.service
+sudo systemctl enable shadowsocks-server@chacha20.service
+sudo systemctl status shadowsocks-server@chacha20.service
+
+sudo systemctl restart shadowsocks-server@salsa20.service
+sudo systemctl enable shadowsocks-server@salsa20.service
+sudo systemctl status shadowsocks-server@salsa20.service
 
 # open port in firewall
 sudo firewall-cmd --reload
 sudo firewall-cmd --permanent --add-port=8000/tcp
 sudo firewall-cmd --permanent --add-port=8000/udp
+sudo firewall-cmd --permanent --add-port=3000/tcp
+sudo firewall-cmd --permanent --add-port=3000/udp
+sudo firewall-cmd --permanent --add-port=4000/tcp
+sudo firewall-cmd --permanent --add-port=4000/udp
 sudo firewall-cmd --reload
 
 # protect against brute forcers
@@ -207,11 +240,10 @@ sslocal -c ~/.config/shadowsocks.json
 ## ALTERNATIVE USE SYSTEMD
 ################################################
 
-sudo vim /etc/shadowsocks.json
-
+sudo vim /etc/shadowsocks-aes-256-cfb.json
 ..............................
 {
-  "server":"178.162.203.161",
+  "server":"ssserver.ucoder.ir",
   "server_port":8000,
   "local_port":1080,
   "password":"<PASSWORD>",
@@ -219,6 +251,32 @@ sudo vim /etc/shadowsocks.json
   "method":"aes-256-cfb"
 }
 ..............................
+
+sudo vim /etc/shadowsocks-chacha20.json
+..............................
+{
+  "server":"ssserver.ucoder.ir",
+  "server_port":3000,
+  "local_port":1080,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"chacha20"
+}
+..............................
+
+sudo vim /etc/shadowsocks-salsa20.json
+..............................
+{
+  "server":"ssserver.ucoder.ir",
+  "server_port":4000,
+  "local_port":1080,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"salsa20"
+}
+..............................
+
+sudo ln -s /etc/shadowsocks-salsa20.json /etc/shadowsocks.json
 
 # create systemd service
 sudo vim /etc/systemd/system/shadowsocks-client.service
@@ -308,7 +366,7 @@ export https_proxy=$http_proxy
 export HTTPS_PROXY=$http_proxy
 export socks_proxy="socks5://127.0.0.1:1080/"
 export SOCKS_PROXY=$socks_proxy
-export no_proxy="localhost,127.0.0.0/8,::1,192.168.0.0/16,10.0.0.0/8,172.0.0.0/8"
+export no_proxy="localhost,127.0.0.0/8,::1,192.168.0.0/16,10.0.0.0/8,172.0.0.0/8,$no_proxy"
 export NO_PROXY=$no_proxy
 export all_proxy=$socks_proxy
 export ALL_PROXY=$all_proxy
@@ -328,6 +386,12 @@ unset NO_PROXY
 unset all_proxy
 unset ALL_PROXY
 .................
+
+# bash should load proxy
+vim ~/.bashrc
+......................
+source $HOME/proxy.source
+......................
 
 ########################################################
 ########################################################
@@ -447,6 +511,294 @@ Acquire::https::Proxy "http://127.0.0.1:8118";
 
 
 
+# More security
+# https://www.tipsforchina.com/how-to-setup-a-fast-shadowsocks-server-on-vultr-vps-the-easy-way.html
+
+Password: testing
+Port: 443
+cipher: chacha20
+protocol: origin
+obfs: http_simple_compatible
+    "fast_open":true,
+    "workers":1
 
 
+########################################################
+Setting KCPTUN Server-side
+########################################################
+
+# intsall kcp tun
+cd /usr/local/src
+sudo wget https://github.com/xtaci/kcptun/releases/download/v20180316/kcptun-linux-amd64-20180316.tar.gz
+sudo rm -rfv kcptun
+sudo mkdir -p kcptun
+sudo tar xvf kcptun-linux-amd64-20180316.tar.gz -C ./kcptun
+sudo mv ./kcptun/server_linux_amd64 /usr/local/bin/kcptun-server
+
+# configure various env files
+sudo vim /etc/sysconfig/kcptun-server-aes-256-cfb.env
+.....................
+TARGET="ssserver.ucoder.ir:8000"
+LOCAL=":8002"
+CRYPT="aes-192"
+KEY="<PASSWORD>"
+.....................
+sudo vim /etc/sysconfig/kcptun-server-chacha20.env
+.....................
+TARGET="ssserver.ucoder.ir:3000"
+LOCAL=":3002"
+CRYPT="blowfish"
+KEY="<PASSWORD>"
+.....................
+sudo vim /etc/sysconfig/kcptun-server-salsa20.env
+.....................
+TARGET="ssserver.ucoder.ir:4000"
+LOCAL=":4002"
+CRYPT="salsa20"
+KEY="<PASSWORD>"
+.....................
+
+# configure systemd meta service
+sudo vim /etc/systemd/system/kcptun-server@.service
+...............................
+[Unit]
+Description=Kcp Tunnel Server %i
+After=network.target shadowsocks@%i.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/sysconfig/kcptun-server-%i.env
+ExecStart=/usr/local/bin/kcptun-server -t "$TARGET" -l "$LOCAL" --crypt "$CRYPT" --key "$KEY" -mode fast2 --nocomp --datashard 10 --parityshard 3 --dscp 46 --mtu 1200
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+
+# reload systemd
+sudo systemctl daemon-reload
+
+# start services
+sudo systemctl restart kcptun-server@aes-256-cfb.service
+sudo systemctl status kcptun-server@aes-256-cfb.service
+sudo systemctl enable kcptun-server@aes-256-cfb.service
+
+sudo systemctl restart kcptun-server@chacha20.service
+sudo systemctl status kcptun-server@chacha20.service
+sudo systemctl enable kcptun-server@chacha20.service
+
+sudo systemctl restart kcptun-server@salsa20.service
+sudo systemctl status kcptun-server@salsa20.service
+sudo systemctl enable kcptun-server@salsa20.service
+
+# open ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=8002/tcp
+sudo firewall-cmd --permanent --add-port=8002/udp
+sudo firewall-cmd --permanent --add-port=3002/tcp
+sudo firewall-cmd --permanent --add-port=3002/udp
+sudo firewall-cmd --permanent --add-port=4002/tcp
+sudo firewall-cmd --permanent --add-port=4002/udp
+sudo firewall-cmd --reload
+
+########################################################
+Setting KCPTUN Client-side
+########################################################
+
+# intsall kcp tun
+cd /usr/local/src
+sudo wget https://github.com/xtaci/kcptun/releases/download/v20180316/kcptun-linux-amd64-20180316.tar.gz
+sudo rm -rfv kcptun
+sudo mkdir -p kcptun
+sudo tar xvf kcptun-linux-amd64-20180316.tar.gz -C ./kcptun
+sudo mv ./kcptun/client_linux_amd64 /usr/local/bin/kcptun-client
+
+# make sure sysconfig is present
+sudo mkdir -p /etc/sysconfig
+
+# configure various env files
+sudo vim /etc/sysconfig/kcptun-client-aes-256-cfb.env
+.....................
+SERVER="kcp.ucoder.ir:8002"
+LOCAL=":8002"
+CRYPT="aes-192"
+KEY="<PASSWORD>"
+.....................
+sudo vim /etc/sysconfig/kcptun-client-chacha20.env
+.....................
+SERVER="kcp.ucoder.ir:3002"
+LOCAL=":3002"
+CRYPT="blowfish"
+KEY="<PASSWORD>"
+.....................
+sudo vim /etc/sysconfig/kcptun-client-salsa20.env
+.....................
+SERVER="kcp.ucoder.ir:4002"
+LOCAL=":4002"
+CRYPT="salsa20"
+KEY="<PASSWORD>"
+.....................
+
+# create primary config
+sudo ln -s /etc/sysconfig/kcptun-client-chacha20.env /etc/sysconfig/kcptun-client.env
+
+# create systemd unit
+sudo vim /etc/systemd/system/kcptun-client.service
+...............................
+[Unit]
+Description=Kcp Tunnel Client
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/sysconfig/kcptun-client.env
+ExecStart=/usr/local/bin/kcptun-client -r "$SERVER" -l "$LOCAL" --crypt "$CRYPT" --key "$KEY" -mode fast2 --nocomp --datashard 10 --parityshard 3 --dscp 46 --mtu 1200
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# enable and start service
+sudo systemctl daemon-reload
+sudo systemctl restart kcptun-client.service
+sudo systemctl status kcptun-client.service
+sudo systemctl enable kcptun-client.service
+
+# create config for shadowsocks
+sudo vim /etc/shadowsocks-kcp-aes-256-cfb.json
+..............................
+{
+  "server":"127.0.0.1",
+  "server_port":8002,
+  "local_port":1080,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"aes-256-cfb"
+}
+..............................
+
+sudo vim /etc/shadowsocks-kcp-chacha20.json
+..............................
+{
+  "server":"127.0.0.1",
+  "server_port":3002,
+  "local_port":1080,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"chacha20"
+}
+..............................
+
+sudo vim /etc/shadowsocks-kcp-salsa20.json
+..............................
+{
+  "server":"127.0.0.1",
+  "server_port":4002,
+  "local_port":1080,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"salsa20"
+}
+..............................
+
+########################################################
+Setting KCPTUN Android-Side
+########################################################
+
+-> install "kcptun" from playstore
+-> enable kcptun plugin in shadowsocks
+-> configure using following
+.....................
+remoteaddr=kcp.ucoder.ir:3002;mode=fast2;dscp=46;crypt=blowfish;parityshard=3;key=<PASSWORD>;nocomp;datashard=10;mtu=1200
+.....................
+
+NOTE: ALL OTHER SHADOWSOCKS CONFIG REMAINS THE SAME AS WITHOUT KCP!
+
+########################################################
+Check UPnP
+########################################################
+
+cd ~/.local/src
+wget http://miniupnp.tuxfamily.org/files/download.php?file=miniupnpc-2.1.tar.gz
+cd miniupnpc-2.1/
+make
+INSTALLPREFIX=/home/arcana/.local make install
+
+upnpc -a `ifconfig wlp3s0 | grep "inet addr" | cut -d : -f 2 | cut -d " " -f 1` 30000 30000 UDP
+
+
+########################################################
+Setup udp2raw Server for OpenVPN
+########################################################
+
+# install udp2raw
+cd /usr/local/src
+sudo wget https://github.com/wangyu-/udp2raw-tunnel/releases/download/20180225.0/udp2raw_binaries.tar.gz
+sudo mkdir -p udp2raw
+sudo tar xvf udp2raw_binaries.tar.gz -C ./udp2raw
+sudo mv ./udp2raw/udp2raw_amd64 /usr/local/bin/udp2raw
+
+# create systemd unit
+sudo vim /etc/systemd/system/udp2raw-openvpn.service
+...............................
+[Unit]
+Description=UDP2RAW for OpenVPN
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/udp2raw -s -l 0.0.0.0:1195 -r 127.0.0.1:1194 --raw-mode udp --cipher-mode aes128cbc --auth-mode md5 --key <PASSWORD>
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# enable and start services
+sudo systemctl restart udp2raw-openvpn.service
+sudo systemctl status udp2raw-openvpn.service
+sudo systemctl enable udp2raw-openvpn.service
+
+# allow port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=1195/tcp
+sudo firewall-cmd --permanent --add-port=1195/udp
+sudo firewall-cmd --reload
+
+########################################################
+Setup udp2raw Client for OpenVPN
+##
+## NOTE: udp2raw DOES NOT WORK WITH DOMAIN NAMES!
+##
+########################################################
+
+# install udp2raw
+cd /usr/local/src
+sudo wget https://github.com/wangyu-/udp2raw-tunnel/releases/download/20180225.0/udp2raw_binaries.tar.gz
+sudo mkdir -p udp2raw
+sudo tar xvf udp2raw_binaries.tar.gz -C ./udp2raw
+sudo mv ./udp2raw/udp2raw_amd64 /usr/local/bin/udp2raw
+
+# create systemd unit
+sudo vim /etc/systemd/system/udp2raw-openvpn.service
+...............................
+[Unit]
+Description=UDP2RAW for OpenVPN
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/udp2raw -c -l 127.0.0.1:1195 -r 178.162.203.161:1194 --raw-mode udp --cipher-mode aes128cbc --auth-mode md5 --key <PASSWORD>
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# enable and start services
+sudo systemctl restart udp2raw-openvpn.service
+sudo systemctl status udp2raw-openvpn.service
+sudo systemctl enable udp2raw-openvpn.service
 

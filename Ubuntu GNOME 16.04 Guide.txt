@@ -6,6 +6,7 @@ sudo apt-get update
 sudo apt-get autoremove
 sudo apt-get upgrade
 sudo apt-get dist-upgrade
+sudo apt-get autoremove
 sudo do-release-upgrade
 sudo reboot
 
@@ -36,6 +37,13 @@ pip3 completion --bash > ~/bash_completions/pip3
 vim ~/.bashrc
 ............................
 source $HOME/bash_completions/pip3
+............................
+
+# update profile
+vim ~/.profile
+............................
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.local/lib"
 ............................
 
 # remap CAPSLOCK to ctrl key
@@ -74,6 +82,11 @@ sudo ufw allow 2122/tcp
 sudo ufw reload
 sudo systemctl enable sshd
 sudo systemctl restart sshd
+
+# enable upnp
+sudo ufw reload
+sudo ufw allow 1900/udp
+sudo ufw reload
 
 # configure sysctl
 sudo vim /etc/sysctl.conf
