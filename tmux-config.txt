@@ -57,6 +57,9 @@ Ctrl-b p
 # switch to window number
 Ctrl-b [0-9]
 
+# resize pane
+Ctrl-b z
+
 ##
 ## Panel management
 ##
@@ -88,6 +91,22 @@ Ctrl-b !
 # kill pane
 Ctrl-b x
 
+##
+## Copy pasting
+##
+
+# enter copy mode
+Ctrl-b [
+
+# start highlighting text
+Space
+
+# finish copy
+Enter
+
+# paste
+Ctrl-b ]
+
 ##############################################################################
 ##############################################################################
 ##############################################################################
@@ -102,6 +121,9 @@ vim ~/.tmux.conf
 ##############################################################################
 
 # Tmux settings
+
+# change to Alt-b
+set-option -g prefix M-b
 
 # Set XTerm key bindings
 setw -g xterm-keys on

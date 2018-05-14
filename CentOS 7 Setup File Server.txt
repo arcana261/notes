@@ -1,0 +1,106 @@
+# install tools 
+sudo yum install httpd-tools
+
+# create a htpasswd to password protect our subdirectory
+sudo htpasswd -c /etc/nginx/conf.d/files.ucoder.ir.htpasswd arcana
+
+# create nginx reverse proxy configuration
+sudo vim /etc/nginx/conf.d/files.ucoder.ir.conf
+...............................
+server {
+  listen 80;
+  server_name files.ucoder.ir;
+
+  access_log /var/log/nginx/access_files.log;
+  error_log  /var/log/nginx/error_files.log;
+
+  root /usr/share/nginx/files.ucoder.ir;
+  autoindex on;
+
+  location /private {
+    auth_basic "Private Property";
+    auth_basic_user_file /etc/nginx/conf.d/files.ucoder.ir.htpasswd;
+  }
+}
+...............................
+
+# create folder
+sudo mkdir -p /usr/share/nginx/files.ucoder.ir/private
+
+# test nginx configuration
+nginx -t
+
+# install certbox (lets encrypt)
+...............................
+yum -y install yum-utils
+yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
+sudo yum install certbot-nginx
+...............................
+
+# Enable CertBot on our Nginx Configuration
+...............................
+sudo certbot --nginx
+...............................
+## OR IF YOU RUN INTO BUG PROBLEM
+...............................
+sudo certbot --authenticator standalone --installer nginx --pre-hook "systemctl stop nginx" --post-hook "systemctl stop nginx"
+...............................
+
+# Test if renewal procedure succeeds
+...............................
+sudo certbot renew --dry-run
+...............................
+
+# Enable CronTab job to renew our certificates automatically
+...............................
+0 0,12 * * * python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew 
+...............................
+
+# enable fail2ban jail to monitor password attempts
+sudo vim /etc/fail2ban/jail.conf
+...............................
+[nginx-http-auth-files]
+
+enabled = true
+filter  = nginx-http-auth
+port    = http,https
+logpath = /var/log/nginx/error_files.log
+...............................
+
+# restart fail2ban
+sudo systemctl restart fail2ban.service
+sudo systemctl status fail2ban.service
+sudo fail2ban-client status
+
+#######################################
+OPTIONAL:
+Add More Security By Customizing DHPARAM
+#######################################
+
+sudo mkdir -p /etc/nginx/ssl/files.ucoder.ir
+sudo openssl dhparam -out /etc/nginx/ssl/files.ucoder.ir/dhparam.pem 4096
+
+sudo vim /etc/nginx/conf.d/sh.ucoder.ir.conf
+...............................
+ssl_dhparam /etc/nginx/ssl/sh.ucoder.ir/dhparam.pem;
+...............................
+
+# test nginx configuration
+nginx -t
+
+# restart nginx
+sudo systemctl restart nginx
+
+#######################################
+TROUBLE SHOOTING!
+IN CASE OF SELINUX GIVING TROUBLE:
+#######################################
+
+sudo chcon -Rt httpd_sys_content_t /usr/share/nginx/files.ucoder.ir
+
+
+
+
+
+
+

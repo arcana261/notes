@@ -408,18 +408,48 @@ Install OpenVPN (to be used accross shadowsocks)
 ########################################################
 
 # initialize openvpn
-docker volume create --name "ovpn-data"
-docker run -v "ovpn-data":/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://ssserver.ucoder.ir
-docker run -v "ovpn-data":/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
+docker volume create --name "ovpn-udp-data"
+docker run -v "ovpn-udp-data":/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://opn.ucoder.ir
+docker run -v "ovpn-udp-data":/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
 
 # run openvpn
-docker run -v "ovpn-data":/etc/openvpn -td -p 1194:1194/udp --cap-add=NET_ADMIN --restart=always kylemanna/openvpn
+docker run -v "ovpn-udp-data":/etc/openvpn -td -p 2000:1194/udp --cap-add=NET_ADMIN --restart=always --name=ovpn-udp kylemanna/openvpn
 
 # generate client id without pass
-docker run -v "ovpn-data":/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full arcana nopass
+docker run -v "ovpn-udp-data":/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full arcana nopass
 
 # retrieve client configuration
-docker run -v "ovpn-data":/etc/openvpn --rm kylemanna/openvpn ovpn_getclient arcana > arcana.ovpn
+docker run -v "ovpn-udp-data":/etc/openvpn --rm kylemanna/openvpn ovpn_getclient arcana > arcana-udp.ovpn
+
+# open port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=2000/udp
+sudo firewall-cmd --reload
+
+
+########################################################
+Install OpenVPN (TCP) (to be used accross shadowsocks)
+########################################################
+
+# initialize openvpn
+docker volume create --name "ovpn-tcp-data"
+docker run -v "ovpn-tcp-data":/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u tcp://opn.ucoder.ir
+docker run -v "ovpn-tcp-data":/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
+
+# run openvpn
+docker run -v "ovpn-tcp-data":/etc/openvpn -td -p 2000:1194/tcp --cap-add=NET_ADMIN --restart=always --name=ovpn-tcp kylemanna/openvpn
+
+# generate client id without pass
+docker run -v "ovpn-tcp-data":/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full arcana nopass
+
+# retrieve client configuration
+docker run -v "ovpn-tcp-data":/etc/openvpn --rm kylemanna/openvpn ovpn_getclient arcana > arcana-tcp.ovpn
+
+# open port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=2000/tcp
+sudo firewall-cmd --reload
+
 
 ########################################################
 Connect to OpenVPN over Shadowsocks
@@ -621,7 +651,7 @@ sudo mkdir -p /etc/sysconfig
 sudo vim /etc/sysconfig/kcptun-client-aes-256-cfb.env
 .....................
 SERVER="kcp.ucoder.ir:8002"
-LOCAL=":8002"
+LOCAL=":3002"
 CRYPT="aes-192"
 KEY="<PASSWORD>"
 .....................
@@ -635,7 +665,7 @@ KEY="<PASSWORD>"
 sudo vim /etc/sysconfig/kcptun-client-salsa20.env
 .....................
 SERVER="kcp.ucoder.ir:4002"
-LOCAL=":4002"
+LOCAL=":3002"
 CRYPT="salsa20"
 KEY="<PASSWORD>"
 .....................
@@ -671,7 +701,7 @@ sudo vim /etc/sysconfig/shadowsocks-kcp-aes-256-cfb.json
 ..............................
 {
   "server":"127.0.0.1",
-  "server_port":8002,
+  "server_port":3002,
   "local_port":1080,
   "password":"<PASSWORD>",
   "timeout":600,
@@ -695,7 +725,7 @@ sudo vim /etc/sysconfig/shadowsocks-kcp-salsa20.json
 ..............................
 {
   "server":"127.0.0.1",
-  "server_port":4002,
+  "server_port":3002,
   "local_port":1080,
   "password":"<PASSWORD>",
   "timeout":600,
@@ -745,11 +775,11 @@ sudo vim /etc/systemd/system/udp2raw-openvpn.service
 ...............................
 [Unit]
 Description=UDP2RAW for OpenVPN
-After=network.target
+After=network.target docker.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/udp2raw -s -l 0.0.0.0:1195 -r 127.0.0.1:1194 --raw-mode udp --cipher-mode aes128cbc --auth-mode md5 --key <PASSWORD>
+ExecStart=/usr/local/bin/udp2raw -s -l 0.0.0.0:1195 -r 127.0.0.1:2000 --raw-mode faketcp --cipher-mode aes128cbc --auth-mode md5 --key <PASSWORD> --auto-rule
 Restart=on-abort
 
 [Install]
@@ -757,6 +787,7 @@ WantedBy=multi-user.target
 ...............................
 
 # enable and start services
+sudo systemctl daemon-reload
 sudo systemctl restart udp2raw-openvpn.service
 sudo systemctl status udp2raw-openvpn.service
 sudo systemctl enable udp2raw-openvpn.service
@@ -767,7 +798,7 @@ sudo firewall-cmd --permanent --add-port=1195/tcp
 sudo firewall-cmd --permanent --add-port=1195/udp
 sudo firewall-cmd --reload
 
-########################################################
+#########################################################
 Setup udp2raw Client for OpenVPN
 ##
 ## NOTE: udp2raw DOES NOT WORK WITH DOMAIN NAMES!
@@ -790,7 +821,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/udp2raw -c -l 127.0.0.1:1195 -r 178.162.203.161:1194 --raw-mode udp --cipher-mode aes128cbc --auth-mode md5 --key <PASSWORD>
+ExecStart=/usr/local/bin/udp2raw -c -l 127.0.0.1:1195 -r 172.162.203.161:2000 --raw-mode faketcp --cipher-mode aes128cbc --auth-mode md5 --key <PASSWORD> --auto-rule
 Restart=on-abort
 
 [Install]
@@ -798,7 +829,160 @@ WantedBy=multi-user.target
 ...............................
 
 # enable and start services
+sudo systemctl daemon-reload
 sudo systemctl restart udp2raw-openvpn.service
 sudo systemctl status udp2raw-openvpn.service
 sudo systemctl enable udp2raw-openvpn.service
+
+########################################################
+Setup udp2raw Server for kcptun
+########################################################
+
+# configure various env files
+sudo vim /etc/sysconfig/udp2raw-kcp-aes-256-cfb.env
+.........................
+LISTEN="8003"
+REDIRECT="8002"
+CIPHER="aes128cbc"
+AUTH="md5"
+KEY="<PASSWORD>"
+.........................
+sudo vim /etc/sysconfig/udp2raw-kcp-chacha20.env
+.........................
+LISTEN="3003"
+REDIRECT="3002"
+CIPHER="aes128cbc"
+AUTH="md5"
+KEY="<PASSWORD>"
+.........................
+sudo vim /etc/sysconfig/udp2raw-kcp-salsa20.env
+.........................
+LISTEN="4003"
+REDIRECT="4002"
+CIPHER="aes128cbc"
+AUTH="md5"
+KEY="<PASSWORD>"
+.........................
+
+# create systemd unit
+sudo vim /etc/systemd/system/udp2raw-kcp@.service
+...............................
+[Unit]
+Description=UDP2RAW for %i KCP Tunnel
+After=network.target kcptun-server@%i.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/sysconfig/udp2raw-kcp-%i.env
+ExecStart=/usr/local/bin/udp2raw -s -l "0.0.0.0:${LISTEN}" -r "127.0.0.1:${REDIRECT}" --raw-mode faketcp --cipher-mode ${CIPHER} --auth-mode ${AUTH} --key ${KEY} --auto-rule
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# reload systemd
+sudo systemctl daemon-reload
+
+# start and reload services
+sudo systemctl restart udp2raw-kcp@aes-256-cfb.service
+sudo systemctl status udp2raw-kcp@aes-256-cfb.service
+sudo systemctl enable udp2raw-kcp@aes-256-cfb.service
+
+sudo systemctl restart udp2raw-kcp@chacha20.service
+sudo systemctl status udp2raw-kcp@chacha20.service
+sudo systemctl enable udp2raw-kcp@chacha20.service
+
+sudo systemctl restart udp2raw-kcp@salsa20.service
+sudo systemctl status udp2raw-kcp@salsa20.service
+sudo systemctl enable udp2raw-kcp@salsa20.service
+
+# add ports to firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=8003/tcp
+sudo firewall-cmd --permanent --add-port=8003/udp
+sudo firewall-cmd --permanent --add-port=4003/tcp
+sudo firewall-cmd --permanent --add-port=4003/udp
+sudo firewall-cmd --permanent --add-port=3003/tcp
+sudo firewall-cmd --permanent --add-port=3003/udp
+sudo firewall-cmd --reload
+
+########################################################
+Setup udp2raw Client for kcptun
+########################################################
+
+# configure various env files
+sudo vim /etc/sysconfig/udp2raw-kcp-aes-256-cfb.env
+.........................
+LISTEN="3003"
+REDIRECT="178.162.203.161:8003"
+CIPHER="aes128cbc"
+AUTH="md5"
+KEY="<PASSWORD>"
+.........................
+sudo vim /etc/sysconfig/udp2raw-kcp-chacha20.env
+.........................
+LISTEN="3003"
+REDIRECT="178.162.203.161:3003"
+CIPHER="aes128cbc"
+AUTH="md5"
+KEY="<PASSWORD>"
+.........................
+sudo vim /etc/sysconfig/udp2raw-kcp-salsa20.env
+.........................
+LISTEN="3003"
+REDIRECT="178.162.203.161:4003"
+CIPHER="aes128cbc"
+AUTH="md5"
+KEY="<PASSWORD>"
+.........................
+
+# create primary config file
+sudo ln -s /etc/sysconfig/udp2raw-kcp-chacha20.env /etc/sysconfig/udp2raw-kcp.env
+
+# create systemd unit
+sudo vim /etc/systemd/system/udp2raw-kcp.service
+...............................
+[Unit]
+Description=UDP2RAW for KCP Tunnel
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/sysconfig/udp2raw-kcp.env
+ExecStart=/usr/local/bin/udp2raw -c -l "0.0.0.0:${LISTEN}" -r "${REDIRECT}" --raw-mode faketcp --cipher-mode ${CIPHER} --auth-mode ${AUTH} --key ${KEY} --auto-rule
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# enable and start service
+sudo systemctl daemon-reload
+sudo systemctl restart udp2raw-kcp.service
+sudo systemctl status udp2raw-kcp.service
+sudo systemctl enable udp2raw-kcp.service
+
+# configure various env files
+sudo vim /etc/sysconfig/kcptun-client-udp2raw-aes-256-cfb.env
+.....................
+SERVER="127.0.0.1:3003"
+LOCAL=":3002"
+CRYPT="aes-192"
+KEY="<PASSWORD>"
+.....................
+sudo vim /etc/sysconfig/kcptun-client-udp2raw-chacha20.env
+.....................
+SERVER="127.0.0.1:3003"
+LOCAL=":3002"
+CRYPT="blowfish"
+KEY="<PASSWORD>"
+.....................
+sudo vim /etc/sysconfig/kcptun-client-udp2raw-salsa20.env
+.....................
+SERVER="127.0.0.1:3003"
+LOCAL=":3002"
+CRYPT="salsa20"
+KEY="<PASSWORD>"
+.....................
 
