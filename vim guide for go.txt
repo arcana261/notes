@@ -8,6 +8,7 @@ sudo apt-get install vim-gnome
 sudo update-alternatives --config editor
 
 # install ctags
+mkdir ~/.local/src
 cd ~/.local/src
 wget https://sourceforge.net/projects/ctags/files/ctags/5.8/ctags-5.8.tar.gz
 tar -xzf ctags-5.8.tar.gz
