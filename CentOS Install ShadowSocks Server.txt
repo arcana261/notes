@@ -90,6 +90,17 @@ sudo vim /etc/shadowsocks-chacha20.json
   "method":"chacha20"
 }
 ..............................
+sudo vim /etc/shadowsocks-chacha20-ietf-poly1305.json
+..............................
+{
+  "server":"178.162.203.161",
+  "server_port":4500,
+  "local_port":1081,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"chacha20-ietf-poly1305"
+}
+..............................
 sudo vim /etc/shadowsocks-salsa20.json
 ..............................
 {
@@ -152,6 +163,10 @@ sudo systemctl restart shadowsocks-server@chacha20.service
 sudo systemctl enable shadowsocks-server@chacha20.service
 sudo systemctl status shadowsocks-server@chacha20.service
 
+sudo systemctl restart shadowsocks-server@chacha20-ietf-poly1305.service
+sudo systemctl enable shadowsocks-server@chacha20-ietf-poly1305.service
+sudo systemctl status shadowsocks-server@chacha20-ietf-poly1305.service
+
 sudo systemctl restart shadowsocks-server@salsa20.service
 sudo systemctl enable shadowsocks-server@salsa20.service
 sudo systemctl status shadowsocks-server@salsa20.service
@@ -164,6 +179,9 @@ sudo firewall-cmd --permanent --add-port=3000/tcp
 sudo firewall-cmd --permanent --add-port=3000/udp
 sudo firewall-cmd --permanent --add-port=4000/tcp
 sudo firewall-cmd --permanent --add-port=4000/udp
+sudo firewall-cmd --permanent --add-port=4500/tcp
+sudo firewall-cmd --permanent --add-port=4500/udp
+
 sudo firewall-cmd --reload
 
 # protect against brute forcers
@@ -402,6 +420,88 @@ source ~/proxy.source
 
 # load no proxy environment
 source ~/no-proxy.source
+
+########################################################
+Install simple-obfs Server
+########################################################
+
+# install requirements
+sudo yum install gcc autoconf libtool automake make zlib-devel openssl-devel asciidoc xmlto
+
+# compile and install
+cd /usr/local/src
+sudo git clone https://github.com/shadowsocks/simple-obfs.git
+cd simple-obfs
+sudo git submodule update --init --recursive
+sudo ./autogen.sh
+sudo ./configure
+sudo make
+sudo make install
+
+# create config
+sudo vim /etc/shadowsocks-chacha20-ietf-poly1305-simple-obfs.json
+..............................
+{
+  "server":"178.162.203.161",
+  "server_port":4700,
+  "local_port":1081,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"chacha20-ietf-poly1305",
+  "plugin":"obfs-server",
+  "plugin_opts":"obfs=http"
+}
+..............................
+
+# enable and start services
+sudo systemctl restart shadowsocks-server@chacha20-ietf-poly1305-simple-obfs.service
+sudo systemctl enable shadowsocks-server@chacha20-ietf-poly1305-simple-obfs.service
+sudo systemctl status shadowsocks-server@chacha20-ietf-poly1305-simple-obfs.service
+
+# open ports through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=4700/tcp
+sudo firewall-cmd --permanent --add-port=4700/udp
+sudo firewall-cmd --reload
+
+########################################################
+Install simple-obfs Client
+########################################################
+
+# install requirements
+sudo apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake
+
+# compile and install
+cd /usr/local/src
+sudo git clone https://github.com/shadowsocks/simple-obfs.git
+cd simple-obfs
+sudo git submodule update --init --recursive
+sudo ./autogen.sh
+sudo ./configure
+sudo make
+sudo make install
+
+# create config
+sudo vim /etc/shadowsocks-chacha20-ietf-poly1305-simple-obfs.json
+..............................
+{
+  "server":"ssserver.ucoder.ir",
+  "server_port":4700,
+  "local_port":1081,
+  "password":"<PASSWORD>",
+  "timeout":600,
+  "method":"chacha20-ietf-poly1305",
+  "plugin":"obfs-local",
+  "plugin_opts":"obfs=http;obfs-host=www.microsoft.com"
+}
+..............................
+
+########################################################
+Install simple-obfs Client (Android)
+########################################################
+
+# search google play for "obfs" or "Simple Obfuscation"
+# which acts as a plugin for shadowsocks
 
 ########################################################
 Install OpenVPN (to be used accross shadowsocks)
