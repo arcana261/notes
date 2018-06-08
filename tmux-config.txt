@@ -122,8 +122,8 @@ vim ~/.tmux.conf
 
 # Tmux settings
 
-# change to Alt-b
-set-option -g prefix M-b
+# change to Alt-q
+set-option -g prefix M-q
 
 # Set XTerm key bindings
 setw -g xterm-keys on
