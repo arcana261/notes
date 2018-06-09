@@ -75,3 +75,6 @@ kubectl rollout history deployment/nginx-deployment --revision=2
 kubectl rollout undo deployment/nginx-deployment
 kubectl rollout undo deployment/nginx-deployment --to-revision=2
 
+# custom config file
+kubectl --kubeconfig <CUSTOM_CONFIG_FILE>
+

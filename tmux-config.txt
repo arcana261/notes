@@ -1,3 +1,6 @@
+# install tmux 
+sudo apt-get install tmux xclip
+
 ##
 ## session management
 ## 
@@ -101,6 +104,9 @@ Ctrl-b [
 # start highlighting text
 Space
 
+# start highlighting text in rectangle mode
+v Space
+
 # finish copy
 Enter
 
@@ -124,6 +130,9 @@ vim ~/.tmux.conf
 
 # change to Alt-b
 set-option -g prefix M-b
+
+# ability to send to system clipboard
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
 
 # Set XTerm key bindings
 setw -g xterm-keys on
