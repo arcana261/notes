@@ -128,8 +128,8 @@ vim ~/.tmux.conf
 
 # Tmux settings
 
-# change to Alt-b
-set-option -g prefix M-b
+# change to Alt-q
+set-option -g prefix M-q
 
 # ability to send to system clipboard
 bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
