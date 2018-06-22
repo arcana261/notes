@@ -934,6 +934,9 @@ sudo systemctl restart udp2raw-openvpn.service
 sudo systemctl status udp2raw-openvpn.service
 sudo systemctl enable udp2raw-openvpn.service
 
+
+#### NOTE: connect OpenVPN through UDP
+
 ########################################################
 Setup udp2raw Server for kcptun
 ########################################################
@@ -1085,4 +1088,63 @@ LOCAL=":3002"
 CRYPT="salsa20"
 KEY="<PASSWORD>"
 .....................
+
+
+########################################################
+Brook Server
+########################################################
+
+# install
+sudo wget -O /usr/bin/brook https://github.com/txthinking/brook/releases/download/v20180707/brook
+sudo chmod +x /usr/bin/brook
+
+# create systemd unit file
+sudo vim /etc/systemd/system/brook-server.service
+...............................................................
+[Unit]
+Description=Brook Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/brook server -l :3001 -p <PASSWORD>
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................................................
+
+# enable and start services
+sudo systemctl start brook-server.service
+sudo systemctl enable brook-server.service
+sudo systemctl status brook-server.service
+
+# allow port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=3001/tcp
+sudo firewall-cmd --reload
+
+
+########################################################
+Brook Client
+########################################################
+
+# install
+sudo wget -O /usr/local/bin/brook https://github.com/txthinking/brook/releases/download/v20180707/brook
+sudo chmod +x /usr/local/bin/brook
+
+# create systemd unit file
+sudo vim /etc/systemd/system/brook-client.service
+...............................................................
+[Unit]
+Description=Brook Client
+After=network.target
+Conflicts=shadowsocks-client.service
+
+[Service]
+ExecStart=/usr/local/bin/brook client -l 127.0.0.1:1080 -i 127.0.0.1 -s 178.162.203.161:3001 -p <PASSWORD>
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................................................
 
