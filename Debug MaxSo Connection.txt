@@ -1,0 +1,49 @@
+for pod in `kubectl get pods | grep -v NAME | awk '{print $1}'`; do \
+    echo POD $pod; \
+    let total_established=0; \
+    ESTABLISHED=$(mktemp); \
+    kubectl exec $pod -- /bin/netstat -nap | grep ESTABLISHED > $ESTABLISHED; \
+    for ip in $(cat $ESTABLISHED | awk '{print $5}' | sed 's/:.*$//g' | sort -u); do \
+        count=$(cat $ESTABLISHED | grep $ip | wc -l); \
+        let "total_established = $total_established + $count"; \
+        echo ip: $ip count: $count; \
+    done; \
+    echo TOTAL_ESTABLISHED: $total_established; \
+    let total_timewait=0; \
+    TIME_WAIT=$(mktemp); \
+    kubectl exec $pod -- /bin/netstat -nap | grep TIME_WAIT > $TIME_WAIT; \
+    for ip in $(cat $TIME_WAIT | awk '{print $5}' | sed 's/:.*$//g' | sort -u); do \
+        count=$(cat $TIME_WAIT | grep $ip | wc -l); \
+        let "total_timewait = $total_timewait + $count"; \
+        echo ip: $ip count: $count; \
+    done; \
+    echo TOTAL_TIME_WAIT: $total_timewait; \
+    echo SOMAXCONN: $(kubectl exec $pod -- sysctl net.core.somaxconn | awk '{print $3}'); \
+    echo ""; \
+    echo ""; \
+done
+
+
+
+
+
+function print_maxso_pod() {
+    let total=0; \
+    for ip in $(kubectl exec $1 -- /bin/netstat -nap | grep ESTABLISHED | awk '{print $5}' | sed 's/:.*$//g' | sort -u); do \
+        count=$(kubectl exec $1 -- /bin/netstat -nap | grep ESTABLISHED | grep $ip | wc -l); \
+        let "total = $total + $count"; \
+        echo ip: $ip count: $count; \
+    done; \
+    echo TOTAL: $total;
+}
+
+
+let total=0;
+for ip in $(kubectl exec $pod -- /bin/netstat -nap | grep ESTABLISHED | awk '{print $5}' | sed 's/:.*$//g' | sort -u); do
+    count=$(kubectl exec $pod -- /bin/netstat -nap | grep ESTABLISHED | grep $ip | wc -l);
+    let "total = $total + $count";
+    echo ip: $ip count: $count;
+done;
+echo TOTAL: $total;
+
+

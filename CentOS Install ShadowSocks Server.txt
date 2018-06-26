@@ -29,7 +29,7 @@ cd shadowsocks-libev
 git tag -l
 
 # checkout specific tag
-git checkout tags/v3.1.1 -b toinstall
+git checkout tags/v3.2.0 -b toinstall
 
 # install submodules
 git submodule update --init --recursive
@@ -461,7 +461,6 @@ sudo systemctl status shadowsocks-server@chacha20-ietf-poly1305-simple-obfs.serv
 # open ports through firewall
 sudo firewall-cmd --reload
 sudo firewall-cmd --permanent --add-port=4700/tcp
-sudo firewall-cmd --permanent --add-port=4700/udp
 sudo firewall-cmd --reload
 
 ########################################################
