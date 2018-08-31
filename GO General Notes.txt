@@ -7,8 +7,10 @@ echo "https://oauth2:XXXXXXXXXX@git.cafebazaar.ir" >> ~/.git-credentials
 # install go
 cd ~/Downloads
 source ~/proxy.source
-wget https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz
-tar -C ~/.local -xzf go1.9.2.linux-amd64.tar.gz
+export GOLANG_VERSION="1.10.3"
+curl "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" -o golang.tar.gz
+tar -C ~/.local -xzf golang.tar.gz
+rm -f golang.tar.gz
 sudo vim /etc/environment
 ....................................
 PATH+="/usr/local/go/bin"
