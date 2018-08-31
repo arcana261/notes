@@ -20,9 +20,10 @@ sudo apt-get install vim nano screen htop psmisc dnsutils wget \
 			traceroute w3m bridge-utils \
 			default-jdk git rar unrar \
 			iputils-arping network-manager-openvpn-gnome \
-			iperf docky curl uget gnome-tweak-tool python-pip python3-pip \
+			iperf curl uget gnome-tweak-tool python-pip python3-pip \
 			p7zip-full p7zip net-tools pulseaudio snapd \
-			gksu clang wine winetricks
+			gksu clang wine winetricks gnome-shell \
+			ubuntu-gnome-desktop gnome-tweak-tool
 sudo pip install --upgrade pip
 sudo pip3 install --upgrade pip
 
@@ -43,7 +44,7 @@ source $HOME/bash_completions/pip3
 vim ~/.profile
 ............................
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.local/lib"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib:$HOME/.local/lib"
 ............................
 
 # remap CAPSLOCK to ctrl key
@@ -247,5 +248,31 @@ Name=Link to Ask Ubuntu
 Type=Link
 URL=http://www.askubuntu.com/
 Icon=text-html
+
+
+######################################
+After upgrade to 18.04 bionic guide
+######################################
+
+##‌ Check for disabled repos under software and updates and reinstall apps
+
+#‌ run apt-get update
+sudo apt-get update
+
+##‌ if complaining about amd64/i386.. open sources in /etc/apt/sources.list.d/
+##‌ or /etc/apt/sources.list file and do following
+##
+## deb [ arch=amd64 ] ...
+##
+
+##‌ enable unity dock gnome extension
+
+#‌ first install
+sudo apt-get update
+sudo apt-get install gnome-shell-extension-ubuntu-dock gnome-shell-extension-dashtodock
+
+# open "tweaks" tool and enable following extensions
+#‌ "Application Menu", "Places status indicator", "Ubuntu appindicators", "Ubuntu dock"
+
 
 
