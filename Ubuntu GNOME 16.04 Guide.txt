@@ -274,5 +274,29 @@ sudo apt-get install gnome-shell-extension-ubuntu-dock gnome-shell-extension-das
 # open "tweaks" tool and enable following extensions
 #‌ "Application Menu", "Places status indicator", "Ubuntu appindicators", "Ubuntu dock"
 
+# setup dns resolver
+sudo vim /etc/systemd/resolved.conf
+..........................
+DNS=4.2.2.4 8.8.8.8
+..........................
+sudo systemctl restart systemd-resolved.service
+
+# view dns resolver status
+systemd-resolve --status
+
+# view networkmanager config
+NetworkManager --print-config
+
+######################################
+Setup Pantheon
+######################################
+
+
+sudo add-apt-repository ppa:elementary-os/daily
+sudo add-apt-repository ppa:elementary-os/os-patches
+sudo add-apt-repository ppa:philip.scott/elementary-tweaks
+
+sudo apt-get install elementary-theme elementary-icon-theme elementary-default-settings elementary-desktop elementary-tweaks
+
 
 
