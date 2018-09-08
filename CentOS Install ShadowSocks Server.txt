@@ -1147,3 +1147,61 @@ Restart=on-abort
 WantedBy=multi-user.target
 ...............................................................
 
+########################################################
+Install Telegram MTProto Proxy
+########################################################
+
+sudo yum install -y openssl-devel zlib-devel
+sudo yum groupinstall -y "Development Tools"
+
+cd /usr/local/src
+sudo git clone https://github.com/TelegramMessenger/MTProxy
+cd MTProxy
+sudo make
+sudo cp objs/bin/* /usr/local/bin/
+sudo mkdir -p /etc/sysconfig/mtproto_proxy
+
+# obtain secret
+sudo curl -s https://core.telegram.org/getProxySecret -o /etc/sysconfig/mtproto_proxy/proxy-secret
+# obtain configuration
+sudo curl -s https://core.telegram.org/getProxyConfig -o /etc/sysconfig/mtproto_proxy/proxy-multi.conf
+# obtain secret for client
+sudo bash -c "head -c 16 /dev/urandom | xxd -ps > /etc/sysconfig/mtproto_proxy/client-secret"
+
+# setup reverse proxy
+sudo vim /etc/nginx/conf.d/sh.ucoder.ir.conf
+...............................
+server {
+  listen 80 ;
+  server_name mt.ucoder.ir;
+
+  access_log /var/log/nginx/access_mt.log;
+  error_log  /var/log/nginx/error_mtf.log;
+
+  location /<<<HIIIIIIDEN SUBDIRECTORYYYYYYYYYYYYY>>> {
+  #location / {
+    rewrite ^/<<<HIIIIIIDEN SUBDIRECTORYYYYYYYYYYYYY>>>(/.*)$ $1 break;
+
+    auth_basic "Private Property";
+    auth_basic_user_file /etc/nginx/conf.d/sh.ucoder.ir.htpasswd;
+
+    proxy_pass https://127.0.0.1:4200/;
+    #proxy_pass https://127.0.0.1:4200;
+    proxy_ssl_verify off;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_read_timeout 43200000;
+
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-NginX-Proxy true;
+  }
+
+}
+...............................
+
+
+
+

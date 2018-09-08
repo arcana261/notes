@@ -1,0 +1,3 @@
+netsh interface ipv4 show subinterface
+netsh interface ipv4 set subinterface “Local Area Connection” mtu=1458 store=persistent
+

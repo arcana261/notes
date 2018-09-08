@@ -1,0 +1,249 @@
+# install openconnect server
+sudo yum install ocserv
+
+# create config for certificate
+cd /etc/ocserv
+sudo vim ca.tmpl
+.............................
+cn = "VPN CA"
+organization = "arcana"
+serial = 1
+expiration_days = 3650
+ca
+signing_key
+cert_signing_key
+crl_signing_key
+.............................
+
+# create self signed certificate
+sudo certtool --generate-privkey --outfile ca-key.pem
+sudo certtool --generate-self-signed --load-privkey ca-key.pem \
+--template ca.tmpl --outfile ca-cert.pem
+
+# create template for server certificate
+sudo vim server.tmpl
+.............................
+cn = "ocs.ucoder.ir"
+organization = "arcana"
+expiration_days = 3650
+signing_key
+encryption_key
+tls_www_server
+.............................
+
+# create server certificate
+sudo certtool --generate-privkey --outfile server-key.pem
+sudo certtool --generate-certificate --load-privkey server-key.pem \
+--load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem \
+--template server.tmpl --outfile server-cert.pem
+
+# modify openconnect configuration
+sudo vim ocserv.conf
+.............................
+>>>
+tcp-port = 4430
+udp-port = 4430
+
+>>> Find the line auth = “pam[gid-min=1000]” and replace it with the following
+auth = “plain[/etc/ocserv/ocpasswd]”
+
+>>> Replace these two lines
+server-cert = /etc/ssl/certs/ssl-cert-snakeoil.pem
+server-key = /etc/ssl/private/ssl-cert-snakeoil.key
+>>> with the following lines
+server-cert = /etc/ocserv/server-cert.pem
+server-key = /etc/ocserv/server-key.pem
+
+>>> Change the value of
+try-mtu-discovery from false to true
+try-mtu-discovery = true
+
+>>> Change the DNS value from 192.168.1.2 to 8.8.8.8
+dns = 8.8.8.8
+
+>>> Remove the lines or place a # in front of following lines
+route = 10.10.10.0/255.255.255.0
+route = 192.168.0.0/255.255.0.0
+no-route = 192.168.5.0/255.255.255.0
+
+>>>
+ipv4-network = 192.168.199.0/24
+.............................
+
+# create password for openconnect server
+sudo ocpasswd -c /etc/ocserv/ocpasswd arcana
+
+# enable packet forwarding
+sudo vim /etc/sysctl.conf
+.............................
+net.ipv4.ip_forward=1
+.............................
+
+# reload sysctl
+sudo sysctl -p
+
+# enable port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=4430/tcp
+sudo firewall-cmd --permanent --add-port=4430/udp
+sudo firewall-cmd --reload
+
+# check if ip forwarding is enabled
+sudo sysctl -a | grep forward
+
+# list zones and bounded interfaces
+sudo firewall-cmd --list-all
+
+# check if masquerading is enabled
+sudo firewall-cmd --zone=public --query-masquerade && echo "enabled" || echo "Not enabled"
+
+# enable ip masquerading
+sudo firewall-cmd --zone=public --permanent --add-masquerade
+
+# reload firewalld
+sudo firewall-cmd --reload
+
+# enable and start services
+sudo systemctl enable ocserv.service
+sudo systemctl restart ocserv.service
+sudo systemctl status ocserv.service
+
+# copy certificate file to be downloaded
+sudo cp ca-cert.pem /usr/share/nginx/files.ucoder.ir/private/
+sudo chcon -Rt httpd_sys_content_t /usr/share/nginx/files.ucoder.ir/private
+
+##########################################################################
+##
+## Client Side (Ubuntu)
+##
+##########################################################################
+
+sudo apt-get install network-manager-openconnect network-manager-openconnect-gnome
+
+##########################################################################
+##
+## SniProxy for sharing 443 port between OCS and Nginx
+##
+## REMEMBER TO HAVE THIS FOR WEB SITES!
+##
+##    try_files $uri/index.html $uri/ $uri;
+##
+##########################################################################
+
+# allow nginx to listen on 444 port
+sudo semanage port -a -t http_port_t -p tcp 444
+
+# install sniproxy
+cd /usr/local/src
+sudo git clone https://github.com/dlundquist/sniproxy.git
+cd sniproxy
+sudo ./autogen.sh
+sudo ./configure
+sudo make check
+sudo make install
+
+# create configuration
+sudo vim /etc/sniproxy.conf
+...............................
+user root
+
+pidfile /var/run/sniproxy.pid
+
+error_log {
+    syslog daemon
+    priority notice
+}
+
+listener 0.0.0.0:443 {
+    protocol tls
+    table TableName
+
+    # Specify a server to use if the initial client request doesn't contain
+    # a hostname
+    fallback 127.0.0.1:4430
+}
+
+table TableName {
+    ocs.ucoder.ir 127.0.0.1:4430
+    ucoder.ir 127.0.0.1:444
+    www.ucoder.ir 127.0.0.1:444
+    files.ucoder.ir 127.0.0.1:444
+    sh.ucoder.ir 127.0.0.1:444
+    webhook.ucoder.ir 127.0.0.1:444
+}
+...............................
+
+# create systemd service for sniproxy
+sudo vim /etc/systemd/system/sniproxy.service
+...............................
+[Unit]
+Description=SNIProxy
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/sniproxy.pid
+ExecStart=/usr/local/sbin/sniproxy -c /etc/sniproxy.conf
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+...............................
+
+# reload systemd
+systemctl daemon-reload
+
+# create bashrc file for ocs
+sudo vim /root/.bashrc
+...............................
+function enable_ocs {
+    find /etc/nginx -type f | xargs sed -i 's/listen 443 ssl;/listen 444 ssl;/g'
+    nginx -t && systemctl restart nginx
+    systemctl start sniproxy.service
+    systemctl enable sniproxy.service
+    systemctl status sniproxy.service
+}
+function disable_ocs {
+    systemctl stop sniproxy.service
+    systemctl disable sniproxy.service
+    systemctl status sniproxy.service
+    find /etc/nginx -type f | xargs sed -i 's/listen 444 ssl;/listen 443 ssl;/g'
+    nginx -t && systemctl restart nginx
+}
+...............................
+
+
+sudo vim /etc/nginx/conf.d/ocs.ucoder.ir.conf
+...............................
+server {
+  listen 80;
+  server_name ocs.ucoder.ir;
+
+  access_log /var/log/nginx/access_ocs.log;
+  error_log  /var/log/nginx/error_ocs.log;
+
+  location / {
+    proxy_pass https://127.0.0.1:4430/;
+    proxy_ssl_verify off;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_read_timeout 43200000;
+
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-NginX-Proxy true;
+  }
+
+}
+...............................
+
+# enable sniproxy
+...............................
+enable_ocs
+...............................
+
+
+
+
