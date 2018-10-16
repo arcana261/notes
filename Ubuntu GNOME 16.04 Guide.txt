@@ -278,8 +278,12 @@ sudo apt-get install gnome-shell-extension-ubuntu-dock gnome-shell-extension-das
 sudo vim /etc/systemd/resolved.conf
 ..........................
 DNS=4.2.2.4 8.8.8.8
+Domains=~
 ..........................
 sudo systemctl restart systemd-resolved.service
+
+# flush dns
+systemd-resolve --flush-caches
 
 # view dns resolver status
 systemd-resolve --status
@@ -297,6 +301,150 @@ sudo add-apt-repository ppa:elementary-os/os-patches
 sudo add-apt-repository ppa:philip.scott/elementary-tweaks
 
 sudo apt-get install elementary-theme elementary-icon-theme elementary-default-settings elementary-desktop elementary-tweaks
+
+---------------------------------------------------------------------
+
+Dear people!
+
+I have exactly the same problem here..
+
+Let's be honest guys! DNS servers are **NOT EQUAL**. There is a difference between **THEORY** and **REALITY**.
+
+I live in an unfortunate part of the world where DNS requests are hijacked.. So DNS probe from my VPN connection is different than that of my ISP provided DNS server. Not even this.. since ISP's in my country hijack DNS requests, they almost **NEVER** respect TTL's. Leading to unexpected results which can last up to days until they are fixed.
+
+Here is output of `systemd-resolve --status`:
+
+```
+arcana@arcana-ubuntu:~$ systemd-resolve --status
+Global
+         DNS Servers: 4.2.2.4
+                      8.8.8.8
+          DNSSEC NTA: 10.in-addr.arpa
+                      16.172.in-addr.arpa
+                      168.192.in-addr.arpa
+                      17.172.in-addr.arpa
+                      18.172.in-addr.arpa
+                      19.172.in-addr.arpa
+                      20.172.in-addr.arpa
+                      21.172.in-addr.arpa
+                      22.172.in-addr.arpa
+                      23.172.in-addr.arpa
+                      24.172.in-addr.arpa
+                      25.172.in-addr.arpa
+                      26.172.in-addr.arpa
+                      27.172.in-addr.arpa
+                      28.172.in-addr.arpa
+                      29.172.in-addr.arpa
+                      30.172.in-addr.arpa
+                      31.172.in-addr.arpa
+                      corp
+                      d.f.ip6.arpa
+                      home
+                      internal
+                      intranet
+                      lan
+                      local
+                      private
+                      test
+
+Link 26 (vpn0)
+      Current Scopes: DNS
+       LLMNR setting: yes
+MulticastDNS setting: no
+      DNSSEC setting: no
+    DNSSEC supported: no
+         DNS Servers: 8.8.8.8
+          DNS Domain: example.com
+
+Link 25 (veth73cfd00)
+      Current Scopes: none
+       LLMNR setting: yes
+MulticastDNS setting: no
+```
+
+As you can see, my VPN connection has assigned `8.8.8.8` as DNS server, also my global configuration states that as `4.2.2.4` and `8.8.8.8`. Which I have set them specifically in order to get around DNS hijacking while having my VPN connection activated.
+
+I have done this in three steps... First.. my openconnect server has DNS configuration as follows located in `ocserv.conf`:
+
+```
+dns = 8.8.8.8
+```
+
+Second I have modified configuration for Network Manager... Designating DNS servers manually:
+
+```
+[connection]
+id=ArcanumNet
+uuid=0aa04538-b8e2-4b3c-9991-fef368b34d50
+type=wifi
+permissions=
+timestamp=1536188751
+
+[wifi]
+mac-address=54:27:1E:0B:6C:BD
+mac-address-blacklist=
+mode=infrastructure
+seen-bssids=6C:FD:B9:80:15:65;
+ssid=ArcanumNet
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=UthinK"YoucAN`1PASS
+
+[ipv4]
+dns=4.2.2.4;8.8.8.8;
+dns-search=
+method=auto
+```
+
+And third step, I have instructed resolved to use some designated global name servers:
+
+```
+[Resolve]
+DNS=4.2.2.4 8.8.8.8
+#FallbackDNS=
+#Domains=
+#LLMNR=no
+#MulticastDNS=no
+#DNSSEC=no
+#Cache=yes
+#DNSStubListener=yes
+```
+
+But even still, resolved would pick my local router's DNS server simply because it responds a little faster! And I have no option at all to disable this.. No option to exclude it.. Here is journal log when I try to resolve `pornhub.com`. In this log, you can see that `192.168.2.1` is picked, which is hijacked by ISP! And I am doomed. Leaving me crying tears of blood every time I edit `resolv.conf` manually by hand.
+
+I just am a fan of systemd... But this **optimization** behavior of resolved comes with no configuration at all.. it comes with no way to exclude a DNS server, increase timeouts, disable this behavior or whatever. And the more I think about it.. The more I come to realize that I should either replace and disable resolved OR to nuke my ubuntu system, find some lonely linux distro which does not use systemd and just stay there...
+
+**OR** maybe we can come to some terms about how we can configure this, I would gladly submit a PR in time.
+
+```
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Cache miss for pornhub.com IN AAAA
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Transaction 47668 for <pornhub.com IN AAAA> scope dns on */*.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Using feature level UDP+EDNS0 for transaction 47668.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Using DNS server 4.2.2.4 for transaction 47668.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Sending query packet with id 47668.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Cache miss for pornhub.com IN A
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Transaction 23735 for <pornhub.com IN A> scope dns on */*.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Using feature level UDP+EDNS0 for transaction 23735.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Using DNS server 4.2.2.4 for transaction 23735.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Sending query packet with id 23735.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Cache miss for pornhub.com IN A
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Transaction 30675 for <pornhub.com IN A> scope dns on vpn0/*.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Using feature level UDP+EDNS0 for transaction 30675.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Using DNS server 8.8.8.8 for transaction 30675.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Sending query packet with id 30675.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Cache miss for pornhub.com IN A
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Transaction 53622 for <pornhub.com IN A> scope dns on wlp3s0/*.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Using feature level UDP+EDNS0 for transaction 53622.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Using DNS server 192.168.2.1 for transaction 53622.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Sending query packet with id 53622.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Got message type=method_return sender=org.freedesktop.DBus destination=:1.2139 path=n/a interface=n/a mem
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Match type='signal',sender='org.freedesktop.DBus',path='/org/freedesktop/DBus',interface='org.freedesktop
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Processing incoming packet on transaction 53622. (rcode=SUCCESS)
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Verified we get a response at feature level UDP+EDNS0 from DNS server 192.168.2.1.
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Added positive unauthenticated cache entry for pornhub.com IN A 25s on */INET/192.168.2.1
+Sep 06 03:24:47 arcana-ubuntu systemd-resolved[3873]: Transaction 53622 for <pornhub.com IN A> on scope dns on wlp3s0/* now complete with <success> from networ
+```
 
 
 
