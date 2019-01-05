@@ -246,6 +246,8 @@ msg.FromDatetime(dt)
 msg.To{Seconds,Milliseconds,Microseconds,Nanoseconds}
 msg.From{Seconds,Milliseconds,Microseconds,Nanoseconds}
 
+from google.protobuf.timestamp_pb2 import Timestamp
+
 # duration
 msg.ToJsonString()
 msg.FromJsonString(str)
