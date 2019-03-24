@@ -1,0 +1,33 @@
+with open('/run/secrets/kubernetes.io/serviceaccount/token') as f:
+    token=f.read()
+
+
+from __future__ import print_function
+import time
+import kubernetes.client
+from kubernetes.client.rest import ApiException
+from pprint import pprint
+import os
+
+configuration = kubernetes.client.Configuration()
+configuration.api_key['authorization'] = token
+configuration.host = 'https://{}'.format(os.getenv('KUBERNETES_SERVICE_HOST'))
+configuration.api_key_prefix['authorization'] = 'Bearer'
+configuration.verify_ssl = False
+
+api_instance = kubernetes.client.CoreV1Api(kubernetes.client.ApiClient(configuration))
+
+api_response = api_instance.read_namespaced_endpoints('queue-reader', 'divar-review', pretty='true', exact=True, export=True)
+
+## pip install git+https://github.com/kubernetes-client/python.git
+
+## /api/v1/namespaces/divar-review/endpoints/queue-reader
+
+## api_response.subsets[0].addresses[0].ip
+
+
+grpc.ChannelConnectivity (IDLE, READY, SHUTDOWN)
+
+channel.subscribe(fn(connectivity_state))
+
+
