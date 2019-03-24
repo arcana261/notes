@@ -1,0 +1,155 @@
+##‌ AptBoar52075203
+##‌ xuid: 2535442839829876
+
+# set version
+export VERSION=1.10.0.7
+
+# create docker file
+mkdir -p ~/Downloads/minecraft-server/$VERSION
+cp ~/Downloads/bedrock-server-$VERSION.zip ~/Downloads/minecraft-server/$VERSION/server.zip
+pushd ~/Downloads/minecraft-server/$VERSION
+vim Dockerfile
+..............................................
+FROM ubuntu:18.04
+
+COPY server.zip /srv
+RUN cd /srv && \
+    apt-get update && \
+    apt-get install -y unzip libcurl4-openssl-dev && \
+    apt-get clean && \
+    unzip -d . server.zip && \
+    rm -f server.zip && \
+    sed -i 's/server-name=.*/server-name=Arcane/g' /srv/server.properties && \
+    sed -i 's/level-name=.*/level-name=Arcane/g' /srv/server.properties && \
+    sed -i 's/level-seed=.*/level-seed=mikata/g' /srv/server.properties && \
+    sed -i 's/server-port=.*/server-port=19132/g' /srv/server.properties && \
+    sed -i 's/difficulty=.*/difficulty=normal/g' /srv/server.properties
+
+ENV LD_LIBRARY_PATH /srv
+EXPOSE 19132/udp
+VOLUME /srv/worlds
+WORKDIR /srv
+
+CMD ["/srv/bedrock_server"]
+..............................................
+
+# build docker image
+docker build . -t registry.ucoder.ir/minecraft:$VERSION
+
+# push image
+docker push registry.ucoder.ir/minecraft:$VERSION
+
+# run
+mkdir -p /srv/minecraft/worlds
+docker run --restart=always -it --name minecraft -v /srv/minecraft/worlds:/srv/worlds -p 19132:19132/udp registry.ucoder.ir/minecraft:1.10.0.7
+
+
+# allow port through firewall
+sudo firewall-cmd --reload
+sudo firewall-cmd --permanent --add-port=19132/udp
+sudo firewall-cmd --reload
+
+
+#‌ taking backup!
+##‌ use `truncate -s <bytes> <file>`
+save hold
+save query
+save resume
+------------------
+stop
+
+
+#
+# 0. PREPERATION
+#    ensure FTP‌ credentials are present
+#
+
+sudo nano /root/credentials.store
+...............................
+FTP_USER="blah"
+FTP_PWD="blahblah"
+FTP_HOST="blah.com"
+................................
+
+
+#
+# 1. issue `save hold` command
+# 
+
+#
+# 2. issue `save query` command until it returns list of file
+#
+
+#
+# 3. open another terminal, `sudo -i` and
+#    plug list of files into following command
+#
+
+export FILES="Arcane/db/000684.ldb:2109734, Arcane/db/CURRENT:16, Arcane/db/000685.ldb:2147064, Arcane/db/000688.ldb:825963, Arcane/db/MANIFEST-000147:27899, Arcane/db/000682.log:3200985, Arcane/db/000686.ldb:2128104, Arcane/db/000687.ldb:2150460, Arcane/level.dat:1981, Arcane/level.dat_old:1981, Arcane/levelname.txt:6"
+
+#
+# 4. run following command to copy all files
+#
+
+export DESTINATION=/home/arcana/minecraft-backup
+export DESTINATION=/srv/minecraft-backup
+export SOURCE=/srv/minecraft/worlds
+
+rm -rfv $DESTINATION/temp
+mkdir -p $DESTINATION/temp
+
+for f in $FILES; do \
+  export FILE="`echo $f | sed 's|:.*$||g'`"; \
+  export SIZE="`echo $f | sed 's|^[^:]*:||g' | sed 's|,$||g'`"; \
+  export DIR_NAME=`dirname $FILE`; \
+  echo copying $SOURCE/$FILE of size $SIZE to $DESTINATION/temp/$FILE; \
+  mkdir -p $DESTINATION/temp/$DIR_NAME; \
+  cp -v $SOURCE/$FILE $DESTINATION/temp/$FILE; \
+  truncate -s $SIZE $DESTINATION/temp/$FILE; \
+done
+
+#
+# 5. issue `save resume` command
+#
+
+source /root/credentials.store
+
+OUTPUT="`date +'%Y-%m-%d-%H-%M-%S'`.tar.xz"
+pushd $DESTINATION/temp
+tar -cvJf $DESTINATION/$OUTPUT .
+popd
+mkdir -p /usr/share/nginx/files.ucoder.ir/minecraft-backups/
+cp $DESTINATION/$OUTPUT /usr/share/nginx/files.ucoder.ir/minecraft-backups/
+echo "
+ verbose
+ open ${FTP_HOST}
+ user ${FTP_USER} ${FTP_PWD}
+ mkdir backups
+ cd backups
+ mkdir minecraft
+ cd minecraft
+ bin
+ put $DESTINATION/$OUTPUT
+ bye
+" | ftp -n
+
+
+
+
+----------------------------------------------------------------------
+
+EXTRACT_SOURCE="/home/arcana/Downloads/minecraft-backups/2019-03-24-00-20-01.tar.xz"
+
+EXTRACT_DESTINATION="/srv/minecraft/worlds"
+mkdir -p $EXTRACT_DESTINATION
+pushd $EXTRACT_DESTINATION
+tar -xvJf $EXTRACT_SOURCE
+popd
+
+
+
+
+
+
+
+

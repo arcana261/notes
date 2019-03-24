@@ -291,6 +291,18 @@ systemd-resolve --status
 # view networkmanager config
 NetworkManager --print-config
 
+# fix nvidia driver issue
+sudo dpkg -r libnvidia-ifr1-390
+sudo dpkg -r libnvidia-ifr1-390:i386
+sudo dpkg -r nvidia-driver-390
+sudo apt-get clean
+sudo apt-get purge nvidia*
+sudo apt-get autoremove --purge
+sudo bash -c "for FILE in $(dpkg-divert --list | grep nvidia-340 | awk '{print $3}'); do dpkg-divert --remove $FILE; done"
+apt --fix-broken install
+sudo apt-get install nvidia-driver-390
+
+
 ######################################
 Setup Pantheon
 ######################################
@@ -303,6 +315,18 @@ sudo add-apt-repository ppa:philip.scott/elementary-tweaks
 sudo apt-get install elementary-theme elementary-icon-theme elementary-default-settings elementary-desktop elementary-tweaks
 
 ---------------------------------------------------------------------
+
+
+nvidia-xconfig --stereo=12
+
+
+sudo bash -c '
+    for OFFSET in $(grep -abio package /dev/mapper/vg2-lv3 | cut -d: -f 1); do
+        ((CLUSTER = OFFSET / 4096))
+        dd if=/dev/mapper/vg2-lv3 of=/tmp/recover2/$CLUSTER.txt bs=4096 skip=$CLUSTER count=1
+    don
+
+
 
 Dear people!
 
@@ -410,6 +434,11 @@ DNS=4.2.2.4 8.8.8.8
 #Cache=yes
 #DNSStubListener=yes
 ```
+
+
+
+
+
 
 But even still, resolved would pick my local router's DNS server simply because it responds a little faster! And I have no option at all to disable this.. No option to exclude it.. Here is journal log when I try to resolve `pornhub.com`. In this log, you can see that `192.168.2.1` is picked, which is hijacked by ISP! And I am doomed. Leaving me crying tears of blood every time I edit `resolv.conf` manually by hand.
 
