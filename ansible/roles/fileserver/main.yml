@@ -1,0 +1,6 @@
+- name: "Installing Required Packages"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - nginx
+
+

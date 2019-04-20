@@ -110,13 +110,13 @@ done
 
 #
 # 5. issue `save resume` command
-#
+# tar -cvJf $DESTINATION/$OUTPUT .
 
 source /root/credentials.store
 
 OUTPUT="`date +'%Y-%m-%d-%H-%M-%S'`.tar.xz"
 pushd $DESTINATION/temp
-tar -cvJf $DESTINATION/$OUTPUT .
+tar -cvf - . | xz -e9 - > $DESTINATION/$OUTPUT
 popd
 mkdir -p /usr/share/nginx/files.ucoder.ir/minecraft-backups/
 cp $DESTINATION/$OUTPUT /usr/share/nginx/files.ucoder.ir/minecraft-backups/
@@ -138,9 +138,9 @@ echo "
 
 ----------------------------------------------------------------------
 
-EXTRACT_SOURCE="/home/arcana/Downloads/minecraft-backups/2019-03-24-00-20-01.tar.xz"
+export EXTRACT_SOURCE="/home/arcana/Downloads/minecraft-backups/2019-03-24-00-20-01.tar.xz"
 
-EXTRACT_DESTINATION="/srv/minecraft/worlds"
+export EXTRACT_DESTINATION="/srv/minecraft/worlds"
 mkdir -p $EXTRACT_DESTINATION
 pushd $EXTRACT_DESTINATION
 tar -xvJf $EXTRACT_SOURCE
