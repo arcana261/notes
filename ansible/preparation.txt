@@ -24,6 +24,8 @@ PermitRootLogin prohibit-password
 ufw reload
 ufw allow <SSH‌ PORT>/tcp
 ufw allow 22/tcp
+ufw allow 443/tcp
+ufw allow 80/tcp
 ufw reload
 ..................................
 7. ensure ufw is up and running
@@ -77,7 +79,7 @@ sudo_pass
 ..................................
 15. install ansibles (add -K to force ask sudo pass)
 ..................................
-ansible-playbook --vault-id @prompt tools.yml
-ansible-playbook --vault-id @prompt prometheus.yml
-ansible-playbook --vault-id @prompt prometheus-revproxy.yml
+ansible-playbook -K --vault-id @prompt tools.yml
+ansible-playbook -K --vault-id @prompt prometheus.yml
+ansible-playbook -K --vault-id @prompt prometheus-revproxy.yml
 ..................................
