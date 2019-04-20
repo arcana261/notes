@@ -1,3 +1,8 @@
+[srv4:vars]
+ansible_become=yes  # use sudo 
+ansible_become_method=sudo 
+ansible_become_pass='{{ sudo_pass }}'
+
 [srv4]
 srv4.ucoder.ir
 

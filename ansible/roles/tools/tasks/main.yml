@@ -1,0 +1,7 @@
+- name: "Installing Good Packages"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - git
+  - vim
+  - nano
+  - ansible

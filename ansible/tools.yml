@@ -1,0 +1,5 @@
+- name: Install Tools
+  hosts: all
+  roles:
+    - tools
+  become: true
