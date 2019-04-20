@@ -1,0 +1,19 @@
+- hosts: all
+  roles:
+    - hispanico.nginx-revproxy
+    - hispanico.letsencrypt-nginx-revproxy
+  vars:
+    nginx_revproxy_sites:
+      prometheus.ucoder.ir:
+        domains:
+          - prometheus.ucoder.ir
+        upstreams:
+          - { backend_address: 127.0.0.1, backend_port: 9090 }
+        letsencrypt: true
+
+      grafana.ucoder.ir:
+        domains:
+          - grafana.ucoder.ir
+        upstreams:
+          - { backend_address: 127.0.0.1, backend_port: 3000 }
+        letsencrypt: true

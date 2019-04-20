@@ -7,3 +7,9 @@
 [submodule "ansible/roles/cloudalchemy.node-exporter"]
 	path = ansible/roles/cloudalchemy.node-exporter
 	url = https://github.com/cloudalchemy/ansible-node-exporter.git
+[submodule "ansible/roles/hispanico.letsencrypt-nginx-revproxy"]
+	path = ansible/roles/hispanico.letsencrypt-nginx-revproxy
+	url = https://github.com/hispanico/ansible-letsencrypt-nginx-revproxy.git
+[submodule "ansible/roles/hispanico.nginx-revproxy"]
+	path = ansible/roles/hispanico.nginx-revproxy
+	url = https://github.com/hispanico/ansible-nginx-revproxy.git

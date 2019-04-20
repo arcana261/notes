@@ -16,7 +16,7 @@
       node:
       - targets: []
         labels:
-          prometheus_web_external_url: "http://srv4.ucoder.ir:9090"
+          prometheus_web_external_url: "https://prometheus.ucoder.ir"
           prometheus_storage_retention: "7d"
           prometheus_targets:
             node:
