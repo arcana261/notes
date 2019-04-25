@@ -22,3 +22,6 @@
 [submodule "ansible/roles/geerlingguy.docker"]
 	path = ansible/roles/geerlingguy.docker
 	url = https://github.com/geerlingguy/ansible-role-docker.git
+[submodule "ansible/roles/nginx-exporter/files/nginx-lua-prometheus"]
+	path = ansible/roles/nginx-exporter/files/nginx-lua-prometheus
+	url = https://github.com/knyar/nginx-lua-prometheus.git

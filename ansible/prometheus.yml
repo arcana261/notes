@@ -74,3 +74,6 @@
       - dashboard_id: '4271'
         revision_id: '4'
         datasource: '{{ grafana_datasources.0.name }}'
+      - dashboard_id: '462'
+        revision_id: '1'
+        datasource: '{{ grafana_datasources.0.name }}'
