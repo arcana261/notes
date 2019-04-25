@@ -75,11 +75,16 @@ ansible-vault create group_vars/all/vault
 ..................................
 vault_grafana_password
 vault_influxdb_password
-sudo_pass
+ansible_sudo_pass
 ..................................
-15. install ansibles (add -K to force ask sudo pass)
+15. create vault password
+vim ~/vault
 ..................................
-ansible-playbook -K --vault-id @prompt tools.yml
-ansible-playbook -K --vault-id @prompt prometheus.yml
-ansible-playbook -K --vault-id @prompt prometheus-revproxy.yml
+<PASS>
+..................................
+16. install ansibles (add -K to force ask sudo pass)
+..................................
+ansible-playbook tools.yml
+ansible-playbook prometheus.yml
+ansible-playbook prometheus-revproxy.yml
 ..................................

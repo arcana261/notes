@@ -13,3 +13,12 @@
 [submodule "ansible/roles/hispanico.nginx-revproxy"]
 	path = ansible/roles/hispanico.nginx-revproxy
 	url = https://github.com/hispanico/ansible-nginx-revproxy.git
+[submodule "ansible/roles/bdellegrazie.nginx_exporter"]
+	path = ansible/roles/bdellegrazie.nginx_exporter
+	url = https://github.com/bdellegrazie/ansible-role-nginx_exporter.git
+[submodule "ansible/roles/geerlingguy.pip"]
+	path = ansible/roles/geerlingguy.pip
+	url = https://github.com/geerlingguy/ansible-role-pip.git
+[submodule "ansible/roles/geerlingguy.docker"]
+	path = ansible/roles/geerlingguy.docker
+	url = https://github.com/geerlingguy/ansible-role-docker.git

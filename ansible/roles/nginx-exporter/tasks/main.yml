@@ -1,0 +1,26 @@
+- name: "Installing nginx"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - nginx
+  notify:
+    - start_nginx
+
+- name: "Installing stub configuration"
+  copy:
+    src: ../files/stub_status.conf
+    dest: /etc/nginx/sites-available/stub_status.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - enable_config
+    - reload_nginx
+
+- name: "Start Nginx Exporter"
+  docker_container:
+    name: nginx_exporter
+    image: nginx/nginx-prometheus-exporter:0.3.0
+    state: started
+    restart_policy: always
+    network_mode: host
+    command: ["-nginx.scrape-uri", "http://127.0.0.1:3001/stub_status"]

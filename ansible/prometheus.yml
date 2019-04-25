@@ -6,6 +6,7 @@
     - node_exporter
 
 - hosts: all
+  name: Deploy prometheus
   roles:
   - cloudalchemy.prometheus
   become: true
@@ -21,12 +22,19 @@
       grafana:
         - targets:
           - "127.0.0.1:3000"
+      nginx:
+        - targets:
+          - "127.0.0.1:9113"
     prometheus_scrape_configs:
     - job_name: "prometheus"
       metrics_path: "/metrics"
       static_configs:
       - targets:
         - "127.0.0.1:9090"
+    - job_name: "nginx"
+      file_sd_configs:
+      - files:
+        - "/etc/prometheus/file_sd/nginx.yml"
     - job_name: "node"
       file_sd_configs:
       - files:

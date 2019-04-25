@@ -1,0 +1,16 @@
+- name: start_nginx
+  service: name=nginx state=started enabled=yes
+
+- name: enable_config
+  file:
+    src: /etc/nginx/sites-available/stub_status.conf
+    dest: /etc/nginx/sites-enabled/stub_status.conf
+    owner: root
+    group: root
+    mode: 0644
+    state: link
+  notify:
+    - reload_nginx
+
+- name: reload_nginx
+  service: name=nginx state=reloaded

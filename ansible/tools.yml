@@ -1,5 +1,10 @@
 - name: Install Tools
   hosts: all
+  vars:
+    pip_install_packages:
+      - name: docker
   roles:
     - tools
+    - geerlingguy.pip
+    - geerlingguy.docker
   become: true

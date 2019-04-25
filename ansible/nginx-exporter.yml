@@ -1,0 +1,5 @@
+- hosts: all
+  name: Deploy nginx exporter
+  become: true
+  roles:
+    - nginx-exporter
