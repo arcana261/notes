@@ -1,0 +1,142 @@
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+  register:
+    nginxinstalled
+
+- name: Install ssl-cert
+  apt:
+    name: ssl-cert
+    state: present
+
+- name: Install python-passlib for Python 3 hosts
+  apt:
+    name:
+        - "python3-passlib"
+    state: present
+  when:
+    - ansible_python['version']['major'] == 3
+
+- name: Install python-passlib for Python 2 hosts
+  apt:
+    name:
+        - "python-passlib"
+    state: present
+  when:
+    - ansible_python['version']['major'] == 2
+
+- name: Get Active Sites
+  command: ls -1 /etc/nginx/sites-enabled/
+  changed_when: "active.stdout_lines != nginx_certbot_domains.keys()|sort()"
+  check_mode: no
+  register: active
+
+- name: De-activate Sites
+  file:
+    path: /etc/nginx/sites-enabled/{{ item }}
+    state: absent
+  with_items: "{{ active.stdout_lines }}"
+  notify: Reload Nginx
+  when:
+    - item in nginx_certbot_domains
+
+- name: Create WebRoot sites
+  file:
+    dest: /var/www/{{ item.key }}/.well-known
+    mode: 0775
+    state: directory
+    owner: www-data
+    group: www-data
+  with_dict: "{{ nginx_certbot_domains }}"
+  notify: Reload Nginx
+  when:
+    - nginxinstalled is success
+
+- name: WebRoot Permissions Sites
+  file:
+    dest: /var/www/{{ item.key }}
+    mode: 0775
+    state: directory
+    owner: www-data
+    group: www-data
+    recurse: yes
+  with_dict: "{{ nginx_certbot_domains }}"
+  notify: Reload Nginx
+  when:
+    - nginxinstalled is success
+
+- name: Get WebRoot Sites
+  command: ls -1 /var/www/
+  changed_when: "webroot.stdout_lines != nginx_certbot_domains.keys()|sort()"
+  check_mode: no
+  register: webroot
+
+- name: Remove WebRoot Sites
+  file:
+    path: /var/www/{{ item }}/
+    state: absent
+  with_items: "{{ webroot.stdout_lines }}"
+  notify: Reload Nginx
+  when:
+    - item not in nginx_certbot_domains
+
+- name: Install certbot
+  get_url:
+    url: https://dl.eff.org/certbot-auto
+    dest: /usr/bin/certbot-auto
+    mode: "a+x"
+
+- name: Enable sites for ACME protocol
+  block:
+    - name: Add Https Site Config
+      template:
+        src: reverseproxy_ssl.conf.j2
+        dest: /etc/nginx/sites-available/{{ item.key }}.acme.conf
+        owner: root
+        group: root
+      with_dict: "{{ nginx_certbot_domains }}"
+      register: siteconfig
+
+    - name: Enable Site Config
+      file:
+        src: /etc/nginx/sites-available/{{ item.key }}.acme.conf
+        dest: /etc/nginx/sites-enabled/{{ item.key }}
+        state: link
+      with_dict: "{{ nginx_certbot_domains }}"
+      register: site_enabled
+      when:
+        - siteconfig is success
+        - not ansible_check_mode
+
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+      when:
+        - site_enabled is success
+  when:
+    - active.changed
+    - nginxinstalled is success
+
+- name: Generate certs (first time)
+  command: certbot-auto certonly --webroot -w /var/www/{{ item.key }} -d {{ item.value.domains | join(' -d ') }} --email {{ item.value.letsencrypt_email }} --non-interactive --cert-name {{ item.key }} --agree-tos creates=/etc/letsencrypt/live/{{ item.key }}/fullchain.pem
+  with_dict: "{{ nginx_certbot_domains }}"
+
+- name: Insert cert-bot renew in crontab
+  cron:
+    name: "cert-bot renew"
+    job: 'certbot-auto renew --post-hook "systemctl reload nginx" >> /var/log/letsencrypt/letsencrypt-update.log 2>&1'
+    hour: 3
+    minute: 30
+    weekday: 1
+
+- name: Re-activate Sites
+  file:
+    src: /etc/nginx/sites-available/{{ item.key }}.conf
+    dest: /etc/nginx/sites-enabled/{{ item.key }}
+    state: link
+  with_items: "{{ active.stdout_lines }}"
+  notify: Reload Nginx
+  when:
+    - item in nginx_certbot_domains

@@ -1,0 +1,41 @@
+- name: Start Registry Container
+  docker_container:
+    name: registry.ucoder.ir
+    image: registry
+    restart_policy: always
+    pull: true
+    state: started
+    published_ports:
+    - "5000:5000"
+    env:
+      SETTINGS_FLAVOR: local
+
+- name: "Installing nginx"
+  apt: pkg={{ item }} state=present
+  with_items:
+  - nginx
+  notify:
+    - start_nginx
+
+- name: "Update nginx"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - nginx
+  notify:
+    - restart_nginx
+
+- name: Update Site Config
+  template:
+    src=registry.conf.j2
+    dest=/etc/nginx/sites-available/{{ registry_domain }}.conf
+    owner=root
+    group=root
+  notify:
+    - reload_nginx
+
+- name: Activate Sites
+  file:
+    src: /etc/nginx/sites-available/{{ registry_domain }}.conf
+    dest: /etc/nginx/sites-enabled/{{ registry_domain }}
+    state: link
+  notify: reload_nginx

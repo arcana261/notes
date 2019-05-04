@@ -1,9 +1,16 @@
 - name: "Installing nginx"
-  apt: pkg={{ item }} state=latest
+  apt: pkg={{ item }} state=present
   with_items:
   - nginx
   notify:
     - start_nginx
+
+- name: "Update nginx"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - nginx
+  notify:
+    - restart_nginx
 
 - name: "Installing lua for nginx"
   apt: pkg={{ item }} state=latest

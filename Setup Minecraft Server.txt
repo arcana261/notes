@@ -23,7 +23,10 @@ RUN cd /srv && \
     sed -i 's/level-name=.*/level-name=Arcane/g' /srv/server.properties && \
     sed -i 's/level-seed=.*/level-seed=mikata/g' /srv/server.properties && \
     sed -i 's/server-port=.*/server-port=19132/g' /srv/server.properties && \
-    sed -i 's/difficulty=.*/difficulty=normal/g' /srv/server.properties
+    sed -i 's/tick-distance=.*/tick-distance=4/g' /srv/server.properties && \
+    sed -i 's/white-list=.*/white-list=true/g' /srv/server.properties && \
+    sed -i 's/difficulty=.*/difficulty=normal/g' /srv/server.properties && \
+    sed -i 's/.*/[{"ignoresPlayerLimit":false,"name":"Arcana261"}]/g' /srv/whitelist.json
 
 ENV LD_LIBRARY_PATH /srv
 EXPOSE 19132/udp
@@ -41,7 +44,7 @@ docker push registry.ucoder.ir/minecraft:$VERSION
 
 # run
 mkdir -p /srv/minecraft/worlds
-docker run --restart=always -it --name minecraft -v /srv/minecraft/worlds:/srv/worlds -p 19132:19132/udp registry.ucoder.ir/minecraft:1.10.0.7
+docker run --restart=always -it --name minecraft -v /srv/minecraft/worlds:/srv/worlds -p 19132:19132/udp registry.ucoder.ir/minecraft:1.11.0.23
 
 
 # allow port through firewall
@@ -52,6 +55,7 @@ sudo firewall-cmd --reload
 
 #‌ taking backup!
 ##‌ use `truncate -s <bytes> <file>`
+## xuid: 2535442839829876
 save hold
 save query
 save resume

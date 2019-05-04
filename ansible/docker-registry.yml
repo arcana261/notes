@@ -1,0 +1,20 @@
+- hosts: all
+
+  vars:
+    pip_install_packages:
+      - name: docker
+      - name: docker-compose
+    registry_domain: registry.ucoder.ir
+    registry_domain_email: info@ucoder.ir
+    nginx_certbot_domains:
+      registry.ucoder.ir:
+        domains:
+        - registry.ucoder.ir
+        letsencrypt_email: info@ucoder.ir
+
+  become: true
+  roles:
+    #- geerlingguy.pip
+    #- geerlingguy.docker
+    #- nginx_certbot
+    - docker-registry
