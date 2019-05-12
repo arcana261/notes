@@ -14,7 +14,7 @@
 
   become: true
   roles:
-    #- geerlingguy.pip
-    #- geerlingguy.docker
-    #- nginx_certbot
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - nginx_certbot
     - docker-registry

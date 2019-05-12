@@ -87,4 +87,6 @@ vim ~/vault
 ansible-playbook tools.yml
 ansible-playbook prometheus.yml
 ansible-playbook prometheus-revproxy.yml
+ansible-playbook nginx-exporter.yml
+ansible-playbook docker-registry.yml
 ..................................

@@ -1,0 +1,60 @@
+- name: Install python-passlib for Python 3 hosts
+  apt:
+    name:
+        - "python3-passlib"
+    state: present
+  when:
+    - ansible_python['version']['major'] == 3
+
+- name: Install python-passlib for Python 2 hosts
+  apt:
+    name:
+        - "python-passlib"
+    state: present
+  when:
+    - ansible_python['version']['major'] == 2
+
+- name: "Creating htpasswd file"
+  htpasswd:
+    path: /etc/nginx/conf.d/{{ fileserver_domain }}.htpasswd
+    name: "{{ fileserver_username }}"
+    password: "{{ fileserver_password }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "Creating root directory"
+  shell: creates=/usr/share/nginx/{{ fileserver_domain }} warn=no mkdir -p /usr/share/nginx/{{ fileserver_domain }}
+
+- name: "Creating private directory"
+  shell: creates=/usr/share/nginx/{{ fileserver_domain }}/private warn=no mkdir -p /usr/share/nginx/{{ fileserver_domain }}/private
+
+- name: "Installing nginx"
+  apt: pkg={{ item }} state=present
+  with_items:
+  - nginx
+  notify:
+    - start_nginx
+
+- name: "Update nginx"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - nginx
+  notify:
+    - restart_nginx
+
+- name: Update Site Config
+  template:
+    src=fileserver.conf.j2
+    dest=/etc/nginx/sites-available/{{ fileserver_domain }}.conf
+    owner=root
+    group=root
+  notify:
+    - reload_nginx
+
+- name: Activate Sites
+  file:
+    src: /etc/nginx/sites-available/{{ fileserver_domain }}.conf
+    dest: /etc/nginx/sites-enabled/{{ fileserver_domain }}
+    state: link
+  notify: reload_nginx
