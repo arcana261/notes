@@ -1,0 +1,24 @@
+FROM ubuntu:18.04
+
+COPY server.zip /srv
+RUN cd /srv && \
+    apt-get update && \
+    apt-get install -y unzip libcurl4-openssl-dev && \
+    apt-get clean && \
+    unzip -d . server.zip && \
+    rm -f server.zip && \
+    sed -i 's/server-name=.*/server-name=Arcane/g' /srv/server.properties && \
+    sed -i 's/level-name=.*/level-name=Arcane/g' /srv/server.properties && \
+    sed -i 's/level-seed=.*/level-seed=mikata/g' /srv/server.properties && \
+    sed -i 's/server-port=.*/server-port=19132/g' /srv/server.properties && \
+    sed -i 's/tick-distance=.*/tick-distance=4/g' /srv/server.properties && \
+    sed -i 's/white-list=.*/white-list=true/g' /srv/server.properties && \
+    sed -i 's/difficulty=.*/difficulty=normal/g' /srv/server.properties && \
+    sed -i 's/.*/[{"ignoresPlayerLimit":false,"name":"Arcana261"}]/g' /srv/whitelist.json
+
+ENV LD_LIBRARY_PATH /srv
+EXPOSE 19132/udp
+VOLUME /srv/worlds
+WORKDIR /srv
+
+CMD ["/srv/bedrock_server"]

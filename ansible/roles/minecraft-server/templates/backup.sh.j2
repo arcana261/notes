@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 # global definitions
-DESTINATION=/home/arcana/minecraft-backup
-#export DESTINATION=/srv/minecraft-backup
+DESTINATION=/srv/minecraft/backup
 SOURCE=/srv/minecraft/worlds
-CONTAINER=minecraft
+CONTAINER=minecraft.ucoder.ir
 
 # vars
 BASH=`which bash`
@@ -72,4 +71,22 @@ rm -fv ${DESTINATION}/temp/logs.txt
 pushd $DESTINATION/temp
 tar -cvf - . | xz -e9 - > $DESTINATION/$OUTPUT
 popd
+
+# copy backup to fileserver
+mkdir -p /usr/share/nginx/files.ucoder.ir/minecraft-backups/
+cp $DESTINATION/$OUTPUT /usr/share/nginx/files.ucoder.ir/minecraft-backups/
+
+#‌ copy backup to ftp server
+echo "
+ verbose
+ open {{ ftp_host }}
+ user {{ ftp_username }} {{ ftp_password }}
+ mkdir backups
+ cd backups
+ mkdir minecraft
+ cd minecraft
+ bin
+ put $DESTINATION/$OUTPUT
+ bye
+" | ftp -n
 

@@ -1,0 +1,14 @@
+- hosts: all
+
+  vars:
+    pip_install_packages:
+      - name: docker
+      - name: docker-compose
+
+    minecraft_version: 1.11.2.1
+
+  become: true
+  roles:
+    #- geerlingguy.pip
+    #- geerlingguy.docker
+    - minecraft-server

@@ -44,7 +44,7 @@ docker push registry.ucoder.ir/minecraft:$VERSION
 
 # run
 mkdir -p /srv/minecraft/worlds
-docker run --restart=always -it --name minecraft -v /srv/minecraft/worlds:/srv/worlds -p 19132:19132/udp registry.ucoder.ir/minecraft:1.11.0.23
+docker run --restart=always -id --name minecraft -v /srv/minecraft/worlds:/srv/worlds -p 19132:19132/udp registry.ucoder.ir/minecraft:1.11.0.23
 
 
 # allow port through firewall
