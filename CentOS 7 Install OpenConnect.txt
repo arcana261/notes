@@ -41,6 +41,9 @@ sudo certtool --generate-certificate --load-privkey server-key.pem \
 sudo vim ocserv.conf
 .............................
 >>>
+default-domain = ocs.ucoder.ir
+
+>>>
 tcp-port = 4430
 udp-port = 4430
 
