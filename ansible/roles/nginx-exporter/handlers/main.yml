@@ -1,0 +1,19 @@
+- name: start_nginx
+  service: name=nginx state=started enabled=yes
+
+- name: restart_nginx
+  service: name=nginx state=restarted
+
+- name: reload_nginx
+  service: name=nginx state=reloaded
+
+- name: enable_config
+  file:
+    src: /etc/nginx/sites-available/prometheus.conf
+    dest: /etc/nginx/sites-enabled/prometheus.conf
+    owner: root
+    group: root
+    mode: 0644
+    state: link
+  notify:
+    - reload_nginx

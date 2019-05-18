@@ -23,7 +23,10 @@ RUN cd /srv && \
     sed -i 's/level-name=.*/level-name=Arcane/g' /srv/server.properties && \
     sed -i 's/level-seed=.*/level-seed=mikata/g' /srv/server.properties && \
     sed -i 's/server-port=.*/server-port=19132/g' /srv/server.properties && \
-    sed -i 's/difficulty=.*/difficulty=normal/g' /srv/server.properties
+    sed -i 's/tick-distance=.*/tick-distance=4/g' /srv/server.properties && \
+    sed -i 's/white-list=.*/white-list=true/g' /srv/server.properties && \
+    sed -i 's/difficulty=.*/difficulty=normal/g' /srv/server.properties && \
+    sed -i 's/.*/[{"ignoresPlayerLimit":false,"name":"Arcana261"}]/g' /srv/whitelist.json
 
 ENV LD_LIBRARY_PATH /srv
 EXPOSE 19132/udp
@@ -41,7 +44,7 @@ docker push registry.ucoder.ir/minecraft:$VERSION
 
 # run
 mkdir -p /srv/minecraft/worlds
-docker run --restart=always -it --name minecraft -v /srv/minecraft/worlds:/srv/worlds -p 19132:19132/udp registry.ucoder.ir/minecraft:1.10.0.7
+docker run --restart=always -id --name minecraft -v /srv/minecraft/worlds:/srv/worlds -p 19132:19132/udp registry.ucoder.ir/minecraft:1.11.0.23
 
 
 # allow port through firewall
@@ -52,6 +55,7 @@ sudo firewall-cmd --reload
 
 #‌ taking backup!
 ##‌ use `truncate -s <bytes> <file>`
+## xuid: 2535442839829876
 save hold
 save query
 save resume
@@ -110,13 +114,13 @@ done
 
 #
 # 5. issue `save resume` command
-#
+# tar -cvJf $DESTINATION/$OUTPUT .
 
 source /root/credentials.store
 
 OUTPUT="`date +'%Y-%m-%d-%H-%M-%S'`.tar.xz"
 pushd $DESTINATION/temp
-tar -cvJf $DESTINATION/$OUTPUT .
+tar -cvf - . | xz -e9 - > $DESTINATION/$OUTPUT
 popd
 mkdir -p /usr/share/nginx/files.ucoder.ir/minecraft-backups/
 cp $DESTINATION/$OUTPUT /usr/share/nginx/files.ucoder.ir/minecraft-backups/
@@ -138,9 +142,9 @@ echo "
 
 ----------------------------------------------------------------------
 
-EXTRACT_SOURCE="/home/arcana/Downloads/minecraft-backups/2019-03-24-00-20-01.tar.xz"
+export EXTRACT_SOURCE="/home/arcana/Downloads/minecraft-backups/2019-03-24-00-20-01.tar.xz"
 
-EXTRACT_DESTINATION="/srv/minecraft/worlds"
+export EXTRACT_DESTINATION="/srv/minecraft/worlds"
 mkdir -p $EXTRACT_DESTINATION
 pushd $EXTRACT_DESTINATION
 tar -xvJf $EXTRACT_SOURCE

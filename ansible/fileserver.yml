@@ -1,0 +1,15 @@
+- hosts: all
+
+  vars:
+    fileserver_domain: files.ucoder.ir
+    fileserver_domain_email: info@ucoder.ir
+    nginx_certbot_domains:
+      files.ucoder.ir:
+        domains:
+        - files.ucoder.ir
+        letsencrypt_email: info@ucoder.ir
+
+  become: true
+  roles:
+    - nginx_certbot
+    - fileserver

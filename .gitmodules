@@ -1,0 +1,27 @@
+[submodule "ansible/roles/cloudalchemy.prometheus"]
+	path = ansible/roles/cloudalchemy.prometheus
+	url = https://github.com/cloudalchemy/ansible-prometheus.git
+[submodule "ansible/roles/cloudalchemy.graphana"]
+	path = ansible/roles/cloudalchemy.grafana
+	url = https://github.com/cloudalchemy/ansible-grafana.git
+[submodule "ansible/roles/cloudalchemy.node-exporter"]
+	path = ansible/roles/cloudalchemy.node-exporter
+	url = https://github.com/cloudalchemy/ansible-node-exporter.git
+[submodule "ansible/roles/hispanico.letsencrypt-nginx-revproxy"]
+	path = ansible/roles/hispanico.letsencrypt-nginx-revproxy
+	url = https://github.com/hispanico/ansible-letsencrypt-nginx-revproxy.git
+[submodule "ansible/roles/hispanico.nginx-revproxy"]
+	path = ansible/roles/hispanico.nginx-revproxy
+	url = https://github.com/hispanico/ansible-nginx-revproxy.git
+[submodule "ansible/roles/bdellegrazie.nginx_exporter"]
+	path = ansible/roles/bdellegrazie.nginx_exporter
+	url = https://github.com/bdellegrazie/ansible-role-nginx_exporter.git
+[submodule "ansible/roles/geerlingguy.pip"]
+	path = ansible/roles/geerlingguy.pip
+	url = https://github.com/geerlingguy/ansible-role-pip.git
+[submodule "ansible/roles/geerlingguy.docker"]
+	path = ansible/roles/geerlingguy.docker
+	url = https://github.com/geerlingguy/ansible-role-docker.git
+[submodule "ansible/roles/nginx-exporter/files/nginx-lua-prometheus"]
+	path = ansible/roles/nginx-exporter/files/nginx-lua-prometheus
+	url = https://github.com/knyar/nginx-lua-prometheus.git

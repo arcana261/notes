@@ -1,0 +1,55 @@
+- name: Ensure /srv/minecraft/docker exists
+  shell: creates=/srv/minecraft/docker warn=no mkdir -p /srv/minecraft/docker
+
+- name: Ensure /srv/minecraft/bin exists
+  shell: creates=/srv/minecraft/bin warn=no mkdir -p /srv/minecraft/bin
+
+- name: Copy Server ZipFile to Docker Context
+  shell: cp -f /usr/share/nginx/files.ucoder.ir/private/minecraft-server/bedrock-server-{{ minecraft_version }}.zip /srv/minecraft/docker/server.zip
+
+- name: Generate Dockerfile
+  template:
+    src: Dockerfile.j2
+    dest: /srv/minecraft/docker/Dockerfile
+    owner: root
+    group: root
+
+- name: Build Docker Image
+  docker_image:
+    path: /srv/minecraft/docker
+    name: registry.ucoder.ir/minecraft-server
+    tag: v{{ minecraft_version }}
+    push: yes
+
+- name: Start Server Container
+  docker_container:
+    name: minecraft.ucoder.ir
+    image: registry.ucoder.ir/minecraft-server:v{{ minecraft_version }}
+    restart_policy: always
+    pull: true
+    state: started
+    interactive: true
+    published_ports:
+    - "19132:19132/udp"
+    volumes:
+    - "/srv/minecraft/worlds:/srv/worlds"
+
+- name: Allow port through firewall
+  ufw:
+    rule: allow
+    port: 19132
+    proto: udp
+
+- name: Make backup shell script
+  template:
+    src: backup.sh.j2
+    dest: /srv/minecraft/bin/backup.sh
+    owner: root
+    group: root
+    mode: 755
+
+- name: Create CronJob for taking backups
+  cron:
+    name: "minecraft-backup"
+    job: '/bin/bash /src/minecraft/bin/backup.sh'
+    hour: '*/12'

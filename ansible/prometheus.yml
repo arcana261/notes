@@ -1,0 +1,79 @@
+- name: Deploy node_exporter
+  hosts: all
+  roles:
+    - cloudalchemy.node-exporter
+  tags:
+    - node_exporter
+
+- hosts: all
+  name: Deploy prometheus
+  roles:
+  - cloudalchemy.prometheus
+  become: true
+  tags:
+    - prometheus
+  vars:
+    prometheus_web_external_url: "https://prometheus.ucoder.ir"
+    prometheus_storage_retention: "7d"
+    prometheus_targets:
+      node:
+        - targets:
+            - "127.0.0.1:9100"
+      grafana:
+        - targets:
+          - "127.0.0.1:3000"
+      nginx:
+        - targets:
+          - "127.0.0.1:9113"
+    prometheus_scrape_configs:
+    - job_name: "prometheus"
+      metrics_path: "/metrics"
+      static_configs:
+      - targets:
+        - "127.0.0.1:9090"
+    - job_name: "nginx"
+      file_sd_configs:
+      - files:
+        - "/etc/prometheus/file_sd/nginx.yml"
+    - job_name: "node"
+      file_sd_configs:
+      - files:
+        - "/etc/prometheus/file_sd/node.yml"
+    - job_name: "grafana"
+      file_sd_configs:
+      - files:
+        - "/etc/prometheus/file_sd/grafana.yml"
+
+- name: Deploy grafana
+  hosts: all
+  roles:
+    - cloudalchemy.grafana
+  tags:
+    - grafana
+  vars:
+    grafana_security:
+      admin_user: admin
+      admin_password: "{{ vault_grafana_password }}"
+    grafana_auth:
+      anonymous:
+        org_name: "Main Org."
+        org_role: Viewer
+    grafana_datasources:
+      - name: "Prometheus"
+        type: "prometheus"
+        access: "proxy"
+        url: "http://127.0.0.1:9090"
+        isDefault: true
+    grafana_dashboards:
+      - dashboard_id: '1860'
+        revision_id: '12'
+        datasource: '{{ grafana_datasources.0.name }}'
+      - dashboard_id: '3662'
+        revision_id: '2'
+        datasource: '{{ grafana_datasources.0.name }}'
+      - dashboard_id: '4271'
+        revision_id: '4'
+        datasource: '{{ grafana_datasources.0.name }}'
+      - dashboard_id: '462'
+        revision_id: '1'
+        datasource: '{{ grafana_datasources.0.name }}'

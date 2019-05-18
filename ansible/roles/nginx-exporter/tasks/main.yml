@@ -1,0 +1,44 @@
+- name: "Installing nginx"
+  apt: pkg={{ item }} state=present
+  with_items:
+  - nginx
+  notify:
+    - start_nginx
+
+- name: "Update nginx"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - nginx
+  notify:
+    - restart_nginx
+
+- name: "Installing lua for nginx"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - libnginx-mod-http-lua
+  notify:
+    - restart_nginx
+
+- name: "Ensuring /etc/nginx/lua exists"
+  shell: creates=/etc/nginx/lua warn=no mkdir -p /etc/nginx/lua
+
+- name: "Installing prometheus exporter lua package"
+  copy:
+    src: ../files/nginx-lua-prometheus/prometheus.lua
+    dest: /etc/nginx/lua/prometheus.lua
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload_nginx
+
+- name: "Installing metric configuration"
+  copy:
+    src: ../files/prometheus.conf
+    dest: /etc/nginx/sites-available/prometheus.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload_nginx
+    - enable_config
