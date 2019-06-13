@@ -1,0 +1,37 @@
+sudo vim /usr/lib/ssl/openssl.cnf
+..........................................
+[ CA_default ]
+dir = .
+
+[ usr_cert ]
+basicConstraints=CA:FALSE
+..........................................
+
+# goto cert dir
+mkdir -p ~/Documents/cert
+cd ~/Documents/cert
+
+# setup
+mkdir {private,newcerts}
+touch index.txt
+echo 00 > serial
+
+# issue CA private key
+openssl req -new -newkey rsa:4096 -nodes -out private/ca.csr -keyout private/cakey.pem
+# Sign CA self-signed certificate
+openssl x509 -trustout -signkey private/cakey.pem -days 3650 -req -in private/ca.csr -out cacert.pem
+
+# create and sign certificate for blah.blah.com
+mkdir blah.blah.com
+openssl genrsa -out blah.blah.com/blah.key 4096
+openssl req -new -key blah.blah.com/key.key -out blah.blah.com/blah.csr
+openssl ca -in blah.blah.com/blah.csr -out blah.blah.com/blah.cer
+
+# check verification
+openssl verify -CAfile cacert.pem blah.blah.com/blah.cer
+
+
+openssl crl2pkcs7 -nocrl -certfile chain.pem | openssl pkcs7 -print_certs -noout 
+
+openssl s_client -CAfile cacert.pem  -connect 127.0.0.1:443
+
