@@ -1,0 +1,31 @@
+server {
+   listen         80;
+   listen    [::]:80;
+   server_name    {{ blog_domain }} {{ blog_subdomains | join(' ') }};
+   location / {
+     return         301 https://$server_name$request_uri;
+   }
+
+   access_log /var/log/nginx/{{ blog_domain }}_access.log;
+   error_log /var/log/nginx/{{ blog_domain }}_error.log error;
+}
+
+server {
+   listen        444 ssl;
+   listen   [::]:444 ssl;
+   server_name {{ blog_domain }} {{ blog_subdomains | join(' ') }};
+
+   access_log /var/log/nginx/{{ blog_domain }}_access.log;
+   error_log /var/log/nginx/{{ blog_domain }}_error.log error;
+
+   ssl on;
+   ssl_certificate /etc/letsencrypt/live/{{ blog_domain }}/fullchain.pem;
+   ssl_certificate_key /etc/letsencrypt/live/{{ blog_domain }}/privkey.pem;
+   ssl_session_timeout 5m;
+   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+   ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+   ssl_prefer_server_ciphers on;
+   ssl_session_cache shared:SSL:10m;
+   
+   root /usr/share/nginx/{{ blog_domain }}/public;
+}
