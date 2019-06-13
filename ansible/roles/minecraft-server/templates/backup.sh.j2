@@ -77,8 +77,11 @@ mkdir -p /usr/share/nginx/files.ucoder.ir/minecraft-backups/
 cp $DESTINATION/$OUTPUT /usr/share/nginx/files.ucoder.ir/minecraft-backups/
 
 #‌ copy backup to ftp server
+pushd $DESTINATION
+
 echo "
  verbose
+ passive
  open {{ ftp_host }}
  user {{ ftp_username }} {{ ftp_password }}
  mkdir backups
@@ -86,7 +89,15 @@ echo "
  mkdir minecraft
  cd minecraft
  bin
- put $DESTINATION/$OUTPUT
+ put $OUTPUT
  bye
 " | ftp -n
 
+popd
+
+# remove output file
+rm -f $DESTINATION/$OUTPUT
+
+# kill all remaining processes
+ps aux | grep "docker attach" | awk '{print $2}' | xargs -n 1 kill -9
+ps aux | grep "docker logs" | awk '{print $2}' | xargs -n 1 kill -9

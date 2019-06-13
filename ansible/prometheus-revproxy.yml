@@ -1,14 +1,21 @@
 - hosts: all
   roles:
-    - hispanico.nginx-revproxy
-    - hispanico.letsencrypt-nginx-revproxy
+    - nginx_certbot
+    - nginx_revproxy
   become: true
   vars:
-    nginx_revproxy_sites:
-      default:
-          ssl: false
-          letsencrypt: false
+    nginx_certbot_domains:
+      prometheus.ucoder.ir:
+        domains:
+        - prometheus.ucoder.ir
+        letsencrypt_email: info@ucoder.ir
 
+      grafana.ucoder.ir:
+        domains:
+        - grafana.ucoder.ir
+        letsencrypt_email: info@ucoder.ir
+
+    nginx_revproxy_sites:
       prometheus.ucoder.ir:
         domains:
           - prometheus.ucoder.ir
@@ -16,7 +23,6 @@
           - { backend_address: 127.0.0.1, backend_port: 9090 }
         ssl: true
         letsencrypt: true
-        letsencrypt_email: 'info@ucoder.ir'
 
       grafana.ucoder.ir:
         domains:
@@ -25,4 +31,3 @@
           - { backend_address: 127.0.0.1, backend_port: 3000 }
         ssl: true
         letsencrypt: true
-        letsencrypt_email: 'info@ucoder.ir'

@@ -76,6 +76,11 @@ ansible-vault create group_vars/all/vault
 vault_grafana_password
 vault_influxdb_password
 ansible_sudo_pass
+fileserver_username
+fileserver_password
+ftp_username
+ftp_password
+ftp_host
 ..................................
 15. create vault password
 vim ~/vault
@@ -85,8 +90,11 @@ vim ~/vault
 16. install ansibles (add -K to force ask sudo pass)
 ..................................
 ansible-playbook tools.yml
+ansible-playbook sniproxy.yml
 ansible-playbook prometheus.yml
 ansible-playbook prometheus-revproxy.yml
 ansible-playbook nginx-exporter.yml
 ansible-playbook docker-registry.yml
+ansible-playbook fileserver.yml
+ansible-playbook minecraft-server.yml
 ..................................

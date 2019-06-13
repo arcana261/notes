@@ -1,0 +1,34 @@
+- name: "Installing nginx"
+  apt: pkg={{ item }} state=present
+  with_items:
+  - nginx
+  notify:
+    - start_nginx
+
+- name: "Update nginx"
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - nginx
+  notify:
+    - restart_nginx
+
+- name: Update Site Config
+  template:
+    src=letsencrypt.conf.j2
+    dest=/etc/nginx/sites-available/{{ item.key }}.conf
+    owner=root
+    group=root
+    mode=0644
+  with_dict: "{{ nginx_revproxy_sites }}"
+  when:
+    - item.value.letsencrypt 
+  notify:
+    - reload_nginx
+
+- name: Activate Sites
+  file:
+    src: /etc/nginx/sites-available/{{ item.key }}.conf
+    dest: /etc/nginx/sites-enabled/{{ item.key }}
+    state: link
+  with_dict: "{{ nginx_revproxy_sites }}"
+  notify: reload_nginx
