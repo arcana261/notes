@@ -32,3 +32,13 @@
     state: link
   with_dict: "{{ nginx_revproxy_sites }}"
   notify: reload_nginx
+
+- name: Enable Sites in sniproxy
+  lineinfile:
+    path: /etc/sniproxy.conf
+    state: present
+    insertafter: '## ADD ENTRIES HERE ##'
+    line: '{{ item.key }} 127.0.0.1:444'
+    regexp: '^{{ item.key }} 127.0.0.1:444'
+  with_dict: "{{ nginx_revproxy_sites }}"
+  notify: reload_sniproxy

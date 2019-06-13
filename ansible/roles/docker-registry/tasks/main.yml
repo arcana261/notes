@@ -39,3 +39,12 @@
     dest: /etc/nginx/sites-enabled/{{ registry_domain }}
     state: link
   notify: reload_nginx
+
+- name: Enable Sites in sniproxy
+  lineinfile:
+    path: /etc/sniproxy.conf
+    state: present
+    insertafter: '## ADD ENTRIES HERE ##'
+    line: '{{ registry_domain }} 127.0.0.1:444'
+    regexp: '^{{ registry_domain }} 127.0.0.1:444'
+  notify: reload_sniproxy
