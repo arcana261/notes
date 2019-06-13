@@ -1,0 +1,14 @@
+- name: update dependencies
+  shell: go get -v -u ./
+  args:
+    chdir: '{{ gopath.stdout_lines[0] }}/src/github.com/arcana261/ucoder-webhook'
+  notify: restart
+
+- name: build
+  shell: go build -o /usr/local/bin/ucoder-webhook
+  args:
+    chdir: '{{ gopath.stdout_lines[0] }}/src/github.com/arcana261/ucoder-webhook'
+  notify: restart
+
+- name: create systemd unit
+  include: systemd-unit.yml

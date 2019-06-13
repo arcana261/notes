@@ -1,0 +1,20 @@
+- name: install required packages
+  apt: package={{ item }} state=latest
+  with_items:
+  - golang-go
+  - make
+
+- name: get gopath
+  command: go env GOPATH
+  register: gopath
+
+- name: clone webhook
+  git:
+    repo: https://github.com/arcana261/ucoder-webhook.git
+    dest: '{{ gopath.stdout_lines[0] }}/src/github.com/arcana261/ucoder-webhook'
+  notify: rebuild
+  register: clone
+
+- name: make systemd unit file
+  include: systemd-unit.yml
+  when: not clone.changed

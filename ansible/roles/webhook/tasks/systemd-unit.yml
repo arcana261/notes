@@ -1,0 +1,8 @@
+- name: make systemd unit file
+  template:
+    src: ucoder-webhook.service.j2
+    dest: /usr/lib/systemd/system/ucoder-webhook.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: post-systemd

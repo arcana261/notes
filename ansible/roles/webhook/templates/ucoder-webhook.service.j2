@@ -1,0 +1,11 @@
+[Unit]
+Description=Ucoder Github Webhook Parser
+After=network.target
+
+[Service]
+Environment="PATH=bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
+ExecStart=/usr/local/bin/ucoder-webhook --port 3900 --secret {{ webhook_secret }}
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

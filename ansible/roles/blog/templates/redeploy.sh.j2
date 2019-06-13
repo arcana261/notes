@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
 cd /usr/share/nginx/{{ blog_domain }}
+git pull origin master
 hexo generate
+systemctl reload nginx

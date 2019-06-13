@@ -83,6 +83,7 @@ ftp_password
 ftp_host
 ocs_username
 ocs_password
+webhook_secret
 ..................................
 16. create vault password
 vim ~/vault
@@ -95,6 +96,7 @@ ansible-playbook tools.yml
 ansible-playbook openconnect.yml
 ansible-playbook sniproxy.yml
 ansible-playbook blog.yml
+ansible-playbook webhook.yml
 ansible-playbook prometheus.yml
 ansible-playbook prometheus-revproxy.yml
 ansible-playbook nginx-exporter.yml

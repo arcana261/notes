@@ -1,0 +1,23 @@
+- name: install webhook
+  hosts: all
+  become: true
+  vars:
+    nginx_certbot_domains:
+      webhook.ucoder.ir:
+        domains:
+        - webhook.ucoder.ir
+        letsencrypt_email: info@ucoder.ir
+
+    nginx_revproxy_sites:
+      webhook.ucoder.ir:
+        domains:
+          - webhook.ucoder.ir
+        upstreams:
+          - { backend_address: 127.0.0.1, backend_port: 3900 }
+        ssl: true
+        letsencrypt: true
+      
+  roles:
+  - nginx_certbot
+  - nginx_revproxy
+  - webhook

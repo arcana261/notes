@@ -1,0 +1,3 @@
+- name: reload daemon
+  shell: systemctl daemon-reload
+  notify: start

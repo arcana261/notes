@@ -63,8 +63,8 @@
     path: /etc/sniproxy.conf
     state: present
     insertafter: '## ADD ENTRIES HERE ##'
-    line: '{{ blog_domain }} 127.0.0.1:444'
-    regexp: '^{{ blog_domain }} 127.0.0.1:444'
+    line: '^{{ blog_domain }}$ 127.0.0.1:444'
+    regexp: '^\^{{ blog_domain }}\$ 127.0.0.1:444'
   notify: reload_sniproxy
 
 - name: Enable Other domains in sniproxy
@@ -74,5 +74,6 @@
     insertafter: '## ADD ENTRIES HERE ##'
     line: '{{ item }} 127.0.0.1:444'
     regexp: '^{{ item }} 127.0.0.1:444'
-  with_items: blog_subdomains
+  with_items: 
+  - '{{ blog_subdomains }}'
   notify: reload_sniproxy
