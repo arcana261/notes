@@ -1,0 +1,8 @@
+- name: start_openconnect
+  service: name=ocserv state=present enabled=yes
+
+- name: restart_openconnect
+  service: name=ocserv state=restarted
+
+- name: reload_ufw
+  shell: ufw reload

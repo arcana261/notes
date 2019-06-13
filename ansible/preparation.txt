@@ -81,6 +81,8 @@ fileserver_password
 ftp_username
 ftp_password
 ftp_host
+ocs_username
+ocs_password
 ..................................
 15. create vault password
 vim ~/vault
@@ -91,6 +93,7 @@ vim ~/vault
 ..................................
 ansible-playbook tools.yml
 ansible-playbook sniproxy.yml
+ansible-playbook openconnect.yml
 ansible-playbook prometheus.yml
 ansible-playbook prometheus-revproxy.yml
 ansible-playbook nginx-exporter.yml
