@@ -5,6 +5,7 @@
   - vim
   - nano
   - ansible
+  - w3m
 
 - name: "Enable git credential store"
   shell: git config --global credential.helper store

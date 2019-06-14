@@ -84,6 +84,9 @@ ftp_host
 ocs_username
 ocs_password
 webhook_secret
+shellinabox_username
+shellinabox_password
+shellinabox_secret_dir
 ..................................
 16. create vault password
 vim ~/vault
@@ -103,4 +106,5 @@ ansible-playbook nginx-exporter.yml
 ansible-playbook docker-registry.yml
 ansible-playbook fileserver.yml
 ansible-playbook minecraft-server.yml
+ansible-playbook shellinabox.yml
 ..................................

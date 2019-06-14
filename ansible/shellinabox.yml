@@ -1,0 +1,14 @@
+- hosts: all
+
+  vars:
+    shellinabox_domain: sh.ucoder.ir
+    nginx_certbot_domains:
+      sh.ucoder.ir:
+        domains:
+        - sh.ucoder.ir
+        letsencrypt_email: info@ucoder.ir
+
+  become: true
+  roles:
+    - nginx_certbot
+    - shellinabox
