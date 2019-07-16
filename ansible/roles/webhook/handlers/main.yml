@@ -1,0 +1,11 @@
+- name: rebuild
+  include: rebuild.yml
+
+- name: post-systemd
+  include: post-systemd.yml
+
+- name: start
+  service: name=ucoder-webhook state=started enabled=yes
+
+- name: restart
+  service: name=ucoder-webhook state=restarted

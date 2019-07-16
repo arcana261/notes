@@ -1,0 +1,150 @@
+- name: install required packages
+  apt: pkg={{ item }} state=present
+  with_items:
+  - "{{ packages }}"
+  notify: start_openconnect
+
+- name: upgrade required packages
+  apt: pkg={{ item }} state=latest
+  with_items: 
+  - "{{ packages }}"
+  notify: restart_openconnect
+
+- name: configure openconnect
+  block:
+    - name: enable tcp port for openconnect
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: present
+        regexp: '^\s*tcp-port\s*=\s*\d+\s*$'
+        line: 'tcp-port = 445'
+      notify: restart_openconnect
+    - name: enable udp port for openconnect
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: present
+        regexp: '^\s*udp-port\s*=\s*\d+\s*$'
+        line: 'udp-port = 445'
+      notify: restart_openconnect
+    - name: configuring authentication methods
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: present
+        regexp: '^\s*auth\s*=\s*"'
+        line: 'auth = "plain[/etc/ocserv/ocpasswd]"'
+      notify: restart_openconnect
+    - name: configuring ssl cert
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: present
+        regexp: '^\s*server-cert\s*=\s*'
+        line: 'server-cert = /etc/letsencrypt/live/{{ openconnect_domain }}/fullchain.pem'
+      notify: restart_openconnect
+    - name: configuring ssl private key
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: present
+        regexp: '^\s*server-key\s*=\s*'
+        line: 'server-key = /etc/letsencrypt/live/{{ openconnect_domain }}/privkey.pem'
+      notify: restart_openconnect
+    - name: configuring mtu discovery
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: present
+        regexp: '^\s*try-mtu-discovery\s*=\s*'
+        line: 'try-mtu-discovery = true'
+      notify: restart_openconnect
+    - name: configuring dns server
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: present
+        regexp: '^\s*dns\s*=\s*'
+        line: 'dns = 8.8.8.8'
+      notify: restart_openconnect
+    - name: removing pre-defined routes
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: absent
+        regexp: '^\s*(no-)?route\s*=\s*'
+      notify: restart_openconnect
+    - name: configuring network
+      lineinfile:
+        path: /etc/ocserv/ocserv.conf
+        state: present
+        regexp: '^\s*ipv4-network\s*=\s*'
+        line: 'ipv4-network = 192.168.199.0/24'
+      notify: restart_openconnect
+    - name: change systemd socket listen stream
+      lineinfile:
+        path: /lib/systemd/system/ocserv.socket
+        state: present
+        regexp: '^\s*ListenStream\s*='
+        line: 'ListenStream=445'
+      notify: restart_openconnect
+    - name: change systemd socket listen datagram
+      lineinfile:
+        path: /lib/systemd/system/ocserv.socket
+        state: present
+        regexp: '^\s*ListenDatagram\s*='
+        line: 'ListenDatagram=445'
+      notify: restart_openconnect
+    - name: reload systemd daemon
+      shell: systemctl daemon-reload
+
+- name: create ocs user
+  shell: echo -e "{{ ocs_password | trim }}\n{{ ocs_password | trim }}" | (ocpasswd -c /etc/ocserv/ocpasswd {{ ocs_username }})
+  notify: restart_openconnect
+
+- name: enable ipv4 forwarding
+  sysctl:
+    name: '{{ item.key }}'
+    value: '{{ item.value }}'
+    state: present
+    reload: yes
+  with_dict:
+    net.ipv4.ip_forward: 1
+    net.ipv6.conf.default.forwarding: 1
+    net.ipv6.conf.all.forwarding: 1
+    net.ipv4.conf.all.rp_filter: 0
+    net.ipv4.conf.all.accept_source_route: 1
+    net.ipv4.conf.default.accept_source_route: 1
+
+- name: enable ufw ipv4 forwarding
+  lineinfile:
+    path: /etc/ufw/sysctl.conf
+    state: present
+    regexp: '^\s*{{ item.key }}\s*=\s*\d\s*$'
+    line: '{{ item.key }}={{ item.value }}'
+  with_dict:
+    net/ipv4/ip_forward: 1
+    net/ipv6/conf/default/forwarding: 1
+    net/ipv6/conf/all/forwarding: 1
+    net/ipv4/conf/all/rp_filter: 0
+    net/ipv4/conf/all/accept_source_route: 1
+    net/ipv4/conf/default/accept_source_route: 1
+  notify: reload_ufw
+
+- name: enable FORWARDING in ufw
+  lineinfile:
+    path: /etc/default/ufw
+    state: present
+    regexp: '^\s*DEFAULT_FORWARD_POLICY\s*=\s*"'
+    line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
+  notify: reload_ufw
+
+- name: setup NAT in ufw
+  lineinfile:
+    path: /etc/ufw/before.rules
+    state: present
+    regexp: '^\s*{{ item | replace("*", "\*") | replace("[", "\[") | replace("]", "\]") }}\s*$'
+    line: '{{ item }}'
+    insertbefore: '^\s*\*filter\s*$'
+    firstmatch: true
+  with_items:
+  - '*nat'
+  - ':POSTROUTING ACCEPT [0:0]'
+  - '-N FORWARD'
+  - '-A FORWARD -o any -j ACCEPT'
+  - '-A POSTROUTING -s 192.168.199.0/24 -o eth0 -j MASQUERADE'
+  - 'COMMIT'
+  notify: reload_ufw

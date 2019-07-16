@@ -1,15 +1,3 @@
-- name: Start Registry Container
-  docker_container:
-    name: registry.ucoder.ir
-    image: registry
-    restart_policy: always
-    pull: true
-    state: started
-    published_ports:
-    - "5000:5000"
-    env:
-      SETTINGS_FLAVOR: local
-
 - name: "Installing nginx"
   apt: pkg={{ item }} state=present
   with_items:
@@ -26,18 +14,23 @@
 
 - name: Update Site Config
   template:
-    src=registry.conf.j2
-    dest=/etc/nginx/sites-available/{{ registry_domain }}.conf
+    src=letsencrypt.conf.j2
+    dest=/etc/nginx/sites-available/{{ item.key }}.conf
     owner=root
     group=root
+    mode=0644
+  with_dict: "{{ nginx_revproxy_sites }}"
+  when:
+    - item.value.letsencrypt 
   notify:
     - reload_nginx
 
 - name: Activate Sites
   file:
-    src: /etc/nginx/sites-available/{{ registry_domain }}.conf
-    dest: /etc/nginx/sites-enabled/{{ registry_domain }}
+    src: /etc/nginx/sites-available/{{ item.key }}.conf
+    dest: /etc/nginx/sites-enabled/{{ item.key }}
     state: link
+  with_dict: "{{ nginx_revproxy_sites }}"
   notify: reload_nginx
 
 - name: Enable Sites in sniproxy
@@ -45,6 +38,7 @@
     path: /etc/sniproxy.conf
     state: present
     insertafter: '## ADD ENTRIES HERE ##'
-    line: '{{ registry_domain }} 127.0.0.1:444'
-    regexp: '^{{ registry_domain }} 127.0.0.1:444'
+    line: '{{ item.key }} 127.0.0.1:444'
+    regexp: '^{{ item.key }} 127.0.0.1:444'
+  with_dict: "{{ nginx_revproxy_sites }}"
   notify: reload_sniproxy

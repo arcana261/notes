@@ -16,18 +16,24 @@
 
 - name: "Creating htpasswd file"
   htpasswd:
-    path: /etc/nginx/conf.d/{{ fileserver_domain }}.htpasswd
-    name: "{{ fileserver_username }}"
-    password: "{{ fileserver_password }}"
+    path: /etc/nginx/conf.d/{{ shellinabox_domain }}.htpasswd
+    name: "{{ shellinabox_username }}"
+    password: "{{ shellinabox_password }}"
     owner: root
     group: root
     mode: 0644
 
-- name: "Creating root directory"
-  shell: creates=/usr/share/nginx/{{ fileserver_domain }} warn=no mkdir -p /usr/share/nginx/{{ fileserver_domain }}
+- name: installing shellinabox
+  apt:
+    name: shellinabox
+    state: present
+  notify: start_shellinabox
 
-- name: "Creating private directory"
-  shell: creates=/usr/share/nginx/{{ fileserver_domain }}/private warn=no mkdir -p /usr/share/nginx/{{ fileserver_domain }}/private
+- name: updating shellinabox
+  apt:
+    name: shellinabox
+    state: latest
+  notify: restart_shellinabox
 
 - name: "Installing nginx"
   apt: pkg={{ item }} state=present
@@ -45,8 +51,8 @@
 
 - name: Update Site Config
   template:
-    src=fileserver.conf.j2
-    dest=/etc/nginx/sites-available/{{ fileserver_domain }}.conf
+    src=shellinabox.conf.j2
+    dest=/etc/nginx/sites-available/{{ shellinabox_domain }}.conf
     owner=root
     group=root
   notify:
@@ -54,8 +60,8 @@
 
 - name: Activate Sites
   file:
-    src: /etc/nginx/sites-available/{{ fileserver_domain }}.conf
-    dest: /etc/nginx/sites-enabled/{{ fileserver_domain }}
+    src: /etc/nginx/sites-available/{{ shellinabox_domain }}.conf
+    dest: /etc/nginx/sites-enabled/{{ shellinabox_domain }}
     state: link
   notify: reload_nginx
 
@@ -64,6 +70,6 @@
     path: /etc/sniproxy.conf
     state: present
     insertafter: '## ADD ENTRIES HERE ##'
-    line: '{{ fileserver_domain }} 127.0.0.1:444'
-    regexp: '^{{ fileserver_domain }} 127.0.0.1:444'
+    line: '{{ shellinabox_domain }} 127.0.0.1:444'
+    regexp: '^{{ shellinabox_domain }} 127.0.0.1:444'
   notify: reload_sniproxy

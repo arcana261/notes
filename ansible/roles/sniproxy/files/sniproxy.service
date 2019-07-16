@@ -1,0 +1,12 @@
+[Unit]
+Description=Transparent TLS proxy
+Documentation=https://github.com/dlundquist/sniproxy
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/sniproxy -f
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

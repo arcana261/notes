@@ -9,3 +9,9 @@
 
 - name: reload_sniproxy
   service: name=sniproxy state=restarted
+
+- name: start_shellinabox
+  service: name=shellinabox state=started enabled=yes
+
+- name: restart_shellinabox
+  service: name=shellinabox state=restarted

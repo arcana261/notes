@@ -133,8 +133,8 @@
 
 - name: Re-activate Sites
   file:
-    src: /etc/nginx/sites-available/{{ item.key }}.conf
-    dest: /etc/nginx/sites-enabled/{{ item.key }}
+    src: /etc/nginx/sites-available/{{ item }}.conf
+    dest: /etc/nginx/sites-enabled/{{ item }}
     state: link
   with_items: "{{ active.stdout_lines }}"
   notify: Reload Nginx

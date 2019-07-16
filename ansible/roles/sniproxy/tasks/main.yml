@@ -1,0 +1,25 @@
+- name: install required packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - autotools-dev 
+  - cdbs
+  - debhelper
+  - dh-autoreconf 
+  - dpkg-dev
+  - gettext 
+  - libev-dev
+  - libpcre3-dev
+  - libudns-dev
+  - pkg-config
+  - fakeroot 
+  - devscripts
+  - git
+
+- name: cloning sniproxy
+  git:
+    repo: 'https://github.com/dlundquist/sniproxy.git'
+    dest: '/srv/sniproxy/src'
+    version: '0.6.0'
+    force: true
+  notify:
+  - install_sniproxy

@@ -1,0 +1,42 @@
+- name: install_sniproxy
+  block:
+  - name: remove last debian package
+    file:
+      path: /srv/sniproxy/src/sniproxy.deb
+      state: absent
+  - name: make sniproxy debian package
+    shell: ./autogen.sh && dpkg-buildpackage && mv $(find ../ -name *.deb -not -name *dbg*) sniproxy.deb
+    args:
+      chdir: /srv/sniproxy/src
+  - name: install sniproxy deb package
+    apt: deb="/srv/sniproxy/src/sniproxy.deb"
+  - name: copy initial sni proxy configuration
+    copy:
+      src: sniproxy.conf
+      dest: /etc/sniproxy.conf
+      owner: root
+      group: root
+      mode: '0644'
+  - name: make systemd unit file
+    copy:
+      src: sniproxy.service
+      dest: /usr/lib/systemd/system/sniproxy.service
+      owner: root
+      group: root
+      mode: '0644'
+  - name: reload systemd daemon
+    shell: systemctl daemon-reload
+  - name: enabling sniproxy service
+    service: name=sniproxy state=started enabled=yes
+  - name: re-start sniproxy service
+    service: name=sniproxy state=restarted
+  - name: enable 443 HTTPS port through firewall
+    ufw:
+      rule: allow
+      port: 443
+      proto: tcp
+  - name: enable 80 HTTP port through firewall
+    ufw:
+      rule: allow
+      port: 80
+      proto: tcp

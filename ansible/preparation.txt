@@ -43,7 +43,7 @@ systemctl restart sshd
 sudo -u arcana bash
 ssh-keygen -t rsa
 ..................................
-9. create host ssh config
+10. create host ssh config
 ..................................
 vim ~/.ssh/config
 ..................................
@@ -52,23 +52,23 @@ Host <HOST>
 	User <USER>
 	Port <PORT>
 ..................................
-10. copy local ssh-key
+11. copy local ssh-key
 ..................................
 ssh-copy-id <HOST>
 ..................................
-11. install ansible on host
+12. install ansible on host
 ..................................
 sudo apt-get install ansible
 ..................................
-12. ensure python is available on server
+13. ensure python is available on server
 ..................................
 sudo apt-get install python-minimal
 ..................................
-13. ensure ansible ping is ok
+14. ensure ansible ping is ok
 ..................................
 ansible -m ping all
 ..................................
-14. create vault (if secret not present)
+15. create vault (if secret not present)
 ..................................
 rm -f group_vars/all/vault
 ansible-vault create group_vars/all/vault
@@ -76,17 +76,35 @@ ansible-vault create group_vars/all/vault
 vault_grafana_password
 vault_influxdb_password
 ansible_sudo_pass
+fileserver_username
+fileserver_password
+ftp_username
+ftp_password
+ftp_host
+ocs_username
+ocs_password
+webhook_secret
+shellinabox_username
+shellinabox_password
+shellinabox_secret_dir
 ..................................
-15. create vault password
+16. create vault password
 vim ~/vault
 ..................................
 <PASS>
 ..................................
-16. install ansibles (add -K to force ask sudo pass)
+17. install ansibles (add -K to force ask sudo pass)
 ..................................
 ansible-playbook tools.yml
+ansible-playbook openconnect.yml
+ansible-playbook sniproxy.yml
+ansible-playbook blog.yml
+ansible-playbook webhook.yml
 ansible-playbook prometheus.yml
 ansible-playbook prometheus-revproxy.yml
 ansible-playbook nginx-exporter.yml
 ansible-playbook docker-registry.yml
+ansible-playbook fileserver.yml
+ansible-playbook minecraft-server.yml
+ansible-playbook shellinabox.yml
 ..................................

@@ -1,0 +1,9 @@
+- name: update npm dependencies
+  npm:
+    path: /usr/share/nginx/{{ blog_domain }}
+    state: present
+  notify: reload_nginx
+
+- name: regenerate
+  shell: /srv/{{ blog_domain }}/bin/redeploy.sh
+  notify: reload_nginx

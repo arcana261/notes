@@ -51,5 +51,6 @@
 - name: Create CronJob for taking backups
   cron:
     name: "minecraft-backup"
-    job: '/bin/bash /src/minecraft/bin/backup.sh'
+    job: '/srv/minecraft/bin/backup.sh'
     hour: '*/12'
+    minute: 0

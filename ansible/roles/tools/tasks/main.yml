@@ -5,3 +5,62 @@
   - vim
   - nano
   - ansible
+  - w3m
+  - unattended-upgrades
+
+- name: Configure unattended upgrade
+  lineinfile:
+    path: /etc/apt/apt.conf.d/50unattended-upgrades
+    state: present
+    regexp: '{{ item.regexp | replace("$", "\$") }}'
+    line: '{{ item.line }}'
+  with_items:
+  - regexp: '"${distro_id}:${distro_codename}-updates";'
+    line: '"${distro_id}:${distro_codename}-updates";'
+  - regexp: '"${distro_id}:${distro_codename}-proposed"'
+    line: '"${distro_id}:${distro_codename}-proposed"'
+  - regexp: '"${distro_id}:${distro_codename}-backports"'
+    line: '"${distro_id}:${distro_codename}-backports"'
+  - regexp: 'Unattended-Upgrade::Remove-Unused-Kernel-Packages "'
+    line: 'Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";'
+  - regexp: 'Unattended-Upgrade::Remove-Unused-Dependencies "'
+    line: 'Unattended-Upgrade::Remove-Unused-Dependencies "true";'
+  - regexp: 'Unattended-Upgrade::Automatic-Reboot "'
+    line: 'Unattended-Upgrade::Automatic-Reboot "true";'
+  - regexp: 'Unattended-Upgrade::Automatic-Reboot-Time "02:00";'
+    line: 'Unattended-Upgrade::Automatic-Reboot-Time "02:00";'
+
+- name: Ensuring unattended upgrades is running
+  service: name=unattended-upgrades state=restarted enabled=yes
+
+- name: "Enable git credential store"
+  shell: git config --global credential.helper store
+
+- name: set vim as default editor
+  command: update-alternatives --set editor /usr/bin/vim.basic
+
+- name: Ensure /srv/updater/bin exists
+  shell: creates=/srv/updater/bin warn=no mkdir -p /srv/updater/bin
+
+- name: create update script
+  copy:
+    src: update.sh
+    dest: /srv/updater/bin/update.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: create update cron
+  cron:
+    name: "updater"
+    job: '/srv/updater/bin/update.sh'
+    hour: '1,13'
+    minute: 0
+
+- name: create reboot cron
+  cron:
+    name: "rebooter"
+    job: 'reboot'
+    day: '1'
+    hour: '2'
+    minute: '0'
