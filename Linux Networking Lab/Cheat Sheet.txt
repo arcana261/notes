@@ -1,3 +1,10 @@
+############# IPTABLES ################
+
+iptables -I INPUT -p tcp --destination 192.168.1.1 --dport 5672 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+
+iptables -I INPUT -p tcp -s 192.168.1.0/24 --dport 5672 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+
+
 ############################ OVS #################################
 
 # print version
