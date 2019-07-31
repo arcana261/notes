@@ -1,0 +1,29 @@
+import sys
+import re
+
+p = re.compile("\s+")
+
+archive = False
+
+sentinel = 'COPY posts_newarchivedpost'
+from_id = -1
+skip_id = 146850607
+
+from_id = 100000000
+
+for line in sys.stdin:
+    try:
+        if sentinel in line:
+            archive = True
+        elif archive and line.strip() == '':
+            archive = False
+        if archive:
+            parts = p.split(line.strip())
+            if len(parts) > 0 and parts[0].isdigit():
+                post_id = int(parts[0])
+                if post_id >= skip_id or post_id < from_id:
+                    continue
+        print(line, end='')
+    except (IOError, StopIteration, KeyboardInterrupt):
+        break
+
