@@ -39,7 +39,7 @@
 - name: install hexo
   npm:
     global: true
-    state: latest
+    state: present
     name: hexo-cli
 
 - name: create nginx site

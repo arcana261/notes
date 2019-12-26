@@ -10,7 +10,7 @@ server {
       alias /var/www/{{ item.key }}/.well-known/acme-challenge;
    }
 
-   access_log /var/log/nginx/{{ item.key }}_access.log;
-   error_log /var/log/nginx/{{ item.key }}_error.log error;
+   access_log /var/log/nginx/{{ item.key }}_access.acme.log;
+   error_log /var/log/nginx/{{ item.key }}_error.acme.log error;
 
 }

@@ -72,15 +72,6 @@
   check_mode: no
   register: webroot
 
-- name: Remove WebRoot Sites
-  file:
-    path: /var/www/{{ item }}/
-    state: absent
-  with_items: "{{ webroot.stdout_lines }}"
-  notify: Reload Nginx
-  when:
-    - item not in nginx_certbot_domains
-
 - name: Install certbot
   get_url:
     url: https://dl.eff.org/certbot-auto
@@ -101,7 +92,7 @@
     - name: Enable Site Config
       file:
         src: /etc/nginx/sites-available/{{ item.key }}.acme.conf
-        dest: /etc/nginx/sites-enabled/{{ item.key }}
+        dest: /etc/nginx/sites-enabled/{{ item.key }}.acme
         state: link
       with_dict: "{{ nginx_certbot_domains }}"
       register: site_enabled
