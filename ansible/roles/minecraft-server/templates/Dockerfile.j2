@@ -14,7 +14,7 @@ RUN cd /srv && \
     sed -i 's/tick-distance=.*/tick-distance=4/g' /srv/server.properties && \
     sed -i 's/white-list=.*/white-list=true/g' /srv/server.properties && \
     sed -i 's/difficulty=.*/difficulty=normal/g' /srv/server.properties && \
-    sed -i 's/.*/[{"ignoresPlayerLimit":false,"name":"Arcana261"}]/g' /srv/whitelist.json
+    sed -i 's/.*/[{"ignoresPlayerLimit":false,"name":"Arcana261"},{"ignoresPlayerLimit":false,"name":"Bardia13"}]/g' /srv/whitelist.json
 
 ENV LD_LIBRARY_PATH /srv
 EXPOSE 19132/udp
