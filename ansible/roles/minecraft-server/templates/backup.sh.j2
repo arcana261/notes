@@ -37,24 +37,35 @@ run_command 'save hold'
 run_command 'save query'
 
 # loop until data is available
-until grep "db/CURRENT" ${DESTINATION}/temp/logs.txt > /dev/null; do \
+until grep "CURRENT" ${DESTINATION}/temp/logs.txt > /dev/null; do \
     sleep 1; \
     echo "trying to acquire list of files..."; \
     run_command 'save query'; \
 done;
 
 # get list of files
-FILES=`grep "db/CURRENT" ${DESTINATION}/temp/logs.txt`
+FILES=`grep "CURRENT" ${DESTINATION}/temp/logs.txt`
 
 # copy files to temp
 for f in $FILES; do \
     FILE=`echo "$f" | sed 's|:.*$||g'`; \
+    ANOTHER_FILE=`echo $FILE | sed 's|^\(.*\)/\([^/]*\)$|\1/db/\2|g'`; \
     SIZE=`echo "$f" | sed 's|^[^:]*:||g' | sed 's|,$||g'`; \
     DIR_NAME="`dirname $FILE`"; \
+    ANOTHER_DIR_NAME="`dirname $ANOTHER_FILE`"; \
     echo copying $SOURCE/$FILE of size $SIZE to $DESTINATION/temp/$FILE; \
     mkdir -p $DESTINATION/temp/$DIR_NAME; \
-    cp -v $SOURCE/$FILE $DESTINATION/temp/$FILE; \
-    truncate -s $SIZE $DESTINATION/temp/$FILE; \
+    mkdir -p $DESTINATION/temp/$ANOTHER_DIR_NAME; \
+    if [ -f $SOURCE/$FILE ]; then \
+        cp -v $SOURCE/$FILE $DESTINATION/temp/$FILE; \
+    else \
+        cp -v $SOURCE/$ANOTHER_FILE $DESTINATION/temp/$ANOTHER_FILE; \
+    fi; \
+    if [ -f $DESTINATION/temp/$FILE ]; then \
+        truncate -s $SIZE $DESTINATION/temp/$FILE; \
+    else \
+        truncate -s $SIZE $DESTINATION/temp/$ANOTHER_FILE; \
+    fi; \
 done;
 
 # issue save resume command

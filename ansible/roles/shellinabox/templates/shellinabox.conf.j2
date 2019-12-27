@@ -5,6 +5,9 @@ server {
    location / {
      return         301 https://$server_name$request_uri;
    }
+   location /.well-known/acme-challenge {
+      alias /var/www/{{ shellinabox_domain }}/.well-known/acme-challenge;
+   }
 
    access_log /var/log/nginx/{{ shellinabox_domain }}_access.log;
    error_log /var/log/nginx/{{ shellinabox_domain }}_error.log error;

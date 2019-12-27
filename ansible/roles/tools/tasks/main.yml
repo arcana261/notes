@@ -61,6 +61,6 @@
   cron:
     name: "rebooter"
     job: 'reboot'
-    day: '1'
+    weekday: '0'
     hour: '2'
     minute: '0'
