@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '84.247.48.0 - 84.247.48.255'
+
+% Abuse contact for '84.247.48.0 - 84.247.48.255' is 'abuse@m247.ro'
+
+inetnum:        84.247.48.0 - 84.247.48.255
+netname:        M247-LTD-Dublin
+descr:          M247-LTD-Dublin-Network
+country:        IE
+org:            ORG-MLD5-RIPE
+geoloc:         53.350140 -6.266155
+admin-c:        GND14-RIPE
+tech-c:         GND14-RIPE
+status:         ASSIGNED PA
+mnt-by:         GLOBALAXS-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2020-02-06T11:21:42Z
+last-modified:  2020-02-06T11:21:42Z
+source:         RIPE
+
+organisation:   ORG-MLD5-RIPE
+org-name:       M247 Ltd Dublin
+org-type:       OTHER
+address:        Unit 24 Hume Ave, Park West Business Park
+address:        Dublin, D12 YY88, Ireland
+abuse-c:        ME5262-RIPE
+mnt-ref:        GLOBALAXS-MNT
+mnt-by:         GLOBALAXS-MNT
+created:        2019-12-17T12:17:51Z
+last-modified:  2019-12-17T12:17:51Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS NOC DUBLIN
+remarks:        M247 - Network Management Center Dublin
+address:        Unit 24 Hume Ave, Park West Business Park
+address:        Dublin, D12 YY88, Ireland
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GND14-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2019-12-17T12:25:01Z
+last-modified:  2019-12-17T12:25:01Z
+source:         RIPE # Filtered
+
+% Information related to '84.247.48.0/24AS16247'
+
+route:          84.247.48.0/24
+origin:         AS16247
+mnt-by:         M247
+created:        2020-01-22T16:29:47Z
+last-modified:  2020-01-22T16:29:47Z
+source:         RIPE
+
+% Information related to '84.247.48.0/24AS35622'
+
+route:          84.247.48.0/24
+descr:          SC BestNet Service SRL
+origin:         AS35622
+mnt-by:         XPLOR-MNT
+created:        2017-03-20T12:28:52Z
+last-modified:  2017-03-20T12:28:52Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

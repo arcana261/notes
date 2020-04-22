@@ -1,0 +1,101 @@
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       172.98.64.0 - 172.98.95.255
+CIDR:           172.98.64.0/19
+NetName:        TSSL
+NetHandle:      NET-172-98-64-0-1
+Parent:         NET172 (NET-172-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS46562
+Organization:   Total Server Solutions L.L.C. (TSSL-2)
+RegDate:        2015-06-15
+Updated:        2015-06-15
+Ref:            https://rdap.arin.net/registry/ip/172.98.64.0
+
+
+OrgName:        Total Server Solutions L.L.C.
+OrgId:          TSSL-2
+Address:        34 Peachtree ST
+Address:        Suite 400
+City:           Atlanta
+StateProv:      GA
+PostalCode:     30303
+Country:        US
+RegDate:        2007-02-13
+Updated:        2019-10-01
+Ref:            https://rdap.arin.net/registry/entity/TSSL-2
+
+ReferralServer:  rwhois://208.78.43.3:4321
+
+OrgNOCHandle: TSSNO-ARIN
+OrgNOCName:   TSS NOC
+OrgNOCPhone:  +1-877-391-9909 
+OrgNOCEmail:  noc@totalserversolutions.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+OrgTechHandle: TSSNO-ARIN
+OrgTechName:   TSS NOC
+OrgTechPhone:  +1-877-391-9909 
+OrgTechEmail:  noc@totalserversolutions.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+OrgAbuseHandle: ABUSE7667-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-877-391-9909 
+OrgAbuseEmail:  abuse@totalserversolutions.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7667-ARIN
+
+# end
+
+
+# start
+
+NetRange:       172.98.76.0 - 172.98.76.255
+CIDR:           172.98.76.0/24
+NetName:        TOTAL-SERVER-SOLUTIONS
+NetHandle:      NET-172-98-76-0-1
+Parent:         TSSL (NET-172-98-64-0-1)
+NetType:        Reallocated
+OriginAS:       AS46562
+Organization:   Total server solutions LLC (TSSL-36)
+RegDate:        2018-12-05
+Updated:        2018-12-05
+Ref:            https://rdap.arin.net/registry/ip/172.98.76.0
+
+
+OrgName:        Total server solutions LLC
+OrgId:          TSSL-36
+Address:        50 NE 8th Street
+City:           Miami
+StateProv:      FL
+PostalCode:     33132
+Country:        US
+RegDate:        2018-12-05
+Updated:        2019-10-02
+Ref:            https://rdap.arin.net/registry/entity/TSSL-36
+
+
+OrgAbuseHandle: ABUSE7667-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-877-391-9909 
+OrgAbuseEmail:  abuse@totalserversolutions.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7667-ARIN
+
+OrgTechHandle: TSSNO-ARIN
+OrgTechName:   TSS NOC
+OrgTechPhone:  +1-877-391-9909 
+OrgTechEmail:  noc@totalserversolutions.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+

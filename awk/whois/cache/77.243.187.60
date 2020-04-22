@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '77.243.187.0 - 77.243.187.255'
+
+% Abuse contact for '77.243.187.0 - 77.243.187.255' is 'abuse@m247.ro'
+
+inetnum:        77.243.187.0 - 77.243.187.255
+netname:        M247-LTD-Manchester
+descr:          M247 LTD Manchester Infrastructure
+country:        GB
+admin-c:        GBXS-RIPE
+tech-c:         GBXS-RIPE
+status:         ASSIGNED PA
+mnt-by:         GLOBALAXS-MNT
+mnt-lower:      GLOBALAXS-MNT
+mnt-routes:     GLOBALAXS-MNT
+created:        2011-05-13T08:25:04Z
+last-modified:  2016-12-29T08:35:02Z
+source:         RIPE
+
+role:           GLOBALAXS NOC
+remarks:        M247 - Network Management Centre
+address:        1 Ball Green, Cobra Court
+address:        M32 0QT, Manchester - United Kingdom
+tech-c:         JB3482-RIPE
+tech-c:         CB2407-RIPE
+nic-hdl:        GBXS-RIPE
+abuse-mailbox:  abuse@m247.ro
+mnt-by:         GLOBALAXS-MNT
+created:        2006-07-13T15:37:05Z
+last-modified:  2018-09-10T17:32:45Z
+source:         RIPE # Filtered
+
+% Information related to '77.243.187.0/24AS9009'
+
+route:          77.243.187.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2017-05-06T11:13:02Z
+last-modified:  2017-05-06T11:13:02Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

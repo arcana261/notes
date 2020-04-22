@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '94.242.57.0 - 94.242.59.255'
+
+% Abuse contact for '94.242.57.0 - 94.242.59.255' is 'abuse@veesp.com'
+
+inetnum:        94.242.57.0 - 94.242.59.255
+netname:        RNet
+descr:          veesp.com vps clients
+country:        RU
+admin-c:        FCOV1-RIPE
+tech-c:         FCOV1-RIPE
+status:         ASSIGNED PA
+geoloc:         59.9100783 30.4076695
+mnt-by:         FISHNET-MNT
+created:        2014-12-27T17:55:56Z
+last-modified:  2017-06-30T12:53:16Z
+source:         RIPE
+
+role:           Veesp SIA - Contact Role
+address:        Obukhovskoy oborony 45
+address:        Saint Petersburg
+address:        Russian Federation
+phone:          +7 812 3136313
+abuse-mailbox:  abuse@veesp.com
+remarks:        *************************************************
+remarks:        * For spam/abuse/security issues please contact *
+remarks:        * abuse@veesp.com *
+remarks:        * The contents of your abuse email will be *
+remarks:        * forwarded directly on to our client for *
+remarks:        * handling. *
+remarks:        *************************************************
+remarks:
+remarks:        *************************************************
+remarks:        * Any questions on Peering/Routing please send to *
+remarks:        * noc@rnet.ru *
+remarks:        *************************************************
+org:            ORG-OC18-RIPE
+admin-c:        AI2525-RIPE
+tech-c:         IR2525-RIPE
+tech-c:         AI2525-RIPE
+nic-hdl:        FCOV1-RIPE
+mnt-by:         FISHNET-MNT
+created:        2017-06-30T12:49:06Z
+last-modified:  2018-11-28T20:45:28Z
+source:         RIPE # Filtered
+
+% Information related to '94.242.48.0/20AS43317'
+
+route:          94.242.48.0/20
+descr:          Veesp datacenter clients
+origin:         AS43317
+mnt-by:         FISHNET-MNT
+created:        2019-07-05T08:00:40Z
+last-modified:  2019-07-05T08:00:40Z
+source:         RIPE
+remarks:        region-id = Russia, Leningrad district, Saint-Petersburg
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

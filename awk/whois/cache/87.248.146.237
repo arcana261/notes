@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '87.248.144.0 - 87.248.159.255'
+
+% Abuse contact for '87.248.144.0 - 87.248.159.255' is 'LIRadmin@tci.ir'
+
+inetnum:        87.248.144.0 - 87.248.159.255
+netname:        Esfahan-TCI
+abuse-c:        AR15666-RIPE
+country:        IR
+admin-c:        MGAD-RIPE
+tech-c:         MGAD-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-CWM
+mnt-by:         MGADMIN
+created:        2020-03-11T20:44:53Z
+last-modified:  2020-03-12T14:50:47Z
+source:         RIPE
+
+person:         Mohammadreza Gholami
+address:        IR-TEHRAN
+phone:          +989124456235
+nic-hdl:        MGAD-RIPE
+mnt-by:         MNT-CWM
+created:        2015-08-03T08:32:59Z
+last-modified:  2020-01-21T07:25:21Z
+source:         RIPE
+
+% Information related to '87.248.144.0/20AS58224'
+
+route:          87.248.144.0/20
+descr:          IR-TCI-Esfahan
+origin:         AS58224
+mnt-by:         MNT-CWM
+mnt-by:         MGADMIN
+created:        2020-03-11T17:10:45Z
+last-modified:  2020-03-11T17:10:45Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

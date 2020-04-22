@@ -1,0 +1,67 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       209.58.128.0 - 209.58.143.255
+CIDR:           209.58.128.0/20
+NetName:        LEASEWEB-USA-SFO-12
+NetHandle:      NET-209-58-128-0-1
+Parent:         NET209 (NET-209-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS7203
+Organization:   Leaseweb USA, Inc. (LU-76)
+RegDate:        1999-04-28
+Updated:        2017-01-13
+Comment:        Please send all abuse notifications to the following email address: abuse@us.leaseweb.com. To ensure proper processing of your abuse notification, please visit the website www.leaseweb.com/abuse for notification requirements. All police and other government agency requests must be sent to subpoenas@us.leaseweb.com.
+Ref:            https://rdap.arin.net/registry/ip/209.58.128.0
+
+
+OrgName:        Leaseweb USA, Inc.
+OrgId:          LU-76
+Address:        1735 Lundy Ave
+City:           San Jose
+StateProv:      CA
+PostalCode:     95131
+Country:        US
+RegDate:        2015-07-30
+Updated:        2016-03-15
+Ref:            https://rdap.arin.net/registry/entity/LU-76
+
+
+OrgTechHandle: LEASE-ARIN
+OrgTechName:   Leaseweb ARIN
+OrgTechPhone:  +1-571-814-3777 
+OrgTechEmail:  netops@us.leaseweb.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/LEASE-ARIN
+
+OrgAbuseHandle: LUAD3-ARIN
+OrgAbuseName:   Leaseweb US abuse dept
+OrgAbusePhone:  +1-571-814-3777 
+OrgAbuseEmail:  abuse@us.leaseweb.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/LUAD3-ARIN
+
+RAbuseHandle: LUAD3-ARIN
+RAbuseName:   Leaseweb US abuse dept
+RAbusePhone:  +1-571-814-3777 
+RAbuseEmail:  abuse@us.leaseweb.com
+RAbuseRef:    https://rdap.arin.net/registry/entity/LUAD3-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

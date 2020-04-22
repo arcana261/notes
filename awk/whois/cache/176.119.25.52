@@ -1,0 +1,76 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '176.119.24.0 - 176.119.31.255'
+
+% Abuse contact for '176.119.24.0 - 176.119.31.255' is 'abuse@v-sys.org'
+
+inetnum:        176.119.24.0 - 176.119.31.255
+netname:        Vsys_VDC_176
+country:        UA
+org:            ORG-VSL22-RIPE
+admin-c:        VSYS-RIPE
+tech-c:         VSYS-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         VSYS-MNT
+created:        2012-06-13T10:10:31Z
+last-modified:  2019-02-03T09:50:17Z
+source:         RIPE
+
+organisation:   ORG-VSL22-RIPE
+org-name:       Virtual Systems LLC
+org-type:       LIR
+address:        Laboratorna str., building 33/37
+address:        03150
+address:        Kiyv
+address:        UKRAINE
+admin-c:        VS10657-RIPE
+tech-c:         VS10657-RIPE
+abuse-c:        AR50431-RIPE
+mnt-ref:        VSYS-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         VSYS-MNT
+created:        2019-01-23T14:51:44Z
+last-modified:  2019-08-01T16:10:11Z
+source:         RIPE # Filtered
+phone:          +380445915679
+phone:          +380981968199
+
+role:           V-SYS Network Coordination Center
+address:        Ukraine, Kyiv
+address:        Turgenevska, 59
+abuse-mailbox:  abuse@v-sys.org
+phone:          +38 044 5915679
+fax-no:         +38 044 5915679
+remarks:        +---------------------------------------------------+
+remarks:        | Virtual Systems cloud services and bare metal HW  |
+remarks:        | To order servers, ddos protection or cloud        |
+remarks:        | contact us sales@v-sys.org                        |
+remarks:        +---------------------------------------------------+
+admin-c:        SV4439-RIPE
+tech-c:         YY281-RIPE
+nic-hdl:        VSYS-RIPE
+mnt-by:         VSYS-NET
+created:        2013-10-16T18:42:32Z
+last-modified:  2019-01-25T14:10:20Z
+source:         RIPE # Filtered
+
+% Information related to '176.119.25.0/24AS30860'
+
+route:          176.119.25.0/24
+origin:         AS30860
+mnt-by:         YURTEH-MNT
+created:        2017-05-19T08:04:13Z
+last-modified:  2017-05-19T08:04:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

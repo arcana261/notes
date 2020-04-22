@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '92.114.50.0 - 92.114.51.255'
+
+% Abuse contact for '92.114.50.0 - 92.114.51.255' is 'abuse@seanet.ir'
+
+inetnum:        92.114.50.0 - 92.114.51.255
+netname:        sepehrava-seanet
+descr:          Sepehrava Data Processing co.
+country:        IR
+admin-c:        HRM78-RIPE
+tech-c:         HRM78-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-SADP1-ROUTES
+created:        2015-08-01T10:18:53Z
+last-modified:  2015-08-01T10:18:53Z
+source:         RIPE
+
+person:         Hamid Reza Mohajeri
+address:        IRAN, Zanjan, Emam St, Head-on EmamZadeh Parking, AFRA Building, 3 Floor, NO 10
+phone:          +98 24 3336 4046
+nic-hdl:        HRM78-RIPE
+mnt-by:         MNT-SADP1-ROUTES
+created:        2013-03-25T18:20:04Z
+last-modified:  2017-03-29T05:42:36Z
+source:         RIPE # Filtered
+
+% Information related to '92.114.50.0/24AS58224'
+
+route:          92.114.50.0/24
+origin:         AS58224
+mnt-by:         MNT-SADP1-ROUTES
+created:        2020-04-13T09:31:29Z
+last-modified:  2020-04-13T09:31:29Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

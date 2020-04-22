@@ -1,0 +1,92 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.215.128.0 - 188.215.135.255'
+
+% Abuse contact for '188.215.128.0 - 188.215.135.255' is 'ar_rezaei@tci.ir'
+
+inetnum:        188.215.128.0 - 188.215.135.255
+netname:        TCIYZD
+descr:          Telecommunication Company of Yazd
+country:        IR
+org:            ORG-TCOY2-RIPE
+admin-c:        NA6213-RIPE
+tech-c:         NA6214-RIPE
+tech-c:         DP14873-RIPE
+tech-c:         ma9485-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+mnt-lower:      TCI-RIPE-MNT
+mnt-routes:     TCI-RIPE-MNT
+created:        2015-02-02T09:31:22Z
+last-modified:  2019-06-22T08:16:58Z
+source:         RIPE
+
+organisation:   ORG-TCOY2-RIPE
+org-name:       Telecommunication Company of Yazd
+org-type:       other
+address:        Yazd - Emam Hossein Square - Telecommunication Company of Yazd
+abuse-c:        AC26336-RIPE
+tech-c:         DP14873-RIPE
+admin-c:        NA6213-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2014-12-27T13:23:04Z
+last-modified:  2019-03-03T06:14:42Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Yazd)
+address:        Yazd - Emam Hossein Square - Telecommunication Company of Yazd
+admin-c:        AANN1-RIPE
+nic-hdl:        DP14873-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T05:55:30Z
+last-modified:  2019-03-03T05:55:30Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Yazd)
+address:        Yazd - Emam Hossein Square - Telecommunication Company of Yazd
+admin-c:        AARZ1-RIPE
+nic-hdl:        NA6213-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T05:52:19Z
+last-modified:  2019-03-03T05:52:19Z
+source:         RIPE # Filtered
+
+role:           NOC (Yazd)
+address:        Yazd - Emam Hossein Square - Telecommunication Company of Yazd
+admin-c:        HRM87-RIPE
+nic-hdl:        NA6214-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T06:00:49Z
+last-modified:  2019-03-03T06:00:49Z
+source:         RIPE # Filtered
+
+person:         mohammadreza ayarehforoush
+address:        telecommunication company of Yazd
+phone:          +98-35-37333235
+phone:          +989131514989
+nic-hdl:        ma9485-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-07-14T06:43:25Z
+last-modified:  2015-08-04T11:49:29Z
+source:         RIPE
+
+% Information related to '188.215.128.0/20AS58224'
+
+route:          188.215.128.0/20
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2016-10-16T11:20:36Z
+last-modified:  2016-10-16T11:20:36Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

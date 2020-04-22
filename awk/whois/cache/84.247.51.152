@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '84.247.51.0 - 84.247.51.255'
+
+% Abuse contact for '84.247.51.0 - 84.247.51.255' is 'abuse@m247.ro'
+
+inetnum:        84.247.51.0 - 84.247.51.255
+netname:        M247-LTD-Paris
+descr:          M247 LTD Paris Infrastructure
+country:        FR
+geoloc:         48.9281 2.3498
+admin-c:        GBXS4-RIPE
+tech-c:         GBXS4-RIPE
+status:         ASSIGNED PA
+mnt-by:         GLOBALAXS-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2020-02-06T11:29:20Z
+last-modified:  2020-02-06T11:29:20Z
+source:         RIPE
+
+role:           GLOBALAXS NOC PARIS
+address:        114 Rue Ambroise Croizat
+address:        93200, St Denis, Paris, France
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS4-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-03-15T15:19:22Z
+last-modified:  2018-02-19T16:00:56Z
+source:         RIPE # Filtered
+
+% Information related to '84.247.51.0/24AS35622'
+
+route:          84.247.51.0/24
+descr:          SC BestNet Service SRL
+origin:         AS35622
+mnt-by:         XPLOR-MNT
+created:        2017-03-20T12:28:53Z
+last-modified:  2017-03-20T12:28:53Z
+source:         RIPE
+
+% Information related to '84.247.51.0/24AS9009'
+
+route:          84.247.51.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2020-01-22T12:38:24Z
+last-modified:  2020-01-22T12:38:24Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

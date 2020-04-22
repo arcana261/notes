@@ -1,0 +1,60 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.98.245.0 - 91.98.247.255'
+
+% Abuse contact for '91.98.245.0 - 91.98.247.255' is 'abuse@parsonline.net'
+
+inetnum:        91.98.245.0 - 91.98.247.255
+netname:        PARSONLINE-VSAT
+descr:          VSAT-POOL-2
+country:        IR
+admin-c:        PNOC5-RIPE
+tech-c:         PNOC5-RIPE
+status:         ASSIGNED PA
+mnt-by:         PARSONLINE-MNT
+mnt-lower:      PARSONLINE-MNT
+mnt-domains:    PARSONLINE-MNT
+mnt-routes:     PARSONLINE-MNT
+remarks:        INFRA-AW
+created:        2010-12-11T12:21:48Z
+last-modified:  2012-12-02T17:11:28Z
+source:         RIPE
+
+role:           ParsOnline Network Operations Center
+address:        224 Khoramshahr ave., No. 6C
+address:        Tehran 15337
+address:        Iran
+phone:          +98 21 8220 8333
+fax-no:         +98 21 8874 9505
+abuse-mailbox:  abuse@parsonline.net
+admin-c:        MR17275-RIPE
+admin-c:        AG16687-RIPE
+tech-c:         MR17275-RIPE
+tech-c:         AG16687-RIPE
+nic-hdl:        PNOC5-RIPE
+mnt-by:         PARSONLINE-MNT
+created:        2007-06-30T09:51:28Z
+last-modified:  2018-09-05T06:01:45Z
+source:         RIPE # Filtered
+
+% Information related to '91.98.240.0/21AS16322'
+
+route:          91.98.240.0/21
+descr:          ParsOnline Co.
+descr:          ParsOnline Co. Route
+origin:         AS16322
+mnt-by:         PARSONLINE-MNT
+created:        2009-05-17T13:21:32Z
+last-modified:  2010-02-06T10:39:20Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

@@ -1,0 +1,162 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       23.227.128.0 - 23.227.159.255
+CIDR:           23.227.128.0/19
+NetName:        24SHELLS
+NetHandle:      NET-23-227-128-0-1
+Parent:         NET23 (NET-23-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS55081
+Organization:   24 SHELLS (TS-74)
+RegDate:        2013-09-23
+Updated:        2013-10-14
+Ref:            https://rdap.arin.net/registry/ip/23.227.128.0
+
+
+OrgName:        24 SHELLS
+OrgId:          TS-74
+Address:        30 Knightsbridge Road, Suite 525
+City:           Piscataway
+StateProv:      NJ
+PostalCode:     08854
+Country:        US
+RegDate:        2012-02-22
+Updated:        2017-01-28
+Comment:        http://www.24shells.net
+Ref:            https://rdap.arin.net/registry/entity/TS-74
+
+ReferralServer:  rwhois://rwhois.24shells.net:4321
+
+OrgAbuseHandle: ABUSE3950-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-732-400-8134 
+OrgAbuseEmail:  abuse@24shells.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3950-ARIN
+
+OrgNOCHandle: NOC13393-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-732-400-8134 
+OrgNOCEmail:  noc@24shells.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC13393-ARIN
+
+OrgTechHandle: NOC13393-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-732-400-8134 
+OrgTechEmail:  noc@24shells.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC13393-ARIN
+
+# end
+
+
+# start
+
+NetRange:       23.227.143.112 - 23.227.143.119
+CIDR:           23.227.143.112/29
+NetName:        ZENEX-5IVE-LIMITED
+NetHandle:      NET-23-227-143-112-1
+Parent:         24SHELLS (NET-23-227-128-0-1)
+NetType:        Reassigned
+OriginAS:       
+Customer:       Zenex 5ive Limited (C07484665)
+RegDate:        2020-01-10
+Updated:        2020-01-10
+Ref:            https://rdap.arin.net/registry/ip/23.227.143.112
+
+
+CustName:       Zenex 5ive Limited
+Address:        5 Jupiter House
+City:           Reading
+StateProv:      BERKSHIRE
+PostalCode:     RG7 8NN
+Country:        GB
+RegDate:        2020-01-10
+Updated:        2020-01-10
+Ref:            https://rdap.arin.net/registry/entity/C07484665
+
+OrgAbuseHandle: ABUSE3950-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-732-400-8134 
+OrgAbuseEmail:  abuse@24shells.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3950-ARIN
+
+OrgNOCHandle: NOC13393-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-732-400-8134 
+OrgNOCEmail:  noc@24shells.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC13393-ARIN
+
+OrgTechHandle: NOC13393-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-732-400-8134 
+OrgTechEmail:  noc@24shells.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC13393-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.24shells.net:4321.
+
+%rwhois V-1.5:003fff:00 rwhois.24shells.net (by Network Solutions, Inc. V-1.5.9.5)
+network:Class-Name:network
+network:ID:NETBLK-24SHELLS.23.227.128.0/19
+network:Auth-Area:23.227.128.0/19
+network:Network-Name:SHAHT1-23.227.128.0
+network:IP-Network:23.227.128.0/19
+network:IP-Network-Block:23.227.128.0 - 23.227.159.254
+network:Organization;I:24Shells Inc.
+network:Street-Address:301 Heights Lane, Suite 32F
+network:City:Feasterville
+network:State:PA
+network:Postal-Code:19053
+network:Country-Code:US
+network:Tech-Contact;I:noc@24shells.net
+network:Admin-Contact;I:ARIN-SHAHT1
+network:Created:20130925
+network:Updated:20130925
+network:Updated-By:noc@24shells.net
+
+network:Class-Name:network
+network:ID:NETBLK-24SHELLS.23.227.128.0/19
+network:Auth-Area:23.227.128.0/19
+network:Network-Name:SHAHT1-23.227.128.0
+network:IP-Network:23.227.143.0/24
+network:IP-Network-Block:23.227.143.0 - 23.227.143.255
+network:Organization;I:MKHOST
+network:City:Kumanovo
+network:State:Kumanovo
+network:Postal-Code:1300
+network:Country-Code:US
+network:Tech-Contact;I:abuse@24shells.net
+network:Admin-Contact;I:abuse@24shells.net
+network:Created:20131102
+network:Updated:20131102
+network:Updated-By:noc@24shells.net
+
+%referral rwhois://root.rwhois.net:4321/auth-area=.
+%ok

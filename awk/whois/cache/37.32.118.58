@@ -1,0 +1,57 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.32.118.0 - 37.32.119.255'
+
+% Abuse contact for '37.32.118.0 - 37.32.119.255' is 'abuse@systec-co.com'
+
+inetnum:        37.32.118.0 - 37.32.119.255
+netname:        SS-SYSTEC-HighSpeed-Wifi
+descr:          Rayan Pardazan Baran Co. Ltd.
+country:        IR
+admin-c:        SS16680-RIPE
+tech-c:         SS16680-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-SSAMAN
+created:        2012-01-05T07:57:43Z
+last-modified:  2018-05-10T16:38:43Z
+source:         RIPE
+
+person:         Saman Salamat
+address:        No.3 ,Floor 13 ,Pam Tower , Afrigha Ave ,Tehran , Iran
+phone:          +989123512096
+phone:          +982142306
+fax-no:         +982142306
+org:            ORG-RPBC1-RIPE
+remarks:        -------------------------------------------
+remarks:        | I AM !NOT! SPAMMING OR HACKING YOU !!! |
+remarks:        | | |
+remarks:        | If you think I am, please read: |
+remarks:        | http://www.ripe.net/nicdb.html |
+remarks:        | | |
+remarks:        -------------------------------------------
+nic-hdl:        SS16680-RIPE
+mnt-by:         MNT-SSAMAN
+created:        2011-06-26T04:39:27Z
+last-modified:  2018-05-10T16:29:45Z
+source:         RIPE
+
+% Information related to '37.32.118.0/23AS50558'
+
+route:          37.32.118.0/23
+descr:          Systec
+origin:         AS50558
+mnt-by:         MNT-SSAMAN
+created:        2012-01-05T17:00:28Z
+last-modified:  2012-01-05T17:00:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

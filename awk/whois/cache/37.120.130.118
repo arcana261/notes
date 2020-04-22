@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.120.130.0 - 37.120.130.255'
+
+% Abuse contact for '37.120.130.0 - 37.120.130.255' is 'abuse@s-data.ro'
+
+inetnum:        37.120.130.0 - 37.120.130.255
+netname:        M247-LTD-Quebec
+descr:          M247 LTD Quebec Infrastructure
+country:        CA
+geoloc:         45.4977 -73.5709
+admin-c:        GBXS34-RIPE
+tech-c:         GBXS34-RIPE
+status:         ASSIGNED PA
+mnt-by:         SDAT-MNT
+mnt-by:         M247-EU-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        --------------LEGAL CONCERNS-----------------------------
+remarks:        For any legal requests, please send an email
+remarks:        to ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---------------------------------------------------------
+created:        2018-10-12T13:15:11Z
+last-modified:  2018-12-30T14:26:41Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS QUEBEC NOC
+address:        1250 Rene-Levesque Blvd W, Montreal, QC H3B 4W8, Canada
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS34-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2018-08-22T18:27:55Z
+last-modified:  2019-11-20T08:17:40Z
+source:         RIPE # Filtered
+
+% Information related to '37.120.130.0/24AS9009'
+
+route:          37.120.130.0/24
+descr:          M247 Europe
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2018-10-12T14:21:08Z
+last-modified:  2018-10-12T14:21:08Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

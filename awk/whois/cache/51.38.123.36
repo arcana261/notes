@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '51.38.123.36 - 51.38.123.39'
+
+% Abuse contact for '51.38.123.36 - 51.38.123.39' is 'abuse@ovh.net'
+
+inetnum:        51.38.123.36 - 51.38.123.39
+netname:        OVH_203234554
+country:        IT
+descr:          Failover Ips
+org:            ORG-PP81-RIPE
+admin-c:        OTC5-RIPE
+tech-c:         OTC5-RIPE
+status:         LEGACY
+mnt-by:         OVH-MNT
+created:        2018-12-24T19:14:29Z
+last-modified:  2018-12-24T19:14:29Z
+source:         RIPE
+
+organisation:   ORG-PP81-RIPE
+org-name:       pishtazweb pishtazweb
+org-type:       OTHER
+address:        parkside se
+address:        t2j3z2 calgary
+address:        CA
+phone:          +1.3155122212
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2015-04-27T12:22:03Z
+last-modified:  2017-10-30T16:39:02Z
+source:         RIPE # Filtered
+
+role:           OVH IT Technical Contact
+address:        OVH Srl
+address:        Via Carlo Imbonati, 18
+address:        20159 Milano
+address:        Italia
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC5-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2008-09-16T16:47:07Z
+last-modified:  2019-05-24T08:39:22Z
+source:         RIPE # Filtered
+
+% Information related to '51.38.0.0/16AS16276'
+
+route:          51.38.0.0/16
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2018-03-07T09:21:14Z
+last-modified:  2018-03-07T09:21:14Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

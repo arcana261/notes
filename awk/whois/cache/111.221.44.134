@@ -1,0 +1,58 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '111.221.44.0 - 111.221.44.255'
+
+% Abuse contact for '111.221.44.0 - 111.221.44.255' is 'abuse@axgn.com.sg'
+
+inetnum:        111.221.44.0 - 111.221.44.255
+netname:        AsiaServerHost
+descr:          asiaServerHost.com
+descr:          sales@asiaserverhost.com
+country:        SG
+admin-c:        AJ28-AP
+tech-c:         AJ28-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-AXGNDOTCOMDOTSG-SG-SG
+mnt-irt:        IRT-AXGNDOTCOMDOTSG-SG-SG
+last-modified:  2015-09-23T01:36:00Z
+source:         APNIC
+
+irt:            IRT-AXGNDOTCOMDOTSG-SG-SG
+address:        VBOX 888431 Singapore 919191
+e-mail:         abuse@axgn.com.sg
+abuse-mailbox:  abuse@axgn.com.sg
+admin-c:        AJ28-AP
+tech-c:         AJ28-AP
+auth:           # Filtered
+remarks:        abuse@axgn.com.sg was validated on 2019-12-10
+mnt-by:         MAINT-AXGNDOTCOMDOTSG-SG-SG
+last-modified:  2019-12-10T21:37:04Z
+source:         APNIC
+
+role:           AXGN - Jacky
+address:        VBOX 888431    Singapore 919191
+country:        SG
+phone:          +6593836790
+e-mail:         sales@axgn.com.sg
+admin-c:        AJ28-AP
+tech-c:         AJ28-AP
+nic-hdl:        AJ28-AP
+mnt-by:         MAINT-AXGNDOTCOMDOTSG-SG-SG
+last-modified:  2009-07-16T01:44:11Z
+source:         APNIC
+
+% Information related to '111.221.44.0/22AS24312'
+
+route:          111.221.44.0/22
+descr:          axgn
+origin:         AS24312
+country:        SG
+notify:         sales@axgn.com.sg
+mnt-by:         MAINT-AXGNDOTCOMDOTSG-SG-SG
+last-modified:  2010-11-25T00:10:59Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK4)
+
+

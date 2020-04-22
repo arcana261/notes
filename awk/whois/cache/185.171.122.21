@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.171.122.0 - 185.171.122.255'
+
+% Abuse contact for '185.171.122.0 - 185.171.122.255' is 'abuse@thinkhuge.net'
+
+inetnum:        185.171.122.0 - 185.171.122.255
+netname:        UK-THINK-DEC01-20190109
+country:        GB
+geoloc:         51.5285582 -0.2416799
+org:            ORG-THL20-RIPE
+admin-c:        WT1475-RIPE
+tech-c:         WT1475-RIPE
+status:         ASSIGNED PA
+mnt-by:         mnt-uk-think-dec01-1
+mnt-routes:     GLOBALAXS-MNT
+created:        2019-01-09T08:47:31Z
+last-modified:  2019-01-09T08:47:31Z
+source:         RIPE
+
+organisation:   ORG-THL20-RIPE
+org-name:       Think Huge Ltd
+org-type:       LIR
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+admin-c:        WT1475-RIPE
+tech-c:         WT1475-RIPE
+abuse-c:        AR50194-RIPE
+mnt-ref:        mnt-uk-think-dec01-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-think-dec01-1
+created:        2019-01-08T12:49:41Z
+last-modified:  2019-01-08T12:49:43Z
+source:         RIPE # Filtered
+phone:          +447415953982
+
+person:         Will Thomas
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+phone:          +447415953982
+nic-hdl:        WT1475-RIPE
+mnt-by:         mnt-uk-think-dec01-1
+created:        2019-01-08T12:49:41Z
+last-modified:  2019-01-08T12:49:41Z
+source:         RIPE
+
+% Information related to '185.171.122.0/24AS9009'
+
+route:          185.171.122.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-01-09T08:48:46Z
+last-modified:  2019-01-09T08:48:46Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

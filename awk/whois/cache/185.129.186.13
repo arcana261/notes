@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.129.184.0 - 185.129.189.255'
+
+% Abuse contact for '185.129.184.0 - 185.129.189.255' is 'abuse@shabdiz.ir'
+
+inetnum:        185.129.184.0 - 185.129.189.255
+netname:        SHABDIZ-TELECOM-NETWORK
+descr:          Shabdiz Telecom Network JSC
+country:        IR
+admin-c:        OMID1-RIPE
+tech-c:         OMID1-RIPE
+abuse-c:        SA32601
+status:         ASSIGNED PA
+mnt-by:         PTE-MNT
+created:        2016-05-31T08:41:14Z
+last-modified:  2018-03-03T07:45:47Z
+source:         RIPE
+
+person:         Omid Kosari
+address:        No.69, Adham St., Beheshti Ave, Karaj, Iran
+phone:          +98 26 32601
+fax-no:         +98 26 32601 ext. 8
+nic-hdl:        OMID1-RIPE
+mnt-by:         omidkosari-mnt
+created:        2009-11-04T07:23:21Z
+last-modified:  2017-10-30T22:07:29Z
+source:         RIPE # Filtered
+
+% Information related to '185.129.186.0/24AS50530'
+
+route:          185.129.186.0/24
+origin:         AS50530
+mnt-by:         PTE-MNT
+created:        2016-05-31T10:05:57Z
+last-modified:  2016-05-31T10:05:57Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

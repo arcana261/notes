@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.180.77.0 - 5.180.77.255'
+
+% Abuse contact for '5.180.77.0 - 5.180.77.255' is 'abuse@digital-vm.com'
+
+inetnum:        5.180.77.0 - 5.180.77.255
+netname:        DVS-TOKYO
+descr:          Digital Virtualisation Solutions Tokyo
+country:        JP
+geoloc:         35.6222 139.7455
+admin-c:        DVS266-RIPE
+tech-c:         DVS266-RIPE
+org:            ORG-DVS9-RIPE
+status:         ASSIGNED PA
+mnt-by:         DVS-MNT
+mnt-routes:     GLOBALAXS-MNT
+created:        2019-03-28T20:30:06Z
+last-modified:  2019-03-28T20:30:06Z
+source:         RIPE
+
+organisation:   ORG-DVS9-RIPE
+org-name:       Digital Virtualisation Solutions Tokyo
+org-type:       OTHER
+address:        2 Chome-1-17 Higashishinagawa, Shinagawa
+address:        Tokyo 140-0002, Japan
+abuse-c:        DVS266-RIPE
+mnt-ref:        DVS-MNT
+mnt-by:         DVS-MNT
+created:        2019-03-28T20:05:00Z
+last-modified:  2019-03-28T20:25:00Z
+source:         RIPE # Filtered
+
+role:           DVS Tokyo abuse contact
+address:        2 Chome-1-17 Higashishinagawa, Shinagawa
+address:        Tokyo 140-0002, Japan
+abuse-mailbox:  abuse@digital-vm.com
+nic-hdl:        DVS266-RIPE
+mnt-by:         DVS-MNT
+created:        2019-03-28T20:09:00Z
+last-modified:  2019-03-28T20:23:50Z
+source:         RIPE # Filtered
+
+% Information related to '5.180.77.0/24AS9009'
+
+route:          5.180.77.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-03-28T20:39:37Z
+last-modified:  2019-03-28T20:39:37Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

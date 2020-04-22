@@ -1,0 +1,139 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       66.45.224.0 - 66.45.255.255
+CIDR:           66.45.224.0/19
+NetName:        INTERSERVER
+NetHandle:      NET-66-45-224-0-1
+Parent:         NET66 (NET-66-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS19318
+Organization:   Interserver, Inc (INTER-83)
+RegDate:        2003-09-23
+Updated:        2012-02-24
+Comment:        Please use abusencc@interserver.net for all abuse reports.
+Ref:            https://rdap.arin.net/registry/ip/66.45.224.0
+
+
+OrgName:        Interserver, Inc
+OrgId:          INTER-83
+Address:        110 Meadowlands Pkwy
+Address:        1st Floor
+City:           Secaucus
+StateProv:      NJ
+PostalCode:     07094
+Country:        US
+RegDate:        2003-03-17
+Updated:        2018-05-18
+Comment:        Please use https://www.interserver.net/contact-information.html for all abuse complaints.
+Comment:        
+Comment:        DMCA registered agent dmca@interserver.net
+Comment:        
+Comment:        To comply with GDPR the rwhois server is no longer publically available.
+Ref:            https://rdap.arin.net/registry/entity/INTER-83
+
+
+OrgNOCHandle: NOC1390-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-201-605-1440 
+OrgNOCEmail:  abusencc@interserver.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC1390-ARIN
+
+OrgTechHandle: NOC1390-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-201-605-1440 
+OrgTechEmail:  abusencc@interserver.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC1390-ARIN
+
+OrgAbuseHandle: NOC1390-ARIN
+OrgAbuseName:   Network Operations Center
+OrgAbusePhone:  +1-201-605-1440 
+OrgAbuseEmail:  abusencc@interserver.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NOC1390-ARIN
+
+RTechHandle: MLA13-ARIN
+RTechName:   Lavrik, Michael 
+RTechPhone:  +1-201-605-1440 
+RTechEmail:  abusencc@interserver.net
+RTechRef:    https://rdap.arin.net/registry/entity/MLA13-ARIN
+
+# end
+
+
+# start
+
+NetRange:       66.45.255.24 - 66.45.255.31
+CIDR:           66.45.255.24/29
+NetName:        GPI-HOLDING-LLC
+NetHandle:      NET-66-45-255-24-1
+Parent:         INTERSERVER (NET-66-45-224-0-1)
+NetType:        Reassigned
+OriginAS:       AS19318
+Customer:       Roman Munteanu (C03162754)
+RegDate:        2012-09-20
+Updated:        2012-09-20
+Comment:        GPI Holding, LLC
+Ref:            https://rdap.arin.net/registry/ip/66.45.255.24
+
+
+CustName:       Roman Munteanu
+Address:        1370 SW 201st Ave
+Address:        97006 Beaverton
+City:           Portland
+StateProv:      OR
+PostalCode:     97006
+Country:        US
+RegDate:        2012-09-20
+Updated:        2012-09-20
+Ref:            https://rdap.arin.net/registry/entity/C03162754
+
+OrgNOCHandle: NOC1390-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-201-605-1440 
+OrgNOCEmail:  abusencc@interserver.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC1390-ARIN
+
+OrgTechHandle: NOC1390-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-201-605-1440 
+OrgTechEmail:  abusencc@interserver.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC1390-ARIN
+
+OrgAbuseHandle: NOC1390-ARIN
+OrgAbuseName:   Network Operations Center
+OrgAbusePhone:  +1-201-605-1440 
+OrgAbuseEmail:  abusencc@interserver.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NOC1390-ARIN
+
+RTechHandle: MLA13-ARIN
+RTechName:   Lavrik, Michael 
+RTechPhone:  +1-201-605-1440 
+RTechEmail:  abusencc@interserver.net
+RTechRef:    https://rdap.arin.net/registry/entity/MLA13-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

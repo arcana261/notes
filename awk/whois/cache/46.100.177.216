@@ -1,0 +1,84 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.100.176.0 - 46.100.179.255'
+
+% Abuse contact for '46.100.176.0 - 46.100.179.255' is 'n_rahimzadeh@tci.ir'
+
+inetnum:        46.100.176.0 - 46.100.179.255
+netname:        TCIKMS
+descr:          Telecommunication Company of Kermanshah
+country:        IR
+admin-c:        NA6194-RIPE
+tech-c:         NA6195-RIPE
+tech-c:         mr11350-RIPE
+org:            ORG-TCOK7-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+remarks:        INFRA-AW
+created:        2012-09-17T07:01:15Z
+last-modified:  2019-06-19T06:55:11Z
+source:         RIPE
+
+organisation:   ORG-TCOK7-RIPE
+org-name:       Telecommunication Company of Kermanshah
+org-type:       other
+address:        Kermanshah Telecom
+abuse-c:        AC26518-RIPE
+admin-c:        NA6194-RIPE
+tech-c:         DM16653-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-02-10T11:09:54Z
+last-modified:  2019-02-24T12:27:38Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Kermanshah)
+address:        Kermanshah - Telecommunication Company of Kermanshah
+admin-c:        HRA77-RIPE
+nic-hdl:        NA6194-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T10:48:50Z
+last-modified:  2019-02-24T10:48:50Z
+source:         RIPE # Filtered
+
+role:           NOC (Kermanshah)
+address:        Kermanshah - Telecommunication Company of Kermanshah
+admin-c:        MRR135-RIPE
+nic-hdl:        NA6195-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T12:08:21Z
+last-modified:  2019-02-24T12:08:21Z
+source:         RIPE # Filtered
+
+person:         mehrdad roozrokh
+address:        telecommunication company of Kermanshah
+phone:          +988318243232
+phone:          +989181317034
+nic-hdl:        mr11350-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-07-18T04:54:47Z
+last-modified:  2010-07-18T05:01:29Z
+source:         RIPE
+
+% Information related to '46.100.128.0/18AS58224'
+
+route:          46.100.128.0/18
+descr:          telecommunication company of iran
+origin:         AS58224
+mnt-routes:     TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+mnt-routes:     mohsenrahimimaintainer
+created:        2012-06-12T09:28:53Z
+last-modified:  2016-06-28T10:18:59Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

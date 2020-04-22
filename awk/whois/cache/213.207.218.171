@@ -1,0 +1,72 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '213.207.208.0 - 213.207.255.255'
+
+% Abuse contact for '213.207.208.0 - 213.207.255.255' is 'ripe@datak.ir'
+
+inetnum:        213.207.208.0 - 213.207.255.255
+netname:        IR-DATAK-20021107
+descr:          PROVIDER LOCAL REGISTRY
+country:        IR
+org:            ORG-DIEI1-RIPE
+admin-c:        SRT47-RIPE
+tech-c:         SRT47-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-RasouliTaher
+mnt-lower:      MNT-DATAK
+mnt-lower:      MNT-RasouliTaher
+mnt-routes:     MNT-DATAK
+created:        2017-05-11T13:02:26Z
+last-modified:  2019-09-16T12:34:16Z
+source:         RIPE # Filtered
+
+organisation:   ORG-DIEI1-RIPE
+org-name:       DATAK Internet Engineering, Inc
+org-type:       LIR
+address:        No. 14, Ebne Yamin St.
+address:        1556835311
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982181681000
+fax-no:         +982188512650
+admin-c:        RT6724-RIPE
+abuse-c:        RA8422-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-RasouliTaher
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-RasouliTaher
+created:        2004-04-17T11:28:05Z
+last-modified:  2019-02-24T10:41:08Z
+source:         RIPE # Filtered
+
+person:         s.h Rasouli taher
+address:        No 14 - Ebne Yamin St - North Sohrevardi Ave
+phone:          +98 21 8168 1000
+nic-hdl:        SRT47-RIPE
+mnt-by:         MNT-RasouliTaher
+mnt-by:         MNT-DATAK
+created:        2019-09-16T12:27:24Z
+last-modified:  2019-09-16T12:27:24Z
+source:         RIPE
+
+% Information related to '213.207.216.0/22AS25124'
+
+route:          213.207.216.0/22
+descr:          Datak
+origin:         AS25124
+mnt-by:         MNT-DATAK
+created:        2005-03-07T10:32:21Z
+last-modified:  2006-12-24T09:57:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

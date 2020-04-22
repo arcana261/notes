@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '80.191.144.0 - 80.191.147.255'
+
+% Abuse contact for '80.191.144.0 - 80.191.147.255' is 'abuse@ito.gov.ir'
+
+inetnum:        80.191.144.0 - 80.191.147.255
+netname:        ADSLTCE
+descr:          telecom ADSL
+country:        IR
+admin-c:        AB32753-RIPE
+tech-c:         AB32753-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2002-12-11T07:52:05Z
+last-modified:  2015-07-07T09:09:32Z
+source:         RIPE
+
+person:         Abolghasem Banitaba
+address:        center Of Data radanipoor,22 bahman ST.,Esfahan,iran
+phone:          +98 31 366 60 662
+fax-no:         +98 31 366  620 25
+nic-hdl:        AB32753-RIPE
+mnt-by:         AS12880-MNT
+created:        2015-07-07T09:09:32Z
+last-modified:  2017-10-30T22:53:38Z
+source:         RIPE # Filtered
+
+% Information related to '80.191.144.0/21AS12880'
+
+route:          80.191.144.0/21
+descr:          DCI-Route
+descr:          Esfahan
+origin:         AS12880
+mnt-by:         AS12880-MNT
+created:        2005-11-01T10:30:02Z
+last-modified:  2018-10-17T10:45:14Z
+source:         RIPE
+
+% Information related to '80.191.144.0/21AS58085'
+
+route:          80.191.144.0/21
+origin:         AS58085
+mnt-by:         MNT-Mah
+mnt-by:         MNT-KALAVANI
+created:        2017-01-14T08:16:52Z
+last-modified:  2017-01-14T08:16:52Z
+source:         RIPE
+
+% Information related to '80.191.144.0/21AS58224'
+
+route:          80.191.144.0/21
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-10-17T10:45:35Z
+last-modified:  2018-10-17T10:45:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

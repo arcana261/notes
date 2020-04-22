@@ -1,0 +1,77 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '213.162.73.0 - 213.162.73.255'
+
+% Abuse contact for '213.162.73.0 - 213.162.73.255' is 'abuse@t-mobile.at'
+
+inetnum:        213.162.73.0 - 213.162.73.255
+netname:        TMA_PG3
+descr:          T-Mobile Austria GmbH
+country:        AT
+admin-c:        TMA5-RIPE
+tech-c:         TMA5-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS8412-MNT
+org:            ORG-MTSG1-RIPE
+created:        2007-11-20T10:09:23Z
+last-modified:  2018-03-13T17:20:26Z
+source:         RIPE # Filtered
+
+organisation:   ORG-MTSG1-RIPE
+org-name:       T-Mobile Austria GmbH
+org-type:       LIR
+address:        Rennweg 97-99
+address:        A-1030
+address:        Wien
+address:        AUSTRIA
+phone:          +43 1 795 85 7239
+fax-no:         +43 1 79585 97239
+admin-c:        MR1765-RIPE
+mnt-ref:        AS8412-MNT
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AS8412-MNT
+abuse-c:        TMA5-RIPE
+created:        2004-04-17T10:59:05Z
+last-modified:  2018-03-09T08:54:42Z
+source:         RIPE # Filtered
+
+role:           T Mobile Austria
+address:        T-Mobile Austria GmbH
+address:        Rennweg 97-99
+address:        A-1030 Vienna
+address:        Austria
+mnt-by:         AS8412-MNT
+abuse-mailbox:  abuse@t-mobile.at
+org:            ORG-MTSG1-RIPE
+admin-c:        MR1765-RIPE
+tech-c:         MR1765-RIPE
+nic-hdl:        TMA5-RIPE
+created:        2006-08-02T10:45:55Z
+last-modified:  2018-03-07T06:36:15Z
+source:         RIPE # Filtered
+
+% Information related to '213.162.64.0/19AS8412'
+
+route:          213.162.64.0/19
+descr:          T-Mobile Austria - routing by T-Mobile Austria
+origin:         AS8412
+mnt-by:         AS8412-MNT
+mnt-routes:     AS8412-MNT
+mnt-routes:     AS8387-MNT
+mnt-lower:      AS8412-MNT
+mnt-lower:      AS8387-MNT
+created:        2004-03-10T13:30:30Z
+last-modified:  2004-03-10T13:30:30Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

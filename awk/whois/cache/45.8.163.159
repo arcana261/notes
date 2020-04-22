@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.8.163.0 - 45.8.163.255'
+
+% Abuse contact for '45.8.163.0 - 45.8.163.255' is 'abuse@farzaneganpars.ir'
+
+inetnum:        45.8.163.0 - 45.8.163.255
+netname:        Farzanegan-Broadband8
+country:        IR
+admin-c:        HH4564-RIPE
+tech-c:         HH4564-RIPE
+status:         ASSIGNED PA
+mnt-by:         Farzanegan-MNT
+created:        2019-04-16T09:45:20Z
+last-modified:  2019-11-16T08:42:25Z
+source:         RIPE
+
+person:         Hossein Hejazi
+address:        No 6,Jaleh Alley, South Shiraz St.
+phone:          +989352525105
+phone:          +982142576212
+nic-hdl:        HH4564-RIPE
+mnt-by:         HEJAZI
+created:        2012-05-08T08:08:08Z
+last-modified:  2018-07-31T08:11:27Z
+source:         RIPE # Filtered
+
+% Information related to '45.8.163.0/24AS200370'
+
+route:          45.8.163.0/24
+origin:         AS200370
+mnt-by:         Farzanegan-MNT
+created:        2019-04-16T09:51:21Z
+last-modified:  2019-04-16T09:51:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

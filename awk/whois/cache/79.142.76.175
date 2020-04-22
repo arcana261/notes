@@ -1,0 +1,60 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '79.142.76.0 - 79.142.77.255'
+
+% Abuse contact for '79.142.76.0 - 79.142.77.255' is 'abuse@as51430.net'
+
+inetnum:        79.142.76.0 - 79.142.77.255
+netname:        ALTUSHOST-SE-NET
+descr:          AltusHost Sweden Network
+descr:          Stockholm Data Center
+country:        SE
+geoloc:         59.32758544549428 18.072509765625
+admin-c:        AHNL-RIPE
+tech-c:         AHNL-RIPE
+status:         ASSIGNED PA
+mnt-by:         ALTUSHOST-MNT
+mnt-by:         ALTUSHOST-MNT
+mnt-lower:      ALTUSHOST-MNT
+mnt-routes:     ALTUSHOST-MNT
+created:        2011-03-02T21:26:31Z
+last-modified:  2017-05-17T09:23:01Z
+source:         RIPE
+
+role:           IP Administration
+address:        AltusHost B.V.
+address:        Kingsfordweg 151
+address:        1043 GR Amsterdam
+address:        The Netherlands
+phone:          +31 20 808 44 44
+fax-no:         +31 20 808 44 45
+abuse-mailbox:  abuse@as51430.net
+remarks:        *********************************************************
+remarks:        * For spam/abuse/security issues please contact abuse@as51430.net
+remarks:        *********************************************************
+nic-hdl:        AHNL-RIPE
+mnt-by:         MNT-AHBV
+created:        2017-05-17T08:54:51Z
+last-modified:  2017-05-17T08:55:58Z
+source:         RIPE # Filtered
+
+% Information related to '79.142.76.0/23AS51430'
+
+route:          79.142.76.0/23
+descr:          ALTUSHOST INC.
+origin:         AS51430
+mnt-by:         ALTUSHOST-MNT
+created:        2011-03-04T16:20:03Z
+last-modified:  2011-03-04T16:20:03Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

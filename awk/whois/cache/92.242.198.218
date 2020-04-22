@@ -1,0 +1,54 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '92.242.196.0 - 92.242.200.255'
+
+% Abuse contact for '92.242.196.0 - 92.242.200.255' is 'abuse@respina.net'
+
+inetnum:        92.242.196.0 - 92.242.200.255
+netname:        IR-RSPN
+descr:          Respina Networks & Beyond PJSC
+country:        IR
+admin-c:        RA7044-RIPE
+tech-c:         RA7044-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-RSPN
+created:        2008-08-12T09:08:03Z
+last-modified:  2015-12-28T10:23:16Z
+source:         RIPE
+
+role:           RSPN ADMINS
+address:        No.1, Pedaran Alley. Nezami Ganjavi St. Tavanir St. Valiasr St. Tehran, Iran, Zip Code: 14348
+admin-c:        MH17606-RIPE
+admin-c:        MM43896-RIPE
+admin-c:        AP26962-RIPE
+remarks:        For peering request: majid@respina.net
+admin-c:        MM43896-RIPE
+tech-c:         AP27221-RIPE
+org:            ORG-RNB1-RIPE
+nic-hdl:        RA7044-RIPE
+mnt-by:         MNT-RSPN
+mnt-by:         MNT-RFCP
+created:        2013-12-10T04:38:30Z
+last-modified:  2020-03-31T19:00:14Z
+source:         RIPE # Filtered
+
+% Information related to '92.242.196.0/22AS42337'
+
+route:          92.242.196.0/22
+descr:          Respina-Route
+origin:         AS42337
+mnt-by:         MNT-RSPN
+created:        2009-01-13T06:42:54Z
+last-modified:  2009-01-13T06:42:54Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

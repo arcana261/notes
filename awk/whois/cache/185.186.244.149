@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.186.244.0 - 185.186.247.255'
+
+% Abuse contact for '185.186.244.0 - 185.186.247.255' is 'abuse@hostry.com'
+
+inetnum:        185.186.244.0 - 185.186.247.255
+netname:        CY-INXY-20170123
+country:        NL
+org:            ORG-IL437-RIPE
+admin-c:        DS19761-RIPE
+tech-c:         DS19761-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         cy-inxy-1-mnt
+created:        2017-01-23T15:00:06Z
+last-modified:  2017-01-23T15:00:06Z
+source:         RIPE
+
+organisation:   ORG-IL437-RIPE
+org-name:       INXY LTD.
+org-type:       LIR
+address:        12 Agias Zonis str., 4th floor, Suite 401
+address:        3027
+address:        Limassol
+address:        CYPRUS
+admin-c:        DS19761-RIPE
+tech-c:         DS19761-RIPE
+abuse-c:        AR38767-RIPE
+mnt-ref:        cy-inxy-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         cy-inxy-1-mnt
+created:        2016-12-27T20:56:36Z
+last-modified:  2016-12-29T16:24:47Z
+source:         RIPE # Filtered
+phone:          +35725104256
+
+person:         Dmitry Schulz
+address:        12 Agias Zonis str., 4th floor, Suite 401
+address:        3027
+address:        Limassol
+address:        CYPRUS
+phone:          +35725104256
+nic-hdl:        DS19761-RIPE
+mnt-by:         cy-inxy-1-mnt
+created:        2016-12-27T20:56:35Z
+last-modified:  2016-12-27T20:56:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

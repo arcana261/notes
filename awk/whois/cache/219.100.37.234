@@ -1,0 +1,27 @@
+[ JPNIC database provides information regarding IP address and ASN. Its use   ]
+[ is restricted to network administration purposes. For further information,  ]
+[ use 'whois -h whois.nic.ad.jp help'. To only display English output,        ]
+[ add '/e' at the end of command, e.g. 'whois -h whois.nic.ad.jp xxx/e'.      ]
+
+Network Information:            
+a. [Network Number]             219.100.37.0/24
+b. [Network Name]               SUBA-576-012
+g. [Organization]               SoftEther Corporation Academic Communication Division (OPEN Project)
+m. [Administrative Contact]     DN4818JP
+n. [Technical Contact]          DN4818JP
+p. [Nameserver]                 nsad1.tennoudai.net
+p. [Nameserver]                 nsad2.tennoudai.net
+[Assigned Date]                 2016/12/26
+[Return Date]                   
+[Last Update]                   2016/12/26 19:38:05(JST)
+                                
+Less Specific Info.
+----------
+SoftEther Corporation
+                     [Allocation]                              219.100.36.0/22
+
+More Specific Info.
+----------
+No match!!
+
+

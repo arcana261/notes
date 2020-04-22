@@ -1,0 +1,86 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.166.148.0 - 46.166.148.255'
+
+% Abuse contact for '46.166.148.0 - 46.166.148.255' is 'abuse@nforce.com'
+
+inetnum:        46.166.148.0 - 46.166.148.255
+netname:        NFORCE_ENTERTAINMENT
+descr:          Serverhosting
+org:            ORG-NE3-RIPE
+country:        NL
+admin-c:        NFAR
+tech-c:         NFTR
+status:         ASSIGNED PA
+mnt-by:         MNT-NFORCE
+mnt-lower:      MNT-NFORCE
+mnt-routes:     MNT-NFORCE
+created:        2016-06-01T05:04:13Z
+last-modified:  2016-06-01T05:04:13Z
+source:         RIPE # Filtered
+remarks:        INFRA-AW
+
+organisation:   ORG-NE3-RIPE
+org-name:       NForce Entertainment B.V.
+org-type:       LIR
+address:        Postbus 1142
+address:        4700BC
+address:        Roosendaal
+address:        NETHERLANDS
+phone:          +31206919299
+admin-c:        JVDM119-RIPE
+admin-c:        JH24522-RIPE
+admin-c:        RD8296-RIPE
+admin-c:        NFAR
+tech-c:         NFTR
+abuse-c:        NFAB
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-NFORCE
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-NFORCE
+created:        2007-06-19T08:39:06Z
+last-modified:  2020-04-16T13:53:13Z
+source:         RIPE # Filtered
+
+person:         NFOrce Internet Services - Administrative role account
+address:        Postbus 1142
+address:        4700BC Roosendaal
+address:        The Netherlands
+phone:          +31 (0)206919299
+nic-hdl:        NFAR
+mnt-by:         MNT-NFORCE
+created:        2010-11-13T14:42:50Z
+last-modified:  2019-02-01T16:14:14Z
+source:         RIPE # Filtered
+
+person:         NFOrce Internet Services - Technical role account
+address:        Postbus 1142
+address:        4700BC Roosendaal
+address:        The Netherlands
+phone:          +31 (0)206919299
+nic-hdl:        NFTR
+mnt-by:         MNT-NFORCE
+created:        2010-11-13T14:43:05Z
+last-modified:  2018-07-04T15:22:04Z
+source:         RIPE # Filtered
+
+% Information related to '46.166.144.0/21AS43350'
+
+route:          46.166.144.0/21
+descr:          NFOrce Entertainment BV - route 46.166.144.0/21
+origin:         AS43350
+mnt-by:         MNT-NFORCE
+created:        2015-09-11T14:49:06Z
+last-modified:  2015-09-11T14:49:06Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

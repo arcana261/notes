@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '81.17.23.192 - 81.17.23.199'
+
+% Abuse contact for '81.17.23.192 - 81.17.23.199' is 'abuse@privatelayer.com'
+
+inetnum:        81.17.23.192 - 81.17.23.199
+netname:        CLIENTID4338
+descr:          CLIENTID4338
+country:        CH
+admin-c:        JP5315-RIPE
+tech-c:         JP5315-RIPE
+status:         ASSIGNED PA
+mnt-by:         KP73900-MNT
+created:        2012-10-08T15:30:50Z
+last-modified:  2012-10-08T15:30:50Z
+source:         RIPE
+
+person:         Milciades Garcia
+address:        Edificio Don Tin, Office 306
+address:        Ave Cuba, Calidonia
+address:        Panama City
+address:        Panama
+phone:          +5078339167
+nic-hdl:        JP5315-RIPE
+mnt-by:         KP73900-MNT
+created:        2011-03-17T23:52:10Z
+last-modified:  2018-05-30T19:09:03Z
+source:         RIPE # Filtered
+
+% Information related to '81.17.16.0/20AS51852'
+
+route:          81.17.16.0/20
+descr:          Ripe Allocation
+origin:         AS51852
+mnt-by:         KP73900-MNT
+created:        2012-04-25T13:15:26Z
+last-modified:  2012-04-25T13:15:26Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.218.247.0 - 217.218.247.255'
+
+% Abuse contact for '217.218.247.0 - 217.218.247.255' is 'abuse@ito.gov.ir'
+
+inetnum:        217.218.247.0 - 217.218.247.255
+netname:        TCISEM
+descr:          Telecomunication Company of Semnan
+descr:          7tir Sq. Semnan.Iran
+country:        IR
+admin-c:        SAS343-RIPE
+tech-c:         SAS343-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2015-02-08T10:56:15Z
+last-modified:  2015-02-08T10:56:15Z
+source:         RIPE
+
+person:         Seyed Abbas ShahMortezaii
+address:        Telecomunication Company of Semnan
+address:        7tir Sq. Semnan ,Iran
+phone:          +98 231 51228
+fax-no:         +98 231 27777
+nic-hdl:        SAS343-RIPE
+mnt-by:         AS12880-MNT
+created:        2015-02-08T10:56:15Z
+last-modified:  2015-02-08T10:56:15Z
+source:         RIPE
+
+% Information related to '217.218.247.0/24AS51119'
+
+route:          217.218.247.0/24
+origin:         AS51119
+mnt-by:         MNT-TCSEM
+created:        2017-02-12T06:28:21Z
+last-modified:  2017-02-12T06:28:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

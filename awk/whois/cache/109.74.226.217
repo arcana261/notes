@@ -1,0 +1,89 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '109.74.224.0 - 109.74.231.255'
+
+% Abuse contact for '109.74.224.0 - 109.74.231.255' is 'e.talebnia@tci.ir'
+
+inetnum:        109.74.224.0 - 109.74.231.255
+org:            ORG-TCOL4-RIPE
+netname:        TCILOR
+country:        AE
+admin-c:        NA6199-RIPE
+tech-c:         NA6330-RIPE
+tech-c:         DP14866-RIPE
+tech-c:         NS5754-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2018-08-28T07:13:54Z
+last-modified:  2019-06-19T09:40:03Z
+source:         RIPE
+
+organisation:   ORG-TCOL4-RIPE
+org-name:       Telecommunication company of Lorestan
+org-type:       OTHER
+admin-c:        NA6199-RIPE
+tech-c:         DP14866-RIPE
+address:        Tir sQ,Janbazan Av, Khorramabad , Iran
+abuse-c:        AC36547-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2018-08-28T07:08:45Z
+last-modified:  2019-03-02T06:55:24Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Lorestan)
+address:        Khorram abad - Ostandari Squre - Telecommunication Company of Khoram Abad
+admin-c:        ZB1450-RIPE
+nic-hdl:        DP14866-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T06:38:11Z
+last-modified:  2019-03-02T06:38:11Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Lorestan)
+address:        Khorram abad - Ostandari Squre - Telecommunication Company of Khoram Abad
+admin-c:        NSF16-RIPE
+nic-hdl:        NA6199-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T05:38:22Z
+last-modified:  2019-03-02T05:38:22Z
+source:         RIPE # Filtered
+
+role:           NOC (Lorestan)
+address:        Khorram abad - Ostandari Squre - Telecommunication Company of Khoram Abad
+admin-c:        SH14773-RIPE
+nic-hdl:        NA6330-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-19T09:21:14Z
+last-modified:  2019-06-19T09:21:14Z
+source:         RIPE # Filtered
+
+person:         Nabialah SHamsifar
+address:        Tir sQ,Janbazan Av, Khorramabad , Iran
+phone:          +98 663 332 56 96
+fax-no:         +98 661 221 64 11
+nic-hdl:        NS5754-RIPE
+mnt-by:         AS12880-MNT
+created:        2015-03-09T10:35:14Z
+last-modified:  2017-10-30T22:45:08Z
+source:         RIPE # Filtered
+
+% Information related to '109.74.224.0/20AS58224'
+
+route:          109.74.224.0/20
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-06-20T15:10:04Z
+last-modified:  2018-06-20T15:10:39Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

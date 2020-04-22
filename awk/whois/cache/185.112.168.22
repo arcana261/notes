@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.112.168.0 - 185.112.171.255'
+
+% Abuse contact for '185.112.168.0 - 185.112.171.255' is 'abuse@pj24.ir'
+
+inetnum:        185.112.168.0 - 185.112.171.255
+netname:        IR-PJCO-20150807
+country:        IR
+org:            ORG-PTFE1-RIPE
+admin-c:        hk4933-ripe
+tech-c:         hk4933-ripe
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HK355-MNT
+mnt-lower:      HK355-MNT
+mnt-routes:     HK355-MNT
+created:        2015-08-07T13:23:28Z
+last-modified:  2018-09-11T07:41:13Z
+source:         RIPE
+geoloc:         28.9672566 50.8370788
+
+organisation:   ORG-PTFE1-RIPE
+org-name:       Pishgaman Toseeh Fanavari Etelaat Va Ertebatat Jonoub (Joint Stock Company)
+org-type:       LIR
+address:        Imam Khomeini Blvd
+address:        7514718877
+address:        Bushehr
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +987733563810
+fax-no:         +987733563818
+abuse-c:        AC28833-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        HK355-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HK355-MNT
+created:        2014-07-30T10:55:02Z
+last-modified:  2016-10-18T11:40:55Z
+source:         RIPE # Filtered
+
+person:         Hossein Kouzehgar
+address:        Imam Khomeini Blvd, Bushehr, I.R.Iran, Pishgaman Toseeh Fanavari Etelaat va Ertebatat Jonoub
+phone:          +987733563810
+nic-hdl:        HK4933-RIPE
+mnt-by:         HK355-MNT
+created:        2014-09-26T14:55:06Z
+last-modified:  2014-10-09T05:02:33Z
+source:         RIPE # Filtered
+
+% Information related to '185.112.168.0/22as201540'
+
+route:          185.112.168.0/22
+descr:          Pishgaman Tose Fannavari Ettelaat Va Ertebatat Jonoub
+origin:         as201540
+mnt-by:         HK355-mnt
+created:        2015-11-03T11:43:14Z
+last-modified:  2015-11-03T11:43:14Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

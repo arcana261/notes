@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.225.208.0 - 185.225.211.255'
+
+% Abuse contact for '185.225.208.0 - 185.225.211.255' is 'abuse@uk2group.com'
+
+inetnum:        185.225.208.0 - 185.225.211.255
+netname:        US-VPS-NET-20171016
+country:        DE
+org:            ORG-HSI3-RIPE
+admin-c:        UK2
+tech-c:         UK2
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AS13213-MNT
+mnt-lower:      AS13213-MNT
+mnt-routes:     AS13213-MNT
+created:        2017-10-16T11:29:25Z
+last-modified:  2017-10-16T11:29:25Z
+source:         RIPE
+
+organisation:   ORG-HSI3-RIPE
+org-name:       Hosting Services Inc
+org-type:       LIR
+address:        164 N. Gateway Drive
+address:        UT 84332
+address:        Providence
+address:        UNITED STATES
+phone:          +442070537671
+fax-no:         +442070537671
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        AS13213-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AS13213-MNT
+descr:          VPS.net Cloud Services
+abuse-c:        AR17971-RIPE
+admin-c:        PD6887-RIPE
+created:        2012-04-19T09:41:35Z
+last-modified:  2018-12-21T15:06:24Z
+source:         RIPE # Filtered
+
+role:           UK2
+address:        91 - 95 Brick Lane
+address:        Truman Brewery
+address:        London
+address:        E1 6QL
+abuse-mailbox:  abuse@uk2group.com
+admin-c:        JI884-RIPE
+tech-c:         JI884-RIPE
+nic-hdl:        UK2
+mnt-by:         AS13213-MNT
+created:        2014-07-11T10:37:58Z
+last-modified:  2018-10-04T14:34:14Z
+source:         RIPE # Filtered
+
+% Information related to '185.225.208.0/22AS13213'
+
+route:          185.225.208.0/22
+origin:         AS13213
+descr:          UK2NET Frankfurt Announcement
+mnt-by:         AS13213-MNT
+created:        2017-10-16T11:34:46Z
+last-modified:  2017-10-16T11:34:46Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

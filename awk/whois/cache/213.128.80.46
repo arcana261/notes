@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '213.128.80.0 - 213.128.80.255'
+
+% Abuse contact for '213.128.80.0 - 213.128.80.255' is 'abuse@as42926.net'
+
+inetnum:        213.128.80.0 - 213.128.80.255
+remarks:        IP BLOCKS FOR COLOCATION / DEDICATED SERVERS
+remarks:        CONTACT US FOR END USER / CUSTOMER INFORMATION
+remarks:        adli bilgi talepleri icin lutfen 0212 920 00 00, info@sayfa.net ve adresimizden iletisim kurunuz.
+netname:        SAYFA-NET
+descr:          ISTANBULDC VERI MERKEZI LTD. STI.
+descr:          www.istanbuldc.com
+country:        TR
+admin-c:        SN3028-RIPE
+tech-c:         SN3028-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS42926-MNT
+mnt-by:         SAYFA-NET-MNT
+mnt-lower:      ISTANBULDC-MNT
+created:        2013-04-14T22:57:19Z
+last-modified:  2017-03-02T11:01:50Z
+source:         RIPE
+
+person:         Sayfa Net ISTANBULDC VERI MERKEZI
+address:        bu ip adresleri diger yer saglayicilarina kiralanmistir.
+address:        adli makamlarca gereken musteri bilgisi icin telefonumuz 0212 920 00 00
+address:        Istanbul
+address:        Turkey, TR
+phone:          +90 (212) 920 00 00
+phone:          +90 (532) 723 52 63
+nic-hdl:        SN3028-RIPE
+mnt-by:         ISTANBULDC-MNT
+created:        2011-01-13T15:30:41Z
+last-modified:  2017-10-30T22:12:24Z
+source:         RIPE # Filtered
+
+% Information related to '213.128.80.0/24AS197328'
+
+route:          213.128.80.0/24
+origin:         AS197328
+mnt-by:         SAYFA-NET-MNT
+created:        2017-04-27T07:35:44Z
+last-modified:  2017-04-27T07:35:44Z
+source:         RIPE
+
+% Information related to '213.128.80.0/24AS59447'
+
+route:          213.128.80.0/24
+descr:          SAYFA.NET COLOCATION CUSTOMERS
+origin:         AS59447
+mnt-by:         SAYFA-NET-MNT
+created:        2016-01-04T16:25:04Z
+last-modified:  2016-01-04T16:25:04Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

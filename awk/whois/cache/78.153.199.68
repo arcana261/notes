@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '78.153.199.64 - 78.153.199.95'
+
+% Abuse contact for '78.153.199.64 - 78.153.199.95' is 'abuse+dmca@pango.co'
+
+inetnum:        78.153.199.64 - 78.153.199.95
+netname:        Pango
+country:        IE
+admin-c:        PA10138-RIPE
+tech-c:         PA10138-RIPE
+abuse-c:        PA10138-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         MNT-BLACKNIGHT
+created:        2019-12-09T14:57:40Z
+last-modified:  2019-12-09T14:57:40Z
+source:         RIPE
+
+role:           Pango
+address:        IE
+abuse-mailbox:  abuse+dmca@pango.co
+nic-hdl:        PA10138-RIPE
+mnt-by:         MNT-BLACKNIGHT
+created:        2019-12-09T14:55:15Z
+last-modified:  2019-12-09T14:57:28Z
+source:         RIPE # Filtered
+
+% Information related to '78.153.192.0/19AS39122'
+
+route:          78.153.192.0/19
+descr:          IE-BLACKNIGHT-NET2-PA
+origin:         AS39122
+mnt-by:         MNT-BLACKNIGHT
+created:        2007-07-11T12:47:50Z
+last-modified:  2019-06-07T15:48:50Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

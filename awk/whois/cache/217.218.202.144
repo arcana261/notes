@@ -1,0 +1,79 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.218.202.0 - 217.218.203.255'
+
+% Abuse contact for '217.218.202.0 - 217.218.203.255' is 'm.lashgari@tci.ir'
+
+inetnum:        217.218.202.0 - 217.218.203.255
+org:            ORG-TCOA4-RIPE
+netname:        alborz-tct
+descr:          Telecommunication Company of Alborz
+country:        IR
+admin-c:        NA6227-RIPE
+tech-c:         NA6338-RIPE
+tech-c:         TA6718-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2020-02-23T12:56:44Z
+last-modified:  2020-02-23T12:56:44Z
+source:         RIPE
+
+organisation:   ORG-TCOA4-RIPE
+org-name:       Telecommunication Company of Alborz
+org-type:       OTHER
+address:        Alborz
+admin-c:        NA6227-RIPE
+tech-c:         NA6228-RIPE
+abuse-c:        AC34782-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2017-08-28T11:37:37Z
+last-modified:  2019-03-03T10:45:51Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Alborz)
+address:        Karaj - Taleghani Street - Telecommunication Company of Alborz
+admin-c:        YASZ1-RIPE
+nic-hdl:        NA6227-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T10:22:22Z
+last-modified:  2019-03-03T10:22:22Z
+source:         RIPE # Filtered
+
+role:           NOC (Alborz)
+address:        Karaj - Taleghani Street - Telecommunication Company of Alborz
+admin-c:        MF18765-RIPE
+nic-hdl:        NA6338-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-24T07:26:38Z
+last-modified:  2019-06-24T07:26:38Z
+source:         RIPE # Filtered
+
+role:           Tejari (Alborz)
+address:        Karaj - Taleghani Street - Telecommunication Company of Alborz
+admin-c:        MSN60-RIPE
+nic-hdl:        TA6718-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-24T07:32:32Z
+last-modified:  2019-06-24T07:32:32Z
+source:         RIPE # Filtered
+
+% Information related to '217.218.202.0/23AS58224'
+
+route:          217.218.202.0/23
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2020-02-23T13:05:14Z
+last-modified:  2020-02-23T13:05:14Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

@@ -1,0 +1,91 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.236.156.0 - 5.236.207.255'
+
+% Abuse contact for '5.236.156.0 - 5.236.207.255' is 'h.manocheri@tci.ir'
+
+inetnum:        5.236.156.0 - 5.236.207.255
+netname:        TCIHMD
+descr:          Telecommunication Company of Hamedan
+country:        IR
+admin-c:        NA6211-RIPE
+tech-c:         NA6336-RIPE
+tech-c:         DP15056-RIPE
+tech-c:         JKR38-RIPE
+org:            ORG-TCOH1-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+mnt-lower:      TCI-RIPE-MNT
+mnt-routes:     TCI-RIPE-MNT
+created:        2013-07-22T07:18:21Z
+last-modified:  2019-06-25T06:51:52Z
+source:         RIPE
+
+organisation:   ORG-TCOH1-RIPE
+org-name:       Telecommunication Company of Hamedan
+org-type:       other
+address:        Hamedan Telecom
+abuse-c:        AC26986-RIPE
+admin-c:        NA6211-RIPE
+tech-c:         DM16667-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-12T11:35:53Z
+last-modified:  2019-03-03T05:30:51Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Hamedan)
+address:        Hamedan - Telecommunication Company of Hamedan
+admin-c:        JH29687-RIPE
+nic-hdl:        DP15056-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-24T07:06:08Z
+last-modified:  2019-06-24T07:06:08Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Hamedan)
+address:        Hamedan - Telecommunication Company of Hamedan
+admin-c:        NMT14-RIPE
+nic-hdl:        NA6211-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T12:34:15Z
+last-modified:  2019-03-02T12:34:15Z
+source:         RIPE # Filtered
+
+role:           NOC (Hamedan)
+address:        Hamedan - Telecommunication Company of Hamedan
+admin-c:        VV4235-RIPE
+nic-hdl:        NA6336-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-24T07:04:09Z
+last-modified:  2019-06-24T07:04:09Z
+source:         RIPE # Filtered
+
+person:         Javad Karimi Radpour
+address:        telecommunication company of Hamedan
+phone:          +98-81-34245454
+nic-hdl:        JKR38-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2013-07-17T11:36:32Z
+last-modified:  2015-02-02T09:26:23Z
+source:         RIPE
+
+% Information related to '5.236.156.0/22AS58224'
+
+route:          5.236.156.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2019-09-21T05:35:09Z
+last-modified:  2019-09-21T05:35:09Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

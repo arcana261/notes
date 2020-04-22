@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.177.228.0 - 185.177.231.255'
+
+% Abuse contact for '185.177.228.0 - 185.177.231.255' is 'abuse.support@h4g.co'
+
+inetnum:        185.177.228.0 - 185.177.231.255
+netname:        US-HOST4GEEKS-20161116
+country:        GB
+org:            ORG-HL130-RIPE
+admin-c:        HN2332-RIPE
+tech-c:         HN2332-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         us-host4geeks-1-mnt
+created:        2016-11-16T09:45:31Z
+last-modified:  2016-11-16T09:45:31Z
+source:         RIPE
+
+organisation:   ORG-HL130-RIPE
+org-name:       Host4Geeks LLC
+org-type:       LIR
+address:
+address:        91780
+address:        Walnut, CA
+address:        UNITED STATES
+admin-c:        HN2332-RIPE
+tech-c:         HN2332-RIPE
+abuse-c:        AR38305-RIPE
+mnt-ref:        us-host4geeks-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         us-host4geeks-1-mnt
+created:        2016-11-14T10:53:29Z
+last-modified:  2017-08-17T10:07:26Z
+source:         RIPE # Filtered
+phone:          +18557374335
+
+person:         Host4Geeks NOC
+address:        340S, Lemon Ave
+address:        91789
+address:        CA, Walnut
+address:        USA
+phone:          +18557374335
+nic-hdl:        HN2332-RIPE
+mnt-by:         us-host4geeks-1-mnt
+created:        2016-11-14T10:53:28Z
+last-modified:  2016-11-14T12:30:08Z
+source:         RIPE
+
+% Information related to '185.177.229.0/24AS61003'
+
+route:          185.177.229.0/24
+origin:         AS61003
+mnt-by:         Host4Geeks
+mnt-by:         us-host4geeks-1-mnt
+created:        2020-01-07T11:21:48Z
+last-modified:  2020-01-07T11:21:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

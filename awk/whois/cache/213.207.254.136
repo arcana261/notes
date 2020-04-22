@@ -1,0 +1,53 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '213.207.248.0 - 213.207.255.255'
+
+% Abuse contact for '213.207.248.0 - 213.207.255.255' is 'ripe@datak.ir'
+
+inetnum:        213.207.248.0 - 213.207.255.255
+netname:        IR-GOSTAREH
+descr:          GOSTAREH ONLINE
+country:        IR
+admin-c:        DBO1-RIPE
+tech-c:         DBO1-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-DATAK
+created:        2006-05-09T12:14:22Z
+last-modified:  2006-12-24T06:20:46Z
+source:         RIPE # Filtered
+
+role:           DATAK
+address:        DATAK
+address:        No 14 - Ebne Yamin St - North Sohrevardi Ave
+address:        Tehran - IRAN
+phone:          +98 21 8168 1000
+abuse-mailbox:  ripe@datak.ir
+admin-c:        RT6724-RIPE
+tech-c:         RT6724-RIPE
+nic-hdl:        DBO1-RIPE
+mnt-by:         MNT-DATAK
+mnt-by:         MNT-RasouliTaher
+created:        2002-11-18T17:36:18Z
+last-modified:  2020-01-07T09:28:33Z
+source:         RIPE # Filtered
+
+% Information related to '213.207.252.0/22as25124'
+
+route:          213.207.252.0/22
+descr:          EK POP
+origin:         as25124
+mnt-by:         MNT-DATAK
+created:        2005-01-16T11:06:08Z
+last-modified:  2006-12-24T09:57:47Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.253.120.0 - 185.253.121.255'
+
+% Abuse contact for '185.253.120.0 - 185.253.121.255' is 'abuse@fxtrading.net'
+
+inetnum:        185.253.120.0 - 185.253.121.255
+netname:        FX_Trading_TR
+country:        TR
+geoloc:         41.0082 28.9784
+admin-c:        JM19876-RIPE
+tech-c:         JM19876-RIPE
+mnt-routes:     GLOBALAXS-MNT
+status:         SUB-ALLOCATED PA
+mnt-by:         us-fxcapital-1-mnt
+created:        2018-04-13T14:35:32Z
+last-modified:  2018-11-29T18:47:17Z
+source:         RIPE
+
+person:         John Mills
+address:        185 HARCROSS RD
+address:        94062-2315
+address:        WOODSIDE
+address:        UNITED STATES
+phone:          +14157285258
+nic-hdl:        JM19876-RIPE
+mnt-by:         us-fxcapital-1-mnt
+created:        2018-03-14T16:17:11Z
+last-modified:  2018-03-14T16:17:12Z
+source:         RIPE
+
+% Information related to '185.253.121.0/24AS9009'
+
+route:          185.253.121.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2018-11-29T19:19:42Z
+last-modified:  2018-11-29T19:19:42Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

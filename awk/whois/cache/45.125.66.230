@@ -1,0 +1,60 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '45.125.66.0 - 45.125.66.255'
+
+% Abuse contact for '45.125.66.0 - 45.125.66.255' is 'abuse@tele-asia.net'
+
+inetnum:        45.125.66.0 - 45.125.66.255
+netname:        HostBaltic-LT
+descr:          HostBaltic Lithuania
+country:        LT
+admin-c:        TAHH1-AP
+tech-c:         TAHH1-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-HK-TELEASIA
+mnt-irt:        IRT-TELE-ASIA
+last-modified:  2015-11-28T11:24:39Z
+source:         APNIC
+
+irt:            IRT-TELE-ASIA
+address:        Tele Asia Limited
+address:        Unit 211, 2/F, Poly Centre
+address:        15 Yip Fung Street, On Lok Tseun
+address:        Fanling, NT, Hong Kong
+e-mail:         abuse@tele-asia.net
+abuse-mailbox:  abuse@tele-asia.net
+admin-c:        TAHH1-AP
+tech-c:         TAHH1-AP
+auth:           # Filtered
+remarks:        abuse@tele-asia.net is invalid
+mnt-by:         MAINT-TELE-HK
+last-modified:  2019-12-18T13:35:24Z
+source:         APNIC
+
+role:           Tele Asia  Host Hong Kong administrator
+address:        Tele Asia Limited, Unit 211, 2/F, Poly Centre, 15 Yip Fung Street, On Lok Tseun,, Fanling New Territ
+country:        HK
+phone:          +85281700749
+fax-no:         +85281700749
+e-mail:         abusedept@tele-asia.net
+admin-c:        TAHH1-AP
+tech-c:         TAHH1-AP
+nic-hdl:        TAHH1-AP
+mnt-by:         MAINT-TELE-HK
+last-modified:  2013-02-15T04:02:01Z
+source:         APNIC
+
+% Information related to '45.125.66.0/24AS133398'
+
+route:          45.125.66.0/24
+descr:          route object for 45.125.66.0/24
+origin:         AS133398
+mnt-by:         MAINT-HK-TELEASIA
+country:        LT
+last-modified:  2015-09-17T23:18:41Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK3)
+
+

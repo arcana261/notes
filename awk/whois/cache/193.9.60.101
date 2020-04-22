@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '193.9.60.0 - 193.9.63.255'
+
+% Abuse contact for '193.9.60.0 - 193.9.63.255' is 'abuse@majorhost.net'
+
+inetnum:        193.9.60.0 - 193.9.63.255
+netname:        RU-INTERNETHOSTING-20181018
+country:        RU
+org:            ORG-IHL17-RIPE
+admin-c:        GA10646-RIPE
+tech-c:         GA10646-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-ru-internethosting-1
+mnt-routes:     MNT-MBNET
+geoloc:         55.874023 37.465209
+created:        2018-10-18T10:30:37Z
+last-modified:  2019-08-01T19:44:28Z
+source:         RIPE
+
+organisation:   ORG-IHL17-RIPE
+org-name:       Internet Hosting LLC
+org-type:       LIR
+address:        Novo-rogachevskaya 11a
+address:        141800
+address:        Dmitrov
+address:        RUSSIAN FEDERATION
+admin-c:        AA34010-RIPE
+tech-c:         AA34010-RIPE
+abuse-c:        AR48792-RIPE
+mnt-ref:        mnt-ru-internethosting-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-ru-internethosting-1
+created:        2018-10-17T16:59:07Z
+last-modified:  2018-11-21T07:55:15Z
+source:         RIPE # Filtered
+phone:          +370 52142141
+
+person:         Gleb Artamonov
+address:        Lvovo g. 13C-5
+address:        09313
+address:        Vilnius
+address:        LITHUANIA
+phone:          +37052142141
+nic-hdl:        GA10646-RIPE
+mnt-by:         mnt-lt-serveriotechnologijos-1
+created:        2018-10-31T14:11:10Z
+last-modified:  2018-11-01T21:50:31Z
+source:         RIPE
+
+% Information related to '193.9.60.0/22AS42632'
+
+route:          193.9.60.0/22
+descr:          InternetHosting network
+origin:         AS42632
+mnt-by:         MNT-MBNET
+created:        2018-10-19T12:41:14Z
+last-modified:  2018-10-19T12:41:14Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

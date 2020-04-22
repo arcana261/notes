@@ -1,0 +1,80 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '43.245.160.0 - 43.245.163.255'
+
+% Abuse contact for '43.245.160.0 - 43.245.163.255' is 'networkabuse@intergrid.com.au'
+
+inetnum:        43.245.160.0 - 43.245.163.255
+netname:        INTERGRID-AU
+descr:          Intergrid Group Pty Ltd
+descr:          PO BOX 62,
+descr:          HORNSBY NSW 1630
+country:        AU
+org:            ORG-IGPL1-AP
+admin-c:        IGPL7-AP
+tech-c:         IGPL7-AP
+mnt-by:         APNIC-HM
+mnt-lower:      MAINT-INTERGRID1-AU
+mnt-routes:     MAINT-INTERGRID1-AU
+mnt-irt:        IRT-INTERGRID-AU
+status:         ALLOCATED PORTABLE
+remarks:        --------------------------------------------------------
+remarks:        To report network abuse, please contact mnt-irt
+remarks:        For troubleshooting, please contact tech-c and admin-c
+remarks:        Report invalid contact via www.apnic.net/invalidcontact
+remarks:        --------------------------------------------------------
+last-modified:  2018-12-16T23:09:19Z
+source:         APNIC
+
+irt:            IRT-INTERGRID-AU
+address:        PO Box 62, Hornsby New South Wales 1630
+e-mail:         noc@intergrid.com.au
+abuse-mailbox:  networkabuse@intergrid.com.au
+admin-c:        IGPL7-AP
+tech-c:         IGPL7-AP
+auth:           # Filtered
+remarks:        noc@intergrid.com.au was validated on 2019-12-03
+remarks:        networkabuse@intergrid.com.au is invalid
+mnt-by:         MAINT-INTERGRID1-AU
+last-modified:  2019-12-18T13:38:12Z
+source:         APNIC
+
+organisation:   ORG-IGPL1-AP
+org-name:       Intergrid Group Pty Ltd
+country:        AU
+address:        PO BOX 62
+phone:          +61291910627
+e-mail:         noc@intergrid.com.au
+mnt-ref:        APNIC-HM
+mnt-by:         APNIC-HM
+last-modified:  2017-08-29T23:22:37Z
+source:         APNIC
+
+role:           Intergrid Group Pty Ltd administrator
+address:        PO Box 62, Hornsby New South Wales 1630
+country:        AU
+phone:          +61291910627
+fax-no:         +61291910627
+e-mail:         noc@intergrid.com.au
+admin-c:        IGPL7-AP
+tech-c:         IGPL7-AP
+nic-hdl:        IGPL7-AP
+mnt-by:         MAINT-INTERGRID1-AU
+last-modified:  2018-01-24T23:07:43Z
+abuse-mailbox:  networkabuse@intergrid.com.au
+source:         APNIC
+
+% Information related to '43.245.161.0/24AS133480'
+
+route:          43.245.161.0/24
+origin:         AS133480
+descr:          Intergrid Group Pty Ltd
+                PO BOX 62
+mnt-by:         MAINT-INTERGRID1-AU
+last-modified:  2020-04-05T03:03:50Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK3)
+
+

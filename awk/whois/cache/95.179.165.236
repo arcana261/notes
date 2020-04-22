@@ -1,0 +1,70 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.179.164.0 - 95.179.165.255'
+
+% Abuse contact for '95.179.164.0 - 95.179.165.255' is 'abuse@vultr.com'
+
+inetnum:        95.179.164.0 - 95.179.165.255
+created:        2018-06-27T19:00:04Z
+last-modified:  2018-06-27T19:00:04Z
+source:         RIPE
+netname:        NET-V4-95-179-128-0-17
+descr:          Hanauer Landstraﬂe 302
+descr:          60314 Frankfurt am Main
+descr:          Germany
+country:        DE
+geoloc:         50.1200 8.7334
+org:            ORG-VHLF1-RIPE
+admin-c:        VHLF1-RIPE
+tech-c:         VHLF2-RIPE
+status:         ASSIGNED PA
+mnt-by:         MAINT-AS20473
+
+organisation:   ORG-VHLF1-RIPE
+created:        2017-12-26T21:41:29Z
+last-modified:  2017-12-26T21:41:29Z
+source:         RIPE # Filtered
+org-name:       Vultr Holdings LLC Frankfurt
+org-type:       OTHER
+address:        Hanauer Landstraﬂe 302
+address:        60314 Frankfurt am Main
+address:        Germany
+phone:          +1-973-849-0500
+admin-c:        VHLF1-RIPE
+tech-c:         VHLF2-RIPE
+abuse-c:        VHLF3-RIPE
+mnt-by:         MAINT-AS20473
+mnt-ref:        MAINT-AS20473
+
+person:         Vultr Holdings LLC Frankfurt Admin
+created:        2017-12-26T21:41:28Z
+last-modified:  2017-12-26T21:41:28Z
+source:         RIPE # Filtered
+address:        14 Cliffwood Ave Suite 300, Metropark South
+address:        Matawan, NJ 07747
+address:        United States
+phone:          +1-973-849-0500
+mnt-by:         MAINT-AS20473
+nic-hdl:        VHLF1-RIPE
+
+person:         Vultr Holdings LLC Frankfurt Tech
+created:        2017-12-26T21:41:29Z
+last-modified:  2017-12-26T21:41:29Z
+source:         RIPE # Filtered
+address:        14 Cliffwood Ave Suite 300, Metropark South
+address:        Matawan, NJ 07747
+address:        United States
+phone:          +1-973-849-0500
+mnt-by:         MAINT-AS20473
+nic-hdl:        VHLF2-RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,58 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.138.218.0 - 217.138.218.255'
+
+% Abuse contact for '217.138.218.0 - 217.138.218.255' is 'support@venus.co.uk'
+
+inetnum:        217.138.218.0 - 217.138.218.255
+netname:        M247-LTD-Madrid
+descr:          M247 Ltd Madrid Infrastructure
+country:        ES
+geoloc:         40.4378698 -3.8196192
+admin-c:        GBXS3-RIPE
+tech-c:         GBXS3-RIPE
+status:         ASSIGNED PA
+mnt-by:         GLOBALAXS-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2019-12-05T11:43:16Z
+last-modified:  2019-12-05T11:43:16Z
+source:         RIPE
+
+role:           GLOBALAXS NOC MADRID
+remarks:        M247 - Network Management Centre Madrid
+address:        Calle Albasanz, 71
+address:        28037, Madrid, Spain
+abuse-mailbox:  ro-legal@m247.ro
+tech-c:         PC12694-RIPE
+tech-c:         JB3482-RIPE
+tech-c:         CB2407-RIPE
+nic-hdl:        GBXS3-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-03-15T14:10:14Z
+last-modified:  2019-06-04T13:28:21Z
+source:         RIPE # Filtered
+
+% Information related to '217.138.218.0/24AS9009'
+
+route:          217.138.218.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-10-08T07:43:52Z
+last-modified:  2019-10-08T07:43:52Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

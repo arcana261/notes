@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.120.244.0 - 185.120.245.0'
+
+% Abuse contact for '185.120.244.0 - 185.120.245.0' is 'gh_yousefi@tci.ir'
+
+inetnum:        185.120.244.0 - 185.120.245.0
+org:            ORG-TCOE4-RIPE
+netname:        EsfahanPublicWifi
+country:        IR
+admin-c:        NA6239-RIPE
+tech-c:         DP15065-RIPE
+tech-c:         NA6357-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2019-09-07T10:00:39Z
+last-modified:  2019-09-07T10:02:00Z
+source:         RIPE
+
+organisation:   ORG-TCOE4-RIPE
+org-name:       Telecommunication Company of Esfahan
+org-type:       OTHER
+address:        Esfahan - Telecommunication Company of Esfahan
+abuse-c:        AC37597-RIPE
+admin-c:        NA6239-RIPE
+tech-c:         DM16689-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2019-07-03T07:28:45Z
+last-modified:  2019-07-03T07:28:45Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Esfahan)
+address:        Esfahan - Jei Street - telecommunication company of Esfahan
+admin-c:        GG17343-RIPE
+nic-hdl:        DP15065-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-07-03T07:32:10Z
+last-modified:  2019-07-03T07:32:10Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Esfahan)
+address:        Esfahan - Jei Street - telecommunication company of Esfahan
+admin-c:        EG7864-RIPE
+nic-hdl:        NA6239-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-11T12:12:58Z
+last-modified:  2019-03-11T12:12:58Z
+source:         RIPE # Filtered
+
+role:           NOC (Esfahan)
+address:        Esfahan - Jei Street - telecommunication company of Esfahan
+admin-c:        MJ83855-RIPE
+nic-hdl:        NA6357-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-07-03T07:34:32Z
+last-modified:  2019-07-03T07:34:32Z
+source:         RIPE # Filtered
+
+% Information related to '185.120.244.0/23AS58224'
+
+route:          185.120.244.0/23
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2019-09-07T09:57:10Z
+last-modified:  2019-09-07T09:57:10Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

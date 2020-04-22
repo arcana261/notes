@@ -1,0 +1,72 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '126.0.0.0 - 126.133.255.255'
+
+% Abuse contact for '126.0.0.0 - 126.133.255.255' is 'abuse@bbtec.net'
+
+inetnum:        126.0.0.0 - 126.133.255.255
+netname:        BBTEC
+descr:          Japan Nation-wide Network of Softbank Corp.
+country:        JP
+org:            ORG-SC4-AP
+admin-c:        SA421-AP
+tech-c:         SA421-AP
+status:         ALLOCATED PORTABLE
+mnt-by:         APNIC-HM
+mnt-lower:      MAINT-JP-BBTECH
+mnt-irt:        IRT-SOFTBANK-JP
+remarks:        --------------------------------------------------------
+remarks:        To report network abuse, please contact mnt-irt
+remarks:        For troubleshooting, please contact tech-c and admin-c
+remarks:        Report invalid contact via www.apnic.net/invalidcontact
+remarks:        --------------------------------------------------------
+last-modified:  2018-10-29T00:04:05Z
+source:         APNIC
+
+irt:            IRT-SOFTBANK-JP
+address:        Tokyo Shiodome bldg.,
+address:        1-9-1, Higashi-Shimbashi
+address:        Minatoku,Tokyo, Japan
+e-mail:         abuse@bbtec.net
+abuse-mailbox:  abuse@bbtec.net
+admin-c:        HS2334-AP
+tech-c:         HS2334-AP
+auth:           # Filtered
+remarks:        abuse@bbtec.net was validated on 2019-12-18
+mnt-by:         MAINT-JP-BBTECH
+last-modified:  2019-12-18T03:34:44Z
+source:         APNIC
+
+organisation:   ORG-SC4-AP
+org-name:       SOFTBANK Corp.
+country:        JP
+address:        Shiodome Sumitomo Bldg. 24F
+address:        1-9-2, Higashi-Shimbashi
+phone:          +81-3-6889-6365
+e-mail:         SBBGRP-ispnw@g.softbank.co.jp
+mnt-ref:        APNIC-HM
+mnt-by:         APNIC-HM
+last-modified:  2019-05-13T12:55:44Z
+source:         APNIC
+
+role:           SoftbankBB ABUSE
+address:        Tokyo Shiodome bldg., 1-9-1, Higashi-Shimbashi, Minatoku,Tokyo
+country:        JP
+phone:          +81-3-6688-5120
+e-mail:         abuse@bbtec.net
+remarks:        Please send spam report,virus alart
+remarks:        or any other abuse report
+remarks:        to  abuse@bbtec.net
+remarks:        Any other Information, Notice,
+remarks:        Please send to hostmaster@bbtec.net
+admin-c:        HS2334-AP
+tech-c:         HS2334-AP
+nic-hdl:        SA421-AP
+mnt-by:         MAINT-JP-BBTECH
+last-modified:  2018-08-08T06:22:48Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK4)
+
+

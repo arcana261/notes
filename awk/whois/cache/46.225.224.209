@@ -1,0 +1,91 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.224.0.0 - 46.225.255.255'
+
+% Abuse contact for '46.224.0.0 - 46.225.255.255' is 'abuse@hiweb.ir'
+
+inetnum:        46.224.0.0 - 46.225.255.255
+netname:        IR-RDGIR-20101231
+country:        IR
+org:            ORG-RDG4-RIPE
+admin-c:        SIM320-RIPE
+tech-c:         SIM320-RIPE
+tech-c:         AM12416-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-AURAUD
+mnt-lower:      MNT-RDG-ADMIN
+mnt-lower:      MNT-AURAUD
+mnt-routes:     MNT-RDG-ADMIN
+mnt-routes:     MNT-AURAUD
+mnt-domains:    MNT-RDG-ADMIN
+mnt-domains:    MNT-AURAUD
+created:        2010-12-31T11:23:24Z
+last-modified:  2016-09-17T09:55:20Z
+source:         RIPE # Filtered
+
+organisation:   ORG-RDG4-RIPE
+org-name:       Rayaneh Danesh Golestan Complex P.J.S. Co.
+org-type:       LIR
+address:        Edalat St., Valiasr Ave.
+address:        4916764845
+address:        GORGAN
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982129401210
+fax-no:         +982129405060
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-RDG-ADMIN
+mnt-ref:        MNT-AURAUD
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-AURAUD
+admin-c:        AM12416-RIPE
+admin-c:        GSH11-RIPE
+admin-c:        SIM320-RIPE
+abuse-c:        RDG300-RIPE
+created:        2007-02-07T11:12:25Z
+last-modified:  2019-05-26T07:17:53Z
+source:         RIPE # Filtered
+
+person:         Auraud Moulana
+address:        19957,Tehran,Iran
+phone:          +989122030617
+nic-hdl:        AM12416-RIPE
+mnt-by:         MNT-AURAUD
+created:        2007-02-11T20:37:06Z
+last-modified:  2008-11-27T11:35:29Z
+source:         RIPE # Filtered
+
+person:         Seyed Iman Miri
+address:        Corner Edalat 34
+                4916764845
+                Gorgan
+                Iran, Islamic Republic of
+phone:          +981712229431
+nic-hdl:        SIM320-RIPE
+mnt-by:         MNT-RDG-ADMIN
+created:        2007-02-11T20:31:44Z
+last-modified:  2007-09-09T22:40:20Z
+source:         RIPE
+
+% Information related to '46.225.224.0/21AS56402'
+
+route:          46.225.224.0/21
+descr:          Dadeh Gostar Asr Novin P.J.S. Co.
+descr:          Bozorgrah Rayaneh Nowshahr
+origin:         AS56402
+mnt-by:         MNT-AURAUD
+mnt-by:         MNT-RDG-ADMIN
+created:        2015-11-30T09:16:27Z
+last-modified:  2015-11-30T09:16:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

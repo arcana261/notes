@@ -1,0 +1,58 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '171.224.0.0 - 171.255.255.255'
+
+% Abuse contact for '171.224.0.0 - 171.255.255.255' is 'hm-changed@vnnic.vn'
+
+inetnum:        171.224.0.0 - 171.255.255.255
+netname:        VIETTEL-VN
+descr:          Viettel Group
+descr:          No 1, Tran Huu Duc street, My Dinh 2 ward, Nam Tu Liem district, Ha Noi City
+country:        VN
+admin-c:        TVT8-AP
+tech-c:         NDT9-AP
+status:         ALLOCATED PORTABLE
+mnt-irt:        IRT-VNNIC-AP
+mnt-by:         MAINT-VN-VNNIC
+last-modified:  2017-11-11T09:43:21Z
+source:         APNIC
+
+irt:            IRT-VNNIC-AP
+address:        Ha Noi, VietNam
+phone:          +84-24-35564944
+fax-no:         +84-24-37821462
+e-mail:         hm-changed@vnnic.vn
+abuse-mailbox:  hm-changed@vnnic.vn
+admin-c:        NTTT1-AP
+tech-c:         NTTT1-AP
+auth:           # Filtered
+mnt-by:         MAINT-VN-VNNIC
+last-modified:  2017-11-08T09:40:06Z
+source:         APNIC
+
+person:         Nguyen Dang Tiep
+address:        Viettel Network Corporation
+address:        No 1, Tran Huu Duc street, My Dinh 2 ward, Nam Tu Liem district, Ha Noi City
+country:        VN
+phone:          +84-24-62989898
+e-mail:         soc@viettel.com.vn
+nic-hdl:        NDT9-AP
+mnt-by:         MAINT-VN-VIETEL
+last-modified:  2017-11-11T09:40:35Z
+source:         APNIC
+
+person:         Tran Van Thanh
+address:        Viettel Network Corporation
+address:        No 1, Tran Huu Duc street, My Dinh 2 ward, Nam Tu Liem district, Ha Noi City
+country:        VN
+phone:          +84-24-62989898
+e-mail:         soc@viettel.com.vn
+nic-hdl:        TVT8-AP
+mnt-by:         MAINT-VN-VIETEL
+last-modified:  2018-08-21T09:57:13Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK3)
+
+

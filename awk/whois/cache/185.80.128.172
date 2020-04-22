@@ -1,0 +1,73 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.80.128.0 - 185.80.131.255'
+
+% Abuse contact for '185.80.128.0 - 185.80.131.255' is 'abuse@vpsnet.lt'
+
+inetnum:        185.80.128.0 - 185.80.131.255
+netname:        LT-VPSNET-20141209
+descr:          www.VPSnet.com
+country:        LT
+org:            ORG-UA290-RIPE
+admin-c:        UEH5-RIPE
+tech-c:         UEH5-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         VPSNET-LT
+created:        2014-12-09T10:35:35Z
+last-modified:  2018-03-08T14:22:38Z
+source:         RIPE
+
+organisation:   ORG-UA290-RIPE
+org-name:       UAB ESNET
+org-type:       LIR
+address:        Zuvedru 36
+address:        LT10103
+address:        Vilnius
+address:        LITHUANIA
+phone:          +37068450242
+abuse-c:        AC28451-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        VPSNET-LT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         VPSNET-LT
+created:        2014-12-05T08:35:29Z
+last-modified:  2018-12-12T09:28:03Z
+source:         RIPE # Filtered
+
+role:           UAB ESNET Hostmaster
+address:        UAB "Esnet"
+address:        Zuvedru g. 36, Vilnius
+address:        LT-10103, Lithuania
+abuse-mailbox:  abuse@vpsnet.lt
+remarks:        *************************************************
+remarks:        * For spam/abuse/security issues please contact *
+remarks:        * -------------- abuse@vpsnet.lt -------------- *
+remarks:        *************************************************
+nic-hdl:        UEH5-RIPE
+mnt-by:         VPSNET-LT
+mnt-by:         JS76764-MNT
+created:        2018-03-08T11:31:00Z
+last-modified:  2018-03-08T11:36:34Z
+source:         RIPE # Filtered
+
+% Information related to '185.80.128.0/22AS61053'
+
+route:          185.80.128.0/22
+descr:          Esnet
+origin:         AS61053
+mnt-by:         VPSNET-LT
+created:        2014-12-09T12:54:16Z
+last-modified:  2014-12-09T12:54:16Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

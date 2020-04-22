@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '88.119.175.0 - 88.119.175.255'
+
+% Abuse contact for '88.119.175.0 - 88.119.175.255' is 'abuse@bacloud.com'
+
+inetnum:        88.119.175.0 - 88.119.175.255
+netname:        US-BACLOUD
+country:        US
+geoloc:         41.881832 -87.623177
+admin-c:        BAC2006-RIPE
+tech-c:         BAC2006-RIPE
+status:         ASSIGNED PA
+mnt-by:         BACLOUD-MNT
+mnt-by:         AS61272-MNT
+created:        2018-11-20T10:09:09Z
+last-modified:  2018-12-30T17:48:22Z
+source:         RIPE
+
+role:           BACLOUD NOC
+address:        Informacines sistemos ir technologijos, UAB
+address:        Pramones 15
+address:        LT-78137 Siauliai
+address:        Lithuania
+phone:          +370 41 210000
+phone:          +370 52 044044
+fax-no:         +370 65 002611
+admin-c:        NB5547-RIPE
+tech-c:         NB5547-RIPE
+nic-hdl:        BAC2006-RIPE
+abuse-mailbox:  abuse@bacloud.com
+mnt-by:         BACLOUD-MNT
+created:        2013-04-22T09:09:11Z
+last-modified:  2015-05-08T15:56:43Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

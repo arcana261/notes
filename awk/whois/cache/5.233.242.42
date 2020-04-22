@@ -1,0 +1,79 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.233.240.0 - 5.233.247.255'
+
+% Abuse contact for '5.233.240.0 - 5.233.247.255' is 'm.mirzabeigi@tci.ir'
+
+inetnum:        5.233.240.0 - 5.233.247.255
+org:            ORG-TCOI2-RIPE
+descr:          Telecommunication Company of Ilam
+netname:        TCIILM
+country:        IR
+admin-c:        NA6191-RIPE
+tech-c:         NA6192-RIPE
+tech-c:         MM52258-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2020-04-20T07:45:40Z
+last-modified:  2020-04-20T07:45:40Z
+source:         RIPE
+
+organisation:   ORG-TCOI2-RIPE
+org-name:       Telecommunication Company of Ilam
+org-type:       other
+address:        Ilam Telecom
+abuse-c:        AC26985-RIPE
+admin-c:        NA6191-RIPE
+tech-c:         NA6192-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-12T11:27:30Z
+last-modified:  2019-02-23T11:49:36Z
+source:         RIPE # Filtered
+
+role:           Network Admin (ILam)
+address:        Ilam - 22 Bahman Square - Telecommunication Company of Ilam
+nic-hdl:        NA6191-RIPE
+admin-c:        AMZ70-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-23T11:33:13Z
+last-modified:  2019-02-23T11:35:33Z
+source:         RIPE # Filtered
+
+role:           NOC (ILam)
+address:        Ilam - 22 Bahman Square - Telecommunication Company of Ilam
+nic-hdl:        NA6192-RIPE
+admin-c:        AH12826-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-23T11:39:17Z
+last-modified:  2019-03-13T06:29:58Z
+source:         RIPE # Filtered
+
+person:         Masoud Mirzabeigi
+address:        Ilam ,Iran
+phone:          +98 843 222 13 00
+nic-hdl:        MM52258-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2020-03-16T14:14:19Z
+last-modified:  2020-03-16T14:14:19Z
+source:         RIPE # Filtered
+
+% Information related to '5.233.240.0/21AS58224'
+
+route:          5.233.240.0/21
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2020-01-14T10:41:56Z
+last-modified:  2020-01-14T10:41:56Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

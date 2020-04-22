@@ -1,0 +1,53 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '87.107.144.0 - 87.107.159.255'
+
+% Abuse contact for '87.107.144.0 - 87.107.159.255' is 'ripencc@sinet.ir'
+
+inetnum:        87.107.144.0 - 87.107.159.255
+netname:        IR-FANAVA-GROUP
+country:        IR
+admin-c:        SAMH3-RIPE
+tech-c:         SAMH3-RIPE
+mnt-lower:      MNT-FANAVA
+mnt-routes:     MNT-FANAVA
+status:         ASSIGNED PA
+mnt-domains:    MNT-FANAVA
+mnt-by:         SINET-MNT
+created:        2017-08-29T10:07:00Z
+last-modified:  2018-01-10T16:06:56Z
+source:         RIPE
+
+person:         Seyed Ali Mirheidari
+address:        1  East 5th Alley North Seoul St.  Tehran  Iran
+address:        4 Firooze Dead end  Dr. Shariati St.  Tehran  Iran
+phone:          +982184371111
+phone:          +982122618700
+phone:          +989126445181
+nic-hdl:        SAMH3-RIPE
+mnt-by:         SINET-MNT
+created:        2018-01-10T13:10:25Z
+last-modified:  2019-06-23T05:19:28Z
+source:         RIPE # Filtered
+
+% Information related to '87.107.148.0/22AS202391'
+
+route:          87.107.148.0/22
+origin:         AS202391
+mnt-by:         MNT-FANAVA
+mnt-by:         MNT-ERFANAVA
+mnt-by:         Fanavadp-LIR
+created:        2020-03-17T10:32:00Z
+last-modified:  2020-03-17T10:32:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

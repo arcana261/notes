@@ -1,0 +1,82 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '93.126.0.0 - 93.126.63.255'
+
+% Abuse contact for '93.126.0.0 - 93.126.63.255' is 'info@asmanfaraz.com'
+
+inetnum:        93.126.0.0 - 93.126.63.255
+netname:        AISDP
+descr:          Region:Isfahan
+descr:          City:Isfahan
+country:        IR
+org:            ORG-AI37-RIPE
+admin-c:        RR12596-RIPE
+admin-c:        RL5000-RIPE
+tech-c:         RL5000-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-AISDP
+mnt-routes:     MNT-AISDP
+mnt-domains:    MNT-AISDP
+created:        2008-07-09T13:48:30Z
+last-modified:  2019-01-11T09:53:27Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-AOEO2-RIPE
+
+organisation:   ORG-AI37-RIPE
+org-name:       ASMANFARAZ SEPAHAN ISDP (PJS)
+org-type:       OTHER
+address:        Parsian Building, Sharif St, Emam khomeini AV ,Esfahan-Iran
+address:        IR
+abuse-c:        ACRO21696-RIPE
+mnt-by:         MNT-AISDP
+mnt-ref:        MNT-AISDP
+created:        2007-12-23T13:19:12Z
+last-modified:  2019-01-14T19:06:44Z
+source:         RIPE # Filtered
+
+person:         Reza Rejalzadeh
+address:        Parsian Building,
+address:        Sharif St, Emam khomeini AVE,
+address:        Esfahan-Iran
+phone:          +98 31-35111
+mnt-by:         MNT-AISDP
+nic-hdl:        RL5000-RIPE
+created:        2008-11-13T06:41:14Z
+last-modified:  2018-12-27T14:57:33Z
+source:         RIPE # Filtered
+
+person:         Reza Rejalzadeh
+address:        No. 5, Homa St, North Kargar St
+address:        1418653781
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989133192550
+nic-hdl:        RR12596-RIPE
+mnt-by:         ir-fcp-1-mnt
+mnt-by:         MNT-AISDP
+created:        2018-12-27T14:42:45Z
+last-modified:  2018-12-27T14:42:45Z
+source:         RIPE
+
+% Information related to '93.126.12.0/24AS44375'
+
+route:          93.126.12.0/24
+descr:          ASMANFARAZ SEPAHAN ISDP (PJS)
+origin:         AS44375
+mnt-by:         MNT-MIHAN
+mnt-by:         MNT-Hamed
+created:        2016-09-07T15:19:45Z
+last-modified:  2016-09-07T15:19:45Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

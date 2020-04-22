@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.133.128.0 - 91.133.191.255'
+
+% Abuse contact for '91.133.128.0 - 91.133.191.255' is 'abuse@mci.ir'
+
+inetnum:        91.133.128.0 - 91.133.191.255
+netname:        MOBINNET
+descr:          Mobinnet Wimax Expansion
+country:        IR
+admin-c:        RA4320-RIPE
+tech-c:         RA4320-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-MOBINNET
+mnt-routes:     MNT-MOBINNET
+created:        2013-07-17T09:31:11Z
+last-modified:  2017-07-03T13:29:36Z
+source:         RIPE
+
+person:         Saeed Osali
+address:        Mobin Net Communication Company
+address:        Sh.Motahari 377
+address:        1595713463 Tehran
+phone:          +98 21 83868
+nic-hdl:        RA4320-RIPE
+mnt-by:         MNT-MOBINNET
+created:        2009-12-01T08:58:59Z
+last-modified:  2015-11-11T15:21:52Z
+source:         RIPE
+
+% Information related to '91.133.128.0/18AS197207'
+
+route:          91.133.128.0/18
+origin:         AS197207
+mnt-by:         MNT-MOBINNET
+created:        2019-03-03T06:29:08Z
+last-modified:  2019-03-03T06:29:08Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '77.104.108.0 - 77.104.109.255'
+
+% Abuse contact for '77.104.108.0 - 77.104.109.255' is 'abuse@respina.net'
+
+inetnum:        77.104.108.0 - 77.104.109.255
+netname:        Khalije-Fars-Etela-Resan
+descr:          Khalije-Fars-Etela-Resan
+country:        IR
+admin-c:        AD9410-RIPE
+tech-c:         AD9410-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-RSPN
+created:        2012-11-17T11:46:24Z
+last-modified:  2018-10-01T13:00:40Z
+source:         RIPE
+
+person:         Abdullah Dashti
+address:        Bandare-Bushehr
+address:        Iran
+phone:          +989173714494
+phone:          +987733554443
+nic-hdl:        AD9410-RIPE
+mnt-by:         mnt-khalijfarsonline
+created:        2012-07-01T14:55:40Z
+last-modified:  2018-03-04T13:12:04Z
+source:         RIPE
+
+% Information related to '77.104.108.0/24AS42337'
+
+route:          77.104.108.0/24
+descr:          Respina-42
+origin:         AS42337
+mnt-by:         MNT-RSPN
+created:        2011-03-01T07:50:25Z
+last-modified:  2011-03-01T07:50:25Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

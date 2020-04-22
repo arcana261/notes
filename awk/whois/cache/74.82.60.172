@@ -1,0 +1,145 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       74.82.0.0 - 74.82.63.255
+CIDR:           74.82.0.0/18
+NetName:        HURRICANE-10
+NetHandle:      NET-74-82-0-0-1
+Parent:         NET74 (NET-74-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS6939
+Organization:   Hurricane Electric LLC (HURC)
+RegDate:        2008-07-22
+Updated:        2012-02-24
+Ref:            https://rdap.arin.net/registry/ip/74.82.0.0
+
+
+
+OrgName:        Hurricane Electric LLC
+OrgId:          HURC
+Address:        760 Mission Court
+City:           Fremont
+StateProv:      CA
+PostalCode:     94539
+Country:        US
+RegDate:        
+Updated:        2018-02-09
+Ref:            https://rdap.arin.net/registry/entity/HURC
+
+ReferralServer:  rwhois://rwhois.he.net:4321
+
+OrgTechHandle: ZH17-ARIN
+OrgTechName:   Hurricane Electric
+OrgTechPhone:  +1-510-580-4100 
+OrgTechEmail:  hostmaster@he.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/ZH17-ARIN
+
+OrgAbuseHandle: ABUSE1036-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-510-580-4100 
+OrgAbuseEmail:  abuse@he.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE1036-ARIN
+
+RTechHandle: ZH17-ARIN
+RTechName:   Hurricane Electric
+RTechPhone:  +1-510-580-4100 
+RTechEmail:  hostmaster@he.net
+RTechRef:    https://rdap.arin.net/registry/entity/ZH17-ARIN
+
+RAbuseHandle: ABUSE1036-ARIN
+RAbuseName:   Abuse Department
+RAbusePhone:  +1-510-580-4100 
+RAbuseEmail:  abuse@he.net
+RAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE1036-ARIN
+
+RNOCHandle: ZH17-ARIN
+RNOCName:   Hurricane Electric
+RNOCPhone:  +1-510-580-4100 
+RNOCEmail:  hostmaster@he.net
+RNOCRef:    https://rdap.arin.net/registry/entity/ZH17-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.he.net:4321.
+
+%rwhois V-1.5:0012b7:01 ops.he.net (HE-RWHOISd v:ec6e,m1:6333)
+network:ID;I:NET-74.82.60.0/24
+network:Auth-Area:nets
+network:Class-Name:network
+network:Network-Name;I:NET-74.82.60.0/24
+network:Parent;I:NET-74.82.0.0/18
+network:IP-Network:74.82.60.0/24
+network:Org-Contact;I:POC-CE-1805
+network:Tech-Contact;I:POC-HE-NOC
+network:Abuse-Contact;I:POC-HE-ABUSE
+network:NOC-Contact;I:POC-HE-NOC
+network:Created:20180817203005000
+network:Updated:20180817203005000
+
+contact:ID;I:POC-CE-1805
+contact:Auth-Area:contacts
+contact:Class-Name:contact
+contact:Name:Mark Chen
+contact:Company:Sophidea, Inc.
+contact:Street-Address:1712 Pioneer Avenue
+contact:City:Cheyenne
+contact:Province:WY
+contact:Postal-Code:82001
+contact:Country-Code:US
+contact:Phone:-
+contact:E-mail:-
+contact:Created:20180817203001000
+contact:Updated:20180817203001000
+
+contact:ID;I:POC-HE-NOC
+contact:Auth-Area:contacts
+contact:Class-Name:contact
+contact:Name:Network Operations Center
+contact:Company:Hurricane Electric
+contact:Street-Address:760 Mission Ct
+contact:City:Fremont
+contact:Province:CA
+contact:Postal-Code:94539
+contact:Country-Code:US
+contact:Phone:+1-510-580-4100
+contact:E-Mail:noc@he.net
+contact:Created:20100901200738000
+contact:Updated:20100901200738000
+
+contact:ID;I:POC-HE-ABUSE
+contact:Auth-Area:contacts
+contact:Class-Name:contact
+contact:Name:Abuse Department
+contact:Company:Hurricane Electric
+contact:Street-Address:760 Mission Ct
+contact:City:Fremont
+contact:Province:CA
+contact:Postal-Code:94539
+contact:Country-Code:US
+contact:Phone:+1-510-580-4100
+contact:E-Mail:abuse@he.net
+contact:Created:20100901200738000
+contact:Updated:20100901200738000
+contact:Comment:For email abuse (spam) only
+
+%ok

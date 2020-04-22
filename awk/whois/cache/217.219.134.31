@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.219.134.0 - 217.219.134.127'
+
+% Abuse contact for '217.219.134.0 - 217.219.134.127' is 'abuse@ito.gov.ir'
+
+inetnum:        217.219.134.0 - 217.219.134.127
+netname:        HEZARE
+descr:          Tabriz Millenium Communications
+country:        IR
+admin-c:        HA1638-RIPE
+tech-c:         HA1638-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2004-08-23T04:53:45Z
+last-modified:  2008-03-01T06:10:11Z
+source:         RIPE
+
+person:         Hadi Amirkhizi
+address:        Hezareh,No 7, Across of Sepah Bank,Azadi Branch,Abbresan st
+address:        Tabriz,Iran
+phone:          +98 411 336 61 61
+nic-hdl:        HA1638-RIPE
+created:        2008-03-01T06:10:11Z
+last-modified:  2016-04-06T21:31:44Z
+mnt-by:         RIPE-NCC-LOCKED-MNT
+source:         RIPE # Filtered
+
+% Information related to '217.219.128.0/20AS58224'
+
+route:          217.219.128.0/20
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2016-07-10T09:40:36Z
+last-modified:  2016-07-10T09:40:36Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

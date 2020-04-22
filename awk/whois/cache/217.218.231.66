@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.218.231.0 - 217.218.231.255'
+
+% Abuse contact for '217.218.231.0 - 217.218.231.255' is 'abuse@ito.gov.ir'
+
+inetnum:        217.218.231.0 - 217.218.231.255
+netname:        VILAGEICT
+descr:          ICT Roostaee Zanjan
+country:        IR
+admin-c:        MB11942-RIPE
+tech-c:         MB11942-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2008-03-29T07:26:41Z
+last-modified:  2008-03-29T07:26:41Z
+source:         RIPE
+
+person:         Mehdi Bageri
+address:        Zanjan telecom company data center
+phone:          +98 241 323 55 00
+nic-hdl:        MB11942-RIPE
+mnt-by:         AS12880-MNT
+created:        2008-03-29T07:26:40Z
+last-modified:  2008-03-29T07:26:40Z
+source:         RIPE # Filtered
+
+% Information related to '217.218.224.0/21AS58224'
+
+route:          217.218.224.0/21
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-10-21T09:35:50Z
+last-modified:  2018-10-21T09:35:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

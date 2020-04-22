@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '80.75.8.192 - 80.75.8.199'
+
+% Abuse contact for '80.75.8.192 - 80.75.8.199' is 'abuse@afranet.com'
+
+inetnum:        80.75.8.192 - 80.75.8.199
+netname:        POUYESH-PARDAZ
+descr:          Pouyesh Pardaz
+country:        ir
+admin-c:        PJS1278-RIPE
+tech-c:         PJS1278-RIPE
+status:         assigned pa
+mnt-by:         AFRA-MNT-NESH-1
+created:        2010-11-08T07:29:28Z
+last-modified:  2010-11-08T07:29:28Z
+source:         RIPE
+
+person:         Mr. jafari
+address:        no.2, 1st dead-end Alley , 1st 20 m st, zamyad st, Iran-khodro Blvd. 14 km karaj special Road, Tehran,1388164756,Iran
+mnt-by:         AFRA-MNT-NESH-1
+phone:          +98-21-44922990
+nic-hdl:        PJS1278-RIPE
+created:        2009-11-07T06:36:41Z
+last-modified:  2015-07-22T06:38:24Z
+source:         RIPE # Filtered
+
+% Information related to '80.75.8.0/24AS25184'
+
+route:          80.75.8.0/24
+descr:          AFRANET Co.
+origin:         AS25184
+mnt-by:         AFRA-MNT-NESH-1
+created:        2004-08-31T12:14:28Z
+last-modified:  2009-10-21T09:52:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

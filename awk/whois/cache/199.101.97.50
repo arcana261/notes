@@ -1,0 +1,133 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       199.101.96.0 - 199.101.103.255
+CIDR:           199.101.96.0/21
+NetName:        QP-IPV4-1
+NetHandle:      NET-199-101-96-0-1
+Parent:         NET199 (NET-199-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS46261
+Organization:   QuickPacket, LLC (QUICK-11)
+RegDate:        2012-02-13
+Updated:        2013-04-03
+Comment:        Please use our primary office address for any correspondence: 801 Atando Ave, Ste C, Charlotte, NC 28206
+Comment:        
+Comment:        Abuse complaints: Send abuse complaints to abuse@quickpacket.com. Abuse complaints sent to other e-mail addresses will be deleted without being read.
+Comment:        
+Comment:        Copyright/DMCA complaints: Send complaints to abuse@quickpacket.com. Please review the information here before contacting us: http://www.quickpacket.com/dmca.html
+Comment:        
+Comment:        Law Enforcement/Subpoenas: Contact us at legal@quickpacket.com. Please review the information here before contacting us: http://www.quickpacket.com/subpoenas.html
+Ref:            https://rdap.arin.net/registry/ip/199.101.96.0
+
+
+OrgName:        QuickPacket, LLC
+OrgId:          QUICK-11
+Address:        801 Atando Ave, Ste C
+City:           Charlotte
+StateProv:      NC
+PostalCode:     28206
+Country:        US
+RegDate:        2004-10-15
+Updated:        2019-11-19
+Comment:        Abuse complaints: Send abuse complaints to abuse@quickpacket.com. Abuse complaints sent to other e-mail addresses will be deleted without being read.
+Comment:        
+Comment:        Copyright/DMCA complaints: Send complaints to abuse@quickpacket.com. Please review the information here before contacting us: http://www.quickpacket.com/dmca.php
+Comment:        
+Comment:        Law Enforcement/Subpoenas: Contact us at legal@quickpacket.com. Please review the information here before contacting us: http://www.quickpacket.com/subpoenas.php
+Ref:            https://rdap.arin.net/registry/entity/QUICK-11
+
+
+OrgAbuseHandle: NETWO1125-ARIN
+OrgAbuseName:   Network Engineering
+OrgAbusePhone:  +1-888-400-3484 
+OrgAbuseEmail:  abuse@quickpacket.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NETWO1125-ARIN
+
+OrgTechHandle: NETWO1125-ARIN
+OrgTechName:   Network Engineering
+OrgTechPhone:  +1-888-400-3484 
+OrgTechEmail:  abuse@quickpacket.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO1125-ARIN
+
+OrgNOCHandle: NETWO1125-ARIN
+OrgNOCName:   Network Engineering
+OrgNOCPhone:  +1-888-400-3484 
+OrgNOCEmail:  abuse@quickpacket.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO1125-ARIN
+
+# end
+
+
+# start
+
+NetRange:       199.101.96.0 - 199.101.103.255
+CIDR:           199.101.96.0/21
+NetName:        QP-IPV4-ATL
+NetHandle:      NET-199-101-96-0-2
+Parent:         QP-IPV4-1 (NET-199-101-96-0-1)
+NetType:        Reallocated
+OriginAS:       AS46261
+Organization:   QuickPacket, LLC (QL-52)
+RegDate:        2017-04-06
+Updated:        2017-04-06
+Ref:            https://rdap.arin.net/registry/ip/199.101.96.0
+
+
+OrgName:        QuickPacket, LLC
+OrgId:          QL-52
+Address:        125 N Myers St
+City:           Charlotte
+StateProv:      NC
+PostalCode:     28202
+Country:        US
+RegDate:        2017-02-23
+Updated:        2019-11-19
+Comment:        The address on this ORG ID is for IP address geolocation purposes only. We cannot receive any correspondence at the address listed on the ORG ID. Please use our primary office address for any correspondence: 801 Atando Ave, Ste C, Charlotte, NC 28206
+Comment:        
+Comment:        Abuse complaints: Send abuse complaints to abuse@quickpacket.com. Abuse complaints sent to other e-mail addresses will be deleted without being read.
+Comment:        
+Comment:        Copyright/DMCA complaints: Send complaints to abuse@quickpacket.com. Please review the information here before contacting us: http://www.quickpacket.com/dmca.php
+Comment:        
+Comment:        Law Enforcement/Subpoenas: Contact us at legal@quickpacket.com. Please review the information here before contacting us: http://www.quickpacket.com/subpoenas.php
+Ref:            https://rdap.arin.net/registry/entity/QL-52
+
+
+OrgAbuseHandle: NETWO1125-ARIN
+OrgAbuseName:   Network Engineering
+OrgAbusePhone:  +1-888-400-3484 
+OrgAbuseEmail:  abuse@quickpacket.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NETWO1125-ARIN
+
+OrgTechHandle: NETWO1125-ARIN
+OrgTechName:   Network Engineering
+OrgTechPhone:  +1-888-400-3484 
+OrgTechEmail:  abuse@quickpacket.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO1125-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

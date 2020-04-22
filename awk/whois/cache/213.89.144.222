@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '213.89.144.0 - 213.89.147.255'
+
+% Abuse contact for '213.89.144.0 - 213.89.147.255' is 'abuse@comhem.com'
+
+inetnum:        213.89.144.0 - 213.89.147.255
+netname:        VASTERTORP-CABLE
+descr:          Com Hem Stockholm customer broadband access
+descr:          Vastertorp
+country:        SE
+admin-c:        CH1252-RIPE
+tech-c:         CH1252-RIPE
+status:         ASSIGNED PA
+descr:          ********************************
+                Abuse & intrusion reports should be done online at:
+                http://www.comhem.se/portal/comhem/kundservice_abuse
+                ********************************
+mnt-by:         COMHEM-MNT
+created:        2002-01-31T15:22:04Z
+last-modified:  2008-05-05T19:40:48Z
+source:         RIPE
+
+role:           Com Hem LIR
+address:        Com Hem AB
+address:        Box 8093
+address:        104 20 STOCKHOLM
+address:        SWEDEN
+remarks:        *************************************************
+remarks:        Abuse & intrusion reports should be
+remarks:        sent via mail to abuse@comhem.com
+remarks:        or at http://www.comhem.se/abuse
+remarks:        **************************************************
+phone:          +46 8 55363000
+fax-no:         +46 8 6601640
+abuse-mailbox:  abuse@comhem.com
+org:            ORG-chA1-RIPE
+admin-c:        MW4779-RIPE
+tech-c:         HM1257-RIPE
+tech-c:         MW4779-RIPE
+nic-hdl:        CH1252-RIPE
+mnt-by:         COMHEM-MNT
+created:        2004-06-28T10:10:53Z
+last-modified:  2020-01-09T09:59:08Z
+source:         RIPE # Filtered
+
+% Information related to '213.89.0.0/16AS39651'
+
+route:          213.89.0.0/16
+descr:          SE-CHELLO-20000629 and
+descr:          SE-CHELLO-20001227
+origin:         AS39651
+mnt-by:         COMHEM-MNT
+created:        2006-10-25T11:55:24Z
+last-modified:  2006-11-29T16:09:51Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '80.191.165.0 - 80.191.166.255'
+
+% Abuse contact for '80.191.165.0 - 80.191.166.255' is 'abuse@ito.gov.ir'
+
+inetnum:        80.191.165.0 - 80.191.166.255
+netname:        KUMSNET
+descr:          Kerman University of Medical Sciences
+descr:          Kerman
+country:        IR
+admin-c:        AH8894-RIPE
+tech-c:         ME4053-RIPE
+status:         ASSIGNED PA
+mnt-by:         as12880-mnt
+created:        2002-12-14T07:25:20Z
+last-modified:  2002-12-14T07:25:20Z
+source:         RIPE
+
+person:         Ali-Akbar Haghdoost
+address:        Kerman University of Medical Sciences
+address:        Kerman
+address:        IR
+phone:          +98 341 42980
+fax-no:         +98 341 49894
+nic-hdl:        AH8894-RIPE
+created:        1970-01-01T00:00:00Z
+last-modified:  2016-04-05T18:53:19Z
+mnt-by:         RIPE-NCC-LOCKED-MNT
+source:         RIPE # Filtered
+
+person:         Mehrdad Ebrahimi
+address:        Kerman University of Medical Sciences
+address:        Kerman
+address:        IRAN
+phone:          +98-341-42980
+fax-no:         +98-341-49894
+nic-hdl:        ME4053-RIPE
+created:        1970-01-01T00:00:00Z
+last-modified:  2016-04-05T18:53:19Z
+mnt-by:         RIPE-NCC-LOCKED-MNT
+source:         RIPE # Filtered
+
+% Information related to '80.191.160.0/21AS58224'
+
+route:          80.191.160.0/21
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-02-27T08:34:53Z
+last-modified:  2018-02-27T08:34:53Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

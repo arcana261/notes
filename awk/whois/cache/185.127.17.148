@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.127.17.0 - 185.127.17.255'
+
+% Abuse contact for '185.127.17.0 - 185.127.17.255' is 'abuse@cloudwm.com'
+
+inetnum:        185.127.17.0 - 185.127.17.255
+netname:        CLOUDWEBMANAGE-EU-LO
+country:        GB
+mnt-by:         CloudWebManage-MNT
+admin-c:        CWM7-RIPE
+tech-c:         CWM7-RIPE
+status:         ASSIGNED PA
+created:        2016-08-20T20:30:02Z
+last-modified:  2019-04-03T19:48:49Z
+source:         RIPE
+
+role:           Cloud Web Manage
+admin-c:        YA57445-RIPE
+tech-c:         YA57445-RIPE
+address:        15 Madison Ave., New York City, New York, USA
+nic-hdl:        CWM7-RIPE
+mnt-by:         CloudWebManage-MNT
+created:        2016-08-23T19:39:53Z
+last-modified:  2019-12-01T17:59:28Z
+source:         RIPE # Filtered
+abuse-mailbox:  abuse@cloudwm.com
+
+% Information related to '185.127.17.0/24AS44150'
+
+route:          185.127.17.0/24
+descr:          CLOUDWEBMANAGE-EU-LO
+origin:         AS44150
+mnt-by:         CloudWebManage-MNT
+created:        2017-03-27T08:55:30Z
+last-modified:  2018-10-14T02:57:08Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.180.222.0 - 185.180.222.255'
+
+% Abuse contact for '185.180.222.0 - 185.180.222.255' is 'abuse@worldstream.nl'
+
+inetnum:        185.180.222.0 - 185.180.222.255
+netname:        WORLDSTREAM
+country:        NL
+admin-c:        WS1670-RIPE
+tech-c:         WS1670-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-WORLDSTREAM
+mnt-domains:    MNT-WORLDSTREAM
+mnt-routes:     MNT-WORLDSTREAM
+created:        2018-12-18T10:38:30Z
+last-modified:  2018-12-18T10:38:30Z
+source:         RIPE # Filtered
+
+role:           WORLDSTREAM DBM
+address:        Industriestraat 24
+address:        2671CT NAALDWIJK
+address:        The Netherlands
+phone:          +31174712117
+abuse-mailbox:  abuse@worldstream.nl
+admin-c:        DV1495-RIPE
+tech-c:         DV1495-RIPE
+nic-hdl:        WS1670-RIPE
+mnt-by:         MNT-WORLDSTREAM
+created:        2008-05-15T09:52:38Z
+last-modified:  2013-08-20T11:17:59Z
+source:         RIPE # Filtered
+
+% Information related to '185.180.220.0/22AS49981'
+
+route:          185.180.220.0/22
+origin:         AS49981
+remarks:        ------------------------------------------------
+remarks:        Abuse notifications to: abuse@worldstream.nl
+remarks:        ------------------------------------------------
+mnt-by:         MNT-WORLDSTREAM
+created:        2018-12-27T08:27:05Z
+last-modified:  2018-12-27T08:27:05Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

@@ -1,0 +1,121 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       216.244.74.232 - 216.244.74.239
+CIDR:           216.244.74.232/29
+NetName:        216-244-74-232-29-ANTHONYHENSON
+NetHandle:      NET-216-244-74-232-1
+Parent:         WOW-IPV4-NET3 (NET-216-244-64-0-1)
+NetType:        Reassigned
+OriginAS:       
+Customer:       anthony henson (C03107023)
+RegDate:        2012-07-25
+Updated:        2012-07-25
+Ref:            https://rdap.arin.net/registry/ip/216.244.74.232
+
+
+CustName:       anthony henson
+Address:        5254 Jasmine lane
+Address:        5254 Jasmine lane
+City:           hilliard
+StateProv:      OH
+PostalCode:     43026
+Country:        US
+RegDate:        2012-07-25
+Updated:        2014-03-27
+Ref:            https://rdap.arin.net/registry/entity/C03107023
+
+OrgAbuseHandle: WAT1-ARIN
+OrgAbuseName:   Wowrack Abuse Team
+OrgAbusePhone:  +1-206-522-4402 
+OrgAbuseEmail:  abuse@wowrack.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/WAT1-ARIN
+
+OrgNOCHandle: WOWRA-ARIN
+OrgNOCName:   Wowrack Hostmaster
+OrgNOCPhone:  +1-206-522-4402 
+OrgNOCEmail:  hostmaster@wowrack.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/WOWRA-ARIN
+
+OrgTechHandle: WOWRA1-ARIN
+OrgTechName:   Wowrack NOC
+OrgTechPhone:  +1-866-969-8878 
+OrgTechEmail:  noc@wowrack.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/WOWRA1-ARIN
+
+# end
+
+
+# start
+
+NetRange:       216.244.64.0 - 216.244.95.255
+CIDR:           216.244.64.0/19
+NetName:        WOW-IPV4-NET3
+NetHandle:      NET-216-244-64-0-1
+Parent:         NET216 (NET-216-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS23033
+Organization:   Wowrack.com (WOWTEC-1)
+RegDate:        1999-09-28
+Updated:        2012-03-02
+Ref:            https://rdap.arin.net/registry/ip/216.244.64.0
+
+
+
+OrgName:        Wowrack.com
+OrgId:          WOWTEC-1
+Address:        12201 Tukwila International Blvd
+Address:        STE 100
+City:           Seattle
+StateProv:      WA
+PostalCode:     98168
+Country:        US
+RegDate:        2002-01-07
+Updated:        2018-05-31
+Ref:            https://rdap.arin.net/registry/entity/WOWTEC-1
+
+
+OrgAbuseHandle: WAT1-ARIN
+OrgAbuseName:   Wowrack Abuse Team
+OrgAbusePhone:  +1-206-522-4402 
+OrgAbuseEmail:  abuse@wowrack.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/WAT1-ARIN
+
+OrgNOCHandle: WOWRA-ARIN
+OrgNOCName:   Wowrack Hostmaster
+OrgNOCPhone:  +1-206-522-4402 
+OrgNOCEmail:  hostmaster@wowrack.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/WOWRA-ARIN
+
+OrgTechHandle: WOWRA1-ARIN
+OrgTechName:   Wowrack NOC
+OrgTechPhone:  +1-866-969-8878 
+OrgTechEmail:  noc@wowrack.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/WOWRA1-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

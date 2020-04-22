@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '2.58.192.0 - 2.58.195.255'
+
+% Abuse contact for '2.58.192.0 - 2.58.195.255' is 'abuse@zenex5ive.com'
+
+inetnum:        2.58.192.0 - 2.58.195.255
+netname:        UK-ZENEX5IVE-20190322
+country:        NL
+org:            ORG-ZL66-RIPE
+admin-c:        SS33968-RIPE
+tech-c:         SS33968-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-zenex5ive-1
+created:        2019-03-22T10:26:10Z
+last-modified:  2019-03-22T10:26:10Z
+source:         RIPE
+
+organisation:   ORG-ZL66-RIPE
+org-name:       Zenex 5ive Limited
+org-type:       LIR
+address:        5 Jupiter House
+address:        RG7 8NN
+address:        Reading
+address:        UNITED KINGDOM
+admin-c:        SS33968-RIPE
+tech-c:         SS33968-RIPE
+abuse-c:        AR51628-RIPE
+mnt-ref:        mnt-uk-zenex5ive-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-zenex5ive-1
+created:        2019-03-21T16:24:09Z
+last-modified:  2019-03-21T16:24:11Z
+source:         RIPE # Filtered
+phone:          +448709619032
+
+person:         Sivakanth Sivarajah
+address:        5 Jupiter House
+address:        RG7 8NN
+address:        Reading
+address:        UNITED KINGDOM
+phone:          +448709619032
+nic-hdl:        SS33968-RIPE
+mnt-by:         mnt-uk-zenex5ive-1
+created:        2019-03-21T16:24:08Z
+last-modified:  2019-03-21T16:24:09Z
+source:         RIPE
+
+% Information related to '2.58.194.0/24AS209181'
+
+route:          2.58.194.0/24
+origin:         AS209181
+mnt-by:         mnt-uk-zenex5ive-1
+created:        2020-03-09T20:21:28Z
+last-modified:  2020-03-09T20:21:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

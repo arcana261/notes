@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.59.136.128 - 37.59.136.159'
+
+% Abuse contact for '37.59.136.128 - 37.59.136.159' is 'abuse@ovh.net'
+
+inetnum:        37.59.136.128 - 37.59.136.159
+netname:        OVH-DEDICATED-37-59-136-128-FO
+descr:          Dedicated Servers
+country:        LT
+org:            ORG-UO132-RIPE
+admin-c:        OTC10-RIPE
+tech-c:         OTC10-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2016-01-11T14:55:45Z
+last-modified:  2016-01-11T14:55:45Z
+source:         RIPE
+
+organisation:   ORG-UO132-RIPE
+org-name:       UAB OVH
+org-type:       OTHER
+address:        A.Jaksto g. 6A/8
+address:        16 LT-01105 Vilnius
+address:        Lietuva
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2009-09-16T15:41:11Z
+last-modified:  2017-10-30T16:13:19Z
+source:         RIPE # Filtered
+
+role:           OVH LT Technical Contact
+address:        UAB OVH
+address:        A.Jaksto g. 6A/8
+address:        16 LT-01105 Vilnius
+address:        Lietuva
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC10-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T15:41:11Z
+last-modified:  2009-09-16T15:41:11Z
+source:         RIPE # Filtered
+
+% Information related to '37.59.0.0/16AS16276'
+
+route:          37.59.0.0/16
+descr:          OVH ISP
+descr:          Paris, France
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2012-01-25T17:04:21Z
+last-modified:  2012-01-25T17:04:21Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

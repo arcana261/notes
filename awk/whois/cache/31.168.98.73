@@ -1,0 +1,97 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.168.0.0 - 31.168.255.255'
+
+% Abuse contact for '31.168.0.0 - 31.168.255.255' is 'abuse@bezeqint.net'
+
+inetnum:        31.168.0.0 - 31.168.255.255
+netname:        IL-BEZEQ-INTERNATIONAL-20110328
+org:            ORG-IL9-RIPE
+country:        IL
+admin-c:        BNT1-RIPE
+tech-c:         BHT2-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AS8551-MNT
+mnt-routes:     AS8551-MNT
+mnt-domains:    AS8551-MNT
+created:        2011-03-28T11:22:11Z
+last-modified:  2017-04-21T21:46:14Z
+source:         RIPE # Filtered
+
+organisation:   ORG-IL9-RIPE
+org-name:       Bezeq International-Ltd
+org-type:       LIR
+address:        40 Hashacham Street,
+address:        49170
+address:        Petach-Tikva
+address:        ISRAEL
+phone:          +972 76 5014014
+fax-no:         +972 3 9257674
+descr:          BEZEQ-INTERNATIONAL-LTD
+admin-c:        BNT1-RIPE
+admin-c:        DB14243-RIPE
+admin-c:        MR916-RIPE
+admin-c:        RD1278-RIPE
+admin-c:        BHT2-RIPE
+mnt-ref:        AS8551-MNT
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AS8551-MNT
+abuse-c:        BAT17-RIPE
+created:        2004-04-17T11:27:44Z
+last-modified:  2019-07-12T10:38:20Z
+source:         RIPE # Filtered
+
+role:           BEZEQINT HOSTMASTERS TEAM
+address:        Bezeq International
+address:        40 hashacham st.
+address:        Petach Tikva 49170 Israel
+phone:          +972 1 800014014
+fax-no:         +972 3 9257674
+admin-c:        MR916-RIPE
+tech-c:         LBHM-RIPE
+tech-c:         HMSB-RIPE
+nic-hdl:        BHT2-RIPE
+remarks:        Please Send Spam and Abuse ONLY to abuse@bezeqint.net
+mnt-by:         AS8551-MNT
+created:        2002-10-29T10:01:49Z
+last-modified:  2009-02-15T12:35:43Z
+source:         RIPE # Filtered
+
+role:           BEZEQINT NETWORKING TEAM
+address:        Bezeq International
+address:        40 hashacham st.
+address:        Petach Tikva 49170 Israel
+phone:          +972 1 800014014
+fax-no:         +972 3 9257674
+admin-c:        MR916-RIPE
+tech-c:         MR916-RIPE
+tech-c:         RD1278-RIPE
+nic-hdl:        BNT1-RIPE
+remarks:        Please Send Spam and Abuse ONLY to abuse@bezeqint.net
+mnt-by:         AS8551-MNT
+created:        2005-09-27T12:31:29Z
+last-modified:  2018-12-05T14:57:44Z
+source:         RIPE # Filtered
+
+% Information related to '31.168.96.0/20AS8551'
+
+route:          31.168.96.0/20
+descr:          BEZEQ-INTERNATIONAL
+origin:         AS8551
+mnt-by:         AS8551-MNT
+created:        2011-11-16T12:25:38Z
+last-modified:  2011-11-16T12:25:38Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

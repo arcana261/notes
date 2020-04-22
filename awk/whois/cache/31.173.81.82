@@ -1,0 +1,87 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.173.80.0 - 31.173.87.255'
+
+% Abuse contact for '31.173.80.0 - 31.173.87.255' is 'abuse-mailbox@megafon.ru'
+
+inetnum:        31.173.80.0 - 31.173.87.255
+netname:        MF-GNOC-STF-CGN-20150729
+descr:          Metropolitan branch of OJSC MegaFon AS25159 31.173.80.0/21
+country:        RU
+admin-c:        MFON-RIPE
+tech-c:         MFMS-RIPE
+status:         ASSIGNED PA
+mnt-by:         MF-MOSCOW-MNT
+mnt-by:         MEGAFON-AUTO-MNT
+mnt-by:         MEGAFON-RIPE-MNT
+created:        2015-07-29T07:19:38Z
+last-modified:  2019-11-21T08:53:39Z
+source:         RIPE # Filtered
+
+role:           Moscow Branch of PJSC MegaFon Internet Center
+address:        41 Oruzheyniy lane, Moscow, Russia, 127006
+admin-c:        IK9000-RIPE
+admin-c:        MFON-RIPE
+tech-c:         IK9000-RIPE
+tech-c:         MFON-RIPE
+nic-hdl:        MFMS-RIPE
+mnt-by:         MF-MOSCOW-MNT
+mnt-by:         MEGAFON-GNOC-MNT
+mnt-by:         MEGAFON-WEST-MNT
+mnt-by:         MEGAFON-RIPE-MNT
+created:        2008-03-25T13:13:46Z
+last-modified:  2019-11-06T11:53:19Z
+source:         RIPE # Filtered
+
+role:           MegaFon PJSC - Internet Service Network Operation Center
+address:        PJSC "MegaFon"
+address:        41, Oruzheyniy lane
+address:        Moscow, 127006
+address:        Russian Federation
+phone:          +8(800)5500500
+abuse-mailbox:  abuse-mailbox@megafon.ru
+remarks:        -----------------------------------------------------------
+remarks:        Customer Service Center, is available at 24 x 7
+remarks:        Phone: +8(800)5500500
+remarks:        -----------------------------------------------------------
+remarks:        Technical questions: gnocwest_tr@megafon.ru
+remarks:        Routing and peering: gnoceast_backbone@megafon.ru
+remarks:        -----------------------------------------------------------
+remarks:        SPAM and Network security: abuse-mailbox@megafon.ru
+remarks:        Please use abuse-mailbox@megafon.ru e-mail address for complaints.
+remarks:        All messages to any other our address, relative to SPAM
+remarks:        or security issues, will not be concerned.
+remarks:        -----------------------------------------------------------
+remarks:        Information: http://www.megafon.ru
+remarks:        -----------------------------------------------------------
+admin-c:        VD3684-RIPE
+admin-c:        RG13628-RIPE
+admin-c:        DM17145-RIPE
+nic-hdl:        MFON-RIPE
+mnt-by:         MEGAFON-RIPE-MNT
+created:        2013-03-27T07:19:58Z
+last-modified:  2019-11-18T11:15:45Z
+source:         RIPE # Filtered
+
+% Information related to '31.173.80.0/21AS25159'
+
+route:          31.173.80.0/21
+descr:          MegaFon-Moscow
+origin:         AS25159
+mnt-by:         MEGAFON-RIPE-MNT
+mnt-by:         MF-MOSCOW-MNT
+mnt-by:         MEGAFON-AUTO-MNT
+created:        2015-07-29T07:54:27Z
+last-modified:  2019-11-21T08:54:06Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

@@ -1,0 +1,154 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       66.165.224.0 - 66.165.255.255
+CIDR:           66.165.224.0/19
+NetName:        NOC4H
+NetHandle:      NET-66-165-224-0-1
+Parent:         NET66 (NET-66-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS29802
+Organization:   NOC4Hosts Inc. (NOC4H)
+RegDate:        2017-05-17
+Updated:        2017-05-18
+Ref:            https://rdap.arin.net/registry/ip/66.165.224.0
+
+
+OrgName:        NOC4Hosts Inc.
+OrgId:          NOC4H
+Address:        8010 Woodland Center Blvd
+Address:        Suite 700
+City:           Tampa
+StateProv:      FL
+PostalCode:     33614
+Country:        US
+RegDate:        2004-04-26
+Updated:        2018-11-05
+Ref:            https://rdap.arin.net/registry/entity/NOC4H
+
+ReferralServer:  rwhois://manage.hivelocity.net:4321
+
+OrgTechHandle: IPADM158-ARIN
+OrgTechName:   IP Admin
+OrgTechPhone:  +1-888-869-4678 
+OrgTechEmail:  noc@noc4hosts.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADM158-ARIN
+
+OrgAbuseHandle: HNAA-ARIN
+OrgAbuseName:   HIvelocity Network Abuse Administrator
+OrgAbusePhone:  +1-888-869-4678 
+OrgAbuseEmail:  abuse@hivelocity.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/HNAA-ARIN
+
+OrgNOCHandle: PROTI2-ARIN
+OrgNOCName:   PROTICH, DAN 
+OrgNOCPhone:  +1-888-869-4678 
+OrgNOCEmail:  dan@hivelocity.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/PROTI2-ARIN
+
+# end
+
+
+# start
+
+NetRange:       66.165.236.0 - 66.165.239.255
+CIDR:           66.165.236.0/22
+NetName:        66-165-236-0-22
+NetHandle:      NET-66-165-236-0-1
+Parent:         NOC4H (NET-66-165-224-0-1)
+NetType:        Reassigned
+OriginAS:       AS29802
+Customer:       Hivelocity Ventures Corp (C07069648)
+RegDate:        2018-09-26
+Updated:        2018-09-26
+Comment:        For abuse issues please contact abuse@hivelocity.net
+Ref:            https://rdap.arin.net/registry/ip/66.165.236.0
+
+
+CustName:       Hivelocity Ventures Corp
+Address:        600 W. 7th Street
+City:           Los Angeles
+StateProv:      CA
+PostalCode:     90017
+Country:        US
+RegDate:        2018-09-26
+Updated:        2018-09-26
+Ref:            https://rdap.arin.net/registry/entity/C07069648
+
+OrgTechHandle: IPADM158-ARIN
+OrgTechName:   IP Admin
+OrgTechPhone:  +1-888-869-4678 
+OrgTechEmail:  noc@noc4hosts.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADM158-ARIN
+
+OrgAbuseHandle: HNAA-ARIN
+OrgAbuseName:   HIvelocity Network Abuse Administrator
+OrgAbusePhone:  +1-888-869-4678 
+OrgAbuseEmail:  abuse@hivelocity.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/HNAA-ARIN
+
+OrgNOCHandle: PROTI2-ARIN
+OrgNOCName:   PROTICH, DAN 
+OrgNOCPhone:  +1-888-869-4678 
+OrgNOCEmail:  dan@hivelocity.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/PROTI2-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to manage.hivelocity.net:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 manage.hivelocity.net (Ubersmith RWhois Server V-3.5.8)
+autharea=66.165.236.0/22
+xautharea=66.165.236.0/22
+network:Class-Name:network
+network:Auth-Area:66.165.236.0/22
+network:ID:NET-109814.66.165.239.56/29
+network:Network-Name:Primary Assignment - P18
+network:IP-Network:66.165.239.56/29
+network:IP-Network-Block:66.165.239.56 - 66.165.239.63
+network:Org-Name:BroCode
+network:Street-Address:naberezhnaya 18, 93
+network:City:Kharkiv
+network:State:Other
+network:Postal-Code:61000
+network:Country-Code:UA
+network:Tech-Contact:MAINT-109814.66.165.239.56/29
+network:Created:20180202205051000
+network:Updated:20190716132014000
+network:Updated-By:ipAdmin@hivelocity.net
+contact:POC-Name:Network Administrator
+contact:POC-Email:ipAdmin@hivelocity.net
+contact:POC-Phone:888-869-4678
+contact:Tech-Name:Network Administrator
+contact:Tech-Email:ipAdmin@hivelocity.net
+contact:Tech-Phone:888-869-4678
+contact:Abuse-Name:Hivelocity Abuse Department
+contact:Abuse-Email:abuse@hivelocity.net
+contact:Abuse-Phone:888-869-4678
+%ok

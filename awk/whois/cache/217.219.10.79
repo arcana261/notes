@@ -1,0 +1,76 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.219.0.0 - 217.219.63.255'
+
+% Abuse contact for '217.219.0.0 - 217.219.63.255' is 'abuse@ito.gov.ir'
+
+inetnum:        217.219.0.0 - 217.219.63.255
+netname:        Area-41
+descr:          Area no 4-1 partition
+country:        IR
+admin-c:        ZD144-RIPE
+tech-c:         ZD144-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         AS12880-MNT
+mnt-lower:      AS12880-MNT
+created:        2004-10-03T08:27:27Z
+last-modified:  2013-09-27T19:41:16Z
+source:         RIPE
+
+person:         Aliasghar Ansari
+address:        ito
+address:        ito
+address:        beihaghi blvd.
+address:        Tehran
+address:        Iran
+phone:          +98 21 84802666
+fax-no:         +98 21 84802666
+nic-hdl:        ZD144-RIPE
+remarks:        Technical Contact Person
+remarks:        Please for any abuse report write to abuse@mail.dci.co.ir
+mnt-by:         AS12880-mnt
+created:        2003-12-31T10:46:22Z
+last-modified:  2016-02-20T08:20:31Z
+source:         RIPE
+
+% Information related to '217.219.0.0/20AS12880'
+
+route:          217.219.0.0/20
+descr:          DCI-Route
+descr:          Esfahan
+origin:         AS12880
+mnt-by:         AS12880-MNT
+created:        2005-11-01T10:01:52Z
+last-modified:  2018-10-17T10:50:37Z
+source:         RIPE
+
+% Information related to '217.219.0.0/20as58085'
+
+route:          217.219.0.0/20
+mnt-routes:     TCI-RIPE-MNT
+origin:         as58085
+mnt-by:         MNT-Mah
+mnt-by:         MNT-KALAVANI
+created:        2017-01-14T08:17:49Z
+last-modified:  2018-10-19T05:30:48Z
+source:         RIPE
+
+% Information related to '217.219.0.0/20AS58224'
+
+route:          217.219.0.0/20
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-10-17T10:51:35Z
+last-modified:  2018-10-17T10:51:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

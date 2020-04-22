@@ -1,0 +1,90 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.92.146.0 - 91.92.147.255'
+
+% Abuse contact for '91.92.146.0 - 91.92.147.255' is 'Abdoos@tci.ir'
+
+inetnum:        91.92.146.0 - 91.92.147.255
+org:            ORG-TCOS2-RIPE
+netname:        semnan-telecomunication
+descr:          telecomunication of semnan
+country:        IR
+admin-c:        NA6201-RIPE
+tech-c:         DP14867-RIPE
+tech-c:         KZ1283-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2018-10-22T06:13:08Z
+last-modified:  2019-06-19T09:24:08Z
+source:         RIPE
+
+organisation:   ORG-TCOS2-RIPE
+org-name:       Telecommunication Company of Semnan
+org-type:       other
+address:        Semnan - Hafte tir Square - Telecommunication Company of Semnan
+tech-c:         DP14867-RIPE
+admin-c:        NA6201-RIPE
+abuse-c:        AC26947-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-03T11:20:18Z
+last-modified:  2019-03-02T07:23:49Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Semnan)
+address:        Semnan - Hafte tir Square - Telecommunication Company of Semnan
+admin-c:        HRF24-RIPE
+nic-hdl:        DP14867-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T07:16:59Z
+last-modified:  2019-03-02T07:16:59Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Semnan)
+address:        Semnan - Hafte tir Square - Telecommunication Company of Semnan
+admin-c:        MMS275-RIPE
+nic-hdl:        NA6201-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T07:11:58Z
+last-modified:  2019-03-02T07:11:58Z
+source:         RIPE # Filtered
+
+person:         Khadijeh Zahedi Arani
+address:        Telecommunication Company of IRAN
+phone:          +982189797777
+nic-hdl:        KZ1283-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2018-01-06T10:31:08Z
+last-modified:  2018-11-15T22:18:56Z
+source:         RIPE # Filtered
+
+% Information related to '91.92.146.0/23AS48159'
+
+route:          91.92.146.0/23
+descr:          TCI (Kordestan)
+origin:         AS48159
+mnt-by:         habibhosseinimaintainer
+created:        2017-09-02T11:12:19Z
+last-modified:  2017-09-02T11:12:19Z
+source:         RIPE
+
+% Information related to '91.92.146.0/23AS58224'
+
+route:          91.92.146.0/23
+origin:         AS58224
+mnt-routes:     mohsenrahimimaintainer
+mnt-by:         TCI-RIPE-MNT
+created:        2017-08-28T08:48:43Z
+last-modified:  2017-08-30T12:35:23Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

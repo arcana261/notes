@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.81.80.0 - 95.81.95.255'
+
+% Abuse contact for '95.81.80.0 - 95.81.95.255' is 'info@hamarasystem.net'
+
+inetnum:        95.81.80.0 - 95.81.95.255
+netname:        LASER
+country:        IR
+admin-c:        ANS126-RIPE
+tech-c:         ANS126-RIPE
+status:         ASSIGNED PA
+mnt-domains:    LASER-MNT
+mnt-lower:      LASER-MNT
+mnt-routes:     LASER-MNT
+mnt-by:         HAMARASYSTEM-MNT
+created:        2019-06-15T12:42:58Z
+last-modified:  2019-06-15T12:42:58Z
+source:         RIPE
+
+person:         Alireza Norouzi Safa
+address:        Laser_Co
+phone:          +98 919 715 713 9
+phone:          +98 21 9130 3091
+nic-hdl:        ANS126-RIPE
+mnt-by:         ANS_LASER
+created:        2019-02-04T12:22:52Z
+last-modified:  2019-07-16T06:57:53Z
+source:         RIPE
+
+% Information related to '95.81.86.0/24AS64413'
+
+route:          95.81.86.0/24
+descr:          IR-SERVCO-AVAGOSTAR
+origin:         AS64413
+remarks:
+remarks:        E-Mail: registry@avagostar.net
+mnt-by:         LASER-MNT
+created:        2019-08-04T13:31:52Z
+last-modified:  2019-08-04T13:31:52Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '80.191.189.0 - 80.191.190.255'
+
+% Abuse contact for '80.191.189.0 - 80.191.190.255' is 'abuse@ito.gov.ir'
+
+inetnum:        80.191.189.0 - 80.191.190.255
+netname:        ANDISHGIL
+descr:          Andisheh sabz khazar co., Internet Service provider
+country:        IR
+admin-c:        MRN13-RIPE
+tech-c:         MRN13-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2004-02-08T11:34:33Z
+last-modified:  2004-02-08T11:34:33Z
+source:         RIPE
+
+person:         Mohammad Reza Nikrou
+address:        No 11,165 Ave,golsar, Rasht ,Guilan,Iran
+phone:          +98 131 7750000
+mnt-by:         MNT-ASK1
+nic-hdl:        MRN13-RIPE
+created:        2004-02-08T06:46:31Z
+last-modified:  2006-01-25T14:28:10Z
+source:         RIPE # Filtered
+
+% Information related to '80.191.160.0/19As12880'
+
+route:          80.191.160.0/19
+descr:          DCI-Route
+origin:         As12880
+mnt-by:         AS12880-MNT
+mnt-routes:     mohsenrahimimaintainer
+mnt-routes:     TCI-RIPE-MNT
+created:        2006-02-03T13:29:52Z
+last-modified:  2017-09-10T11:17:01Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

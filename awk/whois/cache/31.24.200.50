@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.24.200.0 - 31.24.203.255'
+
+% Abuse contact for '31.24.200.0 - 31.24.203.255' is 'abuse@baharnet.ir'
+
+inetnum:        31.24.200.0 - 31.24.203.255
+netname:        BROADBANDUSER
+descr:          ISP
+country:        IQ
+admin-c:        RA7777-RIPE
+tech-c:         RA7777-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-ZENTEX
+created:        2011-09-03T06:16:05Z
+last-modified:  2015-03-14T13:52:20Z
+source:         RIPE
+
+person:         Reza Akbari
+address:        Floor 2, No 458, 64st St, Jamalodin Asad Abadi Av, Yusef Abad , Tehran
+phone:          +989122717541
+nic-hdl:        RA7777-RIPE
+mnt-by:         MNT-ZENTEX
+created:        2015-03-14T12:36:21Z
+last-modified:  2015-03-14T12:36:21Z
+source:         RIPE
+
+% Information related to '31.24.200.0/22AS56466'
+
+route:          31.24.200.0/22
+origin:         AS56466
+mnt-by:         MNT-ZENTEX
+created:        2017-09-08T21:20:19Z
+last-modified:  2017-09-08T21:20:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

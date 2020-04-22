@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '77.111.245.0 - 77.111.245.255'
+
+% Abuse contact for '77.111.245.0 - 77.111.245.255' is 'abuse@hernlabs.se'
+
+inetnum:        77.111.245.0 - 77.111.245.255
+netname:        HERNLABS
+country:        SE
+admin-c:        HLN412-RIPE
+tech-c:         HLN412-RIPE
+abuse-c:        ACRO10700-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         HERNLABS-MNT
+created:        2017-11-27T15:54:34Z
+last-modified:  2017-11-27T15:54:34Z
+source:         RIPE
+
+person:         Hern Labs Netops
+address:        Repslagaregatan 21
+address:        582 22 Linköping
+address:        Sweden
+phone:          +46-13-4791110
+nic-hdl:        HLN412-RIPE
+mnt-by:         OPERA-MNT
+created:        2017-11-27T14:36:32Z
+last-modified:  2019-02-14T08:21:38Z
+source:         RIPE # Filtered
+
+% Information related to '77.111.245.0/24AS205016'
+
+route:          77.111.245.0/24
+mnt-lower:      HERNLABS-MNT
+origin:         AS205016
+mnt-by:         OPERA-MNT
+created:        2017-11-27T12:48:23Z
+last-modified:  2017-11-27T15:55:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

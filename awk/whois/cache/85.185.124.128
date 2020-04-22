@@ -1,0 +1,81 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.185.0.0 - 85.185.255.255'
+
+% Abuse contact for '85.185.0.0 - 85.185.255.255' is 'abuse@ito.gov.ir'
+
+inetnum:        85.185.0.0 - 85.185.255.255
+netname:        IR-DCC-20041125
+country:        IR
+org:            ORG-TCoI1-RIPE
+admin-c:        aaa159-RIPE
+tech-c:         AA12876-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AS12880-MNT
+mnt-lower:      AS12880-MNT
+mnt-routes:     AS12880-MNT
+created:        2004-11-25T13:30:38Z
+last-modified:  2016-05-24T10:30:04Z
+source:         RIPE
+
+organisation:   ORG-TCoI1-RIPE
+org-name:       Information Technology Company (ITC)
+org-type:       LIR
+descr:          Information Technology Organization
+address:        Bayhaghi
+address:        1515674311
+address:        Teheran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982184802666
+fax-no:         +982184803417
+fax-no:         +982184802668
+admin-c:        BA3672-RIPE
+admin-c:        AA12876-RIPE
+abuse-c:        AR15624-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        AS12880-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AS12880-MNT
+created:        2004-04-17T11:28:07Z
+last-modified:  2017-12-05T10:28:23Z
+source:         RIPE # Filtered
+
+person:         Aliasghar Ansari
+address:        Afagh Bldg.,No. 20, Beyhaghi Blvd., Arzhantin Sq.,Tehran, Iran
+phone:          +98 21 848 026 66
+fax-no:         +98 21 848 026 70
+nic-hdl:        AA12876-RIPE
+mnt-by:         AS12880-MNT
+created:        2012-08-04T10:19:05Z
+last-modified:  2018-12-24T09:58:10Z
+source:         RIPE # Filtered
+
+person:         Ali Asghar Ansari
+address:        6 th floor Afagh Building, Bayhaghi Ave,Arjantine Sq.Tehran,iran
+phone:          +982184802667
+nic-hdl:        aaa159-RIPE
+mnt-by:         AS12880-MNT
+created:        2009-11-21T05:45:26Z
+last-modified:  2015-11-09T10:39:06Z
+source:         RIPE
+
+% Information related to '85.185.124.0/24AS58224'
+
+route:          85.185.124.0/24
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-12-03T09:34:34Z
+last-modified:  2018-12-03T09:34:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

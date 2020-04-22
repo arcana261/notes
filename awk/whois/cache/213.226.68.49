@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '213.226.68.0 - 213.226.71.255'
+
+% Abuse contact for '213.226.68.0 - 213.226.71.255' is 'abuse@melbicom.net'
+
+inetnum:        213.226.68.0 - 213.226.71.255
+netname:        LT-MELBICOM6-20181204
+country:        DE
+org:            ORG-MU51-RIPE
+admin-c:        KF2214-RIPE
+tech-c:         KF2214-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MELBICOM-MNT
+created:        2018-12-04T12:48:37Z
+last-modified:  2018-12-04T12:48:37Z
+source:         RIPE
+
+organisation:   ORG-MU51-RIPE
+org-name:       Melbikomas UAB
+org-type:       LIR
+address:        Svitrigailos g. 11B
+address:        LT-03228
+address:        Vilnius
+address:        LITHUANIA
+admin-c:        KF2214-RIPE
+tech-c:         KF2214-RIPE
+abuse-c:        AR49132-RIPE
+mnt-ref:        MELBICOM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MELBICOM-MNT
+created:        2018-11-05T14:28:58Z
+last-modified:  2018-11-05T14:28:59Z
+source:         RIPE # Filtered
+phone:          +370 (5) 235 1727
+
+person:         Konstantin Fedorov
+address:        Svitrigailos g. 11B
+address:        LT-03228
+address:        Vilnius
+address:        LITHUANIA
+phone:          +370 (5) 235 1727
+nic-hdl:        KF2214-RIPE
+mnt-by:         MELBICOM-MNT
+created:        2018-11-05T14:28:57Z
+last-modified:  2018-11-05T14:28:58Z
+source:         RIPE
+
+% Information related to '213.226.68.0/24AS56630'
+
+route:          213.226.68.0/24
+origin:         AS56630
+mnt-by:         MELBICOM-MNT
+created:        2018-12-04T14:09:55Z
+last-modified:  2018-12-04T14:09:55Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

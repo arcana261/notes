@@ -1,0 +1,70 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.124.112.0 - 185.124.115.255'
+
+% Abuse contact for '185.124.112.0 - 185.124.115.255' is 'abedy@satiaisp.com'
+
+inetnum:        185.124.112.0 - 185.124.115.255
+netname:        IR-RAYANKADEH-APADANA-20151102
+country:        IR
+org:            ORG-RACL2-RIPE
+admin-c:        VG4458-RIPE
+tech-c:         VG4458-RIPE
+status:         ALLOCATED PA
+mnt-by:         ir-rayankadeh-apadana-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2019-12-09T13:36:51Z
+last-modified:  2019-12-09T13:36:51Z
+source:         RIPE
+
+organisation:   ORG-RACL2-RIPE
+org-name:       Rayankadeh Apadana Company Ltd
+org-type:       LIR
+address:        Shahid Rajaei St, Jannat ALY, Vaez ALY.
+address:        3813674679
+address:        Arak
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +988632230643
+admin-c:        VG4458-RIPE
+tech-c:         VG4458-RIPE
+abuse-c:        AR33152-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        ir-rayankadeh-apadana-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-rayankadeh-apadana-1-mnt
+created:        2015-08-10T14:28:44Z
+last-modified:  2016-06-19T08:35:27Z
+source:         RIPE # Filtered
+
+person:         Vahid Ghaemmaghami
+address:        Shahid Rajaei St, Jannat ALY, Vaez ALY.
+address:        3813674679
+address:        Arak
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +988632230643
+nic-hdl:        VG4458-RIPE
+mnt-by:         ir-rayankadeh-apadana-1-mnt
+created:        2015-08-10T14:28:42Z
+last-modified:  2015-08-10T14:28:43Z
+source:         RIPE
+
+% Information related to '185.124.112.0/22AS60627'
+
+route:          185.124.112.0/22
+descr:          Rayankadeh-Apadana
+origin:         AS60627
+mnt-by:         ir-rayankadeh-apadana-1-mnt
+created:        2015-11-03T07:56:06Z
+last-modified:  2019-12-10T05:23:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

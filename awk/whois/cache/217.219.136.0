@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.219.136.0 - 217.219.136.15'
+
+% Abuse contact for '217.219.136.0 - 217.219.136.15' is 'abuse@ito.gov.ir'
+
+inetnum:        217.219.136.0 - 217.219.136.15
+netname:        DABAINCO
+descr:          Dadash Baradar Industrial CO
+country:        IR
+admin-c:        PB11300-RIPE
+tech-c:         PB11300-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2008-03-01T06:19:35Z
+last-modified:  2010-07-18T05:04:55Z
+source:         RIPE
+
+person:         Parviz Biuck
+address:        15 km , tabriz ? Tehran rouad
+phone:          +98 411 630 63 91
+nic-hdl:        PB11300-RIPE
+mnt-by:         AS12880-MNT
+created:        2010-07-18T05:04:55Z
+last-modified:  2019-07-08T14:23:28Z
+source:         RIPE # Filtered
+
+% Information related to '217.219.128.0/20AS58224'
+
+route:          217.219.128.0/20
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2016-07-10T09:40:36Z
+last-modified:  2016-07-10T09:40:36Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

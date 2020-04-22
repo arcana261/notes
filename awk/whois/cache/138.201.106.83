@@ -1,0 +1,147 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       138.198.0.0 - 138.201.255.255
+CIDR:           138.200.0.0/15, 138.198.0.0/15
+NetName:        RIPE-ERX-138-198-0-0
+NetHandle:      NET-138-198-0-0-1
+Parent:         NET138 (NET-138-0-0-0-0)
+NetType:        Early Registrations, Transferred to RIPE NCC
+OriginAS:       
+Organization:   RIPE Network Coordination Centre (RIPE)
+RegDate:        2003-12-11
+Updated:        2003-12-11
+Comment:        These addresses have been further assigned to users in
+Comment:        the RIPE NCC region.  Contact information can be found in
+Comment:        the RIPE database at http://www.ripe.net/whois
+Ref:            https://rdap.arin.net/registry/ip/138.198.0.0
+
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+ResourceLink:  whois.ripe.net
+
+
+OrgName:        RIPE Network Coordination Centre
+OrgId:          RIPE
+Address:        P.O. Box 10096
+City:           Amsterdam
+StateProv:      
+PostalCode:     1001EB
+Country:        NL
+RegDate:        
+Updated:        2013-07-29
+Ref:            https://rdap.arin.net/registry/entity/RIPE
+
+ReferralServer:  whois://whois.ripe.net
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+
+OrgAbuseHandle: ABUSE3850-ARIN
+OrgAbuseName:   Abuse Contact
+OrgAbusePhone:  +31205354444 
+OrgAbuseEmail:  abuse@ripe.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3850-ARIN
+
+OrgTechHandle: RNO29-ARIN
+OrgTechName:   RIPE NCC Operations
+OrgTechPhone:  +31 20 535 4444 
+OrgTechEmail:  hostmaster@ripe.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/RNO29-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.ripe.net.
+
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '138.201.106.64 - 138.201.106.95'
+
+% Abuse contact for '138.201.106.64 - 138.201.106.95' is 'abuse@hetzner.de'
+
+inetnum:        138.201.106.64 - 138.201.106.95
+netname:        RAMU-SAGUNALA
+descr:          Ramu Sagunala
+country:        DE
+admin-c:        RS18396-RIPE
+tech-c:         RS18396-RIPE
+status:         LEGACY
+mnt-by:         HOS-GUN
+created:        2016-08-30T01:11:29Z
+last-modified:  2019-03-01T01:27:25Z
+source:         RIPE # Filtered
+
+person:         Ramu Sagunala
+address:        2-2-23/22/23 D.D Colony, Bagh Amberpet
+address:        50013 Hyderabad
+address:        INDIA
+phone:          +37282873018
+nic-hdl:        RS18396-RIPE
+mnt-by:         HOS-GUN
+created:        2014-08-23T08:21:27Z
+last-modified:  2019-03-01T01:27:23Z
+source:         RIPE # Filtered
+
+% Information related to '138.201.0.0/16AS24940'
+
+route:          138.201.0.0/16
+descr:          HETZNER-RZ-BLK-ERX4
+origin:         AS24940
+org:            ORG-HOA1-RIPE
+mnt-by:         HOS-GUN
+created:        2012-12-24T09:10:23Z
+last-modified:  2012-12-24T09:10:23Z
+source:         RIPE
+
+organisation:   ORG-HOA1-RIPE
+org-name:       Hetzner Online GmbH
+org-type:       LIR
+address:        Industriestrasse 25
+address:        D-91710
+address:        Gunzenhausen
+address:        GERMANY
+phone:          +49 9831 5050
+fax-no:         +49 9831 5053
+admin-c:        TF2013-RIPE
+admin-c:        MF1400-RIPE
+admin-c:        GM834-RIPE
+admin-c:        HOAC1-RIPE
+admin-c:        MH375-RIPE
+admin-c:        SK2374-RIPE
+admin-c:        SK8441-RIPE
+abuse-c:        HOAC1-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        HOS-GUN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HOS-GUN
+created:        2004-04-17T11:07:58Z
+last-modified:  2016-08-25T13:26:09Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

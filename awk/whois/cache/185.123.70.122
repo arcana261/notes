@@ -1,0 +1,123 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.123.70.0 - 185.123.70.255'
+
+% Abuse contact for '185.123.70.0 - 185.123.70.255' is 'support@shahroodut.ac.ir'
+
+inetnum:        185.123.70.0 - 185.123.70.255
+netname:        IR-SUT-BLCK3-20151029
+descr:          Shahrood University Address Block 3
+country:        IR
+org:            ORG-SU24-RIPE
+admin-c:        MM42397-RIPE
+admin-c:        MMAG4-RIPE
+tech-c:         SUIT1-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         MNT-MASOUD
+mnt-by:         MNT-RRAMEZANIAN
+mnt-lower:      MNT-MASOUD
+mnt-lower:      MNT-RRAMEZANIAN
+mnt-routes:     MNT-MASOUD
+mnt-routes:     MNT-RRAMEZANIAN
+mnt-domains:    MNT-MASOUD
+mnt-domains:    MNT-RRAMEZANIAN
+created:        2015-10-29T08:29:02Z
+last-modified:  2016-02-15T12:46:26Z
+source:         RIPE # Filtered
+
+organisation:   ORG-SU24-RIPE
+org-name:       Shahrood University
+org-type:       LIR
+address:        Daneshgah Blvd, 7 Tir Sq,
+address:        36199-95161
+address:        Shahrood
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982332392204
+admin-c:        MM42637-RIPE
+tech-c:         MM42637-RIPE
+abuse-c:        AR33928-RIPE
+mnt-ref:        MNT-MASOUD
+mnt-ref:        MNT-RRAMEZANIAN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-MASOUD
+mnt-ref:        RIPE-NCC-HM-MNT
+created:        2015-10-21T10:23:27Z
+last-modified:  2016-09-17T04:58:07Z
+source:         RIPE # Filtered
+
+role:           Shahrood University IT Team
+address:        Daneshgah Blvd, 7 Tir Sq, Shahrood, Iran
+nic-hdl:        SUIT1-RIPE
+mnt-by:         MNT-MASOUD
+mnt-by:         MNT-RRAMEZANIAN
+admin-c:        MMAG4-RIPE
+admin-c:        MM42637-RIPE
+tech-c:         MMAG4-RIPE
+tech-c:         MM42637-RIPE
+created:        2015-10-25T05:33:43Z
+last-modified:  2016-02-15T12:40:04Z
+source:         RIPE # Filtered
+
+person:         Mahdiar Rashidi
+address:        Arya Transfo Factory, Shahmirzad Industrial Area, Shahmirzad
+address:        35731-95986
+address:        Semnan
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982333670138
+nic-hdl:        MM42397-RIPE
+mnt-by:         Mahdiar
+created:        2015-09-10T07:10:17Z
+last-modified:  2016-12-28T06:37:50Z
+source:         RIPE
+
+person:         Masoud Maghsoudi
+address:        No. 12 - Birjandi St. - Emam Khomeini Sq. - Shahrood - Iran
+phone:          +982332243400
+nic-hdl:        MMAG4-RIPE
+mnt-by:         MNT-MASOUD
+created:        2013-10-09T10:49:00Z
+last-modified:  2015-06-27T23:20:03Z
+source:         RIPE
+
+% Information related to '185.123.70.0/24AS5627'
+
+route:          185.123.70.0/24
+org:            ORG-SU24-RIPE
+descr:          Shahrood University
+origin:         AS5627
+mnt-by:         MNT-MASOUD
+mnt-by:         MNT-RRAMEZANIAN
+created:        2015-10-29T08:34:46Z
+last-modified:  2016-02-15T12:46:33Z
+source:         RIPE
+
+organisation:   ORG-SU24-RIPE
+org-name:       Shahrood University
+org-type:       LIR
+address:        Daneshgah Blvd, 7 Tir Sq,
+address:        36199-95161
+address:        Shahrood
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982332392204
+admin-c:        MM42637-RIPE
+tech-c:         MM42637-RIPE
+abuse-c:        AR33928-RIPE
+mnt-ref:        MNT-MASOUD
+mnt-ref:        MNT-RRAMEZANIAN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-MASOUD
+mnt-ref:        RIPE-NCC-HM-MNT
+created:        2015-10-21T10:23:27Z
+last-modified:  2016-09-17T04:58:07Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

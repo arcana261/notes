@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.65.244.0 - 185.65.245.255'
+
+% Abuse contact for '185.65.244.0 - 185.65.245.255' is 'network@abuse.team'
+
+inetnum:        185.65.244.0 - 185.65.245.255
+netname:        HU-VPS3
+descr:          Hosting Ukraine VPS network
+country:        UA
+admin-c:        HU2012-RIPE
+tech-c:         HU2012-RIPE
+status:         ASSIGNED PA
+mnt-by:         HOSTINGUKRAINE-MNT
+created:        2014-11-06T04:01:59Z
+last-modified:  2014-11-06T04:01:59Z
+source:         RIPE
+
+role:           Hosting Ukraine Ltd. Netmaster
+org:            ORG-HUL6-RIPE
+address:        Hosting Ukraine LTD
+address:        PO Box 65
+phone:          +380443927433
+address:        04112, Kiev, Ukraine
+admin-c:        IR1628-RIPE
+abuse-mailbox:  network@abuse.team
+nic-hdl:        HU2012-RIPE
+mnt-by:         HOSTINGUKRAINE-MNT
+created:        2013-04-18T07:53:53Z
+last-modified:  2018-08-13T08:44:09Z
+source:         RIPE # Filtered
+
+% Information related to '185.65.244.0/22AS200000'
+
+route:          185.65.244.0/22
+descr:          VPS IP block
+origin:         AS200000
+mnt-by:         HOSTINGUKRAINE-MNT
+created:        2014-08-04T09:14:13Z
+last-modified:  2014-11-04T13:20:08Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

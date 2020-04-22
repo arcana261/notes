@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '145.239.137.248 - 145.239.137.251'
+
+% Abuse contact for '145.239.137.248 - 145.239.137.251' is 'abuse@ovh.net'
+
+inetnum:        145.239.137.248 - 145.239.137.251
+netname:        OVH_199040982
+country:        GB
+descr:          Failover Ips
+org:            ORG-DH41-RIPE
+admin-c:        OTC14-RIPE
+tech-c:         OTC14-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2018-11-15T08:40:29Z
+last-modified:  2018-11-15T08:40:29Z
+source:         RIPE
+
+organisation:   ORG-DH41-RIPE
+org-name:       Dong Hongyan
+org-type:       OTHER
+address:        Blk 356A Admiralty Drive #08-82
+address:        751356 singapor
+address:        SG
+phone:          +65.91571400
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2016-03-08T08:16:07Z
+last-modified:  2017-10-30T16:47:42Z
+source:         RIPE # Filtered
+
+role:           OVH UK Technical Contact
+address:        OVH Ltd
+address:        New London House, 6 London Street
+address:        EC3R 7LP, LONDON
+address:        UK
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC14-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T16:09:57Z
+last-modified:  2017-01-17T09:52:03Z
+source:         RIPE # Filtered
+
+% Information related to '145.239.0.0/16AS16276'
+
+route:          145.239.0.0/16
+descr:          OVH
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2017-06-19T13:48:30Z
+last-modified:  2017-06-19T13:48:30Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

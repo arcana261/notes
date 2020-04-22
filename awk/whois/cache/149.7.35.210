@@ -1,0 +1,137 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       149.7.0.0 - 149.7.255.255
+CIDR:           149.7.0.0/16
+NetName:        COGENT-149-7-16
+NetHandle:      NET-149-7-0-0-1
+Parent:         NET149 (NET-149-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS174
+Organization:   PSINet, Inc. (PSI-1)
+RegDate:        1992-01-28
+Updated:        2016-02-08
+Ref:            https://rdap.arin.net/registry/ip/149.7.0.0
+
+
+OrgName:        PSINet, Inc.
+OrgId:          PSI-1
+Address:        2450 N Street NW
+City:           Washington
+StateProv:      DC
+PostalCode:     20037
+Country:        US
+RegDate:        1992-01-28
+Updated:        2015-06-04
+Ref:            https://rdap.arin.net/registry/entity/PSI-1
+
+ReferralServer:  rwhois://rwhois.cogentco.com:4321
+
+OrgAbuseHandle: COGEN-ARIN
+OrgAbuseName:   Cogent Abuse
+OrgAbusePhone:  +1-877-875-4311 
+OrgAbuseEmail:  abuse@cogentco.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/COGEN-ARIN
+
+OrgTechHandle: IPALL-ARIN
+OrgTechName:   IP Allocation
+OrgTechPhone:  +1-877-875-4311 
+OrgTechEmail:  ipalloc@cogentco.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPALL-ARIN
+
+OrgNOCHandle: ZC108-ARIN
+OrgNOCName:   Cogent Communications
+OrgNOCPhone:  +1-877-875-4311 
+OrgNOCEmail:  noc@cogentco.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/ZC108-ARIN
+
+# end
+
+
+# start
+
+NetRange:       149.7.35.0 - 149.7.35.255
+CIDR:           149.7.35.0/24
+NetName:        NET-149-7-35-0-1
+NetHandle:      NET-149-7-35-0-1
+Parent:         COGENT-149-7-16 (NET-149-7-0-0-1)
+NetType:        Reassigned
+OriginAS:       AS55081
+Customer:       24Shells Inc (C07482319)
+RegDate:        2020-01-07
+Updated:        2020-01-07
+Ref:            https://rdap.arin.net/registry/ip/149.7.35.0
+
+
+CustName:       24Shells Inc
+Address:        The Oxgate Business Centre
+Address:        Units 8 - 10
+City:           London
+StateProv:      GREATER LONDON
+PostalCode:     NW2 7JA
+Country:        GB
+RegDate:        2020-01-07
+Updated:        2020-01-07
+Ref:            https://rdap.arin.net/registry/entity/C07482319
+
+OrgAbuseHandle: COGEN-ARIN
+OrgAbuseName:   Cogent Abuse
+OrgAbusePhone:  +1-877-875-4311 
+OrgAbuseEmail:  abuse@cogentco.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/COGEN-ARIN
+
+OrgTechHandle: IPALL-ARIN
+OrgTechName:   IP Allocation
+OrgTechPhone:  +1-877-875-4311 
+OrgTechEmail:  ipalloc@cogentco.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPALL-ARIN
+
+OrgNOCHandle: ZC108-ARIN
+OrgNOCName:   Cogent Communications
+OrgNOCPhone:  +1-877-875-4311 
+OrgNOCEmail:  noc@cogentco.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/ZC108-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.cogentco.com:4321.
+
+%rwhois V-1.5:0010b0:00 rwhois.cogentco.com (CGNT rwhoisd 0.0.0)
+network:ID:NET4-9507230018
+network:Network-Name:NET4-9507230018
+network:IP-Network:149.7.35.0/24
+network:Org-Name:24Shells Inc.
+network:Street-Address:30 Knightsbridge Road
+network:City:Piscataway
+network:State:NJ
+network:Country:US
+network:Postal-Code:08854
+network:Tech-Contact:ZC108-ARIN
+network:Updated:2020-01-07 14:45:02
+%ok

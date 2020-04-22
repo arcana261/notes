@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '178.32.189.212 - 178.32.189.215'
+
+% Abuse contact for '178.32.189.212 - 178.32.189.215' is 'abuse@ovh.net'
+
+inetnum:        178.32.189.212 - 178.32.189.215
+netname:        OVH_54136672
+country:        GB
+descr:          ovh
+org:            ORG-VA314-RIPE
+admin-c:        OTC14-RIPE
+tech-c:         OTC14-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2013-04-12T11:15:21Z
+last-modified:  2014-04-21T11:18:17Z
+source:         RIPE
+
+organisation:   ORG-vA314-RIPE
+org-name:       behnam
+org-type:       OTHER
+address:        Souq Al Kabir St
+address:        2108 Dubai
+address:        AE
+descr:          gol
+phone:          +971526240085
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2012-09-03T21:53:00Z
+last-modified:  2017-10-30T16:21:01Z
+source:         RIPE # Filtered
+
+role:           OVH UK Technical Contact
+address:        OVH Ltd
+address:        New London House, 6 London Street
+address:        EC3R 7LP, LONDON
+address:        UK
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC14-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T16:09:57Z
+last-modified:  2017-01-17T09:52:03Z
+source:         RIPE # Filtered
+
+% Information related to '178.32.0.0/15AS16276'
+
+route:          178.32.0.0/15
+descr:          OVH ISP
+descr:          Paris, France
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2010-01-19T16:39:43Z
+last-modified:  2010-01-19T16:39:43Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

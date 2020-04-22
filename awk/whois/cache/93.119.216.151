@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '93.119.216.0 - 93.119.223.255'
+
+% Abuse contact for '93.119.216.0 - 93.119.223.255' is 'abuse@mci.ir'
+
+inetnum:        93.119.216.0 - 93.119.223.255
+netname:        MOBINNET
+descr:          Mobinnet WiMAX Users
+country:        IR
+admin-c:        RA4320-RIPE
+tech-c:         RA4320-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-MOBINNET
+created:        2014-09-13T10:02:52Z
+last-modified:  2014-09-13T10:02:52Z
+source:         RIPE
+
+person:         Saeed Osali
+address:        Mobin Net Communication Company
+address:        Sh.Motahari 377
+address:        1595713463 Tehran
+phone:          +98 21 83868
+nic-hdl:        RA4320-RIPE
+mnt-by:         MNT-MOBINNET
+created:        2009-12-01T08:58:59Z
+last-modified:  2015-11-11T15:21:52Z
+source:         RIPE
+
+% Information related to '93.119.208.0/20AS50810'
+
+route:          93.119.208.0/20
+descr:          Mobinnet Wimax Expansion
+origin:         AS50810
+mnt-by:         MNT-MOBINNET
+created:        2014-09-13T10:03:16Z
+last-modified:  2014-09-13T10:03:16Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

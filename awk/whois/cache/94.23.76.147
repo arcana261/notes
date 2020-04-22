@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '94.23.76.0 - 94.23.79.255'
+
+% Abuse contact for '94.23.76.0 - 94.23.79.255' is 'abuse@ovh.net'
+
+inetnum:        94.23.76.0 - 94.23.79.255
+netname:        PT-OVH
+descr:          OVH Hosting LD
+country:        PT
+org:            ORG-OL44-RIPE
+admin-c:        OTC6-RIPE
+tech-c:         OTC6-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2009-02-09T14:01:47Z
+last-modified:  2009-02-09T14:01:47Z
+source:         RIPE
+
+organisation:   ORG-OL44-RIPE
+org-name:       OVH Hosting LDA
+org-type:       OTHER
+address:        Avenida Miguel Bombarda, 133 - 6ºA
+address:        1050-164 Lisboa
+address:        Portugal
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2008-12-23T18:00:25Z
+last-modified:  2017-10-30T16:12:20Z
+source:         RIPE # Filtered
+
+role:           OVH PT Technical Contact
+address:        OVH Hosting LDA
+address:        Avenida Miguel Bombarda, 133 - 6ºA
+address:        1050-164 Lisboa
+address:        Portugal
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC6-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2008-12-23T17:48:44Z
+last-modified:  2008-12-23T17:48:44Z
+source:         RIPE # Filtered
+
+% Information related to '94.23.0.0/16AS16276'
+
+route:          94.23.0.0/16
+descr:          OVH ISP
+descr:          Paris, France
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2008-07-15T16:59:42Z
+last-modified:  2008-07-15T16:59:42Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,56 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.230.124.0 - 185.230.124.255'
+
+% Abuse contact for '185.230.124.0 - 185.230.124.255' is 'abuse@m247.ro'
+
+inetnum:        185.230.124.0 - 185.230.124.255
+netname:        M247-LTD-Madrid
+descr:          M247 LTD Madrid Infrastructure
+country:        ES
+geoloc:         40.4392433 -3.6237062
+admin-c:        GBXS3-RIPE
+tech-c:         GBXS3-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2017-11-08T09:09:49Z
+last-modified:  2018-11-29T11:44:52Z
+source:         RIPE
+
+role:           GLOBALAXS NOC MADRID
+remarks:        M247 - Network Management Centre Madrid
+address:        Calle Albasanz, 71
+address:        28037, Madrid, Spain
+abuse-mailbox:  ro-legal@m247.ro
+tech-c:         PC12694-RIPE
+tech-c:         JB3482-RIPE
+tech-c:         CB2407-RIPE
+nic-hdl:        GBXS3-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-03-15T14:10:14Z
+last-modified:  2019-06-04T13:28:21Z
+source:         RIPE # Filtered
+
+% Information related to '185.230.124.0/24AS9009'
+
+route:          185.230.124.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2017-11-08T08:59:14Z
+last-modified:  2017-11-08T08:59:14Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

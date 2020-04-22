@@ -1,0 +1,127 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       139.59.0.0 - 139.59.255.255
+CIDR:           139.59.0.0/16
+NetName:        APNIC-ERX-139-59-0-0
+NetHandle:      NET-139-59-0-0-1
+Parent:         NET139 (NET-139-0-0-0-0)
+NetType:        Early Registrations, Transferred to APNIC
+OriginAS:       
+Organization:   Asia Pacific Network Information Centre (APNIC)
+RegDate:        2004-03-03
+Updated:        2009-10-08
+Comment:        This IP address range is not registered in the ARIN database.
+Comment:        This range was transferred to the APNIC Whois Database as
+Comment:        part of the ERX (Early Registration Transfer) project.
+Comment:        For details, refer to the APNIC Whois Database via
+Comment:        WHOIS.APNIC.NET or http://wq.apnic.net/apnic-bin/whois.pl
+Comment:        
+Comment:        ** IMPORTANT NOTE: APNIC is the Regional Internet Registry
+Comment:        for the Asia Pacific region.  APNIC does not operate networks
+Comment:        using this IP address range and is not able to investigate
+Comment:        spam or abuse reports relating to these addresses.  For more
+Comment:        help, refer to http://www.apnic.net/apnic-info/whois_search2/abuse-and-spamming
+Ref:            https://rdap.arin.net/registry/ip/139.59.0.0
+
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+ResourceLink:  whois.apnic.net
+
+
+OrgName:        Asia Pacific Network Information Centre
+OrgId:          APNIC
+Address:        PO Box 3646
+City:           South Brisbane
+StateProv:      QLD
+PostalCode:     4101
+Country:        AU
+RegDate:        
+Updated:        2012-01-24
+Ref:            https://rdap.arin.net/registry/entity/APNIC
+
+ReferralServer:  whois://whois.apnic.net
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+
+OrgTechHandle: AWC12-ARIN
+OrgTechName:   APNIC Whois Contact
+OrgTechPhone:  +61 7 3858 3188 
+OrgTechEmail:  search-apnic-not-arin@apnic.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+OrgAbuseHandle: AWC12-ARIN
+OrgAbuseName:   APNIC Whois Contact
+OrgAbusePhone:  +61 7 3858 3188 
+OrgAbuseEmail:  search-apnic-not-arin@apnic.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.apnic.net.
+
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '139.59.0.0 - 139.59.255.254'
+
+% Abuse contact for '139.59.0.0 - 139.59.255.254' is 'abuse@digitalocean.com'
+
+inetnum:        139.59.0.0 - 139.59.255.254
+netname:        DIGITALOCEAN-AP
+descr:          DigitalOcean, LLC
+country:        SG
+admin-c:        DOIA2-AP
+tech-c:         DOIA2-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-DIGITALOCEAN-AP
+mnt-irt:        IRT-DIGITALOCEAN-AP
+last-modified:  2017-04-11T13:47:40Z
+source:         APNIC
+
+irt:            IRT-DIGITALOCEAN-AP
+address:        101 Avenue of the Americas, 10th Floor, New York NY 10013
+e-mail:         abuse@digitalocean.com
+abuse-mailbox:  abuse@digitalocean.com
+admin-c:        DOIA2-AP
+tech-c:         DOIA2-AP
+auth:           # Filtered
+remarks:        abuse@digitalocean.com is invalid
+mnt-by:         MAINT-DIGITALOCEAN-AP
+last-modified:  2019-11-27T13:28:53Z
+source:         APNIC
+
+role:           Digital Ocean Inc administrator
+address:        101 Avenue of th Americas, 10th Floor, New York NY 10013
+country:        US
+phone:          +1 646 397 8051
+fax-no:         +1 646 397 8051
+e-mail:         abuse@digitalocean.com
+admin-c:        DOIA2-AP
+tech-c:         DOIA2-AP
+nic-hdl:        DOIA2-AP
+mnt-by:         MAINT-DIGITALOCEAN-AP
+last-modified:  2015-04-02T20:27:52Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK4)
+
+

@@ -1,0 +1,54 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '195.206.105.0 - 195.206.105.255'
+
+% Abuse contact for '195.206.105.0 - 195.206.105.255' is 'abuse@m247.ro'
+
+inetnum:        195.206.105.0 - 195.206.105.255
+netname:        M247-LTD-Zurich
+descr:          M247 LTD Zurich Dedicated Servers
+geoloc:         47.3667 8.5500
+country:        CH
+admin-c:        GBXS12-RIPE
+tech-c:         GBXS12-RIPE
+status:         ASSIGNED PA
+mnt-by:         GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2018-08-09T13:15:59Z
+last-modified:  2018-11-28T14:28:49Z
+source:         RIPE
+
+role:           GLOBALAXS ZURICH NOC
+address:        Sägereistrasse 35
+address:        CH-8152 Glattbrugg,Switzerland
+tech-c:         CB2407-RIPE
+tech-c:         JB3482-RIPE
+abuse-mailbox:  abuse@m247.ro
+nic-hdl:        GBXS12-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-06-16T11:23:30Z
+last-modified:  2018-07-20T08:21:30Z
+source:         RIPE # Filtered
+
+% Information related to '195.206.105.0/24AS9009'
+
+route:          195.206.105.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2018-08-08T13:48:34Z
+last-modified:  2018-08-08T13:48:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

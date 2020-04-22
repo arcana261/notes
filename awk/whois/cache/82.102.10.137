@@ -1,0 +1,57 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '82.102.10.0 - 82.102.11.255'
+
+% Abuse contact for '82.102.10.0 - 82.102.11.255' is 'abuse@redstation.com'
+
+inetnum:        82.102.10.0 - 82.102.11.255
+netname:        IOMARTHOSTING
+descr:          iomart Hosting Limited
+country:        GB
+admin-c:        RA1415-RIPE
+tech-c:         RA1415-RIPE
+status:         ASSIGNED PA
+remarks:        ABUSE REPORTS: abuse@almahost.co.uk
+remarks:        ABUSE REPORTS: abuse@redstation.com
+mnt-by:         REDSTATION-MNT
+mnt-domains:    REDSTATION-MNT
+mnt-routes:     REDSTATION-MNT
+created:        2015-08-19T09:15:20Z
+last-modified:  2017-02-06T16:05:09Z
+source:         RIPE
+
+role:           Redstation Admin Role
+address:        Redstation Limited
+address:        2 Frater Gate Business Park
+address:        Aerodrome Road
+address:        Gosport
+address:        Hampshire
+address:        PO13 0GW
+address:        UNITED KINGDOM
+abuse-mailbox:  abuse@redstation.com
+nic-hdl:        RA1415-RIPE
+mnt-by:         REDSTATION-MNT
+created:        2005-04-22T17:34:33Z
+last-modified:  2017-05-02T09:47:13Z
+source:         RIPE # Filtered
+
+% Information related to '82.102.8.0/21AS20860'
+
+route:          82.102.8.0/21
+descr:          Redstation Limited
+origin:         AS20860
+mnt-by:         REDSTATION-MNT
+created:        2015-08-11T13:42:53Z
+last-modified:  2015-08-11T13:42:53Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

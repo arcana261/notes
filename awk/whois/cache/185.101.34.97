@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.101.34.64 - 185.101.34.127'
+
+% Abuse contact for '185.101.34.64 - 185.101.34.127' is 'abuse@anmaxx.net'
+
+inetnum:        185.101.34.64 - 185.101.34.127
+netname:        AnMaXX
+country:        NO
+admin-c:        AM38880-RIPE
+tech-c:         AM38880-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         SERVETHEWORLD-MNT
+created:        2016-04-27T14:41:18Z
+last-modified:  2016-04-27T14:41:18Z
+source:         RIPE
+org:            ORG-AGIS19-RIPE
+
+organisation:   ORG-AGIS19-RIPE
+org-name:       AnMaXX Global IT Services
+org-type:       OTHER
+descr:          Services in Oslo/Norway
+remarks:        Please send all abuse/SPAM complaints to abuse@anmaxx.net
+address:        41 Powell Street
+address:        Wolverhampton
+address:        West Midlands WV10 0BW
+address:        United Kingdom
+abuse-c:        AIS166-RIPE
+mnt-ref:        RU-ANMA-MNT
+mnt-by:         RU-ANMA-MNT
+created:        2016-04-17T14:43:21Z
+last-modified:  2017-10-30T14:43:32Z
+source:         RIPE # Filtered
+
+person:         Anthony Marshall
+address:        41 Powell Street
+address:        Wolverhampton
+address:        West Midlands WV10 0BW
+address:        United Kingdom
+phone:          +4915739122452
+nic-hdl:        AM38880-RIPE
+remarks:        Please send all abuse/SPAM complaints to abuse@anmaxx.net
+mnt-by:         RU-ANMA-MNT
+created:        2016-02-16T21:24:56Z
+last-modified:  2017-10-30T23:08:35Z
+source:         RIPE # Filtered
+
+% Information related to '185.101.32.0/22AS34989'
+
+route:          185.101.32.0/22
+descr:          NO-SERVETHEWORLD
+origin:         AS34989
+mnt-by:         SERVETHEWORLD-MNT
+created:        2015-11-09T12:56:07Z
+last-modified:  2015-11-09T12:56:07Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

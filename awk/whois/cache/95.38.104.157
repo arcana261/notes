@@ -1,0 +1,84 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.38.0.0 - 95.38.255.255'
+
+% Abuse contact for '95.38.0.0 - 95.38.255.255' is 'abuse@fanava.net'
+
+inetnum:        95.38.0.0 - 95.38.255.255
+netname:        IR-FANAVA-GROUP-20081211
+country:        IR
+org:            ORG-FG8-RIPE
+admin-c:        FNA3-RIPE
+tech-c:         FDP401-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-FANAVA
+mnt-routes:     MNT-FANAVA
+mnt-domains:    MNT-FANAVA
+created:        2008-12-11T08:36:38Z
+last-modified:  2019-03-02T13:04:12Z
+source:         RIPE
+
+organisation:   ORG-FG8-RIPE
+org-name:       Fanava Group
+org-type:       LIR
+address:        No.39,17th West St. , Kordestan Ave.
+address:        1438843955
+address:        TEHRAN
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989124274095
+phone:          +982182195450
+fax-no:         +982182195221
+abuse-c:        AR15628-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-FANAVA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-FANAVA
+admin-c:        FDP401-RIPE
+created:        2006-09-06T11:28:42Z
+last-modified:  2019-03-02T09:46:59Z
+source:         RIPE # Filtered
+
+role:           Fanava Network Administrators
+address:        No.39,17th West St. , Kordestan Ave. , Tehran , Iran
+phone:          +98 21 82195450
+fax-no:         +98 21 82195221
+admin-c:        FDP401-RIPE
+tech-c:         FDP401-RIPE
+nic-hdl:        FNA3-RIPE
+mnt-by:         MNT-FANAVA
+created:        2007-07-18T12:14:46Z
+last-modified:  2019-03-02T09:48:30Z
+source:         RIPE # Filtered
+
+person:         Aliakbar Akhavan
+address:        No.39,17th West St. , Kordestan Ave. Tehran
+phone:          +982182195469
+phone:          +989124274095
+nic-hdl:        FDP401-RIPE
+mnt-by:         Fanavadp-LIR
+mnt-by:         MNT-FANAVA
+mnt-by:         MNT-ERFANAVA
+created:        2018-08-06T13:39:56Z
+last-modified:  2019-09-11T10:39:41Z
+source:         RIPE # Filtered
+
+% Information related to '95.38.104.0/22AS41881'
+
+route:          95.38.104.0/22
+origin:         AS41881
+mnt-by:         MNT-FANAVA
+created:        2017-12-14T09:58:44Z
+last-modified:  2017-12-14T09:58:44Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

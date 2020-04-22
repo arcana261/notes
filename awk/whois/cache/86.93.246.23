@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '86.93.0.0 - 86.93.255.255'
+
+% Abuse contact for '86.93.0.0 - 86.93.255.255' is 'abuse@kpn.com'
+
+inetnum:        86.93.0.0 - 86.93.255.255
+netname:        KPN
+descr:          Customers
+country:        NL
+admin-c:        PT978-RIPE
+tech-c:         PT978-RIPE
+status:         ASSIGNED PA
+mnt-by:         KPN-MNT
+remarks:        Please mail abuse issues to: abuse@kpn.com
+created:        2006-05-31T13:36:47Z
+last-modified:  2018-11-05T14:38:13Z
+source:         RIPE # Filtered
+
+role:           KPN B.V.
+address:        Stationsstraat 115 (visit address)
+address:        P.O. box 3053
+address:        3800 DB Amersfoort
+address:        The Netherlands
+phone:          +31 30 6588612
+remarks:        Operational issues: netmaster@kpn.com
+remarks:        Peering issues: peering-office@kpn.com
+nic-hdl:        PT978-RIPE
+admin-c:        RH13540-RIPE
+admin-c:        PBOS-RIPE
+tech-c:         RH13540-RIPE
+remarks:        For security & abuse issues see inetnum.
+abuse-mailbox:  abuse@kpn.com
+mnt-by:         AS8737-MNT
+mnt-by:         KPN-MNT
+created:        2003-04-02T10:49:57Z
+last-modified:  2018-11-05T14:42:07Z
+source:         RIPE # Filtered
+
+% Information related to '86.80.0.0/12AS1136'
+
+route:          86.80.0.0/12
+descr:          PIADDR
+origin:         AS1136
+mnt-by:         KPN-MNT
+created:        2014-12-17T11:06:44Z
+last-modified:  2014-12-17T11:06:44Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

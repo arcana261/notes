@@ -1,0 +1,102 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       172.86.184.0 - 172.86.191.255
+CIDR:           172.86.184.0/21
+NetName:        AMANAH-BLOCK7
+NetHandle:      NET-172-86-184-0-1
+Parent:         NET172 (NET-172-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS32489
+Organization:   Amanah Tech Inc. (AT-2)
+RegDate:        2015-06-01
+Updated:        2015-06-01
+Ref:            https://rdap.arin.net/registry/ip/172.86.184.0
+
+
+OrgName:        Amanah Tech Inc.
+OrgId:          AT-2
+Address:        151 Frontstreet West
+Address:        Suite 341
+City:           Toronto
+StateProv:      ON
+PostalCode:     M5J 2N1
+Country:        CA
+RegDate:        2010-11-23
+Updated:        2017-01-28
+Comment:        Please send all abuse reports uncensored for review and action.
+Ref:            https://rdap.arin.net/registry/entity/AT-2
+
+ReferralServer:  rwhois://rwhois.amanah.com:4321
+
+OrgTechHandle: NETWO4031-ARIN
+OrgTechName:   Network Operations
+OrgTechPhone:  +1-416-603-9825 
+OrgTechEmail:  arin@amanah.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO4031-ARIN
+
+OrgAbuseHandle: ABUSE2837-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-416-603-9825 
+OrgAbuseEmail:  abuse@amanah.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE2837-ARIN
+
+OrgNOCHandle: NETWO4031-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-416-603-9825 
+OrgNOCEmail:  arin@amanah.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO4031-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.amanah.com:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 billing.amanah.com (Ubersmith RWhois Server V-3.5.14)
+autharea=172.86.187.0/24
+xautharea=172.86.187.0/24
+network:Class-Name:network
+network:Auth-Area:172.86.187.0/24
+network:ID:NET-5192.172.86.187.16/29
+network:Network-Name:172.86.187.16/29
+network:IP-Network:172.86.187.16/29
+network:IP-Network-Block:172.86.187.16 - 172.86.187.23
+network:Org-Name:Amanah Tech Inc
+network:Street-Address:
+network:City:Toronto
+network:State:AL
+network:Postal-Code:
+network:Country-Code:CA
+network:Tech-Contact:MAINT-5192.172.86.187.16/29
+network:Created:20161229151127000
+network:Updated:20161229151127000
+network:Updated-By:support@amanah.com
+contact:POC-Name:Network Administrator
+contact:POC-Email:support@amanah.com
+contact:POC-Phone:+14166039825 
+contact:Tech-Name:Network Administrator
+contact:Tech-Email:support@amanah.com
+contact:Tech-Phone:+14166039825 
+contact:Abuse-Name:Abuse Department
+contact:Abuse-Email:abuse@amanah.com
+contact:Abuse-Phone:+14166039825 
+%ok

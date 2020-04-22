@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '145.239.80.0 - 145.239.95.255'
+
+% Abuse contact for '145.239.80.0 - 145.239.95.255' is 'abuse@ovh.net'
+
+inetnum:        145.239.80.0 - 145.239.95.255
+netname:        OVH-VPS
+country:        PL
+descr:          OVH VPS WAW
+org:            ORG-OS23-RIPE
+admin-c:        OTC12-RIPE
+tech-c:         OTC12-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2017-07-04T10:21:51Z
+last-modified:  2017-07-04T10:21:51Z
+source:         RIPE
+
+organisation:   ORG-OS23-RIPE
+org-name:       OVH Sp. z o. o.
+org-type:       OTHER
+address:        ul. Swobodna 1
+address:        50-088 Wroclaw
+address:        Poland
+admin-c:        OTC2-RIPE
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2005-09-02T12:40:01Z
+last-modified:  2019-08-08T07:47:57Z
+source:         RIPE # Filtered
+
+role:           OVH PL Technical Contact
+address:        OVH Sp. z o. o.
+address:        ul. Swobodna 1
+address:        54-088 Wroclaw
+address:        Poland
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC12-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T16:09:56Z
+last-modified:  2019-08-08T07:50:01Z
+source:         RIPE # Filtered
+
+% Information related to '145.239.0.0/16AS16276'
+
+route:          145.239.0.0/16
+descr:          OVH
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2017-06-19T13:48:30Z
+last-modified:  2017-06-19T13:48:30Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

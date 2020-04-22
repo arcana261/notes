@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '92.222.150.0 - 92.222.150.31'
+
+% Abuse contact for '92.222.150.0 - 92.222.150.31' is 'abuse@ovh.net'
+
+inetnum:        92.222.150.0 - 92.222.150.31
+netname:        OVH_60944193
+descr:          OVH
+country:        NL
+org:            ORG-MNTA1-RIPE
+admin-c:        OTC7-RIPE
+tech-c:         OTC7-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2014-05-19T14:10:43Z
+last-modified:  2014-05-19T14:10:43Z
+source:         RIPE
+
+organisation:   ORG-MNTA1-RIPE
+org-name:       ramu sagunala
+org-type:       OTHER
+address:        Dubai PO box 7580
+address:        7580 Dubai
+address:        AE
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2013-08-23T10:30:49Z
+last-modified:  2017-10-30T16:25:08Z
+source:         RIPE # Filtered
+
+role:           OVH NL Technical Contact
+address:        OVH BV
+address:        Corkstraat 46
+address:        3047 AC Rotterdam
+address:        The Netherlands
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC7-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-03-18T15:51:01Z
+last-modified:  2009-03-18T15:51:01Z
+source:         RIPE # Filtered
+
+% Information related to '92.222.0.0/16AS16276'
+
+route:          92.222.0.0/16
+descr:          OVH
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2014-02-25T16:37:57Z
+last-modified:  2014-02-25T16:37:57Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

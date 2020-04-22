@@ -1,0 +1,48 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '116.202.0.0 - 116.203.255.255'
+
+% Abuse contact for '116.202.0.0 - 116.203.255.255' is 'no-email@apnic.net'
+
+inetnum:        116.202.0.0 - 116.203.255.255
+netname:        STUB-116-202SLASH15
+descr:          Transferred to the RIPE region on 2018-08-27T14:42:34Z.
+country:        ZZ
+admin-c:        STUB-AP
+tech-c:         STUB-AP
+status:         ALLOCATED PORTABLE
+mnt-by:         APNIC-STUB
+mnt-irt:        IRT-STUB-AP
+last-modified:  2019-09-30T00:15:24Z
+source:         APNIC
+
+irt:            IRT-STUB-AP
+address:        N/A
+e-mail:         no-email@apnic.net
+abuse-mailbox:  no-email@apnic.net
+admin-c:        STUB-AP
+tech-c:         STUB-AP
+remarks:        IRT for stub records.
+remarks:        We do not operate the referring network and
+remarks:        are unable to investigate complaints of network abuse.
+remarks:        For information about IRT, see www.apnic.net/irt
+mnt-by:         APNIC-HM
+auth:           # Filtered
+last-modified:  2019-09-23T05:22:43Z
+source:         APNIC
+
+person:         STUB PERSON
+address:        N/A
+country:        ZZ
+phone:          +00 0000 0000
+e-mail:         no-email@apnic.net
+nic-hdl:        STUB-AP
+remarks:        No contact information for stub records.
+mnt-by:         APNIC-HM
+last-modified:  2019-09-23T04:53:33Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK4)
+
+

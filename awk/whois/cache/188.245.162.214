@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.245.160.0 - 188.245.163.255'
+
+% Abuse contact for '188.245.160.0 - 188.245.163.255' is 'abuse@parsonline.net'
+
+inetnum:        188.245.160.0 - 188.245.163.255
+netname:        Parsonline-Dynamic-Pool
+descr:          Parsonline-Dynamic-Pool
+country:        IR
+admin-c:        PNOC5-RIPE
+tech-c:         PNOC5-RIPE
+status:         ASSIGNED PA
+mnt-by:         PARSONLINE-MNT
+created:        2013-04-09T06:32:04Z
+last-modified:  2013-04-09T06:32:04Z
+source:         RIPE
+
+role:           ParsOnline Network Operations Center
+address:        224 Khoramshahr ave., No. 6C
+address:        Tehran 15337
+address:        Iran
+phone:          +98 21 8220 8333
+fax-no:         +98 21 8874 9505
+abuse-mailbox:  abuse@parsonline.net
+admin-c:        MR17275-RIPE
+admin-c:        AG16687-RIPE
+tech-c:         MR17275-RIPE
+tech-c:         AG16687-RIPE
+nic-hdl:        PNOC5-RIPE
+mnt-by:         PARSONLINE-MNT
+created:        2007-06-30T09:51:28Z
+last-modified:  2018-09-05T06:01:45Z
+source:         RIPE # Filtered
+
+% Information related to '188.245.160.0/19AS16322'
+
+route:          188.245.160.0/19
+descr:          ParsOnline Routes
+origin:         AS16322
+mnt-by:         PARSONLINE-MNT
+created:        2015-01-24T08:59:28Z
+last-modified:  2015-01-24T08:59:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

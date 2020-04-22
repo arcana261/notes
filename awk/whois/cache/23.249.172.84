@@ -1,0 +1,114 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       23.249.172.0 - 23.249.172.255
+CIDR:           23.249.172.0/24
+NetName:        CLOUDIP-LLC
+NetHandle:      NET-23-249-172-0-1
+Parent:         NET3-INC (NET-23-249-172-0-2)
+NetType:        Reallocated
+OriginAS:       
+Organization:   CloudIP LLC (CL-970)
+RegDate:        2019-12-09
+Updated:        2019-12-09
+Ref:            https://rdap.arin.net/registry/ip/23.249.172.0
+
+
+OrgName:        CloudIP LLC
+OrgId:          CL-970
+Address:        25 Taylor Street
+City:           San Francisco
+StateProv:      CA
+PostalCode:     94102
+Country:        US
+RegDate:        2015-11-04
+Updated:        2017-01-28
+Ref:            https://rdap.arin.net/registry/entity/CL-970
+
+
+OrgAbuseHandle: JSM284-ARIN
+OrgAbuseName:   Mills, John S
+OrgAbusePhone:  +1-415-728-5258 
+OrgAbuseEmail:  sales@ipv4hosting.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/JSM284-ARIN
+
+OrgTechHandle: JSM284-ARIN
+OrgTechName:   Mills, John S
+OrgTechPhone:  +1-415-728-5258 
+OrgTechEmail:  sales@ipv4hosting.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/JSM284-ARIN
+
+# end
+
+
+# start
+
+NetRange:       23.249.172.0 - 23.249.172.255
+CIDR:           23.249.172.0/24
+NetName:        NET3-INC
+NetHandle:      NET-23-249-172-0-2
+Parent:         NET23 (NET-23-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS55286, AS36352, AS62584
+Organization:   Net3 Inc. (NETIN-11)
+RegDate:        2013-11-04
+Updated:        2020-03-03
+Ref:            https://rdap.arin.net/registry/ip/23.249.172.0
+
+
+OrgName:        Net3 Inc.
+OrgId:          NETIN-11
+Address:        8195 Sheridan Drive
+City:           Buffalo
+StateProv:      NY
+PostalCode:     14221
+Country:        US
+RegDate:        2013-07-10
+Updated:        2017-01-28
+Ref:            https://rdap.arin.net/registry/entity/NETIN-11
+
+
+OrgAbuseHandle: NOC13226-ARIN
+OrgAbuseName:   Network Operations Center
+OrgAbusePhone:  +1-289-408-9989 
+OrgAbuseEmail:  netops@net3.co
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NOC13226-ARIN
+
+OrgNOCHandle: NOC13226-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-289-408-9989 
+OrgNOCEmail:  netops@net3.co
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC13226-ARIN
+
+OrgTechHandle: NOC13226-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-289-408-9989 
+OrgTechEmail:  netops@net3.co
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC13226-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

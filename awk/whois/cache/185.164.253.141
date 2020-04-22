@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.164.253.0 - 185.164.253.255'
+
+% Abuse contact for '185.164.253.0 - 185.164.253.255' is 'abuse@nakhl.net'
+
+inetnum:        185.164.253.0 - 185.164.253.255
+netname:        BahoonarUniversityKerman
+descr:          Bahoonar University Kerman
+descr:          Atrin.servco
+country:        IR
+admin-c:        MB42205-RIPE
+tech-c:         AM42226-RIPE
+status:         ASSIGNED PA
+mnt-by:         ir-nakhljonoob-1-mnt
+created:        2017-06-28T05:22:34Z
+last-modified:  2017-11-11T16:04:20Z
+source:         RIPE
+
+person:         Amin Malekghasemi
+address:        Floo2 nakhl Building -Conrner Of 32th Motahari street
+address:        7617699755
+address:        Kerman
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +983432528323
+phone:          +989131407063
+nic-hdl:        AM42226-RIPE
+mnt-by:         ir-nakhljonoob2-1-mnt
+created:        2017-06-02T11:59:39Z
+last-modified:  2017-06-06T09:37:56Z
+source:         RIPE
+
+person:         Mohsen bahrami
+address:        Floor 2-nakhl building-corner of 32th motahari street
+address:        7617699755
+address:        Kerman
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989133996430
+nic-hdl:        MB42205-RIPE
+mnt-by:         ir-nakhljonoob-1-mnt
+created:        2016-08-22T12:09:04Z
+last-modified:  2016-08-22T12:09:04Z
+source:         RIPE
+
+% Information related to '185.164.253.0/24AS207141'
+
+route:          185.164.253.0/24
+origin:         AS207141
+mnt-by:         ir-nakhljonoob-1-mnt
+created:        2017-06-23T19:46:55Z
+last-modified:  2017-06-23T19:46:55Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

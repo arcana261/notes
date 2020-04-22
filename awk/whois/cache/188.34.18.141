@@ -1,0 +1,82 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.34.0.0 - 188.34.127.255'
+
+% Abuse contact for '188.34.0.0 - 188.34.127.255' is 'registry@asretelecom.net'
+
+inetnum:        188.34.0.0 - 188.34.127.255
+netname:        IR-ASRETELECOM-20090319
+country:        IR
+org:            ORG-AED1-RIPE
+admin-c:        HHGH1979-RIPE
+admin-c:        ARDP1981-RIPE
+tech-c:         HHGH1979-RIPE
+tech-c:         ARDP1981-RIPE
+status:         ALLOCATED PA
+remarks:        ASRETELECOM; The Iranian First Broadband Operator
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ASRETELECOM-MNT
+mnt-lower:      ASRETELECOM-MNT
+mnt-routes:     ASRETELECOM-MNT
+created:        2019-04-05T14:30:25Z
+last-modified:  2020-02-22T05:35:52Z
+source:         RIPE # Filtered
+
+organisation:   ORG-AED1-RIPE
+org-name:       Asr-e Enteghal-e Dadeha Company (Private J.S.)
+org-type:       LIR
+address:        No:18, 9th Alley, Ahamd-Qasir Street
+address:        1513734511
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982188284415
+fax-no:         +982188716982
+admin-c:        ARDP1981-RIPE
+admin-c:        HHGH1979-RIPE
+abuse-c:        AR15616-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        ASRETELECOM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ASRETELECOM-MNT
+created:        2008-12-02T14:26:47Z
+last-modified:  2019-03-19T11:29:36Z
+source:         RIPE # Filtered
+
+person:         Alireza Dashtpeyma
+address:        No:183 Jalal-al-ahmad Street Tehran, IRAN
+phone:          +98 21 8870 1750
+nic-hdl:        ARDP1981-RIPE
+created:        2009-04-28T08:47:32Z
+last-modified:  2017-10-30T22:05:28Z
+source:         RIPE
+mnt-by:         ASRETELECOM-MNT
+
+person:         Hassan HABIBI
+address:        No:18, 9th Alley, Ahmad-Qasir Street
+address:        Tehran, IRAN
+phone:          +98 21 8870 1750
+nic-hdl:        HHGH1979-RIPE
+created:        2009-04-27T10:37:56Z
+last-modified:  2016-04-06T20:09:12Z
+mnt-by:         RIPE-NCC-LOCKED-MNT
+source:         RIPE
+
+% Information related to '188.34.16.0/21AS49103'
+
+route:          188.34.16.0/21
+origin:         AS49103
+mnt-by:         ASRETELECOM-MNT
+created:        2017-07-09T10:02:27Z
+last-modified:  2017-07-09T10:02:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

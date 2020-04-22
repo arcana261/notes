@@ -1,0 +1,82 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.245.0.0 - 46.245.63.255'
+
+% Abuse contact for '46.245.0.0 - 46.245.63.255' is 'info@hamarasystem.net'
+
+inetnum:        46.245.0.0 - 46.245.63.255
+netname:        IR-HAMARASYSTEM-20101231
+country:        IR
+org:            ORG-HSTE1-RIPE
+admin-c:        HSCO1-RIPE
+tech-c:         HSCO1-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HAMARASYSTEM-MNT
+mnt-lower:      MK1-MNT
+mnt-lower:      HAMARASYSTEM-MNT
+mnt-routes:     HAMARASYSTEM-MNT
+mnt-routes:     MK1-MNT
+created:        2019-08-08T10:33:45Z
+last-modified:  2019-08-08T10:33:45Z
+source:         RIPE # Filtered
+
+organisation:   ORG-HSTE1-RIPE
+org-name:       Hamara System Tabriz Engineering Company
+org-type:       LIR
+address:        #44, BaghShomal St.
+address:        5137618113
+address:        Tabriz
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +984135531188
+fax-no:         +984135535111
+abuse-c:        AR15631-RIPE
+admin-c:        MK7777-RIPE
+admin-c:        RJ1199-RIPE
+mnt-ref:        HAMARASYSTEM-MNT
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MK1-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HAMARASYSTEM-MNT
+created:        2008-05-13T07:14:20Z
+last-modified:  2019-08-03T23:36:49Z
+source:         RIPE # Filtered
+tech-c:         HSCO1-RIPE
+
+role:           Hamarasystem Administrative Contact Role
+address:        Hamara System
+                Tabriz 5137618113
+                IRAN, ISLAMIC REPUBLIC OF
+phone:          +989141159591
+fax-no:         +984115535111
+admin-c:        MK7777-RIPE
+admin-c:        RJ1199-RIPE
+tech-c:         MKH-RIPE
+nic-hdl:        HSCO1-RIPE
+mnt-by:         HAMARASYSTEM-MNT
+mnt-by:         MK1-MNT
+created:        2010-09-23T06:05:02Z
+last-modified:  2010-09-23T06:05:02Z
+source:         RIPE # Filtered
+
+% Information related to '46.245.0.0/20AS47262'
+
+route:          46.245.0.0/20
+descr:          HAMARA-Route
+origin:         AS47262
+mnt-by:         HAMARASYSTEM-MNT
+mnt-by:         MK1-MNT
+created:        2015-01-12T16:54:01Z
+last-modified:  2015-01-12T16:54:01Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

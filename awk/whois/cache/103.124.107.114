@@ -1,0 +1,47 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '103.124.107.0 - 103.124.107.255'
+
+% Abuse contact for '103.124.107.0 - 103.124.107.255' is 'abuse@serverssale.com'
+
+inetnum:        103.124.107.0 - 103.124.107.255
+netname:        SERVERSSALE-IN
+descr:          Hosteons.com VPS
+country:        US
+admin-c:        SSA30-AP
+tech-c:         SSA30-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-SERVERSSALE-IN
+mnt-irt:        IRT-SERVERSSALE-IN
+last-modified:  2018-11-12T10:40:23Z
+geoloc:         34.048624 118.256313
+source:         APNIC
+
+irt:            IRT-SERVERSSALE-IN
+address:        B-26, Gokul Row House,, Somnath Mahadev Road,, Parle Point, Surat Gujarat 395007
+e-mail:         abuse@serverssale.com
+abuse-mailbox:  abuse@serverssale.com
+admin-c:        SSA30-AP
+tech-c:         SSA30-AP
+auth:           # Filtered
+remarks:        abuse@serverssale.com was validated on 2020-01-08
+mnt-by:         MAINT-SERVERSSALE-IN
+last-modified:  2020-01-08T01:15:42Z
+source:         APNIC
+
+role:           Servers Sale administrator
+address:        B-26, Gokul Row House,, Somnath Mahadev Road,, Parle Point, Surat Gujarat 395007
+country:        IN
+phone:          +919825294945
+e-mail:         abuse@serverssale.com
+admin-c:        SSA30-AP
+tech-c:         SSA30-AP
+nic-hdl:        SSA30-AP
+mnt-by:         MAINT-SERVERSSALE-IN
+last-modified:  2018-11-12T10:38:30Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK4)
+
+

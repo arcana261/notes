@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.120.129.0 - 37.120.129.255'
+
+% Abuse contact for '37.120.129.0 - 37.120.129.255' is 'abuse@s-data.ro'
+
+inetnum:        37.120.129.0 - 37.120.129.255
+netname:        M247-FRA2
+descr:          M247 Ltd Frankfurt 2
+country:        DE
+admin-c:        GBXS1-RIPE
+tech-c:         GBXS1-RIPE
+status:         ASSIGNED PA
+geoloc:         50.12028229783773 8.736469745635986
+mnt-by:         SDAT-MNT
+mnt-by:         M247-EU-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS ----
+created:        2018-10-12T13:06:22Z
+last-modified:  2018-12-30T14:26:40Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS DE NOC
+address:        Hanauer Landstraﬂe 302, Hessen
+address:        60314, Frankfurt, Germany
+abuse-mailbox:  abuse@m247.ro
+nic-hdl:        GBXS1-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-03-10T13:28:16Z
+last-modified:  2018-07-20T12:25:46Z
+source:         RIPE # Filtered
+
+% Information related to '37.120.129.0/24AS9009'
+
+route:          37.120.129.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2018-10-12T14:21:08Z
+last-modified:  2019-01-14T06:27:07Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

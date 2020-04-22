@@ -1,0 +1,133 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       108.61.164.0 - 108.61.167.255
+CIDR:           108.61.164.0/22
+NetName:        NET-108-61-164-0-22
+NetHandle:      NET-108-61-164-0-1
+Parent:         CHOOPA-NETBLK08 (NET-108-61-0-0-1)
+NetType:        Reassigned
+OriginAS:       
+Organization:   Vultr Holdings, LLC (VHL-31)
+RegDate:        2015-03-05
+Updated:        2015-03-05
+Ref:            https://rdap.arin.net/registry/ip/108.61.164.0
+
+
+OrgName:        Vultr Holdings, LLC
+OrgId:          VHL-31
+Address:        2031 BE, Haarlem
+City:           Amsterdam
+StateProv:      NOORD-HOLLAND
+PostalCode:     2031
+Country:        NL
+RegDate:        2015-03-05
+Updated:        2017-04-14
+Ref:            https://rdap.arin.net/registry/entity/VHL-31
+
+
+OrgAbuseHandle: VULTR-ARIN
+OrgAbuseName:   Vultr Abuse
+OrgAbusePhone:  +1-973-849-0500 
+OrgAbuseEmail:  abuse@vultr.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/VULTR-ARIN
+
+OrgTechHandle: VULTR-ARIN
+OrgTechName:   Vultr Abuse
+OrgTechPhone:  +1-973-849-0500 
+OrgTechEmail:  abuse@vultr.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/VULTR-ARIN
+
+# end
+
+
+# start
+
+NetRange:       108.61.0.0 - 108.61.255.255
+CIDR:           108.61.0.0/16
+NetName:        CHOOPA-NETBLK08
+NetHandle:      NET-108-61-0-0-1
+Parent:         NET108 (NET-108-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS20473
+Organization:   Choopa, LLC (CHOOP-1)
+RegDate:        2010-12-08
+Updated:        2012-03-02
+Ref:            https://rdap.arin.net/registry/ip/108.61.0.0
+
+
+OrgName:        Choopa, LLC
+OrgId:          CHOOP-1
+Address:        14 Cliffwood Ave Suite 300
+City:           Matawan
+StateProv:      NJ
+PostalCode:     07747
+Country:        US
+RegDate:        2006-10-03
+Updated:        2016-01-11
+Comment:        http://www.choopa.net/
+Ref:            https://rdap.arin.net/registry/entity/CHOOP-1
+
+
+OrgNOCHandle: NETWO1159-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-973-849-0500 
+OrgNOCEmail:  network@choopa.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+OrgTechHandle: NETWO1159-ARIN
+OrgTechName:   Network Operations
+OrgTechPhone:  +1-973-849-0500 
+OrgTechEmail:  network@choopa.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+OrgAbuseHandle: ABUSE1143-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-973-849-0500 
+OrgAbuseEmail:  abuse@choopa.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE1143-ARIN
+
+RAbuseHandle: ABUSE1143-ARIN
+RAbuseName:   Abuse Department
+RAbusePhone:  +1-973-849-0500 
+RAbuseEmail:  abuse@choopa.com
+RAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE1143-ARIN
+
+RNOCHandle: NETWO1159-ARIN
+RNOCName:   Network Operations
+RNOCPhone:  +1-973-849-0500 
+RNOCEmail:  network@choopa.com
+RNOCRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+RTechHandle: NETWO1159-ARIN
+RTechName:   Network Operations
+RTechPhone:  +1-973-849-0500 
+RTechEmail:  network@choopa.com
+RTechRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

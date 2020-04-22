@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '176.31.28.144 - 176.31.28.151'
+
+% Abuse contact for '176.31.28.144 - 176.31.28.151' is 'info@google.com'
+
+inetnum:        176.31.28.144 - 176.31.28.151
+netname:        OVH_270073727
+country:        FR
+descr:          Failover Ips
+org:            ORG-GIGI4-RIPE
+admin-c:        OTC2-RIPE
+tech-c:         OTC2-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2020-04-19T21:35:26Z
+last-modified:  2020-04-19T21:35:26Z
+source:         RIPE
+
+organisation:   ORG-GIGI4-RIPE
+org-name:       Google Inc Google Inc
+org-type:       OTHER
+address:        CA, brooks street number 68
+address:        17234 Paris
+address:        FR
+phone:          +33.434513411
+abuse-c:        ACRO30998-RIPE
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2020-03-07T22:40:13Z
+last-modified:  2020-03-07T22:40:13Z
+source:         RIPE # Filtered
+
+role:           OVH Technical Contact
+address:        OVH SAS
+address:        2 rue Kellermann
+address:        59100 Roubaix
+address:        France
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+tech-c:         SL10162-RIPE
+nic-hdl:        OTC2-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2004-01-28T17:42:29Z
+last-modified:  2014-09-05T10:47:15Z
+source:         RIPE # Filtered
+
+% Information related to '176.31.0.0/16AS16276'
+
+route:          176.31.0.0/16
+descr:          OVH ISP
+descr:          Paris, France
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2011-05-20T12:54:00Z
+last-modified:  2011-05-20T12:54:00Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

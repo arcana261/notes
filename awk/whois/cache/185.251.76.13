@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.251.76.0 - 185.251.79.255'
+
+% Abuse contact for '185.251.76.0 - 185.251.79.255' is 'abbasi@yousof.com'
+
+inetnum:        185.251.76.0 - 185.251.79.255
+netname:        IR-DAYAN-SHABAKE-GOSTAR-20180322
+country:        IR
+org:            ORG-DSGP1-RIPE
+admin-c:        GA10266-RIPE
+tech-c:         GA10266-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-dayan-shabake-gostar-1-mnt
+created:        2018-03-22T14:44:41Z
+last-modified:  2018-03-22T14:44:41Z
+source:         RIPE
+
+organisation:   ORG-DSGP1-RIPE
+org-name:       Dayan Shabake Gostar Pishro PJSC
+org-type:       LIR
+address:        Ayatollah Heidari
+address:        6931941171
+address:        Ilam
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        GA10266-RIPE
+tech-c:         GA10266-RIPE
+abuse-c:        AR45615-RIPE
+mnt-ref:        ir-dayan-shabake-gostar-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-dayan-shabake-gostar-1-mnt
+created:        2018-03-20T14:07:31Z
+last-modified:  2019-02-10T07:29:13Z
+source:         RIPE # Filtered
+phone:          +989181414484
+fax-no:         +988433338666
+
+person:         Gholamreza Abbasi
+address:        Ayatollah Heidari
+address:        6931948117
+address:        Ilam
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +988433333335
+nic-hdl:        GA10266-RIPE
+mnt-by:         ir-dayan-shabake-gostar-1-mnt
+created:        2018-03-20T14:07:31Z
+last-modified:  2018-12-04T10:08:11Z
+source:         RIPE
+
+% Information related to '185.251.76.0/22AS204499'
+
+route:          185.251.76.0/22
+origin:         AS204499
+mnt-routes:     ir-ertebatdehi-ilam-1-mnt
+mnt-by:         ir-dayan-shabake-gostar-1-mnt
+mnt-by:         ir-ertebatdehi-ilam-1-mnt
+created:        2018-03-25T07:48:07Z
+last-modified:  2018-03-25T07:48:07Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

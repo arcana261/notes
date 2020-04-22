@@ -1,0 +1,150 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       173.44.32.0 - 173.44.63.255
+CIDR:           173.44.32.0/19
+NetName:        QUADRANET-MIA
+NetHandle:      NET-173-44-32-0-1
+Parent:         NET173 (NET-173-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS8100
+Organization:   QuadraNet Enterprises LLC (QEL-5)
+RegDate:        2010-01-11
+Updated:        2018-08-30
+Ref:            https://rdap.arin.net/registry/ip/173.44.32.0
+
+
+
+OrgName:        QuadraNet Enterprises LLC
+OrgId:          QEL-5
+Address:        19528 Ventura Blvd #433
+City:           Tarzana
+StateProv:      CA
+PostalCode:     91356
+Country:        US
+RegDate:        2018-06-07
+Updated:        2018-10-11
+Ref:            https://rdap.arin.net/registry/entity/QEL-5
+
+ReferralServer:  rwhois://rwhois.quadranet.com:4321
+
+OrgAbuseHandle: QUADR4-ARIN
+OrgAbuseName:   QuadraNet Abuse
+OrgAbusePhone:  +1-213-614-8371 
+OrgAbuseEmail:  abuse@quadranet.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/QUADR4-ARIN
+
+OrgTechHandle: QNO6-ARIN
+OrgTechName:   QuadraNet Network Operations
+OrgTechPhone:  +1-213-614-9371 
+OrgTechEmail:  support@quadranet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/QNO6-ARIN
+
+# end
+
+
+# start
+
+NetRange:       173.44.32.0 - 173.44.63.255
+CIDR:           173.44.32.0/19
+NetName:        QUADRANET-MIA
+NetHandle:      NET-173-44-32-0-2
+Parent:         QUADRANET-MIA (NET-173-44-32-0-1)
+NetType:        Reallocated
+OriginAS:       AS8100
+Organization:   QuadraNet, Inc (QUADR-39)
+RegDate:        2014-10-02
+Updated:        2014-10-02
+Ref:            https://rdap.arin.net/registry/ip/173.44.32.0
+
+
+OrgName:        QuadraNet, Inc
+OrgId:          QUADR-39
+Address:        36 NE 2nd St
+Address:        Suite 520
+City:           Miami
+StateProv:      FL
+PostalCode:     33132
+Country:        US
+RegDate:        2014-10-01
+Updated:        2018-09-24
+Ref:            https://rdap.arin.net/registry/entity/QUADR-39
+
+
+OrgTechHandle: QNO6-ARIN
+OrgTechName:   QuadraNet Network Operations
+OrgTechPhone:  +1-213-614-9371 
+OrgTechEmail:  support@quadranet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/QNO6-ARIN
+
+OrgAbuseHandle: MNO88-ARIN
+OrgAbuseName:   Miami Network Operations
+OrgAbusePhone:  +1-213-614-9371 
+OrgAbuseEmail:  abuse@quadranet.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/MNO88-ARIN
+
+OrgTechHandle: MNO88-ARIN
+OrgTechName:   Miami Network Operations
+OrgTechPhone:  +1-213-614-9371 
+OrgTechEmail:  abuse@quadranet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/MNO88-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.quadranet.com:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 manage.quadranet.com (Ubersmith RWhois Server V-4.2.4)
+autharea=173.44.32.0/19
+xautharea=173.44.32.0/19
+network:Class-Name:network
+network:Auth-Area:173.44.32.0/19
+network:ID:NET-56903.173.44.40.136/29
+network:Network-Name:Public Network IP Range
+network:IP-Network:173.44.40.136/29
+network:IP-Network-Block:173.44.40.136 - 173.44.40.143
+network:Org-Name:VPNetworks LLC
+network:Street-Address:36 NE 2nd St
+network:City:Miami
+network:State:FL
+network:Postal-Code:33132
+network:Country-Code:US
+network:Tech-Contact:MAINT-56903.173.44.40.136/29
+network:Created:20150415184941000
+network:Updated:20150415184941000
+network:Updated-By:support@quadranet.com
+contact:POC-Name:Network Administrator
+contact:POC-Email:support@quadranet.com
+contact:POC-Phone:1-888-5-QUADRA
+contact:Tech-Name:Network Administrator
+contact:Tech-Email:support@quadranet.com
+contact:Tech-Phone:1-888-5-QUADRA
+contact:Abuse-Name:Abuse Dept
+contact:Abuse-Email:abuse@quadranet.com
+contact:Abuse-Phone:EMAIL ONLY
+%ok

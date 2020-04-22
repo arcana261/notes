@@ -1,0 +1,61 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '87.107.104.0 - 87.107.111.255'
+
+% Abuse contact for '87.107.104.0 - 87.107.111.255' is 'ripencc@sinet.ir'
+
+inetnum:        87.107.104.0 - 87.107.111.255
+netname:        IR-PTE-TEHRAN-20180723
+country:        IR
+mnt-routes:     PTE-MNT
+admin-c:        MABE86-RIPE
+tech-c:         MABE86-RIPE
+status:         ASSIGNED PA
+mnt-by:         SINET-MNT
+created:        2019-07-30T05:34:35Z
+last-modified:  2019-07-30T05:36:43Z
+source:         RIPE
+
+person:         Masoud Bemanipour
+address:        Tehran,Iran
+phone:          +98 21 22619536
+phone:          +98 21 23545
+fax-no:         +98 21 22607555
+nic-hdl:        MABE86-RIPE
+mnt-by:         PTE-MNT
+created:        2008-06-13T19:15:32Z
+last-modified:  2011-03-14T05:19:10Z
+source:         RIPE # Filtered
+
+% Information related to '87.107.104.0/21AS42337'
+
+route:          87.107.104.0/21
+mnt-lower:      MNT-RSPN
+mnt-routes:     MNT-RSPN
+descr:          RESPINA Networks
+origin:         AS42337
+mnt-by:         SINET-MNT
+created:        2019-07-15T12:10:35Z
+last-modified:  2019-07-15T12:11:49Z
+source:         RIPE
+
+% Information related to '87.107.104.0/21AS49100'
+
+route:          87.107.104.0/21
+origin:         AS49100
+mnt-routes:     PTE-MNT
+mnt-by:         MNT-RSPN
+created:        2019-07-29T10:19:44Z
+last-modified:  2019-07-29T10:19:44Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

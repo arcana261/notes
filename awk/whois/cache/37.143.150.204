@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.143.150.0 - 37.143.150.255'
+
+% Abuse contact for '37.143.150.0 - 37.143.150.255' is 'refatec@gmail.com'
+
+inetnum:        37.143.150.0 - 37.143.150.255
+netname:        IR-REFATEC-CO
+descr:          RK222
+country:        IR
+admin-c:        RK222
+tech-c:         RK222
+status:         ASSIGNED PA
+mnt-by:         SHN2-MNT
+created:        2014-11-05T19:49:37Z
+last-modified:  2014-11-05T19:49:37Z
+source:         RIPE
+
+role:           Reza Kolahdooz
+address:        no22-hafez st-Ahwaz-Iran
+admin-c:        RK22
+tech-c:         RK22
+nic-hdl:        RK222
+mnt-by:         SHN2-MNT
+created:        2012-06-06T08:04:01Z
+last-modified:  2012-06-06T08:04:01Z
+source:         RIPE # Filtered
+
+% Information related to '37.143.150.0/24AS58256'
+
+route:          37.143.150.0/24
+descr:          Rayaneh Gostar Farzanegan Ahvaz LTD
+origin:         AS58256
+mnt-by:         SHN2-MNT
+created:        2014-10-17T19:06:43Z
+last-modified:  2014-10-17T19:06:43Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

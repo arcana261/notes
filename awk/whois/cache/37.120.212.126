@@ -1,0 +1,57 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.120.212.0 - 37.120.212.255'
+
+% Abuse contact for '37.120.212.0 - 37.120.212.255' is 'abuse@s-data.ro'
+
+inetnum:        37.120.212.0 - 37.120.212.255
+netname:        M247-LTD-Vienna
+descr:          M247 LTD Vienna Infrastructure
+country:        AT
+geoloc:         48.2000 16.3667
+admin-c:        GBXS-RIPE
+tech-c:         GBXS-RIPE
+status:         ASSIGNED PA
+mnt-by:         SDAT-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2019-07-03T15:15:25Z
+last-modified:  2019-07-03T15:15:25Z
+source:         RIPE
+
+role:           GLOBALAXS NOC
+remarks:        M247 - Network Management Centre
+address:        1 Ball Green, Cobra Court
+address:        M32 0QT, Manchester - United Kingdom
+tech-c:         JB3482-RIPE
+tech-c:         CB2407-RIPE
+nic-hdl:        GBXS-RIPE
+abuse-mailbox:  abuse@m247.ro
+mnt-by:         GLOBALAXS-MNT
+created:        2006-07-13T15:37:05Z
+last-modified:  2018-09-10T17:32:45Z
+source:         RIPE # Filtered
+
+% Information related to '37.120.212.0/24AS9009'
+
+route:          37.120.212.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-07-03T15:34:15Z
+last-modified:  2019-07-03T15:34:15Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

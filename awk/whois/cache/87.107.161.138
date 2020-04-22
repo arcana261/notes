@@ -1,0 +1,74 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '87.107.0.0 - 87.107.255.255'
+
+% Abuse contact for '87.107.0.0 - 87.107.255.255' is 'ripencc@sinet.ir'
+
+inetnum:        87.107.0.0 - 87.107.255.255
+netname:        IR-SINET-20050822
+country:        IR
+org:            ORG-SAVC1-RIPE
+admin-c:        SAMH3-RIPE
+tech-c:         SAMH3-RIPE
+status:         ALLOCATED PA
+remarks:        Soroush Rasaneh Company
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         SINET-MNT
+mnt-lower:      SINET-MNT
+mnt-domains:    SINET-MNT
+mnt-routes:     SINET-MNT
+created:        2005-08-22T11:33:25Z
+last-modified:  2018-04-24T10:28:54Z
+source:         RIPE # Filtered
+
+organisation:   ORG-SAVC1-RIPE
+org-name:       Soroush Rasanheh Company Ltd
+org-type:       LIR
+address:        1  5th East St.  Seoul St.
+address:        19959-63451
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982184371111
+fax-no:         +982122618694
+abuse-c:        AR13606-RIPE
+admin-c:        SAMH3-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        SINET-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         SINET-MNT
+created:        2004-04-17T11:28:28Z
+last-modified:  2019-06-23T05:16:59Z
+source:         RIPE # Filtered
+
+person:         Seyed Ali Mirheidari
+address:        1  East 5th Alley North Seoul St.  Tehran  Iran
+address:        4 Firooze Dead end  Dr. Shariati St.  Tehran  Iran
+phone:          +982184371111
+phone:          +982122618700
+phone:          +989126445181
+nic-hdl:        SAMH3-RIPE
+mnt-by:         SINET-MNT
+created:        2018-01-10T13:10:25Z
+last-modified:  2019-06-23T05:19:28Z
+source:         RIPE # Filtered
+
+% Information related to '87.107.160.0/19AS41881'
+
+route:          87.107.160.0/19
+origin:         AS41881
+descr:          Fanava ADSL
+mnt-by:         MNT-FANAVA
+created:        2018-01-13T07:24:31Z
+last-modified:  2018-11-06T11:41:40Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

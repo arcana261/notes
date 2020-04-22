@@ -1,0 +1,83 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '82.99.192.0 - 82.99.255.255'
+
+% Abuse contact for '82.99.192.0 - 82.99.255.255' is 'abuse@parsonline.net'
+
+inetnum:        82.99.192.0 - 82.99.255.255
+org:            ORG-PO1-RIPE
+admin-c:        PNOC5-RIPE
+tech-c:         PNOC5-RIPE
+netname:        IR-PARS-20031212
+country:        IR
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         PARSONLINE-MNT
+mnt-routes:     PARSONLINE-MNT
+created:        2003-12-12T09:54:02Z
+last-modified:  2016-10-09T05:25:29Z
+source:         RIPE # Filtered
+
+organisation:   ORG-PO1-RIPE
+org-name:       Pars Online PJS
+org-type:       LIR
+address:        222 Khoramshahr Ave
+address:        15337
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 21 8220 8333
+fax-no:         +98 21 8874 9505
+admin-c:        MR17275-RIPE
+admin-c:        HL591-RIPE
+admin-c:        AG16687-RIPE
+admin-c:        AF11961-RIPE
+admin-c:        RF489-RIPE
+admin-c:        AE551-RIPE
+admin-c:        TR4398-RIPE
+mnt-ref:        PARSONLINE-MNT
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         PARSONLINE-MNT
+abuse-c:        PNOC5-RIPE
+created:        2004-04-17T11:28:21Z
+last-modified:  2017-10-30T14:46:07Z
+source:         RIPE # Filtered
+
+role:           ParsOnline Network Operations Center
+address:        224 Khoramshahr ave., No. 6C
+address:        Tehran 15337
+address:        Iran
+phone:          +98 21 8220 8333
+fax-no:         +98 21 8874 9505
+abuse-mailbox:  abuse@parsonline.net
+admin-c:        MR17275-RIPE
+admin-c:        AG16687-RIPE
+tech-c:         MR17275-RIPE
+tech-c:         AG16687-RIPE
+nic-hdl:        PNOC5-RIPE
+mnt-by:         PARSONLINE-MNT
+created:        2007-06-30T09:51:28Z
+last-modified:  2018-09-05T06:01:45Z
+source:         RIPE # Filtered
+
+% Information related to '82.99.196.0/24AS16322'
+
+route:          82.99.196.0/24
+descr:          ParsOnline Co.
+descr:          ParsOnline Co. Route
+origin:         AS16322
+mnt-by:         PARSONLINE-MNT
+created:        2004-11-13T06:48:00Z
+last-modified:  2010-02-06T10:39:09Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

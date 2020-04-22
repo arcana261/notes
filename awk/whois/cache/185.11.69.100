@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.11.68.0 - 185.11.71.255'
+
+% Abuse contact for '185.11.68.0 - 185.11.71.255' is 'abuse@pejvaknetco.ir'
+
+inetnum:        185.11.68.0 - 185.11.71.255
+netname:        IR-PEJVAK-20121127
+country:        IR
+geoloc:         32.0000 53.0000
+org:            ORG-PEAR1-RIPE
+admin-c:        NA6662-RIPE
+tech-c:         NA6662-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-pejvak-1-mnt
+created:        2012-11-27T07:41:55Z
+last-modified:  2020-04-18T20:44:00Z
+source:         RIPE
+mnt-domains:    FV6355-RIPE
+
+organisation:   ORG-PEAR1-RIPE
+org-name:       Pejvak Ertebatat Atiyeh Roshan Company (P.J.S.)
+org-type:       LIR
+address:        No.10, 4th Floor, pejvakTower, Azadegan, Karaj, Alborz
+address:        3155618315
+address:        Karaj
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989125751768
+admin-c:        NA6662-RIPE
+tech-c:         NA6662-RIPE
+abuse-c:        AR37176-RIPE
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-pejvak-1-mnt
+created:        2016-08-04T06:49:53Z
+last-modified:  2020-04-18T20:41:36Z
+source:         RIPE # Filtered
+fax-no:         +982632133
+geoloc:         32.0000 53.0000
+mnt-ref:        ir-pejvak-1-mnt
+
+role:           NOC
+address:        No.10, 4th Floor, pejvakTower, Azadegan, Karaj, Alborz
+nic-hdl:        NA6662-RIPE
+mnt-by:         FV6355-RIPE
+created:        2020-04-18T20:41:00Z
+last-modified:  2020-04-18T20:41:00Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,120 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       192.40.56.0 - 192.40.59.255
+CIDR:           192.40.56.0/22
+NetName:        TSS
+NetHandle:      NET-192-40-56-0-1
+Parent:         NET192 (NET-192-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS46562
+Organization:   Total Server Solutions L.L.C. (TSSL-2)
+RegDate:        2012-11-29
+Updated:        2013-11-13
+Ref:            https://rdap.arin.net/registry/ip/192.40.56.0
+
+
+OrgName:        Total Server Solutions L.L.C.
+OrgId:          TSSL-2
+Address:        34 Peachtree ST
+Address:        Suite 400
+City:           Atlanta
+StateProv:      GA
+PostalCode:     30303
+Country:        US
+RegDate:        2007-02-13
+Updated:        2019-10-01
+Ref:            https://rdap.arin.net/registry/entity/TSSL-2
+
+ReferralServer:  rwhois://208.78.43.3:4321
+
+OrgAbuseHandle: ABUSE7667-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-877-391-9909 
+OrgAbuseEmail:  abuse@totalserversolutions.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7667-ARIN
+
+OrgTechHandle: TSSNO-ARIN
+OrgTechName:   TSS NOC
+OrgTechPhone:  +1-877-391-9909 
+OrgTechEmail:  noc@totalserversolutions.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+OrgNOCHandle: TSSNO-ARIN
+OrgNOCName:   TSS NOC
+OrgNOCPhone:  +1-877-391-9909 
+OrgNOCEmail:  noc@totalserversolutions.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+# end
+
+
+# start
+
+NetRange:       192.40.57.0 - 192.40.57.255
+CIDR:           192.40.57.0/24
+NetName:        TOTAL-SERVER-SOLUTIONS
+NetHandle:      NET-192-40-57-0-1
+Parent:         TSS (NET-192-40-56-0-1)
+NetType:        Reallocated
+OriginAS:       AS46562
+Organization:   Total server solutions LLC (TSSL-28)
+RegDate:        2019-05-07
+Updated:        2019-05-07
+Ref:            https://rdap.arin.net/registry/ip/192.40.57.0
+
+
+OrgName:        Total server solutions LLC
+OrgId:          TSSL-28
+Address:        Schepenbergweg 42
+City:           Amsterdam-Zuidoost
+StateProv:      
+PostalCode:     1105 AT
+Country:        NL
+RegDate:        2017-06-26
+Updated:        2019-10-02
+Ref:            https://rdap.arin.net/registry/entity/TSSL-28
+
+
+OrgTechHandle: TSSNO-ARIN
+OrgTechName:   TSS NOC
+OrgTechPhone:  +1-877-391-9909 
+OrgTechEmail:  noc@totalserversolutions.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+OrgAbuseHandle: ABUSE7667-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-877-391-9909 
+OrgAbuseEmail:  abuse@totalserversolutions.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7667-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to 208.78.43.3:4321.
+

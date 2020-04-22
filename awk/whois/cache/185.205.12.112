@@ -1,0 +1,54 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.205.12.0 - 185.205.13.255'
+
+% Abuse contact for '185.205.12.0 - 185.205.13.255' is 'abuse@dedipath.com'
+
+inetnum:        185.205.12.0 - 185.205.13.255
+netname:        DEDIPATH-L1
+descr:          Dedipath
+country:        US
+org:            ORG-DA854-RIPE
+admin-c:        DK8496-RIPE
+tech-c:         DK8496-RIPE
+status:         ASSIGNED PA
+mnt-by:         de-kiservices-1-mnt
+created:        2017-12-28T15:53:47Z
+last-modified:  2017-12-28T15:53:47Z
+source:         RIPE
+
+organisation:   ORG-DA854-RIPE
+org-name:       Dedipath
+descr:          Dedipath
+org-type:       OTHER
+address:        700 Wilshire Blvd, Suite 200, Los Angeles, CA 90017, USA
+phone:          +1-877-234-3334
+abuse-c:        AC34974-RIPE
+admin-c:        DK8496-RIPE
+tech-c:         DK8496-RIPE
+mnt-ref:        de-kiservices-1-mnt
+mnt-by:         de-kiservices-1-mnt
+mnt-ref:        de-kis2-1-mnt
+created:        2017-10-11T13:59:16Z
+last-modified:  2018-10-03T10:06:53Z
+source:         RIPE # Filtered
+
+person:         Dylan Kraklan
+address:        700 Wilshire Blvd, Suite 200, Los Angeles, CA 90017, USA
+phone:          +1-877-234-3334
+nic-hdl:        DK8496-RIPE
+mnt-by:         de-kiservices-1-mnt
+created:        2017-10-11T13:59:16Z
+last-modified:  2017-12-28T16:22:53Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

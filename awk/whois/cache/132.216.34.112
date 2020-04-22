@@ -1,0 +1,68 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       132.216.0.0 - 132.216.255.255
+CIDR:           132.216.0.0/16
+NetName:        MCGILL
+NetHandle:      NET-132-216-0-0-1
+Parent:         NET132 (NET-132-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   McGill University (MCGILL-Z)
+RegDate:        1992-11-12
+Updated:        2012-04-02
+Ref:            https://rdap.arin.net/registry/ip/132.216.0.0
+
+
+OrgName:        McGill University
+OrgId:          MCGILL-Z
+Address:        McGill University Computing Centre
+Address:        Rm 200, Burnside Hall
+Address:        805 Sherbrooke St. West
+City:           Montreal
+StateProv:      QC
+PostalCode:     H3A-2K6
+Country:        CA
+RegDate:        2008-05-30
+Updated:        2011-09-24
+Ref:            https://rdap.arin.net/registry/entity/MCGILL-Z
+
+
+OrgAbuseHandle: MU-ORG-ARIN
+OrgAbuseName:   McGill University
+OrgAbusePhone:  +1-514-398-3699 
+OrgAbuseEmail:  contact.ncs@mcgill.ca
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/MU-ORG-ARIN
+
+OrgTechHandle: MU-ORG-ARIN
+OrgTechName:   McGill University
+OrgTechPhone:  +1-514-398-3699 
+OrgTechEmail:  contact.ncs@mcgill.ca
+OrgTechRef:    https://rdap.arin.net/registry/entity/MU-ORG-ARIN
+
+RTechHandle: MU-ORG-ARIN
+RTechName:   McGill University
+RTechPhone:  +1-514-398-3699 
+RTechEmail:  contact.ncs@mcgill.ca
+RTechRef:    https://rdap.arin.net/registry/entity/MU-ORG-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

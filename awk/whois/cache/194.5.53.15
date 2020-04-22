@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.5.53.0 - 194.5.53.255'
+
+% Abuse contact for '194.5.53.0 - 194.5.53.255' is 'abuse@panq.nl'
+
+inetnum:        194.5.53.0 - 194.5.53.255
+netname:        PANQ-194-5-53-0
+country:        FR
+geoloc:         48.9280409 2.3498598
+admin-c:        PANQ
+tech-c:         PANQ
+status:         ASSIGNED PA
+mnt-by:         PREFIXBROKER-MNT
+created:        2020-01-22T08:22:47Z
+last-modified:  2020-01-22T08:22:47Z
+source:         RIPE
+
+role:           Role object for Panq B.V.
+address:        Luchthavenweg 81.221
+address:        5657EA
+address:        Eindhoven
+address:        NETHERLANDS
+phone:          +31403041484
+fax-no:         +31403041489
+abuse-mailbox:  abuse@panq.nl
+admin-c:        WSSL-RIPE
+nic-hdl:        PANQ
+mnt-by:         MNT-PANQ
+created:        2016-07-14T10:40:36Z
+last-modified:  2016-11-08T07:02:03Z
+source:         RIPE # Filtered
+
+% Information related to '194.5.53.0/24AS206092'
+
+route:          194.5.53.0/24
+origin:         AS206092
+mnt-by:         PREFIXBROKER-MNT
+created:        2020-01-22T08:22:47Z
+last-modified:  2020-01-22T08:22:47Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

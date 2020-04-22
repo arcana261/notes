@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.225.166.0 - 194.225.167.255'
+
+% Abuse contact for '194.225.166.0 - 194.225.167.255' is 'abuse@ipm.ir'
+
+inetnum:        194.225.166.0 - 194.225.167.255
+netname:        MODARES
+descr:          Tarbiat-Modares university,
+descr:          Graduate university
+country:        IR
+admin-c:        MK22556-RIPE
+admin-c:        AS42637-RIPE
+tech-c:         MK22556-RIPE
+status:         ASSIGNED PA
+mnt-by:         IPM-MNT
+created:        1970-01-01T00:00:00Z
+last-modified:  2019-05-28T06:55:29Z
+source:         RIPE # Filtered
+
+person:         Alireza Shafieinejad
+address:        Tarbiat-Modares university, IT Center, Tehran, Iran
+phone:          +9821 82883247
+fax-no:         +9821 88220220
+org:            ORG-TMU1-RIPE
+nic-hdl:        AS42637-RIPE
+remarks:
+mnt-by:         IPM-MNT
+created:        2019-05-28T06:52:51Z
+last-modified:  2019-05-28T06:52:51Z
+source:         RIPE # Filtered
+
+person:         Mahdi Kolivand
+address:        Tarbiat-Modares university, IT Center, Tehran, Iran
+phone:          +9821 82884195
+fax-no:         +9821 88220220
+org:            ORG-TMU1-RIPE
+nic-hdl:        MK22556-RIPE
+remarks:
+mnt-by:         IPM-MNT
+created:        2019-05-28T06:50:10Z
+last-modified:  2019-05-28T06:50:10Z
+source:         RIPE # Filtered
+
+% Information related to '194.225.166.0/23AS57745'
+
+route:          194.225.166.0/23
+descr:          TMU Block
+origin:         AS57745
+mnt-by:         IPM-MNT
+mnt-routes:     IPM-MNT
+created:        2012-03-05T09:35:25Z
+last-modified:  2012-03-05T09:35:25Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

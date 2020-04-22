@@ -1,0 +1,70 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '193.182.144.0 - 193.182.145.255'
+
+% Abuse contact for '193.182.144.0 - 193.182.145.255' is 'abuse@edis.at'
+
+inetnum:        193.182.144.0 - 193.182.145.255
+netname:        EDIS-PI-4
+descr:          EDIS GmbH
+remarks:        EDIS infrastructure in Israel
+org:            ORG-ABUS1224-RIPE
+country:        IL
+admin-c:        EDIS-AT
+tech-c:         EDIS-AT
+status:         ASSIGNED PA
+mnt-by:         RESILANS-MNT
+mnt-routes:     EDIS-MNT
+created:        2013-06-18T14:35:48Z
+last-modified:  2018-09-17T14:59:00Z
+source:         RIPE # Filtered
+
+organisation:   ORG-ABUS1224-RIPE
+org-name:       EDIS GmbH
+org-type:       OTHER
+address:        Hauptplatz 3/3
+address:        8010 GRAZ
+address:        Austria
+abuse-c:        ABUS2725-RIPE
+mnt-ref:        RESILANS-MNT
+mnt-by:         RESILANS-MNT
+created:        2013-03-14T13:51:04Z
+last-modified:  2016-08-12T11:02:57Z
+source:         RIPE # Filtered
+
+role:           EDIS GmbH - Noc Engineer
+address:        EDIS GmbH, Hauptplatz 3/3, 8010, GRAZ, Austria
+address:        http://www.edis.at
+phone:          +43 316 827500300
+admin-c:        EDIS-RIPE
+admin-c:        GK2
+admin-c:        ISAT
+tech-c:         EDIS-RIPE
+tech-c:         ISAT
+abuse-mailbox:  abuse@edis.at
+nic-hdl:        EDIS-AT
+mnt-by:         EDIS-MNT
+created:        2011-08-12T07:29:38Z
+last-modified:  2016-04-08T06:50:42Z
+source:         RIPE # Filtered
+
+% Information related to '193.182.144.0/24AS61102'
+
+route:          193.182.144.0/24
+descr:          EDIS Infrastructure in Israel
+origin:         AS61102
+mnt-by:         EDIS-MNT
+created:        2016-10-11T20:42:48Z
+last-modified:  2016-10-11T20:42:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

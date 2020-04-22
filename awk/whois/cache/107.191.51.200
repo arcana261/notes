@@ -1,0 +1,115 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       107.191.32.0 - 107.191.63.255
+CIDR:           107.191.32.0/19
+NetName:        CHOOPA
+NetHandle:      NET-107-191-32-0-1
+Parent:         NET107 (NET-107-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS20473
+Organization:   Choopa, LLC (CHOOP-1)
+RegDate:        2014-04-25
+Updated:        2014-04-25
+Ref:            https://rdap.arin.net/registry/ip/107.191.32.0
+
+
+OrgName:        Choopa, LLC
+OrgId:          CHOOP-1
+Address:        14 Cliffwood Ave Suite 300
+City:           Matawan
+StateProv:      NJ
+PostalCode:     07747
+Country:        US
+RegDate:        2006-10-03
+Updated:        2016-01-11
+Comment:        http://www.choopa.net/
+Ref:            https://rdap.arin.net/registry/entity/CHOOP-1
+
+
+OrgTechHandle: NETWO1159-ARIN
+OrgTechName:   Network Operations
+OrgTechPhone:  +1-973-849-0500 
+OrgTechEmail:  network@choopa.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+OrgNOCHandle: NETWO1159-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-973-849-0500 
+OrgNOCEmail:  network@choopa.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+OrgAbuseHandle: ABUSE1143-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-973-849-0500 
+OrgAbuseEmail:  abuse@choopa.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE1143-ARIN
+
+# end
+
+
+# start
+
+NetRange:       107.191.50.0 - 107.191.51.255
+CIDR:           107.191.50.0/23
+NetName:        NET-107-191-50-0-23
+NetHandle:      NET-107-191-50-0-1
+Parent:         CHOOPA (NET-107-191-32-0-1)
+NetType:        Reassigned
+OriginAS:       
+Organization:   Vultr Holdings, LLC (VHL-56)
+RegDate:        2017-03-15
+Updated:        2017-03-15
+Ref:            https://rdap.arin.net/registry/ip/107.191.50.0
+
+
+OrgName:        Vultr Holdings, LLC
+OrgId:          VHL-56
+Address:        2200 Busse Rd.
+City:           Elk Grove Village
+StateProv:      IL
+PostalCode:     60007
+Country:        US
+RegDate:        2015-03-05
+Updated:        2015-03-05
+Ref:            https://rdap.arin.net/registry/entity/VHL-56
+
+
+OrgTechHandle: VULTR-ARIN
+OrgTechName:   Vultr Abuse
+OrgTechPhone:  +1-973-849-0500 
+OrgTechEmail:  abuse@vultr.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/VULTR-ARIN
+
+OrgAbuseHandle: VULTR-ARIN
+OrgAbuseName:   Vultr Abuse
+OrgAbusePhone:  +1-973-849-0500 
+OrgAbuseEmail:  abuse@vultr.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/VULTR-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

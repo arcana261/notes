@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '109.72.206.0 - 109.72.206.255'
+
+% Abuse contact for '109.72.206.0 - 109.72.206.255' is 'ripe@khalijonline.net'
+
+inetnum:        109.72.206.0 - 109.72.206.255
+netname:        KHALIJFARSONLINE
+descr:          Khalij-Fars-Online  Dynamic IPs
+country:        IR
+admin-c:        AD9410-RIPE
+tech-c:         AD9410-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-KHALIJFARSONLINE
+mnt-by:         mnt-farzad
+created:        2019-01-06T12:24:15Z
+last-modified:  2019-01-06T12:24:15Z
+source:         RIPE
+
+person:         Abdullah Dashti
+address:        Bandare-Bushehr
+address:        Iran
+phone:          +989173714494
+phone:          +987733554443
+nic-hdl:        AD9410-RIPE
+mnt-by:         mnt-khalijfarsonline
+created:        2012-07-01T14:55:40Z
+last-modified:  2018-03-04T13:12:04Z
+source:         RIPE
+
+% Information related to '109.72.206.0/24AS48944'
+
+route:          109.72.206.0/24
+descr:          KOL IP
+origin:         AS48944
+mnt-by:         mnt-khalijfarsonline
+created:        2011-10-20T19:45:48Z
+last-modified:  2011-10-20T19:45:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

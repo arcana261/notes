@@ -1,0 +1,70 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.120.244.0 - 185.120.247.255'
+
+% Abuse contact for '185.120.244.0 - 185.120.247.255' is 'LIRadmin@tci.ir'
+
+inetnum:        185.120.244.0 - 185.120.247.255
+netname:        IR-T-10-20151009
+country:        IR
+org:            ORG-ITCP1-RIPE
+admin-c:        KZ1283-RIPE
+tech-c:         KZ1283-RIPE
+status:         ALLOCATED PA
+mnt-by:         TCI-RIPE-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2019-07-15T10:42:45Z
+last-modified:  2019-07-15T10:42:45Z
+source:         RIPE
+
+organisation:   ORG-ITCP1-RIPE
+org-name:       Iran Telecommunication Company PJS
+org-type:       LIR
+address:        No 43, Floor 7
+address:        1969764913
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982189797777
+phone:          +989122186466
+fax-no:         +982189796605
+admin-c:        KZ1283-RIPE
+admin-c:        NA6437-RIPE
+tech-c:         DP15203-RIPE
+abuse-c:        AR15666-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        TCI-RIPE-MNT
+mnt-ref:        mnt-zahedi
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2010-02-10T12:45:26Z
+last-modified:  2019-10-12T10:31:21Z
+source:         RIPE # Filtered
+
+person:         Khadijeh Zahedi Arani
+address:        Telecommunication Company of IRAN
+phone:          +982189797777
+nic-hdl:        KZ1283-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2018-01-06T10:31:08Z
+last-modified:  2018-11-15T22:18:56Z
+source:         RIPE # Filtered
+
+% Information related to '185.120.244.0/23AS58224'
+
+route:          185.120.244.0/23
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2019-09-07T09:57:10Z
+last-modified:  2019-09-07T09:57:10Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

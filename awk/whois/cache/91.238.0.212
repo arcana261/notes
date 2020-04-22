@@ -1,0 +1,77 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.237.254.0 - 91.238.0.255'
+
+% Abuse contact for '91.237.254.0 - 91.238.0.255' is 'admin@soratgostar.ir'
+
+inetnum:        91.237.254.0 - 91.238.0.255
+netname:        SoratGostarErtebatatParsian
+country:        IR
+org:            ORG-SGEP1-RIPE
+admin-c:        ME3936-RIPE
+tech-c:         ME3936-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         ME3936-SOR
+mnt-by:         MNT-CWM
+mnt-routes:     MNT-CWM
+mnt-domains:    MNT-CWM
+created:        2012-04-03T09:38:16Z
+last-modified:  2018-12-01T06:39:06Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-CA932-RIPE
+
+organisation:   ORG-SGEP1-RIPE
+admin-c:        ME3936-RIPE
+tech-c:         ME3936-RIPE
+org-name:       Sorat Gostar Ertebatat Parsian Co.(Ltd.)
+org-type:       OTHER
+address:        Unit-3,No.49,Shariati St.,Tehran, Iran
+abuse-c:        AR28150-RIPE
+mnt-ref:        MNT-CWM
+mnt-by:         MNT-CWM
+mnt-by:         ME3936-SOR
+created:        2012-03-14T09:22:02Z
+last-modified:  2018-11-28T11:34:58Z
+source:         RIPE # Filtered
+
+person:         Mahdi Eshsraghi
+address:        Unit-3,No.49,Shariati St.,Tehran, Iran
+phone:          +9821 22855156
+nic-hdl:        ME3936-RIPE
+mnt-by:         MNT-CWM
+created:        2012-03-14T09:19:31Z
+last-modified:  2018-11-28T11:57:20Z
+source:         RIPE # Filtered
+
+% Information related to '91.238.0.0/24AS202391'
+
+route:          91.238.0.0/24
+descr:          Sorat Gostar Ertebatat Parsian Co.
+origin:         AS202391
+mnt-by:         ME3936-SOR
+created:        2019-01-26T07:14:50Z
+last-modified:  2019-01-26T08:11:12Z
+source:         RIPE
+
+% Information related to '91.238.0.0/24as58030'
+
+route:          91.238.0.0/24
+descr:          Sorat Gostar Ertebatat Parsian Co.(Ltd.)
+origin:         as58030
+mnt-by:         MNT-CWM
+mnt-by:         ME3936-SOR
+created:        2012-04-13T08:11:41Z
+last-modified:  2018-12-01T14:59:37Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

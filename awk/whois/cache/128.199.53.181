@@ -1,0 +1,133 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       128.199.0.0 - 128.199.255.255
+CIDR:           128.199.0.0/16
+NetName:        RIPE-ERX-128-199-0-0
+NetHandle:      NET-128-199-0-0-1
+Parent:         NET128 (NET-128-0-0-0-0)
+NetType:        Early Registrations, Transferred to RIPE NCC
+OriginAS:       
+Organization:   RIPE Network Coordination Centre (RIPE)
+RegDate:        2007-03-20
+Updated:        2007-03-20
+Comment:        These addresses have been further assigned to users in
+Comment:        the RIPE NCC region.  Contact information can be found in
+Comment:        the RIPE database at http://www.ripe.net/whois
+Ref:            https://rdap.arin.net/registry/ip/128.199.0.0
+
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+ResourceLink:  whois.ripe.net
+
+
+OrgName:        RIPE Network Coordination Centre
+OrgId:          RIPE
+Address:        P.O. Box 10096
+City:           Amsterdam
+StateProv:      
+PostalCode:     1001EB
+Country:        NL
+RegDate:        
+Updated:        2013-07-29
+Ref:            https://rdap.arin.net/registry/entity/RIPE
+
+ReferralServer:  whois://whois.ripe.net
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+
+OrgTechHandle: RNO29-ARIN
+OrgTechName:   RIPE NCC Operations
+OrgTechPhone:  +31 20 535 4444 
+OrgTechEmail:  hostmaster@ripe.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/RNO29-ARIN
+
+OrgAbuseHandle: ABUSE3850-ARIN
+OrgAbuseName:   Abuse Contact
+OrgAbusePhone:  +31205354444 
+OrgAbuseEmail:  abuse@ripe.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3850-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.ripe.net.
+
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '128.199.0.0 - 128.199.255.255'
+
+% Abuse contact for '128.199.0.0 - 128.199.255.255' is 'abuse@digitalocean.com'
+
+inetnum:        128.199.0.0 - 128.199.255.255
+netname:        DigitalOcean
+descr:          DigitalOcean, LLC
+country:        US
+admin-c:        PT7353-RIPE
+tech-c:         PT7353-RIPE
+status:         LEGACY
+mnt-by:         digitalocean
+mnt-domains:    digitalocean
+mnt-routes:     digitalocean
+created:        2004-07-20T10:29:14Z
+last-modified:  2020-03-31T14:17:22Z
+source:         RIPE
+org:            ORG-DOI2-RIPE
+
+organisation:   ORG-DOI2-RIPE
+org-name:       DigitalOcean, LLC
+org-type:       LIR
+address:        101 Avenue of the Americas, 10th Floor
+address:        New York
+address:        10013
+address:        UNITED STATES
+phone:          +1 888 890 6714
+mnt-ref:        digitalocean
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         digitalocean
+abuse-c:        AD10778-RIPE
+language:       EN
+created:        2012-11-29T14:59:01Z
+last-modified:  2019-04-17T14:37:00Z
+source:         RIPE # Filtered
+
+person:         Network Operations
+address:        101 Ave of the Americas, 10th Floor
+address:        New York, NY, 10013
+address:        United States of America
+phone:          +13478756044
+nic-hdl:        PT7353-RIPE
+mnt-by:         digitalocean
+created:        2015-03-11T16:37:07Z
+last-modified:  2019-04-17T14:37:51Z
+source:         RIPE # Filtered
+org:            ORG-DOI2-RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

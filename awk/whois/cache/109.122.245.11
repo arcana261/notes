@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '109.122.240.0 - 109.122.247.255'
+
+% Abuse contact for '109.122.240.0 - 109.122.247.255' is 'abuse@fcp.ir'
+
+inetnum:        109.122.240.0 - 109.122.247.255
+netname:        IR-ESP
+descr:          Ertebat Sabet Parsian [ FCP License :100-94-24 ]
+country:        IR
+org:            ORG-ESP6-RIPE
+admin-c:        ESP44-RIPE
+tech-c:         ESP44-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-MIHAN
+mnt-by:         MNT-Hamed
+mnt-routes:     MNT-MIHAN
+mnt-routes:     MNT-CWM
+mnt-domains:    MNT-MIHAN
+created:        2015-01-19T14:48:38Z
+last-modified:  2017-02-18T12:50:03Z
+source:         RIPE # Filtered
+
+organisation:   ORG-ESP6-RIPE
+org-name:       Ertebatat Sabet Parsian
+descr:          [ FCP License :100-94-24 ]
+org-type:       OTHER
+phone:          +98 21 96861501
+fax-no:         +98 21 22377956
+address:        Unit 8, No. 12 , Fakoori St. ,southern Kaj St.,Golha square,Tehran,Iran
+abuse-c:        ESPA3-RIPE
+tech-c:         ESP44-RIPE
+mnt-ref:        MNT-MIHAN
+mnt-by:         MNT-MIHAN
+mnt-by:         MNT-Hamed
+created:        2017-01-18T10:13:47Z
+last-modified:  2017-02-15T16:43:24Z
+source:         RIPE # Filtered
+
+role:           Ertebatat Sabet Parsian
+address:        Unit 8, No. 12 , Fakoori St. ,southern Kaj St.,Golha square.
+address:        Tehran,IR
+phone:          +98-21-96861501
+fax-no:         +98-21-22377956
+remarks:        +----------------------------------------------+
+remarks:        | Web Site: http://www.fcp.ir |
+remarks:        | NOC: noc@fcp.ir |
+remarks:        +-------------------------------------------+
+nic-hdl:        ESP44-RIPE
+mnt-by:         MNT-MIHAN
+mnt-by:         MNT-Hamed
+created:        2017-02-15T14:46:23Z
+last-modified:  2017-02-15T14:51:06Z
+source:         RIPE # Filtered
+
+% Information related to '109.122.244.0/22AS51788'
+
+route:          109.122.244.0/22
+origin:         AS51788
+mnt-by:         MNT-MIHAN
+mnt-by:         mihan
+mnt-by:         MNT-Hamed
+mnt-by:         MNT-PARTPAYAM
+mnt-by:         HAMED
+created:        2020-04-15T12:04:00Z
+last-modified:  2020-04-15T12:04:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

@@ -1,0 +1,88 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.124.156.0 - 185.124.157.255'
+
+% Abuse contact for '185.124.156.0 - 185.124.157.255' is 'delroshan.e@tci.ir'
+
+inetnum:        185.124.156.0 - 185.124.157.255
+org:            ORG-TCOK3-RIPE
+netname:        Internal
+country:        IR
+admin-c:        NA6219-RIPE
+tech-c:         NA6220-RIPE
+tech-c:         DP14876-RIPE
+tech-c:         KZ1283-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2018-08-28T06:17:21Z
+last-modified:  2019-06-22T09:19:05Z
+source:         RIPE
+
+organisation:   ORG-TCOK3-RIPE
+org-name:       Telecommunication Company of Khouzestan
+org-type:       other
+address:        Ahvaz - Telecommunication Company of Khouzestan
+abuse-c:        AC26358-RIPE
+admin-c:        NA6219-RIPE
+tech-c:         DP14876-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-01-04T11:32:57Z
+last-modified:  2019-03-03T07:38:19Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Khozestan)
+address:        Ahvaz - Telecommunication Company of Ahvaz
+admin-c:        MJN25-RIPE
+nic-hdl:        DP14876-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T07:23:10Z
+last-modified:  2019-03-03T07:23:10Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Khozestan)
+address:        Ahvaz - Telecommunication Company of Ahvaz
+admin-c:        ARH34-RIPE
+nic-hdl:        NA6219-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T07:20:42Z
+last-modified:  2019-03-03T07:20:42Z
+source:         RIPE # Filtered
+
+role:           NOC (Khozestan)
+address:        Ahvaz - Telecommunication Company of Ahvaz
+admin-c:        SR14094-RIPE
+nic-hdl:        NA6220-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T07:26:00Z
+last-modified:  2019-03-03T07:26:00Z
+source:         RIPE # Filtered
+
+person:         Khadijeh Zahedi Arani
+address:        Telecommunication Company of IRAN
+phone:          +982189797777
+nic-hdl:        KZ1283-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2018-01-06T10:31:08Z
+last-modified:  2018-11-15T22:18:56Z
+source:         RIPE # Filtered
+
+% Information related to '185.124.156.0/22AS58224'
+
+route:          185.124.156.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2017-12-27T08:30:35Z
+last-modified:  2017-12-27T08:30:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

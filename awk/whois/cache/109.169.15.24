@@ -1,0 +1,81 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '109.169.0.0 - 109.169.95.255'
+
+% Abuse contact for '109.169.0.0 - 109.169.95.255' is 'abuse@rapidswitch.com'
+
+inetnum:        109.169.0.0 - 109.169.95.255
+netname:        UK-RAPIDSWITCH-20091102
+country:        GB
+org:            ORG-RL20-RIPE
+admin-c:        AR6363-RIPE
+tech-c:         AR6363-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         RAPIDSWITCH-MNT
+mnt-routes:     RAPIDSWITCH-MNT
+created:        2010-02-11T09:11:40Z
+last-modified:  2017-03-24T16:04:24Z
+source:         RIPE # Filtered
+
+organisation:   ORG-RL20-RIPE
+org-name:       IOMART HOSTING LIMITED
+org-type:       LIR
+address:        Spectrum House, Clivemont Road
+address:        SL6 7FW
+address:        Maidenhead
+address:        UNITED KINGDOM
+phone:          +441753471040
+fax-no:         +441753471049
+admin-c:        RC6613-RIPE
+admin-c:        DB16530-RIPE
+admin-c:        RM1358-RIPE
+admin-c:        SMC74-RIPE
+admin-c:        AR6363-RIPE
+mnt-ref:        RAPIDSWITCH-MNT
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         RAPIDSWITCH-MNT
+abuse-c:        AR12896-RIPE
+created:        2005-09-26T12:37:33Z
+last-modified:  2018-12-11T14:48:04Z
+source:         RIPE # Filtered
+
+person:         Abuse Robot
+address:        iomart Hosting Ltd t/a RapidSwitch
+address:        Spectrum House
+address:        Clivemont Road
+address:        Maidenhead
+address:        SL6 7FW
+phone:          +44 (0)1753 471 040
+remarks:        ******************************************************
+remarks:        * ABUSE REPORTS                                      *
+remarks:        * https://myservers.rapidswitch.com/reportabuse.aspx *
+remarks:        ******************************************************
+nic-hdl:        AR6363-RIPE
+mnt-by:         RAPIDSWITCH-MNT
+created:        2007-02-11T09:38:19Z
+last-modified:  2017-10-30T21:53:52Z
+source:         RIPE # Filtered
+
+% Information related to '109.169.0.0/18AS20860'
+
+route:          109.169.0.0/18
+descr:          Iomart Hosting Ltd
+origin:         AS20860
+mnt-by:         GB10488-RIPE-MNT
+mnt-by:         RAPIDSWITCH-MNT
+created:        2011-04-29T00:01:49Z
+last-modified:  2011-04-29T00:01:49Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

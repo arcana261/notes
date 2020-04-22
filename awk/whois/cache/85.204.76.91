@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.204.76.0 - 85.204.77.255'
+
+% Abuse contact for '85.204.76.0 - 85.204.77.255' is 'abuse@dpco.net'
+
+inetnum:        85.204.76.0 - 85.204.77.255
+netname:        IR-PARVARESH-20050113
+country:        IR
+org:            ORG-PDCP2-RIPE
+admin-c:        MJF88-RIPE
+tech-c:         MJF88-RIPE
+status:         ALLOCATED PA
+mnt-by:         mnt-ir-parvaresh-1
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2019-08-19T13:22:21Z
+last-modified:  2019-08-19T13:22:21Z
+source:         RIPE
+
+organisation:   ORG-PDCP2-RIPE
+org-name:       Parvaresh Dadeha Co. Private Joint Stock
+org-type:       LIR
+address:        No 25, Shohada St. Mirzaye Shirazi St., Motahhari Ave,
+address:        1586758113
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        MJF88-RIPE
+tech-c:         MJF88-RIPE
+abuse-c:        AR54602-RIPE
+mnt-ref:        mnt-ir-parvaresh-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-ir-parvaresh-1
+created:        2019-08-07T09:33:59Z
+last-modified:  2019-08-07T09:34:01Z
+source:         RIPE # Filtered
+phone:          +982188712451
+
+person:         Mohammad Jafar Faghihi
+address:        No 25, Shohada St. Mirzaye Shirazi St., Motahhari Ave,
+address:        1586758113
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982188712451
+nic-hdl:        MJF88-RIPE
+mnt-by:         mnt-ir-parvaresh-1
+created:        2019-08-07T09:33:58Z
+last-modified:  2019-08-07T09:33:59Z
+source:         RIPE
+
+% Information related to '85.204.76.0/23AS39501'
+
+route:          85.204.76.0/23
+descr:          NEDA GOSTAR SABA ROUTES
+origin:         AS39501
+mnt-by:         MNT-NGS-ROUTE
+created:        2015-03-30T07:07:50Z
+last-modified:  2015-03-30T07:07:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

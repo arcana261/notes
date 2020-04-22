@@ -1,0 +1,72 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '178.173.128.0 - 178.173.223.255'
+
+% Abuse contact for '178.173.128.0 - 178.173.223.255' is 'cto@hamyar.net'
+
+inetnum:        178.173.128.0 - 178.173.223.255
+netname:        IR-SHIRAZHAMYAR-20100419
+country:        IR
+org:            ORG-SHC1-RIPE
+admin-c:        MA5476-RIPE
+tech-c:         MA5476-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-ASADIAN
+mnt-lower:      MNT-ASADIAN
+mnt-lower:      MNT-Darbandi
+mnt-lower:      MD56436-MNT
+mnt-domains:    MD56436-MNT
+mnt-routes:     MNT-ASADIAN
+created:        2016-12-14T13:26:50Z
+last-modified:  2019-12-12T08:41:20Z
+source:         RIPE # Filtered
+
+organisation:   ORG-SHC1-RIPE
+org-name:       Shiraz Hamyar Co.
+org-type:       LIR
+address:        No.7-4th Floor-Apadana Bldg-Motahhari Blvd-Zargari cross
+address:        71839-94577
+address:        Shiraz
+address:        IRAN, ISLAMIC REPUBLIC OF
+abuse-c:        AR15665-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-ASADIAN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-ASADIAN
+created:        2009-11-18T09:01:46Z
+last-modified:  2016-10-07T11:21:35Z
+source:         RIPE # Filtered
+phone:          +987116269543
+fax-no:         +987116261153
+
+person:         Mohsen Asadian
+address:        Unit 7 4Th Floor Apadana Bulding Motahhari Blvd Shiraz
+address:        Fars Iran
+phone:          +98 711 626 95 43
+nic-hdl:        MA5476-RIPE
+created:        2008-03-10T07:46:34Z
+last-modified:  2016-04-06T21:24:14Z
+mnt-by:         RIPE-NCC-LOCKED-MNT
+source:         RIPE # Filtered
+
+% Information related to '178.173.143.0/24AS1756'
+
+route:          178.173.143.0/24
+descr:          hamyar
+origin:         AS1756
+mnt-by:         MNT-ASADIAN
+created:        2014-05-18T07:28:02Z
+last-modified:  2014-05-18T07:28:02Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

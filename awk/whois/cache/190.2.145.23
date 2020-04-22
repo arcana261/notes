@@ -1,0 +1,129 @@
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN, IPv4 or IPv6 queries
+ 
+% LACNIC resource: whois.lacnic.net
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query, you agree to use this data
+%  only for lawful purposes.
+%  2020-04-21 14:40:34 (-03 -03:00)
+
+inetnum:     190.2.144/20
+status:      reallocated
+owner:       WorldStream B.V.
+ownerid:     NL-WOBV-LACNIC
+responsible: WorldStream B.V.
+address:     Industriestraat, 24, -
+address:     2671CT - Naaldwijk - 
+country:     NL
+phone:       +31  017471211 [0000]
+owner-c:     WLB5
+tech-c:      WOB2
+abuse-c:     WOB2
+inetrev:     190.2.144/20
+nserver:     NS1.WORLDSTREAM.NL  
+nsstat:      20200420 AA
+nslastaa:    20200420
+nserver:     NS2.WORLDSTREAM.COM  
+nsstat:      20200420 AA
+nslastaa:    20200420
+nserver:     NS3.WORLDSTREAM.NET  
+nsstat:      20200420 AA
+nslastaa:    20200420
+dsinetrev:   190.2.144/24
+dsrecord:    35394  6728F5B48863419B04E2695C764F1C6419A3556C211D0AC1F6C983C44262CB99
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.145/24
+dsrecord:    12286  80C0AA9B6B93A38F12903E8C36BE7143C67D95465D2B22F12E547D0ADE76B374
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.146/24
+dsrecord:    51887  1B86767BE5FCB53991DD7BE0A137E2C96C2B4D27AA60A490089EFAC4587E952C
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.147/24
+dsrecord:    15783  94B343F48E47AF94C800B1DF7F44539C4CF7D49BC12E977024BB994B2DAD34A3
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.148/24
+dsrecord:    42269  9218A7BD21BA52B518B3BFF84D7E28A6BFFA179818D0C94A5CA203E0A402BBE2
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.149/24
+dsrecord:    1621  BDB9199A4918E3CFFDC81FB8B1493720EFC521AE9739B39A6AF7B90492854315
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.150/24
+dsrecord:    29703  292E317676F0F6E40EF0EBCEE93C05EC751B9DA332A5DC10FA2D8B260401875D
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.151/24
+dsrecord:    8544  541529A5FC2A09AAF5B8BE691016ADF3CEDC16182D6AD210C16517C798F8BC43
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.152/24
+dsrecord:    36799  45E1F70E769F1A1251995E2D3ECA40656AD14AFCB81DF06D71AD90289E8AB3BE
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.153/24
+dsrecord:    39284  6DF82301D3577DEAD8B20E00BC969E7EC96A644F901057E62EDE881ECCE52657
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.154/24
+dsrecord:    54717  1177439BD6BBC6964E1D8686D7B3C5A05D4509A76FD3B4177CEEF153492D053D
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.155/24
+dsrecord:    23427  91CFAEAD7F6867E4BFF019C1CC3626920618016F5623BBCE5CECA49C91B83E66
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.156/24
+dsrecord:    63143  8DA445998F625E0D59FFB3BC41DA706CACAC364F7218ED2F5D20788D9A622431
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.157/24
+dsrecord:    5837  A5641D1D68234EA0DDA98077808D9D19CD387E8A736C1E4F1A0F5270D997C4CC
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.158/24
+dsrecord:    1409  A437B77918BAF45F635BFB71F7C3FCADDD6A1054A38C044BD247EE36896DC1A0
+dsstatus:    20200420 OK
+dslastok:    20200420
+dsinetrev:   190.2.159/24
+dsrecord:    60470  2E82B587F0775A08E066ED5DB9DCE253A4902AAA1FCACF65D62484E0BE3F4D14
+dsstatus:    20200420 OK
+dslastok:    20200420
+created:     20171127
+changed:     20171127
+inetnum-up:  190.2.128/19
+
+nic-hdl:     WLB5
+person:      WorldStream B.V.
+e-mail:      dv@WORLDSTREAM.CW
+address:     E-Commerce Park Vredenberg, -, -
+address:     0000CW - Willemstad - 
+country:     CW
+phone:       +5999  8200002 [0000]
+created:     20151217
+changed:     20190522
+
+nic-hdl:     WOB2
+person:      WorldStream B.V.
+e-mail:      abuse@WORLDSTREAM.NL
+address:     Industriestraat, 24, 
+address:     2671CT - Naaldwijk - 
+country:     NL
+phone:       +31  0174712117 []
+created:     20171127
+changed:     20180704
+
+% whois.lacnic.net accepts only direct match queries.
+% Types of queries are: POCs, ownerid, CIDR blocks, IP
+% and AS numbers.
+

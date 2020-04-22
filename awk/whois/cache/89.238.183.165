@@ -1,0 +1,53 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.238.183.0 - 89.238.183.255'
+
+% Abuse contact for '89.238.183.0 - 89.238.183.255' is 'abuse@m247.ro'
+
+inetnum:        89.238.183.0 - 89.238.183.255
+netname:        M247-LTD-Manchester
+descr:          M247 Ltd Manchester Infrastructure
+country:        GB
+geoloc:         53.472225 -2.2936314
+admin-c:        JB3482-RIPE
+tech-c:         JB3482-RIPE
+status:         ASSIGNED PA
+mnt-by:         OHT-MAINT
+created:        2011-05-09T10:38:29Z
+last-modified:  2017-03-22T14:30:52Z
+source:         RIPE
+
+person:         Jonathan Buckle
+address:        M247 Ltd
+                1 Ball Green
+                Cobra Court
+                Stretford
+                Manchester
+                M32 0QT
+                United Kingdom
+phone:          +441616151270
+nic-hdl:        JB3482-RIPE
+mnt-by:         OHT-MAINT
+created:        2004-03-08T11:42:01Z
+last-modified:  2010-10-11T15:13:36Z
+source:         RIPE
+
+% Information related to '89.238.183.0/24AS9009'
+
+route:          89.238.183.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2017-05-06T11:16:59Z
+last-modified:  2017-05-06T11:16:59Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

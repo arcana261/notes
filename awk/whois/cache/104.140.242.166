@@ -1,0 +1,135 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       104.140.0.0 - 104.140.255.255
+CIDR:           104.140.0.0/16
+NetName:        EONIX
+NetHandle:      NET-104-140-0-0-1
+Parent:         NET104 (NET-104-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS62904
+Organization:   Eonix Corporation (EONIX)
+RegDate:        2014-06-20
+Updated:        2019-02-28
+Comment:        Please use the below contact information to report suspected security issues specific to traffic emanating from net blocks in this range, including the distribution of malicious content or other illicit or illegal material.
+Comment:        
+Comment:        For SPAM and other abuse issues, please contact: 
+Comment:        * net-abuse@eonix.net 
+Comment:        
+Comment:        For legal and law enforcement-related requests, please contact: 
+Comment:        * legal@eonix.net 
+Comment:        
+Comment:        For Routing, Peering or DNS issues, please contact:
+Comment:        * noc@eonix.net
+Ref:            https://rdap.arin.net/registry/ip/104.140.0.0
+
+
+OrgName:        Eonix Corporation
+OrgId:          EONIX
+Address:        3773 Howard Hughes Pkwy. Suite 500S
+City:           Las Vegas
+StateProv:      NV
+PostalCode:     89169-6014
+Country:        US
+RegDate:        2006-05-31
+Updated:        2017-04-10
+Comment:        Please use the below contact information to report suspected security issues specific to traffic emanating from net blocks in this range, including the distribution of malicious content or other illicit or illegal material.
+Comment:        
+Comment:        For SPAM and other abuse issues, please contact: 
+Comment:        * net-abuse@eonix.net 
+Comment:        
+Comment:        For legal and law enforcement-related requests, please contact: 
+Comment:        * legal@eonix.net 
+Comment:        
+Comment:        For Routing, Peering or DNS issues, please contact:
+Comment:        * noc@eonix.net
+Ref:            https://rdap.arin.net/registry/entity/EONIX
+
+
+OrgTechHandle: NOC31884-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-702-605-2981 
+OrgTechEmail:  noc@eonix.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC31884-ARIN
+
+OrgAbuseHandle: NTS22-ARIN
+OrgAbuseName:   Network Trust and Safety
+OrgAbusePhone:  +1-702-605-2981 
+OrgAbuseEmail:  net-admin@eonix.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NTS22-ARIN
+
+OrgNOCHandle: NOC31884-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-702-605-2981 
+OrgNOCEmail:  noc@eonix.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC31884-ARIN
+
+# end
+
+
+# start
+
+NetRange:       104.140.242.160 - 104.140.242.167
+CIDR:           104.140.242.160/29
+NetName:        SERVERHUB-NEW-YORK
+NetHandle:      NET-104-140-242-160-1
+Parent:         EONIX (NET-104-140-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS62904
+Organization:   ServerHub New York (SNY-6)
+RegDate:        2019-10-29
+Updated:        2019-10-29
+Comment:        This IP address space is assigned statically to the registered customer. IP Addresses within this block are not portable. Please contact the reallocated customer for abuse complaints. If attempts to contact the reallocated customer are unsuccessful, please make an escalated complaint for UCE, SPAM and fraudulent activity that is strictly prohibited from this network by contacting the upstream at: abuse@eonix.net
+Ref:            https://rdap.arin.net/registry/ip/104.140.242.160
+
+
+OrgName:        ServerHub New York
+OrgId:          SNY-6
+Address:        100 Williams St
+City:           New York
+StateProv:      NY
+PostalCode:     10038
+Country:        US
+RegDate:        2017-02-06
+Updated:        2017-02-06
+Ref:            https://rdap.arin.net/registry/entity/SNY-6
+
+
+OrgTechHandle: ADMIN6379-ARIN
+OrgTechName:   Administrator, Administrator 
+OrgTechPhone:  +1-702-968-9305 
+OrgTechEmail:  poc@eonix.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/ADMIN6379-ARIN
+
+OrgAbuseHandle: ADMIN6379-ARIN
+OrgAbuseName:   Administrator, Administrator 
+OrgAbusePhone:  +1-702-968-9305 
+OrgAbuseEmail:  poc@eonix.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ADMIN6379-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

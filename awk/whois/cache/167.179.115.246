@@ -1,0 +1,158 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       167.179.0.0 - 167.179.255.255
+CIDR:           167.179.0.0/16
+NetName:        APNIC-ERX-167-179-0-0
+NetHandle:      NET-167-179-0-0-1
+Parent:         NET167 (NET-167-0-0-0-0)
+NetType:        Early Registrations, Transferred to APNIC
+OriginAS:       
+Organization:   Asia Pacific Network Information Centre (APNIC)
+RegDate:        2003-07-23
+Updated:        2009-10-08
+Comment:        This IP address range is not registered in the ARIN database.
+Comment:        This range was transferred to the APNIC Whois Database as
+Comment:        part of the ERX (Early Registration Transfer) project.
+Comment:        For details, refer to the APNIC Whois Database via
+Comment:        WHOIS.APNIC.NET or http://wq.apnic.net/apnic-bin/whois.pl
+Comment:        
+Comment:        ** IMPORTANT NOTE: APNIC is the Regional Internet Registry
+Comment:        for the Asia Pacific region.  APNIC does not operate networks
+Comment:        using this IP address range and is not able to investigate
+Comment:        spam or abuse reports relating to these addresses.  For more
+Comment:        help, refer to http://www.apnic.net/apnic-info/whois_search2/abuse-and-spamming
+Ref:            https://rdap.arin.net/registry/ip/167.179.0.0
+
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+ResourceLink:  whois.apnic.net
+
+
+OrgName:        Asia Pacific Network Information Centre
+OrgId:          APNIC
+Address:        PO Box 3646
+City:           South Brisbane
+StateProv:      QLD
+PostalCode:     4101
+Country:        AU
+RegDate:        
+Updated:        2012-01-24
+Ref:            https://rdap.arin.net/registry/entity/APNIC
+
+ReferralServer:  whois://whois.apnic.net
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+
+OrgAbuseHandle: AWC12-ARIN
+OrgAbuseName:   APNIC Whois Contact
+OrgAbusePhone:  +61 7 3858 3188 
+OrgAbuseEmail:  search-apnic-not-arin@apnic.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+OrgTechHandle: AWC12-ARIN
+OrgTechName:   APNIC Whois Contact
+OrgTechPhone:  +61 7 3858 3188 
+OrgTechEmail:  search-apnic-not-arin@apnic.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.apnic.net.
+
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '167.179.64.0 - 167.179.127.255'
+
+% Abuse contact for '167.179.64.0 - 167.179.127.255' is 'abuse@choopa.com'
+
+inetnum:        167.179.64.0 - 167.179.127.255
+netname:        CHOOPALLC-AP
+descr:          Choopa, LLC
+country:        US
+org:            ORG-CL35-AP
+admin-c:        CLA15-AP
+tech-c:         CLA15-AP
+status:         ALLOCATED PORTABLE
+mnt-by:         APNIC-HM
+mnt-lower:      MAINT-CHOOPALLC-AP
+mnt-routes:     MAINT-CHOOPALLC-AP
+mnt-irt:        IRT-CHOOPALLC-AP
+remarks:        --------------------------------------------------------
+remarks:        To report network abuse, please contact mnt-irt
+remarks:        For troubleshooting, please contact tech-c and admin-c
+remarks:        Report invalid contact via www.apnic.net/invalidcontact
+remarks:        --------------------------------------------------------
+last-modified:  2018-10-29T08:55:03Z
+source:         APNIC
+
+irt:            IRT-CHOOPALLC-AP
+address:        100 Matawan Rd, Matawan NJ 07747
+e-mail:         abuse@choopa.com
+abuse-mailbox:  abuse@choopa.com
+admin-c:        CLA15-AP
+tech-c:         CLA15-AP
+auth:           # Filtered
+remarks:        abuse@choopa.com was validated on 2020-01-30
+mnt-by:         MAINT-CHOOPALLC-AP
+last-modified:  2020-01-30T14:30:33Z
+source:         APNIC
+
+organisation:   ORG-CL35-AP
+org-name:       Choopa, LLC
+country:        US
+address:        14 Cliffwood Ave
+address:        Suite 300
+phone:          +1-973-849-0500
+e-mail:         abuse@choopa.com
+mnt-ref:        APNIC-HM
+mnt-by:         APNIC-HM
+last-modified:  2017-11-04T12:56:46Z
+source:         APNIC
+
+role:           Choopa LLC administrator
+address:        100 Matawan Rd, Matawan NJ 07747
+country:        US
+phone:          +1-973-849-0501
+fax-no:         +1-973-849-0501
+e-mail:         abuse@choopa.com
+admin-c:        CLA15-AP
+tech-c:         CLA15-AP
+nic-hdl:        CLA15-AP
+mnt-by:         MAINT-CHOOPALLC-AP
+last-modified:  2014-11-18T00:32:03Z
+source:         APNIC
+
+% Information related to '167.179.64.0/18AS20473'
+
+route:          167.179.64.0/18
+origin:         AS20473
+descr:          Choopa, LLC
+                14 Cliffwood Ave
+                Suite 300
+mnt-by:         MAINT-CHOOPALLC-AP
+last-modified:  2020-04-21T14:40:04Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK3)
+
+

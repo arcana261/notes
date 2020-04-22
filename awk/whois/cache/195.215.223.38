@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '195.215.223.0 - 195.215.223.255'
+
+% Abuse contact for '195.215.223.0 - 195.215.223.255' is 'postmaster@abuse.mail.dk'
+
+inetnum:        195.215.223.0 - 195.215.223.255
+netname:        KABELTV
+descr:          YouSee A/S
+descr:          Strandlodsvej 30
+descr:          0900 Koebenhavn C
+country:        DK
+admin-c:        AS6981-RIPE
+tech-c:         TS2729-RIPE
+status:         ASSIGNED PA
+remarks:        +---------------------------------------+
+remarks:        | For abuse and security issues contact |
+remarks:        | postmaster@abuse.mail.dk              |
+remarks:        +---------------------------------------+
+mnt-by:         TDK-MNT
+created:        2013-01-28T16:40:52Z
+last-modified:  2016-05-12T16:10:46Z
+source:         RIPE
+
+role:           Admin Staff
+address:        TDC Kabel TV
+address:        Strandlodsvej 30
+address:        0900 Koebenhavn C
+phone:          +45 32 63 84 00
+admin-c:        JS20088-RIPE
+tech-c:         JP2846-RIPE
+nic-hdl:        AS6981-RIPE
+mnt-by:         TDK-MNT
+created:        2004-11-08T13:10:16Z
+last-modified:  2006-12-22T09:17:53Z
+source:         RIPE # Filtered
+
+role:           Technic Staff
+address:        TDC Kabel TV
+address:        Strandlodsvej 30
+address:        0900 Koebenhavn C
+phone:          +45 70 25 11 50
+admin-c:        PHB4-RIPE
+tech-c:         AKN1-RIPE
+nic-hdl:        TS2729-RIPE
+mnt-by:         TDK-MNT
+created:        2004-11-08T13:10:17Z
+last-modified:  2006-12-22T09:17:54Z
+source:         RIPE # Filtered
+
+% Information related to '195.215.0.0/16AS3292'
+
+route:          195.215.0.0/16
+descr:          Tele Danmark
+origin:         AS3292
+remarks:        +---------------------------------------+
+remarks:        | For abuse and security issues please  |
+remarks:        | see http://postmaster.tdc.dk or       |
+remarks:        | contact postmaster@abuse.mail.dk      |
+remarks:        +---------------------------------------+
+mnt-by:         AS3292-MNT
+created:        2002-07-30T18:29:18Z
+last-modified:  2010-10-28T13:04:08Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

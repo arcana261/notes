@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.95.154.0 - 185.95.155.255'
+
+% Abuse contact for '185.95.154.0 - 185.95.155.255' is 'abuse@datapardaz.net'
+
+inetnum:        185.95.154.0 - 185.95.155.255
+netname:        DPA
+descr:          Data Pardaz Afraz
+country:        IR
+geoloc:         27.483840 52.600962
+admin-c:        MF15155-RIPE
+tech-c:         MF15155-RIPE
+status:         ASSIGNED PA
+mnt-by:         MF387-MNT
+mnt-lower:      MF387-MNT
+mnt-routes:     MF387-MNT
+created:        2015-06-23T19:41:12Z
+last-modified:  2018-01-07T20:53:50Z
+source:         RIPE
+
+person:         Mehran Farmani
+address:        Unit 421, Pegah 3 Complex, Shahed Blvd, Sepahanshar Town
+phone:          +987737324410
+nic-hdl:        MF15155-RIPE
+mnt-by:         MF387-MNT
+created:        2015-04-09T16:43:22Z
+last-modified:  2016-12-23T18:14:15Z
+source:         RIPE # Filtered
+
+% Information related to '185.95.154.0/24AS200796'
+
+route:          185.95.154.0/24
+origin:         AS200796
+mnt-by:         MF387-MNT
+created:        2019-05-17T11:05:45Z
+last-modified:  2019-05-17T11:05:45Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

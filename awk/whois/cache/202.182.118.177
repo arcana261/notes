@@ -1,0 +1,58 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '202.182.112.0 - 202.182.127.255'
+
+% Abuse contact for '202.182.112.0 - 202.182.127.255' is 'abuse@choopa.com'
+
+inetnum:        202.182.112.0 - 202.182.127.255
+netname:        TYO_VULTR_CUST
+descr:          TYO_VULTR_CUST
+country:        JP
+admin-c:        CLA15-AP
+tech-c:         CLA15-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-CHOOPALLC-AP
+mnt-irt:        IRT-CHOOPALLC-AP
+last-modified:  2018-06-18T11:10:26Z
+source:         APNIC
+
+irt:            IRT-CHOOPALLC-AP
+address:        100 Matawan Rd, Matawan NJ 07747
+e-mail:         abuse@choopa.com
+abuse-mailbox:  abuse@choopa.com
+admin-c:        CLA15-AP
+tech-c:         CLA15-AP
+auth:           # Filtered
+remarks:        abuse@choopa.com was validated on 2020-01-30
+mnt-by:         MAINT-CHOOPALLC-AP
+last-modified:  2020-01-30T14:30:33Z
+source:         APNIC
+
+role:           Choopa LLC administrator
+address:        100 Matawan Rd, Matawan NJ 07747
+country:        US
+phone:          +1-973-849-0501
+fax-no:         +1-973-849-0501
+e-mail:         abuse@choopa.com
+admin-c:        CLA15-AP
+tech-c:         CLA15-AP
+nic-hdl:        CLA15-AP
+mnt-by:         MAINT-CHOOPALLC-AP
+last-modified:  2014-11-18T00:32:03Z
+source:         APNIC
+
+% Information related to '202.182.112.0/20AS20473'
+
+route:          202.182.112.0/20
+origin:         AS20473
+descr:          Choopa, LLC
+                14 Cliffwood Ave
+                Suite 300
+mnt-by:         MAINT-CHOOPALLC-AP
+last-modified:  2020-04-21T14:40:39Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK3)
+
+

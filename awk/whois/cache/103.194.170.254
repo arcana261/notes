@@ -1,0 +1,60 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '103.194.170.0 - 103.194.170.255'
+
+% Abuse contact for '103.194.170.0 - 103.194.170.255' is 'abuse@serverhosh.com'
+
+inetnum:        103.194.170.0 - 103.194.170.255
+netname:        Serverhosh
+descr:          Serverhosh Internet Service
+country:        NL
+admin-c:        SA1174-AP
+tech-c:         SA1174-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-HP-IN
+mnt-irt:        IRT-SH-IN
+geoloc:         51.9232407 4.4334202
+last-modified:  2018-07-25T16:09:58Z
+source:         APNIC
+
+irt:            IRT-SH-IN
+address:        61A Rajani Mukjerjee Road
+address:        Pin Code 700038, Kolkata
+address:        West Bengal, India
+e-mail:         abuse@serverhosh.com
+abuse-mailbox:  abuse@serverhosh.com
+admin-c:        HPA3-AP
+tech-c:         HPA3-AP
+auth:           # Filtered
+remarks:        abuse@serverhosh.com was validated on 2019-12-17
+mnt-by:         MAINT-HP-IN
+last-modified:  2019-12-17T13:10:22Z
+source:         APNIC
+
+role:           Serverhosh Administrator
+address:        61A Rajani Mukherjee Road, Kolkata, WEST BENGAL, Pin : 700038
+country:        IN
+phone:          +919674183165
+e-mail:         abuse@serverhosh.com
+admin-c:        HPA3-AP
+tech-c:         HPA3-AP
+nic-hdl:        SA1174-AP
+mnt-by:         MAINT-HP-IN
+abuse-mailbox:  abuse@serverhosh.com
+last-modified:  2018-05-13T11:43:21Z
+source:         APNIC
+
+% Information related to '103.194.170.0/24AS134512'
+
+route:          103.194.170.0/24
+origin:         AS134512
+descr:          Tipu Sultan
+                R.N. Tagore Road
+mnt-by:         MAINT-HP-IN
+last-modified:  2019-11-17T07:56:40Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK3)
+
+

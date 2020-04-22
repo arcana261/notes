@@ -1,0 +1,73 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.219.0.0 - 5.219.255.255'
+
+% Abuse contact for '5.219.0.0 - 5.219.255.255' is 'LIRadmin@tci.ir'
+
+inetnum:        5.219.0.0 - 5.219.255.255
+netname:        IR-T-10-20120904
+country:        IR
+org:            ORG-ITCP1-RIPE
+admin-c:        FK2720-RIPE
+tech-c:         FK2720-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         TCI-RIPE-MNT
+mnt-lower:      TCI-RIPE-MNT
+mnt-routes:     TCI-RIPE-MNT
+created:        2015-11-26T10:32:32Z
+last-modified:  2019-05-06T13:44:59Z
+source:         RIPE
+
+organisation:   ORG-ITCP1-RIPE
+org-name:       Iran Telecommunication Company PJS
+org-type:       LIR
+address:        No 43, Floor 7
+address:        1969764913
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982189797777
+phone:          +989122186466
+fax-no:         +982189796605
+admin-c:        KZ1283-RIPE
+admin-c:        NA6437-RIPE
+tech-c:         DP15203-RIPE
+abuse-c:        AR15666-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        TCI-RIPE-MNT
+mnt-ref:        mnt-zahedi
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2010-02-10T12:45:26Z
+last-modified:  2019-10-12T10:31:21Z
+source:         RIPE # Filtered
+
+person:         farahnaz karami
+address:        Vanak Square,Valiasr Ave, Daman Afshar St, No 43,1969764913, Tehran, Iran, Islamic Republic of
+phone:          +982189796612
+nic-hdl:        FK2720-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-02-28T08:29:41Z
+last-modified:  2017-10-30T22:08:24Z
+source:         RIPE
+
+% Information related to '5.219.128.0/20AS58224'
+
+route:          5.219.128.0/20
+origin:         AS58224
+mnt-by:         MNT-Mah
+mnt-by:         MNT-KALAVANI
+created:        2018-11-19T08:07:33Z
+last-modified:  2018-11-19T08:07:33Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

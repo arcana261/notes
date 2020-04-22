@@ -1,0 +1,52 @@
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN, IPv4 or IPv6 queries
+ 
+% LACNIC resource: whois.lacnic.net
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query, you agree to use this data
+%  only for lawful purposes.
+%  2020-04-21 20:41:29 (-03 -03:00)
+
+inetnum:     200.2.160/20
+status:      allocated
+aut-num:     N/A
+owner:       Telecommunicationcompany Suriname - TeleSur
+ownerid:     SR-TSTE-LACNIC
+responsible: Telesur Administrator
+address:     Heiligenweg, 14, PO Box 1839
+address:     -- - Paramaribo - 
+country:     SR
+phone:       +597  8809685 [0000]
+owner-c:     FUN6
+tech-c:      FUN6
+abuse-c:     FUN6
+inetrev:     200.2.164/22
+nserver:     NS1.SR.NET  
+nsstat:      20200421 AA
+nslastaa:    20200421
+nserver:     NS2.SR.NET  
+nsstat:      20200421 AA
+nslastaa:    20200421
+created:     20040713
+changed:     20180625
+
+nic-hdl:     FUN6
+person:      Furyal .N. (Telesur)
+e-mail:      lacadmin@TELESUR.SR
+address:     Heiligenweg, 14, IP Network contact for Telesur - Suriname
+address:     - - Paramaribo - 
+country:     SR
+phone:       +597  8809685 [0000]
+created:     20180220
+changed:     20190513
+
+% whois.lacnic.net accepts only direct match queries.
+% Types of queries are: POCs, ownerid, CIDR blocks, IP
+% and AS numbers.
+

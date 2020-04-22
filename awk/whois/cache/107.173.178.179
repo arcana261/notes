@@ -1,0 +1,68 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       107.172.0.0 - 107.175.255.255
+CIDR:           107.172.0.0/14
+NetName:        CC-17
+NetHandle:      NET-107-172-0-0-1
+Parent:         NET107 (NET-107-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS36352
+Organization:   ColoCrossing (VGS-9)
+RegDate:        2013-12-27
+Updated:        2013-12-27
+Ref:            https://rdap.arin.net/registry/ip/107.172.0.0
+
+
+
+OrgName:        ColoCrossing
+OrgId:          VGS-9
+Address:        325 Delaware Avenue
+Address:        Suite 300
+City:           Buffalo
+StateProv:      NY
+PostalCode:     14202
+Country:        US
+RegDate:        2005-06-20
+Updated:        2019-10-17
+Ref:            https://rdap.arin.net/registry/entity/VGS-9
+
+
+OrgTechHandle: NETWO882-ARIN
+OrgTechName:   Network Operations
+OrgTechPhone:  +1-800-518-9716 
+OrgTechEmail:  support@colocrossing.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO882-ARIN
+
+OrgAbuseHandle: ABUSE3246-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-800-518-9716 
+OrgAbuseEmail:  abuse@colocrossing.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3246-ARIN
+
+OrgNOCHandle: NETWO882-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-800-518-9716 
+OrgNOCEmail:  support@colocrossing.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO882-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

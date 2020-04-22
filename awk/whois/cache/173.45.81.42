@@ -1,0 +1,85 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       173.45.64.0 - 173.45.127.255
+CIDR:           173.45.64.0/18
+NetName:        ENET-XLHOST-2
+NetHandle:      NET-173-45-64-0-1
+Parent:         NET173 (NET-173-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   eNET Inc. (ENET)
+RegDate:        2008-10-21
+Updated:        2012-03-02
+Comment:        Abuse complaints to abuse@ee.net
+Ref:            https://rdap.arin.net/registry/ip/173.45.64.0
+
+
+OrgName:        eNET Inc.
+OrgId:          ENET
+Address:        3000 East Dublin Granville Rd.
+City:           Columbus
+StateProv:      OH
+PostalCode:     43231
+Country:        US
+RegDate:        1996-04-09
+Updated:        2009-08-20
+Ref:            https://rdap.arin.net/registry/entity/ENET
+
+
+OrgTechHandle: HOSTM634-ARIN
+OrgTechName:   Hostmaster
+OrgTechPhone:  +1-614-508-6450 
+OrgTechEmail:  hostmaster@ee.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+OrgAbuseHandle: ABUSE861-ARIN
+OrgAbuseName:   Abuse Desk
+OrgAbusePhone:  +1-614-508-6450 
+OrgAbuseEmail:  abuse@ee.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE861-ARIN
+
+OrgNOCHandle: HOSTM634-ARIN
+OrgNOCName:   Hostmaster
+OrgNOCPhone:  +1-614-508-6450 
+OrgNOCEmail:  hostmaster@ee.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+RNOCHandle: HOSTM634-ARIN
+RNOCName:   Hostmaster
+RNOCPhone:  +1-614-508-6450 
+RNOCEmail:  hostmaster@ee.net
+RNOCRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+RTechHandle: HOSTM634-ARIN
+RTechName:   Hostmaster
+RTechPhone:  +1-614-508-6450 
+RTechEmail:  hostmaster@ee.net
+RTechRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+RAbuseHandle: ABUSE861-ARIN
+RAbuseName:   Abuse Desk
+RAbusePhone:  +1-614-508-6450 
+RAbuseEmail:  abuse@ee.net
+RAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE861-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

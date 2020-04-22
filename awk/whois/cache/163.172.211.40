@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '163.172.208.0 - 163.172.223.255'
+
+% Abuse contact for '163.172.208.0 - 163.172.223.255' is 'abuse@online.net'
+
+inetnum:        163.172.208.0 - 163.172.223.255
+netname:        ONLINE_NET_DEDICATED_SERVERS_NL
+country:        NL
+admin-c:        MM42047-RIPE
+tech-c:         MM42047-RIPE
+status:         LEGACY
+mnt-by:         ONLINESAS-MNT
+created:        2016-05-13T10:36:53Z
+last-modified:  2016-05-13T10:42:13Z
+source:         RIPE
+org:            ORG-ONLI2-RIPE
+
+organisation:   ORG-ONLI2-RIPE
+org-name:       ONLINE SAS NL
+org-type:       OTHER
+address:        ONLINE SAS NL, EvoSwitch AMS1, J.W. Lucasweg 35 2031 BE Haarlem
+abuse-c:        AR32851-RIPE
+mnt-ref:        ONLINESAS-MNT
+mnt-by:         ONLINESAS-MNT
+created:        2016-05-13T10:41:40Z
+last-modified:  2016-05-13T10:41:40Z
+source:         RIPE # Filtered
+
+person:         Mickael Marchand
+address:        8 rue de la ville l'eveque 75008 PARIS
+phone:          +33173502000
+nic-hdl:        MM42047-RIPE
+mnt-by:         MMA-MNT
+created:        2015-07-10T15:02:32Z
+last-modified:  2016-02-23T12:43:25Z
+source:         RIPE # Filtered
+
+% Information related to '163.172.208.0/20AS12876'
+
+route:          163.172.208.0/20
+descr:          SCALEWAY
+descr:          Amsterdam, Netherlands
+origin:         AS12876
+mnt-by:         MNT-TISCALIFR
+created:        2019-10-03T15:09:54Z
+last-modified:  2019-10-03T15:09:54Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

@@ -1,0 +1,82 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.144.16.0 - 45.144.19.255'
+
+% Abuse contact for '45.144.16.0 - 45.144.19.255' is 'LIRadmin@tci.ir'
+
+inetnum:        45.144.16.0 - 45.144.19.255
+netname:        IR-AFTAB-NETWORK-2-20190822
+descr:          Telecommunication Company of Khorasan Razavi
+country:        IR
+org:            ORG-FSCC8-RIPE
+admin-c:        HN2575-RIPE
+tech-c:         HN2575-RIPE
+tech-c:         JS15290-RIPE
+abuse-c:        AR15666-RIPE
+mnt-domains:    TCI-RIPE-MNT
+status:         ALLOCATED PA
+mnt-by:         Aftab-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2019-08-22T06:43:37Z
+last-modified:  2020-03-17T18:25:27Z
+source:         RIPE
+
+organisation:   ORG-FSCC8-RIPE
+org-name:       Faragostar Shargh Communication Company PJS
+org-type:       LIR
+address:        No 15 -Nestaran Building -Farhad 22 - Sajad
+address:        9185736938
+address:        mashhad
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        HN2575-RIPE
+tech-c:         HN2575-RIPE
+abuse-c:        AR54895-RIPE
+mnt-ref:        Aftab-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         Aftab-MNT
+created:        2019-08-20T09:02:02Z
+last-modified:  2019-08-20T09:02:04Z
+source:         RIPE # Filtered
+phone:          +989151160438
+
+person:         hosein Nikbin
+address:        No 15 -Nestaran Building -Farhad 22 - Sajad
+address:        9185736938
+address:        mashhad
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989151160438
+nic-hdl:        HN2575-RIPE
+mnt-by:         Aftab-MNT
+created:        2019-08-20T09:02:02Z
+last-modified:  2019-08-20T09:02:02Z
+source:         RIPE
+
+person:         Javad Soleymani
+address:        telecommunication company of Khorasan Razavi
+phone:          +985118528877
+nic-hdl:        JS15290-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2014-03-10T11:49:03Z
+last-modified:  2015-08-04T11:43:44Z
+source:         RIPE
+
+% Information related to '45.144.16.0/22AS58224'
+
+route:          45.144.16.0/22
+origin:         AS58224
+mnt-by:         mnt-ir-aftab-network-1
+mnt-by:         TCI-RIPE-MNT
+created:        2020-03-17T17:23:07Z
+last-modified:  2020-03-17T17:48:42Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

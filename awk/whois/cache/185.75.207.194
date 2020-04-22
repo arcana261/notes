@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.75.207.0 - 185.75.207.255'
+
+% Abuse contact for '185.75.207.0 - 185.75.207.255' is 'iman.fakhari@gmail.com'
+
+inetnum:        185.75.207.0 - 185.75.207.255
+netname:        Are-Rayane207
+descr:          Asre-Rayane-BAM
+country:        IR
+admin-c:        if22891-ripe
+tech-c:         if22891-ripe
+status:         ASSIGNED PA
+abuse-c:        AEH61-RIPE
+mnt-by:         MNT-AsrB
+created:        2015-05-07T07:10:43Z
+last-modified:  2018-12-23T16:11:31Z
+source:         RIPE
+
+person:         Iman Fakhari
+address:        Asr Rayaneh Ertebat BAM CO
+phone:          +989139440479
+nic-hdl:        if22891-ripe
+mnt-by:         MNT-AsrB
+created:        2015-05-07T07:02:24Z
+last-modified:  2018-12-23T15:41:24Z
+source:         RIPE
+
+% Information related to '185.75.207.0/24AS58331'
+
+route:          185.75.207.0/24
+origin:         AS58331
+descr:          Asre Rayaneh Bam ISP
+mnt-by:         MNT-AsrB
+created:        2016-04-28T12:11:19Z
+last-modified:  2016-04-28T12:11:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

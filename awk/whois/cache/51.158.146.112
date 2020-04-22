@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '51.158.128.0 - 51.158.255.255'
+
+% Abuse contact for '51.158.128.0 - 51.158.255.255' is 'abuse@online.net'
+
+inetnum:        51.158.128.0 - 51.158.255.255
+netname:        ONLINE_NET_DEDICATED_SERVERS
+country:        NL
+admin-c:        MM42047-RIPE
+tech-c:         MM42047-RIPE
+status:         LEGACY
+mnt-by:         ONLINESAS-MNT
+created:        2019-05-06T11:58:01Z
+last-modified:  2019-05-06T11:58:01Z
+source:         RIPE
+
+person:         Mickael Marchand
+address:        8 rue de la ville l'eveque 75008 PARIS
+phone:          +33173502000
+nic-hdl:        MM42047-RIPE
+mnt-by:         MMA-MNT
+created:        2015-07-10T15:02:32Z
+last-modified:  2016-02-23T12:43:25Z
+source:         RIPE # Filtered
+
+% Information related to '51.158.128.0/17AS12876'
+
+route:          51.158.128.0/17
+descr:          SCALEWAY
+descr:          Amsterdam, Netherlands
+origin:         AS12876
+mnt-by:         MNT-TISCALIFR
+created:        2019-10-03T15:09:09Z
+last-modified:  2019-10-03T15:09:09Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.185.178.0 - 85.185.178.255'
+
+% Abuse contact for '85.185.178.0 - 85.185.178.255' is 'abuse@ito.gov.ir'
+
+inetnum:        85.185.178.0 - 85.185.178.255
+netname:        ICTROOSTAEE-Hormozgan
+descr:          ICT ROOSTAEE in Hormozagan
+country:        IR
+admin-c:        AM2253-RIPE
+tech-c:         AM2253-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2009-10-04T08:51:01Z
+last-modified:  2010-01-31T11:14:49Z
+source:         RIPE
+
+person:         AHMAD MIRTABA
+address:        DATA Office,EMAM KHOMEYNI Tellcomunication
+address:        ,JAHANBAR Triode, Bandarabbas,HORMOZGAN.IRAN
+phone:          +98 761 555 11 13
+fax-no:         +98 761 555 35 07
+nic-hdl:        AM2253-RIPE
+mnt-by:         AS12880-MNT
+created:        2009-10-04T08:51:01Z
+last-modified:  2009-10-04T08:51:01Z
+source:         RIPE # Filtered
+
+% Information related to '85.185.176.0/21AS58224'
+
+route:          85.185.176.0/21
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-02-19T11:32:24Z
+last-modified:  2018-02-19T11:32:24Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

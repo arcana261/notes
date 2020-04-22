@@ -1,0 +1,57 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.159.150.0 - 45.159.150.255'
+
+% Abuse contact for '45.159.150.0 - 45.159.150.255' is 'info@suninternet.ir'
+
+inetnum:        45.159.150.0 - 45.159.150.255
+org:            ORG-SA4537-RIPE
+netname:        SUNINTERNET
+country:        IR
+admin-c:        MM48033-RIPE
+tech-c:         MM48033-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         wcd
+created:        2020-03-12T09:31:28Z
+last-modified:  2020-04-04T09:10:58Z
+source:         RIPE
+
+organisation:   ORG-SA4537-RIPE
+org-name:       SUNINTERNET-SHIRAZ
+org-type:       OTHER
+address:        NO1 AMIRKABIR BLV  SHIRAZ
+abuse-c:        ACRO31089-RIPE
+mnt-ref:        wcd
+mnt-by:         wcd
+created:        2020-03-12T09:35:51Z
+last-modified:  2020-03-12T09:35:51Z
+source:         RIPE # Filtered
+
+person:         Mostafa Mohammadi
+address:        2nd Plaque , Right Side, Corner of Khadem Sadegh St, Farashbandi Blvs, Shiraz, Iran
+phone:          +989177040451
+nic-hdl:        MM48033-RIPE
+mnt-by:         SunInternet
+created:        2018-03-07T23:16:27Z
+last-modified:  2018-03-07T23:16:27Z
+source:         RIPE
+
+% Information related to '45.159.150.0/24AS204393'
+
+route:          45.159.150.0/24
+origin:         AS204393
+mnt-by:         wcd
+created:        2020-03-11T18:13:04Z
+last-modified:  2020-03-11T18:13:04Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

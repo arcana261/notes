@@ -1,0 +1,56 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.165.104.0 - 89.165.111.255'
+
+% Abuse contact for '89.165.104.0 - 89.165.111.255' is 'abuse@dpco.net'
+
+inetnum:        89.165.104.0 - 89.165.111.255
+netname:        SABANET-AHVAZ
+descr:          Sabanet Ahvaz Network
+country:        IR
+admin-c:        nns60-ripe
+tech-c:         ara82-ripe
+status:         ASSIGNED PA
+mnt-by:         MNT-ALIREZA
+created:        2009-05-17T07:31:31Z
+last-modified:  2012-01-12T09:26:42Z
+source:         RIPE
+
+person:         Alireza Abbasi
+address:        No.25 - Shohada St. - Mirza Shirazi St. - Tehran - Iran
+phone:          +989381901770
+nic-hdl:        ARA82-RIPE
+mnt-by:         MNT-ALIREZA
+created:        2011-10-11T11:45:24Z
+last-modified:  2013-04-04T07:29:43Z
+source:         RIPE # Filtered
+
+person:         Naghi Nasim
+address:        No.25 - Shohada St. - Mirza Shirazi St. - Tehran - Iran
+phone:          +982188554129
+nic-hdl:        NNS60-RIPE
+mnt-by:         MNT-AMIN76
+created:        2012-01-12T09:04:59Z
+last-modified:  2013-03-17T15:45:12Z
+source:         RIPE
+
+% Information related to '89.165.104.0/21AS39501'
+
+route:          89.165.104.0/21
+descr:          Route ahwaz
+origin:         AS39501
+mnt-by:         MNT-NGS-NOC
+created:        2008-03-11T18:33:25Z
+last-modified:  2008-03-11T18:33:25Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

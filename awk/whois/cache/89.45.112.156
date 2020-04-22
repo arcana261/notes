@@ -1,0 +1,104 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.45.112.0 - 89.45.115.255'
+
+% Abuse contact for '89.45.112.0 - 89.45.115.255' is 'a.etesamifar@tci.ir'
+
+inetnum:        89.45.112.0 - 89.45.115.255
+netname:        TCIBSH
+descr:          Telecommunication Company of Boushehr
+country:        IR
+admin-c:        NA6207-RIPE
+tech-c:         NA6208-RIPE
+tech-c:         HB5041-RIPE
+org:            ORG-TCOB1-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+mnt-lower:      TCI-RIPE-MNT
+mnt-routes:     TCI-RIPE-MNT
+created:        2015-04-18T06:28:25Z
+last-modified:  2019-06-22T07:29:07Z
+source:         RIPE
+
+organisation:   ORG-TCOB1-RIPE
+org-name:       Telecommunication Company of Boushehr
+org-type:       other
+address:        Boushehr Telecom
+abuse-c:        AC26444-RIPE
+admin-c:        NA6207-RIPE
+tech-c:         NA6208-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-01-16T07:45:38Z
+last-modified:  2019-03-02T11:44:27Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Bushehr)
+address:        Bushehr - Telecommunication Company of Bushehr
+admin-c:        JP11596-RIPE
+nic-hdl:        NA6207-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T10:15:14Z
+last-modified:  2019-03-02T10:15:14Z
+source:         RIPE # Filtered
+
+role:           NOC (Bushehr)
+address:        Bushehr - Telecommunication Company of Bushehr
+admin-c:        RTM34-RIPE
+nic-hdl:        NA6208-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T10:18:22Z
+last-modified:  2019-03-02T10:18:22Z
+source:         RIPE # Filtered
+
+person:         Hamidreza Bahrani
+address:        telecommunication company of Boushehr
+phone:          +987715555507
+nic-hdl:        HB5041-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2013-09-11T10:37:00Z
+last-modified:  2013-09-11T10:37:00Z
+source:         RIPE
+
+% Information related to '89.45.112.0/21AS12880'
+
+route:          89.45.112.0/21
+descr:          TIC
+origin:         AS12880
+mnt-routes:     AS12880-MNT
+mnt-by:         AS12880-MNT
+created:        2018-02-05T05:51:58Z
+last-modified:  2018-02-05T05:51:58Z
+source:         RIPE
+
+% Information related to '89.45.112.0/21AS48159'
+
+route:          89.45.112.0/21
+descr:          TCI(Boushehr)
+origin:         AS48159
+mnt-by:         mohsenrahimimaintainer
+created:        2015-04-18T09:04:48Z
+last-modified:  2015-04-18T09:04:48Z
+source:         RIPE
+
+% Information related to '89.45.112.0/21AS58224'
+
+route:          89.45.112.0/21
+descr:          Telecommunication Company of IRAN
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+mnt-routes:     AS12880-MNT
+created:        2015-04-18T08:02:10Z
+last-modified:  2015-10-13T11:08:59Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,129 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       8.0.0.0 - 8.127.255.255
+CIDR:           8.0.0.0/9
+NetName:        LVLT-ORG-8-8
+NetHandle:      NET-8-0-0-0-1
+Parent:         NET8 (NET-8-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Level 3 Parent, LLC (LPL-141)
+RegDate:        1992-12-01
+Updated:        2018-04-23
+Ref:            https://rdap.arin.net/registry/ip/8.0.0.0
+
+
+
+OrgName:        Level 3 Parent, LLC
+OrgId:          LPL-141
+Address:        100 CenturyLink Drive
+City:           Monroe
+StateProv:      LA
+PostalCode:     71203
+Country:        US
+RegDate:        2018-02-06
+Updated:        2020-01-15
+Comment:        ADDRESSES WITHIN THIS BLOCK ARE NON-PORTABLE ANY ISP ANNOUNCING PORTIONS WITHIN OUR RANGES SHOULD NOT RELY ON PRESENTED LOA'S UNLESS THOSE RANGES ARE ALSO ANNOUNCED TO A CENTURYLINK ASN.
+Comment:        
+Comment:        All abuse reports MUST include: 
+Comment:        * src IP 
+Comment:        * dest IP (your IP) 
+Comment:        * dest port 
+Comment:        * Accurate date/timestamp and timezone of activity 
+Comment:        * Intensity/frequency (short log extracts) 
+Comment:        * Your contact details (phone and email) 
+Comment:        Without these we will be unable to identify the correct owner of the IP address at that point in time.
+Comment:        
+Comment:        For subpoena or court order please fax 844.254.5800 or refer to our Law Enforcement Support page http://www.centurylink.com/static/Pages/AboutUs/Legal/LawEnforcement/
+Ref:            https://rdap.arin.net/registry/entity/LPL-141
+
+
+OrgAbuseHandle: IPADD5-ARIN
+OrgAbuseName:   ipaddressing
+OrgAbusePhone:  +1-877-453-8353 
+OrgAbuseEmail:  ipaddressing@level3.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/IPADD5-ARIN
+
+OrgTechHandle: IPADD5-ARIN
+OrgTechName:   ipaddressing
+OrgTechPhone:  +1-877-453-8353 
+OrgTechEmail:  ipaddressing@level3.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADD5-ARIN
+
+# end
+
+
+# start
+
+NetRange:       8.9.4.0 - 8.9.5.255
+CIDR:           8.9.4.0/23
+NetName:        LVLT-CHOOP-1-8-9-4
+NetHandle:      NET-8-9-4-0-1
+Parent:         LVLT-ORG-8-8 (NET-8-0-0-0-1)
+NetType:        Reassigned
+OriginAS:       
+Organization:   Choopa, LLC (CHOOP-1)
+RegDate:        2008-12-08
+Updated:        2008-12-08
+Ref:            https://rdap.arin.net/registry/ip/8.9.4.0
+
+
+
+OrgName:        Choopa, LLC
+OrgId:          CHOOP-1
+Address:        14 Cliffwood Ave Suite 300
+City:           Matawan
+StateProv:      NJ
+PostalCode:     07747
+Country:        US
+RegDate:        2006-10-03
+Updated:        2016-01-11
+Comment:        http://www.choopa.net/
+Ref:            https://rdap.arin.net/registry/entity/CHOOP-1
+
+
+OrgAbuseHandle: ABUSE1143-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-973-849-0500 
+OrgAbuseEmail:  abuse@choopa.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE1143-ARIN
+
+OrgNOCHandle: NETWO1159-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-973-849-0500 
+OrgNOCEmail:  network@choopa.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+OrgTechHandle: NETWO1159-ARIN
+OrgTechName:   Network Operations
+OrgTechPhone:  +1-973-849-0500 
+OrgTechEmail:  network@choopa.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

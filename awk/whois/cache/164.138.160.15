@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '164.138.160.0 - 164.138.191.255'
+
+% Abuse contact for '164.138.160.0 - 164.138.191.255' is 'abuse@mci.ir'
+
+inetnum:        164.138.160.0 - 164.138.191.255
+netname:        MCCI
+descr:          Mobile Communication Company of Iran
+country:        IR
+admin-c:        RL7844-RIPE
+tech-c:         RL7844-RIPE
+status:         ASSIGNED PA
+mnt-by:         MCCI-MNT
+created:        2014-10-28T06:54:51Z
+last-modified:  2018-02-24T11:34:00Z
+source:         RIPE
+
+person:         Reza Tahan Latibari
+address:        Hamrah Tower - Kordestan High way cross Vanak st.Tehran Iran
+phone:          +98 21 88640934
+nic-hdl:        RL7844-RIPE
+mnt-by:         MCCI-MNT
+created:        2012-09-05T13:41:38Z
+last-modified:  2012-09-05T13:41:39Z
+source:         RIPE # Filtered
+
+% Information related to '164.138.160.0/20AS197207'
+
+route:          164.138.160.0/20
+descr:          BGP route
+origin:         AS197207
+mnt-by:         MCCI-MNT
+created:        2015-04-20T05:12:58Z
+last-modified:  2015-04-20T05:12:58Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

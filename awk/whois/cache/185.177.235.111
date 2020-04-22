@@ -1,0 +1,56 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.177.234.0 - 185.177.235.255'
+
+% Abuse contact for '185.177.234.0 - 185.177.235.255' is 'abuse@pishgaman.net'
+
+inetnum:        185.177.234.0 - 185.177.235.255
+netname:        PTE
+country:        IR
+admin-c:        MABE86-RIPE
+tech-c:         MHE14-RIPE
+status:         ASSIGNED PA
+mnt-by:         PTE-MNT
+created:        2016-12-28T09:43:46Z
+last-modified:  2016-12-28T09:43:46Z
+source:         RIPE
+
+person:         Masoud Bemanipour
+address:        Tehran,Iran
+phone:          +98 21 22619536
+phone:          +98 21 23545
+fax-no:         +98 21 22607555
+nic-hdl:        MABE86-RIPE
+mnt-by:         PTE-MNT
+created:        2008-06-13T19:15:32Z
+last-modified:  2011-03-14T05:19:10Z
+source:         RIPE # Filtered
+
+person:         Hadi Ebrahimi
+address:        Tehran,Iran
+phone:          +98 21 23545
+nic-hdl:        MHE14-RIPE
+mnt-by:         PTE-MNT
+created:        2012-05-20T12:27:31Z
+last-modified:  2012-05-20T12:27:31Z
+source:         RIPE
+
+% Information related to '185.177.235.0/24AS49100'
+
+route:          185.177.235.0/24
+origin:         AS49100
+mnt-by:         PTE-MNT
+created:        2016-12-28T09:48:29Z
+last-modified:  2016-12-28T09:48:29Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

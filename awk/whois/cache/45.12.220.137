@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.12.220.0 - 45.12.220.255'
+
+% Abuse contact for '45.12.220.0 - 45.12.220.255' is 'abuse@m247.ro'
+
+inetnum:        45.12.220.0 - 45.12.220.255
+netname:        M247-LTD-Stockholm
+descr:          M247 LTD Stockholm Infrastructure
+country:        SE
+org:            ORG-MLA32-RIPE
+geoloc:         59.3293 18.0686
+admin-c:        GBXS20-RIPE
+tech-c:         GBXS20-RIPE
+status:         ASSIGNED PA
+mnt-by:         GLOBALAXS-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        --------------LEGAL CONCERNS-----------------------------
+remarks:        For any legal requests, please send an email
+remarks:        to ro-legal@m247.com for a maximum 48hours response.
+remarks:        ---------------------------------------------------------
+created:        2019-05-09T13:39:29Z
+last-modified:  2019-05-09T13:39:29Z
+source:         RIPE
+
+organisation:   ORG-MLA32-RIPE
+org-name:       M247 Ltd Stockholm
+org-type:       OTHER
+address:        Esbogatan 11
+address:        164 74 Kista, Sweden
+abuse-c:        ME5262-RIPE
+mnt-ref:        GLOBALAXS-MNT
+mnt-by:         GLOBALAXS-MNT
+created:        2018-06-13T16:12:20Z
+last-modified:  2018-06-13T16:20:52Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS Stockholm NOC
+address:        Kvastvägen 25
+address:        128 62 Sköndal, Stockholm
+address:        Sweden
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS20-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2017-01-31T13:55:00Z
+last-modified:  2017-01-31T13:55:00Z
+source:         RIPE # Filtered
+
+% Information related to '45.12.220.0/24AS9009'
+
+route:          45.12.220.0/24
+descr:          M247 Europe
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-05-09T12:56:37Z
+last-modified:  2019-05-09T12:56:37Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

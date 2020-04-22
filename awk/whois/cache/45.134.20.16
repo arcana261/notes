@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.134.20.0 - 45.134.20.255'
+
+% Abuse contact for '45.134.20.0 - 45.134.20.255' is 'jeroen@falco-networks.com'
+
+inetnum:        45.134.20.0 - 45.134.20.255
+netname:        VCNL-45-134-20-0
+country:        NL
+geoloc:         52.0645166 4.3846205
+org:            ORG-VA29472-RIPE
+admin-c:        JVV19-RIPE
+tech-c:         JVV19-RIPE
+status:         ASSIGNED PA
+mnt-by:         PREFIXBROKER-MNT
+created:        2020-03-27T18:29:38Z
+last-modified:  2020-03-27T18:29:38Z
+source:         RIPE
+
+organisation:   ORG-VA29472-RIPE
+org-name:       VPN-Consumer-NL
+org-type:       OTHER
+address:        Moezel 5
+address:        2491 CV Den Haag
+address:        The Netherlands
+abuse-c:        AR54969-RIPE
+mnt-ref:        PREFIXBROKER-MNT
+mnt-by:         PREFIXBROKER-MNT
+created:        2020-03-27T18:29:38Z
+last-modified:  2020-03-27T18:29:38Z
+source:         RIPE # Filtered
+
+person:         Jeroen van veen
+address:        Falco IPR B.V.
+address:        De Hoefsmid 11-13
+address:        1851 PZ Heiloo
+address:        The Netherlands
+phone:          +31 72 532 3744
+nic-hdl:        JVV19-RIPE
+created:        2002-09-16T13:46:49Z
+last-modified:  2018-05-01T12:11:21Z
+source:         RIPE # Filtered
+mnt-by:         MNT-FALCO
+
+% Information related to '45.134.20.0/24AS43350'
+
+route:          45.134.20.0/24
+origin:         AS43350
+mnt-by:         PREFIXBROKER-MNT
+created:        2020-03-27T18:29:38Z
+last-modified:  2020-03-27T18:29:38Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

@@ -1,0 +1,139 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       209.250.224.0 - 209.250.255.255
+CIDR:           209.250.224.0/19
+NetName:        RIPE
+NetHandle:      NET-209-250-224-0-1
+Parent:         NET209 (NET-209-0-0-0-0)
+NetType:        Early Registrations, Transferred to RIPE NCC
+OriginAS:       
+Organization:   RIPE Network Coordination Centre (RIPE)
+RegDate:        2017-12-12
+Updated:        2017-12-12
+Ref:            https://rdap.arin.net/registry/ip/209.250.224.0
+
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+ResourceLink:  whois://whois.ripe.net
+
+
+OrgName:        RIPE Network Coordination Centre
+OrgId:          RIPE
+Address:        P.O. Box 10096
+City:           Amsterdam
+StateProv:      
+PostalCode:     1001EB
+Country:        NL
+RegDate:        
+Updated:        2013-07-29
+Ref:            https://rdap.arin.net/registry/entity/RIPE
+
+ReferralServer:  whois://whois.ripe.net
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+
+OrgTechHandle: RNO29-ARIN
+OrgTechName:   RIPE NCC Operations
+OrgTechPhone:  +31 20 535 4444 
+OrgTechEmail:  hostmaster@ripe.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/RNO29-ARIN
+
+OrgAbuseHandle: ABUSE3850-ARIN
+OrgAbuseName:   Abuse Contact
+OrgAbusePhone:  +31205354444 
+OrgAbuseEmail:  abuse@ripe.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3850-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.ripe.net.
+
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '209.250.234.0 - 209.250.235.255'
+
+% Abuse contact for '209.250.234.0 - 209.250.235.255' is 'abuse@vultr.com'
+
+inetnum:        209.250.234.0 - 209.250.235.255
+created:        2017-12-26T21:42:35Z
+last-modified:  2017-12-26T21:42:35Z
+source:         RIPE
+netname:        NET-V4-209-250-224-0-19
+descr:          Hanauer Landstraﬂe 302
+descr:          60314 Frankfurt am Main
+descr:          Germany
+country:        DE
+geoloc:         50.1200 8.7334
+org:            ORG-VHLF1-RIPE
+admin-c:        VHLF1-RIPE
+tech-c:         VHLF2-RIPE
+status:         ASSIGNED PA
+mnt-by:         MAINT-AS20473
+
+organisation:   ORG-VHLF1-RIPE
+created:        2017-12-26T21:41:29Z
+last-modified:  2017-12-26T21:41:29Z
+source:         RIPE # Filtered
+org-name:       Vultr Holdings LLC Frankfurt
+org-type:       OTHER
+address:        Hanauer Landstraﬂe 302
+address:        60314 Frankfurt am Main
+address:        Germany
+phone:          +1-973-849-0500
+admin-c:        VHLF1-RIPE
+tech-c:         VHLF2-RIPE
+abuse-c:        VHLF3-RIPE
+mnt-by:         MAINT-AS20473
+mnt-ref:        MAINT-AS20473
+
+person:         Vultr Holdings LLC Frankfurt Admin
+created:        2017-12-26T21:41:28Z
+last-modified:  2017-12-26T21:41:28Z
+source:         RIPE # Filtered
+address:        14 Cliffwood Ave Suite 300, Metropark South
+address:        Matawan, NJ 07747
+address:        United States
+phone:          +1-973-849-0500
+mnt-by:         MAINT-AS20473
+nic-hdl:        VHLF1-RIPE
+
+person:         Vultr Holdings LLC Frankfurt Tech
+created:        2017-12-26T21:41:29Z
+last-modified:  2017-12-26T21:41:29Z
+source:         RIPE # Filtered
+address:        14 Cliffwood Ave Suite 300, Metropark South
+address:        Matawan, NJ 07747
+address:        United States
+phone:          +1-973-849-0500
+mnt-by:         MAINT-AS20473
+nic-hdl:        VHLF2-RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

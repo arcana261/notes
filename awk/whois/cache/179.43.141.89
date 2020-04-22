@@ -1,0 +1,52 @@
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN, IPv4 or IPv6 queries
+ 
+% LACNIC resource: whois.lacnic.net
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query, you agree to use this data
+%  only for lawful purposes.
+%  2020-04-21 21:13:12 (-03 -03:00)
+
+inetnum:     179.43.128/18
+status:      allocated
+aut-num:     AS51852
+owner:       PRIVATE LAYER INC
+ownerid:     PA-PLIN-LACNIC
+responsible: Milciades Garcia
+address:     Torres De Las Americas, Torre C, 0, Suite 1404, Floor 14
+address:     00000 - Panama - 
+country:     PA
+phone:       +41 43 5082295 []
+owner-c:     MIG23
+tech-c:      MIG23
+abuse-c:     MIG23
+inetrev:     179.43.141/24
+nserver:     DNS01.PRIVATELAYER.COM  
+nsstat:      20200420 AA
+nslastaa:    20200420
+nserver:     DNS02.PRIVATELAYER.COM  
+nsstat:      20200420 AA
+nslastaa:    20200420
+created:     20131112
+changed:     20151101
+
+nic-hdl:     MIG23
+person:      Milciades Garcia
+e-mail:      support@PRIVATELAYER.COM
+address:     Edif. Ocean Business Plaza, 1404, Marbella
+address:     00000 - Panama City - 
+country:     PA
+phone:       +41 43 5082295 []
+created:     20151023
+changed:     20151023
+
+% whois.lacnic.net accepts only direct match queries.
+% Types of queries are: POCs, ownerid, CIDR blocks, IP
+% and AS numbers.
+

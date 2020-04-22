@@ -1,0 +1,60 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.80.102.0 - 185.80.103.255'
+
+% Abuse contact for '185.80.102.0 - 185.80.103.255' is 'e.saedi@tci.ir'
+
+inetnum:        185.80.102.0 - 185.80.103.255
+netname:        TCIMRK
+country:        IR
+admin-c:        sm13577-RIPE
+tech-c:         sm13577-RIPE
+org:            ORG-TCOM3-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2017-08-29T09:53:14Z
+last-modified:  2017-08-29T09:53:14Z
+source:         RIPE
+
+organisation:   ORG-TCOM3-RIPE
+org-name:       Telecommunication Company of Markazi
+org-type:       other
+address:        Arak - Telecommunication Company of Markazi
+abuse-c:        AC26829-RIPE
+admin-c:        NA6221-RIPE
+tech-c:         DP14877-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-04-08T13:18:03Z
+last-modified:  2019-03-03T08:35:07Z
+source:         RIPE # Filtered
+
+person:         soroush mazdak
+address:        telecommunication company of Markazi
+phone:          +988632212290
+phone:          +989355295810
+nic-hdl:        sm13577-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-07-28T10:48:19Z
+last-modified:  2014-12-03T22:43:03Z
+source:         RIPE
+
+% Information related to '185.80.100.0/22AS58224'
+
+route:          185.80.100.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2017-08-12T06:23:50Z
+last-modified:  2018-06-24T07:46:46Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

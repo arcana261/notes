@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.183.103.0 - 5.183.103.255'
+
+% Abuse contact for '5.183.103.0 - 5.183.103.255' is 'abuse@digital-vm.com'
+
+inetnum:        5.183.103.0 - 5.183.103.255
+netname:        DVS-Madrid
+descr:          Digital Virtualisation Solutions Madrid
+org:            ORG-DVS17-RIPE
+country:        ES
+geoloc:         40.4378698 -3.8196192
+admin-c:        DVS276-RIPE
+tech-c:         DVS276-RIPE
+status:         ASSIGNED PA
+mnt-by:         DVS-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+created:        2019-04-12T15:24:17Z
+last-modified:  2019-04-15T15:34:48Z
+source:         RIPE
+
+organisation:   ORG-DVS17-RIPE
+org-name:       Digital Virtualisation Solutions Madrid
+org-type:       OTHER
+address:        Calle Albasanz, 71
+address:        28037, Madrid, Spain
+abuse-c:        DVS276-RIPE
+mnt-ref:        DVS-MNT
+mnt-by:         DVS-MNT
+created:        2019-04-15T15:33:27Z
+last-modified:  2019-04-15T15:33:27Z
+source:         RIPE # Filtered
+
+role:           DVS Madrid abuse contact
+abuse-mailbox:  abuse@digital-vm.com
+address:        Calle Albasanz, 71
+address:        28037, Madrid, Spain
+nic-hdl:        DVS276-RIPE
+mnt-by:         DVS-MNT
+created:        2019-04-15T15:31:40Z
+last-modified:  2019-04-15T15:31:40Z
+source:         RIPE # Filtered
+
+% Information related to '5.183.103.0/24AS9009'
+
+route:          5.183.103.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-04-10T12:18:24Z
+last-modified:  2019-04-10T12:18:24Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

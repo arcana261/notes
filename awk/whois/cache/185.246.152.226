@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.246.152.0 - 185.246.152.255'
+
+% Abuse contact for '185.246.152.0 - 185.246.152.255' is 'abuse@melbicom.net'
+
+inetnum:        185.246.152.0 - 185.246.152.255
+netname:        MELBICOM-NL
+country:        NL
+org:            ORG-MU30-RIPE
+descr:          Melbicom infrastructure
+descr:          Colocation block
+admin-c:        MCR89-RIPE
+tech-c:         MCR89-RIPE
+mnt-by:         MELBICOM-MNT
+status:         ASSIGNED PA
+created:        2018-04-12T09:49:01Z
+last-modified:  2018-04-12T09:49:01Z
+source:         RIPE
+
+organisation:   ORG-MU30-RIPE
+org-name:       Melbikomas UAB
+org-type:       LIR
+address:        Svitrigailos g. 11B
+address:        LT-03228
+address:        Vilnius
+address:        LITHUANIA
+phone:          +370 (5) 235-17-27
+admin-c:        MCR89-RIPE
+tech-c:         MCR89-RIPE
+abuse-c:        AR34659-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MELBICOM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MELBICOM-MNT
+created:        2015-12-14T08:56:33Z
+last-modified:  2020-03-18T16:40:18Z
+source:         RIPE # Filtered
+
+person:         Melbicom NCC
+address:        Svitrigailos g. 11B
+address:        LT-03228
+address:        Vilnius
+address:        LITHUANIA
+phone:          +370 (5) 235-17-27
+nic-hdl:        MCR89-RIPE
+mnt-by:         MELBICOM-MNT
+created:        2015-12-14T08:56:32Z
+last-modified:  2016-02-11T19:23:19Z
+source:         RIPE # Filtered
+
+% Information related to '185.246.152.0/24AS56630'
+
+route:          185.246.152.0/24
+descr:          Melbicom route
+origin:         AS56630
+mnt-by:         MELBICOM-MNT
+created:        2018-02-21T14:15:05Z
+last-modified:  2018-02-21T14:15:05Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

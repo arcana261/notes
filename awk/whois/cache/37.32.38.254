@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.32.32.0 - 37.32.39.255'
+
+% Abuse contact for '37.32.32.0 - 37.32.39.255' is 'ripe-abuse@0-1.ir'
+
+inetnum:        37.32.32.0 - 37.32.39.255
+netname:        IR-SEFROYEKPARDAZENG-20120102
+country:        IR
+org:            ORG-SPEC3-RIPE
+admin-c:        SY88-RIPE
+tech-c:         AS38447-RIPE
+status:         ALLOCATED PA
+mnt-by:         MNT-SHAHRAD
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2020-01-16T09:22:52Z
+last-modified:  2020-01-16T09:22:52Z
+source:         RIPE
+
+organisation:   ORG-SPEC3-RIPE
+org-name:       Sefroyek Pardaz Engineering Co. LTD
+org-type:       LIR
+address:        Unit 2 Number 8 Arian Building Paniz Alley Vafa Azar st
+address:        1481853861
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+abuse-c:        SPAR6-RIPE
+admin-c:        SY88-RIPE
+tech-c:         AS38447-RIPE
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-SHAHRAD
+created:        2016-09-20T12:52:38Z
+last-modified:  2018-12-02T13:31:00Z
+source:         RIPE # Filtered
+phone:          +989121221710
+fax-no:         +982148658201
+mnt-ref:        MNT-SHAHRAD
+
+person:         Amir Sabet
+address:        Unit 2 Number 8 Arian Building Paniz Alley Vafa Azar st
+phone:          +989121321312
+phone:          +982148658110
+nic-hdl:        AS38447-RIPE
+mnt-by:         MNT-AMIRSABET
+created:        2016-11-26T09:51:36Z
+last-modified:  2019-03-12T07:49:48Z
+source:         RIPE # Filtered
+
+person:         Shahrad Yousefizadeh
+address:        Ferdos Blvd. Tehran - Iran
+phone:          +989121221710
+fax-no:         +982144083160
+nic-hdl:        SY88-RIPE
+mnt-by:         MNT-SHAHRAD
+created:        2005-03-06T17:50:36Z
+last-modified:  2018-11-10T07:28:05Z
+source:         RIPE # Filtered
+
+% Information related to '37.32.36.0/22AS44285'
+
+route:          37.32.36.0/22
+origin:         AS44285
+mnt-by:         MNT-SHAHRAD
+mnt-by:         MNT-AMIRSABET
+created:        2020-03-05T07:49:12Z
+last-modified:  2020-03-05T07:49:12Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

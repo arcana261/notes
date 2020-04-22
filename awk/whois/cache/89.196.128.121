@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.196.128.0 - 89.196.255.255'
+
+% Abuse contact for '89.196.128.0 - 89.196.255.255' is 'abuse@mci.ir'
+
+inetnum:        89.196.128.0 - 89.196.255.255
+netname:        MCCI
+descr:          Mobile Communication Company of Iran
+country:        IR
+admin-c:        RL7844-RIPE
+tech-c:         RL7844-RIPE
+status:         ASSIGNED PA
+mnt-by:         MCCI-MNT
+created:        2014-06-02T03:38:11Z
+last-modified:  2018-02-24T11:27:42Z
+source:         RIPE
+
+person:         Reza Tahan Latibari
+address:        Hamrah Tower - Kordestan High way cross Vanak st.Tehran Iran
+phone:          +98 21 88640934
+nic-hdl:        RL7844-RIPE
+mnt-by:         MCCI-MNT
+created:        2012-09-05T13:41:38Z
+last-modified:  2012-09-05T13:41:39Z
+source:         RIPE # Filtered
+
+% Information related to '89.196.128.0/17AS197207'
+
+route:          89.196.128.0/17
+descr:          new LTE service
+origin:         AS197207
+mnt-by:         MCCI-MNT
+created:        2014-05-06T06:28:48Z
+last-modified:  2014-05-06T06:28:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

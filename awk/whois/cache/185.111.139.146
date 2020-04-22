@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.111.139.0 - 185.111.139.255'
+
+% Abuse contact for '185.111.139.0 - 185.111.139.255' is 'abuse@pj24.ir'
+
+inetnum:        185.111.139.0 - 185.111.139.255
+netname:        PJ-DSL-Zobar
+country:        IR
+admin-c:        HK4577-RIPE
+tech-c:         HK4577-RIPE
+status:         ASSIGNED PA
+mnt-by:         HK355-MNT
+created:        2016-10-08T05:51:33Z
+last-modified:  2016-10-08T05:51:33Z
+source:         RIPE
+
+person:         Hosein kouzehgar
+address:        Pishgaman Building - Yadegar e Imam St, Imam Blv, Boushehr
+phone:          +98 77 33563810
+fax-no:         +98 77 33563810
+phone:          +98 917 371 1721
+nic-hdl:        HK4577-RIPE
+mnt-by:         HK355-MNT
+created:        2013-11-06T10:56:47Z
+last-modified:  2018-10-11T13:12:51Z
+source:         RIPE
+
+% Information related to '185.111.136.0/22as201540'
+
+route:          185.111.136.0/22
+descr:          Pishgaman Tose Fannavari Ettelaat Va Ertebatat Jonoub
+origin:         as201540
+mnt-by:         HK355-mnt
+created:        2015-11-03T11:39:45Z
+last-modified:  2015-11-03T11:39:45Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

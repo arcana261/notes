@@ -1,0 +1,143 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       192.54.54.0 - 192.54.80.255
+CIDR:           192.54.64.0/20, 192.54.54.0/23, 192.54.56.0/21, 192.54.80.0/24
+NetName:        RIPE-ERX-192-54-54-0
+NetHandle:      NET-192-54-54-0-1
+Parent:         NET192 (NET-192-0-0-0-0)
+NetType:        Early Registrations, Transferred to RIPE NCC
+OriginAS:       
+Organization:   RIPE Network Coordination Centre (RIPE)
+RegDate:        2005-02-28
+Updated:        2005-02-28
+Comment:        These addresses have been further assigned to users in
+Comment:        the RIPE NCC region.  Contact information can be found in
+Comment:        the RIPE database at http://www.ripe.net/whois
+Ref:            https://rdap.arin.net/registry/ip/192.54.54.0
+
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+ResourceLink:  whois.ripe.net
+
+
+OrgName:        RIPE Network Coordination Centre
+OrgId:          RIPE
+Address:        P.O. Box 10096
+City:           Amsterdam
+StateProv:      
+PostalCode:     1001EB
+Country:        NL
+RegDate:        
+Updated:        2013-07-29
+Ref:            https://rdap.arin.net/registry/entity/RIPE
+
+ReferralServer:  whois://whois.ripe.net
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+
+OrgAbuseHandle: ABUSE3850-ARIN
+OrgAbuseName:   Abuse Contact
+OrgAbusePhone:  +31205354444 
+OrgAbuseEmail:  abuse@ripe.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3850-ARIN
+
+OrgTechHandle: RNO29-ARIN
+OrgTechName:   RIPE NCC Operations
+OrgTechPhone:  +31 20 535 4444 
+OrgTechEmail:  hostmaster@ripe.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/RNO29-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.ripe.net.
+
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '192.54.57.0 - 192.54.57.255'
+
+% Abuse contact for '192.54.57.0 - 192.54.57.255' is 'abuse@thinkhuge.net'
+
+inetnum:        192.54.57.0 - 192.54.57.255
+netname:        Think-Huge-Ltd
+descr:          Think Huge Ltd Amsterdam
+org:            ORG-THL20-RIPE
+country:        NL
+geoloc:         52.3745 4.8285
+admin-c:        WT1475-RIPE
+tech-c:         WT1475-RIPE
+mnt-routes:     GLOBALAXS-MNT
+status:         ASSIGNED PA
+mnt-by:         mnt-uk-think-jan191-1
+created:        2019-05-06T14:53:29Z
+last-modified:  2019-05-06T14:57:11Z
+source:         RIPE
+
+organisation:   ORG-THL20-RIPE
+org-name:       Think Huge Ltd
+org-type:       LIR
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+admin-c:        WT1475-RIPE
+tech-c:         WT1475-RIPE
+abuse-c:        AR50194-RIPE
+mnt-ref:        mnt-uk-think-dec01-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-think-dec01-1
+created:        2019-01-08T12:49:41Z
+last-modified:  2019-01-08T12:49:43Z
+source:         RIPE # Filtered
+phone:          +447415953982
+
+person:         Will Thomas
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+phone:          +447415953982
+nic-hdl:        WT1475-RIPE
+mnt-by:         mnt-uk-think-dec01-1
+created:        2019-01-08T12:49:41Z
+last-modified:  2019-01-08T12:49:41Z
+source:         RIPE
+
+% Information related to '192.54.57.0/24AS9009'
+
+route:          192.54.57.0/24
+descr:          Think Huge Ltd Amsterdam
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-01-24T09:34:18Z
+last-modified:  2019-01-24T10:08:54Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

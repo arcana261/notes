@@ -1,0 +1,57 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '27.122.12.0 - 27.122.12.255'
+
+% Abuse contact for '27.122.12.0 - 27.122.12.255' is 'abuse@pacswitch.com'
+
+inetnum:        27.122.12.0 - 27.122.12.255
+netname:        MIHK-HK
+descr:          Pacswitch Globe Telecom Limited
+country:        HK
+admin-c:        MNA11-AP
+tech-c:         MNA11-AP
+status:         ASSIGNED NON-PORTABLE
+mnt-by:         MAINT-PSWITCH-HK
+mnt-irt:        IRT-PSWITCH-HK
+last-modified:  2018-07-24T04:21:02Z
+source:         APNIC
+
+irt:            IRT-PSWITCH-HK
+address:        Unit 827 8/F Corporation Park 11 On Lai Street Shatin NT Hong Kong
+e-mail:         noc@pacswitch.com
+abuse-mailbox:  abuse@pacswitch.com
+admin-c:        PGTL1-AP
+tech-c:         PGTL1-AP
+auth:           # Filtered
+remarks:        noc@pacswitch.com was validated on 2019-11-14
+remarks:        abuse@pacswitch.com is invalid
+mnt-by:         MAINT-PSWITCH-HK
+last-modified:  2019-11-27T13:24:13Z
+source:         APNIC
+
+role:           MIHK - network administrator
+address:        Unit 827 8/F Corporation Park 11 On Lai Street Shatin NT Hong Kong
+country:        HK
+phone:          +852 21570550
+e-mail:         abuse@pshk.co
+admin-c:        MNA11-AP
+tech-c:         MNA11-AP
+nic-hdl:        MNA11-AP
+mnt-by:         MAINT-MIHK-HK
+abuse-mailbox:  abuse@pshk.co
+last-modified:  2017-01-18T12:14:23Z
+source:         APNIC
+
+% Information related to '27.122.12.0/24AS55536'
+
+route:          27.122.12.0/24
+descr:          Pacswitch
+origin:         AS55536
+mnt-by:         MAINT-PSWITCH-HK
+last-modified:  2017-01-19T04:50:35Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK4)
+
+

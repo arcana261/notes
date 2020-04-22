@@ -1,0 +1,58 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '94.241.136.0 - 94.241.143.255'
+
+% Abuse contact for '94.241.136.0 - 94.241.143.255' is 'abuse@cyber.ir'
+
+inetnum:        94.241.136.0 - 94.241.143.255
+netname:        AtrtinNetwork
+descr:          Fannavaran Etelaat & Ertebatat Atrin
+country:        IR
+admin-c:        AM39763-RIPE
+tech-c:         AM39763-RIPE
+status:         ASSIGNED PA
+mnt-routes:     ir-nakhljonoob-1-mnt
+mnt-routes:     MNT-takallou
+mnt-lower:      ir-nakhljonoob-1-mnt
+mnt-lower:      MNT-takallou
+mnt-domains:    ir-nakhljonoob-1-mnt
+mnt-domains:    MNT-takallou
+mnt-by:         Cyber-MNT
+created:        2017-09-12T06:31:30Z
+last-modified:  2017-11-15T15:25:09Z
+source:         RIPE
+
+person:         Amin Malekghasemi
+address:        Floor 2-nakhl building-corner of 32th motahari street
+address:        7617699755
+address:        Kerman
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989131407063
+nic-hdl:        AM39763-RIPE
+mnt-by:         ir-nakhljonoob-1-mnt
+created:        2016-08-22T12:09:04Z
+last-modified:  2018-01-30T10:59:52Z
+source:         RIPE
+
+% Information related to '94.241.136.0/21AS39650'
+
+route:          94.241.136.0/21
+origin:         AS39650
+mnt-by:         ir-atrin-1-mnt
+mnt-by:         ir-nakhljonoob-1-mnt
+mnt-by:         ir-takallou-1-mnt
+mnt-by:         MNT-takallou
+created:        2017-11-16T13:58:48Z
+last-modified:  2017-11-16T14:01:01Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

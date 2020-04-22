@@ -1,0 +1,51 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '83.147.240.0 - 83.147.255.255'
+
+% Abuse contact for '83.147.240.0 - 83.147.255.255' is 'abuse@cyber.ir'
+
+inetnum:        83.147.240.0 - 83.147.255.255
+netname:        Cybertech
+country:        IR
+admin-c:        FF8300-RIPE
+tech-c:         FF8300-RIPE
+status:         ASSIGNED PA
+mnt-domains:    Cyber-MNT
+mnt-routes:     Cyber-MNT
+mnt-lower:      Cyber-MNT
+mnt-by:         Cyber-MNT
+created:        2016-11-21T12:16:27Z
+last-modified:  2020-04-19T07:04:27Z
+source:         RIPE
+
+person:         Farhad Farjadmanesh
+address:        No.33, West Sarv, Sa'adat Abad.
+address:        1998757335
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 21 22373270
+nic-hdl:        FF8300-RIPE
+mnt-by:         Cyber-MNT
+created:        2015-08-18T14:20:52Z
+last-modified:  2018-01-11T16:21:53Z
+source:         RIPE
+
+% Information related to '83.147.244.0/22AS56466'
+
+route:          83.147.244.0/22
+origin:         AS56466
+mnt-by:         MNT-ZENTEX
+created:        2017-03-11T21:33:44Z
+last-modified:  2017-03-11T21:33:44Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

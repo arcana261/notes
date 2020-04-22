@@ -1,0 +1,79 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.227.64.0 - 185.227.67.255'
+
+% Abuse contact for '185.227.64.0 - 185.227.67.255' is 'zamanisp.net@gmail.com'
+
+inetnum:        185.227.64.0 - 185.227.67.255
+netname:        IR-SAMSYSTEM-20171023
+country:        IR
+org:            ORG-SSKC2-RIPE
+admin-c:        SC19832-RIPE
+tech-c:         SC19832-RIPE
+mnt-routes:     ir-afrarasa-1-mnt
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-samsystem-1-mnt
+created:        2017-10-23T08:51:30Z
+last-modified:  2018-06-26T07:47:03Z
+source:         RIPE
+
+organisation:   ORG-SSKC2-RIPE
+org-name:       Sam System Kar Company LTD
+org-type:       LIR
+address:        fakhriye ave oghaf Complex zamanisp Unit
+address:        6571915971
+address:        malayer
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        SC19832-RIPE
+tech-c:         SC19832-RIPE
+abuse-c:        AR43372-RIPE
+mnt-ref:        ir-samsystem-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-samsystem-1-mnt
+created:        2017-10-10T14:56:23Z
+last-modified:  2017-10-11T07:13:32Z
+source:         RIPE # Filtered
+phone:          +98 8132242333
+
+person:         Masoud zamani
+address:        fakhriye ave oghaf Complex zamanisp Unit
+address:        6571915971
+address:        malayer
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 8132242333
+nic-hdl:        SC19832-RIPE
+mnt-by:         ir-samsystem-1-mnt
+created:        2017-10-10T14:56:22Z
+last-modified:  2017-10-21T10:50:47Z
+source:         RIPE
+
+% Information related to '185.227.64.0/22AS202391'
+
+route:          185.227.64.0/22
+origin:         AS202391
+mnt-by:         ir-samsystem-1-mnt
+mnt-by:         ir-afrarasa-1-mnt
+created:        2019-03-18T13:31:22Z
+last-modified:  2019-03-18T13:31:22Z
+source:         RIPE
+
+% Information related to '185.227.64.0/22AS205061'
+
+route:          185.227.64.0/22
+origin:         AS205061
+mnt-by:         ir-samsystem-1-mnt
+created:        2017-11-22T08:38:38Z
+last-modified:  2017-11-22T08:38:38Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

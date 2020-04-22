@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.39.8.0 - 185.39.11.255'
+
+% Abuse contact for '185.39.8.0 - 185.39.11.255' is 'abuse@networkdedicated.com'
+
+inetnum:        185.39.8.0 - 185.39.11.255
+netname:        CO-NETWORKDEDICATED-20131028
+country:        CH
+org:            ORG-NDS7-RIPE
+admin-c:        MC26729-RIPE
+tech-c:         MC26729-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-lower:      MC72397-MNT
+mnt-routes:     MC72397-MNT
+created:        2013-10-28T08:56:01Z
+last-modified:  2016-04-14T07:54:03Z
+source:         RIPE # Filtered
+
+organisation:   ORG-NDS7-RIPE
+org-name:       Network Dedicated SAS
+org-type:       LIR
+address:        Carrera 96 No 10 - 28 Oficina 201
+address:        00000
+address:        Bogota
+address:        COLOMBIA
+phone:          +573183761255
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MC72397-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+abuse-c:        AD11260-RIPE
+created:        2013-10-21T12:58:01Z
+last-modified:  2016-10-06T15:36:51Z
+source:         RIPE # Filtered
+
+person:         Martin Callahan
+address:        Carrera 96 No 10 - 28 Oficina 201
+address:        Bogota Colombia
+phone:          +57 647-460-1100
+nic-hdl:        MC26729-RIPE
+mnt-by:         MC72397-MNT
+created:        2013-10-23T10:15:22Z
+last-modified:  2013-10-23T10:15:23Z
+source:         RIPE # Filtered
+
+% Information related to '185.39.8.0/22AS62355'
+
+route:          185.39.8.0/22
+descr:          Main Route
+origin:         AS62355
+mnt-by:         MC72397-MNT
+created:        2014-05-28T19:37:49Z
+last-modified:  2014-05-28T19:37:49Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

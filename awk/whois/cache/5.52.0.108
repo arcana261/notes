@@ -1,0 +1,57 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.52.0.0 - 5.52.255.255'
+
+% Abuse contact for '5.52.0.0 - 5.52.255.255' is 'abuse@mci.ir'
+
+inetnum:        5.52.0.0 - 5.52.255.255
+netname:        IR-MCI-20120525
+country:        IR
+org:            ORG-MCCo2-RIPE
+admin-c:        RL7844-RIPE
+tech-c:         RL7844-RIPE
+status:         ALLOCATED PA
+mnt-by:         MCCI-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2019-03-04T10:27:57Z
+last-modified:  2019-03-04T10:27:57Z
+source:         RIPE
+
+organisation:   ORG-MCCo2-RIPE
+org-name:       Mobile Communication Company of Iran PLC
+org-type:       LIR
+address:        Hamrah Tower - Kordestan High way cross Vanak st.
+address:        1991954
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982188640934
+fax-no:         +982188640934
+admin-c:        RL7844-RIPE
+abuse-c:        MA14429-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MCCI-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MCCI-MNT
+created:        2012-09-05T08:49:58Z
+last-modified:  2016-05-24T05:56:33Z
+source:         RIPE # Filtered
+
+person:         Reza Tahan Latibari
+address:        Hamrah Tower - Kordestan High way cross Vanak st.Tehran Iran
+phone:          +98 21 88640934
+nic-hdl:        RL7844-RIPE
+mnt-by:         MCCI-MNT
+created:        2012-09-05T13:41:38Z
+last-modified:  2012-09-05T13:41:39Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

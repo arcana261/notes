@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.93.219.0 - 45.93.219.255'
+
+% Abuse contact for '45.93.219.0 - 45.93.219.255' is 'abuse@thinkhuge.net'
+
+inetnum:        45.93.219.0 - 45.93.219.255
+netname:        Think-Huge-Ltd
+descr:          Think Huge London
+org:            ORG-THL17-RIPE
+country:        GB
+geoloc:         51.5285582 -0.2416799
+admin-c:        WT1470-RIPE
+tech-c:         WT1470-RIPE
+mnt-routes:     GLOBALAXS-MNT
+status:         ASSIGNED PA
+mnt-by:         mnt-uk-think-jan191-1
+created:        2019-07-04T19:24:54Z
+last-modified:  2019-07-04T19:25:46Z
+source:         RIPE
+
+organisation:   ORG-THL17-RIPE
+org-name:       Think Huge Ltd
+org-type:       LIR
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+admin-c:        WT1470-RIPE
+tech-c:         WT1470-RIPE
+abuse-c:        AR49015-RIPE
+mnt-ref:        mnt-uk-think-oct-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-think-oct-1
+created:        2018-10-30T15:13:49Z
+last-modified:  2018-10-30T15:13:50Z
+source:         RIPE # Filtered
+phone:          +447415953982
+
+person:         WIll Thomas
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+phone:          +447415953982
+nic-hdl:        WT1470-RIPE
+mnt-by:         mnt-uk-think-oct-1
+created:        2018-10-30T15:13:48Z
+last-modified:  2018-10-30T15:13:49Z
+source:         RIPE
+
+% Information related to '45.93.219.0/24AS9009'
+
+route:          45.93.219.0/24
+descr:          M247 Customer
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-07-04T19:31:57Z
+last-modified:  2019-07-04T19:31:57Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

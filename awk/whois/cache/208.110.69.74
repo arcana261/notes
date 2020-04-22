@@ -1,0 +1,157 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       208.110.64.0 - 208.110.95.255
+CIDR:           208.110.64.0/19
+NetName:        WII-NET-208-110
+NetHandle:      NET-208-110-64-0-1
+Parent:         NET208 (NET-208-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS32097
+Organization:   WholeSale Internet, Inc. (WHOLE-125)
+RegDate:        2006-03-17
+Updated:        2018-04-10
+Comment:        http://www.wholesaleinternet.net
+Ref:            https://rdap.arin.net/registry/ip/208.110.64.0
+
+
+OrgName:        WholeSale Internet, Inc.
+OrgId:          WHOLE-125
+Address:        324 E. 11th St.
+Address:        Suite 1000
+City:           Kansas City
+StateProv:      MO
+PostalCode:     64106
+Country:        US
+RegDate:        2003-09-24
+Updated:        2019-07-22
+Comment:        http://www.wholesaleinternet.net
+Ref:            https://rdap.arin.net/registry/entity/WHOLE-125
+
+
+OrgNOCHandle: NETWO1112-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-816-256-3031 
+OrgNOCEmail:  admin@wholesaleinternet.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO1112-ARIN
+
+OrgTechHandle: MULLI188-ARIN
+OrgTechName:   Mulligan, Brandon 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  brandon@wholesaleinternet.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/MULLI188-ARIN
+
+OrgTechHandle: AWE13-ARIN
+OrgTechName:   Wendel, Aaron 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  aaron@wholesaleinternet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/AWE13-ARIN
+
+OrgRoutingHandle: MULLI188-ARIN
+OrgRoutingName:   Mulligan, Brandon 
+OrgRoutingPhone:  +1-816-256-3031 
+OrgRoutingEmail:  brandon@wholesaleinternet.net
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/MULLI188-ARIN
+
+OrgAbuseHandle: NETWO1111-ARIN
+OrgAbuseName:   Network Security
+OrgAbusePhone:  +1-816-256-3031 
+OrgAbuseEmail:  abuse@wholesaleinternet.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NETWO1111-ARIN
+
+OrgTechHandle: REGIO-ARIN
+OrgTechName:   Region, Bob 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  bob@wholesaleinternet.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/REGIO-ARIN
+
+# end
+
+
+# start
+
+NetRange:       208.110.69.72 - 208.110.69.79
+CIDR:           208.110.69.72/29
+NetName:        DS-208-110-69-73-79
+NetHandle:      NET-208-110-69-72-1
+Parent:         WII-NET-208-110 (NET-208-110-64-0-1)
+NetType:        Reassigned
+OriginAS:       AS32097
+Customer:       Mallah, Ben (C07358635)
+RegDate:        2019-05-25
+Updated:        2019-05-25
+Ref:            https://rdap.arin.net/registry/ip/208.110.69.72
+
+
+CustName:       Mallah, Ben
+Address:        201 E. 16th st
+City:           North Kansas City
+StateProv:      MO
+PostalCode:     64116
+Country:        US
+RegDate:        2019-05-25
+Updated:        2019-05-25
+Ref:            https://rdap.arin.net/registry/entity/C07358635
+
+OrgNOCHandle: NETWO1112-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-816-256-3031 
+OrgNOCEmail:  admin@wholesaleinternet.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO1112-ARIN
+
+OrgTechHandle: MULLI188-ARIN
+OrgTechName:   Mulligan, Brandon 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  brandon@wholesaleinternet.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/MULLI188-ARIN
+
+OrgTechHandle: AWE13-ARIN
+OrgTechName:   Wendel, Aaron 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  aaron@wholesaleinternet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/AWE13-ARIN
+
+OrgRoutingHandle: MULLI188-ARIN
+OrgRoutingName:   Mulligan, Brandon 
+OrgRoutingPhone:  +1-816-256-3031 
+OrgRoutingEmail:  brandon@wholesaleinternet.net
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/MULLI188-ARIN
+
+OrgAbuseHandle: NETWO1111-ARIN
+OrgAbuseName:   Network Security
+OrgAbusePhone:  +1-816-256-3031 
+OrgAbuseEmail:  abuse@wholesaleinternet.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NETWO1111-ARIN
+
+OrgTechHandle: REGIO-ARIN
+OrgTechName:   Region, Bob 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  bob@wholesaleinternet.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/REGIO-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

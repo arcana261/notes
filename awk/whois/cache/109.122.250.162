@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '109.122.250.0 - 109.122.251.255'
+
+% Abuse contact for '109.122.250.0 - 109.122.251.255' is 'abuse@skydsl.ir'
+
+inetnum:        109.122.250.0 - 109.122.251.255
+netname:        IR-Badrrayan
+descr:          Badr Rayan Jonoub .Co [ Servco License :100-95-19 ]
+country:        IR
+admin-c:        RRK5-RIPE
+tech-c:         RRK5-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         MNT-MIHAN
+mnt-by:         mihan
+mnt-by:         MNT-Hamed
+mnt-by:         HAMED
+created:        2019-08-08T08:32:10Z
+last-modified:  2019-11-24T13:29:57Z
+source:         RIPE
+
+person:         Reza Raeisi
+address:        No.1, Saeid mal, Infrom of citypark, Imam st, Sarbandar,Khozestan, IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 916 151 5900
+nic-hdl:        RRK5-RIPE
+mnt-by:         MNT-RAEISI-RIPEMNT
+created:        2011-03-03T09:39:17Z
+last-modified:  2015-12-07T09:04:50Z
+source:         RIPE
+
+% Information related to '109.122.250.0/23AS56503'
+
+route:          109.122.250.0/23
+origin:         AS56503
+mnt-by:         MNT-MIHAN
+mnt-by:         mihan
+mnt-by:         MNT-Hamed
+mnt-by:         HAMED
+created:        2019-08-08T08:33:36Z
+last-modified:  2019-08-08T08:33:36Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

@@ -1,0 +1,43 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.139.8.0 - 37.139.15.255'
+
+% Abuse contact for '37.139.8.0 - 37.139.15.255' is 'abuse@digitalocean.com'
+
+inetnum:        37.139.8.0 - 37.139.15.255
+abuse-c:        AD10778-RIPE
+netname:        DIGITALOCEAN
+descr:          DigitalOcean
+country:        NL
+admin-c:        PT7353-RIPE
+tech-c:         PT7353-RIPE
+status:         ASSIGNED PA
+mnt-by:         digitalocean
+mnt-lower:      digitalocean
+mnt-routes:     digitalocean
+created:        2013-07-11T19:01:58Z
+last-modified:  2020-04-01T22:18:40Z
+source:         RIPE
+
+person:         Network Operations
+address:        101 Ave of the Americas, 10th Floor
+address:        New York, NY, 10013
+address:        United States of America
+phone:          +13478756044
+nic-hdl:        PT7353-RIPE
+mnt-by:         digitalocean
+created:        2015-03-11T16:37:07Z
+last-modified:  2019-04-17T14:37:51Z
+source:         RIPE # Filtered
+org:            ORG-DOI2-RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

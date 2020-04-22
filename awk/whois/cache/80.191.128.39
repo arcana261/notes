@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '80.191.128.0 - 80.191.128.255'
+
+% Abuse contact for '80.191.128.0 - 80.191.128.255' is 'abuse@ito.gov.ir'
+
+inetnum:        80.191.128.0 - 80.191.128.255
+netname:        ADSLSTATIC
+descr:          TCE ADSL Static
+country:        IR
+admin-c:        JS11196-RIPE
+tech-c:         JS11196-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2012-02-28T09:29:50Z
+last-modified:  2012-02-28T09:29:50Z
+source:         RIPE
+
+person:         Jamaleddin Soltanzadeh
+address:        Valiasr St,Center Of Valiasr,Esfahan,Iran
+phone:          +98 311 228 99 99
+fax-no:         +98 311 228 85 85
+nic-hdl:        JS11196-RIPE
+mnt-by:         AS12880-MNT
+created:        2012-02-28T09:29:50Z
+last-modified:  2012-02-28T09:29:50Z
+source:         RIPE # Filtered
+
+% Information related to '80.191.128.0/20AS12880'
+
+route:          80.191.128.0/20
+descr:          DCI-Route
+descr:          Esfahan
+origin:         AS12880
+mnt-by:         AS12880-MNT
+created:        2005-11-01T10:28:31Z
+last-modified:  2018-10-17T10:41:02Z
+source:         RIPE
+
+% Information related to '80.191.128.0/20AS58085'
+
+route:          80.191.128.0/20
+origin:         AS58085
+mnt-by:         MNT-Mah
+mnt-by:         MNT-KALAVANI
+created:        2017-01-14T08:16:27Z
+last-modified:  2017-01-14T08:16:27Z
+source:         RIPE
+
+% Information related to '80.191.128.0/20AS58224'
+
+route:          80.191.128.0/20
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-10-17T10:42:30Z
+last-modified:  2018-10-17T10:42:30Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,45 @@
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN, IPv4 or IPv6 queries
+ 
+% Brazilian resource: whois.registro.br
+
+
+% Copyright (c) Nic.br
+%  The use of the data below is only permitted as described in
+%  full by the terms of use at https://registro.br/termo/en.html ,
+%  being prohibited its distribution, commercialization or
+%  reproduction, in particular, to use it for advertising or
+%  any similar purpose.
+%  2020-04-21T20:38:32-03:00
+
+inetnum:     177.54.152.0/21
+aut-num:     AS262287
+abuse-c:     MAADO4
+owner:       Maxihost LTDA
+ownerid:     06.043.809/0001-87
+responsible: Guilherme Soubihe Alberto
+owner-c:     MAADO4
+tech-c:      MAADO4
+inetrev:     177.54.157.0/24
+nserver:     ns1.maxihost.com.br
+nsstat:      20200421 AA
+nslastaa:    20200421
+nserver:     ns2.maxihost.com.br
+nsstat:      20200421 AA
+nslastaa:    20200421
+created:     20130528
+changed:     20130528
+
+nic-hdl-br:  MAADO4
+person:      MaxiHost - Administração de domínios
+created:     20070111
+changed:     20200130
+
+% Security and mail abuse issues should also be addressed to
+% cert.br, http://www.cert.br/ , respectivelly to cert@cert.br
+% and mail-abuse@cert.br
+%
+% whois.registro.br accepts only direct match queries. Types
+% of queries are: domain (.br), registrant (tax ID), ticket,
+% provider, contact handle (ID), CIDR block, IP and ASN.

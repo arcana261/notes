@@ -1,0 +1,79 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.131.124.0 - 185.131.127.255'
+
+% Abuse contact for '185.131.124.0 - 185.131.127.255' is 'me.khosravi@tci.ir'
+
+inetnum:        185.131.124.0 - 185.131.127.255
+org:            ORG-TCOA3-RIPE
+descr:          Telecommunication Company of Ardabil
+netname:        ARDEBIL
+country:        IR
+admin-c:        NA6196-RIPE
+tech-c:         NA6334-RIPE
+tech-c:         DP14858-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2019-11-25T07:28:45Z
+last-modified:  2019-11-25T07:28:45Z
+source:         RIPE
+
+organisation:   ORG-TCOA3-RIPE
+org-name:       Telecommunication Company of Ardebil
+org-type:       other
+address:        Ardebil Telecom
+abuse-c:        AC26984-RIPE
+admin-c:        NA6196-RIPE
+tech-c:         DP14858-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-12T11:19:03Z
+last-modified:  2019-02-24T13:05:36Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Ardabil)
+address:        Ardabil - Telecommunication Company of Ardabil
+admin-c:        AS42246-RIPE
+nic-hdl:        DP14858-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T12:44:45Z
+last-modified:  2019-02-24T12:44:45Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Ardabil)
+address:        Ardabil - Telecommunication Company of Ardabil
+admin-c:        AE5485-RIPE
+nic-hdl:        NA6196-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T12:40:16Z
+last-modified:  2019-02-24T12:40:16Z
+source:         RIPE # Filtered
+
+role:           NOC (Ardabil)
+address:        Ardabil - Telecommunication Company of Ardabil
+admin-c:        MBAP1-RIPE
+nic-hdl:        NA6334-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-24T05:54:08Z
+last-modified:  2019-06-24T05:54:08Z
+source:         RIPE # Filtered
+
+% Information related to '185.131.124.0/22AS58224'
+
+route:          185.131.124.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2019-11-25T07:20:03Z
+last-modified:  2019-11-25T07:20:03Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.219.64.0 - 5.219.127.255'
+
+% Abuse contact for '5.219.64.0 - 5.219.127.255' is 'LIRadmin@tci.ir'
+
+inetnum:        5.219.64.0 - 5.219.127.255
+netname:        TCE-NET
+descr:          TCE ADSL Dynamic
+country:        IR
+admin-c:        HK5437-RIPE
+tech-c:         HK5437-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-MOJAHEDI
+mnt-by:         MNT-Mah
+created:        2015-09-06T09:31:37Z
+last-modified:  2018-10-18T06:39:11Z
+source:         RIPE
+
+person:         Hosein Keshaei
+address:        NO.1 Of Telecom Building, Chaharbagh St. , Esfahan, Iran
+phone:          +98-31-36641111
+fax-no:         +98-31-36620121
+nic-hdl:        HK5437-RIPE
+mnt-by:         MNT-MOJAHEDI
+mnt-by:         MNT-Mah
+created:        2015-09-06T08:17:09Z
+last-modified:  2018-05-14T10:05:29Z
+source:         RIPE
+
+% Information related to '5.219.96.0/20AS58224'
+
+route:          5.219.96.0/20
+origin:         AS58224
+mnt-by:         MNT-Mah
+mnt-by:         MNT-KALAVANI
+created:        2018-11-18T11:00:56Z
+last-modified:  2018-11-18T11:00:56Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

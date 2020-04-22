@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '176.221.16.0 - 176.221.31.255'
+
+% Abuse contact for '176.221.16.0 - 176.221.31.255' is 'abuse@askiran.com'
+
+inetnum:        176.221.16.0 - 176.221.31.255
+netname:        IR-ASK-20111125
+country:        IR
+geoloc:         37.3070826 49.5861339
+org:            ORG-ASK1-RIPE
+admin-c:        MRN1-RIPE
+tech-c:         MRN1-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-ASK1
+mnt-lower:      MNT-ASK1
+mnt-domains:    MNT-ASK1
+mnt-routes:     MNT-ASK1
+created:        2011-11-25T12:26:27Z
+last-modified:  2019-07-15T13:40:25Z
+source:         RIPE # Filtered
+
+organisation:   ORG-ASK1-RIPE
+org-name:       ANDISHE SABZ KHAZAR CO. P.J.S.
+descr:          AndisheSabzKHazar
+org-type:       LIR
+address:        NO. 11, 165 Ave. , Golsar
+address:        4166715985
+address:        Rasht, Gilan,
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98133410
+geoloc:         37.3070826 49.5861339
+fax-no:         +981333728155
+admin-c:        RM17533-RIPE
+admin-c:        MRN1-RIPE
+abuse-c:        AA26763-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-ASK1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-ASK1
+created:        2004-05-11T07:33:31Z
+last-modified:  2019-07-15T12:18:52Z
+source:         RIPE # Filtered
+
+person:         Mohammad Reza Nikrou
+address:        165 Ave, No 11
+address:        Golsar, Rasht ,Guilan, Iran
+mnt-by:         MNT-ASK1
+phone:          +98(13)3410
+nic-hdl:        MRN1-RIPE
+created:        2001-12-17T06:53:51Z
+last-modified:  2018-12-06T06:53:50Z
+source:         RIPE # Filtered
+
+% Information related to '176.221.16.0/20as39308'
+
+route:          176.221.16.0/20
+descr:          Andishe Sabz Khazar IP block
+origin:         as39308
+mnt-by:         mnt-ask1
+created:        2011-11-25T13:46:53Z
+last-modified:  2011-11-25T13:46:53Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

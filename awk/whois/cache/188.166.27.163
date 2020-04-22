@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.166.0.0 - 188.166.127.255'
+
+% Abuse contact for '188.166.0.0 - 188.166.127.255' is 'abuse@digitalocean.com'
+
+inetnum:        188.166.0.0 - 188.166.127.255
+netname:        EU-DIGITALOCEAN-NL1
+descr:          Digital Ocean, Inc.
+country:        NL
+org:            ORG-DOI2-RIPE
+admin-c:        PT7353-RIPE
+tech-c:         PT7353-RIPE
+status:         ASSIGNED PA
+mnt-by:         digitalocean
+mnt-lower:      digitalocean
+mnt-routes:     digitalocean
+mnt-domains:    digitalocean
+created:        2015-06-03T01:18:40Z
+last-modified:  2015-11-20T14:46:27Z
+source:         RIPE # Filtered
+
+organisation:   ORG-DOI2-RIPE
+org-name:       DigitalOcean, LLC
+org-type:       LIR
+address:        101 Avenue of the Americas, 10th Floor
+address:        New York
+address:        10013
+address:        UNITED STATES
+phone:          +1 888 890 6714
+mnt-ref:        digitalocean
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         digitalocean
+abuse-c:        AD10778-RIPE
+language:       EN
+created:        2012-11-29T14:59:01Z
+last-modified:  2019-04-17T14:37:00Z
+source:         RIPE # Filtered
+
+person:         Network Operations
+address:        101 Ave of the Americas, 10th Floor
+address:        New York, NY, 10013
+address:        United States of America
+phone:          +13478756044
+nic-hdl:        PT7353-RIPE
+mnt-by:         digitalocean
+created:        2015-03-11T16:37:07Z
+last-modified:  2019-04-17T14:37:51Z
+source:         RIPE # Filtered
+org:            ORG-DOI2-RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

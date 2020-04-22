@@ -1,0 +1,72 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.138.199.0 - 217.138.199.255'
+
+% Abuse contact for '217.138.199.0 - 217.138.199.255' is 'abuse@m247.com'
+
+inetnum:        217.138.199.0 - 217.138.199.255
+netname:        M247-LTD-Prague
+descr:          M247 LTD Prague Infrastructure
+country:        CZ
+org:            ORG-MLP2-RIPE
+geoloc:         50.0776556 14.5212365
+admin-c:        GBXS6-RIPE
+tech-c:         GBXS6-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         GLOBALAXS-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2019-10-07T10:33:10Z
+last-modified:  2019-10-15T15:12:48Z
+source:         RIPE
+
+organisation:   ORG-MLP2-RIPE
+org-name:       M247 Ltd Prague
+org-type:       OTHER
+address:        Tiskarska 10
+address:        11000, Prague, Czech Republic
+abuse-c:        GBXS6-RIPE
+mnt-ref:        GLOBALAXS-MNT
+mnt-by:         GLOBALAXS-MNT
+created:        2019-10-15T15:12:01Z
+last-modified:  2019-10-15T15:12:01Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS PRAGUE NOC
+remarks:        M247 - Prague Network Management Centre
+address:        Tiskarska 10
+address:        11000, Prague - Czech Republic
+admin-c:        JB3482-RIPE
+tech-c:         PC12694-RIPE
+tech-c:         MJ3986-RIPE
+tech-c:         CB2407-RIPE
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS6-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-05-12T12:52:49Z
+last-modified:  2016-05-12T12:59:51Z
+source:         RIPE # Filtered
+
+% Information related to '217.138.199.0/24AS9009'
+
+route:          217.138.199.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-10-08T07:43:51Z
+last-modified:  2019-10-08T07:43:51Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

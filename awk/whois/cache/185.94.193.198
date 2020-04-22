@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.94.193.0 - 185.94.193.255'
+
+% Abuse contact for '185.94.193.0 - 185.94.193.255' is 'abuse@m247.ro'
+
+inetnum:        185.94.193.0 - 185.94.193.255
+netname:        M247-LTD-Milan
+descr:          M247 LTD Milan Infrastructure
+descr:          M247 Milan Servers
+country:        IT
+geoloc:         45.4636889 9.1881408
+admin-c:        GNM20-RIPE
+tech-c:         GNM20-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2016-04-27T13:17:49Z
+last-modified:  2018-11-28T14:15:48Z
+source:         RIPE
+
+role:           GLOBALAXS NOC MILAN
+remarks:        M247 - Network Management Centre Milan
+address:        Edificio B, ala 2 Via Caldera 21
+address:        Milan, Italy
+tech-c:         MJ3986-RIPE
+tech-c:         PC12694-RIPE
+tech-c:         JB3482-RIPE
+tech-c:         CB2407-RIPE
+admin-c:        MJ3986-RIPE
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GNM20-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-03-11T12:09:37Z
+last-modified:  2016-03-11T12:41:23Z
+source:         RIPE # Filtered
+
+% Information related to '185.94.193.0/24AS9009'
+
+route:          185.94.193.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2016-04-27T13:18:30Z
+last-modified:  2016-04-27T13:18:30Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

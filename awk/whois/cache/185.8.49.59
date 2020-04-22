@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.8.49.0 - 185.8.49.255'
+
+% Abuse contact for '185.8.49.0 - 185.8.49.255' is 'abuse@staff.aruba.it'
+
+inetnum:        185.8.49.0 - 185.8.49.255
+netname:        ARUBACLOUD-FR
+descr:          Aruba SAS - Cloud Services Farm4
+country:        FR
+admin-c:        SANS-RIPE
+tech-c:         AN3450-RIPE
+status:         ASSIGNED PA
+mnt-by:         ARUBAFR-MNT
+created:        2012-10-29T11:04:27Z
+last-modified:  2012-10-29T11:04:27Z
+source:         RIPE
+
+role:           ARUBA NOC
+address:        Aruba S.p.A.
+address:        via S.Clemente 53
+address:        24036 Ponte San Pietro (BG)
+address:        Italy
+abuse-mailbox:  abuse@staff.aruba.it
+admin-c:        SS936-RIPE
+tech-c:         SC279-RIPE
+nic-hdl:        AN3450-RIPE
+mnt-by:         ARUBA-MNT
+created:        2008-11-19T19:02:34Z
+last-modified:  2017-11-15T08:13:57Z
+source:         RIPE # Filtered
+
+person:         Eric Sansonny
+address:        Aruba SAS
+address:        92-98 boulevard Victor Hugo
+address:        92110 Clichy
+phone:          +330141065225
+fax-no:         +330146079808
+nic-hdl:        SANS-RIPE
+mnt-by:         ARUBAFR-MNT
+created:        2012-09-20T06:28:55Z
+last-modified:  2016-04-07T14:15:10Z
+source:         RIPE
+
+% Information related to '185.8.48.0/22AS199653'
+
+route:          185.8.48.0/22
+descr:          Aruba.FR Network
+origin:         AS199653
+mnt-by:         ARUBAFR-MNT
+created:        2012-10-26T15:40:29Z
+last-modified:  2012-10-26T15:40:29Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,87 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.101.92.0 - 185.101.92.255'
+
+% Abuse contact for '185.101.92.0 - 185.101.92.255' is 'abuse@vnetso.com'
+
+inetnum:        185.101.92.0 - 185.101.92.255
+netname:        DE-MYVIRTUALSERVER-FFM-01
+descr:          myvirtualserver.de
+country:        DE
+org:            ORG-MK61-RIPE
+admin-c:        MYNO-RIPE
+tech-c:         MYNO-RIPE
+status:         ASSIGNED PA
+mnt-by:         de-myvirtualserver-1-mnt
+mnt-routes:     de-myvirtualserver-1-mnt
+mnt-domains:    de-myvirtualserver-1-mnt
+created:        2015-05-22T10:02:48Z
+last-modified:  2015-05-24T17:31:49Z
+source:         RIPE # Filtered
+
+organisation:   ORG-MK61-RIPE
+org-name:       Mike Kaldig
+org-type:       LIR
+address:        Moerserstr. 293
+address:        47475
+address:        Kamp-Lintfort
+address:        GERMANY
+phone:          +49 201 85789392
+fax-no:         +49 201 45855222
+admin-c:        MTAM1-RIPE
+tech-c:         MYNO-RIPE
+abuse-c:        MYNO-RIPE
+mnt-ref:        de-myvirtualserver-1-mnt
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         de-myvirtualserver-1-mnt
+created:        2015-05-20T15:46:22Z
+last-modified:  2018-10-11T10:13:01Z
+source:         RIPE # Filtered
+
+role:           myVirtualserver Network Operations Team
+address:        Moerserstr. 293
+address:        47475
+address:        Kamp-Lintfort
+address:        GERMANY
+admin-c:        MYMK-RIPE
+tech-c:         MYMK-RIPE
+nic-hdl:        MYNO-RIPE
+abuse-mailbox:  abuse@vnetso.com
+remarks:        ***************************************************
+remarks:        ***************************************************
+remarks:        ABUSIVE COMPLAINTS
+remarks:        ( ----> ) abuse@vnetso.com ( <---- )
+remarks:        ***************************************************
+remarks:        SECURITY AND OTHER ENQUIRIES
+remarks:        ( ----> ) noc@vnetso.com ( <---- )
+remarks:        ***************************************************
+remarks:        MORE INFORMATION
+remarks:        ( ----> ) https://www.myvirtualserver.com ( <---- )
+remarks:        ***************************************************
+remarks:        ***************************************************
+mnt-by:         de-myvirtualserver-1-mnt
+created:        2015-05-22T15:26:07Z
+last-modified:  2019-08-18T15:39:52Z
+source:         RIPE # Filtered
+
+% Information related to '185.101.92.0/22AS200615'
+
+route:          185.101.92.0/22
+descr:          myVirtualserver Routing
+origin:         AS200615
+mnt-by:         de-myvirtualserver-1-mnt
+created:        2016-04-10T13:18:31Z
+last-modified:  2018-07-16T14:27:33Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

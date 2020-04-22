@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.133.0.0 - 31.133.7.255'
+
+% Abuse contact for '31.133.0.0 - 31.133.7.255' is 'abuse@hosteam.pl'
+
+inetnum:        31.133.0.0 - 31.133.7.255
+netname:        EASYNET-1
+country:        PL
+org:            ORG-HSTG1-RIPE
+admin-c:        HNA19-RIPE
+tech-c:         HNA19-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-HOSTEAM
+mnt-routes:     MNT-HOSTEAM
+mnt-domains:    MNT-HOSTEAM
+created:        2011-04-11T09:58:08Z
+last-modified:  2016-04-14T10:16:13Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-EWSZ1-RIPE
+
+organisation:   ORG-HsTG1-RIPE
+org-name:       HOSTEAM S.C. TOMASZ GROSZEWSKI BARTOSZ WASZAK LUKASZ GROSZEWSKI
+org-type:       OTHER
+address:        ul. Lesnowolska 6, 60-452 Poznan, PL
+abuse-c:        AR21331-RIPE
+mnt-ref:        MNT-HOSTEAM
+mnt-by:         MNT-HOSTEAM
+created:        2010-04-22T11:15:11Z
+last-modified:  2019-08-12T12:17:36Z
+source:         RIPE # Filtered
+
+role:           HosTeam Network Administrators
+address:        ul. Darlowska 42, Poznan
+admin-c:        BW1026-RIPE
+admin-c:        TG2859-RIPE
+tech-c:         BW1026-RIPE
+tech-c:         TG2859-RIPE
+nic-hdl:        HNA19-RIPE
+created:        2010-06-16T09:58:21Z
+last-modified:  2010-06-24T08:41:42Z
+source:         RIPE # Filtered
+mnt-by:         MNT-HOSTEAM
+
+% Information related to '31.133.0.0/21AS51290'
+
+route:          31.133.0.0/21
+descr:          EasyNET
+origin:         AS51290
+mnt-by:         MNT-HOSTEAM
+created:        2011-04-11T10:26:00Z
+last-modified:  2011-04-11T10:26:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

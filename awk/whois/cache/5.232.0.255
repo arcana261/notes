@@ -1,0 +1,101 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.232.0.0 - 5.232.175.255'
+
+% Abuse contact for '5.232.0.0 - 5.232.175.255' is 'rasoolpour@tci.ir'
+
+inetnum:        5.232.0.0 - 5.232.175.255
+netname:        TCIKHR
+descr:          Telecommunication Company of Khorasan Razavi
+country:        IR
+admin-c:        NAR56-RIPE
+tech-c:         NR4198-RIPE
+tech-c:         DPR31-RIPE
+tech-c:         JS15290-RIPE
+org:            ORG-TCOK9-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2014-02-26T07:38:18Z
+last-modified:  2019-06-24T09:48:25Z
+source:         RIPE
+
+organisation:   ORG-TCOK9-RIPE
+org-name:       Telecommunication Company of Khorasan Razavi
+org-type:       other
+address:        Khorasan Razavi - Mashhad - Emam Khomeini Boulevard - Telecommunication Company
+abuse-c:        AC26948-RIPE
+admin-c:        NAR56-RIPE
+tech-c:         DPR31-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-03T11:35:39Z
+last-modified:  2019-03-03T12:18:22Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Khorasan Razavi)
+address:        Khorasan Razavi - Mashhad - Emam Khomeini Boulevard - Telecommunication Company
+admin-c:        HO2193-RIPE
+nic-hdl:        DPR31-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T12:04:43Z
+last-modified:  2019-03-03T12:04:43Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Khorasan Razavi)
+address:        Khorasan Razavi - Mashhad - Emam Khomeini Boulevard - Telecommunication Company of Khorasan Razavi
+admin-c:        HO2193-RIPE
+nic-hdl:        NAR56-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T11:47:00Z
+last-modified:  2019-03-03T11:47:00Z
+source:         RIPE # Filtered
+
+role:           NOC (Khorasan Razavi)
+address:        Khorasan Razavi - Mashhad - Emam Khomeini Boulevard - Telecommunication Company
+admin-c:        MA22473-RIPE
+nic-hdl:        NR4198-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T12:10:09Z
+last-modified:  2019-03-03T12:10:09Z
+source:         RIPE # Filtered
+
+person:         Javad Soleymani
+address:        telecommunication company of Khorasan Razavi
+phone:          +985118528877
+nic-hdl:        JS15290-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2014-03-10T11:49:03Z
+last-modified:  2015-08-04T11:43:44Z
+source:         RIPE
+
+% Information related to '5.232.0.0/18AS12880'
+
+route:          5.232.0.0/18
+origin:         AS12880
+mnt-by:         TCI-RIPE-MNT
+mnt-by:         AS12880-MNT
+mnt-by:         AS58224
+created:        2018-02-14T12:15:50Z
+last-modified:  2018-02-14T12:15:50Z
+source:         RIPE
+
+% Information related to '5.232.0.0/18AS58224'
+
+route:          5.232.0.0/18
+origin:         AS58224
+mnt-routes:     AS12880-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2018-02-14T12:06:23Z
+last-modified:  2018-02-14T12:07:53Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

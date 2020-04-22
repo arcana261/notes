@@ -1,0 +1,51 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.135.229.0 - 45.135.229.255'
+
+% Abuse contact for '45.135.229.0 - 45.135.229.255' is 'Abuse@gcore.lu'
+
+inetnum:        45.135.229.0 - 45.135.229.255
+netname:        GCL-CUSTOMER-US
+descr:          G-Core Labs Customer assignment
+country:        US
+admin-c:        LA5122-RIPE
+tech-c:         LA5122-RIPE
+status:         ASSIGNED PA
+mnt-by:         GCL1-MNT
+created:        2019-12-05T12:00:26Z
+last-modified:  2019-12-05T12:00:26Z
+source:         RIPE
+geoloc:         38.747203 -77.531658
+
+person:         LIR Admin
+address:        G-Core Labs S.A.
+address:        2A Rue Albert Borschette
+address:        1246 Luxembourg
+phone:          +352-691-045488
+nic-hdl:        LA5122-RIPE
+mnt-by:         WGI1-MNT
+mnt-by:         GCL1-MNT
+created:        2012-12-05T15:05:34Z
+last-modified:  2015-12-10T08:56:40Z
+source:         RIPE # Filtered
+
+% Information related to '45.135.229.0/24AS199524'
+
+route:          45.135.229.0/24
+descr:          GCL-45-135-229-0-24
+origin:         AS199524
+mnt-by:         GCL1-MNT
+created:        2019-08-12T12:36:11Z
+last-modified:  2019-08-12T12:36:11Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

@@ -1,0 +1,116 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       136.244.64.0 - 136.244.127.255
+CIDR:           136.244.64.0/18
+NetName:        CHOOP-1
+NetHandle:      NET-136-244-64-0-1
+Parent:         NET136 (NET-136-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Choopa, LLC (CHOOP-1)
+RegDate:        2019-04-08
+Updated:        2019-04-08
+Ref:            https://rdap.arin.net/registry/ip/136.244.64.0
+
+
+
+OrgName:        Choopa, LLC
+OrgId:          CHOOP-1
+Address:        14 Cliffwood Ave Suite 300
+City:           Matawan
+StateProv:      NJ
+PostalCode:     07747
+Country:        US
+RegDate:        2006-10-03
+Updated:        2016-01-11
+Comment:        http://www.choopa.net/
+Ref:            https://rdap.arin.net/registry/entity/CHOOP-1
+
+
+OrgNOCHandle: NETWO1159-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-973-849-0500 
+OrgNOCEmail:  network@choopa.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+OrgAbuseHandle: ABUSE1143-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-973-849-0500 
+OrgAbuseEmail:  abuse@choopa.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE1143-ARIN
+
+OrgTechHandle: NETWO1159-ARIN
+OrgTechName:   Network Operations
+OrgTechPhone:  +1-973-849-0500 
+OrgTechEmail:  network@choopa.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO1159-ARIN
+
+# end
+
+
+# start
+
+NetRange:       136.244.108.0 - 136.244.109.255
+CIDR:           136.244.108.0/23
+NetName:        NET-136-244-108-0-23
+NetHandle:      NET-136-244-108-0-1
+Parent:         CHOOP-1 (NET-136-244-64-0-1)
+NetType:        Reassigned
+OriginAS:       
+Organization:   Vultr Holdings, LLC (VHL-31)
+RegDate:        2019-07-08
+Updated:        2019-07-08
+Ref:            https://rdap.arin.net/registry/ip/136.244.108.0
+
+
+OrgName:        Vultr Holdings, LLC
+OrgId:          VHL-31
+Address:        2031 BE, Haarlem
+City:           Amsterdam
+StateProv:      NOORD-HOLLAND
+PostalCode:     2031
+Country:        NL
+RegDate:        2015-03-05
+Updated:        2017-04-14
+Ref:            https://rdap.arin.net/registry/entity/VHL-31
+
+
+OrgTechHandle: VULTR-ARIN
+OrgTechName:   Vultr Abuse
+OrgTechPhone:  +1-973-849-0500 
+OrgTechEmail:  abuse@vultr.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/VULTR-ARIN
+
+OrgAbuseHandle: VULTR-ARIN
+OrgAbuseName:   Vultr Abuse
+OrgAbusePhone:  +1-973-849-0500 
+OrgAbuseEmail:  abuse@vultr.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/VULTR-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

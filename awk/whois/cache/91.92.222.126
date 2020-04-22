@@ -1,0 +1,89 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.92.222.0 - 91.92.223.255'
+
+% Abuse contact for '91.92.222.0 - 91.92.223.255' is 'reza.kara@tci.ir'
+
+inetnum:        91.92.222.0 - 91.92.223.255
+netname:        TCIQOM
+country:        IR
+admin-c:        NA6217-RIPE
+tech-c:         NA6337-RIPE
+tech-c:         DP14875-RIPE
+tech-c:         MA14620-RIPE
+org:            ORG-TCOQ1-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2017-08-29T13:31:02Z
+last-modified:  2019-06-25T08:04:13Z
+source:         RIPE
+
+organisation:   ORG-TCOQ1-RIPE
+org-name:       Telecommunication Company of Qom
+org-type:       other
+address:        Qom - 15 Khordad Boulevard - Telecommunication Company of Qom
+abuse-c:        AC26827-RIPE
+admin-c:        NA6217-RIPE
+tech-c:         DP14875-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-04-08T12:59:50Z
+last-modified:  2019-03-03T07:13:45Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Qom)
+address:        Qom - 15 Khordad Boulevard - Telecommunication Company of Qom
+admin-c:        MAPM5-RIPE
+nic-hdl:        DP14875-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T07:03:42Z
+last-modified:  2019-03-03T07:03:42Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Qom)
+address:        Qom - 15 Khordad Boulevard - Telecommunication Company of Qom
+admin-c:        MHE21-RIPE
+nic-hdl:        NA6217-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T07:01:05Z
+last-modified:  2019-03-03T07:01:05Z
+source:         RIPE # Filtered
+
+role:           NOC (Qom)
+address:        Qom - 15 Khordad Boulevard - Telecommunication Company of Qom
+admin-c:        MJ83853-RIPE
+nic-hdl:        NA6337-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-24T07:14:34Z
+last-modified:  2019-06-24T07:14:34Z
+source:         RIPE # Filtered
+
+person:         Masoud Azadegan
+address:        telecommunication company of Qom
+phone:          +982537755755
+phone:          +989121520151
+nic-hdl:        MA14620-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2013-07-16T11:42:30Z
+last-modified:  2014-10-26T12:46:57Z
+source:         RIPE
+
+% Information related to '91.92.220.0/22AS58224'
+
+route:          91.92.220.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2017-08-28T08:54:29Z
+last-modified:  2018-10-06T06:45:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

@@ -1,0 +1,92 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.234.48.0 - 5.234.63.255'
+
+% Abuse contact for '5.234.48.0 - 5.234.63.255' is 'n.mardani@tci.ir'
+
+inetnum:        5.234.48.0 - 5.234.63.255
+netname:        TCICHB
+org:            ORG-TCOC2-RIPE
+descr:          Telecommunication Company of Chaharmahal va Bakhtiyari
+country:        IR
+admin-c:        NAMB4-RIPE
+tech-c:         NMB25-RIPE
+tech-c:         DPMB1-RIPE
+tech-c:         mr11436-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+mnt-lower:      TCI-RIPE-MNT
+mnt-routes:     TCI-RIPE-MNT
+created:        2013-08-15T08:52:42Z
+last-modified:  2019-06-19T06:27:59Z
+source:         RIPE
+
+organisation:   ORG-TCOC2-RIPE
+org-name:       Telecommunication Company of Chahar Mahal o Bakhtiari
+org-type:       OTHER
+address:        Chahar Mahal o Bakhtiari - Telecommunication Company of Chahar Mahal o Bakhtiari
+abuse-c:        AC37492-RIPE
+admin-c:        NAMB4-RIPE
+tech-c:         DPMB1-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-19T06:10:29Z
+last-modified:  2019-06-19T06:10:29Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Chahar Mahale Bakhtiari)
+address:        Shahre kord - Shariati Boulevard - Telecommunication Company of Share Kord
+admin-c:        NM7673-RIPE
+nic-hdl:        DPMB1-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-23T12:26:02Z
+last-modified:  2019-02-23T12:26:02Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Chahar Mahale Bakhtiari)
+address:        Shahre kord - Shariati Boulevard - Telecommunication Company of Share Kord
+admin-c:        YTF3-RIPE
+nic-hdl:        NAMB4-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-23T12:20:02Z
+last-modified:  2019-02-23T12:20:02Z
+source:         RIPE # Filtered
+
+role:           NOC (Chahar Mahale Bakhtiari)
+address:        Chahar Mahal o Bakhtiari - Telecommunication Company of Chahar Mahal o Bakhtiari
+admin-c:        MRS215-RIPE
+nic-hdl:        NMB25-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-19T06:16:28Z
+last-modified:  2019-06-19T06:16:28Z
+source:         RIPE # Filtered
+
+person:         mohsen rahimi
+address:        Telecommunication Company of Chaharmahal va bakhtiyari
+phone:          +98-38-33388251
+phone:          +989133814032
+nic-hdl:        mr11436-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-08-10T08:36:30Z
+last-modified:  2015-01-18T06:53:29Z
+source:         RIPE
+
+% Information related to '5.234.48.0/20AS58224'
+
+route:          5.234.48.0/20
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-02-27T06:26:00Z
+last-modified:  2018-02-27T06:26:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

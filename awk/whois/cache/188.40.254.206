@@ -1,0 +1,97 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.40.254.192 - 188.40.254.207'
+
+% Abuse contact for '188.40.254.192 - 188.40.254.207' is 'abuse@hetzner.de'
+
+inetnum:        188.40.254.192 - 188.40.254.207
+netname:        HOS-299877
+descr:          HOS-299877
+country:        DE
+admin-c:        HOAC1-RIPE
+tech-c:         HOAC1-RIPE
+status:         ASSIGNED PA
+mnt-by:         HOS-GUN
+created:        2019-02-07T02:26:33Z
+last-modified:  2019-03-01T16:09:28Z
+source:         RIPE # Filtered
+
+role:           Hetzner Online GmbH - Contact Role
+address:        Hetzner Online GmbH
+address:        Industriestrasse 25
+address:        D-91710 Gunzenhausen
+address:        Germany
+phone:          +49 9831 505-0
+fax-no:         +49 9831 505-3
+abuse-mailbox:  abuse@hetzner.de
+remarks:        *************************************************
+remarks:        * For spam/abuse/security issues please contact *
+remarks:        * abuse@hetzner.de, not this address. *
+remarks:        * The contents of your abuse email will be *
+remarks:        * forwarded directly on to our client for *
+remarks:        * handling. *
+remarks:        *************************************************
+remarks:
+remarks:        *************************************************
+remarks:        * Any questions on Peering please send to *
+remarks:        * peering@hetzner.de *
+remarks:        *************************************************
+org:            ORG-HOA1-RIPE
+admin-c:        MH375-RIPE
+tech-c:         GM834-RIPE
+tech-c:         SK2374-RIPE
+tech-c:         TF2013-RIPE
+tech-c:         MF1400-RIPE
+tech-c:         SK8441-RIPE
+nic-hdl:        HOAC1-RIPE
+mnt-by:         HOS-GUN
+created:        2004-08-12T09:40:20Z
+last-modified:  2015-08-06T09:39:14Z
+source:         RIPE # Filtered
+
+% Information related to '188.40.0.0/16AS24940'
+
+route:          188.40.0.0/16
+descr:          HETZNER-RZ-FKS-BLK1
+origin:         AS24940
+org:            ORG-HOA1-RIPE
+mnt-by:         HOS-GUN
+created:        2009-04-23T15:49:32Z
+last-modified:  2009-04-23T15:49:32Z
+source:         RIPE
+
+organisation:   ORG-HOA1-RIPE
+org-name:       Hetzner Online GmbH
+org-type:       LIR
+address:        Industriestrasse 25
+address:        D-91710
+address:        Gunzenhausen
+address:        GERMANY
+phone:          +49 9831 5050
+fax-no:         +49 9831 5053
+admin-c:        TF2013-RIPE
+admin-c:        MF1400-RIPE
+admin-c:        GM834-RIPE
+admin-c:        HOAC1-RIPE
+admin-c:        MH375-RIPE
+admin-c:        SK2374-RIPE
+admin-c:        SK8441-RIPE
+abuse-c:        HOAC1-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        HOS-GUN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HOS-GUN
+created:        2004-04-17T11:07:58Z
+last-modified:  2016-08-25T13:26:09Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

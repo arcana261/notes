@@ -1,0 +1,91 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.100.80.0 - 46.100.83.255'
+
+% Abuse contact for '46.100.80.0 - 46.100.83.255' is 'me.khosravi@tci.ir'
+
+inetnum:        46.100.80.0 - 46.100.83.255
+netname:        TCIARD
+descr:          Telecommunication Company of Ardebil
+country:        IR
+admin-c:        NA6196-RIPE
+tech-c:         NA6334-RIPE
+tech-c:         DP14858-RIPE
+tech-c:         fk1806-RIPE
+org:            ORG-TCOA3-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+remarks:        INFRA-AW
+created:        2012-09-17T05:44:31Z
+last-modified:  2019-06-25T06:26:42Z
+source:         RIPE
+
+organisation:   ORG-TCOA3-RIPE
+org-name:       Telecommunication Company of Ardebil
+org-type:       other
+address:        Ardebil Telecom
+abuse-c:        AC26984-RIPE
+admin-c:        NA6196-RIPE
+tech-c:         DP14858-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-12T11:19:03Z
+last-modified:  2019-02-24T13:05:36Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Ardabil)
+address:        Ardabil - Telecommunication Company of Ardabil
+admin-c:        AS42246-RIPE
+nic-hdl:        DP14858-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T12:44:45Z
+last-modified:  2019-02-24T12:44:45Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Ardabil)
+address:        Ardabil - Telecommunication Company of Ardabil
+admin-c:        AE5485-RIPE
+nic-hdl:        NA6196-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T12:40:16Z
+last-modified:  2019-02-24T12:40:16Z
+source:         RIPE # Filtered
+
+role:           NOC (Ardabil)
+address:        Ardabil - Telecommunication Company of Ardabil
+admin-c:        MBAP1-RIPE
+nic-hdl:        NA6334-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-24T05:54:08Z
+last-modified:  2019-06-24T05:54:08Z
+source:         RIPE # Filtered
+
+person:         farideh kazemiyan
+address:        telecommunication company of Ardebil
+phone:          +984512250001
+phone:          +984512250002
+nic-hdl:        fk1806-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-07-18T06:18:59Z
+last-modified:  2010-07-18T06:21:26Z
+source:         RIPE
+
+% Information related to '46.100.80.0/22AS58224'
+
+route:          46.100.80.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2016-06-21T09:37:01Z
+last-modified:  2016-06-21T09:37:01Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

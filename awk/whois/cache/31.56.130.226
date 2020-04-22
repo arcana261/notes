@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.56.128.0 - 31.56.143.255'
+
+% Abuse contact for '31.56.128.0 - 31.56.143.255' is 'abuse@rasana.net'
+
+inetnum:        31.56.128.0 - 31.56.143.255
+netname:        SHTL-DSL-NEA
+descr:          SHATEL DSL Network
+country:        IR
+admin-c:        MHSZ-RIPE
+tech-c:         SHAD-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-RASANA
+created:        2015-12-09T08:00:36Z
+last-modified:  2016-10-04T13:12:03Z
+source:         RIPE
+
+role:           SHATEL Network Operation Center - Administration
+address:        Shatel Group Companies
+address:        # 2, Elahieh Alley, Shariati Ave., Sadr Bridge
+address:        Tehran, Iran, 1914733444
+phone:          +98 21 2261 2601
+phone:          +982191000001
+fax-no:         +98 21 2261 2602
+fax-no:         +982191000002
+abuse-mailbox:  abuse@rasana.net
+admin-c:        MHSZ-RIPE
+admin-c:        FDSI-RIPE
+tech-c:         HSY-RIPE
+nic-hdl:        SHAD-RIPE
+mnt-by:         MNT-RASANA
+created:        2007-11-26T15:10:30Z
+last-modified:  2019-10-05T19:39:42Z
+source:         RIPE # Filtered
+
+person:         Mohammad Hasan Shanehsazzadeh
+address:        Arya Rasana Tadbir Co.
+address:        Tehran, Iran, 1914733444
+phone:          +98 21 2261 2601
+phone:          +982191000001
+fax-no:         +98 21 2261 2602
+fax-no:         +982191000002
+nic-hdl:        MHSZ-RIPE
+mnt-by:         MNT-RASANA
+created:        2006-06-12T20:02:24Z
+last-modified:  2019-06-22T04:50:08Z
+source:         RIPE
+
+% Information related to '31.56.130.0/24AS31549'
+
+route:          31.56.130.0/24
+descr:          SHATEL Network Route
+origin:         AS31549
+mnt-by:         MNT-RASANA
+created:        2015-07-21T06:21:53Z
+last-modified:  2015-07-21T06:21:53Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

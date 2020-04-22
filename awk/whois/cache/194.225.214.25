@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.225.192.0 - 194.225.223.255'
+
+% Abuse contact for '194.225.192.0 - 194.225.223.255' is 'abuse@ipm.ir'
+
+inetnum:        194.225.192.0 - 194.225.223.255
+netname:        TUMS
+descr:          Tehran University of Medical Sciences
+descr:          Tehran, I.R. Iran
+country:        IR
+admin-c:        AS85-RIPE
+tech-c:         AS85-RIPE
+status:         ASSIGNED PA
+mnt-by:         IPM-MNT
+created:        2008-03-06T06:34:55Z
+last-modified:  2013-12-24T10:14:52Z
+source:         RIPE # Filtered
+
+person:         Alireza Shadpoor
+address:        Tehran University of Medical Sciences
+address:        P.O.BOX : 14155-6559 Tehran, I.R. of Iran
+phone:          +9821 64432658
+fax-no:         +9821 88951822
+nic-hdl:        AS85-RIPE
+mnt-by:         IPM-MNT
+created:        2003-06-10T09:55:54Z
+last-modified:  2006-11-06T14:27:13Z
+source:         RIPE # Filtered
+
+% Information related to '194.225.208.0/20AS43965'
+
+route:          194.225.208.0/20
+descr:          TUMS Network
+origin:         AS43965
+mnt-by:         IPM-MNT
+created:        2008-09-01T07:47:47Z
+last-modified:  2008-09-01T07:47:47Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

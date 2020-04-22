@@ -1,0 +1,92 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.233.46.0 - 5.233.95.255'
+
+% Abuse contact for '5.233.46.0 - 5.233.95.255' is 'mina.jalali1810@tci.ir'
+
+inetnum:        5.233.46.0 - 5.233.95.255
+netname:        TCIKMN
+descr:          Telecommunication Company of Kerman
+country:        IR
+org:            ORG-TCOK4-RIPE
+admin-c:        NA6215-RIPE
+tech-c:         NA6216-RIPE
+tech-c:         DP14874-RIPE
+tech-c:         ai1788-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+mnt-lower:      TCI-RIPE-MNT
+mnt-routes:     TCI-RIPE-MNT
+created:        2013-07-17T12:23:58Z
+last-modified:  2019-06-24T05:14:36Z
+source:         RIPE
+
+organisation:   ORG-TCOK4-RIPE
+org-name:       Telecommunication Company of Kerman
+org-type:       other
+address:        Kerman - Rezvani Nezhad Street - Telecommunication Company of Kerman
+admin-c:        NA6215-RIPE
+tech-c:         DP14874-RIPE
+abuse-c:        AC26359-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-01-04T14:34:45Z
+last-modified:  2019-03-03T06:42:51Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Kerman)
+address:        Kerman - Rezvani Nezhad Street - Telecommunication Company of Kerman
+admin-c:        LH3862-RIPE
+nic-hdl:        DP14874-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T06:27:09Z
+last-modified:  2019-03-03T06:27:09Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Kerman)
+address:        Kerman - Rezvani Nezhad Street - Telecommunication Company of Kerman
+admin-c:        HM6029-RIPE
+nic-hdl:        NA6215-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T06:23:31Z
+last-modified:  2019-03-03T06:23:31Z
+source:         RIPE # Filtered
+
+role:           NOC (Kerman)
+address:        Kerman - Rezvani Nezhad Street - Telecommunication Company of Kerman
+admin-c:        AI4817-RIPE
+nic-hdl:        NA6216-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T06:33:22Z
+last-modified:  2019-03-03T06:33:22Z
+source:         RIPE # Filtered
+
+person:         aghdas izadi
+address:        telecommunication company of Kerman
+phone:          +98-34-32262443
+phone:          +98-34-32220656
+nic-hdl:        ai1788-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-08-14T08:02:19Z
+last-modified:  2014-12-29T09:55:23Z
+source:         RIPE
+
+% Information related to '5.233.48.0/20AS58224'
+
+route:          5.233.48.0/20
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-09-16T13:10:09Z
+last-modified:  2018-09-16T13:10:09Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

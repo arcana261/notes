@@ -1,0 +1,51 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '82.102.27.0 - 82.102.27.255'
+
+% Abuse contact for '82.102.27.0 - 82.102.27.255' is 'support@venus.co.uk'
+
+inetnum:        82.102.27.0 - 82.102.27.255
+netname:        M247-LTD-OSLO
+descr:          M247 LTD Oslo Infrastructure
+country:        NO
+geoloc:         59.91 10.75
+admin-c:        GBXS23-RIPE
+tech-c:         GBXS23-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2017-10-10T15:06:29Z
+last-modified:  2018-11-29T12:33:13Z
+source:         RIPE
+
+role:           GLOBALAXS OSLO NOC
+address:        Selma Ellefsens Vei 1, 0581 Oslo, Norway
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS23-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2017-06-07T05:03:00Z
+last-modified:  2017-11-01T09:18:42Z
+source:         RIPE # Filtered
+
+% Information related to '82.102.27.0/24AS9009'
+
+route:          82.102.27.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2017-09-22T13:16:26Z
+last-modified:  2017-09-22T13:16:26Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,60 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       209.141.32.0 - 209.141.63.255
+CIDR:           209.141.32.0/19
+NetName:        PONYNET-04
+NetHandle:      NET-209-141-32-0-1
+Parent:         NET209 (NET-209-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS53667
+Organization:   FranTech Solutions (SYNDI-5)
+RegDate:        2011-01-27
+Updated:        2012-03-25
+Ref:            https://rdap.arin.net/registry/ip/209.141.32.0
+
+
+OrgName:        FranTech Solutions
+OrgId:          SYNDI-5
+Address:        1621 Central Ave
+City:           Cheyenne
+StateProv:      WY
+PostalCode:     82001
+Country:        US
+RegDate:        2010-07-21
+Updated:        2017-01-28
+Ref:            https://rdap.arin.net/registry/entity/SYNDI-5
+
+
+OrgTechHandle: FDI19-ARIN
+OrgTechName:   Dias, Francisco 
+OrgTechPhone:  +1-778-977-8246 
+OrgTechEmail:  admin@frantech.ca
+OrgTechRef:    https://rdap.arin.net/registry/entity/FDI19-ARIN
+
+OrgAbuseHandle: FDI19-ARIN
+OrgAbuseName:   Dias, Francisco 
+OrgAbusePhone:  +1-778-977-8246 
+OrgAbuseEmail:  admin@frantech.ca
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/FDI19-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

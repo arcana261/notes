@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.191.88.0 - 37.191.91.255'
+
+% Abuse contact for '37.191.88.0 - 37.191.91.255' is 'ripe-abuse@spadana.net'
+
+inetnum:        37.191.88.0 - 37.191.91.255
+netname:        PANAONE
+descr:          Ariana ADSL Users
+country:        IR
+admin-c:        NZ618-RIPE
+geoloc:         32.63445993843638 51.337223052978516
+tech-c:         NZ618-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-HAJIAHMADI
+mnt-lower:      MNT-HAJIAHMADI
+mnt-routes:     MNT-HAJIAHMADI
+created:        2012-08-29T11:45:01Z
+last-modified:  2018-03-12T06:35:32Z
+source:         RIPE
+
+person:         Narges Zarrabi
+address:        No 1, Homa Building, Sheikh Saddough,Esfahan,Iran
+phone:          +98 313 6106
+fax-no:         +98 313 667 1547
+nic-hdl:        NZ618-RIPE
+mnt-by:         MNT-HAJIAHMADI
+created:        2012-10-14T07:49:12Z
+last-modified:  2019-02-08T10:59:01Z
+source:         RIPE # Filtered
+
+% Information related to '37.191.88.0/22AS48309'
+
+route:          37.191.88.0/22
+origin:         AS48309
+mnt-by:         MNT-HAJIAHMADI
+created:        2018-02-19T14:11:30Z
+last-modified:  2018-02-19T14:11:30Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

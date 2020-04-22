@@ -1,0 +1,108 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       104.244.72.0 - 104.244.79.255
+CIDR:           104.244.72.0/21
+NetName:        PONYNET-14
+NetHandle:      NET-104-244-72-0-1
+Parent:         NET104 (NET-104-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS53667
+Organization:   FranTech Solutions (SYNDI-5)
+RegDate:        2014-11-10
+Updated:        2014-11-10
+Ref:            https://rdap.arin.net/registry/ip/104.244.72.0
+
+
+OrgName:        FranTech Solutions
+OrgId:          SYNDI-5
+Address:        1621 Central Ave
+City:           Cheyenne
+StateProv:      WY
+PostalCode:     82001
+Country:        US
+RegDate:        2010-07-21
+Updated:        2017-01-28
+Ref:            https://rdap.arin.net/registry/entity/SYNDI-5
+
+
+OrgAbuseHandle: FDI19-ARIN
+OrgAbuseName:   Dias, Francisco 
+OrgAbusePhone:  +1-778-977-8246 
+OrgAbuseEmail:  fdias@frantech.ca
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/FDI19-ARIN
+
+OrgTechHandle: FDI19-ARIN
+OrgTechName:   Dias, Francisco 
+OrgTechPhone:  +1-778-977-8246 
+OrgTechEmail:  fdias@frantech.ca
+OrgTechRef:    https://rdap.arin.net/registry/entity/FDI19-ARIN
+
+# end
+
+
+# start
+
+NetRange:       104.244.72.0 - 104.244.79.255
+CIDR:           104.244.72.0/21
+NetName:        BUYVM-LUXEMBOURG-01
+NetHandle:      NET-104-244-72-0-2
+Parent:         PONYNET-14 (NET-104-244-72-0-1)
+NetType:        Reallocated
+OriginAS:       AS53667
+Organization:   BuyVM (BUYVM)
+RegDate:        2017-10-01
+Updated:        2017-10-01
+Ref:            https://rdap.arin.net/registry/ip/104.244.72.0
+
+
+OrgName:        BuyVM
+OrgId:          BUYVM
+Address:        3, op der Poukewiss
+City:           Roost
+StateProv:      
+PostalCode:     7795
+Country:        LU
+RegDate:        2017-10-01
+Updated:        2017-10-01
+Ref:            https://rdap.arin.net/registry/entity/BUYVM
+
+
+OrgAbuseHandle: FDI19-ARIN
+OrgAbuseName:   Dias, Francisco 
+OrgAbusePhone:  +1-778-977-8246 
+OrgAbuseEmail:  fdias@frantech.ca
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/FDI19-ARIN
+
+OrgTechHandle: FDI19-ARIN
+OrgTechName:   Dias, Francisco 
+OrgTechPhone:  +1-778-977-8246 
+OrgTechEmail:  fdias@frantech.ca
+OrgTechRef:    https://rdap.arin.net/registry/entity/FDI19-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

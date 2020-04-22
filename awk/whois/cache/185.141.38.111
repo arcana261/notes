@@ -1,0 +1,79 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.141.36.0 - 185.141.39.255'
+
+% Abuse contact for '185.141.36.0 - 185.141.39.255' is 'halakooei@gmail.com'
+
+inetnum:        185.141.36.0 - 185.141.39.255
+netname:        IR-MOEIN-DADOSETAD-20160301
+country:        IR
+org:            ORG-MDGC1-RIPE
+admin-c:        MHNN2-RIPE
+tech-c:         MHNN2-RIPE
+status:         ALLOCATED PA
+mnt-by:         mnt-ir-moein-dadosetad-1
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2020-03-18T08:17:26Z
+last-modified:  2020-03-18T08:17:26Z
+source:         RIPE
+
+organisation:   ORG-MDGC1-RIPE
+org-name:       Moein Dadosetad Golestan Co. (P.J,S)
+org-type:       LIR
+address:        2nd Floor Sina Building, Opposite 36th Edalat,Valiasr Avenue
+address:        4917887459
+address:        Gorgan
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        MHNN2-RIPE
+tech-c:         MHNN2-RIPE
+abuse-c:        AR54839-RIPE
+mnt-ref:        mnt-ir-moein-dadosetad-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-ir-moein-dadosetad-1
+created:        2019-08-16T08:27:49Z
+last-modified:  2019-08-16T08:27:51Z
+source:         RIPE # Filtered
+phone:          +98 17322 33534
+
+person:         Mohammad Hadi Najafi Nezhad
+address:        2nd Floor Sina Building, Opposite 36th Edalat,Valiasr Avenue
+address:        4917887459
+address:        Gorgan
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 17322 33534
+nic-hdl:        MHNN2-RIPE
+mnt-by:         mnt-ir-moein-dadosetad-1
+created:        2019-08-16T08:27:48Z
+last-modified:  2019-08-16T08:27:49Z
+source:         RIPE
+
+% Information related to '185.141.38.0/24AS202391'
+
+route:          185.141.38.0/24
+origin:         AS202391
+mnt-by:         MNT-Soshiant
+created:        2018-09-01T07:32:17Z
+last-modified:  2018-09-01T07:32:17Z
+source:         RIPE
+
+% Information related to '185.141.38.0/24as8604'
+
+route:          185.141.38.0/24
+origin:         as8604
+mnt-by:         ir-iprocessing-IPnet-mntner
+mnt-by:         ir-iprocessingindustry-1-mnt
+mnt-by:         MNT-Soshiant
+created:        2017-11-16T08:20:06Z
+last-modified:  2017-11-16T08:20:06Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

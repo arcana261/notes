@@ -1,0 +1,61 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '178.211.43.0 - 178.211.43.255'
+
+% Abuse contact for '178.211.43.0 - 178.211.43.255' is 'abuse@as42926.net'
+
+inetnum:        178.211.43.0 - 178.211.43.255
+netname:        ISTANBUL-DC
+descr:          Istanbul Datacenter Ltd. Sti.
+country:        TR
+admin-c:        SNOC14-RIPE
+tech-c:         SNOC14-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS42926-MNT
+mnt-by:         SAYFA-NET-MNT
+created:        2015-11-01T16:04:50Z
+last-modified:  2016-01-05T02:15:37Z
+source:         RIPE
+
+person:         SAYFA-NET Network Operations Center
+address:        650 South Grand Ave
+address:        Suite 112
+address:        Los Angeles, California
+address:        USA
+phone:          +902129200000
+fax-no:         +90 (532) 723 52 63
+nic-hdl:        SNOC14-RIPE
+mnt-by:         SAYFA-NET-MNT
+created:        2011-05-04T13:23:34Z
+last-modified:  2017-10-30T22:13:39Z
+source:         RIPE # Filtered
+
+% Information related to '178.211.43.0/24AS197328'
+
+route:          178.211.43.0/24
+origin:         AS197328
+mnt-by:         SAYFA-NET-MNT
+created:        2017-04-27T07:33:13Z
+last-modified:  2017-04-27T07:33:13Z
+source:         RIPE
+
+% Information related to '178.211.43.0/24AS42926'
+
+route:          178.211.43.0/24
+descr:          ISTANBUL-DC
+origin:         AS42926
+mnt-by:         ISTANBULDC-MNT
+created:        2010-09-20T18:56:55Z
+last-modified:  2010-09-20T19:42:29Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

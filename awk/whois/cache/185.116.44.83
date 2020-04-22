@@ -1,0 +1,100 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.116.44.0 - 185.116.45.255'
+
+% Abuse contact for '185.116.44.0 - 185.116.45.255' is 'm.pourfakheri@tci.ir'
+
+inetnum:        185.116.44.0 - 185.116.45.255
+netname:        TCIAZS
+country:        IR
+admin-c:        NAS126-RIPE
+tech-c:         DPS105-RIPE
+tech-c:         NS7537-RIPE
+abuse-c:        AC26828-RIPE
+tech-c:         AA27050-RIPE
+org:            ORG-TCOA2-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2018-01-01T07:39:46Z
+last-modified:  2019-06-24T10:04:36Z
+source:         RIPE
+
+organisation:   ORG-TCOA2-RIPE
+org-name:       Telecommunication Company of Azarbayejan Sharghi
+org-type:       other
+address:        Azarbayejan Sharghi - Tabriz - Telecommunication Company of Azarbayejan Sharghi
+abuse-c:        AC26828-RIPE
+admin-c:        NAS126-RIPE
+tech-c:         DPS105-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-04-08T13:10:01Z
+last-modified:  2019-03-03T11:04:16Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Azarbayejan Sharghi)
+address:        Azarbayejan Sharghi - Tabriz - Telecommunication Company of Azarbayejan Sharghi
+admin-c:        BFA33-RIPE
+nic-hdl:        DPS105-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T10:57:18Z
+last-modified:  2019-03-03T10:57:18Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Azarbayejan Sharghi)
+address:        Azarbayejan Sharghi - Tabriz - Telecommunication Company of Azarbayejan Sharghi
+admin-c:        MG26054-RIPE
+nic-hdl:        NAS126-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T10:53:42Z
+last-modified:  2019-03-03T10:53:42Z
+source:         RIPE # Filtered
+
+role:           NOC (Azarbayejan Sharghi)
+address:        Azarbayejan Sharghi - Tabriz - Telecommunication Company of Azarbayejan Sharghi
+admin-c:        MN12361-RIPE
+nic-hdl:        NS7537-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-03T10:59:46Z
+last-modified:  2019-03-03T10:59:46Z
+source:         RIPE # Filtered
+
+person:         mehdi noori
+address:        telecommunication company of Azarbayejan Sharghi
+phone:          +98 41 34765454
+nic-hdl:        AA27050-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2014-01-22T10:53:25Z
+last-modified:  2018-10-31T08:29:51Z
+source:         RIPE # Filtered
+
+% Information related to '185.116.44.0/22AS48159'
+
+route:          185.116.44.0/22
+descr:          TCI (Azarbayjan sharghi)
+origin:         AS48159
+mnt-by:         habibhosseinimaintainer
+created:        2018-01-01T12:19:49Z
+last-modified:  2018-01-01T12:19:49Z
+source:         RIPE
+
+% Information related to '185.116.44.0/22AS58224'
+
+route:          185.116.44.0/22
+origin:         AS58224
+mnt-routes:     habibhosseinimaintainer
+mnt-by:         TCI-RIPE-MNT
+created:        2017-11-13T13:02:25Z
+last-modified:  2018-01-01T07:40:36Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

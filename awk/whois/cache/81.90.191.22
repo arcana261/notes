@@ -1,0 +1,80 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '81.90.191.0 - 81.90.191.255'
+
+% Abuse contact for '81.90.191.0 - 81.90.191.255' is 'abuse@thinkhuge.net'
+
+inetnum:        81.90.191.0 - 81.90.191.255
+netname:        THINKHUGE-NEW-YORK
+country:        US
+geoloc:         40.7175 -74.0083
+org:            ORG-THL12-RIPE
+admin-c:        GBXS131-RIPE
+tech-c:         WT1449-RIPE
+status:         ASSIGNED PA
+mnt-by:         uk-think-aug02-1-mnt
+created:        2018-08-22T06:07:07Z
+last-modified:  2018-08-22T06:07:07Z
+source:         RIPE
+mnt-routes:     GLOBALAXS-MNT
+
+organisation:   ORG-THL12-RIPE
+org-name:       Think Huge Ltd
+org-type:       LIR
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+admin-c:        WT1449-RIPE
+tech-c:         WT1449-RIPE
+abuse-c:        AR47084-RIPE
+mnt-ref:        uk-think-uk02-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         uk-think-uk02-1-mnt
+created:        2018-06-21T12:58:49Z
+last-modified:  2018-06-21T12:58:51Z
+source:         RIPE # Filtered
+phone:          +447415953982
+
+role:           Think Huge New York
+address:        Equinix NY8 60 Hudson Street, Suite 1602, 10013 New York,
+address:        New York, USA
+nic-hdl:        GBXS131-RIPE
+mnt-by:         GLOBALAXS-MNT
+admin-c:        WT1449-RIPE
+tech-c:         WT1449-RIPE
+created:        2018-08-06T14:29:21Z
+last-modified:  2018-08-06T14:29:21Z
+source:         RIPE # Filtered
+
+person:         Will Thomas
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+phone:          +447415953982
+nic-hdl:        WT1449-RIPE
+mnt-by:         uk-think-uk02-1-mnt
+created:        2018-06-21T12:58:47Z
+last-modified:  2018-06-21T12:58:48Z
+source:         RIPE
+
+% Information related to '81.90.191.0/24AS9009'
+
+route:          81.90.191.0/24
+origin:         AS9009
+mnt-by:         uk-think-aug02-1-mnt
+created:        2018-08-22T05:26:50Z
+last-modified:  2018-08-22T05:26:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

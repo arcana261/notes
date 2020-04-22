@@ -1,0 +1,58 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.160.164.0 - 5.160.165.255'
+
+% Abuse contact for '5.160.164.0 - 5.160.165.255' is 'abuse@respina.net'
+
+inetnum:        5.160.164.0 - 5.160.165.255
+netname:        IR-PTE-TEHRAN-20180723
+country:        IR
+admin-c:        MABE86-RIPE
+tech-c:         MABE86-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         MNT-RSPN
+created:        2018-07-23T06:48:56Z
+last-modified:  2018-07-23T06:48:56Z
+source:         RIPE
+
+person:         Masoud Bemanipour
+address:        Tehran,Iran
+phone:          +98 21 22619536
+phone:          +98 21 23545
+fax-no:         +98 21 22607555
+nic-hdl:        MABE86-RIPE
+mnt-by:         PTE-MNT
+created:        2008-06-13T19:15:32Z
+last-modified:  2011-03-14T05:19:10Z
+source:         RIPE # Filtered
+
+% Information related to '5.160.164.0/23AS42337'
+
+route:          5.160.164.0/23
+mnt-routes:     PDZ-MNT
+mnt-routes:     PTE-MNT
+origin:         AS42337
+mnt-by:         MNT-RSPN
+created:        2018-01-03T06:09:43Z
+last-modified:  2018-07-24T06:17:54Z
+source:         RIPE
+
+% Information related to '5.160.164.0/23AS49100'
+
+route:          5.160.164.0/23
+origin:         AS49100
+mnt-by:         PTE-MNT
+created:        2018-07-24T07:02:14Z
+last-modified:  2018-07-24T07:02:14Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

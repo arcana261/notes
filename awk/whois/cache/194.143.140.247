@@ -1,0 +1,72 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.143.140.0 - 194.143.141.255'
+
+% Abuse contact for '194.143.140.0 - 194.143.141.255' is 'abuse@nioc-intl.ir'
+
+inetnum:        194.143.140.0 - 194.143.141.255
+netname:        NIOCI-NET
+descr:          International Affairs - NIOC
+country:        IR
+org:            ORG-IANI1-RIPE
+admin-c:        HN2524-RIPE
+tech-c:         HN2524-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         HAMID-MNT
+mnt-by:         IPM-MNT
+mnt-routes:     HAMID-MNT
+mnt-routes:     IPM-MNT
+mnt-domains:    HAMID-MNT
+created:        2007-05-31T10:43:25Z
+last-modified:  2019-04-29T05:19:21Z
+source:         RIPE
+sponsoring-org: ORG-IA30-RIPE
+
+organisation:   ORG-IANI1-RIPE
+org-name:       National Iranian Oil Company
+descr:          International Affairs
+org-type:       OTHER
+address:        Taleghani Ave, Ministry of Oil Central Bldg 1, Tehran 1593657919
+abuse-c:        AR20750-RIPE
+mnt-ref:        HAMID-MNT
+mnt-by:         HAMID-MNT
+mnt-by:         IPM-MNT
+created:        2007-04-19T09:48:38Z
+last-modified:  2019-04-29T05:40:54Z
+source:         RIPE # Filtered
+
+person:         Habib Nasiri
+address:        International Affairs - National Iranian Oil Company
+address:        Taleghani Ave
+address:        Ministry of Oil Central Bldg 1, Tehran, Iran 1593657919
+phone:          +9821 61622813
+fax-no:         +9821 88936032
+nic-hdl:        HN2524-RIPE
+mnt-by:         HAMID-MNT
+mnt-by:         IPM-MNT
+created:        2018-11-18T06:01:49Z
+last-modified:  2019-04-29T05:41:14Z
+source:         RIPE
+
+% Information related to '194.143.140.0/23AS42867'
+
+route:          194.143.140.0/23
+descr:          NIOC IA Block
+origin:         AS42867
+mnt-by:         HAMID-MNT
+mnt-by:         IPM-MNT
+created:        2009-01-28T12:30:02Z
+last-modified:  2019-04-29T05:38:29Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

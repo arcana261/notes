@@ -1,0 +1,72 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       209.126.0.0 - 209.126.15.255
+CIDR:           209.126.0.0/20
+NetName:        CONTA-48
+NetHandle:      NET-209-126-0-0-1
+Parent:         NET209 (NET-209-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Contabo Inc. (CONTA-48)
+RegDate:        2020-03-02
+Updated:        2020-03-02
+Ref:            https://rdap.arin.net/registry/ip/209.126.0.0
+
+
+OrgName:        Contabo Inc.
+OrgId:          CONTA-48
+Address:        710 N Tucker Blvd. STE 420
+City:           St. Louis
+StateProv:      MO
+PostalCode:     63101
+Country:        US
+RegDate:        2019-12-23
+Updated:        2020-02-17
+Ref:            https://rdap.arin.net/registry/entity/CONTA-48
+
+
+OrgAbuseHandle: CAD61-ARIN
+OrgAbuseName:   Contabo Abuse Department
+OrgAbusePhone:  +498921665862 
+OrgAbuseEmail:  abuse@contabo.de
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/CAD61-ARIN
+
+OrgRoutingHandle: CONTA393-ARIN
+OrgRoutingName:   Contabo NOC
+OrgRoutingPhone:  +498921665862 
+OrgRoutingEmail:  noc@contabo.de
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/CONTA393-ARIN
+
+OrgTechHandle: CONTA392-ARIN
+OrgTechName:   Contabo Tech
+OrgTechPhone:  +498921665862 
+OrgTechEmail:  sascha.wintz@contabo.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/CONTA392-ARIN
+
+OrgNOCHandle: CONTA393-ARIN
+OrgNOCName:   Contabo NOC
+OrgNOCPhone:  +498921665862 
+OrgNOCEmail:  noc@contabo.de
+OrgNOCRef:    https://rdap.arin.net/registry/entity/CONTA393-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

@@ -1,0 +1,51 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.180.14.0 - 185.180.15.255'
+
+% Abuse contact for '185.180.14.0 - 185.180.15.255' is 'abuse@cdn77.com'
+
+inetnum:        185.180.14.0 - 185.180.15.255
+netname:        CZ-PRG-CDN77
+country:        CZ
+admin-c:        Dsts2-RIPE
+tech-c:         Dsts2-RIPE
+status:         ASSIGNED PA
+mnt-by:         DATACAMP-MNT
+created:        2016-12-08T16:09:25Z
+last-modified:  2016-12-08T16:09:25Z
+source:         RIPE
+
+role:           Datacamp s.r.o. tech staff
+address:        Datacamp s.r.o.
+address:        Bozeny Nemcovej 8
+address:        Bratislava 811 04
+address:        Slovakia
+abuse-mailbox:  abuse@datacamp.sk
+admin-c:        SUPN1-RIPE
+tech-c:         SUPN1-RIPE
+nic-hdl:        Dsts2-RIPE
+mnt-by:         SUPERNETWORK-MNT
+created:        2012-11-26T10:59:53Z
+last-modified:  2012-11-26T10:59:53Z
+source:         RIPE # Filtered
+
+% Information related to '185.180.14.0/23AS60068'
+
+route:          185.180.14.0/23
+descr:          CDN77 PRG
+origin:         AS60068
+mnt-by:         DATACAMP-MNT
+created:        2016-12-08T16:10:22Z
+last-modified:  2019-04-05T10:02:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.243.160.0 - 91.243.175.255'
+
+% Abuse contact for '91.243.160.0 - 91.243.175.255' is 'rasooli@ssjco.ir'
+
+inetnum:        91.243.160.0 - 91.243.175.255
+netname:        SariSystemBandarabasCompany
+country:        IR
+geoloc:         27.184651 56.291436
+org:            ORG-SSBC1-RIPE
+admin-c:        HJ1529-RIPE
+tech-c:         HJ1529-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-CWM
+mnt-routes:     MNT-CWM
+mnt-domains:    MNT-CWM
+created:        2012-08-07T12:23:10Z
+last-modified:  2018-09-03T05:17:15Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-CA932-RIPE
+
+organisation:   ORG-SSBC1-RIPE
+org-name:       Sari System Bandarabas Company
+org-type:       other
+admin-c:        HJ1529-RIPE
+address:        Unit4 , 4 Floor , Asadabadi Street , Green Building , Bandarabas
+abuse-c:        AR28149-RIPE
+mnt-ref:        MNT-CWM
+mnt-by:         MNT-CWM
+created:        2012-07-30T05:46:11Z
+last-modified:  2019-12-12T06:51:14Z
+source:         RIPE # Filtered
+
+person:         Hamed Jafari
+address:        Unit4 , 4 Floor , Asadabadi Street , Green Building , Bandarabas
+phone:          +987616663418
+nic-hdl:        HJ1529-RIPE
+mnt-by:         MNT-Pishtaz
+created:        2012-07-30T05:43:09Z
+last-modified:  2013-06-05T07:25:30Z
+source:         RIPE
+
+% Information related to '91.243.160.0/20AS59573'
+
+route:          91.243.160.0/20
+descr:          Sari System Bandarabas Company
+origin:         AS59573
+mnt-by:         MNT-CWM
+created:        2012-08-14T07:08:32Z
+last-modified:  2012-08-14T07:08:32Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

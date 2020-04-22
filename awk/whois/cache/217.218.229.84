@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.218.229.0 - 217.218.229.127'
+
+% Abuse contact for '217.218.229.0 - 217.218.229.127' is 'abuse@ito.gov.ir'
+
+inetnum:        217.218.229.0 - 217.218.229.127
+netname:        SHABAKEGOSTARAN
+descr:          shabake gostaran zangan co.,ISP
+country:        IR
+admin-c:        MRA7-RIPE
+tech-c:         MRA7-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS12880-MNT
+created:        2004-07-18T07:33:15Z
+last-modified:  2012-06-27T12:24:47Z
+source:         RIPE
+
+person:         Mohammad Reza Adami
+address:        NO 426,Saba building,Shohada ST,Zanjan,Iran
+phone:          +98 241 522 00 22
+nic-hdl:        MRA7-RIPE
+mnt-by:         AS12880-MNT
+created:        2008-03-16T11:01:48Z
+last-modified:  2008-03-16T11:01:48Z
+source:         RIPE # Filtered
+
+% Information related to '217.218.224.0/21AS58224'
+
+route:          217.218.224.0/21
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-10-21T09:35:50Z
+last-modified:  2018-10-21T09:35:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

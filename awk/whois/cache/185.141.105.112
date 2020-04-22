@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.141.105.0 - 185.141.105.255'
+
+% Abuse contact for '185.141.105.0 - 185.141.105.255' is 'baharan1391@yahoo.com'
+
+inetnum:        185.141.105.0 - 185.141.105.255
+netname:        Asre-ertebat
+country:        IR
+admin-c:        if22891-ripe
+tech-c:         IF1092-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-AsrB
+created:        2016-04-28T11:04:40Z
+last-modified:  2016-04-28T11:10:32Z
+source:         RIPE
+
+person:         Iman Fakhari
+address:        Postal Code 7661777985. Unit 16, Jalali Street, Jamaledin Asadabadi Street,. Kerman
+phone:          +983442220205
+nic-hdl:        IF1092-RIPE
+mnt-by:         MNT-CWM
+created:        2012-06-21T08:31:04Z
+last-modified:  2012-06-21T08:31:04Z
+source:         RIPE
+
+person:         Iman Fakhari
+address:        Asr Rayaneh Ertebat BAM CO
+phone:          +989139440479
+nic-hdl:        if22891-ripe
+mnt-by:         MNT-AsrB
+created:        2015-05-07T07:02:24Z
+last-modified:  2018-12-23T15:41:24Z
+source:         RIPE
+
+% Information related to '185.141.105.0/24AS56466'
+
+route:          185.141.105.0/24
+origin:         AS56466
+mnt-by:         ir-raveshyab-1-mnt
+mnt-by:         MNT-AsrB
+created:        2019-07-15T18:13:04Z
+last-modified:  2019-07-15T18:13:04Z
+source:         RIPE
+
+% Information related to '185.141.105.0/24AS58331'
+
+route:          185.141.105.0/24
+origin:         AS58331
+mnt-by:         MNT-AsrB
+created:        2016-04-28T11:16:12Z
+last-modified:  2016-04-28T11:16:12Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

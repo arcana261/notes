@@ -1,0 +1,83 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.153.128.0 - 37.153.129.255'
+
+% Abuse contact for '37.153.128.0 - 37.153.129.255' is 'hadadi@tci.ir'
+
+inetnum:        37.153.128.0 - 37.153.129.255
+netname:        TCIZNJ
+descr:          Telecommunication Company of Zanjan
+country:        IR
+admin-c:        NA6193-RIPE
+tech-c:         DP14857-RIPE
+tech-c:         EB9582-RIPE
+org:            ORG-TCOZ1-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+mnt-lower:      TCI-RIPE-MNT
+mnt-routes:     TCI-RIPE-MNT
+created:        2015-06-10T06:23:35Z
+last-modified:  2019-06-19T08:25:30Z
+source:         RIPE
+
+organisation:   ORG-TCOZ1-RIPE
+tech-c:         DP14857-RIPE
+org-name:       Telecommunication Company of Zanjan
+org-type:       other
+address:        Zanjan - Telecommunication Company of Zanjan
+abuse-c:        AC27056-RIPE
+admin-c:        NA6193-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-30T06:30:58Z
+last-modified:  2019-02-24T10:40:06Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Zanjan)
+address:        Zanjan - Telecommunication Company of Zanjan
+admin-c:        HD3631-RIPE
+nic-hdl:        DP14857-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T06:10:38Z
+last-modified:  2019-02-24T06:10:38Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Zanjan)
+address:        Zanjan - Telecommunication Company of Zanjan
+nic-hdl:        NA6193-RIPE
+admin-c:        HD3631-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T06:03:13Z
+last-modified:  2019-02-24T06:03:13Z
+source:         RIPE # Filtered
+
+person:         ebrahim bathaee
+address:        telecommunication company of Zanjan
+phone:          +98-24-34122326
+phone:          +989127455367
+nic-hdl:        EB9582-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2014-01-18T13:41:55Z
+last-modified:  2015-02-17T09:01:00Z
+source:         RIPE
+
+% Information related to '37.153.128.0/22AS58224'
+
+route:          37.153.128.0/22
+descr:          Telecommunication Company of Iran
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2015-06-09T13:56:44Z
+last-modified:  2017-03-12T05:21:53Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

@@ -1,0 +1,130 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       184.22.0.0 - 184.22.255.255
+CIDR:           184.22.0.0/16
+NetName:        APNIC
+NetHandle:      NET-184-22-0-0-1
+Parent:         NET184 (NET-184-0-0-0-0)
+NetType:        Early Registrations, Transferred to APNIC
+OriginAS:       
+Organization:   Asia Pacific Network Information Centre (APNIC)
+RegDate:        2015-08-10
+Updated:        2015-08-10
+Ref:            https://rdap.arin.net/registry/ip/184.22.0.0
+
+
+
+OrgName:        Asia Pacific Network Information Centre
+OrgId:          APNIC
+Address:        PO Box 3646
+City:           South Brisbane
+StateProv:      QLD
+PostalCode:     4101
+Country:        AU
+RegDate:        
+Updated:        2012-01-24
+Ref:            https://rdap.arin.net/registry/entity/APNIC
+
+ReferralServer:  whois://whois.apnic.net
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+
+OrgTechHandle: AWC12-ARIN
+OrgTechName:   APNIC Whois Contact
+OrgTechPhone:  +61 7 3858 3188 
+OrgTechEmail:  search-apnic-not-arin@apnic.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+OrgAbuseHandle: AWC12-ARIN
+OrgAbuseName:   APNIC Whois Contact
+OrgAbusePhone:  +61 7 3858 3188 
+OrgAbuseEmail:  search-apnic-not-arin@apnic.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.apnic.net.
+
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '184.22.128.0 - 184.22.191.255'
+
+% Abuse contact for '184.22.128.0 - 184.22.191.255' is 'abuseIPv4@ais.co.th'
+
+inetnum:        184.22.128.0 - 184.22.191.255
+netname:        TH-AIS-Fibre
+descr:          AIS Fibre
+country:        TH
+admin-c:        SS1413-AP
+tech-c:         ANMC1-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-AWN-CO-LTD-TH
+mnt-irt:        IRT-AWN-CO-LTD-TH
+last-modified:  2016-01-16T07:09:53Z
+source:         APNIC
+
+irt:            IRT-AWN-CO-LTD-TH
+address:        414  Phaholyothin Rd Samsen Nai Phayathai Thailand Bangkok 10400
+e-mail:         abuseIPv4@ais.co.th
+abuse-mailbox:  abuseIPv4@ais.co.th
+admin-c:        AWNC1-AP
+tech-c:         AWNC1-AP
+auth:           # Filtered
+remarks:        abuseIPv4@ais.co.th was validated on 2019-12-19
+mnt-by:         MAINT-AWN-CO-LTD-TH
+last-modified:  2020-02-05T07:46:01Z
+source:         APNIC
+
+role:           SBN Co Ltd IP Planning
+address:        408/60 Phaholyothin Place Building 38th floor
+address:        Phaholyothin Road, Samsennai,
+address:        Phayathai, Bangkok 10400
+country:        TH
+phone:          +66-2-615-3964
+fax-no:         +66-2-619-8777
+e-mail:         sitthips@ais.co.th
+admin-c:        SS1413-AP
+tech-c:         BS534-AP
+nic-hdl:        SS1413-AP
+mnt-by:         MAINT-SUPERBROADBANDNETWORK-TH
+abuse-mailbox:  abuseipv4@sbn.co.th
+last-modified:  2013-06-18T08:41:20Z
+source:         APNIC
+
+person:         AIS Network Management Center
+address:        Advanced Info Service Public Company Limited
+address:        NMC, 1291/1 Phaholyothin Road, Phayathai, Bangkok 10400, THAILAND
+country:        TH
+phone:          +66-2615-3803
+fax-no:         +66-2615-3838
+e-mail:         abuseIPv4@ais.co.th
+nic-hdl:        ANMC1-AP
+remarks:        1st tier of abuse contact
+mnt-by:         MAINT-TH-AIS
+last-modified:  2011-06-09T08:33:06Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK4)
+
+
