@@ -314,6 +314,15 @@ sudo add-apt-repository ppa:philip.scott/elementary-tweaks
 
 sudo apt-get install elementary-theme elementary-icon-theme elementary-default-settings elementary-desktop elementary-tweaks
 
+
+#######################################
+FIX KEYBOARD MESS
+#######################################
+
+sudo dpkg-reconfigure keyboard-configuration
+gsettings reset org.gnome.desktop.input-sources xkb-options
+
+
 ---------------------------------------------------------------------
 
 
