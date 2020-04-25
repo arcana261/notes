@@ -1,50 +1,21 @@
 BEGIN {
-    whois_reload_db();
+    whoisdb_reload();
 }
 
-function whois_reload_db() {
-    whois_records_length = 0;
-    ignore_list_length = 0;
-    whois_records_dirty = 0;
-
-    while ((getline line < "whois.db") > 0) {
-        whois_records_length = whois_records_length + 1;
-        split(line, parts, "`")
-
-        n = int(parts[1]);
-        fields_length = 0;
-        for (i=2; i<=(n*2)+1; i+=2) {
-            field = parts[i];
-            value = parts[i+1];
-
-            fields_length = fields_length + 1;
-            whois_records[whois_records_length]["fields"][fields_length] = field;
-            whois_records[whois_records_length]["values"][field] = value;
-        }
-
-        whois_records[whois_records_length]["fields_length"] = fields_length;
-    }
-
-    close("whois.db");
-
-    while ((getline line < "ignore.txt") > 0) {
-        sub(/^\s*/,"",line);
-        sub(/\s*$/,"",line);
-        ignore_list_length = ignore_list_length + 1;
-        ignore_list[ignore_list_length] = line;
-    }
-
-    close("ignore.txt");
-
-    whois_records_start_ips_length = 0;
-    for (rebuild_counter=1; rebuild_counter<=whois_records_length; rebuild_counter++) {
-        start = get_whois_record_ip_start_by_index(rebuild_counter);
-        whois_records_start_ips_length = whois_records_start_ips_length + 1;
-        whois_records_start_ips[whois_records_start_ips_length] = start;
-    }
+### BEGIN IP UTILITIES ###
+function canonical_ip(_canonical_ip_ip) {
+    split(_canonical_ip_ip,_canonical_ip_parts,".");
+    _canonical_ip_result = sprintf("%03d.%03d.%03d.%03d",_canonical_ip_parts[1],_canonical_ip_parts[2],_canonical_ip_parts[3],_canonical_ip_parts[4]);
+    return _canonical_ip_result;
 }
 
-function decimal_to_boolean(num) {
+function uncanonical_ip(_canonical_ip_ip) {
+    split(_canonical_ip_ip,_canonical_ip_parts,".");
+    _canonical_ip_result = sprintf("%d.%d.%d.%d",_canonical_ip_parts[1],_canonical_ip_parts[2],_canonical_ip_parts[3],_canonical_ip_parts[4]);
+    return _canonical_ip_result;
+}
+
+function _decimal_to_boolean(num) {
     result = "";
 
     while (num > 1) {
@@ -57,7 +28,7 @@ function decimal_to_boolean(num) {
     return result;
 }
 
-function boolean_to_decimal(val) {
+function _boolean_to_decimal(val) {
     split(val,parts,"");
     result = 0;
     for (i=1; parts[i]!=""; i++) {
@@ -66,38 +37,32 @@ function boolean_to_decimal(val) {
     return int(result);
 }
 
-function fix_ip(ip) {
-    split(ip,parts,".");
-    result = sprintf("%03d.%03d.%03d.%03d",parts[1],parts[2],parts[3],parts[4]);
-    return result;
-}
-
-function ip_to_boolean(ip) {
-    split(ip,parts,".");
-    for (i=1;i<=4;i++) {
-        if (parts[i]=="") {
-            part = "0";
+function _ip_to_boolean(_ip_to_boolean_ip) {
+    split(_ip_to_boolean_ip,_ip_to_boolean_parts,".");
+    for (_ip_to_boolean_i=1;_ip_to_boolean_i<=4;_ip_to_boolean_i++) {
+        if (_ip_to_boolean_parts[_ip_to_boolean_i]=="") {
+            _ip_to_boolean_part = "0";
         } else {
-            part = decimal_to_boolean(int(parts[i]));
+            _ip_to_boolean_part = _decimal_to_boolean(int(_ip_to_boolean_parts[_ip_to_boolean_i]));
         }
-        part = sprintf("%08s", part);
-        for (j=1;j<=8;j++) {
-            sub(/ /,"0",part);
+        _ip_to_boolean_part = sprintf("%08s", _ip_to_boolean_part);
+        for (_ip_to_boolean_j=1;_ip_to_boolean_j<=8;_ip_to_boolean_j++) {
+            sub(/ /,"0",_ip_to_boolean_part);
         }
-        result_parts[i] = part;
+        _ip_to_boolean_result_parts[_ip_to_boolean_i] = _ip_to_boolean_part;
     }
-    return sprintf("%s%s%s%s", result_parts[1], result_parts[2], result_parts[3], result_parts[4]);
+    return sprintf("%s%s%s%s", _ip_to_boolean_result_parts[1], _ip_to_boolean_result_parts[2], _ip_to_boolean_result_parts[3], _ip_to_boolean_result_parts[4]);
 }
 
-function boolean_to_ip(val) {
-    boolean_to_ip_parts[1] = boolean_to_decimal(substr(val, 1, 8));
-    boolean_to_ip_parts[2] = boolean_to_decimal(substr(val, 9, 8));
-    boolean_to_ip_parts[3] = boolean_to_decimal(substr(val, 17, 8));
-    boolean_to_ip_parts[4] = boolean_to_decimal(substr(val, 25, 8));
-    return sprintf("%d.%d.%d.%d", boolean_to_ip_parts[1], boolean_to_ip_parts[2], boolean_to_ip_parts[3], boolean_to_ip_parts[4]);
+function _boolean_to_ip(val) {
+    _boolean_to_ip_parts[1] = _boolean_to_decimal(substr(val, 1, 8));
+    _boolean_to_ip_parts[2] = _boolean_to_decimal(substr(val, 9, 8));
+    _boolean_to_ip_parts[3] = _boolean_to_decimal(substr(val, 17, 8));
+    _boolean_to_ip_parts[4] = _boolean_to_decimal(substr(val, 25, 8));
+    return sprintf("%d.%d.%d.%d", _boolean_to_ip_parts[1], _boolean_to_ip_parts[2], _boolean_to_ip_parts[3], _boolean_to_ip_parts[4]);
 }
 
-function boolean_and(left, right) {
+function _boolean_and(left, right) {
     split(left,left_parts,"");
     split(right,right_parts,"");
     result = "";
@@ -113,7 +78,7 @@ function boolean_and(left, right) {
     return result;
 }
 
-function boolean_or(left, right) {
+function _boolean_or(left, right) {
     split(left,left_parts,"");
     split(right,right_parts,"");
     result = "";
@@ -129,7 +94,23 @@ function boolean_or(left, right) {
     return result;
 }
 
-function cidr_low_bitmask(count) {
+function _boolean_xor(left, right) {
+    split(left,left_parts,"");
+    split(right,right_parts,"");
+    _boolean_xor_result = "";
+
+    for (_boolean_xor_counter=1; left_parts[_boolean_xor_counter]!=""&&right_parts[_boolean_xor_counter]!=""; _boolean_xor_counter++) {
+        if ((int(left_parts[_boolean_xor_counter]) + int(right_parts[_boolean_xor_counter])) == 1) {
+            _boolean_xor_result = (_boolean_xor_result "1");
+        } else {
+            _boolean_xor_result = (_boolean_xor_result "0");
+        }
+    }
+
+    return _boolean_xor_result;
+}
+
+function _cidr_low_bitmask(count) {
     result = "";
     for (i=1; i<=count; i++) {
         result = (result "1");
@@ -140,7 +121,7 @@ function cidr_low_bitmask(count) {
     return result;
 }
 
-function cidr_high_bitmask(count) {
+function _cidr_high_bitmask(count) {
     result = "";
     for (i=1; i<=count; i++) {
         result = (result "0");
@@ -151,38 +132,353 @@ function cidr_high_bitmask(count) {
     return result;
 }
 
-function cidr_start_ip(cidr) {
-    idx = match(cidr,/\//);
-    if (idx == 0) {
+function cidr_start_ip(_cidr_start_ip_cidr) {
+    _cidr_start_ip_idx = match(_cidr_start_ip_cidr,/\//);
+    if (_cidr_start_ip_idx == 0) {
         return "";
     }
 
-    ip = substr(cidr, 0, idx - 1);
-    count = substr(cidr, idx + 1);
+    _cidr_start_ip_ip = substr(_cidr_start_ip_cidr, 0, _cidr_start_ip_idx - 1);
+    _cidr_start_ip_count = substr(_cidr_start_ip_cidr, _cidr_start_ip_idx + 1);
 
-    sub(/^\s*/,"",ip);
-    sub(/^\s*/,"",count);
-    sub(/\s*$/,"",ip);
-    sub(/\s*$/,"",count);
+    sub(/^\s*/,"",_cidr_start_ip_ip);
+    sub(/^\s*/,"",_cidr_start_ip_count);
+    sub(/\s*$/,"",_cidr_start_ip_ip);
+    sub(/\s*$/,"",_cidr_start_ip_count);
 
-    count = int(count);
+    _cidr_start_ip_count = int(_cidr_start_ip_count);
 
-    return fix_ip(boolean_to_ip(boolean_and(ip_to_boolean(ip), cidr_low_bitmask(count))))
+    return canonical_ip(_boolean_to_ip(_boolean_and(_ip_to_boolean(_cidr_start_ip_ip), _cidr_low_bitmask(_cidr_start_ip_count))))
 }
 
-function cidr_end_ip(cidr) {
-    idx = match(cidr,/\//);
-    if (idx == 0) {
+function cidr_end_ip(_cidr_end_ip_cidr) {
+    _cidr_end_ip_idx = match(_cidr_end_ip_cidr,/\//);
+    if (_cidr_end_ip_idx == 0) {
         return "";
     }
 
-    ip = substr(cidr, 0, idx - 1);
-    count = int(substr(cidr, idx + 1));
+    _cidr_end_ip_ip = substr(_cidr_end_ip_cidr, 0, _cidr_end_ip_idx - 1);
+    _cidr_end_ip_count = substr(_cidr_end_ip_cidr, _cidr_end_ip_idx + 1);
 
-    return fix_ip(boolean_to_ip(boolean_or(ip_to_boolean(ip), cidr_high_bitmask(count))))
+    sub(/^\s*/,"",_cidr_end_ip_ip);
+    sub(/^\s*/,"",_cidr_end_ip_count);
+    sub(/\s*$/,"",_cidr_end_ip_ip);
+    sub(/\s*$/,"",_cidr_end_ip_count);
+
+    _cidr_end_ip_count = int(_cidr_end_ip_count);
+
+    return canonical_ip(_boolean_to_ip(_boolean_or(_ip_to_boolean(_cidr_end_ip_ip), _cidr_high_bitmask(_cidr_end_ip_count))))
 }
 
-func parse_field(line) {
+function ip_range_to_cidr(_iprange_to_cidr_start_ip, _iprange_to_cidr_end_ip) {
+    _iprange_to_cidr_start_ip = canonical_ip(_iprange_to_cidr_start_ip);
+    _iprange_to_cidr_end_ip = canonical_ip(_iprange_to_cidr_end_ip);
+    _iprange_to_cidr_xor_result = _boolean_xor(_ip_to_boolean(_iprange_to_cidr_start_ip), _ip_to_boolean(_iprange_to_cidr_end_ip))
+
+    split(_iprange_to_cidr_xor_result,_iprange_to_cidr_xor_parts,"");
+    _iprange_to_cidr_cidr_range = 32;
+    _iprange_to_cidr_cidr_range_found = 0;
+
+    for (_iprange_to_cidr_counter=32; _iprange_to_cidr_counter>=1; _iprange_to_cidr_counter--) {
+        if (_iprange_to_cidr_cidr_range_found == 0) {
+            if (_iprange_to_cidr_xor_parts[_iprange_to_cidr_counter] == "1") {
+                _iprange_to_cidr_cidr_range = _iprange_to_cidr_cidr_range - 1;
+            } else if (_iprange_to_cidr_xor_parts[_iprange_to_cidr_counter] == "0") {
+                _iprange_to_cidr_cidr_range_found = 1;
+            } else {
+                print "ERROR: UNEXPECTED OPERATION WHILE CALCULATING CIDR i=" _iprange_to_cidr_counter " part=" _iprange_to_cidr_xor_parts[_iprange_to_cidr_counter] " xor_result=" _iprange_to_cidr_xor_result;
+            }
+        } else {
+            if (_iprange_to_cidr_xor_parts[_iprange_to_cidr_counter] == "1") {
+                print "WARN: no CIDR could be constructed from [" _iprange_to_cidr_start_ip "] - [" _iprange_to_cidr_end_ip "] xor_result=" _iprange_to_cidr_xor_result;
+                return "";
+            } else if (_iprange_to_cidr_xor_parts[_iprange_to_cidr_counter] != "0") {
+                print "ERROR: UNEXPECTED OPERATION WHILE CALCULATING CIDR";
+            }
+        }
+    }
+
+    return uncanonical_ip(_iprange_to_cidr_start_ip) "/" _iprange_to_cidr_cidr_range;
+}
+### END IP UTILITIES ###
+
+### BEGIN DATABASE ###
+function whoisdb_init() {
+    WHOISDB["length"] = 0;
+    WHOISDB["dirty"] = 0;
+    WHOISDB["start_ips"]["length"] = 0;
+    WHOISDB["is_rebuild"] = 0;
+}
+
+function _whoisdb_append_field_only(idx, field) {
+    _whoisdb_append_field_n = WHOISDB["records"][idx]["fields_length"];
+
+    for (_whoisdb_append_i = 1; _whoisdb_append_i <= _whoisdb_append_field_n; _whoisdb_append_i++) {
+        if (WHOISDB["records"][idx]["fields"][_whoisdb_append_i] == field) {
+            return "";
+        }
+    }
+
+    _whoisdb_append_field_n = _whoisdb_append_field_n + 1;
+    WHOISDB["records"][idx]["fields_length"] = _whoisdb_append_field_n;
+    WHOISDB["records"][idx]["fields"][_whoisdb_append_field_n] = field;
+    WHOISDB["records"][idx]["values"][field]["length"] = 0;
+    WHOISDB["dirty"] = 1;
+}
+
+function whoisdb_set_field(idx, field, value) {
+    _whoisdb_append_field_only(idx, field);
+    WHOISDB["records"][idx]["values"][field]["length"] = 1;
+    WHOISDB["records"][idx]["values"][field]["items"][1] = value;
+    WHOISDB["dirty"] = 1;
+}
+
+function whoisdb_append_field(idx, field, value) {
+    _whoisdb_append_field_only(idx, field);
+    _whoisdb_append_field_n = WHOISDB["records"][idx]["values"][field]["length"] + 1;
+    WHOISDB["records"][idx]["values"][field]["length"] = _whoisdb_append_field_n;
+    WHOISDB["records"][idx]["values"][field]["items"][_whoisdb_append_field_n] = value;
+    WHOISDB["dirty"] = 1;
+}
+
+function whoisdb_new_record() {
+    _whoisdb_new_record = WHOISDB["length"] + 1;
+    WHOISDB["length"] = _whoisdb_new_record;
+    WHOISDB["records"][_whoisdb_new_record]["fields_length"] = 0;
+    WHOISDB["dirty"] = 1;
+
+    return _whoisdb_new_record;
+}
+
+function whoisdb_pop_record() {
+    _whoisdb_new_record = WHOISDB["length"] - 1;
+    WHOISDB["length"] = _whoisdb_new_record;
+    WHOISDB["dirty"] = 1;
+}
+
+function whoisdb_length() {
+    return WHOISDB["length"];
+}
+
+function whoisdb_get_field_length(idx, field) {
+    _whoisdb_get_value_count = WHOISDB["records"][idx]["values"][field]["length"];
+    if (_whoisdb_get_value_count == "") {
+        return 0;
+    }
+    return _whoisdb_get_value_count;
+}
+
+function whoisdb_get_field(idx, field, field_idx) {
+    return WHOISDB["records"][idx]["values"][field]["items"][field_idx];
+}
+
+function whoisdb_get_origin(idx) {
+    return whoisdb_get_field(idx, "__ORIGIN__", 1);
+}
+
+function _whoisdb_get_iprange(idx, iprange_index) {
+    offset = 0;
+    range = whoisdb_get_field(idx, "NetRange", iprange_index - offset);
+    if (range != "") {
+        return range;
+    }
+    offset = offset + whoisdb_get_field_length(idx, "NetRange");
+
+    range = whoisdb_get_field(idx, "inetnum", iprange_index - offset);
+    if (range != "") {
+        return range;
+    }
+    offset = offset + whoisdb_get_field_length(idx, "inetnum");
+
+    range = whoisdb_get_field(idx, "IPv4 Address", iprange_index - offset);
+    if (range != "") {
+        return range;
+    }
+    offset = offset + whoisdb_get_field_length(idx, "IPv4 Address");
+
+    range = whoisdb_get_field(idx, "Network Number", iprange_index - offset);
+    if (range != "") {
+        return range;
+    }
+    offset = offset + whoisdb_get_field_length(idx, "Network Number");
+
+    range = whoisdb_get_field(idx, "CIDR", iprange_index - offset);
+    if (range != "") {
+        return range;
+    }
+    offset = offset + whoisdb_get_field_length(idx, "CIDR");
+
+    return "";
+}
+
+function whoisdb_get_ip_start(idx, iprange_index) {
+    result_record_ip_start = whoisdb_get_field(idx, "__START_IP__", iprange_index);
+    if (result_record_ip_start != "") {
+        return result_record_ip_start;
+    }
+
+    result_record_ip_start = _whoisdb_get_ip_start(idx, iprange_index);
+    if (result_record_ip_start != "") {
+        whoisdb_append_field(idx, "__START_IP__", result_record_ip_start);
+    }
+    return result_record_ip_start;
+}
+
+function _whoisdb_get_ip_start(idx, iprange_index) {
+    _get_whois_record_ip_start_range = _whoisdb_get_iprange(idx, iprange_index);
+    if (iprange_index > 1 && _get_whois_record_ip_start_range == "") {
+        return "";
+    }
+
+    if (_get_whois_record_ip_start_range ~ /[0-9][0-9]*(\.[0-9][0-9]*(\.[0-9][0-9]*(\.[0-9][0-9]*)?)?)?\s*\/\s*[0-9][0-9]*/) {
+        ip_start = cidr_start_ip(_get_whois_record_ip_start_range);
+        ip_end = cidr_end_ip(_get_whois_record_ip_start_range);
+
+        if (ip_start != "" && ip_end != "" && ip_start != "000.000.000.000" && ip_end != "000.000.000.000") {
+            return ip_start;
+        }
+
+        print "ERROR: (1) PARSING ip_start [" _get_whois_record_ip_start_range "] FOR INDEX [" idx "] FROM [" _get_whois_record_ip_start_range "] ORIGIN=[" whoisdb_get_origin(idx) "]";
+        return "";
+    }
+
+    if (_get_whois_record_ip_start_range !~ /[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\s*-\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*/) {
+        print "ERROR: (2) FAILED TO PARSE IP ip_start FOR IDX=" idx " (iprange_index=" iprange_index ") FROM [" _get_whois_record_ip_start_range "] ORIGIN=[" whoisdb_get_origin(idx) "]";
+        return "";
+    }
+
+    split(_get_whois_record_ip_start_range, _get_whois_ip_ranges_start_ip_ranges, "-");
+    sub(/^\s*/, "", _get_whois_ip_ranges_start_ip_ranges[1]);
+    sub(/^\s*/, "", _get_whois_ip_ranges_start_ip_ranges[2]);
+    sub(/\s*$/, "", _get_whois_ip_ranges_start_ip_ranges[1]);
+    sub(/\s*$/, "", _get_whois_ip_ranges_start_ip_ranges[2]);
+
+    if (_get_whois_ip_ranges_start_ip_ranges[1] != "" && _get_whois_ip_ranges_start_ip_ranges[2] != "") {
+        _get_whois_record_ip_start_ip_ranges_start = canonical_ip(_get_whois_ip_ranges_start_ip_ranges[1]);
+        _get_whois_record_ip_start_ip_ranges_end = canonical_ip(_get_whois_ip_ranges_start_ip_ranges[2]);
+
+        if (_get_whois_record_ip_start_ip_ranges_start != "" && _get_whois_record_ip_start_ip_ranges_end != "" && _get_whois_record_ip_start_ip_ranges_start != "000.000.000.000" && _get_whois_record_ip_start_ip_ranges_end != "000.000.000.000") {
+            return _get_whois_record_ip_start_ip_ranges_start;
+        }
+    }
+
+    print "ERROR: (3) FAILED TO PARSE ip_start IP RANGE FOR IDX=" idx " FROM " _get_whois_record_ip_start_range " ORIGIN=[" whoisdb_get_origin(idx) "]";
+    return "";
+}
+
+function whoisdb_get_ip_end(idx, iprange_index) {
+    result_record_ip_end = whoisdb_get_field(idx, "__IP_END__", iprange_index);
+    if (result_record_ip_end != "") {
+        return result_record_ip_end;
+    }
+
+    result_record_ip_end = _whoisdb_get_ip_end(idx, iprange_index);
+    if (result_record_ip_end != "") {
+        whoisdb_append_field(idx, "__IP_END__", result_record_ip_end);
+    }
+
+    return result_record_ip_end;
+}
+
+function _whoisdb_get_ip_end(idx, iprange_index) {
+    range = _whoisdb_get_iprange(idx, iprange_index);
+    if (iprange_index > 1 && range == "") {
+        return "";
+    }
+
+    if (range ~ /[0-9][0-9]*(\.[0-9][0-9]*(\.[0-9][0-9]*(\.[0-9][0-9]*)?)?)?\s*\/\s*[0-9][0-9]*/) {
+        ip_start = cidr_start_ip(range);
+        ip_end = cidr_end_ip(range);
+
+        if (ip_start != "" && ip_end != "" && ip_start != "000.000.000.000" && ip_end != "000.000.000.000") {
+            return ip_end;
+        }
+
+        print "ERROR: (4) PARSING [" range "] FOR INDEX [" idx "] FROM [" range "] ORIGIN=[" whoisdb_get_origin(idx) "]";
+        return "";
+    }
+
+    if (range !~ /[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\s*-\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*/) {
+        print "ERROR: (5) FAILED TO PARSE IP RANGE FOR IDX=" idx " (iprange_index=" iprange_index ") FROM [" range "] ORIGIN=[" whoisdb_get_origin(idx) "]";
+        return "";
+    }
+
+    split(range, ip_ranges, "-");
+    sub(/^\s*/, "", ip_ranges[1]);
+    sub(/^\s*/, "", ip_ranges[2]);
+    sub(/\s*$/, "", ip_ranges[1]);
+    sub(/\s*$/, "", ip_ranges[2]);
+
+    if (ip_ranges[1] != "" && ip_ranges[2] != "") {
+        ip_start = canonical_ip(ip_ranges[1]);
+        ip_end = canonical_ip(ip_ranges[2]);
+
+        if (ip_start != "" && ip_end != "" && ip_start != "000.000.000.000" && ip_end != "000.000.000.000") {
+            return ip_end;
+        }
+    }
+
+    print "ERROR: (6) FAILED TO PARSE IP RANGE FOR IDX=" idx " FROM [" range "] ORIGIN=[" whoisdb_get_origin(idx) "]";
+    return "";
+}
+
+function whoisdb_reload() {
+    whoisdb_init();
+
+    while ((getline line < "whois.db") > 0) {
+        idx = whoisdb_new_record();
+        split(line, parts, "`")
+
+        n = int(parts[1]);
+        for (i=2; i<=n;) {
+            field = parts[i];
+            value_length = int(parts[i+1]);
+
+            i = i + 2;
+
+            for (j=1; j<=value_length; j++) {
+                value = parts[i + j - 1];
+                whoisdb_append_field(idx, field, value)
+            }
+
+            i = i + value_length;
+        }
+    }
+
+    close("whois.db");
+    
+    for (rebuild_counter=1; rebuild_counter<=whoisdb_length(); rebuild_counter++) {
+        for (rebuild_iprange_counter=1; ;rebuild_iprange_counter++) {
+            start = whoisdb_get_ip_start(rebuild_counter, rebuild_iprange_counter);
+            if (start == "") {
+                break;
+            }
+
+            whois_records_start_ips_length = WHOISDB["start_ips"]["length"] + 1;
+            WHOISDB["start_ips"]["length"] = whois_records_start_ips_length;
+            WHOISDB["start_ips"]["items"][whois_records_start_ips_length] = start;
+            WHOISDB["start_ips"]["indices"][whois_records_start_ips_length] = rebuild_counter;
+
+            for (rebuild_sort_counter = whois_records_start_ips_length; rebuild_sort_counter >= 2; rebuild_sort_counter--) {
+                next_rebuild_sort_counter = rebuild_sort_counter - 1;
+                next_rebuild_sort_start = WHOISDB["start_ips"]["items"][next_rebuild_sort_counter];
+                next_rebuild_sort_index = WHOISDB["start_ips"]["indices"][next_rebuild_sort_counter];
+
+                if (start < next_rebuild_sort_start) {
+                    WHOISDB["start_ips"]["items"][next_rebuild_sort_counter] = start;
+                    WHOISDB["start_ips"]["items"][rebuild_sort_counter] = next_rebuild_sort_start;
+
+                    WHOISDB["start_ips"]["indices"][next_rebuild_sort_counter] = rebuild_counter;
+                    WHOISDB["start_ips"]["indices"][rebuild_sort_counter] = next_rebuild_sort_index;
+                }
+            }
+        }
+    }
+
+    WHOISDB["dirty"] = 0;
+}
+
+function _whoisdb_parse_field(line) {
     idx = match(line, /^\s*%/);
     if (idx != 0) {
         return "";
@@ -229,7 +525,7 @@ func parse_field(line) {
     return line;
 }
 
-func parse_value(line) {
+function _whoisdb_parse_value(line) {
     idx = match(line, /^\s*%/);
     if (idx != 0) {
         return "";
@@ -265,7 +561,7 @@ func parse_value(line) {
     return line;
 }
 
-function discard_seperator(a_line) {
+function _whoisdb_discard_seperator(a_line) {
     continue_discard_seperator = 1;
 
     while (continue_discard_seperator == 1) {
@@ -279,14 +575,14 @@ function discard_seperator(a_line) {
     return a_line;
 }
 
-function fetch_whois(ip) {
-    print "[fetching.. " ip "]";
+function _whoisdb_fetch_whois(ip) {
+    print "INFO: [fetching.. " ip "]";
     lines_length = 0;
     cache_file = "cache/" ip;
     read_cache_file_cmd = ("cat " cache_file);
 
     while (read_cache_file_cmd | getline line) {
-        line = discard_seperator(line);
+        line = _whoisdb_discard_seperator(line);
 
         lines_length = lines_length + 1;
         lines[lines_length] = line;
@@ -302,14 +598,24 @@ function fetch_whois(ip) {
     close(read_cache_file_cmd);
 
     if (lines_length == 0) {
+        if (WHOISDB["is_rebuild"] == 1) {
+            print "ERROR: no fetch should happend during rebuild, while processing ip=[" ip "]";
+            return "";
+        }
+
         cmd = ("whois " ip);
 
-        print "[contacting whois..]";
+        print "INFO: [contacting whois..]";
         while (cmd | getline line) {
-            line = discard_seperator(line);
+            line = _whoisdb_discard_seperator(line);
 
             lines_length = lines_length + 1;
             lines[lines_length] = line;
+
+            if (line ~ /temporary unable to query/) {
+                print "ERROR: [TEMPORARY UNABLE TO QUERY '" ip "']"
+                return "";
+            }
         }
         close(line);
         close(cmd);
@@ -321,25 +627,15 @@ function fetch_whois(ip) {
     }
 
     fields_length = 0;
-    whois_records_length = whois_records_length + 1;
+    _whoisdb_fetch_whois_new_record = whoisdb_new_record();
 
     for (i=1; i<=lines_length; i++) {
-        if (lines[i] ~ /temporary unable to query/) {
-            print "ERROR: [TEMPORARY UNABLE TO QUERY '" ip "']"
-            whois_records_length = whois_records_length - 1;
-            return "";
-        }
-
-        field = parse_field(lines[i]);
-        value = parse_value(lines[i]);
+        field = _whoisdb_parse_field(lines[i]);
+        value = _whoisdb_parse_value(lines[i]);
 
         if (field != "" && value != "") {
+            whoisdb_append_field(_whoisdb_fetch_whois_new_record, field, value);
             fields_length = fields_length + 1;
-            fields[fields_length] = field;
-            values[field] = value;
-
-            whois_records[whois_records_length]["fields"][fields_length] = field;
-            whois_records[whois_records_length]["values"][field] = value;
         }
     }
 
@@ -356,19 +652,10 @@ function fetch_whois(ip) {
                     sub(/\s*$/,"",owner);
                     sub(/\s*$/,"",range);
 
-                    fields_length = fields_length + 1;
-                    fields[fields_length] = "NetRange";
-                    values["NetRange"] = range;
+                    whoisdb_append_field(_whoisdb_fetch_whois_new_record, "NetRange", range);
+                    whoisdb_append_field(_whoisdb_fetch_whois_new_record, "OrgName", owner);
 
-                    whois_records[whois_records_length]["fields"][fields_length] = "NetRange";
-                    whois_records[whois_records_length]["values"]["NetRange"] = range;
-
-                    fields_length = fields_length + 1;
-                    fields[fields_length] = "OrgName";
-                    values["OrgName"] = owner;
-
-                    whois_records[whois_records_length]["fields"][fields_length] = "OrgName";
-                    whois_records[whois_records_length]["values"]["OrgName"] = owner;
+                    fields_length = 2;
                 }
             }
         }
@@ -376,7 +663,7 @@ function fetch_whois(ip) {
 
     if (fields_length == 0) {
         print "ERROR: UNABLE TO EXTRACT WHOIS FIELDS";
-        whois_records_length = whois_records_length - 1;
+        whoisdb_pop_record();
 
         for (i=1; i<=lines_length; i++) {
             print "ERROR: DBG: [" i "]: " lines[i];
@@ -385,310 +672,38 @@ function fetch_whois(ip) {
         return "";
     }
 
-    whois_records[whois_records_length]["fields_length"] = fields_length;
+    whoisdb_set_field(_whoisdb_fetch_whois_new_record, "__ORIGIN__", ip);
 
-    if (fields_length > 0) {
-        whois_records_dirty = 1;
-
-        out_line = "" fields_length;
-        for (i=1; i<= fields_length; i++) {
-            out_line = (out_line "`" fields[i] "`" values[fields[i]]);
-        }
-        print(out_line) >> "whois.db";
-        close("whois.db");
-    }
-
-    print "[ fetch done ]";
+    print "INFO: [ fetch done ]";
 }
 
-function get_whois_length() {
-    return whois_records_length;
-}
-
-function get_whois_record_by_index(idx, field) {
-    return whois_records[idx]["values"][field];
-}
-
-function _get_whois_ip_range_by_index(idx) {
-    range = get_whois_record_by_index(idx, "NetRange");
-    if (range != "") {
-        return range;
-    }
-
-    range = get_whois_record_by_index(idx, "inetnum");
-    if (range != "") {
-        return range;
-    }
-
-    range = get_whois_record_by_index(idx, "IPv4 Address");
-    if (range != "") {
-        return range;
-    }
-
-    range = get_whois_record_by_index(idx, "Network Number");
-    if (range != "") {
-        return range;
-    }
-
-    range = get_whois_record_by_index(idx, "CIDR");
-    if (range != "") {
-        return range;
-    }
-
-    return "";
-}
-
-function get_whois_record_ip_start_by_index(idx) {
-    result_record_ip_start = get_whois_record_by_index(idx, "__START_IP__");
-    if (result_record_ip_start != "") {
-        return result_record_ip_start;
-    }
-
-    result_record_ip_start = _get_whois_record_ip_start_by_index(idx);
-    if (result_record_ip_start != "") {
-        whois_append_field(idx, "__START_IP__", result_record_ip_start);
-    }
-    return result_record_ip_start;
-}
-
-function _get_whois_record_ip_start_by_index(idx) {
-    _get_whois_record_ip_start_range = _get_whois_ip_range_by_index(idx);
-
-    if (_get_whois_record_ip_start_range ~ /[0-9][0-9]*(\.[0-9][0-9]*(\.[0-9][0-9]*(\.[0-9][0-9]*)?)?)?\s*\/\s*[0-9][0-9]*/) {
-        ip_start = cidr_start_ip(_get_whois_record_ip_start_range);
-        ip_end = cidr_end_ip(_get_whois_record_ip_start_range);
-
-        if (ip_start != "" && ip_end != "" && ip_start != "000.000.000.000" && ip_end != "000.000.000.000") {
-            return ip_start;
-        }
-
-        print "ERROR: (1) PARSING ip_start [" _get_whois_record_ip_start_range "] FOR INDEX [" idx "] FROM [" _get_whois_record_ip_start_range "]";
+function whoisdb_save() {
+    if (WHOISDB["dirty"] == 0) {
         return "";
     }
 
-    if (_get_whois_record_ip_start_range !~ /[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\s*-\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*/) {
-        print "ERROR: (2) FAILED TO PARSE IP ip_start FOR IDX=" idx " FROM [" _get_whois_record_ip_start_range "]";
-        return "";
-    }
-
-    split(_get_whois_record_ip_start_range, _get_whois_ip_ranges_start_ip_ranges, "-");
-    sub(/^\s*/, "", _get_whois_ip_ranges_start_ip_ranges[1]);
-    sub(/^\s*/, "", _get_whois_ip_ranges_start_ip_ranges[2]);
-    sub(/\s*$/, "", _get_whois_ip_ranges_start_ip_ranges[1]);
-    sub(/\s*$/, "", _get_whois_ip_ranges_start_ip_ranges[2]);
-
-    if (_get_whois_ip_ranges_start_ip_ranges[1] != "" && _get_whois_ip_ranges_start_ip_ranges[2] != "") {
-        _get_whois_record_ip_start_ip_ranges_start = fix_ip(_get_whois_ip_ranges_start_ip_ranges[1]);
-        _get_whois_record_ip_start_ip_ranges_end = fix_ip(_get_whois_ip_ranges_start_ip_ranges[2]);
-
-        if (_get_whois_record_ip_start_ip_ranges_start != "" && _get_whois_record_ip_start_ip_ranges_end != "" && _get_whois_record_ip_start_ip_ranges_start != "000.000.000.000" && _get_whois_record_ip_start_ip_ranges_end != "000.000.000.000") {
-            return _get_whois_record_ip_start_ip_ranges_start;
-        }
-    }
-
-    print "ERROR: (3) FAILED TO PARSE ip_start IP RANGE FOR IDX=" idx " FROM " _get_whois_record_ip_start_range;
-    return "";
-}
-
-function get_whois_record_ip_end_by_index(idx) {
-    result_record_ip_end = get_whois_record_by_index(idx, "__IP_END__");
-    if (result_record_ip_end != "") {
-        return result_record_ip_end;
-    }
-
-    result_record_ip_end = _get_whois_record_ip_end_by_index(idx);
-    if (result_record_ip_end != "") {
-        whois_append_field(idx, "__IP_END__", result_record_ip_end);
-    }
-
-    return result_record_ip_end;
-}
-
-function _get_whois_record_ip_end_by_index(idx) {
-    range = _get_whois_ip_range_by_index(idx);
-
-    if (range ~ /[0-9][0-9]*(\.[0-9][0-9]*(\.[0-9][0-9]*(\.[0-9][0-9]*)?)?)?\s*\/\s*[0-9][0-9]*/) {
-        ip_start = cidr_start_ip(range);
-        ip_end = cidr_end_ip(range);
-
-        if (ip_start != "" && ip_end != "" && ip_start != "000.000.000.000" && ip_end != "000.000.000.000") {
-            return ip_end;
-        }
-
-        print "ERROR: (4) PARSING [" range "] FOR INDEX [" idx "] FROM [" range "]";
-        return "";
-    }
-
-    if (range !~ /[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\s*-\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*/) {
-        print "ERROR: (5) FAILED TO PARSE IP RANGE FOR IDX=" idx " FROM [" range "]";
-        return "";
-    }
-
-    split(range, ip_ranges, "-");
-    sub(/^\s*/, "", ip_ranges[1]);
-    sub(/^\s*/, "", ip_ranges[2]);
-    sub(/\s*$/, "", ip_ranges[1]);
-    sub(/\s*$/, "", ip_ranges[2]);
-
-    if (ip_ranges[1] != "" && ip_ranges[2] != "") {
-        ip_start = fix_ip(ip_ranges[1]);
-        ip_end = fix_ip(ip_ranges[2]);
-
-        if (ip_start != "" && ip_end != "" && ip_start != "000.000.000.000" && ip_end != "000.000.000.000") {
-            return ip_end;
-        }
-    }
-
-    print "ERROR: (6) FAILED TO PARSE IP RANGE FOR IDX=" idx " FROM [" range "]";
-    return "";
-}
-
-function get_whois_phone_by_index(idx) {
-    result_phone = get_whois_record_by_index(idx, "__PHONE__");
-    if (result_phone != "") {
-        return result_phone;
-    }
-
-    result_phone = _get_whois_phone_by_index(idx);
-    if (result_phone != "") {
-        whois_append_field(idx, "__PHONE__", result_phone);
-    }
-
-    return result_phone;
-}
-
-function _get_whois_phone_by_index(idx) {
-    result = get_whois_record_by_index(idx, "Phone");
-    if (result != "") {
-        return result;
-    }
-
-    return "";
-}
-
-function get_whois_owner_by_index(idx) {
-    result_owner = get_whois_record_by_index(idx, "__OWNER__");
-    if (result_owner != "") {
-        return result_owner;
-    }
-
-    result_owner = _get_whois_owner_by_index(idx);
-    if (result_owner != "") {
-        whois_append_field(idx, "__OWNER__", result_owner);
-    }
-
-    return result_owner;
-}
-
-function _get_whois_owner_by_index(idx) {
-    result = get_whois_record_by_index(idx, "netname");
-    if (result != "") {
-        return result;
-    }
-
-    result = get_whois_record_by_index(idx, "OrgName");
-    if (result != "") {
-        return result;
-    }
-
-    result = get_whois_record_by_index(idx, "owner");
-    if (result != "") {
-        return result;
-    }
-
-    result = get_whois_record_by_index(idx, "Organization");
-    if (result != "") {
-        return result;
-    }
-
-    return "";
-}
-
-function get_whois_country_by_index(idx) {
-    result_country = get_whois_record_by_index(idx, "__COUNTRY__");
-    if (result_country != "") {
-        return result_country;
-    }
-
-    result_country = _get_whois_country_by_index(idx);
-    if (result_country != "") {
-        whois_append_field(idx, "__COUNTRY__", result_country);
-    }
-
-    return result_country;
-}
-
-function _get_whois_country_by_index(idx) {
-    result = get_whois_record_by_index(idx, "Country");
-    if (result != "") {
-        result = toupper(result);
-        if (result ~ /^EU/) {
-            return "EU";
-        }
-        return result;
-    }
-
-    result = get_whois_record_by_index(idx, "country");
-    if (result != "") {
-        result = toupper(result);
-        if (result ~ /^EU/) {
-            return "EU";
-        }
-        return result;
-    }
-
-    phone = get_whois_phone_by_index(idx);
-    if (phone != "") {
-        if (phone ~ /[+]82/) {
-            return "KR";
-        }
-    }
-
-    organization = get_whois_owner_by_index(idx);
-    if (organization != "") {
-        if (organization ~ /24Shells/) {
-            return "US";
-        }
-        if (organization ~ /Maxihost/) {
-            return "BR";
-        }
-        if (organization ~ /SoftEther/) {
-            return "JP";
-        }
-    }
-
-    nameserver = get_whois_record_by_index(idx, "Nameserver");
-    if (nameserver != "") {
-        if (nameserver ~ /\.jp$/) {
-            return "JP";
-        }
-    }
-
-    return "";
-}
-
-function whois_append_field(idx, field, value) {
-    n = whois_records[idx]["fields_length"];
-    whois_records[idx]["fields_length"] = n + 1;
-    whois_records[idx]["fields"][n + 1] = field;
-    whois_records[idx]["values"][field] = value;
-    whois_records_dirty = 1;
-}
-
-function whois_save_db() {
-    if (whois_records_dirty == 0) {
-        return "";
-    }
-
-    n = get_whois_length();
+    n = whoisdb_length();
     for (i=1; i<=n; i++) {
-        fields_length = whois_records[i]["fields_length"];
-        out_line = "" fields_length;
+        fields_length = WHOISDB["records"][i]["fields_length"];
+        printed_parts_count = 1;
         for (j=1; j<= fields_length; j++) {
-            field = whois_records[i]["fields"][j];
-            value = whois_records[i]["values"][field];
-            out_line = (out_line "`" field "`" value);
+            field = WHOISDB["records"][i]["fields"][j];
+            field_length = WHOISDB["records"][i]["values"][field]["length"];
+            printed_parts_count = printed_parts_count + 2 + field_length;
         }
+
+        out_line = "" printed_parts_count;
+        for (j=1; j<= fields_length; j++) {
+            field = WHOISDB["records"][i]["fields"][j];
+            field_length = WHOISDB["records"][i]["values"][field]["length"];
+            out_line = (out_line "`" field "`" field_length);
+            
+            for (k=1; k<= field_length; k++) {
+                value = WHOISDB["records"][i]["values"][field]["items"][k];
+                out_line = (out_line "`" value);
+            }
+        }
+
         if (i == 1) {
             print(out_line) > "whois.db";
         } else {
@@ -698,499 +713,761 @@ function whois_save_db() {
 
     close("whois.db");
 
-    whois_reload_db();
+    whoisdb_reload();
 }
 
-function get_whois_iran_isp_by_index(idx) {
-    result_isp = get_whois_record_by_index(idx, "__IRAN_ISP__");
-    if (result_isp != "") {
-        return result_isp;
-    }
+function _whoisdb_lookup(ip) {
+    target_ip = canonical_ip(ip);
 
-    result_isp = _get_whois_iran_isp_by_index(idx);
-    if (result_isp != "") {
-        whois_append_field(idx, "__IRAN_ISP__", result_isp);
-    }
+    for (_get_whois_record_index_by_ip_counter=1; _get_whois_record_index_by_ip_counter<=whoisdb_length(); _get_whois_record_index_by_ip_counter++) {
+        for (_whois_lookup_iprange_counter=1; ;_whois_lookup_iprange_counter++) {
+            start_ip = whoisdb_get_ip_start(_get_whois_record_index_by_ip_counter, _whois_lookup_iprange_counter);
+            end_ip = whoisdb_get_ip_end(_get_whois_record_index_by_ip_counter, _whois_lookup_iprange_counter);
 
-    return result_isp;
-}
+            if (start_ip == "" || end_ip == "") {
+                break;
+            }
 
-function _get_whois_iran_isp_by_index(idx) {
-    organization = get_whois_owner_by_index(idx);
-    if (organization != "") {
-        if (organization ~ /^IR-MCI/ || organization ~ /^MCCI$/ || organization ~ /^MCI$/ || organization ~ /^MTCE$/) {
-            return "MCI";
-        }
-        if (organization ~ /IRANCELL/) {
-            return "Iran Cell";
-        }
-        if (organization ~ /TAMINTELECOM/ || toupper(organization) ~ /RIGHTEL/) {
-            return "RighTel";
-        }
-        if (organization ~ /^(IR|NET)-ASK/ || toupper(organization) ~ /^ASK-ADSL/ || toupper(organization) ~ /^ASK$/ || organization ~ /^ANDISHGIL/ || organization ~ /^ASK-/) {
-            return "Andishe Sabz Khazar";
-        }
-        if (organization ~ /^SHABDIZ/) {
-            return "Shabdiz";
-        }
-        if (organization ~ /^PTS-DSL/ || organization ~ /^PTE$/ || organization ~ /^PJ-/ || organization ~ /^IR-PJCO/ || organization ~ /^HIGHSPEED-DSL/ || organization ~ /^PTE-/ || organization ~ /-PTE-/ || organization ~ /RoshangaranErtebatatRayaneh/ || organization ~ /^ADSL-USERS$/) {
-            return "Pishgaman";
-        }
-        if (organization ~ /DATAK/ || toupper(organization) ~ /ROHAM/ || organization ~ /IR-GOSTAREH/) {
-            return "Datak";
-        }
-        if (organization ~ /IR-FANAVA-/) {
-            return "Fanava";
-        }
-        if (organization ~ /^DADEHGOSTAR-/ || organization ~ /^IR-RDGIR-/) {
-            return "Hiweb";
-        }
-        if (organization ~ /IR-RSPN/ || toupper(organization) ~ /RESPINA/) {
-            return "Respina";
-        }
-        if (organization ~ /^SHTL-/ || organization ~ /IR-RASANA/ || organization ~ /-FanVaAndishe$/ || organization ~ /IR-EBTEKARANDISHAN/) {
-            return "Shatel";
-        }
-        if (organization ~ /^mana$/ || organization ~ /SEPANTA/) {
-            return "Sepanta";
-        }
-        if (toupper(organization) ~ /^FANAPTELECOM/ || organization ~ /^SHABAKIEH/ || organization ~ /IR-JAVIDAN-/) {
-            return "Fanap Telecom";
-        }
-        if (organization ~ /^IR-PARS/ || toupper(organization) ~ /PARSONLINE/ || organization ~ /Dynamic-pool-/) {
-            return "ParsOnline";
-        }
-        if (tolower(organization) ~ /^khalijfarsonline$/ || tolower(organization) ~ /^khalij-fars-etela-resan$/ || tolower(organization) ~ /^khalije-fars-etela-resan$/ || tolower(organization) ~ /^khalij-fars-online$/ || tolower(organization) ~ /^khalij-fars-onlne$/) {
-            return "Khalij Fars Online";
-        }
-        if (organization ~ /IR-SINET/) {
-            return "Sinet";
-        }
-        if (organization ~ /^Asan-Khodro$/) {
-            return "Asan Khodro";
-        }
-        if (organization ~ /^IR-SUMS$/) {
-            return "Fars Province University of Medical Science and Health Care Services";
-        }
-        if (organization ~ /^IR-T-/ || organization ~ /^Tehran-Tejari$/ || organization ~ /^TCI/ || organization ~ /^IR-TC/ || organization ~ /PublicWifi/ || organization ~ /Internal/ || organization ~ /ARDEBIL/ || organization ~ /TELECOMMUNICATION/ || organization ~ /^DCI/ || organization ~ /^Area-/ || organization ~ /^EDUCATION/ || organization ~ /^IR-DCC/ || organization ~ /^tct-/ || organization ~ /tel$/ || organization ~ /^TELECOM/ || organization ~ /^TCE-/ || organization ~ /^GILTEL$/ ||
-            organization ~ /^ORG-/ || organization ~ /-tct$/ || organization ~ /^TCS$/ || organization ~ /^ADSLSTATIC$/ || organization ~ /^ADSL[^-][^-]*$/ || organization ~ /^DLC[^-][^-]*/ || organization ~ /-adsl$/ || organization ~ /[^-][^-]*ICT$/ || organization ~ /IR-AFTAB-NETWORK-/ || organization ~ /^[a-zA-Z]DC$/ || organization ~ /^[a-zA-Z][a-zA-Z]*-TCI$/ || tolower(organization) ~ /-telecommunication$/ || organization ~ /^TCi-/ || organization ~ /^TCi-/ || organization ~ /^TCEWIFI$/ ||
-            organization ~ /^TCM$/ || organization ~ /^tci[^-][^-]*$/ || organization ~ /-telecomunication$/) {
-            return "Iran Telecommunication Company";
-        }
-        if (organization ~ /^IR-ASIATECH/ || organization ~ /^DEHLORAN$/ || organization ~ /^FARAMOJ-/ || organization ~ /^HEZARE$/) {
-            return "Asia Tech";
-        }
-        if (organization ~ /^IR-SHIRAZHAMYAR/) {
-            return "Hamyar Net";
-        }
-        if (organization ~ /ALBORZ-PARS/) {
-            return "Alborz Pars";
-        }
-        if (organization ~ /IR-MABNA/) {
-            return "Mabna Telecom";
-        }
-        if (organization ~ /IR-CYBER/) {
-            return "Raya Sepehr";
-        }
-        if (toupper(organization) ~ /IR-BADRRAYAN/) {
-            return "Badr Rayan";
-        }
-        if (organization ~ /MOBINNET/) {
-            return "Mobin Net";
-        }
-        if (organization ~ /IR-ATRIN/ || organization ~ /ArtinCommunication/ || organization ~ /AtrinCommunication/ || organization ~ /RizPardazan-Danesh-Sarband/ || organization ~ /AtrtinNetwork/) {
-            return "Artin Net";
-        }
-        if (organization ~ /IR-PEJVAK/) {
-            return "Pejvak Net";
-        }
-        if (organization ~ /^MLS-/) {
-            return "Boors";
-        }
-        if (organization ~ /AFRARASA/) {
-            return "Afra Rasa";
-        }
-        if (organization ~ /IR-SUT/) {
-            return "Shahroud University of Technology";
-        }
-        if (organization ~ /HojatiJavad/) {
-            return "HojatiJavad";
-        }
-        if (organization ~ /MahanNet/) {
-            return "Mahan Net";
-        }
-        if (organization ~ /IR-HESABGAR/ || organization ~ /IR-ARYA-/) {
-            return "Tak Net";
-        }
-        if (organization ~ /Ayandeh-Net/) {
-            return "Ertebatat Dourbord Fars";
-        }
-        if (organization ~ /IR-ABAN/) {
-            return "Fanavaran Aban";
-        }
-        if (organization ~ /IR-PARVAZSYSTEM/) {
-            return "Parvaz System";
-        }
-        if (toupper(organization) ~ /IR-AZARAKHSH/ || organization ~ /AryaOxin/) {
-            return "Arya Oxin";
-        }
-        if (organization ~ /Avagostar/) {
-            return "Ava Gostar";
-        }
-        if (organization ~ /IR-FARABORD/ || organization ~ /LTE-BSNS-/) {
-            return "Zitel";
-        }
-        if (organization ~ /Shoushtar_Medical_School/) {
-            return "Shoushtar Medical School";
-        }
-        if (organization ~ /IR-KAVOSHGAR/) {
-            return "Kavoshgar Novin";
-        }
-        if (organization ~ /^Dedicated-BroadBand$/) {
-            return "Kharg";
-        }
-        if (organization ~ /^DPA$/) {
-            return "Data Pardaz";
-        }
-        if (organization ~ /IR-DAYAN/) {
-            return "Dayan Shabake Gostar";
-        }
-        if (organization ~ /IR-REFATEC/ || organization ~ /IR-CMA/) {
-            return "Refah Tec";
-        }
-        if (organization ~ /ASRETELECOM/) {
-            return "Asre Telecom";
-        }
-        if (organization ~ /Are-Rayane/) {
-            return "Asr Telecom";
-        }
-        if (organization ~ /INFRA/) {
-            return "INFRA";
-        }
-        if (organization ~ /^NGS/ || organization ~ /^IR-PARVARESH/ || organization ~ /SABANET/) {
-            return "Saba Net";
-        } 
-        if (organization ~ /^SBUK$/) {
-            return "Shahid Bahonar University of Kerman";
-        }
-        if (organization ~ /^KUMSNET$/) {
-            return "Kerman University of Medical Sciences";
-        }
-        if (organization ~ /^Didi$/) {
-            return "Dideh Ban Net";
-        }
-        if (organization ~ /^IR_DORNA/ || organization ~ /^IR-DORNA/) {
-            return "Uz Net";
-        }
-        if (organization ~ /^ITMCI$/) {
-            return "International Travel Medicine Center";
-        }
-        if (organization ~ /Shabakeyeh-Sepehr/) {
-            return "Ertebat Gostar";
-        }
-        if (organization ~ /NIOCI/) {
-            return "National Iranian Oil Company";
-        }
-        if (toupper(organization) ~ /^MODARES$/) {
-            return "Tarbiat Modares University";
-        }
-        if (organization ~ /HAMARASYSTEM/ || organization ~ /^LASER$/) {
-            return "Hamara System";
-        }
-        if (organization ~ /^OMIDAN-/) {
-            return "Omidan";
-        }
-        if (organization ~ /SAPCO/) {
-            return "Iran Khodro";
-        }
-        if (organization ~ /JN-NET/) {
-            return "Mysha Net";
-        }
-        if (organization ~ /^TUMS$/) {
-            return "Tehran University of Medical Sciences";
-        }
-        if (organization ~ /HAJ-OGHAF/) {
-            return "Haj-Oghaf";
-        }
-        if (organization ~ /PETRO-GAZ/ || organization ~ /AFRANET/ || organization ~ /^Ima-Hamrah$/ || organization ~ /^POUYESH-PARDAZ$/) {
-            return "Afra Net";
-        }
-        if (organization ~ /^SCC$/) {
-            return "Soufian Cement Co";
-        }
-        if (organization ~ /AZADUNIVERSITY/ || organization ~ /^AZ[a-zA-Z][a-zA-Z]$/ || organization ~ /^LIAU$/ || organization ~ /^UNAZAD[^-]*$/) {
-            return "Azad University";
-        }
-        if (organization ~ /PANAONE/) {
-            return "Panaone Net";
-        }
-        if (organization ~ /Parsis-Net/) {
-            return "Parsis Net";
-        }
-        if (organization ~ /RAHANET/) {
-            return "Raha Net";
-        }
-        if (organization ~ /GOLNET/) {
-            return "Gol Net";
-        }
-        if (organization ~ /HAIERNET/) {
-            return "Arya Gostar Spadana";
-        }
-        if (organization ~ /CIS-IT/) {
-            return "CIS-IT";
-        }
-        if (toupper(organization) ~ /SEFROYEK/) {
-            return "0-1.ir";
-        }
-        if (organization ~ /^AISDP$/) {
-            return "Aseman Faraz Sepahan";
-        }
-        if (organization ~ /BANKMAS/) {
-            return "Bank Maskan";
-        }
-        if (organization ~ /^SS-SYSTEC/) {
-            return "Systech";
-        }
-        if (organization ~ /Bahar_Samaneh/ || organization ~ /^ZENTEX$/ || organization ~ /^BS_BROADBAND/) {
-            return "Bahar Net";
-        }
-        if (organization ~ /IR-ASREDANESH/) {
-            return "Asr Danesh Afzar";
-        }
-        if (organization ~ /IR-SHAHRAD/) {
-            return "Shahrad";
-        }
-        if (toupper(organization) ~ /SUNINTERNET/) {
-            return "Sun Internet";
-        }
-        if (organization ~ /Farzanegan-/) {
-            return "Wenex";
-        }
-        if (organization ~ /IR-PAPER/) {
-            return "Tadarok Kerman Paper Company";
-        }
-        if (organization ~ /PARTPAYAM/ || organization ~ /PARTPATAM/) {
-            return "Part Payam Shahin Shahr";
-        }
-        if (organization ~ /HOSTIRAN-NET/) {
-            return "Host Iran";
-        }
-        if (organization ~ /PETIAK/) {
-            return "Petiak";
-        }
-        if (organization ~ /^WiMAX$/) {
-            return "WiMAX";
-        }
-        if (organization ~ /^MXNT-/) {
-            return "Max Net";
-        }
-        if (organization ~ /^GOVNT$/) {
-            return "Guilan Governemt Building in Rasht";
-        }
-        if (organization ~ /^Aryasat$/ || organization ~ /ILAM-NEWNET/) {
-            return "Aryasat";
-        }
-        if (organization ~ /^hichestan$/) {
-            return "Hichestan";
-        }
-        if (organization ~ /^Abadan_University_of_Medical_Sciences$/) {
-            return "Abadan University of Medical Sciences";
-        }
-        if (organization ~ /HOOSHANNET/) {
-            return "Hooshan Net";
-        }
-        if (organization ~ /APAD/) {
-            return "Urmia University";
-        }
-        if (organization ~ /^Cybertech$/) {
-            return "Cybertech";
-        }
-        if (organization ~ /^AIDINSYSTEM/) {
-            return "Aidin System Boushehr";
-        }
-        if (organization ~ /NOAVJOLFA/) {
-            return "Jolfa Net";
-        }
-        if (organization ~ /^IR-ESP$/ || organization ~ /^Hirad-ISP$/) {
-            return "Ertebatar Sabet Parsian";
-        }
-        if (organization ~ /Boomerang-Rayaneh/) {
-            return "Boomerang Rayaneh";
-        }
-        if (organization ~ /YasOnline/) {
-            return "Yas Online";
-        }
-        if (organization ~ /^TRLCO$/ || organization ~ /IR-AVA-ARVAND-/) {
-            return "Webotel";
-        }
-        if (tolower(organization) ~ /asre-ertebat/) {
-            return "Asre Ertebat";
-        }
-        if (organization ~ /IR-MOEIN-DADOSETAD/) {
-            return "Moin Dadosetad Golestan";
-        }
-        if (organization ~ /IR-BITA/) {
-            return "Bita Net";
-        }
-        if (organization ~ /BahoonarUniversityKerman/) {
-            return "Bahonar University Kerman";
-        }
-        if (tolower(organization) ~ /faratelecom/) {
-            return "Fara Telecom";
-        }
-        if (organization ~ /IR-POOYA/) {
-            return "Pooya Part o Gheshm";
-        }
-        if (tolower(organization) ~ /ir-satiareyertebat/) {
-            return "Satia ISP";
-        }
-        if (organization ~ /IR-NOAVARAN/) {
-            return "Noavaran System Sarv";
-        }
-        if (organization ~ /IR-SAMSYSTEM/) {
-            return "Zaman ISP";
-        }
-        if (organization ~ /^Shabakieh[^-][^-]*$/) {
-            return "Shabakieh";
-        }
-        if (organization ~ /IR-MANA/) {
-            return "Mana Net";
-        }
-        if (organization ~ /Sabz-Dsl/) {
-            return "sabzonline";
-        }
-        if (organization ~ /IR-CITC/ || organization ~ /^UTNET$/) {
-            return "University of Tehran";
-        }
-        if (organization ~ /ARAXNET/) {
-            return "Araax";
-        }
-        if (organization ~ /IR-PARDAZESHNET-/) {
-            return "Pardazesh Net";
-        }
-        if (organization ~ /^Fixed-Broadband-Subscriber$/) {
-            return "Dotin";
-        }
-        if (organization ~ /^SHABAKEGOSTARAN$/) {
-            return "Shabake Gostaran Zanjan";
-        }
-        if (organization ~ /^Machine-Sazi-Arak/) {
-            return "Mashin Sazi Arak";
-        }
-        if (organization ~ /ARKBUS-AWB/) {
-            return "ARKBUS ISP (Arak)";
-        }
-        if (organization ~ /^[a-zA-Z][a-zA-Z]EC$/) {
-            return "Electric Company";
-        }
-        if (organization ~ /^DABAINCO$/) {
-            return "Dadash Baradar Co";
-        }
-        if (organization ~ /fayez-rayaneh-/) {
-            return "Fayez Online";
-        }
-        if (organization ~ /IR-SSPP-/) {
-            return "Bank Parsian";
-        }
-        if (organization ~ /^NIDC$/) {
-            return "National Iranian Drilling Company";
-        }
-        if (organization ~ /UK-PRIVAX-/) {
-            return "AVAST Software";
-        }
-        if (organization ~ /^IRIB-/) {
-            return "IRIB";
-        }
-        if (organization ~ /MihanWebHost/) {
-            return "Mihan Web Host";
-        }
-        if (organization ~ /-seanet-/ || organization ~ /-seanet$/) {
-            return "Sea Net";
-        }
-        if (organization ~ /ZNU-Server-Farm/) {
-            return "Zanjan University Server Farm";
-        }
-        if (organization ~ /SariSystemBandarabasCompany/) {
-            return "Sari System Jonub";
-        }
-        if (organization ~ /ZabolUniversityofMedicalSciences/) {
-            return "Zabol University of Medical Sciences";
-        }
-        if (organization ~ /FARAGOSTAR/) {
-            return "Faragostar Shargh";
-        }
-        if (organization ~ /^MEHRAVA$/) {
-            return "Mehr Net";
-        }
-        if (organization ~ /SoratGostarErtebatatParsian/) {
-            return "Sorat Gostar Ertebatat";
-        }
-        if (organization ~ /IR-KOSARAN-/) {
-            return "Kosar Ghadir Kariman Agro-Industrial Complex";
-        }
-    }
-
-    return "";
-}
-
-function _get_whois_record_index_by_ip(ip) {
-    for (_get_whois_record_index_by_ip_counter=1; _get_whois_record_index_by_ip_counter<=ignore_list_length; _get_whois_record_index_by_ip_counter++) {
-        if (ignore_list[_get_whois_record_index_by_ip_counter] == ip) {
-            return 0;
-        }
-    }
-
-    target_ip = fix_ip(ip);
-
-    n = get_whois_length();
-    for (_get_whois_record_index_by_ip_counter=1; _get_whois_record_index_by_ip_counter<=n; _get_whois_record_index_by_ip_counter++) {
-        start_ip = get_whois_record_ip_start_by_index(_get_whois_record_index_by_ip_counter);
-        end_ip = get_whois_record_ip_end_by_index(_get_whois_record_index_by_ip_counter);
-
-        if (target_ip >= start_ip && target_ip <= end_ip) {
-            return _get_whois_record_index_by_ip_counter;
+            if (target_ip >= start_ip && target_ip <= end_ip) {
+                return _get_whois_record_index_by_ip_counter;
+            }
         }
     }
 
     return 0;
 }
 
-function get_whois_record_index_by_ip(ip) {
-    target_ip = fix_ip(ip);
+function whoisdb_lookup(ip) {
+    target_ip = canonical_ip(ip);
 
     bs_start = 1;
-    bs_end = get_whois_length();
+    bs_end = WHOISDB["start_ips"]["length"] + 1;
+    #print "> start=" bs_start " end=" bs_end " target=" target_ip;
 
-    while (bs_start < bs_end) {
+    while ((bs_end - bs_start) > 1) {
         mid = int((bs_start + bs_end) / 2);
-        if (target_ip < whois_records_start_ips[mid]) {
-            bs_start = mid + 1;
-        } else {
+        mid_value = WHOISDB["start_ips"]["items"][mid];
+
+        if (target_ip < mid_value) {
+            #print "> start=" bs_start " end=" bs_end " mid=" mid " mid_value=" mid_value " (target_ip < mid_value)";
             bs_end = mid;
+        } else {
+            #print "> start=" bs_start " end=" bs_end " mid=" mid " mid_value=" mid_value " (target_ip >= mid_value)";
+            bs_start = mid;
         }
     }
 
-    if (bs_start == bs_end) {
-        start_ip = get_whois_record_ip_start_by_index(bs_start);
-        end_ip = get_whois_record_ip_end_by_index(bs_start);
+    if (bs_start < bs_end) {
+        bs_start = WHOISDB["start_ips"]["indices"][bs_start];
+        #print "?> index=" bs_start;
 
-        if (target_ip >= start_ip && target_ip <= end_ip) {
-            return bs_start;
+        for (bs_iprange_counter=1; ;bs_iprange_counter++) {
+            start_ip = whoisdb_get_ip_start(bs_start, bs_iprange_counter);
+            end_ip = whoisdb_get_ip_end(bs_start, bs_iprange_counter);
+
+            if (start_ip == "" || end_ip == "") {
+                break;
+            }
+
+            #print ">> start_ip=" start_ip " end_ip=" end_ip;
+
+            if (target_ip >= start_ip && target_ip <= end_ip) {
+                if (WHOISDB["is_rebuild"] == 1) {
+                    print "ERROR: LOOKUP SHOULD HAD FAILED WHILE IN REBUILD (ip=" ip ") BUT MATCHED VIA (ORIGIN=" whoisdb_get_origin(bs_start) ")";
+                }
+                return bs_start;
+            }
         }
     }
 
-    result = _get_whois_record_index_by_ip(ip);
+    #print "ERROR: binary search failed";
+
+    result = _whoisdb_lookup(ip);
     if (result == 0) {
-        fetch_whois(ip);
+        _whoisdb_fetch_whois(ip);
 
-        result = _get_whois_record_index_by_ip(ip);
+        result = _whoisdb_lookup(ip);
         if (result == 0) {
             return 0;
+        }
+    } else {
+        if (WHOISDB["is_rebuild"] == 1) {
+            print "ERROR: LOOKUP SHOULD HAD FAILED WHILE IN REBUILD (ip=" ip ") BUT MATCHED VIA (ORIGIN=" whoisdb_get_origin(result) ")";
         }
     }
 
     return result;
 }
+
+function whoisdb_get_phone(idx, phone_index) {
+    result_phone = whoisdb_get_field(idx, "__PHONE__", phone_index);
+    if (result_phone != "") {
+        return result_phone;
+    }
+
+    result_phone = _whoisdb_get_phone(idx, phone_index);
+    if (result_phone != "") {
+        whoisdb_append_field(idx, "__PHONE__", result_phone);
+    }
+
+    return result_phone;
+}
+
+function _whoisdb_get_phone(idx, phone_index) {
+    result = whoisdb_get_field(idx, "Phone", phone_index);
+    if (result != "") {
+        return result;
+    }
+
+    return "";
+}
+
+function whoisdb_get_phone_length(idx) {
+    return whoisdb_get_field_length(idx, "Phone");
+}
+
+function whoisdb_get_owner(idx, owner_index) {
+    result_owner = whoisdb_get_field(idx, "__OWNER__", owner_index);
+    if (result_owner != "") {
+        return result_owner;
+    }
+
+    result_owner = _whoisdb_get_owner(idx, owner_index);
+    if (result_owner != "") {
+        whoisdb_append_field(idx, "__OWNER__", result_owner);
+    }
+
+    return result_owner;
+}
+
+function _whoisdb_get_owner(idx, owner_index) {
+    owner_offset = 0;
+
+    result = whoisdb_get_field(idx, "OrgName", owner_index - owner_offset);
+    if (result != "") {
+        return result;
+    }
+    owner_offset = owner_offset + whoisdb_get_field_length(idx, "OrgName");
+
+    result = whoisdb_get_field(idx, "owner", owner_index - owner_offset);
+    if (result != "") {
+        return result;
+    }
+    owner_offset = owner_offset + whoisdb_get_field_length(idx, "owner");
+
+    result = whoisdb_get_field(idx, "Organization", owner_index - owner_offset);
+    if (result != "") {
+        return result;
+    }
+    owner_offset = owner_offset + whoisdb_get_field_length(idx, "Organization");
+
+    result = whoisdb_get_field(idx, "netname", owner_index - owner_offset);
+    if (result != "") {
+        return result;
+    }
+    owner_offset = owner_offset + whoisdb_get_field_length(idx, "netname");
+
+    return "";
+}
+
+function whoisdb_get_owner_length(idx) {
+    return whoisdb_get_field_length(idx, "OrgName") + whoisdb_get_field_length(idx, "owner") + whoisdb_get_field_length(idx, "Organization") + whoisdb_get_field_length(idx, "netname");
+}
+
+function whoisdb_get_country(idx) {
+    result_country = whoisdb_get_field(idx, "__COUNTRY__", 1);
+    if (result_country != "") {
+        return result_country;
+    }
+
+    result_country = _whoisdb_get_country(idx);
+    if (result_country != "") {
+        whoisdb_set_field(idx, "__COUNTRY__", result_country);
+    }
+
+    return result_country;
+}
+
+function _whoisdb_get_country(idx) {
+    _whoisdb_country_result = "";
+
+    for (_whoisdb_country_counter=1; ;_whoisdb_country_counter++) {
+        _whoisdb_country_part = __whoisdb_get_country(idx, _whoisdb_country_counter);
+        if (_whoisdb_country_part == "") {
+            return _whoisdb_country_result;
+        }
+        if (_whoisdb_country_part == "IR") {
+            return "IR";
+        }
+        if (_whoisdb_country_part != "--") {
+            _whoisdb_country_result = _whoisdb_country_part;
+        }
+    }
+}
+
+function __whoisdb_get_country(idx, country_index) {
+    offset = 0;
+    result = whoisdb_get_field(idx, "Country", country_index - offset);
+    if (result != "") {
+        result = toupper(result);
+        if (result ~ /^EU/) {
+            return "EU";
+        }
+        return result;
+    }
+    offset = offset + whoisdb_get_field_length(idx, "Country")
+
+    result = whoisdb_get_field(idx, "country", country_index - offset);
+    if (result != "") {
+        result = toupper(result);
+        if (result ~ /^EU/) {
+            return "EU";
+        }
+        return result;
+    }
+    offset = offset + whoisdb_get_field_length("country")
+
+    phone = whoisdb_get_phone(idx, country_index - offset);
+    if (phone != "") {
+        if (phone ~ /[+]82/) {
+            return "KR";
+        }
+        if (phone ~ /[+]98/) {
+            return "IR";
+        }
+        return "--";
+    }
+    offset = offset + whoisdb_get_phone_length(idx);
+
+    owner = whoisdb_get_owner(idx, country_index - offset);
+    if (owner != "") {
+        if (owner ~ /24Shells/) {
+            return "US";
+        }
+        if (owner ~ /Maxihost/) {
+            return "BR";
+        }
+        if (owner ~ /SoftEther/) {
+            return "JP";
+        }
+        return "--";
+    }
+    offset = offset + whoisdb_get_owner_length(idx);
+
+    nameserver = whoisdb_get_field(idx, "Nameserver", country_index - offset);
+    if (nameserver != "") {
+        if (nameserver ~ /\.jp$/) {
+            return "JP";
+        }
+        if (nameserver ~ /\.ir$/) {
+            return "IR";
+        }
+        return "--";
+    }
+    offset = offset + whoisdb_get_field_length(idx, "Nameserver");
+
+    netname = whoisdb_get_field(idx, "netname", country_index - offset);
+    if (netname != "") {
+        if (toupper(netname) ~ /^IR-/) {
+            return "IR";
+        }
+        return "--";
+    }
+    offset = offset + whoisdb_get_field_length(idx, "netname");
+
+    mnt = whoisdb_get_field(idx, "mnt-by", country_index - offset);
+    if (mnt != "") {
+        if (toupper(mnt) ~ /^IR-/) {
+            return "IR";
+        }
+        return "--";
+    }
+    offset = offset + whoisdb_get_field_length(idx, "mnt-by");
+
+    descr = whoisdb_get_field(idx, "descr", country_index - offset);
+    if (descr != "") {
+        if (toupper(descr) ~ /IRAN/) {
+            return "IR";
+        }
+        return "--";
+    }
+    offset = offset + whoisdb_get_field_length(idx, "descr");
+
+    address = whoisdb_get_field(idx, "address", country_index - offset);
+    if (address != "") {
+        if (toupper(address) ~ /IRAN/) {
+            return "IR";
+        }
+        if (toupper(address) ~ /TEHRAN/) {
+            return "IR";
+        }
+        return "--";
+    }
+    offset = offset + whoisdb_get_field_length(idx, "address");
+
+    return "";
+}
+
+function whoisdb_get_iran_isp(idx) {
+    result_isp = whoisdb_get_field(idx, "__IRAN_ISP__", 1);
+    if (result_isp != "") {
+        return result_isp;
+    }
+
+    result_isp = _whoisdb_get_iran_isp(idx);
+    if (result_isp != "") {
+        whoisdb_set_field(idx, "__IRAN_ISP__", result_isp);
+    }
+
+    return result_isp;
+}
+
+function _whoisdb_get_iran_isp(idx) {
+    for (isp_counter=1; ;isp_counter++) {
+        isp_result = __whoisdb_get_iran_isp(idx, isp_counter);
+        if (isp_result == "") {
+            return "";
+        } else if (isp_result != "-") {
+            return isp_result;
+        }
+    }
+}
+
+function __whoisdb_get_iran_isp(idx, isp_counter) {
+    offset = 0;
+    mnt = whoisdb_get_field(idx, "mnt-by", isp_counter - offset);
+    if (mnt != "") {
+        return __whoisdb_get_iran_isp_from_mnt(mnt);
+    }
+    offset = offset + whoisdb_get_field_length(idx, "mnt-by");
+
+    owner = whoisdb_get_owner(idx, isp_counter - offset);
+    if (owner != "") {
+        return __whoisdb_get_iran_isp_from_owner(owner);
+    }
+    offset = offset + whoisdb_get_owner_length(idx);
+
+    return "";
+}
+
+function __whoisdb_get_iran_isp_from_mnt(mnt) {
+    mnt = toupper(mnt);
+
+    if (mnt == "TCI-RIPE-MNT" || mnt == "MNT-TCF" || mnt == "MK1-MNT" || mnt == "MNT-TCSEM" || mnt == "TIC-OBJECT-MNT") {
+        return "Iran Telecommunication Company";
+    }
+    if (mnt ~ /^MCCI[0-9]*-MNT[0-9]*?$/) {
+        return "Hamrah Avval";
+    }
+    if (mnt == "MNT-MOBINNET") {
+        return "Mobin Net";
+    }
+    if (mnt == "MNT-ASIATECH" || mnt == "ASIATECH-MNT") {
+        return "Asia Tech";
+    }
+    if (mnt == "MNT-MABNA") {
+        return "Mabna Telecom";
+    }
+    if (mnt == "PARSONLINE-MNT") {
+        return "Pars Online";
+    }
+    if (mnt == "IRANCELL-MNT") {
+        return "Iran Cell";
+    }
+    if (mnt == "MNT-BOOM") {
+        return "Boomerang Rayaneh";
+    }
+    if (mnt == "MNT-DATAK") {
+        return "Datak";
+    }
+    if (mnt == "PTE-MNT" || mnt == "PISHGAMAN-MNT") {
+        return "Pishgaman";
+    }
+    if (mnt ~ /^MNT-ASK[0-9]*$/) {
+        return "Andisheh Sabz Khazar";
+    }
+    if (mnt ~ /^IR-RAYANKADEH-APADANA-[0-9]*-MNT$/) {
+        return "Satia"
+    }
+    if (mnt ~ /^IR-ATRIN-[0-9]*-MNT$/) {
+        return "Atrin Net";
+    }
+    if (mnt == "AFRA-MNT-NESH-1") {
+        return "Afra Net";
+    }
+    if (mnt == "IR-FARABORD-MNT") {
+        return "Zitel";
+    }
+    if (mnt == "MNT-MIHAN" || mnt == "MNT-HAMED") {
+        return "Samaneh haye Ertebati Mihan";
+    }
+    if (mnt == "MNT-KHALIJFARSONLINE") {
+        return "Khalij Fars Online";
+    }
+    if (mnt == "MEHVARMACHINE-MNT") {
+        return "Mehvar Machine";
+    }
+    if (mnt == "MNT-HESABGAR") {
+        return "Tak Net";
+    }
+    if (mnt == "ABNN-MNT") {
+        return "Fanavaran Aban";
+    }
+    if (mnt ~ /^IR-PARVAZSYSTEM-[0-9]*-MNT$/) {
+        return "Parvaz System";
+    }
+    if (mnt == "HK355-MNT") {
+        return "Pishgaman";
+    }
+    if (mnt ~ /^IR-SEO-[0-9]*-MNT$/) {
+        return "Boors DataCenter";
+    }
+    if (mnt == "MNT-MASOUD") {
+        return "Byte ISP";
+    }
+    if (mnt ~ /^FANAVADP-LIR$/ || mnt == "MNT-FANAVA") {
+        return "Fanava";
+    }
+    if (mnt ~ /^IR-JAVIDAN-[0-9]*-MNT$/) {
+        return "Fanap";
+    }
+    if (mnt == "MNT-NGS-ROUTE" || mnt == "MNT-NGS-NOC") {
+        return "Saba Net";
+    }
+    if (mnt == "DidEHBANNET") {
+        return "Dideh Ban Net";
+    }
+    if (mnt == "MNT-RAEISI-RIPEMNT") {
+        return "Badr Rayan";
+    }
+    if (mnt ~ /^IR-HOOR-[0-9]*-MNT$/) {
+        return "Hoor";
+    }
+    if (mnt ~ /^IR-AYANDEH-[0-9]*-MNT$/ || mnt ~ /^MNT-IR-AYANDEH[0-9]*-[0-9]*$/) {
+        return "Ertebatat Dourbord Fars";
+    }
+    if (mnt == "GILASSRAYANEH") {
+        return "Fara Telecom";
+    }
+    if (mnt ~ /^IR-KAVOSHGAR[0-9]*-[0-9]*-MNT$/) {
+        return "Kavoshgar Novin";
+    }
+    if (mnt == "MNT-RSPN") {
+        return "Respina";
+    }
+    if (mnt ~ /^IR-AFRARASA-[0-9]*-MNT$/) {
+        return "Afra Rasa";
+    }
+    if (mnt == "MXNT-MNT") {
+        return "Max Net";
+    }
+    if (mnt == "IPM-MNT") {
+        return "IPM";
+    }
+    if (mnt == "MNT-RASANA" || mnt == "MNT-DSA-HQ" || mnt ~ /^IR-EBTEKARANDISHAN-[0-9]*-MNT$/) {
+        return "Shatel";
+    }
+    if (mnt == "REFAH-MNT" || mnt ~ /^SHN[0-9]*-MNT$/) {
+        return "Refah Tech";
+    }
+    if (mnt == "MNT-FOROUD") {
+        return "Saba Net";
+    }
+    if (mnt ~ /^IR-MIHAN-[0-9]*-MNT$/ || mnt == "MNT_MWH") {
+        return "Mihan WebHost";
+    }
+    if (mnt ~ /^MNT-IR-PARSPARVA[0-9]*-[0-9]*$/ || mnt ~ /^IR-PARSPARVA-[0-9]*-MNT$/) {
+        return "Yas Online";
+    }
+    if (mnt ~ /^IR-PEJVAK-[0-9]*-MNT$/) {
+        return "Pejvak Net";
+    }
+    if (mnt == "MNT-ZENTEX") {
+        return "Bahar Net";
+    }
+    if (mnt == "MNT-RDG-ADMIN" || mnt == "MNT-AURAUD") {
+        return "Hiweb";
+    }
+    if (mnt == "MNT-HAJIAHMADI") {
+        return "Aria Phone";
+    }
+    if (mnt == "HAMARASYSTEM-MNT") {
+        return "Hamara";
+    }
+    if (mnt ~ /^MNT-SADP[0-9]*$/ || mnt ~ /^MNT-SADP[0-9]*-ROUTES$/) {
+        return "Sea Net";
+    }
+    if (mnt ~ /^MNT-ASR[A-Z]$/) {
+        return "Asre Ertebat";
+    }
+    if (mnt ~ /^IR-POOYA-[0-9]*-MNT$/) {
+        return "Pooya Part o Gheshm";
+    }
+    if (mnt == "MNT-MANA") {
+        return "Mana Net";
+    }
+    if (mnt == "DIDEHBANNET") {
+        return "Dideh Ban Net";
+    }
+    if (mnt == "ASRETELECOM-MNT") {
+        return "Asre Telecom";
+    }
+    if (mnt == "MNT-CWM") {
+        return "Ertebat Gostar";
+    }
+    if (mnt == "AZMA-MNT") {
+        return "Azma Group";
+    }
+    if (mnt == "SEPANTA-MNT") {
+        return "Sepanta";
+    }
+    if (mnt ~ /^IR-NAKHLJONOOB-[0-9]*-MNT$/) {
+        return "Nakhl";
+    }
+    if (mnt ~ /^IR-AZARAKHSH-[0-9]*-MNT$/) {
+        return "Arya Oxin";
+    }
+    if (mnt == "SABZ-NETWORK") {
+        return "Sabz Online";
+    }
+    if (mnt ~ /^IR-YAGHOOT-[0-9]*-MNT$/) {
+        return "Yaghoot";
+    }
+    if (mnt ~ /^IR-EBTEKARANDISHAN-[0-9]*-MNT$/) {
+        return "Parsian FCB";
+    }
+    if (mnt == "MNT-ARYASAT" || mnt == "ARYASAT" || mnt ~ /^ARYASAT-/) {
+        return "Arya Sat";
+    }
+    if (mnt ~ /^MNT-IR-ASREDANESH-[0-9]*$/ || mnt ~ /^MNT-IR-ASREDANESH-[0-9]*-[0-9]*$/) {
+        return "Asre Danesh";
+    }
+    if (mnt == "IRIB-MNT") {
+        return "IRIB";
+    }
+    if (mnt == "JN-IP") {
+        return "Mysha Net";
+    }
+    if (mnt == "WCD") {
+        return "Sun Internet";
+    }
+    if (mnt == "MNT-SHAHRAD" || mnt == "MNT-AMIRSABET") {
+        return "0-1.ir";
+    }
+    if (mnt == "FARZANEGAN-MNT") {
+        return "Wenex";
+    }
+    if (mnt ~ /^IR-SHABAKIEH-[0-9]*-MNT$/) {
+        return "Shabakieh";
+    }
+    if (mnt ~ /^IR-DAYAN-SHABAKE-GOSTAR-[0-9]*-MNT$/) {
+        return "Dayan Shabake Gostar";
+    }
+    if (mnt ~ /^MNT-IR-PAPER-[0-9]*$/) {
+        return "Dabco";
+    }
+    if (mnt ~ /^MNT-IR-MOEIN-DADOSETAD-[0-9]*$/) {
+        return "Moein Dadosetad Golestan";
+    }
+    if (mnt ~ /^MNT-IR-KOSAR[0-9]*-[0-9]*$/) {
+        return "Kosar Ghadir Agro Industrial Complex";
+    }
+    if (mnt == "HOS-GUN") {
+        return "Hetzner Online";
+    }
+    if (mnt ~ /^IR-NOAVARAN[0-9]*-[0-9]*-MNT$/) {
+        return "Noavaran System Sarv";
+    }
+    if (mnt ~ /^MNT-RAHANET$/) {
+        return "Raha Net";
+    }
+    if (mnt == "MNT-SSAMAN") {
+        return "Sys Tech";
+    }
+    if (mnt == "HOSTIRAN-MNT") {
+        return "Host Iran";
+    }
+    if (mnt ~ /^IR-POSHTKAR-RAYANEH-KHARG-[0-9]*-MNT$/ || mnt == "GRAZ-AG-MNT") {
+        return "Poshtkar Rayaneh Kharg";
+    }
+    if (mnt == "KAVOSHGARNOVIN-MNT" || mnt ~ /^IR-QESHMDEHKADEHERTEBATAT-[0-9]*-MNT$/) {
+        return "Kavoshgar Novin";
+    }
+    if (mnt == "UTIC-MNT") {
+        return "University of Tehran";
+    }
+    if (mnt == "PRIVAX-MNT") {
+        return "Avax Software";
+    }
+    if (mnt == "APAKSERESHT-MNT") {
+        return "Toloe Rayaneh Loghman";
+    }
+
+    return "-";
+}
+
+function __whoisdb_get_iran_isp_from_owner(owner) {
+    owner = toupper(owner);
+
+    if (owner == "IR-DATAK-ADSL") {
+        return "Datak";
+    }
+    if (owner == "SHABDIZ-TELECOM-NETWORK") {
+        return "Shabdiz";
+    }
+    if (owner ~ /^IR-SUT-/) {
+        return "Shahroud University of Technology";
+    }
+    if (owner ~ /^FANAPTELECOM-/) {
+        return "Fanap";
+    }
+    if (owner == "IR-TAMINTELECOM" || owner ~ /^IR-TAMINTELECOM-/) {
+        return "RighTel";
+    }
+    if (owner == "AFRARASA") {
+        return "Afra Rasa";
+    }
+    if (owner ~ /^IR-BITA-/) {
+        return "Bita Net";
+    }
+    if (owner ~ /-TCI$/ || owner == "TCE-NET" || owner == "TELECOMADSL" || owner == "TCI-NET") {
+        return "Iran Telecommunication Company";
+    }
+    if (owner ~ /YASONLINE/) {
+        return "Yas Online";
+    }
+    if (owner ~ /^IR-SHIRAZHAMYAR-/) {
+        return "Hamyar Net";
+    }
+    if (owner == "ALBORZ-PARS") {
+        return "Alborz Link";
+    }
+    if (owner == "ZENTEX") {
+        return "Bahar Net";
+    }
+    if (owner == "ATRTINNETWORK") {
+        return "Atrin Net";
+    }
+    if (owner == "RIGHTEL") {
+        return "RighTel";
+    }
+    if (owner ~ /^SEFROYEK[-_]/ || owner ~ /^IR-SEFROYEKPARDAZENG-/) {
+        return "0-1.ir";
+    }
+    if (owner == "TRLCO") {
+        return "Webotel";
+    }
+    if (owner ~ /^INFRA-/) {
+        return "Zirsakht";
+    }
+    if (owner ~ /^IR-REFATEC-/) {
+        return "Refah Tech";
+    }
+    if (owner == "KHALIJ-FARS-ONLINE" || owner == "KHALIJ-FARS-ETELA-RESAN") {
+        return "Khalij Fars Online";
+    }
+    if (owner == "CIS-IT-GROUP") {
+        return "Shabakeh Gostar Sharyar";
+    }
+    if (owner == "HIRAD-ISP") {
+        return "Hirad";
+    }
+    if (owner == "DPA") {
+        return "Data Pardaz";
+    }
+    if (owner == "ARIAWEBCO") {
+        return "Aria Web";
+    }
+    if (owner == "PARSIS-NET") {
+        return "Parsis Net";
+    }
+    if (owner ~ /^IR-MOEIN-DADOSETAD-/) {
+        return "Moein Dadosetad Golestan";
+    }
+    if (owner == "NIDC") {
+        return "National Iranian Drilling Company";
+    }
+
+    return "-";
+}
+
+function whoisdb_get_asnumber(idx, asnumber_index) {
+    result_asnumber = whoisdb_get_field(idx, "__ASNUMBER__", asnumber_index);
+    if (result_asnumber != "") {
+        return result_asnumber;
+    }
+
+    result_asnumber = _whoisdb_get_asnumber(idx, asnumber_index);
+    if (result_asnumber != "") {
+        whoisdb_append_field(idx, "__ASNUMBER__", result_asnumber);
+    }
+
+    return result_asnumber;
+}
+
+function _whoisdb_get_asnumber(idx, asnumber_index) {
+    asnumber_list_length = 0;
+
+    for (_whoisdb_get_asnumber_counter=1; _whoisdb_get_asnumber_counter<=whoisdb_get_field_length(idx, "origin"); _whoisdb_get_asnumber_counter++) {
+        asnumber = whoisdb_get_field(idx, "origin", _whoisdb_get_asnumber_counter);
+        asnumber_list_length = asnumber_list_length + 1;
+        asnumber_list[asnumber_list_length] = asnumber;
+    }
+
+    if (asnumber_list_length == 0) {
+        for (_whoisdb_get_asnumber_counter=1; _whoisdb_get_asnumber_counter<3;_whoisdb_get_asnumber_counter++) {
+            ip_start = whoisdb_get_ip_start(idx, _whoisdb_get_asnumber_counter);
+            ip_end = whoisdb_get_ip_end(idx, _whoisdb_get_asnumber_counter);
+
+            if (ip_start != "" && ip_start != "000.000.000.000" && ip_end != "" && ip_end != "000.000.000.000") {
+                cidr = ip_range_to_cidr(ip_start, ip_end); 
+
+                if (cidr != "") {
+                    asnumber_list_length = asnumber_list_length + 1;
+                    asnumber_list[asnumber_list_length] = cidr;
+                }
+            } else {
+                break;
+            }
+        }
+    }
+
+    if (asnumber_list_length == 0) {
+        for (_whoisdb_get_asnumber_counter=1; _whoisdb_get_asnumber_counter<3;_whoisdb_get_asnumber_counter++) {
+            ip_start = whoisdb_get_ip_start(idx, _whoisdb_get_asnumber_counter);
+            ip_end = whoisdb_get_ip_end(idx, _whoisdb_get_asnumber_counter);
+
+            if (ip_start != "" && ip_start != "000.000.000.000" && ip_end != "" && ip_end != "000.000.000.000") {
+                asnumber_list_length = asnumber_list_length + 1;
+                asnumber_list[asnumber_list_length] = uncanonical_ip(ip_start) "-" uncanonical_ip(ip_end);
+            } else {
+                break;
+            }
+        }
+    }
+
+    if (asnumber_list_length == 0) {
+        return "";
+    }
+
+    for (asnumber_outer_sort_counter=1; asnumber_outer_sort_counter<=asnumber_list_length; asnumber_outer_sort_counter++) {
+        asnumber = asnumber_list[asnumber_outer_sort_counter];
+
+        for (asnumber_sort_counter=asnumber_outer_sort_counter; asnumber_sort_counter>=2; asnumber_sort_counter--) {
+            next_asnumber_sort_counter = asnumber_sort_counter - 1;
+            next_asnumber = asnumber_list[next_asnumber_sort_counter];
+
+            if (asnumber < next_asnumber) {
+                asnumber_list[next_asnumber_sort_counter] = asnumber;
+                asnumber_list[asnumber_sort_counter] = next_asnumber;
+            }
+        }
+    }
+
+    return asnumber_list[asnumber_index];
+}
+
+### END DATABASE ###
 
 function increment_counter(type, key, field, value) {
     _increment_counter(type, key, field, value);
@@ -1207,6 +1484,7 @@ function _ensure_counter_init() {
         stats_counter["count"] = 0;
         stats_counter["display"]["type"] = "none";
         stats_counter["display"]["show_sum"] = "on";
+        stats_counter["display"]["show_count"] = "on";
     }
 }
 
@@ -1391,7 +1669,7 @@ function report_counter_txt() {
                 for (field_counter=1; field_counter<=stats_counter["type"][type]["key"][key]["count"]; field_counter++) {
                     field = stats_counter["type"][type]["key"][key]["fields"][field_counter];
 
-                    if (field != "sum" || stats_counter["display"]["show_sum"] != "off") {
+                    if ((field != "sum" || stats_counter["display"]["show_sum"] != "off") && (field != "count" || stats_counter["display"]["show_count"] != "off")) {
                         value = stats_counter["type"][type]["key"][key]["field"][field];
 
                         if (field != "count" && stats_counter["display"]["type"] == "percent") {
@@ -1413,168 +1691,212 @@ function report_counter_txt() {
     print "";
 }
 
-/(PUT|POST)/ {
-    if ((NR % 5000) == 0) {
-        set_counter_display_option("type", "percent");
-        set_counter_display_option("show_sum", "off");
+/^\s*SORT\s+DESC\s*$/ {
+    sort_counter_decreasing();
+}
 
-        #set_counter_display_option("type", "none");
-        #set_counter_display_option("show_sum", "on");
+/^\s*REPORT\s*$/ {
+    report_counter_txt();
+}
 
-        sort_counter_decreasing();
-        report_counter_txt();
+/^\s*INCREMENT\s*[^\s]+\s+[^\s]+\s+[^\s]+\s+[0-9]+\s*$/ {
+    line = $0;
+    sub(/^\s*INCREMENT\s*/, "", line)
+    sub(/\s*$/, "", line);
 
-        print ("***************************************");
+    for (i=1; i<=4; i++) {
+        part = line;
+
+        idx = match(line, /\s+/);
+        if (idx != 0) {
+            part = substr(line, 1, idx - 1);
+            line = substr(line, idx);
+        }
+
+        sub(/^\s*/, "", part);
+        sub(/^\s*/, "", line);
+
+        sub(/\s*$/, "", part);
+        sub(/\s*$/, "", line);
+
+        parts[i] = part;
     }
 
-    is_error = match($0, /\[error\]/);
-    if (is_error == 0) {
-        ip = $3;
-        idx = match(ip, /[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*/)
-        if (idx == 0) {
-            print "ERROR: could not find IP address for [" $0 "] at [" NR "]";
+    increment_counter(parts[1], parts[2], parts[3], int(parts[4]));
+}
+
+/^\s*((COUNTRY)|(ISP)|(ASNUMBER))(\s*((,\s*COUNTRY)|(,\s*ISP)|(,\s*ASNUMBER)))*\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*(\s\s*.*)?$/ {
+    if (NR % 100 == 0) {
+        whoisdb_save();
+    }
+
+    requested_fields_length = 0;
+
+    line = $0;
+    for (;;) {
+        if (line ~ /^\s*COUNTRY\s*/) {
+            requested_fields_length = requested_fields_length + 1;
+            requested_fields[requested_fields_length] = "country";
+            sub(/^\s*COUNTRY\s*(,\s*)?/, "", line);
+        } else if (line ~ /^\s*ISP\s*/) {
+            requested_fields_length = requested_fields_length + 1;
+            requested_fields[requested_fields_length] = "isp";
+            sub(/^\s*ISP\s*(,\s*)?/, "", line);
+        } else if (line ~ /^\s*ASNUMBER\s*/) {
+            requested_fields_length = requested_fields_length + 1;
+            requested_fields[requested_fields_length] = "asnumber";
+            sub(/^\s*ASNUMBER\s*(,\s*)?/, "", line);
         } else {
-            idx = match($0, /HTTP\/1\.1" /)
-            if (idx == 0) {
-                print "ERROR: could not locate HTTP directive for [" $0 "] at [" NR "]";
-            } else {
-                line = substr($0, idx + 10);
-
-                idx = match(line, /^[0-9][0-9][0-9] /) 
-                if (idx == 0) {
-                    print "ERROR: could not locate status code for [" $0 "] at [" NR "]";
-                } else {
-                    status = int(substr(line, 1, 3));
-                    method = "PUT";
-
-                    if (match($0, /"POST \//) != 0) {
-                        method = "POST";
-                    }
-
-                    error_type = "UNKNOWN";
-                    if (status >= 200 && status < 300) {
-                        error_type = "OK";
-                    } else if (status >= 300 && status < 400) {
-                        error_type = "REDIRECT";
-                    } else if (status >= 400 && status < 490) {
-                        error_type = "CLIENT";
-                    } else if (status >= 490 && status < 500) {
-                        error_type = "CLIENT_CLOSED";
-                    } else if (status >= 500 && status < 600) {
-                        error_type = "SERVER";
-                    }
-
-                    idx = get_whois_record_index_by_ip(ip);
-                    if (idx == 0) {
-                        print "ERROR: could not locate whois information for [" $0 "] at [" NR "]";
-                    } else {
-                        increment_counter("World", "World", error_type, 1);
-
-                        country = get_whois_country_by_index(idx);
-                        if (country == "") {
-                            country = "(UNKNOWN)";
-                            region = "(UNKNOWN)";
-                        } else if (country == "IR") {
-                            region = "IR";
-                        } else {
-                            region = "Outside-IR";
-                        }
-
-                        increment_counter("Country", country, error_type, 1);
-                        increment_counter("Region", region, error_type, 1);
-
-                        if (country == "IR") {
-                            isp = get_whois_iran_isp_by_index(idx);
-                            if (isp == "") {
-                                isp = "(UNKNOWN)";
-                            }
-
-                            increment_counter("Iran ISP", isp, error_type, 1);
-                        }
-
-                        ########
-                    }
-                }
-            }
+            break;
         }
+    }
+
+    print "--remained: [" line "]";
+
+    remainder_idx = match(line, /\s\s*.*$/);
+    if (remainder_idx != 0) {
+        ip = substr(line, 1, remainder_idx - 1);
+        remainder = substr(line, remainder_idx);
+    } else {
+        ip = line;
+        remainder = "";
+    }
+
+    sub(/^\s*/, "", remainder);
+    sub(/^\s*/, "", ip);
+    sub(/\s*$/, "", remainder);
+    sub(/\s*$/, "", ip);
+
+    print "-- remainder=[" remainder "]";
+    print "-- ip=[" ip "]";
+
+    idx = whoisdb_lookup(ip);
+    if (idx == 0) {
+        print "ERROR: could not fetch [" ip "] at [NR=" NR "]";
+    } else {
+        for (requested_field_counter=1; requested_field_counter<=requested_fields_length; requested_field_counter++) {
+            requested_field = requested_fields[requested_field_counter];
+            if (requested_field == "country") {
+                country = whoisdb_get_country(idx);
+                if (country == "") {
+                    print "ERROR: could not find country for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                    country = "(UNKNOWN)";
+                }
+
+                result_row[requested_field_counter] = country;
+            } else if (requested_field == "isp") {
+                isp = whoisdb_get_iran_isp(idx);
+                if (isp == "") {
+                    print "ERROR: could not find isp for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                    isp = "(UNKNOWN)";
+                }
+
+                result_row[requested_field_counter] = isp;
+            } else if (requested_field == "asnumber") {
+                asnumber = whoisdb_get_asnumber(idx, 1);
+                if (asnumber == "") {
+                    print "ERROR: could not find asnumber for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                    asnumber = "(UNKNOWN)";
+                }
+
+                result_row[requested_field_counter] = asnumber;
+            } 
+        }
+
+        out_line = ip;
+        for (requested_field_counter=1; requested_field_counter<=requested_fields_length; requested_field_counter++) {
+            out_line = (out_line "," result_row[requested_field_counter]);
+        }
+
+        if (remainder != "") {
+            out_line = (out_line "," remainder);
+        }
+
+        print out_line;
     }
 }
 
-/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$/ {
+/^REBUILD [0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$/ {
+    WHOISDB["is_rebuild"] = 1;
+
+    ip = $0;
+    sub(/^REBUILD /, "", ip);
+
     if (NR % 100 == 0) {
-        whois_save_db();
+        whoisdb_save();
         
         print "";
-        print ">> [" NR "]";
+        print ">> [NR=" NR "]";
         print "";
 
-        for (i=1; i<=country_list_length; i++) {
-            print "C=[" country_list[i] "] = " country_count[country_list[i]];
-        }
-
-        print "";
-        print "-----------------";
-        print "";
-
-        for (i=1; i<=isp_list_length; i++) {
-            print "ISP[" isp_list[i] "] = " isp_count[isp_list[i]];
-        }
-
-        print "";
-        print "";
+        set_counter_display_option("type", "none");
+        set_counter_display_option("show_sum", "off");
+        set_counter_display_option("show_count", "off");
+        sort_counter_decreasing();
+        report_counter_txt();
     }
-    idx = get_whois_record_index_by_ip($0);
+    idx = whoisdb_lookup(ip);
     if (idx == 0) {
-        print "ERROR: could not fetch [" $0 "] at [" NR "]";
+        print "ERROR: could not fetch [" ip "] at [NR=" NR "]";
     } else {
-        country = get_whois_country_by_index(idx);
+        asnumber = whoisdb_get_asnumber(idx, 1);
+        if (asnumber == "") {
+            print "ERROR: could not find asnumber for [" ip "] at [NR=" NR "] matching ORIGIN=[" whoisdb_get_origin(idx) "]";
+        }
+        for (asnumber_index=2; whoisdb_get_asnumber(idx, asnumber_index) != ""; asnumber_index++) {
+        }
+
+        country = whoisdb_get_country(idx);
         if (country == "") {
-            print "ERROR: could not find country for [" $0 "] at [" NR "]";
+            print "ERROR: could not find country for [" ip "] at [NR=" NR "] [idx=" idx "] matching ORIGIN=[" whoisdb_get_origin(idx) "]";
             country = "[UNKNOWN]";
         } 
 
         if (country == "IR") {
-            print "IR_IP=" $0;
- 
-            isp = get_whois_iran_isp_by_index(idx);
-            if (isp == "") {
-                organization = get_whois_owner_by_index(idx);
-                print "ERROR: could not find ISP for [" $0 "] owner=[" organization "] at [" NR "]"; 
-                isp = "[UNKNOWN]";
-            } 
+            print "INFO: IR_IP=" ip;
+            isp = whoisdb_get_iran_isp(idx);
 
-            if (isp_count[isp] == "") {
-                if (isp_list_length == "") {
-                    isp_list_length = 0;
+            if (isp == "") {
+                for (i=1; i<=whoisdb_get_field_length(idx, "mnt-by"); i++) {
+                    mnt = whoisdb_get_field(idx, "mnt-by", i);
+                    if (toupper(mnt) ~ /^AS[0-9]*-MNT$/ || mnt == "RIPE-NCC-HM-MNT") {
+                        continue;
+                    }
+
+                    increment_counter("IR-UNKNOWN-MNT", mnt, "value", 1);
+
+                    for (j=1; j<=whoisdb_get_owner_length(idx);j++) {
+                        owner = whoisdb_get_owner(idx, j);
+                        increment_counter("IR-UNKNOWN-MNT-OWNER", mnt ":" owner, "value", 1);
+                    }
                 }
- 
-                isp_list_length = isp_list_length + 1;
-                isp_list[isp_list_length] = isp;
-                isp_count[isp] = 0;
+                for (j=1; j<=whoisdb_get_owner_length(idx);j++) {
+                    owner = whoisdb_get_owner(idx, j);
+                    increment_counter("IR-UNKOWN-OWNER", owner, "value", 1);
+                }
             }
  
-            isp_count[isp] = isp_count[isp] + 1;
+            if (isp == "") {
+                organization = whoisdb_get_owner(idx, 1);
+                print "ERROR: could not find ISP for [" ip "] at [" NR "] ORIGIN=[" whoisdb_get_origin(idx) "]"; 
+                isp = "(UNKNOWN)";
+            } 
+
+            increment_counter("IR-ISP", isp, "value", 1);
         }
- 
-        if (country_count[country] == "") {
-           if (country_list_length == "") {
-               country_list_length = 0;
-           }
- 
-           country_list_length = country_list_length + 1;
-           country_list[country_list_length] = country;
-           country_count[country] = 0;
-        }
- 
-        country_count[country] = country_count[country] + 1;
+
+        increment_counter("Country", country, "value", 1);
     }
 }
 
 END {
-    set_counter_display_option("type", "percent");
-    set_counter_display_option("show_sum", "off");
-    sort_counter_decreasing();
-    report_counter_txt();
+    if (WHOISDB["is_rebuild"] == 1) {
+        set_counter_display_option("type", "none");
+        set_counter_display_option("show_sum", "off");
+        set_counter_display_option("show_count", "off");
+        sort_counter_decreasing();
+        report_counter_txt();
+    }
 
-    whois_save_db();
+    whoisdb_save();
 }

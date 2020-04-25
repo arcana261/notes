@@ -2,6 +2,6 @@
 
 rm -f whois.db
 
-ls cache/ | awk -f whois.awk
+ls cache/ | sed 's|^|REBUILD |g' | awk -f whois.awk
 
 
