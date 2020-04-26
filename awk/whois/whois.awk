@@ -1526,7 +1526,7 @@ function _increment_counter(type, key, field, value) {
     stats_counter["type"][type]["key"][key]["field"][field] = stats_counter["type"][type]["key"][key]["field"][field] + value;
 }
 
-function sort_counter_key_decreasing(type, key) {
+function sort_counter_key_decreasing(type, key, percent_mode) {
     stats_counter["type"][type]["key"][key]["sorted_count"] = 0;
 
     for (field_counter=1; field_counter<=stats_counter["type"][type]["key"][key]["count"]; field_counter++) {
@@ -1544,6 +1544,15 @@ function sort_counter_key_decreasing(type, key) {
 
             field_sort_value = stats_counter["type"][type]["key"][key]["field"][field_sort];
             next_field_sort_value = stats_counter["type"][type]["key"][key]["field"][next_field_sort];
+
+            if (percent_mode == 1) {
+                if (field_sort != "count") {
+                    field_sort_value = (field_sort_value / stats_counter["type"][type]["key"]["_"]["field"]["sum"]) * 100;
+                }
+                if (next_field_sort != "count") {
+                    next_field_sort_value = (next_field_sort_value / stats_counter["type"][type]["key"]["_"]["field"]["sum"]) * 100;
+                }
+            }
 
             if ((field_sort == "sum" || (field_sort == "count" && next_field_sort != "sum") || field_sort_value > next_field_sort_value) && next_field_sort != "sum" && (next_field_sort != "count" || field_sort == "sum")) {
                 stats_counter["type"][type]["key"][key]["sorted_fields"][field_sort_counter] = next_field_sort;
@@ -1563,10 +1572,16 @@ function sort_counter_key_decreasing(type, key) {
 function sort_counter_type_decreasing_on_field(type, field) {
     stats_counter["type"][type]["sorted_count"] = 0;
 
+    sort_type_percent_mode = 0;
+    if (field ~ /\s*%\s*$/) {
+        sort_type_percent_mode = 1;
+        sub(/\s*%\s*$/, "", field);
+    }
+
     for (key_counter=1; key_counter<=stats_counter["type"][type]["count"]; key_counter++) {
         key = stats_counter["type"][type]["keys"][key_counter];
 
-        sort_counter_key_decreasing(type, key);
+        sort_counter_key_decreasing(type, key, sort_type_percent_mode);
 
         stats_counter["type"][type]["sorted_count"] = stats_counter["type"][type]["sorted_count"] + 1;
         stats_counter["type"][type]["sorted_keys"][stats_counter["type"][type]["sorted_count"]] = key;
@@ -1579,6 +1594,11 @@ function sort_counter_type_decreasing_on_field(type, field) {
 
             key_sort_value = stats_counter["type"][type]["key"][key_sort]["field"][field];
             next_key_sort_value = stats_counter["type"][type]["key"][next_key_sort]["field"][field];
+
+            if (sort_type_percent_mode == 1) {
+                key_sort_value = (key_sort_value / stats_counter["type"][type]["key"][key_sort]["field"]["sum"]) * 100;
+                next_key_sort_value = (next_key_sort_value / stats_counter["type"][type]["key"][next_key_sort]["field"]["sum"]) * 100;
+            }
 
             if (key_sort_value > next_key_sort_value) {
                 stats_counter["type"][type]["sorted_keys"][key_sort_counter] = next_key_sort;
@@ -1600,9 +1620,35 @@ function sort_counter_type_decreasing(type) {
 }
 
 function aggregate_counter_type_using(type, fn) {
-    if (fn == "sum" || fn == "count") {
+    if (fn == "sum" || fn == "count" || fn == "SUM" || fn == "COUNT") {
         _ensure_counter(type, "_", fn);
         return stats_counter["type"][type]["key"]["_"]["field"][fn];
+    }
+    if (fn ~ /^\s*sum\s*[\(].*[\)]\s*$/ || fn ~ /^\s*SUM\s*[\(].*[\)]\s*$/) {
+        aggregate_field = fn;
+        sub(/^\s*sum\s*[\(]\s*/, "", aggregate_field);
+        sub(/^\s*SUM\s*[\(]\s*/, "", aggregate_field);
+        sub(/\s*[\)]\s*$/, "", aggregate_field);
+
+        aggregate_result = 0;
+        aggregate_percent_mode = 0;
+
+        if (aggregate_field ~ /\s*%\s*$/) {
+            aggregate_percent_mode = 1;
+            sub(/\s*%\s*$/, "", aggregate_field);
+        }
+
+        for (aggregate_key_counter=1; aggregate_key_counter<=stats_counter["type"][type]["count"]; aggregate_key_counter++) {
+            aggregate_key = stats_counter["type"][type]["keys"][aggregate_key_counter];
+            aggregate_value = stats_counter["type"][type]["key"][aggregate_key]["field"][aggregate_field];
+            aggregate_result = aggregate_result + aggregate_value;
+        }
+
+        if (aggregate_percent_mode == 1) {
+            aggregate_result = (aggregate_result / stats_counter["type"][type]["key"]["_"]["field"]["sum"]) * 100;
+        }
+
+        return aggregate_result;
     }
     print "ERROR: Undefined aggregate function: [" fn "]";
     return "";
@@ -1611,10 +1657,17 @@ function aggregate_counter_type_using(type, fn) {
 function sort_counter_decreasing_using(fn) {
     stats_counter["sorted_count"] = 0;
 
+    sort_type_crit = fn;
+    if (sort_type_crit ~ /^\s*sum\s*[\(].*[\)]\s*$/ || sort_type_crit ~ /^\s*SUM\s*[\(].*[\)]\s*$/) {
+        sub(/^\s*sum\s*[\(]\s*/, "", sort_type_crit);
+        sub(/^\s*SUM\s*[\(]\s*/, "", sort_type_crit);
+        sub(/\s*[\)]\s*$/, "", sort_type_crit);
+    }
+
     for (type_counter=1; type_counter<=stats_counter["count"]; type_counter++) {
         type = stats_counter["types"][type_counter];
 
-        sort_counter_type_decreasing_on_field(type, fn);
+        sort_counter_type_decreasing_on_field(type, sort_type_crit);
 
         stats_counter["sorted_count"] = stats_counter["sorted_count"] + 1;
         stats_counter["sorted_types"][stats_counter["sorted_count"]] = type;
@@ -1695,31 +1748,47 @@ function report_counter_txt() {
     sort_counter_decreasing();
 }
 
+/^\s*SORT\s+DESC\s+USING\s+.*$/ {
+    fn = $0;
+    sub(/\s*SORT\s+DESC\s+USING\s+/, "", fn);
+    sub(/\s*$/, "", fn);
+    
+    sort_counter_decreasing_using(fn);
+}
+
 /^\s*REPORT\s*$/ {
     report_counter_txt();
 }
 
-/^\s*INCREMENT\s*[^\s]+\s+[^\s]+\s+[^\s]+\s+[0-9]+\s*$/ {
+/^\s*DISPLAY\s+PERCENT\s*$/ {
+    set_counter_display_option("type", "percent");
+}
+
+/^\s*DISPLAY\s+SHOW\s+SUM\s+OFF\s*$/ {
+    set_counter_display_option("show_sum", "off");
+}
+
+/^\s*DISPLAY\s+SHOW\s+SUM\s+ON\s*$/ {
+    set_counter_display_option("show_sum", "on");
+}
+
+/^\s*DISPLAY\s+SHOW\s+COUNT\s+OFF\s*$/ {
+    set_counter_display_option("show_count", "off");
+}
+
+/^\s*DISPLAY\s+SHOW\s+COUNT\s+ON\s*$/ {
+    set_counter_display_option("show_count", "on");
+}
+
+/^\s*INCREMENT\s+[^,]+\s*,\s*[^,]+\s*,\s*[^,]+\s*,\s*[0-9]+\s*$/ {
     line = $0;
     sub(/^\s*INCREMENT\s*/, "", line)
     sub(/\s*$/, "", line);
+    split(line,parts,",")
 
     for (i=1; i<=4; i++) {
-        part = line;
-
-        idx = match(line, /\s+/);
-        if (idx != 0) {
-            part = substr(line, 1, idx - 1);
-            line = substr(line, idx);
-        }
-
-        sub(/^\s*/, "", part);
-        sub(/^\s*/, "", line);
-
-        sub(/\s*$/, "", part);
-        sub(/\s*$/, "", line);
-
-        parts[i] = part;
+        sub(/^\s*/, "", parts[i]);
+        sub(/\s*$/, "", parts[i]);
     }
 
     increment_counter(parts[1], parts[2], parts[3], int(parts[4]));
@@ -1751,8 +1820,6 @@ function report_counter_txt() {
         }
     }
 
-    print "--remained: [" line "]";
-
     remainder_idx = match(line, /\s\s*.*$/);
     if (remainder_idx != 0) {
         ip = substr(line, 1, remainder_idx - 1);
@@ -1766,9 +1833,6 @@ function report_counter_txt() {
     sub(/^\s*/, "", ip);
     sub(/\s*$/, "", remainder);
     sub(/\s*$/, "", ip);
-
-    print "-- remainder=[" remainder "]";
-    print "-- ip=[" ip "]";
 
     idx = whoisdb_lookup(ip);
     if (idx == 0) {
