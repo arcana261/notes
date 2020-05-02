@@ -1,0 +1,11 @@
+
+
+# Git clean unused objects
+
+git reflog expire --all --expire=now
+git repack -A -d -f
+git gc
+git gc --aggressive
+git prune
+
+

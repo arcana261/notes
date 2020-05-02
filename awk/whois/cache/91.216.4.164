@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.216.4.0 - 91.216.4.255'
+
+% Abuse contact for '91.216.4.0 - 91.216.4.255' is 'abuse@respina.net'
+
+inetnum:        91.216.4.0 - 91.216.4.255
+netname:        TBTB
+country:        IR
+org:            ORG-TBTB1-RIPE
+admin-c:        SH4559-RIPE
+tech-c:         SH4559-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-RSPN
+mnt-routes:     MNT-RSPN
+mnt-domains:    MNT-RSPN
+created:        2010-04-14T13:54:13Z
+last-modified:  2016-04-14T11:00:16Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-RNB1-RIPE
+
+organisation:   ORG-TBTB1-RIPE
+org-name:       Tehran Metropolitan Power Energy Distribution Company
+org-type:       OTHER
+address:        Sarv Alley, South Shiraz St., Mollasadra St., Tehran, Iran
+abuse-c:        AR22803-RIPE
+mnt-ref:        MNT-RSPN
+mnt-by:         MNT-RSPN
+created:        2010-04-12T05:46:58Z
+last-modified:  2014-11-17T16:26:55Z
+source:         RIPE # Filtered
+
+person:         Saeed Hosseini
+address:        Sarv Alley, South Shiraz St., Mollasadra St., Tehran, Iran
+phone:          +98 (21) 8805 1878
+nic-hdl:        SH4559-RIPE
+created:        2010-04-12T05:41:55Z
+last-modified:  2010-04-12T05:41:55Z
+source:         RIPE
+mnt-by:         MNT-RSPN
+
+% Information related to '91.216.4.0/24AS42337'
+
+route:          91.216.4.0/24
+descr:          Respina-Route
+origin:         AS42337
+mnt-by:         MNT-RSPN
+created:        2010-08-16T10:08:17Z
+last-modified:  2010-08-16T10:08:17Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+

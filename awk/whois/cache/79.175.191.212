@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '79.175.191.192 - 79.175.191.255'
+
+% Abuse contact for '79.175.191.192 - 79.175.191.255' is 'abuse@afranet.com'
+
+inetnum:        79.175.191.192 - 79.175.191.255
+netname:        Agah-Pardaz-Hooshmand
+descr:          AVaye Houshmadn Hezar Dastan
+country:        IR
+admin-c:        PARV2015-RIPE
+tech-c:         PARV2015-RIPE
+status:         ASSIGNED PA
+mnt-by:         AFRA-MNT-NESH-1
+created:        2015-09-05T11:09:53Z
+last-modified:  2017-01-09T12:26:55Z
+source:         RIPE
+
+person:         Mr Armandehi
+address:        Floor 4, Negar Tower, Uper than Vanak, valiasr St, Tehran, Iran
+phone:          +98-2166090721
+nic-hdl:        PARV2015-RIPE
+mnt-by:         AFRA-MNT-NESH-1
+created:        2015-09-05T08:29:00Z
+last-modified:  2018-01-20T12:10:49Z
+source:         RIPE
+
+% Information related to '79.175.191.0/24AS25184'
+
+route:          79.175.191.0/24
+descr:          AFranet Co
+origin:         AS25184
+mnt-by:         AFRA-MNT-NESH-1
+created:        2013-02-17T05:16:54Z
+last-modified:  2013-02-17T05:16:54Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

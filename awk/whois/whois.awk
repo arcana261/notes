@@ -132,6 +132,25 @@ function _cidr_high_bitmask(count) {
     return result;
 }
 
+function cidr_netmask(_cidr_netmask_cidr) {
+    _cidr_netmask_idx = match(_cidr_netmask_cidr,/\//);
+    if (_cidr_netmask_idx == 0) {
+        return "";
+    }
+
+    _cidr_netmask_ip = substr(_cidr_netmask_cidr, 0, _cidr_netmask_idx - 1);
+    _cidr_netmask_count = substr(_cidr_netmask_cidr, _cidr_netmask_idx + 1);
+
+    sub(/^\s*/,"",_cidr_netmask_ip);
+    sub(/^\s*/,"",_cidr_netmask_count);
+    sub(/\s*$/,"",_cidr_netmask_ip);
+    sub(/\s*$/,"",_cidr_netmask_count);
+
+    _cidr_netmask_count = int(_cidr_netmask_count);
+
+    return canonical_ip(_boolean_to_ip(_cidr_low_bitmask(_cidr_netmask_count)));
+}
+
 function cidr_start_ip(_cidr_start_ip_cidr) {
     _cidr_start_ip_idx = match(_cidr_start_ip_cidr,/\//);
     if (_cidr_start_ip_idx == 0) {
@@ -148,7 +167,7 @@ function cidr_start_ip(_cidr_start_ip_cidr) {
 
     _cidr_start_ip_count = int(_cidr_start_ip_count);
 
-    return canonical_ip(_boolean_to_ip(_boolean_and(_ip_to_boolean(_cidr_start_ip_ip), _cidr_low_bitmask(_cidr_start_ip_count))))
+    return canonical_ip(_boolean_to_ip(_boolean_and(_ip_to_boolean(_cidr_start_ip_ip), _cidr_low_bitmask(_cidr_start_ip_count))));
 }
 
 function cidr_end_ip(_cidr_end_ip_cidr) {
@@ -167,7 +186,7 @@ function cidr_end_ip(_cidr_end_ip_cidr) {
 
     _cidr_end_ip_count = int(_cidr_end_ip_count);
 
-    return canonical_ip(_boolean_to_ip(_boolean_or(_ip_to_boolean(_cidr_end_ip_ip), _cidr_high_bitmask(_cidr_end_ip_count))))
+    return canonical_ip(_boolean_to_ip(_boolean_or(_ip_to_boolean(_cidr_end_ip_ip), _cidr_high_bitmask(_cidr_end_ip_count))));
 }
 
 function ip_range_to_cidr(_iprange_to_cidr_start_ip, _iprange_to_cidr_end_ip) {
@@ -309,6 +328,16 @@ function _whoisdb_get_iprange(idx, iprange_index) {
     offset = offset + whoisdb_get_field_length(idx, "CIDR");
 
     return "";
+}
+
+function _whoisdb_get_iprange_length(idx) {
+    _iprange_length = whoisdb_get_field_length(idx, "NetRange");
+    _iprange_length = _iprange_length + whoisdb_get_field_length(idx, "inetnum");
+    _iprange_length = _iprange_length + whoisdb_get_field_length(idx, "IPv4 Address");
+    _iprange_length = _iprange_length + whoisdb_get_field_length(idx, "Network Number");
+    _iprange_length = _iprange_length + whoisdb_get_field_length(idx, "CIDR");
+
+    return _iprange_length;
 }
 
 function whoisdb_get_ip_start(idx, iprange_index) {
@@ -1391,6 +1420,112 @@ function __whoisdb_get_iran_isp_from_owner(owner) {
     return "-";
 }
 
+function whoisdb_get_route_netmask(idx, route_netmask_index) {
+    result_route_netmask = whoisdb_get_field(idx, "__ROUTE_NETMASK__", route_netmask_index);
+    if (result_route_netmask != "") {
+        return result_route_netmask;
+    }
+
+    result_route_netmask = _whoisdb_get_route_netmask(idx, route_netmask_index);
+    if (result_route_netmask != "") {
+        whoisdb_append_field(idx, "__ROUTE_NETMASK__", result_route_netmask);
+    }
+
+    return result_route_netmask;
+}
+
+function _whoisdb_get_route_netmask(idx, route_netmask_index) {
+    _route_cidr = whoisdb_get_route(idx, route_netmask_index);
+    if (_route_cidr != "") {
+        return uncanonical_ip(cidr_netmask(_route_cidr));
+    } 
+
+    return "";
+}
+
+function whoisdb_get_route(idx, route_index) {
+    result_route = whoisdb_get_field(idx, "__ROUTE__", route_index);
+    if (result_route != "") {
+        return result_route;
+    }
+
+    result_route = _whoisdb_get_route(idx, route_index);
+    if (result_route != "") {
+        whoisdb_append_field(idx, "__ROUTE__", result_route);
+    }
+
+    return result_route;
+}
+
+function _whoisdb_get_route(idx, route_index) {
+    offset = 0;
+    _route = whoisdb_get_field(idx, "route", route_index - offset);
+    if (_route != "") {
+        return _route;
+    }
+    offset = offset + whoisdb_get_field_length(idx, "route");
+
+    _route_ip_start = whoisdb_get_ip_start(idx, route_index - offset);
+    _route_ip_end = whoisdb_get_ip_end(idx, route_index - offset);
+    if (_route_ip_start != "" && _route_ip_start != "000.000.000.000" && _route_ip_end != "" && _route_ip_end != "000.000.000.000") {
+        return ip_range_to_cidr(_route_ip_start, _route_ip_end)
+    }
+
+    return "";
+}
+
+function whoisdb_get_route_length(idx) {
+    return whoisdb_get_field_length(idx, "route") + _whoisdb_get_iprange_length(idx);
+}
+
+function whoisdb_get_netmask(idx, netmask_index) {
+    result_netmask = whoisdb_get_field(idx, "__NETMASK__", netmask_index);
+    if (result_netmask != "") {
+        return result_netmask;
+    }
+
+    result_netmask = _whoisdb_get_netmask(idx, netmask_index);
+    if (result_netmask != "") {
+        whoisdb_append_field(idx, "__NETMASK__", result_netmask);
+    }
+
+    return result_netmask;
+}
+
+function _whoisdb_get_netmask(idx, netmask_index) {
+    _netmask_cidr = whoisdb_get_cidr(idx, netmask_index);
+    if (_netmask_cidr != "") {
+        return uncanonical_ip(cidr_netmask(_netmask_cidr));
+    } 
+
+    return "";
+}
+
+function whoisdb_get_cidr(idx, cidr_index) {
+    result_cidr = whoisdb_get_field(idx, "__CIDR__", cidr_index);
+    if (result_cidr != "") {
+        return result_cidr;
+    }
+
+    result_cidr = _whoisdb_get_cidr(idx, cidr_index);
+    if (result_cidr != "") {
+        whoisdb_append_field(idx, "__CIDR__", result_cidr);
+    }
+
+    return result_cidr;
+}
+
+function _whoisdb_get_cidr(idx, cidr_index) {
+    _get_cidr_ip_start = whoisdb_get_ip_start(idx, cidr_index);
+    _get_cidr_ip_end = whoisdb_get_ip_end(idx, cidr_index);
+
+    if (_get_cidr_ip_start != "" && _get_cidr_ip_start != "000.000.000.000" && _get_cidr_ip_end != "" && _get_cidr_ip_end != "000.000.000.000") {
+        return ip_range_to_cidr(_get_cidr_ip_start, _get_cidr_ip_end); 
+    } 
+
+    return "";
+}
+
 function whoisdb_get_asnumber(idx, asnumber_index) {
     result_asnumber = whoisdb_get_field(idx, "__ASNUMBER__", asnumber_index);
     if (result_asnumber != "") {
@@ -1794,7 +1929,7 @@ function report_counter_txt() {
     increment_counter(parts[1], parts[2], parts[3], int(parts[4]));
 }
 
-/^\s*((COUNTRY)|(ISP)|(ASNUMBER))(\s*((,\s*COUNTRY)|(,\s*ISP)|(,\s*ASNUMBER)))*\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*(\s\s*.*)?$/ {
+/^\s*((COUNTRY)|(ISP)|(ASNUMBER)|(CIDR)|(NETMASK)|(ROUTE)|(ROUTING_NETMASK))(\s*((,\s*COUNTRY)|(,\s*ISP)|(,\s*ASNUMBER)|(,\s*CIDR)|(,\s*NETMASK)|(,\s*ROUTE)|(,\s*ROUTING_NETMASK)))*\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*(\s\s*.*)?$/ {
     if (NR % 100 == 0) {
         whoisdb_save();
     }
@@ -1815,6 +1950,22 @@ function report_counter_txt() {
             requested_fields_length = requested_fields_length + 1;
             requested_fields[requested_fields_length] = "asnumber";
             sub(/^\s*ASNUMBER\s*(,\s*)?/, "", line);
+        } else if (line ~ /^\s*CIDR\s*/) {
+            requested_fields_length = requested_fields_length + 1;
+            requested_fields[requested_fields_length] = "cidr";
+            sub(/^\s*CIDR\s*(,\s*)?/, "", line);
+        } else if (line ~ /^\s*NETMASK\s*/) {
+            requested_fields_length = requested_fields_length + 1;
+            requested_fields[requested_fields_length] = "netmask";
+            sub(/^\s*NETMASK\s*(,\s*)?/, "", line);
+        } else if (line ~ /^\s*ROUTE\s*/) {
+            requested_fields_length = requested_fields_length + 1;
+            requested_fields[requested_fields_length] = "route";
+            sub(/^\s*ROUTE\s*(,\s*)?/, "", line);
+        } else if (line ~ /^\s*ROUTING_NETMASK\s*/) {
+            requested_fields_length = requested_fields_length + 1;
+            requested_fields[requested_fields_length] = "route_netmask";
+            sub(/^\s*ROUTING_NETMASK\s*(,\s*)?/, "", line);
         } else {
             break;
         }
@@ -1838,45 +1989,125 @@ function report_counter_txt() {
     if (idx == 0) {
         print "ERROR: could not fetch [" ip "] at [NR=" NR "]";
     } else {
-        for (requested_field_counter=1; requested_field_counter<=requested_fields_length; requested_field_counter++) {
-            requested_field = requested_fields[requested_field_counter];
-            if (requested_field == "country") {
-                country = whoisdb_get_country(idx);
-                if (country == "") {
-                    print "ERROR: could not find country for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
-                    country = "(UNKNOWN)";
+        finished_fields = 0;
+        for (data_index_counter=1; finished_fields < requested_fields_length; data_index_counter++) {
+            for (requested_field_counter=1; requested_field_counter<=requested_fields_length; requested_field_counter++) {
+                requested_field = requested_fields[requested_field_counter];
+                if (requested_field == "country") {
+                    country = whoisdb_get_country(idx);
+                    if (country == "") {
+                        print "ERROR: could not find country for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        country = "(UNKNOWN)";
+                    }
+
+                    if (data_index_counter > 1) {
+                        finished_fields = finished_fields + 1;
+                    }
+
+                    result_row[requested_field_counter] = country;
+                } else if (requested_field == "isp") {
+                    isp = whoisdb_get_iran_isp(idx);
+                    if (isp == "") {
+                        print "ERROR: could not find isp for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        isp = "(UNKNOWN)";
+                    }
+
+                    if (data_index_counter > 1) {
+                        finished_fields = finished_fields + 1;
+                    }
+
+                    result_row[requested_field_counter] = isp;
+                } else if (requested_field == "asnumber") {
+                    asnumber = whoisdb_get_asnumber(idx, data_index_counter);
+                    if (asnumber == "") {
+                        if (finished_fields_marker["cidr"] != 1) {
+                            finished_fields = finished_fields + 1;
+                            finished_fields_marker["cidr"] = 1;
+                        }
+                        if (data_index_counter == 1) {
+                            print "ERROR: could not find asnumber for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        }
+                        asnumber = "(UNKNOWN)";
+                    }
+
+                    result_row[requested_field_counter] = asnumber;
+                } else if (requested_field == "cidr") {
+                    cidr = whoisdb_get_cidr(idx, data_index_counter);
+                    if (cidr == "") {
+                        if (finished_fields_marker["cidr"] != 1) {
+                            finished_fields = finished_fields + 1;
+                            finished_fields_marker["cidr"] = 1;
+                        }
+                        if (data_index_counter == 1) {
+                            print "ERROR: could not find CIDR for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        }
+                        cidr = "(UNKNOWN)";
+                    }
+
+                    result_row[requested_field_counter] = cidr;
+                } else if (requested_field == "netmask") {
+                    netmask_cidr = whoisdb_get_cidr(idx, data_index_counter);
+                    if (netmask_cidr != "") {
+                        netmask = uncanonical_ip(cidr_netmask(netmask_cidr));
+                    } else {
+                        netmask = "";
+                    }
+                    if (netmask == "") {
+                        if (finished_fields_marker["netmask"] != 1) {
+                            finished_fields = finished_fields + 1;
+                            finished_fields_marker["netmask"] = 1;
+                        }
+                        if (data_index_counter == 1) {
+                            print "ERROR: could not find netmask for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        }
+                        netmask = "(UNKNOWN)";
+                    }
+
+                    result_row[requested_field_counter] = netmask;
+                } else if (requested_field == "route") {
+                    route = whoisdb_get_route(idx, data_index_counter);
+                    if (route == "") {
+                        if (finished_fields_marker["route"] != 1) {
+                            finished_fields = finished_fields + 1;
+                            finished_fields_marker["route"] = 1;
+                        }
+                        if (data_index_counter == 1) {
+                            print "ERROR: could not find route for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        }
+                        route = "(UNKNOWN)";
+                    }
+
+                    result_row[requested_field_counter] = route;
+                } else if (requested_field == "route_netmask") {
+                    route_netmask = whoisdb_get_route_netmask(idx, data_index_counter);
+                    if (route_netmask == "") {
+                        if (finished_fields_marker["route_netmask"] != 1) {
+                            finished_fields = finished_fields + 1;
+                            finished_fields_marker["route_netmask"] = 1;
+                        }
+                        if (data_index_counter == 1) {
+                            print "ERROR: could not find route netmask for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        }
+                        route_netmask = "(UNKNOWN)";
+                    }
+
+                    result_row[requested_field_counter] = route_netmask;
                 }
+            }
 
-                result_row[requested_field_counter] = country;
-            } else if (requested_field == "isp") {
-                isp = whoisdb_get_iran_isp(idx);
-                if (isp == "") {
-                    print "ERROR: could not find isp for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
-                    isp = "(UNKNOWN)";
-                }
+            out_line = ip;
+            for (requested_field_counter=1; requested_field_counter<=requested_fields_length; requested_field_counter++) {
+                out_line = (out_line "," result_row[requested_field_counter]);
+            }
 
-                result_row[requested_field_counter] = isp;
-            } else if (requested_field == "asnumber") {
-                asnumber = whoisdb_get_asnumber(idx, 1);
-                if (asnumber == "") {
-                    print "ERROR: could not find asnumber for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
-                    asnumber = "(UNKNOWN)";
-                }
+            if (remainder != "") {
+                out_line = (out_line "," remainder);
+            }
 
-                result_row[requested_field_counter] = asnumber;
-            } 
+            if (finished_fields < requested_fields_length) {
+                print out_line;
+            }
         }
-
-        out_line = ip;
-        for (requested_field_counter=1; requested_field_counter<=requested_fields_length; requested_field_counter++) {
-            out_line = (out_line "," result_row[requested_field_counter]);
-        }
-
-        if (remainder != "") {
-            out_line = (out_line "," remainder);
-        }
-
-        print out_line;
     }
 }
 
@@ -1908,6 +2139,35 @@ function report_counter_txt() {
             print "ERROR: could not find asnumber for [" ip "] at [NR=" NR "] matching ORIGIN=[" whoisdb_get_origin(idx) "]";
         }
         for (asnumber_index=2; whoisdb_get_asnumber(idx, asnumber_index) != ""; asnumber_index++) {
+        }
+
+        netmask = whoisdb_get_netmask(idx, 1);
+        if (asnumber == "") {
+            print "ERROR: could not find netmask for [" ip "] at [NR=" NR "] matching ORIGIN=[" whoisdb_get_origin(idx) "]";
+        }
+        for (netmask_index=2; whoisdb_get_netmask(idx, netmask_index) != ""; netmask_index++) {
+        }
+
+        cidr = whoisdb_get_cidr(idx, 1);
+        if (asnumber == "") {
+            print "ERROR: could not find CIDR for [" ip "] at [NR=" NR "] matching ORIGIN=[" whoisdb_get_origin(idx) "]";
+        }
+        for (cidr_index=2; whoisdb_get_cidr(idx, cidr_index) != ""; cidr_index++) {
+        }
+
+        route = whoisdb_get_route(idx, 1)
+        if (route == "") {
+            print "ERROR: could not find route for [" ip "] at [NR=" NR "] [idx=" idx "] matching ORIGIN=[" whoisdb_get_origin(idx) "]";
+            route = "[UNKNOWN]";
+        }
+        for (route_index=2; whoisdb_get_route(idx, route_index) != ""; route_index++) {
+        }
+
+        route_netmask = whoisdb_get_route_netmask(idx, 1);
+        if (asnumber == "") {
+            print "ERROR: could not find route_netmask for [" ip "] at [NR=" NR "] matching ORIGIN=[" whoisdb_get_origin(idx) "]";
+        }
+        for (route_netmask_index=2; whoisdb_get_route_netmask(idx, route_netmask_index) != ""; route_netmask_index++) {
         }
 
         country = whoisdb_get_country(idx);

@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.12.101.0 - 185.12.101.255'
+
+% Abuse contact for '185.12.101.0 - 185.12.101.255' is 'v.vash@nrdc.ir'
+
+inetnum:        185.12.101.0 - 185.12.101.255
+netname:        IR-NRDC
+descr:          Naji Research & Development Company Private Join-Stock
+country:        ir
+admin-c:        VVF6266-RIPE
+tech-c:         VVF6266-RIPE
+status:         ASSIGNED PA
+mnt-by:         mnt-nrdc-ft
+mnt-lower:      mnt-nrdc-ft
+mnt-routes:     mnt-nrdc-ft
+created:        2012-12-17T08:35:21Z
+last-modified:  2015-02-25T11:16:41Z
+source:         RIPE
+
+person:         Vahid Vasheghani Farahani
+address:        No. 382, Mirdamad Blvd,Postal code 1518964613, Tehran, Iran
+phone:          +989122333607
+fax-no:         +98 21 86012472
+nic-hdl:        vvf6266-RIPE
+mnt-by:         Vahid_Vasheghani_Farahani
+created:        2014-02-08T07:16:50Z
+last-modified:  2019-02-04T08:18:54Z
+source:         RIPE # Filtered
+
+% Information related to '185.12.101.0/24AS61239'
+
+route:          185.12.101.0/24
+descr:          Naji Research & Development Company Private Join-Stock
+origin:         AS61239
+mnt-by:         Vahid_Vasheghani_Farahani
+created:        2013-01-26T16:02:42Z
+last-modified:  2014-02-13T06:29:17Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (WAGYU)
+
+

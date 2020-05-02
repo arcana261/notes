@@ -1,0 +1,80 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.240.180.0 - 91.240.183.255'
+
+% Abuse contact for '91.240.180.0 - 91.240.183.255' is 'abuse@skydsl.ir'
+
+inetnum:        91.240.180.0 - 91.240.183.255
+netname:        IR-SEP
+country:        IR
+geoloc:         35.76645022504895 51.397647857666016
+org:            ORG-SEPK1-RIPE
+admin-c:        HS800
+tech-c:         ATK700-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-MIHAN
+mnt-by:         MNT-SEP
+mnt-routes:     MNT-MIHAN
+mnt-routes:     MNT-SEP
+mnt-domains:    MNT-MIHAN
+mnt-domains:    MNT-SEP
+created:        2012-07-03T12:37:07Z
+last-modified:  2016-04-14T11:07:57Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-MCSC2-RIPE
+
+organisation:   ORG-SEPK1-RIPE
+org-name:       Saman Electronic Payment Kish PJS
+org-type:       OTHER
+address:        No. 104, Central Building Of SAMAN Electronic Payment Kish,martyr Khodami St.,above Vanak Square,Valiasr St.,Tehran-IRAN
+abuse-c:        AR28494-RIPE
+mnt-ref:        MNT-MIHAN
+mnt-by:         MNT-MIHAN
+mnt-by:         MNT-SEP
+created:        2012-07-01T16:26:39Z
+last-modified:  2017-10-30T15:32:15Z
+source:         RIPE # Filtered
+
+person:         Amir Teymor Kalali
+address:        No. 104, Central Building Of SAMAN Electronic Payment Kish,martyr Khodami St.
+address:        Above Vanak Square,Valiasr St.,Tehran-IRAN
+phone:          +98 912 350 7786
+nic-hdl:        ATK700-RIPE
+mnt-by:         MNT-MIHAN
+created:        2012-07-02T17:09:17Z
+last-modified:  2012-07-02T17:09:17Z
+source:         RIPE # Filtered
+
+person:         Hamed Shafaghi
+address:        Unit 1,Floor 6,Spadan-Saman Building,Bahonar AV
+address:        Esfahan-IRAN
+phone:          +98-3133461350
+phone:          +98-935-8506020
+fax-no:         +98-21-89785050
+nic-hdl:        HS800
+mnt-by:         MNT-Hamed
+created:        2010-05-25T05:04:57Z
+last-modified:  2016-11-06T12:18:26Z
+source:         RIPE # Filtered
+
+% Information related to '91.240.180.0/22AS43487'
+
+route:          91.240.180.0/22
+descr:          Saman Electronic Payment Kish PJS
+origin:         AS43487
+mnt-by:         MNT-MIHAN
+created:        2012-07-07T04:14:12Z
+last-modified:  2012-07-07T04:14:12Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (BLAARKOP)
+
+

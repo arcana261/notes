@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.188.104.0 - 185.188.104.255'
+
+% Abuse contact for '185.188.104.0 - 185.188.104.255' is 'netadmin@digikala.com'
+
+inetnum:        185.188.104.0 - 185.188.104.255
+netname:        Digikala-B1
+country:        IR
+admin-c:        NSD58-RIPE
+tech-c:         NSD58-RIPE
+status:         ASSIGNED PA
+mnt-by:         ir-fanavazeh-1-mnt
+created:        2017-02-19T13:13:14Z
+last-modified:  2020-02-23T06:30:51Z
+source:         RIPE
+
+role:           Network Security Department
+abuse-mailbox:  netadmin@digikala.com
+tech-c:         PT8910-RIPE
+tech-c:         SM31554-RIPE
+phone:          +982161930000
+admin-c:        PT8910-RIPE
+admin-c:        SM31554-RIPE
+address:        No. 38, Saba Blvd, Jordan St., Tehran, Iran
+nic-hdl:        NSD58-RIPE
+mnt-by:         ir-fanavazeh-1-mnt
+created:        2020-02-22T09:53:58Z
+last-modified:  2020-02-23T06:28:55Z
+source:         RIPE # Filtered
+
+% Information related to '185.188.104.0/24AS43211'
+
+route:          185.188.104.0/24
+descr:
+origin:         AS43211
+remarks:
+mnt-by:         ir-fanavazeh-1-mnt
+created:        2017-11-28T18:40:42Z
+last-modified:  2017-11-28T18:40:42Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

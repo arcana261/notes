@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '94.182.146.0 - 94.182.147.255'
+
+% Abuse contact for '94.182.146.0 - 94.182.147.255' is 'abuse@rasana.net'
+
+inetnum:        94.182.146.0 - 94.182.147.255
+netname:        SHTL-NET-HSTG
+descr:          SHTL-NET-HSTG
+country:        IR
+admin-c:        SHAD-RIPE
+tech-c:         AK12138-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-RASANA
+mnt-lower:      MNT-RASANA
+mnt-routes:     MNT-RASANA
+created:        2013-01-16T11:57:03Z
+last-modified:  2017-10-24T07:35:30Z
+source:         RIPE
+
+role:           SHATEL Network Operation Center - Administration
+address:        Shatel Group Companies
+address:        # 2, Elahieh Alley, Shariati Ave., Sadr Bridge
+address:        Tehran, Iran, 1914733444
+phone:          +98 21 2261 2601
+phone:          +982191000001
+fax-no:         +98 21 2261 2602
+fax-no:         +982191000002
+abuse-mailbox:  abuse@rasana.net
+admin-c:        MHSZ-RIPE
+admin-c:        FDSI-RIPE
+tech-c:         HSY-RIPE
+nic-hdl:        SHAD-RIPE
+mnt-by:         MNT-RASANA
+created:        2007-11-26T15:10:30Z
+last-modified:  2019-10-05T19:39:42Z
+source:         RIPE # Filtered
+
+person:         Adel Khaleghi
+address:        No 6, Yeghaneh Alley, South Kheradmand St., Karimkhan Ave.
+phone:          +98 21 88323520
+nic-hdl:        AK12138-RIPE
+mnt-by:         AK86303-MNT
+created:        2013-12-04T11:34:40Z
+last-modified:  2013-12-04T11:34:40Z
+source:         RIPE # Filtered
+
+% Information related to '94.182.146.0/24AS31549'
+
+route:          94.182.146.0/24
+descr:          SHATEL Network Route
+origin:         AS31549
+mnt-by:         MNT-RASANA
+created:        2014-11-05T05:31:53Z
+last-modified:  2015-07-21T06:23:52Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (HEREFORD)
+
+

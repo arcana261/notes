@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '176.56.157.159 - 176.56.157.159'
+
+% Abuse contact for '176.56.157.159 - 176.56.157.159' is 'ghorbani@sits-co.com'
+
+inetnum:        176.56.157.159 - 176.56.157.159
+netname:        BEHPARDAKHT-MELLAT
+country:        IR
+admin-c:        BM10385-RIPE
+tech-c:         BM10385-RIPE
+status:         ASSIGNED PA
+mnt-by:         ir-rg-sits-co-mnt
+mnt-by:         ir-sits-co-1-mnt
+created:        2020-01-11T10:04:42Z
+last-modified:  2020-01-11T10:04:42Z
+source:         RIPE
+
+person:         BEHPARDAKHT MELLAT
+address:        TEHRAN
+phone:          +982127310000
+nic-hdl:        BM10385-RIPE
+mnt-by:         ir-rg-sits-co-mnt
+mnt-by:         ir-sits-co-1-mnt
+created:        2019-08-26T13:51:59Z
+last-modified:  2019-08-26T13:51:59Z
+source:         RIPE
+
+% Information related to '176.56.157.0/24AS43415'
+
+route:          176.56.157.0/24
+origin:         AS43415
+mnt-by:         ir-rg-sits-co-mnt
+mnt-by:         ir-sits-co-1-mnt
+created:        2019-10-07T11:52:26Z
+last-modified:  2019-10-07T11:52:26Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97 (ANGUS)
+
+
