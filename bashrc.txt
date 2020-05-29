@@ -1,0 +1,169 @@
+alias ocean="bash --rcfile $HOME/.ocean.bashrc"
+
+# CafeBazaar
+export CI_BUILD_USERNAME=????????????????????????????????????
+export CI_BUILD_TOKEN=???????????????????????????????????????
+# End CafeBazaar
+
+export BLACK='\033[0;30m'
+export RED='\033[0;31m'
+export GREEN='\033[0;32m'
+export ORANGE='\033[0;33m'
+export BLUE='\033[0;34m'
+
+export YELLOW='\033[1;33m'
+
+export NC='\033[0m' # No Color
+
+#Black        0;30     Dark Gray     1;30
+#Red          0;31     Light Red     1;31
+#Green        0;32     Light Green   1;32
+#Brown/Orange 0;33     Yellow        1;33
+#Blue         0;34     Light Blue    1;34
+#Purple       0;35     Light Purple  1;35
+#Cyan         0;36     Light Cyan    1;36
+#Light Gray   0;37     White         1;37
+
+function changelog()
+{
+    git checkout master
+    git pull origin master
+    git fetch --tags
+    git log --pretty=oneline `git describe --abbrev=0`..HEAD | grep Merge
+}
+
+alias setclip="xclip -selection c"
+alias getclip="xclip -selection c -o"
+alias cc="tmux show-buffer | setclip"
+alias ee="exit"
+
+function routes() {
+    for addr in $(nslookup $1 | grep -v '127.0.0.1' | grep -o -P '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'); do echo $addr $(ip route get $addr | grep -o -P 'dev\s+\S+' | awk '{print $2}'); done
+}
+
+function fix-ir-routes() {
+    cd $HOME/Documents/notes/awk/whois && sudo ./route-ir-via.sh wlp3s0
+}
+
+function gs() {
+    git status
+}
+
+function gc() {
+    git commit
+}
+
+function gca() {
+    git commit --amend
+}
+
+function gco() {
+    git checkout $@
+}
+
+function gcob() {
+    git checkout -b $@
+}
+
+function gcom() {
+    git checkout master $@
+}
+
+function ga() {
+    git add $@
+}
+
+function gd() {
+    git diff $@
+}
+
+function gp() {
+    git pull origin $(git rev-parse --abbrev-ref HEAD)
+}
+
+function gpp() {
+    git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+}
+
+function gppf() {
+    git push -f --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+}
+
+function gb() {
+    git branch $@
+}
+
+function gr() {
+    git rebase -i $@
+}
+
+function grc() {
+    git rebase --continue $@
+}
+
+function gra() {
+    git rebase --abort $@
+}
+
+function gl() {
+    git log $@
+}
+
+function grm() {
+    git rm $@
+}
+
+function grr() {
+    git reset $@
+}
+
+function grrh() {
+    git reset --hard $@
+}
+
+function gss() {
+    git stash $@
+}
+
+function gssa() {
+    git stash apply $@
+}
+
+function _regit() {
+    ISGIT=$(git status 1>/dev/null 2>&1 || echo "NOGIT")
+    if [ "$ISGIT" != "NOGIT" ]; then
+        #export PS1="(${ORANGE}git: "$(git rev-parse --abbrev-ref HEAD)"${NC}) "$(echo $PS1 | sed 's|([^(]*git: [^)]*)\s*||g' | sed 's|\s*$||g')" "
+        export PS1=$(echo $PS1 | sed 's|#.*$||g')"# \[${YELLOW}\]"$(pwd | sed 's|[^/]*/||g')"\[${RED}\]>\[${NC}\] "
+
+        tmux set -g status-right '#[fg=red](git: '$(git rev-parse --abbrev-ref HEAD)') #[fg=yellow]'$(pwd)' #[fg=Cyan]#S #[fg=white]%a %d %b %R'
+    else
+        #export PS1=$(echo $PS1 | sed 's|([^(]*git: [^)]*)\s*||g' | sed 's|\s*$||g')" "
+        export PS1=$(echo $PS1 | sed 's|#.*$||g')"# \[${YELLOW}\]"$(pwd | sed 's|[^/]*/||g')"\[${RED}\]>\[${NC}\] "
+
+        tmux set -g status-right '#[fg=yellow]'$(pwd)' #[fg=Cyan]#S #[fg=white]%a %d %b %R'
+    fi
+}
+
+function qind() {
+    find . -not -path *.venv* -not -path *.git* -name *$1*
+}
+
+function qin() {
+    grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude=*.pyc --exclude-dir=.git "$@" .
+}
+
+PROMPT_COMMAND="_regit"
+
+export PS1="\[${RED}\]#>\[${NC}\] "
+#export PS1="${RED}"$(whoami)"@ARCANE:${YELLOW}\w${NC}$ "
+
+_regit
+
+# Enhanced file path completion in bash - https://github.com/sio/bash-complete-partial-path
+if [ -s "$HOME/.config/bash-complete-partial-path/bash_completion" ]
+then
+        source "$HOME/.config/bash-complete-partial-path/bash_completion"
+        _bcpp --defaults
+fi
+
+

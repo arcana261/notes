@@ -1,0 +1,101 @@
+##########################################
+https://github.com/ChristopherHX/linux-packaging-scripts/releases/tag/ng.appimage
+
+
+# Install clang-9
+
+```
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+sudo add-apt-repository -u 'http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
+sudo apt install clang-9
+```
+
+# Upgrade cmake
+
+```
+version=3.17
+build=2
+mkdir -p ~/.local/src/
+cd ~/.local/src/
+wget https://cmake.org/files/v$version/cmake-$version.$build.tar.gz
+tar -xzvf cmake-$version.$build.tar.gz
+cd cmake-$version.$build/
+
+./bootstrap
+make -j$(nproc)
+sudo make install
+```
+
+# Install gtest
+
+sudo apt-get install libgtest-dev
+
+sudo apt-get install cmake # install cmake
+cd /usr/src/gtest
+sudo cmake CMakeLists.txt
+sudo make
+ 
+# copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
+ sudo cp *.a /usr/lib
+
+# Install pre-requirements
+
+```
+sudo apt install texinfo
+```
+
+
+sudo dpkg --add-architecture i386
+
+sudo apt-get install g++-multilib libpng-dev:i386 libx11-dev:i386 \
+  libxi-dev:i386 libcurl4-openssl-dev:i386 libudev-dev:i386 \
+  libevdev-dev:i386 libegl1-mesa-dev:i386 libasound2:i386
+
+
+sudo apt-get install libpng-dev:i386 libev-dev:i386
+ORRRRRR?
+MORE LIKELY >>>>>>>>>>> sudo apt-get install libpng-dev libev-dev
+
+
+###
+
+mkdir -p ~/.local/src
+cd ~/.local/src
+git clone --recursive https://github.com/minecraft-linux/mcpelauncher-manifest.git mcpelauncher && cd mcpelauncher
+git checkout ng
+git submodule update --init --recursive
+mkdir -p build && cd build
+CC=`which clang-9` CXX=`which clang++-9` cmake -DBUILD_FAKE_JNI_EXAMPLES=OFF -DBUILD_BARON_EXAMPLES=OFF ..
+CC=`which clang-9` CXX=`which clang++-9` make -j$(nproc)
+
+cpack --config mcpelauncher-client/CPackConfig.cmake
+sudo dpkg -i  ./mcpelauncher-client-*-Linux.deb && sudo apt-get install -f
+
+
+#############################################################################
+
+# Install QT UI
+
+# Install pre-req
+
+sudo apt-get install libssl-dev libcurl4-openssl-dev libuv1-dev              \
+ libzip-dev libprotobuf-dev protobuf-compiler qtbase5-dev qtwebengine5-dev   \
+ qtdeclarative5-dev libqt5svg5-dev qml-module-qtquick2                       \
+ qml-module-qtquick-layouts qml-module-qtquick-controls                      \
+ qml-module-qtquick-controls2 qml-module-qtquick-window2                     \
+ qml-module-qtquick-dialogs qml-module-qt-labs-settings                      \
+ qml-module-qt-labs-folderlistmodel
+
+
+# Compile
+
+mkdir -p ~/.local/src
+cd ~/.local/src
+git clone --recursive https://github.com/minecraft-linux/mcpelauncher-ui-manifest.git mcpelauncher-ui
+cd mcpelauncher-ui
+git checkout ng
+git submodule update --init --recursive
+mkdir -p build && cd build
+CC=`which clang-9` CXX=`which clang++-9` cmake ..
+CC=`which clang-9` CXX=`which clang++-9` make -j$(nproc)
+

@@ -1,0 +1,319 @@
+worker_processes 8;
+
+worker_rlimit_nofile 10240;
+
+events {
+    worker_connections 3000;
+    use epoll;
+    multi_accept on;
+ }
+
+http {
+    lua_load_resty_core off;
+    lua_shared_dict prometheus_metrics 30M;
+
+    init_by_lua '
+        prometheus = require("prometheus").init("prometheus_metrics")
+        upstream = require("ngx.upstream")
+        metric_requests = prometheus:counter(
+            "nginx_http_requests_total", "Number of HTTP requests", {"host", "alias", "status", "upstream", "method"})
+        metric_latency = prometheus:histogram(
+            "nginx_http_request_duration_seconds", "HTTP request latency", {"host", "alias", "status", "upstream", "method"})
+        metric_connections = prometheus:gauge(
+            "nginx_http_connections", "Number of HTTP connections", {"state"})
+        metric_request_size = prometheus:histogram(
+            "nginx_http_request_size", "HTTP request latency", {"host", "alias", "status", "upstream", "method"})
+    ';
+    init_worker_by_lua 'prometheus:init_worker()';
+    log_by_lua '
+        metric_requests:inc(1, {ngx.var.server_name, ngx.var.http_host, ngx.var.status, upstream.current_upstream_name() or "no_upstream", ngx.var.request_method})
+        metric_latency:observe(tonumber(ngx.var.request_time), {ngx.var.server_name, ngx.var.http_host, ngx.var.status, upstream.current_upstream_name() or "no_upstream", ngx.var.request_method})
+        metric_request_size:observe(tonumber(ngx.var.request_length)/1048576, {ngx.var.server_name, ngx.var.http_host, ngx.var.status, upstream.current_upstream_name() or "no_upstream", ngx.var.request_method})
+    ';
+
+    keepalive_timeout  30;
+
+    log_format main '$remote_addr - $http_x_forwarded_for - $http_x_real_ip - [$http_x_real] $remote_user [$time_local]  '
+                    '"$request" $status $body_bytes_sent '
+                    '"$http_referer" "$http_user_agent" $request_time';
+
+    error_log /dev/stdout;
+    access_log /dev/stdout main;
+
+    upstream images_upload {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    upstream images_upload_path_upload {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    upstream images_upload_path_upload_s3_temp {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    upstream images_upload_path_upload_s3_car_business {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    upstream images_upload_path_upload_s3_real_estate {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    upstream images_upload_path_v1_image_service_carauction {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    upstream images_upload_path_v1_image_service_carinspection {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    upstream images_upload_path_v1_image_service_marketplace {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    upstream images_upload_path_v2_image_service_marketplace {
+        server images-upload:8002;
+        keepalive 32;
+    }
+
+    server {
+        listen 9113;
+        location /metrics {
+            content_by_lua '
+            metric_connections:set(ngx.var.connections_reading, {"reading"})
+            metric_connections:set(ngx.var.connections_waiting, {"waiting"})
+            metric_connections:set(ngx.var.connections_writing, {"writing"})
+            prometheus:collect()
+            ';
+        }
+    }
+
+   server {
+        listen	80 default;
+        listen [::]:80 default;
+
+        keepalive_disable none;
+        keepalive_requests 20;
+        keepalive_timeout 20s;
+
+        location /nginx-health {
+           return 200 "healthy\n";
+        }
+
+        location / {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+
+        location /upload {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload_path_upload;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+
+        location /upload_s3/temp/ {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload_path_upload_s3_temp;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+
+        location /upload_s3/car-business/ {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload_path_upload_s3_car_business;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+
+        location /upload_s3/real-estate/ {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload_path_upload_s3_real_estate;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+
+        location /v1/image-service/carauction/ {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload_path_v1_image_service_carauction;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+
+        location /v1/image-service/carinspection/ {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload_path_v1_image_service_carinspection;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+
+        location /v1/image-service/marketplace/ {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload_path_v1_image_service_marketplace;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+
+        location /v2/image-service/marketplace/ {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://images_upload_path_v2_image_service_marketplace;
+            client_max_body_size 30M;
+            client_body_timeout 210s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 210s;
+            proxy_send_timeout 210s;
+        }
+    }
+}

@@ -1,0 +1,334 @@
+worker_processes 8;
+
+worker_rlimit_nofile 10240;
+
+events {
+    worker_connections 3000;
+    use epoll;
+    multi_accept on;
+ }
+
+http {
+    lua_load_resty_core off;
+    lua_shared_dict prometheus_metrics 10M;
+
+    init_by_lua '
+        prometheus = require("prometheus").init("prometheus_metrics")
+        upstream = require("ngx.upstream")
+        metric_requests = prometheus:counter(
+            "nginx_http_requests_total", "Number of HTTP requests", {"host", "alias", "status", "upstream", "method"})
+        metric_latency = prometheus:histogram(
+            "nginx_http_request_duration_seconds", "HTTP request latency", {"host", "alias", "status", "upstream", "method"})
+        metric_connections = prometheus:gauge(
+            "nginx_http_connections", "Number of HTTP connections", {"state"})
+    ';
+    init_worker_by_lua 'prometheus:init_worker()';
+    log_by_lua '
+        metric_requests:inc(1, {ngx.var.server_name, ngx.var.http_host, ngx.var.status, upstream.current_upstream_name() or "no_upstream", ngx.var.request_method})
+        metric_latency:observe(tonumber(ngx.var.request_time), {ngx.var.server_name, ngx.var.http_host, ngx.var.status, upstream.current_upstream_name() or "no_upstream", ngx.var.request_method})
+    ';
+
+    keepalive_timeout  30;
+
+    log_format main '$remote_addr - $remote_user [$time_local]  '
+                    '"$request" $status $body_bytes_sent '
+                    '"$http_referer" "$http_user_agent" $request_time';
+
+    upstream hamyan {
+        server hamyan.roo.cloud:80;
+        keepalive 32;
+    }
+    upstream kise {
+        server kise.roo.cloud:80;
+        keepalive 32;
+    }
+
+    server {
+        listen 9113;
+        location /metrics {
+            content_by_lua '
+            metric_connections:set(ngx.var.connections_reading, {"reading"})
+            metric_connections:set(ngx.var.connections_waiting, {"waiting"})
+            metric_connections:set(ngx.var.connections_writing, {"writing"})
+            prometheus:collect()
+            ';
+        }
+    }
+
+   server {
+        listen	80 default;
+        listen [::]:80 default;
+
+        keepalive_disable none;
+        keepalive_requests 20;
+        keepalive_timeout 20s;
+
+        error_log /dev/stdout; # TODO: check
+        access_log /dev/stdout; # TODO: check
+
+        location /nginx-health {
+           return 200 "healthy\n";
+        }
+
+        location / {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header x-amz-content-sha256;
+            proxy_pass_header x-amz-date;
+            proxy_pass_header x-amz-acl;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host kise.roo.cloud;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://kise;
+            client_max_body_size 30M;
+            client_body_timeout 60s;
+
+            # Dont generate 499
+            proxy_ignore_client_abort on;
+
+            # timeouts
+            proxy_connect_timeout 250ms;
+            proxy_read_timeout 250ms;
+            proxy_send_timeout 250ms;
+
+            # retry with a quick 504
+            proxy_intercept_errors on;
+            error_page 504 = @retry_kise_1;
+            error_page 403 = @try_hamyan;
+        }
+
+        location @retry_kise_1 {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header x-amz-content-sha256;
+            proxy_pass_header x-amz-date;
+            proxy_pass_header x-amz-acl;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host kise.roo.cloud;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://kise;
+            client_max_body_size 30M;
+            client_body_timeout 60s;
+
+            # timeouts
+            proxy_connect_timeout 512ms;
+            proxy_read_timeout 512ms;
+            proxy_send_timeout 512ms;
+
+            # Dont generate 499
+            proxy_ignore_client_abort on;
+
+            # retry with a quick 504
+            proxy_intercept_errors on;
+            error_page 504 = @retry_kise_2;
+            error_page 403 = @retry_hamyan_1;
+        }
+
+        location @retry_kise_2 {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header x-amz-content-sha256;
+            proxy_pass_header x-amz-date;
+            proxy_pass_header x-amz-acl;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host kise.roo.cloud;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://kise;
+            client_max_body_size 30M;
+            client_body_timeout 60s;
+
+            # timeouts
+            proxy_connect_timeout 1s;
+            proxy_read_timeout 1s;
+            proxy_send_timeout 1s;
+
+            # Dont generate 499
+            proxy_ignore_client_abort on;
+
+            # retry with a quick 504
+            proxy_intercept_errors on;
+            error_page 504 = @retry_kise_3;
+            error_page 403 = @retry_hamyan_2;
+        }
+
+        location @retry_kise_3 {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header x-amz-content-sha256;
+            proxy_pass_header x-amz-date;
+            proxy_pass_header x-amz-acl;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host kise.roo.cloud;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://kise;
+            client_max_body_size 30M;
+            client_body_timeout 60s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 30s;
+            proxy_send_timeout 30s;
+
+            # Dont generate 499
+            proxy_ignore_client_abort on;
+
+            error_page 403 = @retry_hamyan_3;
+        }
+
+        location @try_hamyan {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header x-amz-content-sha256;
+            proxy_pass_header x-amz-date;
+            proxy_pass_header x-amz-acl;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://hamyan;
+            client_max_body_size 30M;
+            client_body_timeout 60s;
+
+            # Dont generate 499
+            proxy_ignore_client_abort on;
+
+            # timeouts
+            proxy_connect_timeout 250ms;
+            proxy_read_timeout 250ms;
+            proxy_send_timeout 250ms;
+
+            # retry with a quick 504
+            proxy_intercept_errors on;
+            error_page 504 = @retry_hamyan_1;
+        }
+
+        location @retry_hamyan_1 {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header x-amz-content-sha256;
+            proxy_pass_header x-amz-date;
+            proxy_pass_header x-amz-acl;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://hamyan;
+            client_max_body_size 30M;
+            client_body_timeout 60s;
+
+            # timeouts
+            proxy_connect_timeout 512ms;
+            proxy_read_timeout 512ms;
+            proxy_send_timeout 512ms;
+
+            # Dont generate 499
+            proxy_ignore_client_abort on;
+
+            # retry with a quick 504
+            proxy_intercept_errors on;
+            error_page 504 = @retry_hamyan_2;
+        }
+
+        location @retry_hamyan_2 {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header x-amz-content-sha256;
+            proxy_pass_header x-amz-date;
+            proxy_pass_header x-amz-acl;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://hamyan;
+            client_max_body_size 30M;
+            client_body_timeout 60s;
+
+            # timeouts
+            proxy_connect_timeout 1s;
+            proxy_read_timeout 1s;
+            proxy_send_timeout 1s;
+
+            # Dont generate 499
+            proxy_ignore_client_abort on;
+
+            # retry with a quick 504
+            proxy_intercept_errors on;
+            error_page 504 = @retry_hamyan_3;
+        }
+
+        location @retry_hamyan_3 {
+            proxy_pass_header Server;
+            proxy_pass_header Authorization;
+            proxy_pass_header Credential;
+            proxy_pass_header SignedHeaders;
+            proxy_pass_header Signature;
+            proxy_pass_header Host;
+            proxy_pass_header x-amz-content-sha256;
+            proxy_pass_header x-amz-date;
+            proxy_pass_header x-amz-acl;
+            proxy_pass_header Date;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Scheme $scheme;
+            proxy_pass http://hamyan;
+            client_max_body_size 30M;
+            client_body_timeout 60s;
+
+            # timeouts
+            proxy_connect_timeout 30s;
+            proxy_read_timeout 30s;
+            proxy_send_timeout 30s;
+
+            # Dont generate 499
+            proxy_ignore_client_abort on;
+        }
+    }
+}
