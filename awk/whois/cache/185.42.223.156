@@ -1,0 +1,86 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.42.223.116 - 185.42.223.255'
+
+% Abuse contact for '185.42.223.116 - 185.42.223.255' is 'abuse@clouvider.net'
+
+inetnum:        185.42.223.116 - 185.42.223.255
+netname:        CLOUVIDER
+descr:          CLOUVIDER Virtual Dedicated Servers
+country:        GB
+org:            ORG-CL248-RIPE
+admin-c:        CLO7-RIPE
+tech-c:         CLO7-RIPE
+status:         ASSIGNED PA
+mnt-by:         CLOUVIDER-MNT
+mnt-lower:      CLOUVIDER-MNT
+mnt-domains:    CLOUVIDER-MNT
+mnt-routes:     CLOUVIDER-MNT
+created:        2015-12-01T11:54:10Z
+last-modified:  2015-12-01T11:54:10Z
+source:         RIPE # Filtered
+
+organisation:   ORG-CL248-RIPE
+org-name:       Clouvider Limited
+org-type:       LIR
+address:        30 Moorgate
+address:        EC2R 6PJ
+address:        London
+address:        UNITED KINGDOM
+phone:          +443333441640
+phone:          +442036035030
+fax-no:         +442071124829
+admin-c:        MO5116-RIPE
+admin-c:        JO2974-RIPE
+admin-c:        CLO8-RIPE
+admin-c:        DN3032-RIPE
+tech-c:         CLO7-RIPE
+abuse-c:        CLO7-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        CLOUVIDER-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         CLOUVIDER-MNT
+created:        2013-12-11T13:55:43Z
+last-modified:  2019-08-07T12:10:50Z
+source:         RIPE # Filtered
+
+role:           Clouvider NOC
+org:            ORG-CL248-RIPE
+address:        Clouvider Limited
+address:        30 Moorgate
+address:        City of London
+address:        London, UK
+address:        EC2R 6PJ
+phone:          +442036035030
+abuse-mailbox:  abuse@clouvider.net
+nic-hdl:        CLO7-RIPE
+mnt-by:         CLOUVIDER-MNT
+tech-c:         DN3032-RIPE
+tech-c:         JO2974-RIPE
+tech-c:         MO5116-RIPE
+admin-c:        CLO8-RIPE
+created:        2013-12-11T16:03:30Z
+last-modified:  2019-08-06T11:26:11Z
+source:         RIPE # Filtered
+
+% Information related to '185.42.223.0/24AS62240'
+
+route:          185.42.223.0/24
+descr:          Clouvider Limited
+descr:          DDOS mitigation route
+origin:         AS62240
+mnt-by:         CLOUVIDER-MNT
+created:        2014-09-03T17:06:20Z
+last-modified:  2014-09-03T17:06:20Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

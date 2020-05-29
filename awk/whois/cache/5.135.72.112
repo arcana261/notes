@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.135.72.112 - 5.135.72.115'
+
+% Abuse contact for '5.135.72.112 - 5.135.72.115' is 'abuse@ovh.net'
+
+inetnum:        5.135.72.112 - 5.135.72.115
+netname:        OVH_109072136
+descr:          OVH Static IP
+country:        LT
+org:            ORG-HJ50-RIPE
+admin-c:        OTC10-RIPE
+tech-c:         OTC10-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2016-05-26T09:07:41Z
+last-modified:  2016-05-26T09:07:41Z
+source:         RIPE
+
+organisation:   ORG-HJ50-RIPE
+org-name:       Hos Jam
+org-type:       OTHER
+address:        Ozo g. 18, Vilnius
+address:        LT-07151 Vilnius
+address:        LT
+phone:          +370.37248926
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2016-05-26T09:06:04Z
+last-modified:  2017-10-30T16:49:56Z
+source:         RIPE # Filtered
+
+role:           OVH LT Technical Contact
+address:        UAB OVH
+address:        A.Jaksto g. 6A/8
+address:        16 LT-01105 Vilnius
+address:        Lietuva
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC10-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T15:41:11Z
+last-modified:  2009-09-16T15:41:11Z
+source:         RIPE # Filtered
+
+% Information related to '5.135.0.0/16AS16276'
+
+route:          5.135.0.0/16
+descr:          OVH
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2012-07-06T13:00:08Z
+last-modified:  2012-07-06T13:00:08Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

@@ -1,0 +1,89 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.109.108.0 - 91.109.111.255'
+
+% Abuse contact for '91.109.108.0 - 91.109.111.255' is 'a.etesamifar@tci.ir'
+
+inetnum:        91.109.108.0 - 91.109.111.255
+netname:        TCIBSH
+country:        IR
+admin-c:        NA6207-RIPE
+tech-c:         NA6208-RIPE
+tech-c:         HB5041-RIPE
+org:            ORG-TCOB1-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2018-01-01T08:26:45Z
+last-modified:  2019-06-23T06:00:12Z
+source:         RIPE
+
+organisation:   ORG-TCOB1-RIPE
+org-name:       Telecommunication Company of Boushehr
+org-type:       other
+address:        Boushehr Telecom
+abuse-c:        AC26444-RIPE
+admin-c:        NA6207-RIPE
+tech-c:         NA6208-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-01-16T07:45:38Z
+last-modified:  2019-03-02T11:44:27Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Bushehr)
+address:        Bushehr - Telecommunication Company of Bushehr
+admin-c:        JP11596-RIPE
+nic-hdl:        NA6207-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T10:15:14Z
+last-modified:  2019-03-02T10:15:14Z
+source:         RIPE # Filtered
+
+role:           NOC (Bushehr)
+address:        Bushehr - Telecommunication Company of Bushehr
+admin-c:        RTM34-RIPE
+nic-hdl:        NA6208-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T10:18:22Z
+last-modified:  2019-03-02T10:18:22Z
+source:         RIPE # Filtered
+
+person:         Hamidreza Bahrani
+address:        telecommunication company of Boushehr
+phone:          +987715555507
+nic-hdl:        HB5041-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2013-09-11T10:37:00Z
+last-modified:  2013-09-11T10:37:00Z
+source:         RIPE
+
+% Information related to '91.109.104.0/21AS48159'
+
+route:          91.109.104.0/21
+descr:          Boushehr
+origin:         AS48159
+mnt-by:         habibhosseinimaintainer
+created:        2018-01-01T12:20:52Z
+last-modified:  2018-01-01T12:20:52Z
+source:         RIPE
+
+% Information related to '91.109.104.0/21AS58224'
+
+route:          91.109.104.0/21
+origin:         AS58224
+mnt-routes:     habibhosseinimaintainer
+mnt-by:         TCI-RIPE-MNT
+created:        2017-10-07T08:08:46Z
+last-modified:  2018-01-01T08:27:40Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

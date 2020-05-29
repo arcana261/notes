@@ -1,0 +1,79 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.174.132.0 - 185.174.135.255'
+
+% Abuse contact for '185.174.132.0 - 185.174.135.255' is 'karpira@gmail.com'
+
+inetnum:        185.174.132.0 - 185.174.135.255
+netname:        IR-FAVAPAYAM-20161024
+country:        IR
+org:            ORG-FPCL2-RIPE
+admin-c:        HHS81-RIPE
+tech-c:         HHS81-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-favapayam-1-mnt
+created:        2016-10-24T12:27:37Z
+last-modified:  2016-10-24T12:27:37Z
+source:         RIPE
+
+organisation:   ORG-FPCL2-RIPE
+org-name:       Favapayam Pars Co., Ltd
+org-type:       LIR
+address:        Un.1,Fl.1,No.92,mirzaei zeynali junction , North Sohrevardi
+address:        1577665114
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        HHS81-RIPE
+tech-c:         HHS81-RIPE
+abuse-c:        AR38022-RIPE
+mnt-ref:        ir-favapayam-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-favapayam-1-mnt
+created:        2016-10-20T12:40:31Z
+last-modified:  2020-01-07T05:59:52Z
+source:         RIPE # Filtered
+phone:          +989121382568
+fax-no:         +982188533705
+
+person:         Hamidreza Hemati Serajehlou
+address:        Un.1,Fl.1,No.92,mirzaei zeynali junction , North Sohrevardi
+address:        1577665141
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989123634274
+phone:          +989121382568
+nic-hdl:        HHS81-RIPE
+mnt-by:         ir-favapayam-1-mnt
+created:        2016-10-20T12:40:30Z
+last-modified:  2020-01-20T03:13:13Z
+source:         RIPE
+
+% Information related to '185.174.132.0/24AS202391'
+
+route:          185.174.132.0/24
+origin:         AS202391
+mnt-by:         ir-favapayam-1-mnt
+created:        2018-11-06T08:52:16Z
+last-modified:  2018-11-06T08:52:16Z
+source:         RIPE
+
+% Information related to '185.174.132.0/24AS24631'
+
+route:          185.174.132.0/24
+origin:         AS24631
+mnt-by:         ir-favapayam-1-mnt
+created:        2017-04-16T11:04:24Z
+last-modified:  2017-04-16T11:04:24Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

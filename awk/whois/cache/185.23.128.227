@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.23.128.0 - 185.23.131.255'
+
+% Abuse contact for '185.23.128.0 - 185.23.131.255' is 'technical@aqrazavi.net'
+
+inetnum:        185.23.128.0 - 185.23.131.255
+netname:        IR-FAVA-20130410
+country:        IR
+org:            ORG-RIAC2-RIPE
+admin-c:        HS7082-RIPE
+tech-c:         HS7082-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HS90767-MNT
+mnt-routes:     HS90767-MNT
+created:        2013-04-10T08:32:38Z
+last-modified:  2017-02-08T07:42:59Z
+source:         RIPE # Filtered
+
+organisation:   ORG-RIAC2-RIPE
+org-name:       Razavi Information and communication technology company Plc
+org-type:       LIR
+address:        kohsangi 17
+address:        9175917933
+address:        Mashhad
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +985138454897
+fax-no:         +985138454897
+abuse-c:        AR15630-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        HS90767-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HS90767-MNT
+created:        2013-03-15T13:23:01Z
+last-modified:  2017-02-08T07:42:59Z
+source:         RIPE # Filtered
+
+person:         Hamed Sedighi
+address:        RICT Co. - Koohsangi 17 - Mashhad - Khorasan - Iran
+phone:          +9838427774
+nic-hdl:        HS7082-RIPE
+mnt-by:         HS90767-MNT
+created:        2013-03-25T06:01:40Z
+last-modified:  2016-01-26T04:55:20Z
+source:         RIPE # Filtered
+
+% Information related to '185.23.128.0/24AS199082'
+
+route:          185.23.128.0/24
+descr:          Razavi Information and communication technology company
+origin:         AS199082
+mnt-by:         HS90767-MNT
+created:        2013-10-22T07:34:13Z
+last-modified:  2013-10-22T07:34:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

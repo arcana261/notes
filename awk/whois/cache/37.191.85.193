@@ -1,0 +1,58 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.191.84.0 - 37.191.87.255'
+
+% Abuse contact for '37.191.84.0 - 37.191.87.255' is 'ripe-abuse@spadana.net'
+
+inetnum:        37.191.84.0 - 37.191.87.255
+netname:        ARIAPHONE
+descr:          Ariana Gostar ADSL Users
+country:        IR
+admin-c:        NZ618-RIPE
+tech-c:         RH4545-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-HAJIAHMADI
+created:        2015-02-14T07:41:15Z
+last-modified:  2015-02-14T07:41:15Z
+source:         RIPE
+
+person:         Narges Zarrabi
+address:        No 1, Homa Building, Sheikh Saddough,Esfahan,Iran
+phone:          +98 313 6106
+fax-no:         +98 313 667 1547
+nic-hdl:        NZ618-RIPE
+mnt-by:         MNT-HAJIAHMADI
+created:        2012-10-14T07:49:12Z
+last-modified:  2019-02-08T10:59:01Z
+source:         RIPE # Filtered
+
+person:         Reza Hajiahmadi
+address:        No 1, Homa-Building , Sheikh Saddough, Isfahan , Iran
+phone:          +98 313 6106
+fax-no:         +98 313 667 1547
+nic-hdl:        RH4545-RIPE
+mnt-by:         MNT-HAJIAHMADI
+created:        2009-04-07T10:18:47Z
+last-modified:  2019-02-08T10:57:47Z
+source:         RIPE # Filtered
+
+% Information related to '37.191.80.0/21AS48309'
+
+route:          37.191.80.0/21
+descr:          Ariana Gostar Spadana's route
+origin:         AS48309
+mnt-by:         MNT-HAJIAHMADI
+created:        2012-09-02T13:24:19Z
+last-modified:  2012-09-02T13:24:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

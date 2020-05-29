@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.204.150.0 - 31.204.151.255'
+
+% Abuse contact for '31.204.150.0 - 31.204.151.255' is 'abuse@i3d.net'
+
+inetnum:        31.204.150.0 - 31.204.151.255
+netname:        INTERACTIVE3D
+remarks:        Retail
+descr:          Interactive 3D B.V. IP space
+country:        NL
+admin-c:        ir809-RIPE
+tech-c:         ir809-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-i3D
+created:        2011-08-10T13:36:02Z
+last-modified:  2011-08-10T13:36:02Z
+source:         RIPE
+
+role:           i3D.net Role
+address:        i3D.net - Interactive 3D
+address:        Rivium 1e Straat 1
+address:        2909LE Capelle aan den IJssel
+address:        The Netherlands
+phone:          +31108900070
+org:            ORG-IA772-RIPE
+mnt-by:         MNT-i3D
+mnt-by:         AS49544-MNT
+abuse-mailbox:  abuse@i3d.net
+admin-c:        SK4163-RIPE
+admin-c:        SI982-RIPE
+tech-c:         SI982-RIPE
+tech-c:         MJS89-RIPE
+tech-c:         EVER1-RIPE
+tech-c:         RVE2600-RIPE
+tech-c:         MPW16-RIPE
+nic-hdl:        Ir809-RIPE
+created:        2008-06-24T12:25:11Z
+last-modified:  2018-10-12T11:39:11Z
+source:         RIPE # Filtered
+
+% Information related to '31.204.128.0/19AS49544'
+
+route:          31.204.128.0/19
+descr:          i3D.net B.V. (AS49544)
+remarks:        --------------------------------------------------------
+remarks:        Abuse : abuse@i3d.net
+remarks:        NOC: noc@i3d.net
+remarks:        --------------------------------------------------------
+origin:         AS49544
+mnt-by:         MNT-I3D
+created:        2011-04-29T15:25:29Z
+last-modified:  2018-03-09T14:43:17Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

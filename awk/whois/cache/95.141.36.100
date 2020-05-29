@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.141.35.0 - 95.141.36.255'
+
+% Abuse contact for '95.141.35.0 - 95.141.36.255' is 'abuse@seflow.net'
+
+inetnum:        95.141.35.0 - 95.141.36.255
+netname:        SEFLOW-DEDICATED-NET
+descr:          Dedicated Servers
+country:        it
+admin-c:        MB14946-RIPE
+tech-c:         MB14946-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-SEFLOW
+created:        2011-11-07T12:31:31Z
+last-modified:  2012-11-01T11:45:49Z
+source:         RIPE
+
+person:         Matteo Berlonghi
+org:            ORG-Ss112-RIPE
+address:        V. Alberici, 20
+address:        Codogno, 26845 (LO)
+address:        IT
+phone:          +39 3484876015
+nic-hdl:        MB14946-RIPE
+mnt-by:         MNT-SEFLOW
+created:        2008-05-09T10:34:19Z
+last-modified:  2017-10-30T22:00:49Z
+source:         RIPE
+
+% Information related to '95.141.36.0/24AS49367'
+
+route:          95.141.36.0/24
+origin:         AS49367
+mnt-by:         SEFLOW-MNT
+mnt-by:         MNT-SEFLOW
+created:        2019-12-03T21:11:54Z
+last-modified:  2019-12-03T21:11:54Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

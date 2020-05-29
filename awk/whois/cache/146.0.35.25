@@ -1,0 +1,143 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       146.0.0.0 - 146.0.255.255
+CIDR:           146.0.0.0/16
+NetName:        RIPE-ERX-146-0-0-0
+NetHandle:      NET-146-0-0-0-1
+Parent:         NET146 (NET-146-0-0-0-0)
+NetType:        Early Registrations, Transferred to RIPE NCC
+OriginAS:       
+Organization:   RIPE Network Coordination Centre (RIPE)
+RegDate:        2010-11-03
+Updated:        2010-11-03
+Comment:        These addresses have been further assigned to users in
+Comment:        the RIPE NCC region. Contact information can be found in
+Comment:        the RIPE database at http://www.ripe.net/whois
+Ref:            https://rdap.arin.net/registry/ip/146.0.0.0
+
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+ResourceLink:  whois.ripe.net
+
+
+OrgName:        RIPE Network Coordination Centre
+OrgId:          RIPE
+Address:        P.O. Box 10096
+City:           Amsterdam
+StateProv:      
+PostalCode:     1001EB
+Country:        NL
+RegDate:        
+Updated:        2013-07-29
+Ref:            https://rdap.arin.net/registry/entity/RIPE
+
+ReferralServer:  whois://whois.ripe.net
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+
+OrgAbuseHandle: ABUSE3850-ARIN
+OrgAbuseName:   Abuse Contact
+OrgAbusePhone:  +31205354444 
+OrgAbuseEmail:  abuse@ripe.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3850-ARIN
+
+OrgTechHandle: RNO29-ARIN
+OrgTechName:   RIPE NCC Operations
+OrgTechPhone:  +31 20 535 4444 
+OrgTechEmail:  hostmaster@ripe.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/RNO29-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.ripe.net.
+
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '146.0.35.0 - 146.0.35.127'
+
+% Abuse contact for '146.0.35.0 - 146.0.35.127' is 'abuse@myloc.de'
+
+inetnum:        146.0.35.0 - 146.0.35.127
+netname:        MYLOC-DE-DUS3-Enterprise-SERVER
+descr:          webtropia enterprise Server by http://www.webtropia.com
+descr:          myLoc managed IT AG
+country:        DE
+admin-c:        MOPS-RIPE
+tech-c:         MOPS-RIPE
+status:         ASSIGNED PA
+mnt-by:         MYLOC-MNT
+created:        2014-02-14T11:57:47Z
+last-modified:  2016-04-13T10:07:05Z
+source:         RIPE
+
+role:           myLoc NOC
+address:        myLoc managed IT AG
+address:        Network Operations & Services
+address:        Am Gatherhof 44
+address:        40472 Duesseldorf DE
+admin-c:        PHAN
+tech-c:         PHAN
+tech-c:         DDO
+tech-c:         JOH
+tech-c:         NIL
+nic-hdl:        MOPS-RIPE
+remarks:        +---------------------------------------------------+
+remarks:        | 24/7 NOC email: noc@myLoc.de |
+remarks:        | 24/7 NOC phone: +49 211 61708 110 |
+remarks:        | Please direct abuse issues ONLY |
+remarks:        | to abuse@myloc.de |
+remarks:        | Complaints to other adresses will be deemed |
+remarks:        | as spam and not further processed! |
+remarks:        +---------------------------------------------------+
+remarks:        | Please send legal/law enforcement inquiries to |
+remarks:        | auskunft_AT_myloc.de. Mails to abuse@myloc.de WILL|
+remarks:        | be automatically processed and the customer WILL |
+remarks:        | get a notification about your inquiry. |
+remarks:        | You can send your inquiry also via fax to this |
+remarks:        | number: +49 211 61708 551 |
+remarks:        +---------------------------------------------------+
+abuse-mailbox:  abuse@myloc.de
+mnt-by:         MYLOC-MNT
+created:        2013-02-11T16:38:10Z
+last-modified:  2019-05-13T16:56:37Z
+source:         RIPE # Filtered
+
+% Information related to '146.0.32.0/20AS24961'
+
+route:          146.0.32.0/20
+descr:          myLoc managed IT AG
+origin:         AS24961
+mnt-by:         MYLOC-MNT
+created:        2017-12-13T07:29:02Z
+last-modified:  2017-12-13T07:29:02Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

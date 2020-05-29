@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '78.157.48.0 - 78.157.63.255'
+
+% Abuse contact for '78.157.48.0 - 78.157.63.255' is 'abuse@fanavaidc.com'
+
+inetnum:        78.157.48.0 - 78.157.63.255
+netname:        FANAVA-Group
+descr:          Fanava
+country:        IR
+admin-c:        FDP401-RIPE
+tech-c:         FDP401-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-FANAVA
+created:        2008-10-13T14:28:00Z
+last-modified:  2020-02-05T05:51:58Z
+source:         RIPE
+org:            ORG-DSFC1-RIPE
+
+organisation:   ORG-DSFC1-RIPE
+org-name:       Dadeh Samaneh Fanava Co.
+org-type:       OTHER
+address:        No. 3 , Adaie St. , Sabounchi St. , Takhti Sq. , Tehran , Iran
+abuse-c:        AC32095-RIPE
+mnt-ref:        MNT-FANAVA
+mnt-by:         MNT-FANAVA
+created:        2013-07-11T10:24:00Z
+last-modified:  2020-02-04T07:12:41Z
+source:         RIPE # Filtered
+fax-no:         +982141784300
+phone:          +982141784110
+admin-c:        AC32095-RIPE
+
+person:         Aliakbar Akhavan
+address:        No.39,17th West St. , Kordestan Ave. Tehran
+phone:          +982182195469
+phone:          +989124274095
+nic-hdl:        FDP401-RIPE
+mnt-by:         Fanavadp-LIR
+mnt-by:         MNT-FANAVA
+mnt-by:         MNT-ERFANAVA
+created:        2018-08-06T13:39:56Z
+last-modified:  2019-09-11T10:39:41Z
+source:         RIPE # Filtered
+
+% Information related to '78.157.52.0/24AS41881'
+
+route:          78.157.52.0/24
+descr:          Fanava Group
+origin:         AS41881
+mnt-by:         MNT-FANAVA
+created:        2017-05-09T07:54:58Z
+last-modified:  2017-10-02T10:20:16Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

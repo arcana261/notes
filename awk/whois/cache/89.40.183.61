@@ -1,0 +1,74 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.40.183.0 - 89.40.183.255'
+
+% Abuse contact for '89.40.183.0 - 89.40.183.255' is 'abuse@netlink.ro'
+
+inetnum:        89.40.183.0 - 89.40.183.255
+netname:        SC-BESTNET-SERVICE-SRL
+org:            ORG-BSS28-RIPE
+descr:          SC BESTNET SERVICE SRL
+country:        RO
+admin-c:        PN2999-RIPE
+tech-c:         PN2999-RIPE
+tech-c:         ANEU
+status:         ASSIGNED PA
+mnt-by:         INTERLAN_IEX-MNT
+mnt-by:         BESTNET-SERVICE-MNT
+created:        2016-06-07T07:28:05Z
+last-modified:  2016-06-28T07:48:12Z
+source:         RIPE
+
+organisation:   ORG-BSS28-RIPE
+org-name:       Bestnet Service SRL
+org-type:       OTHER
+address:        Comuna Domnesti Nr. 876B
+address:        Domnesti, Romania
+address:        +40751155666
+abuse-c:        AR23416-RIPE
+admin-c:        PN2999-RIPE
+tech-c:         PN2999-RIPE
+mnt-ref:        INTERLAN_IEX-MNT
+mnt-by:         INTERLAN_IEX-MNT
+created:        2016-06-28T07:21:09Z
+last-modified:  2017-10-30T15:35:09Z
+source:         RIPE # Filtered
+
+person:         Alin Stefanescu
+address:        Bucharest, RO
+phone:          +40310800700
+nic-hdl:        ANEU
+mnt-by:         BESTNET-SERVICE-MNT
+created:        2010-09-27T12:17:37Z
+last-modified:  2019-08-28T09:43:41Z
+source:         RIPE # Filtered
+
+person:         Petrisor Negoita
+address:        Bestnet Service SRL
+address:        Bucharest, Romania
+phone:          +40751155666
+nic-hdl:        PN2999-RIPE
+mnt-by:         BESTNET-SERVICE-MNT
+created:        2011-03-31T15:13:56Z
+last-modified:  2011-03-31T15:28:29Z
+source:         RIPE # Filtered
+
+% Information related to '89.40.183.0/24AS9009'
+
+route:          89.40.183.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2020-02-04T15:51:58Z
+last-modified:  2020-02-04T15:51:58Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

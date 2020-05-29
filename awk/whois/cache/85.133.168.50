@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.133.128.0 - 85.133.255.255'
+
+% Abuse contact for '85.133.128.0 - 85.133.255.255' is 'abuse@sepanta.net'
+
+inetnum:        85.133.128.0 - 85.133.255.255
+netname:        IR-SEPANTA-20051206
+country:        IR
+org:            ORG-SCDC1-RIPE
+admin-c:        KMH104
+tech-c:         KMH104
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         SEPANTA-MNT
+mnt-routes:     SEPANTA-MNT
+created:        2005-12-06T15:14:55Z
+last-modified:  2016-11-19T06:50:52Z
+source:         RIPE # Filtered
+
+organisation:   ORG-SCDC1-RIPE
+org-name:       Sepanta Communication Development Co. Ltd
+org-type:       LIR
+address:        No. 107, Malayeri Pour St., North Mofateh St., 7th Tir Sq.
+address:        1575718616
+address:        TEHRAN
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 21 8421 1100
+fax-no:         +98 21 8842 1101
+admin-c:        KMH104
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        SEPANTA-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         SEPANTA-MNT
+abuse-c:        PR13710-RIPE
+created:        2005-08-17T06:47:49Z
+last-modified:  2017-10-30T14:37:08Z
+source:         RIPE # Filtered
+
+person:         Kiarash Mizanian
+address:        123, Malayeri Poor Str, Haft_e_Tir Sq,Tehran
+phone:          +98 21 8831 5800
+fax-no:         +98 21 8884 3534
+nic-hdl:        KMH104
+mnt-by:         IRNETCO-RIPE-MNT
+created:        2002-09-22T11:11:01Z
+last-modified:  2009-10-27T00:50:26Z
+source:         RIPE # Filtered
+
+% Information related to '85.133.168.0/22AS39074'
+
+route:          85.133.168.0/22
+descr:          Sepanta Wireless Users
+origin:         AS39074
+mnt-by:         SEPANTA-MNT
+created:        2013-12-24T10:31:16Z
+last-modified:  2013-12-24T10:31:16Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.128.25.0 - 185.128.25.255'
+
+% Abuse contact for '185.128.25.0 - 185.128.25.255' is 'abuse@m247.ro'
+
+inetnum:        185.128.25.0 - 185.128.25.255
+netname:        M247-LTD-Paris
+descr:          M247 LTD Paris Infrastructure
+country:        FR
+geoloc:         48.857314 2.3172814
+admin-c:        GBXS4-RIPE
+tech-c:         GBXS4-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2018-01-03T06:13:54Z
+last-modified:  2018-11-29T11:19:18Z
+source:         RIPE
+
+role:           GLOBALAXS NOC PARIS
+address:        114 Rue Ambroise Croizat
+address:        93200, St Denis, Paris, France
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS4-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-03-15T15:19:22Z
+last-modified:  2018-02-19T16:00:56Z
+source:         RIPE # Filtered
+
+% Information related to '185.128.25.0/24AS9009'
+
+route:          185.128.25.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2018-01-03T06:13:55Z
+last-modified:  2018-01-03T06:13:55Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

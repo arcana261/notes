@@ -1,0 +1,72 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '178.21.40.0 - 178.21.41.255'
+
+% Abuse contact for '178.21.40.0 - 178.21.41.255' is 'abuse@caspco.ir'
+
+inetnum:        178.21.40.0 - 178.21.41.255
+org:            ORG-PBJ1-RIPE
+netname:        PARSIAN_BANK
+descr:          Parsian Bank
+country:        IR
+admin-c:        MH2012
+tech-c:         KK3182-RIPE
+remarks:        This range assigned by Caspian.
+status:         ASSIGNED PA
+mnt-by:         MNT-CASP
+created:        2010-06-27T08:03:00Z
+last-modified:  2019-08-27T12:41:45Z
+source:         RIPE # Filtered
+mnt-domains:    MNT-CASP
+
+organisation:   ORG-PBJ1-RIPE
+org-name:       Parsian Bank (Public Joint-Stock)
+org-type:       OTHER
+address:        No.4, Zarafshan St., Farahzadi Blvd, Shahrak Ghods, Tehran, Iran
+abuse-c:        AC32455-RIPE
+mnt-ref:        MNT-CASP
+mnt-by:         MNT-CASP
+created:        2010-12-22T21:56:56Z
+last-modified:  2019-08-27T12:23:40Z
+source:         RIPE # Filtered
+
+person:         Kamran Kazemi
+address:        No.4, Zarafshan St., Farahzadi Blvd, Shahrak Ghods, Tehran, Iran
+phone:          +98(21)84842920
+fax-no:         +98(21)88362714
+nic-hdl:        KK3182-RIPE
+created:        2010-08-03T05:41:01Z
+last-modified:  2016-04-06T18:49:08Z
+mnt-by:         RIPE-NCC-LOCKED-MNT
+source:         RIPE # Filtered
+
+person:         Mohammad Haghdadi
+address:        No 225, Takhti Square, Shahid Beheshti Avenue, Tehran, Iran
+phone:          +982182152000
+nic-hdl:        MH2012
+mnt-by:         MNT-CASP
+created:        2018-01-16T20:00:48Z
+last-modified:  2018-01-16T20:04:23Z
+source:         RIPE # Filtered
+
+% Information related to '178.21.41.0/24AS52070'
+
+route:          178.21.41.0/24
+descr:          Parsian Bank
+origin:         AS52070
+mnt-by:         MNT-CASP
+mnt-routes:     MNT-CASP
+created:        2011-01-04T16:17:28Z
+last-modified:  2011-01-04T16:17:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

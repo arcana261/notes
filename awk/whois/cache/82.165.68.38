@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '82.165.64.0 - 82.165.127.255'
+
+% Abuse contact for '82.165.64.0 - 82.165.127.255' is 'abuse@oneandone.net'
+
+inetnum:        82.165.64.0 - 82.165.127.255
+netname:        SCHLUND-SHARED
+descr:          1&1 Internet AG
+descr:          NCC#2004115007
+country:        DE
+admin-c:        IPAD-RIPE
+tech-c:         IPOP-RIPE
+remarks:        in case of abuse or spam, please mailto: abuse@oneandone.net
+status:         ASSIGNED PA
+mnt-by:         AS8560-MNT
+created:        2004-11-22T13:37:06Z
+last-modified:  2009-05-28T17:47:31Z
+source:         RIPE # Filtered
+
+role:           IP Administration
+address:        1&1 Internet SE
+admin-c:        RME9-RIPE
+admin-c:        JR2342-RIPE
+tech-c:         RME9-RIPE
+tech-c:         JR2342-RIPE
+nic-hdl:        IPAD-RIPE
+abuse-mailbox:  abuse@oneandone.net
+mnt-by:         AS8560-MNT
+created:        2009-05-20T17:24:09Z
+last-modified:  2018-12-14T16:09:07Z
+source:         RIPE # Filtered
+
+role:           IP Operations
+address:        1&1 Internet AG
+admin-c:        RME9-RIPE
+admin-c:        JR2342-RIPE
+tech-c:         RME9-RIPE
+tech-c:         JR2342-RIPE
+nic-hdl:        IPOP-RIPE
+abuse-mailbox:  abuse@oneandone.net
+mnt-by:         AS8560-MNT
+created:        2009-05-28T16:25:04Z
+last-modified:  2018-12-14T16:09:08Z
+source:         RIPE # Filtered
+
+% Information related to '82.165.0.0/16AS8560'
+
+route:          82.165.0.0/16
+descr:          SCHLUND-PA-4
+origin:         AS8560
+mnt-by:         AS8560-MNT
+created:        2003-08-08T10:58:01Z
+last-modified:  2009-05-14T16:44:59Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

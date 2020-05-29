@@ -1,0 +1,81 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.100.72.0 - 46.100.75.255'
+
+% Abuse contact for '46.100.72.0 - 46.100.75.255' is 'hadadi@tci.ir'
+
+inetnum:        46.100.72.0 - 46.100.75.255
+netname:        TCIZNJ
+descr:          Telecommunication Company of Zanjan
+country:        IR
+admin-c:        NA6193-RIPE
+tech-c:         DP14857-RIPE
+tech-c:         ha1967-RIPE
+org:            ORG-TCOZ1-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+remarks:        INFRA-AW
+created:        2012-09-17T05:39:36Z
+last-modified:  2019-06-19T08:18:09Z
+source:         RIPE
+
+organisation:   ORG-TCOZ1-RIPE
+tech-c:         DP14857-RIPE
+org-name:       Telecommunication Company of Zanjan
+org-type:       other
+address:        Zanjan - Telecommunication Company of Zanjan
+abuse-c:        AC27056-RIPE
+admin-c:        NA6193-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-30T06:30:58Z
+last-modified:  2019-02-24T10:40:06Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Zanjan)
+address:        Zanjan - Telecommunication Company of Zanjan
+admin-c:        HD3631-RIPE
+nic-hdl:        DP14857-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T06:10:38Z
+last-modified:  2019-02-24T06:10:38Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Zanjan)
+address:        Zanjan - Telecommunication Company of Zanjan
+nic-hdl:        NA6193-RIPE
+admin-c:        HD3631-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T06:03:13Z
+last-modified:  2019-02-24T06:03:13Z
+source:         RIPE # Filtered
+
+person:         hamidreza almasi
+address:        telecommunication company of Zanjan
+phone:          +982414122326
+phone:          +989192414196
+nic-hdl:        ha1967-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-09-22T10:52:42Z
+last-modified:  2010-09-22T10:52:42Z
+source:         RIPE
+
+% Information related to '46.100.72.0/22AS58224'
+
+route:          46.100.72.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2018-10-21T09:45:28Z
+last-modified:  2018-10-21T09:45:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

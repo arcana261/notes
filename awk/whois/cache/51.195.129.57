@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '51.195.129.56 - 51.195.129.59'
+
+% Abuse contact for '51.195.129.56 - 51.195.129.59' is 'ahmad@karizanta.com'
+
+inetnum:        51.195.129.56 - 51.195.129.59
+netname:        OVH_264773272
+country:        GB
+descr:          Failover Ips
+org:            ORG-MCS36-RIPE
+admin-c:        OTC14-RIPE
+tech-c:         OTC14-RIPE
+status:         LEGACY
+mnt-by:         OVH-MNT
+created:        2020-03-09T17:12:26Z
+last-modified:  2020-03-09T17:12:26Z
+source:         RIPE
+
+organisation:   ORG-MCS36-RIPE
+org-name:       Moreno Coleman Sinsuat
+org-type:       OTHER
+address:        921 M. Dela Fuente Street Sampaloc 1109
+address:        1109 Manila
+address:        PH
+phone:          +1.8063407626
+abuse-c:        ACRO31032-RIPE
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2020-03-09T17:05:14Z
+last-modified:  2020-03-09T17:05:14Z
+source:         RIPE # Filtered
+
+role:           OVH UK Technical Contact
+address:        OVH Ltd
+address:        New London House, 6 London Street
+address:        EC3R 7LP, LONDON
+address:        UK
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC14-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T16:09:57Z
+last-modified:  2017-01-17T09:52:03Z
+source:         RIPE # Filtered
+
+% Information related to '51.195.0.0/16AS16276'
+
+route:          51.195.0.0/16
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2019-12-19T14:43:37Z
+last-modified:  2019-12-19T14:43:37Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

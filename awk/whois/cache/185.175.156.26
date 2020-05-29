@@ -1,0 +1,51 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.175.156.0 - 185.175.156.255'
+
+% Abuse contact for '185.175.156.0 - 185.175.156.255' is 'abuse@theideasystems.com'
+
+inetnum:        185.175.156.0 - 185.175.156.255
+descr:          TheIDEAHosting /24 Subnet for US Datacenter
+mnt-domains:    mnt-tih
+org:            ORG-TL418-RIPE
+netname:        TheIDEAHosting-LTD-US01
+country:        US
+admin-c:        AEM89-RIPE
+tech-c:         AEM89-RIPE
+status:         ASSIGNED PA
+mnt-by:         ru-clx-1-mnt
+mnt-by:         mnt-tih
+created:        2016-11-19T11:18:18Z
+last-modified:  2018-01-11T06:19:49Z
+source:         RIPE # Filtered
+
+organisation:   ORG-TL418-RIPE
+org-name:       TheIDEAHosting LTD
+org-type:       OTHER
+address:        PO BOX 64564 COMO LAKE, Coquitlam, BC V3J 6P4, Canada
+abuse-c:        TLA143-RIPE
+mnt-ref:        mnt-tih
+mnt-by:         mnt-tih
+created:        2017-01-10T08:29:47Z
+last-modified:  2018-01-11T06:17:43Z
+source:         RIPE # Filtered
+
+person:         Artem E. Moskvin
+address:        PO BOX 64564 COMO LAKE, Coquitlam, BC V3J 6P4, Canada
+phone:          +17786505478
+nic-hdl:        AEM89-RIPE
+mnt-by:         mnt-tih
+created:        2017-01-10T08:07:33Z
+last-modified:  2017-01-10T09:03:52Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

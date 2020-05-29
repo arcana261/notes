@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.27.73.0 - 194.27.73.255'
+
+% Abuse contact for '194.27.73.0 - 194.27.73.255' is 'abuse@ulakbim.gov.tr'
+
+inetnum:        194.27.73.0 - 194.27.73.255
+netname:        DAU-NET
+descr:          Eastern Mediterranean University Gazi Magosa-TRNC
+country:        TR
+admin-c:        NI31-RIPE
+tech-c:         ACN1-RIPE
+status:         ASSIGNED PA
+mnt-by:         ULAKNET-MNT
+created:        2007-07-05T11:31:17Z
+last-modified:  2007-07-05T11:31:17Z
+source:         RIPE
+
+person:         Ali Cenap Noyin
+address:        Dogu Akdeniz University
+address:        Gazi Magusa-North Cyprus, Mersin 10
+address:        Turkey
+phone:          +90 392 366 7276
+fax-no:         +90 392 366 8260
+nic-hdl:        ACN1-RIPE
+created:        1970-01-01T00:00:00Z
+last-modified:  2016-04-05T15:22:09Z
+mnt-by:         RIPE-NCC-LOCKED-MNT
+source:         RIPE
+
+person:         Necdet Icil
+address:        Eastern Mediterranean University
+address:        Gazi Magusa-North Cyprus, Mersin 10
+address:        Turkey
+phone:          +90 392 3651276
+fax-no:         +90 392 3658240
+nic-hdl:        NI31-RIPE
+created:        1970-01-01T00:00:00Z
+last-modified:  2016-04-05T21:02:17Z
+mnt-by:         RIPE-NCC-LOCKED-MNT
+source:         RIPE # Filtered
+
+% Information related to '194.27.73.0/24AS31689'
+
+route:          194.27.73.0/24
+descr:          Eastern Mediterranean University
+origin:         AS31689
+mnt-by:         ULAKNET-MNT
+created:        2006-10-05T08:42:27Z
+last-modified:  2006-10-05T08:42:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

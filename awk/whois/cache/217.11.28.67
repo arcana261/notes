@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.11.28.64 - 217.11.28.71'
+
+% Abuse contact for '217.11.28.64 - 217.11.28.71' is 'abuse@afranet.com'
+
+inetnum:        217.11.28.64 - 217.11.28.71
+netname:        Sazman-Sama
+descr:          Sazman-Sama
+country:        IR
+admin-c:        GOGO2015-RIPE
+tech-c:         GOGO2015-RIPE
+status:         ASSIGNED PA
+mnt-by:         AFRA-MNT-NESH-1
+created:        2015-10-25T09:02:23Z
+last-modified:  2015-10-25T09:03:54Z
+source:         RIPE
+
+person:         Mr. gorgani
+address:        Sama Build, Alborz St., Danshjou St.,Velenjak, Tehran,Iran
+phone:          +98-2122174327
+nic-hdl:        GOGO2015-RIPE
+mnt-by:         AFRA-MNT-NESH-1
+created:        2015-10-25T09:01:20Z
+last-modified:  2015-10-25T09:01:20Z
+source:         RIPE
+
+% Information related to '217.11.28.0/24AS25184'
+
+route:          217.11.28.0/24
+descr:          AFRANET Co.
+origin:         AS25184
+mnt-by:         AFRA-MNT-NESH-1
+created:        2004-08-19T05:04:31Z
+last-modified:  2009-10-21T08:56:44Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

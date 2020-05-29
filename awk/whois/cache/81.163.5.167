@@ -1,0 +1,86 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '81.163.0.0 - 81.163.7.255'
+
+% Abuse contact for '81.163.0.0 - 81.163.7.255' is 'abuse@skydsl.ir'
+
+inetnum:        81.163.0.0 - 81.163.7.255
+netname:        IR-RasanaPishtaz
+country:        IR
+org:            ORG-RPIS1-RIPE
+geoloc:         35.9579353 50.6819961
+admin-c:        ENZ70-RIPE
+admin-c:        EM12153-RIPE
+tech-c:         ENZ70-RIPE
+tech-c:         EM12153-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-MIHAN
+mnt-by:         MNT-HAMED
+mnt-routes:     MNT-MIHAN
+mnt-routes:     MNT-HAMED
+mnt-routes:     Rasanapishtaz
+mnt-domains:    MNT-MIHAN
+mnt-domains:    MNT-HAMED
+mnt-domains:    Rasanapishtaz
+mnt-lower:      Rasanapishtaz
+mnt-by:         Rasanapishtaz
+created:        2011-08-23T07:48:01Z
+last-modified:  2019-12-16T20:14:55Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-MCSC2-RIPE
+
+organisation:   ORG-RPIS1-RIPE
+org-name:       Rasana Pishtaz Iranian Service Cooperative Co.
+org-type:       Other
+address:        Floor 3,Haj Madani Building, Imam Blvd., Hashtgerd-IRAN
+phone:          +98-262-4233031
+abuse-c:        AR28499-RIPE
+mnt-ref:        MNT-MIHAN
+mnt-by:         MNT-HAMED
+mnt-by:         MNT-MIHAN
+created:        2011-08-11T13:20:39Z
+last-modified:  2017-10-30T15:31:41Z
+source:         RIPE # Filtered
+
+person:         Ebrahim Mamani
+address:        Unit5, No2, Emam Khomeini AVE, Hashtgerd City, Tehraan Provice, Iran
+phone:          +989195999975
+nic-hdl:        EM12153-RIPE
+mnt-by:         RPI-Mamani
+mnt-by:         Rasanapishtaz
+created:        2018-01-18T06:12:13Z
+last-modified:  2018-01-26T21:25:42Z
+source:         RIPE # Filtered
+fax-no:         +98 26 44233031 - 8
+
+person:         Ebrahim Nokhbeh Zaeim
+address:        Floor 3,Haj Madani Building, Imam Blvd., Hashtgerd-IRAN
+phone:          +98-262-4233031
+nic-hdl:        ENZ70-RIPE
+mnt-by:         Rasanapishtaz
+created:        2018-02-17T12:47:34Z
+last-modified:  2018-10-09T16:15:36Z
+source:         RIPE
+
+% Information related to '81.163.5.0/24AS58303'
+
+route:          81.163.5.0/24
+descr:          Rasana Pishtaz Iranian Service Cooperative Co.
+origin:         AS58303
+mnt-by:         MNT-MIHAN
+mnt-by:         MNT-RPI
+created:        2014-04-07T05:24:01Z
+last-modified:  2018-02-19T09:49:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

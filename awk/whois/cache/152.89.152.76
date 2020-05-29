@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '152.89.152.0 - 152.89.155.255'
+
+% Abuse contact for '152.89.152.0 - 152.89.155.255' is 'abuse@avagostar.net'
+
+inetnum:        152.89.152.0 - 152.89.155.255
+netname:        IR-SERVCO-AVAGOSTAR-20190125
+country:        IR
+org:            ORG-ASCL10-RIPE
+mnt-routes:     MRM-22081357
+admin-c:        MRM230-RIPE
+tech-c:         MRM230-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MRM-22081357
+created:        2019-01-25T10:25:56Z
+last-modified:  2019-12-26T10:14:10Z
+source:         RIPE
+
+organisation:   ORG-ASCL10-RIPE
+org-name:       Avagostar Sarv Co. Ltd.
+org-type:       LIR
+address:        Suite No. 4 First Floor, Next to Tejarat Bank, Sarvenaz Bldg
+address:        1998994657
+address:        Sa'adat Abad, Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        SA39370-RIPE
+tech-c:         SA39370-RIPE
+abuse-c:        AR50460-RIPE
+mnt-ref:        mnt-ir-servco-avagostar-1
+mnt-ref:        MRM-22081357
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MRM-22081357
+created:        2019-01-25T07:29:35Z
+last-modified:  2019-12-26T10:14:19Z
+source:         RIPE # Filtered
+phone:          +982124539000
+
+person:         Mohammad Reza Mehri
+address:        Flow 9 , No 72 , West Sarv , SaadatAbad , Tehran , Iran
+phone:          +989123842451
+nic-hdl:        MRM230-RIPE
+mnt-by:         MRM-22081357
+created:        2019-07-18T08:46:52Z
+last-modified:  2019-07-18T08:46:52Z
+source:         RIPE
+
+% Information related to '152.89.152.0/24AS64413'
+
+route:          152.89.152.0/24
+origin:         AS64413
+mnt-by:         MRM-22081357
+created:        2019-08-25T13:03:16Z
+last-modified:  2019-08-25T13:03:16Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

@@ -1,0 +1,51 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.46.109.0 - 185.46.109.255'
+
+% Abuse contact for '185.46.109.0 - 185.46.109.255' is 'davooddelavar@yahoo.com'
+
+inetnum:        185.46.109.0 - 185.46.109.255
+netname:        IR-MANA
+descr:          MEHREGAN ERTEBATAT NOVIN ASIA CO.
+country:        IR
+admin-c:        AC28340-RIPE
+tech-c:         AC28340-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-MANA
+created:        2015-01-05T11:23:48Z
+last-modified:  2018-05-22T07:55:42Z
+source:         RIPE
+
+role:           Abuse Contact
+address:        MEHREGAN ERTEBATAT NOVIN ASIA CO. - Ertebatat Dourbord Fars
+address:        Mohammad Rahmani
+address:        Emam - No 118-ground floor
+address:        7914644981
+address:        Bandarabas
+address:        IRAN, ISLAMIC REPUBLIC OF
+abuse-mailbox:  davooddelavar@yahoo.com
+nic-hdl:        AC28340-RIPE
+mnt-by:         MNT-MANA
+created:        2016-02-15T15:45:17Z
+last-modified:  2018-10-20T09:52:58Z
+source:         RIPE # Filtered
+
+% Information related to '185.46.109.0/24AS43395'
+
+route:          185.46.109.0/24
+origin:         AS43395
+mnt-by:         MNT-MANA
+created:        2020-02-18T09:36:39Z
+last-modified:  2020-02-18T09:36:39Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

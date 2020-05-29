@@ -1,0 +1,100 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       198.100.144.0 - 198.100.159.255
+CIDR:           198.100.144.0/20
+NetName:        OVH-ARIN-2
+NetHandle:      NET-198-100-144-0-1
+Parent:         NET198 (NET-198-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS16276
+Organization:   OVH Hosting, Inc. (HO-2)
+RegDate:        2012-07-05
+Updated:        2012-07-05
+Ref:            https://rdap.arin.net/registry/ip/198.100.144.0
+
+
+OVH Hosting, Inc. (HO-2)
+
+
+OrgTechHandle: NOC11876-ARIN
+OrgTechName:   NOC
+OrgTechPhone:  +1-855-684-5463 
+OrgTechEmail:  noc@ovh.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC11876-ARIN
+
+OrgAbuseHandle: ABUSE3956-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-855-684-5463 
+OrgAbuseEmail:  abuse@ovh.ca
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3956-ARIN
+
+# end
+
+
+# start
+
+NetRange:       198.100.156.0 - 198.100.157.255
+CIDR:           198.100.156.0/23
+NetName:        OVH-DEDICATED-25
+NetHandle:      NET-198-100-156-0-1
+Parent:         OVH-ARIN-2 (NET-198-100-144-0-1)
+NetType:        Reassigned
+OriginAS:       AS16276
+Organization:   OVH (NWK) (ON-6)
+RegDate:        2013-12-04
+Updated:        2013-12-04
+Comment:        OVH-DEDICATED-25
+Ref:            https://rdap.arin.net/registry/ip/198.100.156.0
+
+
+OrgName:        OVH (NWK)
+OrgId:          ON-6
+Address:        165 Halsey Street
+City:           Newark
+StateProv:      NJ
+PostalCode:     07102
+Country:        US
+RegDate:        2012-07-11
+Updated:        2012-07-11
+Ref:            https://rdap.arin.net/registry/entity/ON-6
+
+
+OrgTechHandle: NOC11876-ARIN
+OrgTechName:   NOC
+OrgTechPhone:  +1-855-684-5463 
+OrgTechEmail:  noc@ovh.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC11876-ARIN
+
+OrgAbuseHandle: NOC11876-ARIN
+OrgAbuseName:   NOC
+OrgAbusePhone:  +1-855-684-5463 
+OrgAbuseEmail:  noc@ovh.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NOC11876-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

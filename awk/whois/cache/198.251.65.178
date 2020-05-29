@@ -1,0 +1,70 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       198.251.64.0 - 198.251.79.255
+CIDR:           198.251.64.0/20
+NetName:        1AND1-HOSTING
+NetHandle:      NET-198-251-64-0-1
+Parent:         NET198 (NET-198-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS8560
+Organization:   1&1 IONOS Inc. (11INT)
+RegDate:        2013-02-13
+Updated:        2013-02-13
+Comment:        For abuse issues, please use only abuse@1and1.com
+Ref:            https://rdap.arin.net/registry/ip/198.251.64.0
+
+
+OrgName:        1&1 IONOS Inc.
+OrgId:          11INT
+Address:        701 Lee Rd
+Address:        Suite 300
+City:           Chesterbrook
+StateProv:      PA
+PostalCode:     19087
+Country:        US
+RegDate:        2006-09-05
+Updated:        2019-08-22
+Comment:        http://www.1and1.com
+Comment:        For abuse issues, please use only abuse@1and1.com
+Ref:            https://rdap.arin.net/registry/entity/11INT
+
+
+OrgAbuseHandle: 1AD-ARIN
+OrgAbuseName:   1and1 Abuse Department
+OrgAbusePhone:  +1-877-206-4253 
+OrgAbuseEmail:  abuse@1and1.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/1AD-ARIN
+
+OrgNOCHandle: 1NOC-ARIN
+OrgNOCName:   1and1 Network Operations Center
+OrgNOCPhone:  +49-721-91374-8560 
+OrgNOCEmail:  noc@oneandone.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/1NOC-ARIN
+
+OrgTechHandle: 1NO-ARIN
+OrgTechName:   1and1 ARIN Role
+OrgTechPhone:  +1-913-433-7549 
+OrgTechEmail:  arin-role@oneandone.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/1NO-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

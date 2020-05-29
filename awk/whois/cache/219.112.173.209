@@ -1,0 +1,25 @@
+[ JPNIC database provides information regarding IP address and ASN. Its use   ]
+[ is restricted to network administration purposes. For further information,  ]
+[ use 'whois -h whois.nic.ad.jp help'. To only display English output,        ]
+[ add '/e' at the end of command, e.g. 'whois -h whois.nic.ad.jp xxx/e'.      ]
+
+Network Information:            
+a. [Network Number]             219.112.160.0/20
+b. [Network Name]               TOKAI-NET
+g. [Organization]               TOKAI Communications Corporation
+m. [Administrative Contact]     OA1837JP
+n. [Technical Contact]          TH10696JP
+p. [Nameserver]                 dns1.tokai.or.jp
+p. [Nameserver]                 dns2.tokai.or.jp
+[Assigned Date]                 2006/06/28
+[Return Date]                   
+[Last Update]                   2018/08/22 10:32:04(JST)
+                                
+Less Specific Info.
+----------
+TOKAI Communications Corporation
+                     [Allocation]                             219.112.160.0/19
+
+More Specific Info.
+----------
+No match!!

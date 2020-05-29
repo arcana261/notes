@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.145.131.0 - 185.145.131.255'
+
+% Abuse contact for '185.145.131.0 - 185.145.131.255' is 'abuses@abelohost.net'
+
+inetnum:        185.145.131.0 - 185.145.131.255
+remarks:        This IP space is used by Abelohost clients abuses@abelohost.net
+remarks:        Most of the clients are using /32(one IP) for each service.
+netname:        NL-ABELOHOST-20181013-4
+country:        NL
+admin-c:        AB34136-RIPE
+tech-c:         AB34136-RIPE
+status:         ASSIGNED PA
+mnt-by:         nl-abelohost-1-mnt
+mnt-by:         nl-abelohost-2-mnt
+created:        2018-10-13T02:33:47Z
+last-modified:  2018-10-13T14:19:51Z
+source:         RIPE
+
+person:         Agasi Bahishev
+address:        www.abelohost.com
+address:        Beatrixstraat 30
+address:        6981GN
+address:        Doesburg
+address:        NETHERLANDS
+phone:          +31 6 15164604
+nic-hdl:        AB34136-RIPE
+mnt-by:         nl-abelohost-1-mnt
+mnt-by:         nl-abelohost-2-mnt
+created:        2016-03-31T14:38:57Z
+last-modified:  2018-10-10T16:36:23Z
+source:         RIPE
+
+% Information related to '185.145.128.0/22AS204196'
+
+route:          185.145.128.0/22
+origin:         AS204196
+mnt-by:         nl-abelohost-1-mnt
+mnt-by:         nl-abelohost-3-mnt
+mnt-by:         nl-abelohost-2-mnt
+created:        2016-05-27T11:45:23Z
+last-modified:  2016-05-27T11:45:23Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

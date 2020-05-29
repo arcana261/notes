@@ -1,0 +1,99 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '77.81.81.0 - 77.81.81.255'
+
+% Abuse contact for '77.81.81.0 - 77.81.81.255' is 'abuse@uznet.ir'
+
+inetnum:        77.81.81.0 - 77.81.81.255
+netname:        IR-DORNA-20140831
+descr:          DornaNet
+country:        IR
+org:            ORG-SGDC1-RIPE
+admin-c:        DORA1-RIPE
+tech-c:         DTEC1-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-MAHDIYARS
+mnt-routes:     MNT-MAHDIYARS
+mnt-domains:    MNT-MAHDIYARS
+created:        2014-08-31T04:41:34Z
+last-modified:  2016-07-17T06:27:52Z
+source:         RIPE # Filtered
+
+organisation:   ORG-SGDC1-RIPE
+org-name:       Shabakeh Gostar Dorna Cooperative Co.
+org-type:       LIR
+address:        11/224 Williamsons Rd
+address:        3615693887
+address:        Doncaster, VIC 3108
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +61432104789
+admin-c:        MMAG4-RIPE
+admin-c:        MS33312-RIPE
+tech-c:         DTEC1-RIPE
+abuse-c:        DTEC1-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-MAHDIYARS
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-MAHDIYARS
+created:        2013-10-07T13:28:11Z
+last-modified:  2019-02-10T08:18:39Z
+source:         RIPE # Filtered
+
+role:           Dorna Administration Team
+address:        No. 12 - Birjandi St. - Emam Khomeini Sq.
+admin-c:        MS33312-RIPE
+admin-c:        MMAG4-RIPE
+admin-c:        AD15445-RIPE
+tech-c:         DTEC1-RIPE
+nic-hdl:        DORA1-RIPE
+mnt-by:         MNT-MAHDIYARS
+abuse-mailbox:  mahdiyars@gmail.com
+remarks:        ************************************
+remarks:        * This IP-range is not related to *
+remarks:        * hacking or spamming, please read *
+remarks:        * http://www.ripe.net/nicdb.html *
+remarks:        *************************************
+created:        2014-05-10T12:02:26Z
+last-modified:  2020-02-14T10:01:05Z
+source:         RIPE # Filtered
+
+role:           Dorna Techniacal Team
+address:        No. 12 - Birjandi St. - Emam Khomeini Sq.
+admin-c:        MS33312-RIPE
+admin-c:        MMAG4-RIPE
+admin-c:        AD15445-RIPE
+tech-c:         MMAG4-RIPE
+tech-c:         MS33312-RIPE
+admin-c:        AD15445-RIPE
+nic-hdl:        DTEC1-RIPE
+mnt-by:         MNT-MAHDIYARS
+abuse-mailbox:  abuse@uznet.ir
+remarks:        ************************************
+remarks:        * This IP-range is not related to *
+remarks:        * hacking or spamming, please read *
+remarks:        * http://www.ripe.net/nicdb.html *
+remarks:        *************************************
+created:        2013-10-09T11:32:38Z
+last-modified:  2020-02-14T10:00:24Z
+source:         RIPE # Filtered
+
+% Information related to '77.81.80.0/22AS48592'
+
+route:          77.81.80.0/22
+descr:          DornaNet
+origin:         AS48592
+mnt-by:         MNT-MAHDIYARS
+created:        2014-09-14T05:36:55Z
+last-modified:  2016-07-17T06:22:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

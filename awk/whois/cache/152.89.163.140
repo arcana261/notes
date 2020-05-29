@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '152.89.163.0 - 152.89.163.255'
+
+% Abuse contact for '152.89.163.0 - 152.89.163.255' is 'abuse@m247.ro'
+
+inetnum:        152.89.163.0 - 152.89.163.255
+netname:        M247-LTD-BERLIN-SERVERS
+descr:          M247-LTD-BERLIN-SERVERS
+org:            ORG-MLA23-RIPE
+country:        DE
+geoloc:         52.5200 13.4050
+admin-c:        GBXS7-RIPE
+tech-c:         GBXS7-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2019-01-29T13:58:02Z
+last-modified:  2019-01-29T13:58:02Z
+source:         RIPE
+status:         ASSIGNED PA
+
+organisation:   ORG-MLA23-RIPE
+org-name:       M247 Ltd Berlin
+org-type:       OTHER
+address:        Albert Einstein Ring 17-25
+address:        14532, Kleinmachow, Germany
+abuse-c:        ME5262-RIPE
+mnt-ref:        GLOBALAXS-MNT
+mnt-by:         GLOBALAXS-MNT
+created:        2018-05-17T12:42:55Z
+last-modified:  2018-05-17T12:42:55Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS BERLIN NOC
+address:        Albert Einstein Ring 17-25
+address:        14532, Kleinmachow, Germany
+abuse-mailbox:  abuse@m247.ro
+nic-hdl:        GBXS7-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-05-16T12:47:08Z
+last-modified:  2018-05-17T12:41:00Z
+source:         RIPE # Filtered
+
+% Information related to '152.89.163.0/24AS9009'
+
+route:          152.89.163.0/24
+descr:          M247 Europe
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-01-29T14:22:03Z
+last-modified:  2019-01-29T14:22:03Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

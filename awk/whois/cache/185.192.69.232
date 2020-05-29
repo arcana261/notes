@@ -1,0 +1,86 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.192.69.0 - 185.192.69.255'
+
+% Abuse contact for '185.192.69.0 - 185.192.69.255' is 'abuse@legaconetworks.nl'
+
+inetnum:        185.192.69.0 - 185.192.69.255
+netname:        GB-DATACENTER
+country:        GB
+org:            ORG-LNB10-RIPE
+admin-c:        JVV284-RIPE
+admin-c:        WS4695-RIPE
+tech-c:         JVV284-RIPE
+tech-c:         WS4695-RIPE
+status:         ASSIGNED PA
+mnt-routes:     CLOUVIDER-MNT
+mnt-by:         nl-legaco-1-mnt
+created:        2017-03-06T23:02:14Z
+last-modified:  2018-06-20T21:17:23Z
+source:         RIPE
+
+organisation:   ORG-LNB10-RIPE
+org-name:       Legaco Networks B.V.
+org-type:       OTHER
+address:        Kennedyplein 200
+address:        5611ZT
+address:        Eindhoven
+address:        NETHERLANDS
+admin-c:        JVV284-RIPE
+admin-c:        WS4695-RIPE
+tech-c:         JVV284-RIPE
+tech-c:         WS4695-RIPE
+abuse-c:        AR39402-RIPE
+mnt-by:         nl-legaco-1-mnt
+created:        2017-08-11T07:53:24Z
+last-modified:  2020-04-06T07:22:52Z
+source:         RIPE # Filtered
+phone:          +31403041481
+mnt-ref:        nl-legaco-1-mnt
+
+person:         Jeroen van Veen
+address:        Kennedyplein 200
+address:        5611ZT
+address:        Eindhoven
+address:        NETHERLANDS
+phone:          +31403041481
+nic-hdl:        JVV284-RIPE
+mnt-by:         nl-legaco-1-mnt
+created:        2017-02-27T16:04:05Z
+last-modified:  2019-02-19T13:15:38Z
+source:         RIPE
+
+person:         Wessel Sandkuijl
+address:        Kennedyplein 200
+address:        5611ZT
+address:        Eindhoven
+address:        NETHERLANDS
+phone:          +31403041481
+nic-hdl:        WS4695-RIPE
+mnt-by:         nl-legaco-1-mnt
+created:        2017-02-27T16:04:06Z
+last-modified:  2019-09-28T05:08:55Z
+source:         RIPE # Filtered
+
+% Information related to '185.192.69.0/24AS62240'
+
+route:          185.192.69.0/24
+descr:          UK Data Centre
+descr:          Customer Route
+descr:          Route Object based on LoA
+origin:         AS62240
+mnt-by:         CLOUVIDER-MNT
+created:        2018-06-22T10:51:24Z
+last-modified:  2018-06-22T10:51:24Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

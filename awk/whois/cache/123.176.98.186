@@ -1,0 +1,45 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '123.176.98.0 - 123.176.98.254'
+
+% Abuse contact for '123.176.98.0 - 123.176.98.254' is 'netadmin@layerstack.com'
+
+inetnum:        123.176.98.0 - 123.176.98.254
+netname:        CPCFARM
+descr:          broadbandservice
+country:        HK
+admin-c:        ND71-AP
+tech-c:         ND71-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-LAYER-HK
+mnt-irt:        IRT-PACHOST-HK
+last-modified:  2020-02-10T07:07:21Z
+source:         APNIC
+
+irt:            IRT-PACHOST-HK
+address:        Room 1701-2, Chinachem Leighton Plaza, 29 Leighton Road, Causeway Bay, HK
+e-mail:         netadmin@layerstack.com
+abuse-mailbox:  netadmin@layerstack.com
+admin-c:        PHLn1-AP
+tech-c:         PHLn1-AP
+auth:           # Filtered
+remarks:        netadmin@layerstack.com is invalid
+mnt-by:         MAINT-PACHOST-HK
+last-modified:  2020-01-15T13:21:23Z
+source:         APNIC
+
+person:         Ng Dennis
+nic-hdl:        ND71-AP
+e-mail:         ipadmin@layerstack.com
+address:        Room 1902, 178-186 Johnston Road, HK
+phone:          +852-28762941
+fax-no:         +852-23898852
+country:        HK
+mnt-by:         MAINT-HK-SPEEDVPS
+last-modified:  2018-10-01T05:45:58Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK3)
+
+

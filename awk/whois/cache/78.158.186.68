@@ -1,0 +1,73 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '78.158.186.0 - 78.158.186.255'
+
+% Abuse contact for '78.158.186.0 - 78.158.186.255' is 'abuse@aryasat.ir'
+
+inetnum:        78.158.186.0 - 78.158.186.255
+netname:        KIANI
+descr:          Kiani Tehran ADSL Pool
+country:        IR
+admin-c:        AI1643-RIPE
+admin-c:        AMIR1-RIPE
+admin-c:        MASS1-RIPE
+tech-c:         AI1643-RIPE
+tech-c:         AMIR1-RIPE
+tech-c:         MASS1-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-ARYASAT
+mnt-lower:      MNT-ARYASAT
+mnt-routes:     MNT-ARYASAT
+created:        2009-01-05T07:17:27Z
+last-modified:  2009-04-11T11:39:21Z
+source:         RIPE
+
+person:         Hooman Adelpour
+address:        Farhang Bldg-E 42 Ally-S Allameh St-Modiriat Bridge Apt # 23
+phone:          +98 21 8868 9966
+fax-no:         +98 21 8868 2751
+nic-hdl:        AI1643-RIPE
+mnt-by:         MNT-ARYASAT
+created:        2007-11-23T05:40:07Z
+last-modified:  2017-10-30T21:57:33Z
+source:         RIPE # Filtered
+
+person:         Amir Zandifar
+address:        Farhang Bldg-E 42 Ally-S Allameh St-Modiriat Bridge Apt#23
+phone:          +98 2188689966
+nic-hdl:        AMIR1-RIPE
+mnt-by:         MNT-ZANDIFAR
+created:        2007-12-25T21:46:53Z
+last-modified:  2008-10-29T21:58:14Z
+source:         RIPE
+
+person:         Massoud Sharififar
+address:        Farhang Bldg-E 42 Ally-S Allameh St-Modiriat Bridge Apt#23
+phone:          +98 21 8868 9966
+nic-hdl:        MASS1-RIPE
+mnt-by:         MNT-SHARIFIFAR
+created:        2008-10-27T10:52:54Z
+last-modified:  2009-01-14T13:52:17Z
+source:         RIPE
+
+% Information related to '78.158.186.0/24AS43343'
+
+route:          78.158.186.0/24
+origin:         AS43343
+mnt-by:         aryasat
+mnt-by:         aryasat-sepehr-tehran
+mnt-by:         MNT-ARYASAT
+created:        2018-01-25T07:31:15Z
+last-modified:  2018-01-25T07:31:15Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

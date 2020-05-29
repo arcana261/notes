@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.186.204.0 - 91.186.207.255'
+
+% Abuse contact for '91.186.204.0 - 91.186.207.255' is 'abuse@cyber.ir'
+
+inetnum:        91.186.204.0 - 91.186.207.255
+netname:        ZENTEX
+descr:          Bahar Samaneh Shargh Co.
+country:        IR
+admin-c:        AK7134-RIPE
+tech-c:         AK7134-RIPE
+mnt-domains:    MNT-ZENTEX
+mnt-routes:     MNT-ZENTEX
+status:         ASSIGNED PA
+mnt-by:         Cyber-MNT
+created:        2019-05-26T16:16:23Z
+last-modified:  2019-05-26T16:16:23Z
+source:         RIPE
+
+person:         Amir Khoramian
+address:        # 6, Jaleh Alley, South Shiraz St, Tehran, Iran
+phone:          +98 21 42576000
+nic-hdl:        AK7134-RIPE
+mnt-by:         MNT-ZENTEX
+created:        2011-02-17T08:29:26Z
+last-modified:  2018-06-17T05:24:45Z
+source:         RIPE # Filtered
+
+% Information related to '91.186.205.0/24AS16200'
+
+route:          91.186.205.0/24
+origin:         AS16200
+mnt-by:         Cyber-MNT
+created:        2016-09-28T18:03:33Z
+last-modified:  2016-09-28T18:03:33Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

@@ -1,0 +1,81 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       134.202.0.0 - 134.202.255.255
+CIDR:           134.202.0.0/16
+NetName:        NICPR
+NetHandle:      NET-134-202-0-0-1
+Parent:         NET134 (NET-134-0-0-0-0)
+NetType:        Direct Assignment
+OriginAS:       
+Organization:   Gauss Research Laboratory, Inc. (GRL-11)
+RegDate:        1989-07-19
+Updated:        2019-12-09
+Comment:        http://www.nic.pr
+Comment:        INOC-DBA 36810
+Ref:            https://rdap.arin.net/registry/ip/134.202.0.0
+
+
+OrgName:        Gauss Research Laboratory, Inc.
+OrgId:          GRL-11
+Address:        PO Box 21613
+City:           San Juan
+StateProv:      Puerto Rico
+PostalCode:     00931
+Country:        PR
+RegDate:        2006-11-29
+Updated:        2017-01-28
+Comment:        http://www.nic.pr
+Ref:            https://rdap.arin.net/registry/entity/GRL-11
+
+
+OrgTechHandle: RTC5-ARIN
+OrgTechName:   Registry Technical Contact
+OrgTechPhone:  +1-787-753-5869 
+OrgTechEmail:  tech@nic.pr
+OrgTechRef:    https://rdap.arin.net/registry/entity/RTC5-ARIN
+
+OrgAbuseHandle: RTC5-ARIN
+OrgAbuseName:   Registry Technical Contact
+OrgAbusePhone:  +1-787-753-5869 
+OrgAbuseEmail:  tech@nic.pr
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/RTC5-ARIN
+
+RAbuseHandle: ABUSE5327-ARIN
+RAbuseName:   Abuse team
+RAbusePhone:  +44-870-820-0222 
+RAbuseEmail:  abuse@heficed.com
+RAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE5327-ARIN
+
+RTechHandle: RTC5-ARIN
+RTechName:   Registry Technical Contact
+RTechPhone:  +1-787-753-5869 
+RTechEmail:  tech@nic.pr
+RTechRef:    https://rdap.arin.net/registry/entity/RTC5-ARIN
+
+RAbuseHandle: RTC5-ARIN
+RAbuseName:   Registry Technical Contact
+RAbusePhone:  +1-787-753-5869 
+RAbuseEmail:  tech@nic.pr
+RAbuseRef:    https://rdap.arin.net/registry/entity/RTC5-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

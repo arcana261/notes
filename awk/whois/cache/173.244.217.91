@@ -1,0 +1,85 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       173.244.192.0 - 173.244.223.255
+CIDR:           173.244.192.0/19
+NetName:        HSI-NET-173-244-192-0-1
+NetHandle:      NET-173-244-192-0-1
+Parent:         NET173 (NET-173-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS32780, AS29854
+Organization:   Hosting Services, Inc. (HOSTI-20)
+RegDate:        2010-05-10
+Updated:        2014-01-02
+Ref:            https://rdap.arin.net/registry/ip/173.244.192.0
+
+
+OrgName:        Hosting Services, Inc.
+OrgId:          HOSTI-20
+Address:        517 W 100 N STE 225
+City:           Providence
+StateProv:      UT
+PostalCode:     84332
+Country:        US
+RegDate:        2008-03-03
+Updated:        2017-02-08
+Ref:            https://rdap.arin.net/registry/entity/HOSTI-20
+
+ReferralServer:  rwhois://secure.mpcustomer.com:4321
+
+OrgTechHandle: NOC12189-ARIN
+OrgTechName:   NOC
+OrgTechPhone:  +1-435-755-3433 
+OrgTechEmail:  abuse@uk2group.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC12189-ARIN
+
+OrgAbuseHandle: HSIAB-ARIN
+OrgAbuseName:   HSI Abuse
+OrgAbusePhone:  +1-435-755-3433 
+OrgAbuseEmail:  abuse@uk2group.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/HSIAB-ARIN
+
+RTechHandle: NOC12189-ARIN
+RTechName:   NOC
+RTechPhone:  +1-435-755-3433 
+RTechEmail:  abuse@uk2group.com
+RTechRef:    https://rdap.arin.net/registry/entity/NOC12189-ARIN
+
+RNOCHandle: NOC12189-ARIN
+RNOCName:   NOC
+RNOCPhone:  +1-435-755-3433 
+RNOCEmail:  abuse@uk2group.com
+RNOCRef:    https://rdap.arin.net/registry/entity/NOC12189-ARIN
+
+RAbuseHandle: HSIAB-ARIN
+RAbuseName:   HSI Abuse
+RAbusePhone:  +1-435-755-3433 
+RAbuseEmail:  abuse@uk2group.com
+RAbuseRef:    https://rdap.arin.net/registry/entity/HSIAB-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to secure.mpcustomer.com:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 secure.mpcustomer.com (Ubersmith RWhois Server V-2.4.0)
+%error 230 Address not found

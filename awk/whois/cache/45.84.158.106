@@ -1,0 +1,70 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.84.156.0 - 45.84.159.255'
+
+% Abuse contact for '45.84.156.0 - 45.84.159.255' is 'abuse@didi.ir'
+
+inetnum:        45.84.156.0 - 45.84.159.255
+netname:        IR-DIDEHBAN3-20190531
+country:        IR
+org:            ORG-DNCP7-RIPE
+admin-c:        mb33945-ripe
+tech-c:         mb33945-ripe
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         Didehbannet
+mnt-lower:      Didehbannet
+mnt-routes:     Didehbannet
+created:        2019-05-31T11:18:28Z
+last-modified:  2019-05-31T11:18:28Z
+source:         RIPE
+
+organisation:   ORG-DNCP7-RIPE
+org-name:       Didehban Net Company PJS
+org-type:       LIR
+address:        corner of Baghe Lele alley ,Ebnsina sharghi
+address:        7614733785
+address:        Kerman
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        MS48418-RIPE
+tech-c:         MS48418-RIPE
+abuse-c:        AR52845-RIPE
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         Didehbannet
+created:        2019-05-23T14:15:16Z
+last-modified:  2019-05-30T06:56:35Z
+source:         RIPE # Filtered
+phone:          +989337332828
+mnt-ref:        Didehbannet
+
+person:         Masood Soltani
+address:        Department of information technology of Didehbannet,Eastern Ebnesina Street
+address:        Kerman,Iran
+phone:          +98 34 31243000 Ext.790
+phone:          +989337332790
+nic-hdl:        MB33945-RIPE
+mnt-by:         Didehbannet
+created:        2013-07-09T20:54:34Z
+last-modified:  2017-12-04T12:00:50Z
+source:         RIPE # Filtered
+
+% Information related to '45.84.156.0/22AS201150'
+
+route:          45.84.156.0/22
+origin:         AS201150
+descr:          Didehban Net Company
+mnt-by:         Didehbannet
+created:        2019-06-01T07:15:38Z
+last-modified:  2019-06-01T07:15:38Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

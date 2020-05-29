@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.145.38.0 - 185.145.39.255'
+
+% Abuse contact for '185.145.38.0 - 185.145.39.255' is 'abuse@as61317.net'
+
+inetnum:        185.145.38.0 - 185.145.39.255
+descr:          Digital Energy Technologies Limited
+netname:        SUBNET-H-28
+country:        DE
+admin-c:        VG4580-RIPE
+tech-c:         HNOC6-RIPE
+status:         ASSIGNED PA
+mnt-by:         uk-fel-1-mnt
+created:        2016-03-31T07:32:50Z
+last-modified:  2016-03-31T07:32:50Z
+source:         RIPE
+
+person:         Heficed Network Operating Center
+org:            ORG-DETL1-RIPE
+address:        207 Regent Street
+address:        London
+address:        W1B 3HH
+phone:          +443308080975
+nic-hdl:        HNOC6-RIPE
+mnt-by:         MNT-DETUK
+created:        2016-03-21T12:22:54Z
+last-modified:  2019-04-18T10:38:09Z
+source:         RIPE # Filtered
+
+person:         Vincentas Grinius
+address:        2711 Centerville Road
+address:        19808
+address:        Wilmington
+address:        UNITED STATES
+phone:          +1-312-766-1853
+nic-hdl:        VG4580-RIPE
+mnt-by:         us-delta-1-mnt
+created:        2016-02-19T11:16:52Z
+last-modified:  2018-01-03T12:03:57Z
+source:         RIPE
+
+% Information related to '185.145.36.0/22AS61317'
+
+route:          185.145.36.0/22
+descr:          Digital Energy Technologies Limited
+origin:         AS61317
+mnt-by:         uk-fel-1-mnt
+created:        2016-03-31T07:33:33Z
+last-modified:  2016-03-31T07:33:33Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

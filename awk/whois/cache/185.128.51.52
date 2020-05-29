@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.128.48.0 - 185.128.51.255'
+
+% Abuse contact for '185.128.48.0 - 185.128.51.255' is 'LIR@iranian-net.ir'
+
+inetnum:        185.128.48.0 - 185.128.51.255
+netname:        IR-IRANIAN-NET-20151124
+country:        IR
+org:            ORG-INCA2-RIPE
+admin-c:        AZ6195-RIPE
+tech-c:         AZ6195-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-iranian-net-1-mnt
+mnt-lower:      ir-iranian-net-1-mnt
+mnt-routes:     ir-iranian-net-1-mnt
+created:        2015-11-24T15:41:18Z
+last-modified:  2017-06-15T12:45:12Z
+source:         RIPE
+
+organisation:   ORG-INCA2-RIPE
+org-name:       Iranian Net Communication and Electronic Services Co PJS
+org-type:       LIR
+address:        #24, 31 St., Alvand avenue, Argentina Sq.
+address:        1516645911
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982188770163
+admin-c:        AZ6195-RIPE
+tech-c:         AZ6195-RIPE
+abuse-c:        AR34191-RIPE
+mnt-ref:        ir-iranian-net-1-mnt
+mnt-by:         ir-iranian-net-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2015-11-10T14:28:18Z
+last-modified:  2019-02-11T21:24:49Z
+source:         RIPE # Filtered
+
+person:         Abdolnabi Zameni
+address:        # 24, 31 St., Alvand avenue, Argentina Sq.
+address:        1516645911
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982188770163
+nic-hdl:        AZ6195-RIPE
+mnt-by:         Irnetmnt
+created:        2015-11-10T14:28:17Z
+last-modified:  2015-11-24T07:04:36Z
+source:         RIPE
+
+% Information related to '185.128.48.0/22AS52049'
+
+route:          185.128.48.0/22
+descr:          ipsubnet-exhibition
+origin:         AS52049
+mnt-by:         ir-iranian-net-1-mnt
+created:        2016-01-05T09:33:02Z
+last-modified:  2016-01-05T09:33:02Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

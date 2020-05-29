@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.187.48.0 - 185.187.49.255'
+
+% Abuse contact for '185.187.48.0 - 185.187.49.255' is 'kavoshgaranaftab@gmail.com'
+
+inetnum:        185.187.48.0 - 185.187.49.255
+org:            ORG-SA4104-RIPE
+descr:          Fara Net Gostar Kavoshgaran Aftab
+netname:        SunInternet
+country:        IR
+admin-c:        MM48033-RIPE
+tech-c:         MM48033-RIPE
+mnt-routes:     AH27894-MNT
+mnt-routes:     SunInternet
+mnt-routes:     MNT-Hesabgar
+mnt-domains:    AH27894-MNT
+mnt-domains:    SunInternet
+status:         ASSIGNED PA
+mnt-by:         AH27894-MNT
+created:        2017-03-07T10:54:23Z
+last-modified:  2018-03-16T07:16:53Z
+source:         RIPE
+
+organisation:   ORG-SA4104-RIPE
+org-name:       Fara Net Gostar Kavoshgaran Aftab
+org-type:       OTHER
+address:        2nd Plaque , Right Side, Corner of Khadem Sadegh St, Farashbandi Blvs, Shiraz
+abuse-c:        AD14314-RIPE
+mnt-ref:        SunInternet
+mnt-by:         AH27894-MNT
+mnt-by:         SunInternet
+created:        2018-03-07T23:19:35Z
+last-modified:  2018-03-07T23:27:00Z
+source:         RIPE # Filtered
+
+person:         Mostafa Mohammadi
+address:        2nd Plaque , Right Side, Corner of Khadem Sadegh St, Farashbandi Blvs, Shiraz, Iran
+phone:          +989177040451
+nic-hdl:        MM48033-RIPE
+mnt-by:         SunInternet
+created:        2018-03-07T23:16:27Z
+last-modified:  2018-03-07T23:16:27Z
+source:         RIPE
+
+% Information related to '185.187.48.0/24AS204393'
+
+route:          185.187.48.0/24
+origin:         AS204393
+mnt-by:         SunInternet
+created:        2018-05-30T10:35:33Z
+last-modified:  2018-05-30T10:35:33Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

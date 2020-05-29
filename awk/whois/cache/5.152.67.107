@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.152.0.0 - 5.152.99.255'
+
+% Abuse contact for '5.152.0.0 - 5.152.99.255' is 'abuse@silknet.com'
+
+inetnum:        5.152.0.0 - 5.152.99.255
+netname:        SILKNET-BROADBAND
+descr:          SILKNET BROADBAND
+country:        GE
+org:            ORG-UToG1-RIPE
+admin-c:        MB16997-RIPE
+tech-c:         MB16997-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-UTG
+created:        2012-07-19T11:37:54Z
+last-modified:  2018-11-23T12:22:12Z
+source:         RIPE
+
+organisation:   ORG-UTOG1-RIPE
+org-name:       JSC "Silknet"
+org-type:       LIR
+address:        95 Tsinamdzgvrishvili Str.
+address:        0112
+address:        Tbilisi
+address:        GEORGIA
+phone:          +99532100000
+fax-no:         +99532100000
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-UTG
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-UTG
+admin-c:        MB16997-RIPE
+tech-c:         MB16997-RIPE
+tech-c:         IJ761-RIPE
+abuse-c:        SILK3-RIPE
+created:        2005-08-09T12:38:13Z
+last-modified:  2018-11-05T14:07:39Z
+source:         RIPE # Filtered
+
+person:         Maria Belmasova
+address:        95 Tsinamdzgvrishvili st., Tbilisi 0112, Georgia
+phone:          +995 322100100
+nic-hdl:        MB16997-RIPE
+mnt-by:         MARIA-MNT
+created:        2007-03-28T13:13:02Z
+last-modified:  2018-07-12T09:00:52Z
+source:         RIPE # Filtered
+
+% Information related to '5.152.67.0/24AS35805'
+
+route:          5.152.67.0/24
+descr:          SILKNET-BROADBAND
+origin:         AS35805
+mnt-by:         MNT-UTG
+created:        2020-02-25T06:53:47Z
+last-modified:  2020-02-25T06:53:47Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

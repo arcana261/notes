@@ -1,0 +1,67 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       156.96.0.0 - 156.96.255.255
+CIDR:           156.96.0.0/16
+NetName:        NEWTREND
+NetHandle:      NET-156-96-0-0-1
+Parent:         NET156 (NET-156-0-0-0-0)
+NetType:        Direct Assignment
+OriginAS:       
+Organization:   NEWTREND (NEWTRE)
+RegDate:        1991-12-23
+Updated:        1998-11-20
+Ref:            https://rdap.arin.net/registry/ip/156.96.0.0
+
+
+OrgName:        NEWTREND
+OrgId:          NEWTRE
+Address:        FastLink Network - Newtrend Division
+Address:        P.O. Box 17295
+City:           Encino
+StateProv:      CA
+PostalCode:     91416
+Country:        US
+RegDate:        1991-12-23
+Updated:        2011-09-24
+Ref:            https://rdap.arin.net/registry/entity/NEWTRE
+
+
+OrgTechHandle: KT87-ARIN
+OrgTechName:   Thompson, Keith 
+OrgTechPhone:  +1-818-908-8900 
+OrgTechEmail:  keith@fastlink.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/KT87-ARIN
+
+OrgAbuseHandle: KT87-ARIN
+OrgAbuseName:   Thompson, Keith 
+OrgAbusePhone:  +1-818-908-8900 
+OrgAbuseEmail:  keith@fastlink.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/KT87-ARIN
+
+RTechHandle: KT87-ARIN
+RTechName:   Thompson, Keith 
+RTechPhone:  +1-818-908-8900 
+RTechEmail:  keith@fastlink.net
+RTechRef:    https://rdap.arin.net/registry/entity/KT87-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

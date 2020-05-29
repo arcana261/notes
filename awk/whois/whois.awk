@@ -1076,6 +1076,25 @@ function __whoisdb_get_iran_isp(idx, isp_counter) {
     }
     offset = offset + whoisdb_get_owner_length(idx);
 
+    descr = whoisdb_get_field(idx, "descr", isp_counter - offset);
+    if (descr != "") {
+        return __whoisdb_get_iran_isp_from_description(descr);
+    }
+    offset = offset + whoisdb_get_field_length(idx, "descr");
+
+    return "";
+}
+
+function __whoisdb_get_iran_isp_from_description(descr) {
+    descr = toupper(descr);
+
+    if (descr ~ /TELECOMMUNICATION COMPANY/) {
+        return "Iran Telecommunication Company";
+    }
+    if (descr ~ /ORUM TORKAN RAYANEH/) {
+        return "Torka Net"
+    }
+
     return "";
 }
 
@@ -1277,7 +1296,7 @@ function __whoisdb_get_iran_isp_from_mnt(mnt) {
     if (mnt == "JN-IP") {
         return "Mysha Net";
     }
-    if (mnt == "WCD") {
+    if (mnt == "WCD" || mnt ~ /^SUNINTERNET$/) {
         return "Sun Internet";
     }
     if (mnt == "MNT-SHAHRAD" || mnt == "MNT-AMIRSABET") {
@@ -1331,6 +1350,51 @@ function __whoisdb_get_iran_isp_from_mnt(mnt) {
     if (mnt == "APAKSERESHT-MNT") {
         return "Toloe Rayaneh Loghman";
     }
+    if (mnt == "ABRARVAN") {
+        return "Abr Arvan";
+    }
+    if (mnt ~ /^IR-FAVAPAYAM-[0-9]*-MNT$/) {
+        return "FAVA";
+    }
+    if (mnt ~ /^IR-ASANPARDAKHT-[0-9]*-MNT$/) {
+        return "Asan Pardakht";
+    }
+    if (mnt == "AFTAB-MNT" || mnt ~ /^MNT-IR-AFTAB-NETWORK-[0-9]*$/) {
+        return "Aftab Net";
+    }
+    if (mnt ~ /^MNT-IR-UZNET-[0-9]*$/) {
+        return "Uz Net";
+    }
+    if (mnt == "INSTITUTE-ISIRAN-MNT") {
+        return "ISIRAN";
+    }
+    if (mnt ~ /^IR-CAFEBAZAAR-[0-9]*-MNT$/) {
+        return "CafeBazaar";
+    }
+    if (mnt ~ /^IR-FANAVAZEH-[0-9]*-MNT$/) {
+        return "Digikala";
+    }
+    if (mnt ~ /^IR-KHORSHIDNET-[0-9]*-MNT$/) {
+        return "Khorshid Net";
+    }
+    if (mnt ~ /^IR-FCP-[0-9]*-MNT$/) {
+        return "Ertebat Sabet Parsian";
+    }
+    if (mnt ~ /^IR-AUOS-[0-9]*-MNT$/) {
+        return "Azad University";
+    }
+    if (mnt == "MNT-NRDC-FT") {
+        return "Naji R&D";
+    }
+    if (mnt ~ /^IR-IRANIAN-NET-[0-9]*-MNT$/) {
+        return "Iranian Net";
+    }
+    if (mnt == "MNT-PETIAK") {
+        return "Petiak Net";
+    }
+    if (mnt == "MNT-ARP") {
+        return "Asan Pardakht Parsian";
+    }
 
     return "-";
 }
@@ -1359,7 +1423,7 @@ function __whoisdb_get_iran_isp_from_owner(owner) {
     if (owner ~ /^IR-BITA-/) {
         return "Bita Net";
     }
-    if (owner ~ /-TCI$/ || owner == "TCE-NET" || owner == "TELECOMADSL" || owner == "TCI-NET") {
+    if (owner ~ /-TCI$/ || owner == "TCE-NET" || owner == "TELECOMADSL" || owner == "TCI-NET" || owner ~ /TELECOMMUNICATION_COMPANY/ || owner ~ /^IR-TCI/) {
         return "Iran Telecommunication Company";
     }
     if (owner ~ /YASONLINE/) {
@@ -1415,6 +1479,36 @@ function __whoisdb_get_iran_isp_from_owner(owner) {
     }
     if (owner == "NIDC") {
         return "National Iranian Drilling Company";
+    }
+    if (owner ~ /^IR-DORNA/) {
+        return "Uz Net";
+    }
+    if (owner ~ /^IR-SERVCO-AVAGOSTAR/) {
+        return "Ava Gostar Sarv";
+    }
+    if (owner == "FARAHOOSH-SERVCO-SHIRAZ" || owner == "FARAHOOSHDENA-ADSL") {
+        return "Farahoosh";
+    }
+    if (owner == "PARSIAN_BANK") {
+        return "Parsian Bank";
+    }
+    if (owner ~ /^IR-FAVA/) {
+        return "FAVA";
+    }
+    if (owner == "BEHPARDAKHT-MELLAT") {
+        return "Behpardakht Mellat";
+    }
+    if (owner == "NOORIDC") {
+        return "Noor Net";
+    }
+    if (owner == "VALAPAYAMFARDA") {
+        return "Vala Payam Farda";
+    }
+    if (owner == "MAHANNET-TDLTE") {
+        return "Mahan Net";
+    }
+    if (owner == "BUMSACIR") {
+        return "Birjand University of Medical Sciences";
     }
 
     return "-";
@@ -1861,7 +1955,7 @@ function report_counter_txt() {
                         value = stats_counter["type"][type]["key"][key]["field"][field];
 
                         if (field != "count" && stats_counter["display"]["type"] == "percent") {
-                            value = (value / stats_counter["type"][type]["key"][key]["field"]["sum"]) * 100;
+                            value = "" ((value / stats_counter["type"][type]["key"][key]["field"]["sum"]) * 100) "%";
                         }
 
                         print "\t  " field ": " value;
@@ -1929,12 +2023,13 @@ function report_counter_txt() {
     increment_counter(parts[1], parts[2], parts[3], int(parts[4]));
 }
 
-/^\s*((COUNTRY)|(ISP)|(ASNUMBER)|(CIDR)|(NETMASK)|(ROUTE)|(ROUTING_NETMASK))(\s*((,\s*COUNTRY)|(,\s*ISP)|(,\s*ASNUMBER)|(,\s*CIDR)|(,\s*NETMASK)|(,\s*ROUTE)|(,\s*ROUTING_NETMASK)))*\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*(\s\s*.*)?$/ {
+/^\s*((ONE)|(COUNTRY)|(ISP)|(ASNUMBER)|(CIDR)|(NETMASK)|(ROUTE)|(ROUTING_NETMASK))(\s*((,\s*ONE)|(,\s*COUNTRY)|(,\s*ISP)|(,\s*ASNUMBER)|(,\s*CIDR)|(,\s*NETMASK)|(,\s*ROUTE)|(,\s*ROUTING_NETMASK)))*\s*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*(\s\s*.*)?$/ {
     if (NR % 100 == 0) {
         whoisdb_save();
     }
 
     requested_fields_length = 0;
+    select_one = 0;
 
     line = $0;
     for (;;) {
@@ -1966,6 +2061,9 @@ function report_counter_txt() {
             requested_fields_length = requested_fields_length + 1;
             requested_fields[requested_fields_length] = "route_netmask";
             sub(/^\s*ROUTING_NETMASK\s*(,\s*)?/, "", line);
+        } else if (line ~ /^\s*ONE\s*/) {
+            select_one = 1;
+            sub(/^\s*ONE\s*(,\s*)?/, "", line);
         } else {
             break;
         }
@@ -1985,12 +2083,18 @@ function report_counter_txt() {
     sub(/\s*$/, "", remainder);
     sub(/\s*$/, "", ip);
 
+    finished_fields_marker["cidr"] = 0
+    finished_fields_marker["asnumber"] = 0
+    finished_fields_marker["netmask"] = 0
+    finished_fields_marker["route"] = 0
+    finished_fields_marker["route_netmask"] = 0
+
     idx = whoisdb_lookup(ip);
     if (idx == 0) {
         print "ERROR: could not fetch [" ip "] at [NR=" NR "]";
     } else {
         finished_fields = 0;
-        for (data_index_counter=1; finished_fields < requested_fields_length; data_index_counter++) {
+        for (data_index_counter=1; (select_one == 1 && data_index_counter == 1) || (select_one == 0 && finished_fields < requested_fields_length); data_index_counter++) {
             for (requested_field_counter=1; requested_field_counter<=requested_fields_length; requested_field_counter++) {
                 requested_field = requested_fields[requested_field_counter];
                 if (requested_field == "country") {
@@ -2008,7 +2112,12 @@ function report_counter_txt() {
                 } else if (requested_field == "isp") {
                     isp = whoisdb_get_iran_isp(idx);
                     if (isp == "") {
-                        print "ERROR: could not find isp for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        country = whoisdb_get_country(idx);
+                        if (country == "IR") {
+                            print "ERROR: could not find isp for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        } else {
+                            print "WARN: could not find non-IR isp for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";
+                        }
                         isp = "(UNKNOWN)";
                     }
 
@@ -2020,9 +2129,9 @@ function report_counter_txt() {
                 } else if (requested_field == "asnumber") {
                     asnumber = whoisdb_get_asnumber(idx, data_index_counter);
                     if (asnumber == "") {
-                        if (finished_fields_marker["cidr"] != 1) {
+                        if (finished_fields_marker["asnumber"] != 1) {
                             finished_fields = finished_fields + 1;
-                            finished_fields_marker["cidr"] = 1;
+                            finished_fields_marker["asnumber"] = 1;
                         }
                         if (data_index_counter == 1) {
                             print "ERROR: could not find asnumber for [" ip "] at [NR=" NR "] (index=" idx ") matching ORIGIN=[" whoisdb_get_origin(idx) "] RECORD_IDX=[" idx "]";

@@ -1,0 +1,84 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.45.188.0 - 185.45.191.255'
+
+% Abuse contact for '185.45.188.0 - 185.45.191.255' is 'abuse@fanaptelecom.ir'
+
+inetnum:        185.45.188.0 - 185.45.191.255
+netname:        IR-JAVIDAN-20140122
+country:        IR
+org:            ORG-PNEV1-RIPE
+admin-c:        ZK1263-RIPE
+tech-c:         BA82-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-javidan-1-mnt
+mnt-lower:      ir-javidan-1-mnt
+mnt-routes:     ir-javidan-1-mnt
+mnt-domains:    TRG-DMN-MNT
+created:        2017-05-11T07:07:52Z
+last-modified:  2017-05-13T05:08:55Z
+source:         RIPE
+
+organisation:   ORG-PNEV1-RIPE
+org-name:       Tose'h Fanavari Ertebabat Pasargad Arian Co. PJS
+org-type:       LIR
+address:        No6 - 3rd St. - Shamstabrizi St. - Mirdamad Ave.
+address:        1919633813
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 2191031567
+admin-c:        MY1614-RIPE
+tech-c:         MY1614-RIPE
+abuse-c:        AR34589-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        ir-javidan-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-javidan-1-mnt
+created:        2015-12-08T10:33:27Z
+last-modified:  2018-07-28T06:41:12Z
+source:         RIPE # Filtered
+fax-no:         +98 2122920153
+
+person:         Behazin Aghighi
+address:        No.16 , Jamal Alley.
+address:        S Kheradmand St.
+address:        Tehran-IRAN
+phone:          +98-21-88306410
+fax-no:         +98-21-88845583
+nic-hdl:        BA82-RIPE
+mnt-by:         KAVEH-GIS
+created:        2002-05-18T17:13:36Z
+last-modified:  2012-02-14T13:37:48Z
+source:         RIPE # Filtered
+
+person:         Zeinab Kani
+address:        No3. - East Quobadian St. - Africa Ave. - TEHRAN - IRAN
+phone:          +982188327598
+nic-hdl:        ZK1263-RIPE
+mnt-by:         ir-javidan-1-mnt
+created:        2015-12-09T06:35:56Z
+last-modified:  2015-12-09T06:35:56Z
+source:         RIPE
+
+% Information related to '185.45.188.0/22AS24631'
+
+route:          185.45.188.0/22
+origin:         AS24631
+mnt-by:         TRG-DMN-MNT
+mnt-by:         KAVEH-GIS
+mnt-by:         ir-javidan-1-mnt
+created:        2017-05-21T05:24:02Z
+last-modified:  2017-05-21T05:24:02Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

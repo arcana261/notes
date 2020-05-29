@@ -1,0 +1,68 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       127.0.0.0 - 127.255.255.255
+CIDR:           127.0.0.0/8
+NetName:        SPECIAL-IPV4-LOOPBACK-IANA-RESERVED
+NetHandle:      NET-127-0-0-0-1
+Parent:          ()
+NetType:        IANA Special Use
+OriginAS:       
+Organization:   Internet Assigned Numbers Authority (IANA)
+RegDate:        
+Updated:        2013-08-30
+Comment:        Addresses starting with "127." are used when one program needs to talk to another program running on the same machine using the Internet 
+Comment:        Protocol.  127.0.0.1 is the most commonly used address and is called the "loopback" address.
+Comment:        
+Comment:        These addresses were assigned by the IETF, the organization that develops Internet protocols, in the Standard document, RFC 1122, which can  
+Comment:        be found here:
+Comment:        http://datatracker.ietf.org/doc/rfc1122
+Ref:            https://rdap.arin.net/registry/ip/127.0.0.0
+
+
+
+OrgName:        Internet Assigned Numbers Authority
+OrgId:          IANA
+Address:        12025 Waterfront Drive
+Address:        Suite 300
+City:           Los Angeles
+StateProv:      CA
+PostalCode:     90292
+Country:        US
+RegDate:        
+Updated:        2012-08-31
+Ref:            https://rdap.arin.net/registry/entity/IANA
+
+
+OrgTechHandle: IANA-IP-ARIN
+OrgTechName:   ICANN
+OrgTechPhone:  +1-310-301-5820 
+OrgTechEmail:  abuse@iana.org
+OrgTechRef:    https://rdap.arin.net/registry/entity/IANA-IP-ARIN
+
+OrgAbuseHandle: IANA-IP-ARIN
+OrgAbuseName:   ICANN
+OrgAbusePhone:  +1-310-301-5820 
+OrgAbuseEmail:  abuse@iana.org
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/IANA-IP-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

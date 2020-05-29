@@ -1,0 +1,51 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.200.80.0 - 5.200.87.255'
+
+% Abuse contact for '5.200.80.0 - 5.200.87.255' is 'abuse@baharnet.ir'
+
+inetnum:        5.200.80.0 - 5.200.87.255
+netname:        BS_BROADBANDUSER
+descr:          Bahar Samaneh Shargh
+country:        IR
+admin-c:        BS56466-RIPE
+tech-c:         BS56466-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-ZENTEX
+created:        2017-02-25T14:26:29Z
+last-modified:  2017-02-25T14:26:29Z
+source:         RIPE
+
+role:           BS ADMINS
+org:            ORG-PFOI1-RIPE
+admin-c:        RA7777-RIPE
+admin-c:        HH4564-RIPE
+admin-c:        AK7134-RIPE
+address:        No6, Jaleh St, South Shiraz Ave.
+address:        Tehran,IRAN
+nic-hdl:        BS56466-RIPE
+mnt-by:         MNT-ZENTEX
+created:        2017-01-12T09:21:45Z
+last-modified:  2017-12-16T10:26:18Z
+source:         RIPE # Filtered
+
+% Information related to '5.200.84.0/22AS56466'
+
+route:          5.200.84.0/22
+descr:          BROADBANDUSER
+origin:         AS56466
+mnt-by:         MNT-ZENTEX
+created:        2015-05-12T10:08:21Z
+last-modified:  2015-05-12T10:08:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

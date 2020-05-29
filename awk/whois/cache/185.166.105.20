@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.166.104.0 - 185.166.107.255'
+
+% Abuse contact for '185.166.104.0 - 185.166.107.255' is 'lirabuse@cafebazaar.ir'
+
+inetnum:        185.166.104.0 - 185.166.107.255
+netname:        IR-CAFEBAZAAR-20160905
+country:        IR
+org:            ORG-AHHH1-RIPE
+admin-c:        YP762-RIPE
+tech-c:         YP762-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-cafebazaar-1-mnt
+created:        2016-09-05T10:21:50Z
+last-modified:  2016-09-05T10:21:50Z
+source:         RIPE
+
+organisation:   ORG-AHHH1-RIPE
+org-name:       Avaye Hamrahe Houshmande Hezardastan PJSC
+org-type:       LIR
+address:        No 8 , 2nd peyvand St., Farhang Blvd., Saadatabad, Tehran,
+address:        1997748311
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        YP762-RIPE
+tech-c:         YP762-RIPE
+abuse-c:        AR37489-RIPE
+mnt-ref:        ir-cafebazaar-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-cafebazaar-1-mnt
+created:        2016-09-02T13:11:00Z
+last-modified:  2020-04-15T09:19:24Z
+source:         RIPE # Filtered
+phone:          +982174314161
+
+person:         Mohammad Bajelan
+address:        No. 8, 2nd Peyvand , Farhang Square , Saadat abaad
+address:        1997748310
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +9874314000
+nic-hdl:        YP762-RIPE
+mnt-by:         ir-cafebazaar-1-mnt
+created:        2016-09-02T13:11:00Z
+last-modified:  2020-04-21T14:10:49Z
+source:         RIPE # Filtered
+
+% Information related to '185.166.105.0/24AS202319'
+
+route:          185.166.105.0/24
+origin:         AS202319
+mnt-by:         ir-cafebazaar-1-mnt
+created:        2018-06-10T13:28:20Z
+last-modified:  2018-06-10T13:28:20Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

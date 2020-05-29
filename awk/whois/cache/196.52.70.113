@@ -1,0 +1,41 @@
+% This is the AfriNIC Whois server.
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '196.52.70.0 - 196.52.70.255'
+
+% No abuse contact registered for 196.52.70.0 - 196.52.70.255
+
+inetnum:        196.52.70.0 - 196.52.70.255
+netname:        ShereenMirchandani
+descr:          AS32181
+country:        US
+admin-c:        CA12-AFRINIC
+tech-c:         CA12-AFRINIC
+status:         ASSIGNED PA
+mnt-by:         LOGICWEB-MNT
+source:         AFRINIC # Filtered
+parent:         196.52.0.0 - 196.55.255.255
+
+person:         Chad Abizeid
+address:        LogicWeb Inc.
+address:        4509 Steeplechase Dr.
+address:        Easton, PA 18040
+address:        USA
+phone:          tel:+1-866-611-1556
+org:            ORG-LWI1-AFRINIC
+nic-hdl:        CA12-AFRINIC
+mnt-by:         LOGICWEB-MNT
+source:         AFRINIC # Filtered
+
+% Information related to '196.52.70.0/24AS32780'
+
+route:          196.52.70.0/24
+descr:          Pango
+origin:         AS32780
+mnt-by:         LOGICWEB-MNT
+source:         AFRINIC # Filtered
+
+
+

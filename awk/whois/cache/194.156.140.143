@@ -1,0 +1,72 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.156.140.0 - 194.156.143.255'
+
+% Abuse contact for '194.156.140.0 - 194.156.143.255' is 'nazari.amirhamzeh@golrang.com'
+
+inetnum:        194.156.140.0 - 194.156.143.255
+netname:        IR-GSC1-20180806
+country:        IR
+org:            ORG-GSCP2-RIPE
+admin-c:        AN31399-RIPE
+tech-c:         AN31399-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-gsc1-1-mnt
+mnt-lower:      ir-gsc1-1-mnt
+mnt-routes:     ir-gsc1-1-mnt
+created:        2018-08-06T08:40:36Z
+last-modified:  2018-08-06T08:40:36Z
+source:         RIPE
+
+organisation:   ORG-GSCP2-RIPE
+org-name:       Golrang System Co. P.J.S
+org-type:       LIR
+address:        N. 4 18th AV. Ahmad ghasir St. Arjantin Square
+address:        1511935813
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        AN31399-RIPE
+admin-c:        MA21870-RIPE
+tech-c:         AN31399-RIPE
+tech-c:         MA21870-RIPE
+abuse-c:        AR47660-RIPE
+mnt-ref:        ir-gsc1-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-gsc1-1-mnt
+created:        2018-07-27T12:05:30Z
+last-modified:  2020-04-29T10:02:05Z
+source:         RIPE # Filtered
+phone:          +982142661000
+
+person:         amirhamzeh Nazari
+address:        saee1, Valiasr St
+address:        1514835411
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982142661000
+nic-hdl:        AN31399-RIPE
+mnt-by:         ir-gsc1-1-mnt
+created:        2018-07-27T12:05:29Z
+last-modified:  2019-11-10T11:14:39Z
+source:         RIPE
+
+% Information related to '194.156.140.0/24AS200312'
+
+route:          194.156.140.0/24
+origin:         AS200312
+mnt-by:         ir-gsc1-1-mnt
+created:        2019-05-04T07:21:36Z
+last-modified:  2019-05-04T07:21:36Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

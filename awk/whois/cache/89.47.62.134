@@ -1,0 +1,70 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.47.62.0 - 89.47.62.255'
+
+% Abuse contact for '89.47.62.0 - 89.47.62.255' is 'abuse@m247.ro'
+
+inetnum:        89.47.62.0 - 89.47.62.255
+netname:        RO-M247RO-20051129
+country:        GB
+geoloc:         51.5285582 -0.2416799
+org:            ORG-MES6-RIPE
+admin-c:        GBXS-RIPE
+tech-c:         GBXS-RIPE
+status:         ALLOCATED PA
+mnt-by:         M247-EU-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2020-04-01T13:42:12Z
+last-modified:  2020-04-02T12:49:12Z
+source:         RIPE
+
+organisation:   ORG-MES6-RIPE
+org-name:       M247 Europe SRL
+org-type:       LIR
+address:        11B Sos. Fabrica de Glucoza, 1st floor District 2
+address:        020331
+address:        Bucharest
+address:        ROMANIA
+phone:          +40749654672
+abuse-c:        ME5262-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        M247-EU-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         M247-EU-MNT
+created:        2014-01-06T11:23:03Z
+last-modified:  2016-05-26T11:49:08Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS NOC
+remarks:        M247 - Network Management Centre
+address:        1 Ball Green, Cobra Court
+address:        M32 0QT, Manchester - United Kingdom
+tech-c:         JB3482-RIPE
+tech-c:         CB2407-RIPE
+nic-hdl:        GBXS-RIPE
+abuse-mailbox:  abuse@m247.ro
+mnt-by:         GLOBALAXS-MNT
+created:        2006-07-13T15:37:05Z
+last-modified:  2018-09-10T17:32:45Z
+source:         RIPE # Filtered
+
+% Information related to '89.47.62.0/24AS9009'
+
+route:          89.47.62.0/24
+descr:          M247 Ltd
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2020-04-02T12:49:40Z
+last-modified:  2020-04-02T12:49:40Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

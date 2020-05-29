@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.159.84.0 - 185.159.87.255'
+
+% Abuse contact for '185.159.84.0 - 185.159.87.255' is 'abuse@khorshidnet.com'
+
+inetnum:        185.159.84.0 - 185.159.87.255
+netname:        IR-KHORSHIDNET-20160712
+country:        IR
+org:            ORG-MCBC1-RIPE
+admin-c:        AR36914-RIPE
+tech-c:         AR36914-RIPE
+geoloc:         35.485859 50.542442
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-khorshidnet-1-mnt
+created:        2016-07-12T16:15:44Z
+last-modified:  2016-09-14T06:04:58Z
+source:         RIPE
+
+organisation:   ORG-MCBC1-RIPE
+org-name:       Moshaver Computer Behnam Company
+org-type:       LIR
+address:        8th Floor, Salian Building, Eram Blvd., Mehrshahr
+address:        3186656734
+address:        Karaj
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        AR36914-RIPE
+admin-c:        FK3620-RIPE
+tech-c:         AR36914-RIPE
+tech-c:         FK3620-RIPE
+abuse-c:        AR36915-RIPE
+mnt-ref:        ir-khorshidnet-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-khorshidnet-1-mnt
+created:        2016-07-07T11:55:59Z
+last-modified:  2016-07-07T11:56:02Z
+source:         RIPE # Filtered
+phone:          +98263569
+
+person:         Alireza Rajabi
+address:        8th Floor, Salian Building, Eram Blvd., Mehrshahr
+address:        3186656734
+address:        Karaj
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98263569
+nic-hdl:        AR36914-RIPE
+mnt-by:         ir-khorshidnet-1-mnt
+created:        2016-07-07T11:55:59Z
+last-modified:  2016-07-07T11:55:59Z
+source:         RIPE
+
+% Information related to '185.159.84.0/22AS202616'
+
+route:          185.159.84.0/22
+origin:         AS202616
+mnt-by:         ir-khorshidnet-1-mnt
+created:        2016-09-14T06:01:48Z
+last-modified:  2016-09-14T06:01:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

@@ -1,0 +1,80 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.60.32.0 - 185.60.35.255'
+
+% Abuse contact for '185.60.32.0 - 185.60.35.255' is 'a.gheshlaghi@pep.co.ir'
+
+inetnum:        185.60.32.0 - 185.60.35.255
+netname:        IR-PARDAKHT-20140605
+descr:          Pardakht Electronic Co. of Bank Pasargad (P.J.S)
+country:        IR
+org:            ORG-PECO1-RIPE
+admin-c:        AAG116-RIPE
+tech-c:         SM27847-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AAG502
+mnt-lower:      aag
+mnt-lower:      AAG502
+created:        2014-06-05T09:57:16Z
+last-modified:  2018-10-01T12:55:38Z
+source:         RIPE # Filtered
+
+organisation:   ORG-PECO1-RIPE
+org-name:       Pardakht Electronic Co. of Bank Pasargad (P.J.S)
+org-type:       LIR
+address:        No. 52 West Sarv St., Sarv Junction,
+                Paknejad Blvd., Saadatabad
+address:        1446600000
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989124581233
+fax-no:         +982122116706
+admin-c:        AAG116-RIPE
+abuse-c:        AC28861-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        AAG502
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AAG502
+created:        2014-05-19T13:58:50Z
+last-modified:  2018-10-01T12:45:50Z
+source:         RIPE # Filtered
+
+person:         Amir aghajanzadeh gheshlaghi
+address:        no.52,Next to pasargad bank, western sarv Ave, Paknejad Blvd,Saadat abad, Tehran-Iran
+phone:          +989121571613
+nic-hdl:        AAG116-RIPE
+mnt-by:         aag
+created:        2014-05-26T05:58:06Z
+last-modified:  2014-05-26T05:58:07Z
+source:         RIPE # Filtered
+
+person:         Payam Haddad
+address:        no.52,Next to pasargad bank, western sarv Ave, Paknejad Blvd,Saadat abad, Tehran-Iran
+phone:          +989126135174
+nic-hdl:        SM27847-RIPE
+mnt-by:         SM
+created:        2014-05-26T06:00:28Z
+last-modified:  2016-07-10T07:05:58Z
+source:         RIPE # Filtered
+
+% Information related to '185.60.32.0/22AS201259'
+
+route:          185.60.32.0/22
+descr:          Pardakht Electronic Co. of Bank Pasargad (P.J.S)
+origin:         AS201259
+mnt-by:         AAG502
+created:        2014-12-24T05:30:55Z
+last-modified:  2014-12-24T05:30:55Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

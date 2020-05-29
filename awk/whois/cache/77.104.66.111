@@ -1,0 +1,80 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '77.104.64.0 - 77.104.127.255'
+
+% Abuse contact for '77.104.64.0 - 77.104.127.255' is 'abuse@respina.net'
+
+inetnum:        77.104.64.0 - 77.104.127.255
+netname:        IR-RSPN-20081007
+country:        IR
+org:            ORG-RNB1-RIPE
+admin-c:        RA7044-RIPE
+tech-c:         RA7044-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-RSPN
+mnt-lower:      MNT-RSPN
+mnt-domains:    MNT-RSPN
+mnt-routes:     MNT-RSPN
+created:        2008-10-07T14:12:37Z
+last-modified:  2016-05-19T06:10:20Z
+source:         RIPE # Filtered
+
+organisation:   ORG-RNB1-RIPE
+org-name:       Respina Networks & Beyond PJSC
+descr:          Respina Networks & Beyond PJSC
+org-type:       LIR
+address:        No. 1, Pedaran Alley, Nezami Ganjavi St.,
+                Tavanir St., Valiasr Ave.
+address:        1434894411
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982184230000
+fax-no:         +982188191083
+admin-c:        RA7044-RIPE
+admin-c:        RA7044-RIPE
+abuse-c:        RAD41-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-RSPN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-RSPN
+created:        2007-01-16T11:11:03Z
+last-modified:  2018-08-10T10:13:00Z
+source:         RIPE # Filtered
+
+role:           RSPN ADMINS
+address:        No.1, Pedaran Alley. Nezami Ganjavi St. Tavanir St. Valiasr St. Tehran, Iran, Zip Code: 14348
+admin-c:        MH17606-RIPE
+admin-c:        MM43896-RIPE
+admin-c:        AP26962-RIPE
+remarks:        For peering request: majid@respina.net
+admin-c:        MM43896-RIPE
+tech-c:         AP27221-RIPE
+org:            ORG-RNB1-RIPE
+nic-hdl:        RA7044-RIPE
+mnt-by:         MNT-RSPN
+mnt-by:         MNT-RFCP
+created:        2013-12-10T04:38:30Z
+last-modified:  2020-03-31T19:00:14Z
+source:         RIPE # Filtered
+
+% Information related to '77.104.66.0/24AS42337'
+
+route:          77.104.66.0/24
+descr:          Respina-03
+origin:         AS42337
+mnt-by:         MNT-RSPN
+created:        2011-03-01T07:35:09Z
+last-modified:  2011-03-01T07:35:09Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

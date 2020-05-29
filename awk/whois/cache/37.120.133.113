@@ -1,0 +1,76 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.120.133.0 - 37.120.133.255'
+
+% Abuse contact for '37.120.133.0 - 37.120.133.255' is 'abuse@m247.ro'
+
+inetnum:        37.120.133.0 - 37.120.133.255
+netname:        M247-LTD-London
+descr:          M247 LTD London Infrastructure
+country:        GB
+geoloc:         51.5285582 -0.2416799
+admin-c:        GBXS34-RIPE
+tech-c:         GBXS34-RIPE
+status:         ASSIGNED PA
+org:            ORG-GL37-RIPE
+mnt-by:         SDAT-MNT
+mnt-by:         M247-EU-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2018-10-12T13:59:55Z
+last-modified:  2019-01-17T15:19:03Z
+source:         RIPE # Filtered
+
+organisation:   ORG-GL37-RIPE
+org-name:       M247 Ltd
+org-type:       LIR
+address:        1 Ball Green, Cobra Court
+address:        M32 0QT
+address:        Manchester
+address:        UNITED KINGDOM
+phone:          +441616151272
+fax-no:         +441618655763
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        GLOBALAXS-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         GLOBALAXS-MNT
+admin-c:        CB2407-RIPE
+admin-c:        JB3482-RIPE
+abuse-c:        GBXS-RIPE
+created:        2007-03-14T11:11:06Z
+last-modified:  2018-02-21T10:27:01Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS QUEBEC NOC
+address:        1250 Rene-Levesque Blvd W, Montreal, QC H3B 4W8, Canada
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS34-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2018-08-22T18:27:55Z
+last-modified:  2019-11-20T08:17:40Z
+source:         RIPE # Filtered
+
+% Information related to '37.120.133.0/24AS9009'
+
+route:          37.120.133.0/24
+descr:          M247 Europe
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2018-10-12T14:21:09Z
+last-modified:  2018-10-12T14:21:09Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

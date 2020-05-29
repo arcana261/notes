@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '152.89.211.0 - 152.89.211.255'
+
+% Abuse contact for '152.89.211.0 - 152.89.211.255' is 'abuse@thinkhuge.net'
+
+inetnum:        152.89.211.0 - 152.89.211.255
+netname:        UK-TH01-Amsterdam
+country:        NL
+geoloc:         52.3745913 4.828575
+org:            ORG-THL11-RIPE
+admin-c:        WT1446-RIPE
+tech-c:         WT1446-RIPE
+mnt-routes:     GLOBALAXS-MNT
+status:         ASSIGNED PA
+mnt-by:         mnt-uk-think-jan192-1
+created:        2019-01-28T18:25:43Z
+last-modified:  2019-01-28T18:25:43Z
+source:         RIPE
+
+organisation:   ORG-THL11-RIPE
+org-name:       Think Huge Ltd
+org-type:       LIR
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+admin-c:        WT1446-RIPE
+tech-c:         WT1446-RIPE
+abuse-c:        AR46222-RIPE
+mnt-ref:        uk-th01-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         uk-th01-1-mnt
+created:        2018-04-25T21:18:42Z
+last-modified:  2018-04-25T21:18:44Z
+source:         RIPE # Filtered
+phone:          +447415953982
+
+person:         Will Thomas
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+phone:          +447415953982
+nic-hdl:        WT1446-RIPE
+mnt-by:         uk-th01-1-mnt
+created:        2018-04-25T21:18:40Z
+last-modified:  2018-04-25T21:18:41Z
+source:         RIPE
+
+% Information related to '152.89.211.0/24AS9009'
+
+route:          152.89.211.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-01-28T18:20:41Z
+last-modified:  2019-01-28T18:20:41Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

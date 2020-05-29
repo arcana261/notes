@@ -1,0 +1,73 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.66.132.0 - 45.66.135.255'
+
+% Abuse contact for '45.66.132.0 - 45.66.135.255' is 'abuse@thinkhuge.net'
+
+inetnum:        45.66.132.0 - 45.66.135.255
+netname:        UK-THINK-JAN193-20190213
+descr:          East-Coast Internet Provider LLC
+country:        JP
+org:            ORG-THL23-RIPE
+admin-c:        EIPL2-RIPE
+tech-c:         EIPL2-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-think-jan193-1
+mnt-lower:      mnt-uk-think-jan193-1
+mnt-routes:     mnt-uk-think-jan193-1
+mnt-routes:     GLOBALAXS-MNT
+created:        2019-02-13T09:49:09Z
+last-modified:  2019-03-12T20:27:01Z
+source:         RIPE
+
+organisation:   ORG-THL23-RIPE
+org-name:       Think Huge Ltd
+org-type:       LIR
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+admin-c:        WT1482-RIPE
+tech-c:         WT1482-RIPE
+abuse-c:        AR50784-RIPE
+mnt-ref:        mnt-uk-think-jan193-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-think-jan193-1
+created:        2019-02-12T15:00:44Z
+last-modified:  2019-02-12T15:00:46Z
+source:         RIPE # Filtered
+phone:          +447415953982
+
+person:         East-Coast Internet Provider LLC
+address:        16192 Coastal Highway, Lewes
+address:        Delaware
+address:        19958
+address:        Country of Sussex
+address:        USA
+phone:          +447415953982
+nic-hdl:        EIPL2-RIPE
+mnt-by:         mnt-uk-think-jan193-1
+created:        2019-02-14T13:06:40Z
+last-modified:  2019-02-14T13:06:40Z
+source:         RIPE # Filtered
+
+% Information related to '45.66.134.0/24AS9009'
+
+route:          45.66.134.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-03-13T09:02:04Z
+last-modified:  2019-03-13T09:02:04Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

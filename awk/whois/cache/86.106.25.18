@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '86.106.25.0 - 86.106.25.255'
+
+% Abuse contact for '86.106.25.0 - 86.106.25.255' is 'abuse@shabdiz.ir'
+
+inetnum:        86.106.25.0 - 86.106.25.255
+netname:        SHABDIZ-TELECOM-NETWORK
+descr:          Shabdiz Telecom Network JSC
+country:        IR
+admin-c:        OMID1-RIPE
+tech-c:         OMID1-RIPE
+status:         ASSIGNED PA
+mnt-by:         omidkosari-mnt
+created:        2015-05-03T14:00:29Z
+last-modified:  2015-05-03T14:00:29Z
+source:         RIPE
+
+person:         Omid Kosari
+address:        No.69, Adham St., Beheshti Ave, Karaj, Iran
+phone:          +98 26 32601
+fax-no:         +98 26 32601 ext. 8
+nic-hdl:        OMID1-RIPE
+mnt-by:         omidkosari-mnt
+created:        2009-11-04T07:23:21Z
+last-modified:  2017-10-30T22:07:29Z
+source:         RIPE # Filtered
+
+% Information related to '86.106.25.0/24AS50530'
+
+route:          86.106.25.0/24
+descr:          Shabdiz Telecom Network
+origin:         AS50530
+mnt-by:         omidkosari-mnt
+created:        2015-05-03T07:15:04Z
+last-modified:  2015-05-03T07:15:04Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

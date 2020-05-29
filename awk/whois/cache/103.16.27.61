@@ -1,0 +1,58 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '103.16.27.0 - 103.16.27.255'
+
+% Abuse contact for '103.16.27.0 - 103.16.27.255' is 'support@hkserverworks.com'
+
+inetnum:        103.16.27.0 - 103.16.27.255
+netname:        HKSERVERWORKS-HK
+descr:          Hong Kong Serverworks Limited
+country:        HK
+admin-c:        DCCH1-AP
+tech-c:         DCCH1-AP
+status:         ASSIGNED NON-PORTABLE
+mnt-by:         MAINT-HKSERVERWORKS-HK
+mnt-irt:        IRT-HKSERVERWORKS-HK
+geoloc:         22.373888888888888 114.1083888888888
+last-modified:  2017-06-19T09:30:01Z
+source:         APNIC
+
+irt:            IRT-HKSERVERWORKS-HK
+address:        Unit 9, 18/F, Thriving Industrial Centre 26-38 Sha Tsui Road, Tsuen Wan NT
+e-mail:         support@hkserverworks.com
+abuse-mailbox:  support@hkserverworks.com
+admin-c:        HKSL1-AP
+tech-c:         HKSL1-AP
+auth:           # Filtered
+remarks:        support@hkserverworks.com is invalid
+mnt-by:         MAINT-HKSERVERWORKS-HK
+last-modified:  2019-12-18T13:35:26Z
+source:         APNIC
+
+role:           Defoe Chan  Company Hong Kong Limited administr
+address:        Unit 9, 18/F, Thriving Industrial Centre
+                26-38 Sha Tsui Road, Tsuen Wan NT
+country:        HK
+phone:          +852 95762987
+fax-no:         +852 95762987
+e-mail:         support@hkserverworks.com
+admin-c:        DCCH1-AP
+tech-c:         DCCH1-AP
+nic-hdl:        DCCH1-AP
+mnt-by:         MAINT-DEFOE-HK
+last-modified:  2017-06-19T08:58:16Z
+source:         APNIC
+
+% Information related to '103.16.26.0/23AS132597'
+
+route:          103.16.26.0/23
+descr:          Hong Kong Serverworks Limited
+origin:         AS132597
+mnt-by:         MAINT-DEFOE-HK
+last-modified:  2016-02-27T00:00:44Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-47 (WHOIS-UK4)
+
+

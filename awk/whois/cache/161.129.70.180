@@ -1,0 +1,94 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       161.129.64.0 - 161.129.71.255
+CIDR:           161.129.64.0/21
+NetName:        QUADRANET
+NetHandle:      NET-161-129-64-0-1
+Parent:         NET161 (NET-161-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS8100
+Organization:   QuadraNet Enterprises LLC (QEL-5)
+RegDate:        2018-03-29
+Updated:        2018-08-07
+Ref:            https://rdap.arin.net/registry/ip/161.129.64.0
+
+
+OrgName:        QuadraNet Enterprises LLC
+OrgId:          QEL-5
+Address:        19528 Ventura Blvd #433
+City:           Tarzana
+StateProv:      CA
+PostalCode:     91356
+Country:        US
+RegDate:        2018-06-07
+Updated:        2018-10-11
+Ref:            https://rdap.arin.net/registry/entity/QEL-5
+
+ReferralServer:  rwhois://rwhois.quadranet.com:4321
+
+OrgTechHandle: QNO6-ARIN
+OrgTechName:   QuadraNet Network Operations
+OrgTechPhone:  +1-213-614-9371 
+OrgTechEmail:  support@quadranet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/QNO6-ARIN
+
+OrgAbuseHandle: QUADR4-ARIN
+OrgAbuseName:   QuadraNet Abuse
+OrgAbusePhone:  +1-213-614-8371 
+OrgAbuseEmail:  abuse@quadranet.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/QUADR4-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.quadranet.com:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 manage.quadranet.com (Ubersmith RWhois Server V-4.2.4)
+autharea=161.129.70.0/23
+xautharea=161.129.70.0/23
+network:Class-Name:network
+network:Auth-Area:161.129.70.0/23
+network:ID:NET-99329.161.129.70.128/26
+network:Network-Name:Public Network IP Range
+network:IP-Network:161.129.70.128/26
+network:IP-Network-Block:161.129.70.128 - 161.129.70.191
+network:Org-Name:Windscribe Limited
+network:Street-Address:9251 Yonge St #8901
+network:City:Richmond Hill
+network:State:AB
+network:Postal-Code:L4C 9T3
+network:Country-Code:CA
+network:Tech-Contact:MAINT-99329.161.129.70.128/26
+network:Created:20181115003758000
+network:Updated:20181115003758000
+network:Updated-By:support@quadranet.com
+contact:POC-Name:Network Administrator
+contact:POC-Email:support@quadranet.com
+contact:POC-Phone:1-888-5-QUADRA
+contact:Tech-Name:Network Administrator
+contact:Tech-Email:support@quadranet.com
+contact:Tech-Phone:1-888-5-QUADRA
+contact:Abuse-Name:Abuse
+contact:Abuse-Email:abuse@windscribe.com
+contact:Abuse-Phone:
+%ok

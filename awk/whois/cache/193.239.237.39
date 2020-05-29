@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '193.239.236.0 - 193.239.237.255'
+
+% Abuse contact for '193.239.236.0 - 193.239.237.255' is 'mohamad.boroumand@gmail.com'
+
+inetnum:        193.239.236.0 - 193.239.237.255
+netname:        IR-DIDEHBANAN-20191017
+country:        IR
+org:            ORG-DNCP10-RIPE
+admin-c:        MS49292-RIPE
+tech-c:         MS49292-RIPE
+status:         ALLOCATED PA
+abuse-c:        AR47884-RIPE
+mnt-by:         Didehbannet
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2019-10-17T08:00:02Z
+last-modified:  2020-03-18T08:40:43Z
+source:         RIPE
+
+organisation:   ORG-DNCP10-RIPE
+org-name:       Didehban Net Company PJS
+org-type:       LIR
+address:        NO: 10, FREIGHT GATE 2 DAFZA CMC
+address:        0555193258
+address:        Dubai
+address:        UNITED ARAB EMIRATES
+admin-c:        MS49292-RIPE
+tech-c:         MS49292-RIPE
+abuse-c:        AR56238-RIPE
+mnt-ref:        Didehbannet
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         Didehbannet
+created:        2019-10-16T09:17:40Z
+last-modified:  2019-10-16T09:17:42Z
+source:         RIPE # Filtered
+phone:          +989337332830
+
+role:           Masoud Soltani
+address:        NO: 10, FREIGHT GATE 2 DAFZA CMC
+address:        0555193258
+address:        Dubai
+address:        UNITED ARAB EMIRATES
+phone:          +989337332830
+nic-hdl:        MS49292-RIPE
+mnt-by:         Didehbannet
+created:        2019-10-16T09:17:40Z
+last-modified:  2019-10-16T09:17:40Z
+source:         RIPE # Filtered
+
+% Information related to '193.239.236.0/23AS58224'
+
+route:          193.239.236.0/23
+origin:         AS58224
+mnt-by:         mnt-ir-behsazan1-1
+mnt-by:         Didehbannet
+mnt-by:         mnt-ir-behsaz-1
+created:        2020-03-18T08:44:24Z
+last-modified:  2020-03-18T08:44:24Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

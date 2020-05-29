@@ -1,0 +1,67 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       66.203.112.0 - 66.203.113.255
+CIDR:           66.203.112.0/23
+NetName:        ML-1213
+NetHandle:      NET-66-203-112-0-1
+Parent:         NET66 (NET-66-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Maxihost LLC (ML-1213)
+RegDate:        2020-04-16
+Updated:        2020-04-16
+Ref:            https://rdap.arin.net/registry/ip/66.203.112.0
+
+
+OrgName:        Maxihost LLC
+OrgId:          ML-1213
+Address:        616 Corporate Way
+Address:        Suite 2-3521
+City:           Valley Cottage
+StateProv:      NY
+PostalCode:     10989
+Country:        US
+RegDate:        2019-04-11
+Updated:        2019-08-02
+Ref:            https://rdap.arin.net/registry/entity/ML-1213
+
+
+OrgTechHandle: MAXIH-ARIN
+OrgTechName:   Maxihost Support
+OrgTechPhone:  +1-646-760-4353 
+OrgTechEmail:  networkops@maxihost.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/MAXIH-ARIN
+
+OrgNOCHandle: MAXIH-ARIN
+OrgNOCName:   Maxihost Support
+OrgNOCPhone:  +1-646-760-4353 
+OrgNOCEmail:  networkops@maxihost.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/MAXIH-ARIN
+
+OrgAbuseHandle: ABUSE7399-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-646-760-4353 
+OrgAbuseEmail:  abuse@maxihost.com.br
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7399-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
