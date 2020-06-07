@@ -1,0 +1,133 @@
+############ PEPARE WINDOWS ####################
+# Disable Bit Locker on Windows
+-> Settings -> BitLocker -> Disable
+
+# Switch to AHCI
+1. boot windows
+2. bcdedit /set {default} safeboot minimal
+3. reboot, enter bios, set SATA to AHCI
+4. contiune booting windows to safe mode
+5. now windows will automatically enable AHCI drivers
+6. bcdedit /deletevalue {default} safeboot
+
+################################################
+
+############# RESIZE NTFS ####################
+
+# find devices
+sudo -i
+lsblk
+
+# check existing partition
+mount /dev/nvme0n1p3 /mnt
+ls /mnt
+umount /mnt
+
+# resize NTFS file system
+ntfsresize -n -i /dev/nvme0n1p3
+ntfsresize -n -s 128G /dev/nvme0n1p3
+ntfsresize -s 128G /dev/nvme0n1p3
+
+# resize partition table itself
+parted /dev/nvme0n1
+  print
+  rm 3
+  mkpart
+    "Basic data partition"
+    290MB
+    129GB
+  print
+  set 3 msftdata on
+  print
+  quit
+
+# test new partition
+mount /dev/nvme0n1p3 /mnt
+ls /mnt
+umount /mnt
+
+# reboot into windows and check if it boots
+reboot
+
+###### IF BOOT FAILS
+
+1. Prepare a live Windows stick
+2. Verify partition is mounted on C: (by running Notepad and checking This PC)
+3. Run commands
+  bootrec /fixboot
+  bcdboot c:\windows
+4. hit "exit" and reboot, select "Windows on Volume 3"
+5. After booting to windows, delete extra useless boot option
+
+bcdedit
+bcdedit /delete {blah blah blah}
+bcdedit
+
+6. reboot
+
+################################################
+INSTALLATION USING LUKS
+################################################
+
+sudo -i
+lsblk
+parted /dev/nvme0n1
+  print
+  mkpart primary 129GB 511GB
+  print
+  quit
+
+lsblk
+
+cryptsetup luksFormat --type=luks1 /dev/nvme0n1p5
+cryptsetup luksOpen /dev/nvme0n1p5 enc
+
+pvcreate /dev/mapper/enc
+pvdisplay
+
+vgcreate vg /dev/mapper/enc
+vgdisplay
+
+lvcreate -l 100%FREE -n root vg
+lvdisplay
+
+>>> Install using "Something Else"
+
+>>> Enable Encrypted GRUB
+  # As soon as you have completed those forms switch to the Terminal to configure GRUB:
+
+  echo "GRUB_ENABLE_CRYPTODISK=y" >> /target/etc/default/grub
+
+  # This has to be done before the installer reaches the
+  # Install Bootloader stage at the end of the installation process.
+
+
+>>> Post Installation
+
+mount /dev/mapper/vg-root /target
+for n in proc sys dev etc/resolv.conf; do mount --rbind /$n /target/$n; done 
+chroot /target
+mount -a
+
+apt install -y cryptsetup-initramfs
+
+echo "KEYFILE_PATTERN=/etc/luks/*.keyfile" >> /etc/cryptsetup-initramfs/conf-hook 
+echo "UMASK=0077" >> /etc/initramfs-tools/initramfs.conf 
+
+mkdir /etc/luks
+dd if=/dev/urandom of=/etc/luks/boot_os.keyfile bs=4096 count=1
+
+chmod u=rx,go-rwx /etc/luks
+chmod u=r,go-rwx /etc/luks/boot_os.keyfile
+
+cryptsetup luksAddKey /dev/nvme0n1p5 /etc/luks/boot_os.keyfile 
+
+echo "enc UUID=$(blkid -s UUID -o value /dev/nvme0n1p5) /etc/luks/boot_os.keyfile luks,discard" >> /etc/crypttab
+
+update-initramfs -u -k all
+
+################################################
+################################################
+################################################
+
+
