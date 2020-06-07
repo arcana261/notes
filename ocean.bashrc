@@ -5,7 +5,7 @@ _KUBECTL_PATH=`which kubectl`
 
 function _ocean_set_ps() {
     #echo ">'" $PS1 "'"
-    export PS1="(${BLUE}k8s: $1${NC}) "$(echo $PS1 | sed 's|([^(]*k8s: [^)]*)\s*||g' | sed 's|\s*$||g')" "
+    export PS1="(\[${BLUE}\]k8s: $1\[${NC}\]) "$(echo $PS1 | sed 's|([^(]*k8s: [^)]*)\s*||g' | sed 's|\s*$||g')" "
     #echo ">>'" $PS1 "'"
 }
 
@@ -52,6 +52,10 @@ function divar-review() {
     swim divar-review
 }
 
+function divar-car-business() {
+    swim divar-car-business
+}
+
 function secret() {
     for key in $(kubectl get secret $1 -ojson | jq -r '.data | keys | @tsv' | tr '\t' ' '); do echo $key; kubectl get secret $1 -ojson | jq -r ".data.$key" | base64 -d -w 0; echo ""; echo ""; done
 }
@@ -95,7 +99,9 @@ function run_bash() {
 }
 
 alias kgp="kubectl get pods"
+alias kgpow="kubectl get pods -owide"
 alias kgpg="kubectl get pods | grep"
+alias kgpowg="kubectl get pods -owide | grep"
 
 alias kgd="kubectl get deployments"
 alias kgdg="kubectl get deployments | grep"
@@ -107,6 +113,30 @@ alias kaf="kubectl apply -f"
 alias kcf="kubectl create -f"
 alias kdf="kubectl diff -f"
 alias kddf="kubectl delete -f"
+alias krf="kubectl replace -f"
+
+alias kgcm="kubectl get configmap"
+alias kgcmg="kubectl get configmap | grep"
+alias kecm="kubectl edit configmap"
+
+alias kgs="kubectl get svc"
+alias kgsg="kubectl get svc | grep"
+alias kes="kubectl edit svc"
+alias kgsoy="kubectl get svc -oyaml"
+
+alias kgsm="kubectl get ServiceMonitor"
+alias kgsmg="kubectl get ServiceMonitor | grep"
+alias kgsmoy="kubectl get ServiceMonitor -o yaml"
+
+alias kgcr="kubectl get cronjob"
+alias kgcrg="kubectl get cronjob | grep"
+alias kdcr="kubectl delete cronjob"
+alias kecr="kubectl edit cronjob"
+
+alias keit="kubectl exec -it"
+function keitb() {
+    kubectl exec -it $1 bash
+}
 
 swim divar-infra
 

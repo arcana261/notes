@@ -5,6 +5,7 @@ export CI_BUILD_USERNAME=????????????????????????????????????
 export CI_BUILD_TOKEN=???????????????????????????????????????
 # End CafeBazaar
 
+
 export BLACK='\033[0;30m'
 export RED='\033[0;31m'
 export GREEN='\033[0;32m'
@@ -35,6 +36,9 @@ function changelog()
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
 alias cc="tmux show-buffer | setclip"
+function pp() {
+    tmux set-buffer $(getclip)
+}
 alias ee="exit"
 
 function routes() {
@@ -129,6 +133,10 @@ function gssa() {
     git stash apply $@
 }
 
+function gb() {
+    git blame $@
+}
+
 function _regit() {
     ISGIT=$(git status 1>/dev/null 2>&1 || echo "NOGIT")
     if [ "$ISGIT" != "NOGIT" ]; then
@@ -145,7 +153,7 @@ function _regit() {
 }
 
 function qind() {
-    find . -not -path *.venv* -not -path *.git* -name *$1*
+    find . -not -path *.venv* -not -path *.git* -not -path *.mehdi* -iname "*$1*"
 }
 
 function qin() {
@@ -159,11 +167,31 @@ export PS1="\[${RED}\]#>\[${NC}\] "
 
 _regit
 
+function y0() {
+    tmux select-pane -U
+    tmux resize-pane -Z
+}
+alias y15="tmux resize-pane -y 15"
+alias y20="tmux resize-pane -y 20"
+alias yf="tmux resize-pane -Z"
+alias x50="tmux resize-pane -x 50"
+alias bgblack="tmux select-pane -P 'bg=black'"
+alias bgred="tmux select-pane -P 'bg=red'"
+alias bgblue="tmux select-pane -P 'bg=blue'"
+alias bggreen="tmux select-pane -P 'bg=green'"
+alias bgyellow="tmux select-pane -P 'bg=yellow'"
+alias bgwhite="tmux select-pane -P 'bg=white'"
+alias fgblack="tmux select-pane -P 'fg=black'"
+alias fgwhite="tmux select-pane -P 'fg=white'"
+alias fgred="tmux select-pane -P 'fg=red'"
+function pipe() {
+    tmux pipe-pane -o 'cat >>'"$1"
+}
+
 # Enhanced file path completion in bash - https://github.com/sio/bash-complete-partial-path
 if [ -s "$HOME/.config/bash-complete-partial-path/bash_completion" ]
 then
         source "$HOME/.config/bash-complete-partial-path/bash_completion"
         _bcpp --defaults
 fi
-
 

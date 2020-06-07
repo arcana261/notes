@@ -1,0 +1,50 @@
+# setup template for tests
+        {
+            "name": "Test",
+            "type": "python",
+            "request": "test",
+            "justMyCode": false
+        }
+ 
+
+# some fixed dev
+        {
+            "name": "Upload (Gunicorn)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/.venv/bin/gunicorn",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "envFile": "${workspaceFolder}/.env",
+            "env": {
+                "IS_GUNICORN": "true",
+                "IS_UPLOAD": "true"
+            },
+            "args": ["main:app", "--config", "${workspaceFolder}/confs/gunicorn.py"]
+        },
+ 
+# current file setting
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+ 
+# python remote debug
+        { 
+            "name": "Python Attach (Remote Debug K8s)",
+            "type": "python",
+            "request": "attach",
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",  // You may also manually specify the directory containing your source code.
+                    "remoteRoot": "/code" // Linux example; adjust as necessary for your OS and situation.
+                }
+            ],
+            "port": 9500,                   // Set to the remote port.
+            "host": "127.0.0.1"               // Set to your remote host's public IP address.
+        },
+ 

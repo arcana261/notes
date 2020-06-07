@@ -80,7 +80,7 @@ rm -fv ${DESTINATION}/temp/logs.txt
 
 # create tarball
 pushd $DESTINATION/temp
-tar -cvf - . | xz -e9 - > $DESTINATION/$OUTPUT
+tar -cvf - . | xz -0 - > $DESTINATION/$OUTPUT
 popd
 
 # copy backup to fileserver

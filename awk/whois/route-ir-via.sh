@@ -37,6 +37,7 @@ NS="$NS ipg.mydigipay.com"
 NS="$NS cdn.yektanet.com"
 NS="$NS logo.samandehi.ir"
 NS="$NS survey.porsline.ir"
+NS="$NS pec.shaparak.ir"
 
 ARGS=""
 
