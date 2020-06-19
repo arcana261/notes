@@ -1,0 +1,45 @@
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN, IPv4 or IPv6 queries
+ 
+% LACNIC resource: whois.lacnic.net
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query, you agree to use this data
+%  only for lawful purposes.
+%  2020-06-16 13:26:44 (-03 -03:00)
+
+inetnum:     191.96.70/23
+status:      reallocated
+owner:       Digital Energy Technologies Limited
+ownerid:     BR-DETL4-LACNIC
+responsible: Felipe Ernst
+address:     Alameda Araguaia, 3641, 
+address:      - São Paulo - SP
+country:     BR
+phone:       +56 226 382322 []
+owner-c:     FEE14
+tech-c:      FEE14
+abuse-c:     FEE14
+created:     20150217
+changed:     20170420
+inetnum-up:  191.96/16
+
+nic-hdl:     FEE14
+person:      Felipe Ernst
+e-mail:      abuse@HEFICED.COM
+address:     Rua Dr. Miguel Couto, 58, -
+address:     01008-010 - Sao Paulo - RM
+country:     BR
+phone:       +56  229382322 [0000]
+created:     20160321
+changed:     20190227
+
+% whois.lacnic.net accepts only direct match queries.
+% Types of queries are: POCs, ownerid, CIDR blocks, IP
+% and AS numbers.
+

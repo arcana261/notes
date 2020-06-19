@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '81.90.158.80 - 81.90.158.95'
+
+% Abuse contact for '81.90.158.80 - 81.90.158.95' is 'abuse@afranet.com'
+
+inetnum:        81.90.158.80 - 81.90.158.95
+netname:        Amoozesh-Enghelab
+descr:          Markaz Amoozesh Fanni Enghelab Eslami
+country:        IR
+admin-c:        MAFE2014-RIPE
+tech-c:         MAFE2014-RIPE
+status:         ASSIGNED PA
+mnt-by:         AFRA-MNT-NESH-1
+created:        2014-11-02T13:01:52Z
+last-modified:  2014-11-02T13:01:52Z
+source:         RIPE
+
+person:         Mr. Ahmadi
+address:        Markaz Amoozesh Fanni Enghelab Eslami,Moalem Sqr,Yaft Abad,Tehran,Iran
+phone:          +98-9126193452
+nic-hdl:        MAFE2014-RIPE
+mnt-by:         AFRA-MNT-NESH-1
+created:        2014-11-02T12:59:53Z
+last-modified:  2014-11-02T12:59:53Z
+source:         RIPE
+
+% Information related to '81.90.158.0/24AS25184'
+
+route:          81.90.158.0/24
+descr:          Afranet Co
+origin:         AS25184
+mnt-by:         AFRA-MNT-NESH-1
+created:        2013-02-17T14:07:02Z
+last-modified:  2013-02-17T14:07:02Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

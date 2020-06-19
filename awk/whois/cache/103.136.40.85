@@ -1,0 +1,71 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '103.136.40.0 - 103.136.42.255'
+
+% Abuse contact for '103.136.40.0 - 103.136.42.255' is 'abuse@apeironglobal.co'
+
+inetnum:        103.136.40.0 - 103.136.42.255
+netname:        AGPL-IN
+descr:          Apeiron Global Pvt. Ltd.
+country:        NL
+admin-c:        AGPL1-AP
+tech-c:         AGPL1-AP
+status:         ASSIGNED NON-PORTABLE
+mnt-by:         MAINT-AGPL-IN
+mnt-irt:        IRT-AGPL-IN
+geoloc:         51.9963306 4.2059633
+last-modified:  2019-03-05T10:48:29Z
+source:         APNIC
+
+irt:            IRT-AGPL-IN
+address:        98D Behind Decathlon,, Airport Road, HUBLI Karnataka 580030
+e-mail:         abuse@apeironglobal.co
+abuse-mailbox:  abuse@apeironglobal.co
+admin-c:        AGPL1-AP
+tech-c:         AGPL1-AP
+auth:           # Filtered
+remarks:        abuse@apeironglobal.co was validated on 2020-04-03
+mnt-by:         MAINT-AGPL-IN
+last-modified:  2020-04-03T07:51:22Z
+source:         APNIC
+
+role:           Apeiron Global Pvt Ltd administrator
+address:        98D Behind Decathlon,, Airport Road, HUBLI Karnataka 580030
+country:        IN
+phone:          +919538869980
+fax-no:         +91-836-4261980
+e-mail:         abuse@apeironglobal.co
+admin-c:        AGPL1-AP
+tech-c:         AGPL1-AP
+nic-hdl:        AGPL1-AP
+mnt-by:         MAINT-AGPL-IN
+last-modified:  2019-03-04T12:35:26Z
+source:         APNIC
+
+% Information related to '103.136.40.0/23AS139884'
+
+route:          103.136.40.0/23
+descr:          Apeiron Global Pvt. Ltd.
+                98D Behind Decathlon,
+                Airport Road
+                Hubli
+origin:         AS139884
+mnt-by:         MAINT-AGPL-IN
+last-modified:  2019-12-18T09:09:46Z
+source:         APNIC
+
+% Information related to '103.136.40.0/23AS207704'
+
+route:          103.136.40.0/23
+origin:         AS207704
+descr:          Apeiron Global Pvt. Ltd.
+                98D Behind Decathlon,
+                Airport Road
+mnt-by:         MAINT-AGPL-IN
+last-modified:  2019-12-24T04:52:42Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

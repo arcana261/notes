@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.255.211.0 - 185.255.211.255'
+
+% Abuse contact for '185.255.211.0 - 185.255.211.255' is 'abuse@afrarasa.com'
+
+inetnum:        185.255.211.0 - 185.255.211.255
+netname:        AFRARASA-Network
+country:        IR
+admin-c:        AA35765-RIPE
+tech-c:         AA35765-RIPE
+status:         ASSIGNED PA
+mnt-by:         ir-afrarasa-1-mnt
+created:        2020-05-04T07:16:42Z
+last-modified:  2020-05-04T07:16:42Z
+source:         RIPE
+
+role:           AFRARASA-NOC
+address:        No.189, Mirdamad blvd., Tehran, Iran
+tech-c:         SG16995-RIPE
+phone:          +982154976666
+tech-c:         SM36615-RIPE
+abuse-mailbox:  abuse@afrarasa.com
+tech-c:         MA19704-RIPE
+nic-hdl:        AA35765-RIPE
+mnt-by:         ir-afrarasa-1-mnt
+created:        2020-02-20T13:05:11Z
+last-modified:  2020-02-20T13:12:16Z
+source:         RIPE # Filtered
+
+% Information related to '185.255.211.0/24AS202391'
+
+route:          185.255.211.0/24
+origin:         AS202391
+mnt-by:         ir-afrarasa-1-mnt
+created:        2019-04-15T05:55:51Z
+last-modified:  2020-02-20T13:22:10Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

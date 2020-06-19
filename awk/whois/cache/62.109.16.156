@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '62.109.16.0 - 62.109.23.255'
+
+% Abuse contact for '62.109.16.0 - 62.109.23.255' is 'abuse@abusehost.ru'
+
+inetnum:        62.109.16.0 - 62.109.23.255
+netname:        THEFIRST-NET
+org:            ORG-FVDS1-RIPE
+descr:          TheFirst-RU clients (WebDC Msk)
+country:        RU
+admin-c:        FRST3-RIPE
+tech-c:         FRST3-RIPE
+status:         ASSIGNED PA
+mnt-by:         THEFIRST-MNT
+mnt-irt:        IRT-THEFIRST
+created:        2009-03-30T01:23:13Z
+last-modified:  2016-04-20T04:55:04Z
+source:         RIPE
+
+organisation:   ORG-FVDS1-RIPE
+org-name:       CJSC THE FIRST
+org-type:       OTHER
+address:        CJSC The First, Raduzhny 34a
+address:        PoBox64, Irkutsk, 664017
+address:        Russian Federation
+abuse-c:        AR34130-RIPE
+mnt-ref:        THEFIRST-MNT
+mnt-by:         THEFIRST-MNT
+created:        2012-02-14T06:27:22Z
+last-modified:  2017-10-30T14:41:44Z
+source:         RIPE # Filtered
+
+role:           The First JSC Network Operations
+address:        The First JSC
+address:        Office 2, 34a, Raduzhny m-r
+address:        664017
+address:        Irkutsk
+address:        Russian Federation
+phone:          +7 (495) 663 73 72
+fax-no:         +7 (3952) 52 57 89
+remarks:        trouble: -------------------------------------------------------
+remarks:        trouble: Points of contact for The First CJSC Network Operations
+remarks:        trouble: -------------------------------------------------------
+remarks:        trouble: Routing and peering issues: noc@firstvds.ru
+remarks:        trouble: SPAM issues: abuse@abusehost.ru
+remarks:        trouble: Mail issues: abuse@abusehost.ru
+remarks:        trouble: General information: noc@firstvds.ru
+remarks:        trouble: -------------------------------------------------------
+admin-c:        AA26905-RIPE
+tech-c:         ST11762-RIPE
+nic-hdl:        FRST3-RIPE
+mnt-by:         THEFIRST-MNT
+created:        2014-09-12T07:34:10Z
+last-modified:  2018-08-24T09:07:31Z
+source:         RIPE # Filtered
+abuse-mailbox:  abuse@abusehost.ru
+
+% Information related to '62.109.16.0/21AS29182'
+
+route:          62.109.16.0/21
+descr:          TheFirst-RU
+origin:         AS29182
+mnt-by:         THEFIRST-MNT
+created:        2009-03-30T01:27:51Z
+last-modified:  2014-06-10T02:25:45Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

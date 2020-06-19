@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.38.128.0 - 95.38.255.255'
+
+% Abuse contact for '95.38.128.0 - 95.38.255.255' is 'abuse@fanava.net'
+
+inetnum:        95.38.128.0 - 95.38.255.255
+netname:        FANAVADP
+descr:          Fanava DP
+country:        IR
+admin-c:        YS1836-RIPE
+tech-c:         YS1836-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-FANAVA
+mnt-lower:      Fanavadp-LIR
+mnt-routes:     Fanavadp-LIR
+created:        2013-04-25T09:34:43Z
+last-modified:  2018-07-24T10:38:58Z
+source:         RIPE
+
+person:         FDP RIPE
+address:        No.39,17th West St. , Kordestan Ave.
+phone:          +982182195450
+nic-hdl:        YS1836-RIPE
+mnt-by:         MNT-FANAVA
+created:        2018-03-11T07:07:12Z
+last-modified:  2019-03-02T11:44:37Z
+source:         RIPE
+
+% Information related to '95.38.208.0/21AS41881'
+
+route:          95.38.208.0/21
+origin:         AS41881
+mnt-by:         MNT-ERFANAVA
+mnt-by:         MNT-FANAVA
+mnt-by:         Fanavadp-LIR
+created:        2019-09-11T06:07:48Z
+last-modified:  2019-09-11T06:07:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

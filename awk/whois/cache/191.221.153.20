@@ -1,0 +1,50 @@
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN, IPv4 or IPv6 queries
+ 
+% Brazilian resource: whois.registro.br
+
+
+% Copyright (c) Nic.br
+%  The use of the data below is only permitted as described in
+%  full by the terms of use at https://registro.br/termo/en.html ,
+%  being prohibited its distribution, commercialization or
+%  reproduction, in particular, to use it for advertising or
+%  any similar purpose.
+%  2020-06-16T14:52:54-03:00
+
+inetnum:     191.220.0.0/14
+aut-num:     AS8167
+abuse-c:     CSIOI
+owner:       Brasil Telecom S/A - Filial Distrito Federal
+ownerid:     76.535.764/0326-90
+responsible: Brasil Telecom S. A. - CNBRT
+owner-c:     BTC14
+tech-c:      BTC14
+inetrev:     191.221.153.0/24
+nserver:     ns03-cta.brasiltelecom.net.br
+nsstat:      20200614 AA
+nslastaa:    20200614
+nserver:     ns04-bsa.brasiltelecom.net.br
+nsstat:      20200614 AA
+nslastaa:    20200614
+created:     20131211
+changed:     20131216
+
+nic-hdl-br:  BTC14
+person:      Brasil Telecom S. A. - CNRS
+created:     20031003
+changed:     20170106
+
+nic-hdl-br:  CSIOI
+person:      CSIRT OI
+created:     20140127
+changed:     20140127
+
+% Security and mail abuse issues should also be addressed to
+% cert.br, http://www.cert.br/ , respectivelly to cert@cert.br
+% and mail-abuse@cert.br
+%
+% whois.registro.br accepts only direct match queries. Types
+% of queries are: domain (.br), registrant (tax ID), ticket,
+% provider, contact handle (ID), CIDR block, IP and ASN.

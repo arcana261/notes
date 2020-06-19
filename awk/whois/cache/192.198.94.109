@@ -1,0 +1,139 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       192.198.80.0 - 192.198.95.255
+CIDR:           192.198.80.0/20
+NetName:        CUST-NET-6
+NetHandle:      NET-192-198-80-0-1
+Parent:         NET192 (NET-192-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS31863
+Organization:   Centrilogic, Inc. (CENTR-60)
+RegDate:        2012-09-21
+Updated:        2014-06-18
+Ref:            https://rdap.arin.net/registry/ip/192.198.80.0
+
+
+OrgName:        Centrilogic, Inc.
+OrgId:          CENTR-60
+Address:        28 Mansfield Street
+City:           Rochester
+StateProv:      NY
+PostalCode:     14606
+Country:        US
+RegDate:        2007-05-14
+Updated:        2017-08-16
+Comment:        http://www.centrilogic.com/
+Ref:            https://rdap.arin.net/registry/entity/CENTR-60
+
+ReferralServer:  rwhois://rwhois.centrilogic.com:4321
+
+OrgTechHandle: CIT3-ARIN
+OrgTechName:   Centrilogic IP Tech
+OrgTechPhone:  +1-888-999-3091 
+OrgTechEmail:  IPtech@centrilogic.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/CIT3-ARIN
+
+OrgNOCHandle: CIT3-ARIN
+OrgNOCName:   Centrilogic IP Tech
+OrgNOCPhone:  +1-888-999-3091 
+OrgNOCEmail:  IPtech@centrilogic.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/CIT3-ARIN
+
+OrgAbuseHandle: DACEN-ARIN
+OrgAbuseName:   Dacentec Abuse
+OrgAbusePhone:  +1-828-393-4443 
+OrgAbuseEmail:  abuse@dacentec.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/DACEN-ARIN
+
+OrgTechHandle: GTG11-ARIN
+OrgTechName:   Giesen, Gary T
+OrgTechPhone:  +1-416-548-7020 
+OrgTechEmail:  ggiesen@centrilogic.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/GTG11-ARIN
+
+# end
+
+
+# start
+
+NetRange:       192.198.94.104 - 192.198.94.111
+CIDR:           192.198.94.104/29
+NetName:        FERESHTE-192-198-94-104
+NetHandle:      NET-192-198-94-104-1
+Parent:         CUST-NET-6 (NET-192-198-80-0-1)
+NetType:        Reassigned
+OriginAS:       AS31863
+Customer:       Hassan Fereshte (C05448186)
+RegDate:        2014-11-11
+Updated:        2014-11-11
+Ref:            https://rdap.arin.net/registry/ip/192.198.94.104
+
+
+CustName:       Hassan Fereshte
+Address:        Dubai
+City:           Dubai
+StateProv:      DUBAI
+PostalCode:     2381
+Country:        AE
+RegDate:        2014-11-11
+Updated:        2014-11-11
+Ref:            https://rdap.arin.net/registry/entity/C05448186
+
+OrgTechHandle: CIT3-ARIN
+OrgTechName:   Centrilogic IP Tech
+OrgTechPhone:  +1-888-999-3091 
+OrgTechEmail:  IPtech@centrilogic.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/CIT3-ARIN
+
+OrgNOCHandle: CIT3-ARIN
+OrgNOCName:   Centrilogic IP Tech
+OrgNOCPhone:  +1-888-999-3091 
+OrgNOCEmail:  IPtech@centrilogic.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/CIT3-ARIN
+
+OrgAbuseHandle: DACEN-ARIN
+OrgAbuseName:   Dacentec Abuse
+OrgAbusePhone:  +1-828-393-4443 
+OrgAbuseEmail:  abuse@dacentec.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/DACEN-ARIN
+
+OrgTechHandle: GTG11-ARIN
+OrgTechName:   Giesen, Gary T
+OrgTechPhone:  +1-416-548-7020 
+OrgTechEmail:  ggiesen@centrilogic.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/GTG11-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.centrilogic.com:4321.
+
+%rwhois V-1.5:003eff:00 rwhois.centrilogic.com (by Network Solutions, Inc. V-1.5.9.5)
+%referral rwhois://root.rwhois.net:4321/auth-area=.
+%ok

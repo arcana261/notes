@@ -1,0 +1,79 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.184.192.0 - 31.184.199.255'
+
+% Abuse contact for '31.184.192.0 - 31.184.199.255' is 'abuse@pinspb.ru'
+
+inetnum:        31.184.192.0 - 31.184.199.255
+netname:        PIN-DATACENTER-NET
+descr:          public vlans of DC
+country:        RU
+org:            ORG-PINl1-RIPE
+admin-c:        PIN44050-RIPE
+tech-c:         PIN44050-RIPE
+mnt-routes:     MNT-PINSUPPORT
+status:         ASSIGNED PA
+mnt-by:         MNT-PIN
+mnt-domains:    MNT-PINSUPPORT
+mnt-by:         MNT-PINSUPPORT
+created:        2015-07-19T21:06:36Z
+last-modified:  2019-02-28T11:13:27Z
+source:         RIPE
+
+organisation:   ORG-PINl1-RIPE
+org-name:       Petersburg Internet Network ltd.
+org-type:       LIR
+address:        Babushkina st. 3, office 215.
+address:        192029
+address:        Saint-Petersburg
+address:        RUSSIAN FEDERATION
+phone:          +78126772525
+fax-no:         +78123093916
+admin-c:        MNV32-RIPE
+tech-c:         SEO-RIPE
+abuse-c:        PIN44050-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-PIN
+mnt-ref:        MNT-PINSUPPORT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-PIN
+created:        2009-05-28T09:40:17Z
+last-modified:  2019-05-20T23:48:40Z
+source:         RIPE # Filtered
+
+role:           PIN Support and NOC Teams
+org:            ORG-PINl1-RIPE
+address:        Petersburg Internet Network ltd. Babushkina st. 3, office 215, Saint-Petersburg, RUSSIAN FEDERATION
+phone:          +78126772525
+fax-no:         +78123093916
+abuse-mailbox:  abuse@pinspb.ru
+admin-c:        MNV32-RIPE
+tech-c:         SEO-RIPE
+nic-hdl:        PIN44050-RIPE
+mnt-by:         MNT-PIN
+mnt-by:         MNT-PINSUPPORT
+created:        2013-06-08T06:08:16Z
+last-modified:  2019-06-14T23:09:40Z
+source:         RIPE # Filtered
+
+% Information related to '31.184.198.0/24AS34665'
+
+route:          31.184.198.0/24
+descr:          PIN DC
+origin:         AS34665
+mnt-by:         MNT-PIN
+mnt-by:         MNT-PINSUPPORT
+created:        2019-11-07T13:35:31Z
+last-modified:  2019-11-07T13:35:31Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.182.47.152 - 217.182.47.155'
+
+% Abuse contact for '217.182.47.152 - 217.182.47.155' is 'abuse@ovh.net'
+
+inetnum:        217.182.47.152 - 217.182.47.155
+netname:        OVH_136900940
+country:        IT
+descr:          Failover Ips
+org:            ORG-GG119-RIPE
+admin-c:        OTC5-RIPE
+tech-c:         OTC5-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2017-04-06T02:44:08Z
+last-modified:  2017-04-06T02:44:08Z
+source:         RIPE
+
+organisation:   ORG-GG119-RIPE
+org-name:       GE GE
+org-type:       OTHER
+address:        350 Main Street
+address:        14202 Buffalo
+address:        US
+phone:          +1.7267554678
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2016-08-03T18:36:08Z
+last-modified:  2017-10-30T16:51:34Z
+source:         RIPE # Filtered
+
+role:           OVH IT Technical Contact
+address:        OVH Srl
+address:        Via Carlo Imbonati, 18
+address:        20159 Milano
+address:        Italia
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC5-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2008-09-16T16:47:07Z
+last-modified:  2019-05-24T08:39:22Z
+source:         RIPE # Filtered
+
+% Information related to '217.182.0.0/16AS16276'
+
+route:          217.182.0.0/16
+descr:          OVH
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2017-02-20T14:51:37Z
+last-modified:  2017-02-20T14:52:46Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

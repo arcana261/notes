@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.144.243.0 - 45.144.243.255'
+
+% Abuse contact for '45.144.243.0 - 45.144.243.255' is 'abuse@thinkhuge.net'
+
+inetnum:        45.144.243.0 - 45.144.243.255
+netname:        Think-Huge-Ltd
+descr:          Think Huge Los Angeles
+org:            ORG-THL30-RIPE
+country:        US
+geoloc:         34.0426701 -118.2559604
+admin-c:        WT1510-RIPE
+tech-c:         WT1510-RIPE
+status:         ASSIGNED PA
+mnt-by:         mnt-uk-think-jun1902-1
+mnt-routes:     GLOBALAXS-MNT
+created:        2019-08-28T18:46:12Z
+last-modified:  2019-08-28T18:46:12Z
+source:         RIPE
+
+organisation:   ORG-THL30-RIPE
+org-name:       Think Huge Ltd
+org-type:       LIR
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+admin-c:        WT1510-RIPE
+tech-c:         WT1510-RIPE
+abuse-c:        AR54970-RIPE
+mnt-ref:        mnt-uk-think-jun1902-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-think-jun1902-1
+created:        2019-08-22T07:16:34Z
+last-modified:  2019-08-22T07:16:36Z
+source:         RIPE # Filtered
+phone:          +447415953982
+
+person:         Will Thomas
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+phone:          +447415953982
+nic-hdl:        WT1510-RIPE
+mnt-by:         mnt-uk-think-jun1902-1
+created:        2019-08-22T07:16:33Z
+last-modified:  2019-08-22T07:16:34Z
+source:         RIPE
+
+% Information related to '45.144.243.0/24AS9009'
+
+route:          45.144.243.0/24
+descr:          Think Huge Ltd
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-08-28T18:38:07Z
+last-modified:  2019-08-28T18:38:07Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

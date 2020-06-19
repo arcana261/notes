@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.170.248.0 - 217.170.251.255'
+
+% Abuse contact for '217.170.248.0 - 217.170.251.255' is 'abuse@petiak.com'
+
+inetnum:        217.170.248.0 - 217.170.251.255
+netname:        PETIAK
+descr:          Petiak System PPPOE Clients
+country:        IR
+admin-c:        AS16049-RIPE
+tech-c:         AS16049-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-PETIAK
+created:        2011-03-08T08:52:53Z
+last-modified:  2011-08-03T15:45:40Z
+source:         RIPE
+
+person:         Arash Sadeghi
+address:        No.17, South Ghalandari St. Sadr Highway - Tehran - Iran
+phone:          +98-21-2349
+nic-hdl:        AS16049-RIPE
+mnt-by:         MNT-PETIAK
+created:        2010-08-30T08:03:55Z
+last-modified:  2011-03-08T08:57:19Z
+source:         RIPE
+
+% Information related to '217.170.248.0/23AS51469'
+
+route:          217.170.248.0/23
+descr:          Petiak Route
+origin:         AS51469
+mnt-by:         MNT-PETIAK
+created:        2014-12-14T05:35:38Z
+last-modified:  2014-12-14T05:35:38Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

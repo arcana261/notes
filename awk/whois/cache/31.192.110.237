@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.192.110.0 - 31.192.110.255'
+
+% Abuse contact for '31.192.110.0 - 31.192.110.255' is 'abuse@hostkey.ru'
+
+inetnum:        31.192.110.0 - 31.192.110.255
+netname:        HOSTKEY-RU
+country:        RU
+admin-c:        AS36383-RIPE
+tech-c:         AS36383-RIPE
+status:         ASSIGNED PA
+mnt-by:         HOSTKEY-RU-MNT
+created:        2019-06-26T13:51:07Z
+last-modified:  2019-06-26T13:51:07Z
+source:         RIPE
+
+person:         RIPE Team
+address:        Barabannyi line , 4/4
+address:        107023
+address:        Moscow
+address:        RUSSIAN FEDERATION
+phone:          +7(495)369-97-96
+org:            ORG-LVA15-RIPE
+nic-hdl:        AS36383-RIPE
+mnt-by:         HOSTKEY-RU-MNT
+created:        2015-12-08T08:26:30Z
+last-modified:  2019-07-01T08:05:35Z
+source:         RIPE # Filtered
+
+% Information related to '31.192.110.0/24AS49335'
+
+route:          31.192.110.0/24
+origin:         AS49335
+mnt-by:         HOSTKEY-RU-MNT
+created:        2017-12-25T10:18:09Z
+last-modified:  2019-06-28T13:43:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

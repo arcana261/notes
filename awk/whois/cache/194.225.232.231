@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.225.224.0 - 194.225.239.255'
+
+% Abuse contact for '194.225.224.0 - 194.225.239.255' is 'abuse@ipm.ir'
+
+inetnum:        194.225.224.0 - 194.225.239.255
+netname:        IUSTECH
+descr:          University of Science & Technology
+country:        IR
+admin-c:        HM5318-RIPE
+tech-c:         DM18-RIPE
+status:         ASSIGNED PA
+mnt-routes:     IPM-MNT
+mnt-lower:      IPM-MNT
+mnt-by:         IPM-MNT
+mnt-routes:     MNT-FOKUS
+created:        2004-09-04T05:06:18Z
+last-modified:  2016-07-16T07:13:15Z
+source:         RIPE
+
+person:         Davood Mohtashami
+address:        Iran University of Science & technology
+address:        Comuter Center
+address:        Narmaks
+address:        Tehran-Iran
+phone:          +9821 7456783
+fax-no:         +9821 7451143
+nic-hdl:        DM18-RIPE
+created:        2002-05-20T04:17:13Z
+last-modified:  2020-06-04T13:13:44Z
+source:         RIPE # Filtered
+mnt-by:         IPM-MNT
+
+person:         Hashem Mashhoun
+address:        IUST University, Narmak, Tehran, Iran
+phone:          +9821 77240444
+nic-hdl:        HM5318-RIPE
+mnt-by:         IPM-MNT
+created:        2016-07-16T07:09:31Z
+last-modified:  2016-07-16T07:09:31Z
+source:         RIPE # Filtered
+
+% Information related to '194.225.224.0/20AS41620'
+
+route:          194.225.224.0/20
+descr:          IUST block
+origin:         AS41620
+mnt-by:         IPM-MNT
+mnt-routes:     IPM-MNT
+created:        2006-11-04T12:10:55Z
+last-modified:  2006-11-04T12:10:55Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

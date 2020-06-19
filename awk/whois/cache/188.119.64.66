@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.119.64.0 - 188.119.65.255'
+
+% Abuse contact for '188.119.64.0 - 188.119.65.255' is 'noc@baxet.ru'
+
+inetnum:        188.119.64.0 - 188.119.65.255
+netname:        RU-BAXET-20190124
+country:        RU
+org:            ORG-LB145-RIPE
+admin-c:        AP29217-RIPE
+tech-c:         AP29217-RIPE
+status:         ASSIGNED PA
+mnt-by:         IP-RIPE
+mnt-routes:     BX-NOC
+mnt-domains:    BX-NOC
+created:        2019-01-24T11:07:48Z
+last-modified:  2019-01-24T11:07:48Z
+source:         RIPE
+
+organisation:   ORG-LB145-RIPE
+org-name:       LLC Baxet
+org-type:       OTHER
+descr:          http://justhost.ru
+address:        Zelenograd, Sosnovaya alleya, 4 str 2, office 120
+address:        124489 Moscow
+address:        Russia
+abuse-c:        BN2044-RIPE
+mnt-ref:        IP-RIPE
+mnt-by:         IP-RIPE
+created:        2018-11-02T13:40:02Z
+last-modified:  2018-11-02T13:40:50Z
+source:         RIPE # Filtered
+
+person:         Anton Pankratov
+remarks:        http://justhost.ru
+address:        Zelenograd, Sosnovaya alleya, 4 str 2, office 120
+address:        124489 Moscow
+address:        Russia
+phone:          +7 495 6680903
+nic-hdl:        AP29217-RIPE
+mnt-by:         IP-RIPE
+created:        2018-11-02T13:40:01Z
+last-modified:  2018-11-02T13:41:22Z
+source:         RIPE # Filtered
+
+% Information related to '188.119.64.0/23AS49392'
+
+route:          188.119.64.0/23
+origin:         AS49392
+mnt-by:         BX-NOC
+created:        2019-06-28T08:42:31Z
+last-modified:  2019-06-28T08:42:31Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

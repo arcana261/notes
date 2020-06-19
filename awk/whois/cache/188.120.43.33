@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.120.40.0 - 188.120.43.255'
+
+% Abuse contact for '188.120.40.0 - 188.120.43.255' is 'abuse@goknet.com.tr'
+
+inetnum:        188.120.40.0 - 188.120.43.255
+netname:        Goknet-NET
+org:            ORG-GBTV2-RIPE
+descr:          GOKNET BILGI TEKNOLOJILERI VE TELEKOMUNIKASYON HIZMETLERI A.S
+country:        TR
+admin-c:        GBTV1-RIPE
+tech-c:         GBTV1-RIPE
+abuse-c:        GA11339-RIPE
+status:         ASSIGNED PA
+mnt-routes:     goknetip
+mnt-domains:    goknetip
+mnt-by:         LeadertelecomBV-mnt
+created:        2017-07-11T11:56:45Z
+last-modified:  2019-11-06T08:48:48Z
+source:         RIPE
+
+organisation:   ORG-GBTV2-RIPE
+org-name:       GOKNET BILGI TEKNOLOJILERI VE TELEKOMUNIKASYON HIZMETLERI A.S
+org-type:       OTHER
+address:        06520, Ankara, Ehlibey Mah, Cehun Atuf Kansu Cad, 130/26, Cankaya
+abuse-c:        GA11339-RIPE
+mnt-ref:        LeadertelecomBV-mnt
+mnt-by:         LeadertelecomBV-mnt
+created:        2019-11-06T08:45:05Z
+last-modified:  2019-11-06T08:45:05Z
+source:         RIPE # Filtered
+
+role:           GOKNET iletisim A.S.
+remarks:        Goknet Internet Service Provider
+address:        Y.Öveçler Mah. - Cevizlidere Cad. - No:7/A. Cankaya/ANKARA
+phone:          +90 312 474 05 71
+fax-no:         +90 312 474 05 70
+abuse-mailbox:  abuse@goknet.com.tr
+admin-c:        MAK162-RIPE
+admin-c:        HA3738-RIPE
+nic-hdl:        GBTV1-RIPE
+mnt-by:         goknetip
+created:        2016-11-10T13:30:01Z
+last-modified:  2020-01-29T05:41:22Z
+source:         RIPE # Filtered
+
+% Information related to '188.120.43.0/24AS201411'
+
+route:          188.120.43.0/24
+origin:         AS201411
+mnt-by:         goknetip
+created:        2020-02-18T06:11:01Z
+last-modified:  2020-02-18T06:11:01Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

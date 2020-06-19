@@ -1,0 +1,83 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '27.35.0.0 - 27.35.255.255'
+
+% Abuse contact for '27.35.0.0 - 27.35.255.255' is 'irt@nic.or.kr'
+
+inetnum:        27.35.0.0 - 27.35.255.255
+netname:        HCN
+descr:          HYUNDAI COMMUNICATIONS   NETWORK
+country:        KR
+admin-c:        IM699-AP
+tech-c:         IM699-AP
+status:         ALLOCATED PORTABLE
+mnt-by:         MNT-KRNIC-AP
+mnt-irt:        IRT-KRNIC-KR
+last-modified:  2019-04-29T07:39:35Z
+source:         APNIC
+
+irt:            IRT-KRNIC-KR
+address:        Jeollanam-do Naju-si Jinheung-gil
+e-mail:         irt@nic.or.kr
+abuse-mailbox:  irt@nic.or.kr
+admin-c:        IM574-AP
+tech-c:         IM574-AP
+auth:           # Filtered
+remarks:        irt@nic.or.kr was validated on 2020-04-09
+mnt-by:         MNT-KRNIC-AP
+last-modified:  2020-04-09T10:23:17Z
+source:         APNIC
+
+person:         IP Manager
+address:        Seoul Seocho-gu Banpo-daero 19
+country:        KR
+phone:          +82-70-8109-1661
+e-mail:         hcn_ipadm@hyundaihmall.com
+nic-hdl:        IM699-AP
+mnt-by:         MNT-KRNIC-AP
+last-modified:  2017-03-28T06:37:05Z
+source:         APNIC
+
+% Information related to '27.35.0.0 - 27.35.255.255'
+
+inetnum:        27.35.0.0 - 27.35.255.255
+netname:        HCN-KR
+descr:          HYUNDAI COMMUNICATIONS   NETWORK
+country:        KR
+admin-c:        IA82-KR
+tech-c:         IM82-KR
+status:         ALLOCATED PORTABLE
+mnt-by:         MNT-KRNIC-AP
+mnt-irt:        IRT-KRNIC-KR
+remarks:        This information has been partially mirrored by APNIC from
+remarks:        KRNIC. To obtain more specific information, please use the
+remarks:        KRNIC whois server at whois.kisa.or.kr.
+changed:        hostmaster@nic.or.kr
+source:         KRNIC
+
+person:         IP Manager
+address:        Seoul Seocho-gu Banpo-daero 19
+address:        Hyundai HCN
+country:        KR
+phone:          +82-70-8109-1661
+e-mail:         hcn_ipadm@hyundaihmall.com
+nic-hdl:        IA82-KR
+mnt-by:         MNT-KRNIC-AP
+changed:        hostmaster@nic.or.kr
+source:         KRNIC
+
+person:         IP Manager
+address:        Seoul Seocho-gu Banpo-daero 19
+address:        Hyundai HCN
+country:        KR
+phone:          +82-70-8109-1661
+e-mail:         hcn_ipadm@hyundaihmall.com
+nic-hdl:        IM82-KR
+mnt-by:         MNT-KRNIC-AP
+changed:        hostmaster@nic.or.kr
+source:         KRNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK3)
+
+

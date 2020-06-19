@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.153.208.0 - 185.153.211.255'
+
+% Abuse contact for '185.153.208.0 - 185.153.211.255' is 'info@byteisp.com'
+
+inetnum:        185.153.208.0 - 185.153.211.255
+netname:        IR-PERSIA-20160525
+country:        IR
+org:            ORG-PSKL1-RIPE
+admin-c:        MMAG4-RIPE
+tech-c:         MMAG4-RIPE
+mnt-routes:     PTE-MNT
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-MASOUD
+created:        2016-05-25T09:04:51Z
+last-modified:  2016-05-28T05:37:17Z
+source:         RIPE
+
+organisation:   ORG-PSKL1-RIPE
+org-name:       Persia System Kashan Ltd
+org-type:       LIR
+address:        No 12, Golestan Passage, Rajaeishahr St,
+address:        8713753717
+address:        Kashan
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        MM44143-RIPE
+tech-c:         MM44143-RIPE
+abuse-c:        AR36497-RIPE
+mnt-ref:        MNT-MASOUD
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         MNT-MASOUD
+created:        2016-05-24T07:22:46Z
+last-modified:  2016-06-14T07:50:18Z
+source:         RIPE # Filtered
+phone:          +98314000
+
+person:         Masoud Maghsoudi
+address:        No. 12 - Birjandi St. - Emam Khomeini Sq. - Shahrood - Iran
+phone:          +982332243400
+nic-hdl:        MMAG4-RIPE
+mnt-by:         MNT-MASOUD
+created:        2013-10-09T10:49:00Z
+last-modified:  2015-06-27T23:20:03Z
+source:         RIPE
+
+% Information related to '185.153.208.0/22AS49100'
+
+route:          185.153.208.0/22
+origin:         AS49100
+mnt-by:         PTE-MNT
+created:        2016-05-28T07:41:57Z
+last-modified:  2016-05-28T07:41:57Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

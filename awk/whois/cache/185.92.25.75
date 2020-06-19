@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.92.25.0 - 185.92.25.255'
+
+% Abuse contact for '185.92.25.0 - 185.92.25.255' is 'jeroen@falco-networks.com'
+
+inetnum:        185.92.25.0 - 185.92.25.255
+netname:        Express-Equinix-London
+descr:          Express-Equinix-London
+descr:          Slough Trading Estate
+descr:          2 Buckingham Ave
+descr:          Slough SL1
+country:        GB
+geoloc:         51.523504 -0.636006
+admin-c:        JVV19-RIPE
+tech-c:         JVV19-RIPE
+mnt-lower:      MNT-EXPRESS-NETWORK
+mnt-routes:     AF-NETWORKS-MNT
+mnt-by:         AF-NETWORKS-MNT
+mnt-domains:    AF-NETWORKS-MNT
+org:            ORG-EA974-RIPE
+status:         ASSIGNED PA
+created:        2016-08-23T21:08:29Z
+last-modified:  2016-08-23T21:08:29Z
+source:         RIPE
+
+organisation:   ORG-EA974-RIPE
+org-name:       EXPRESS-EQUINIX-LONDON
+org-type:       OTHER
+address:        Express-Equinix-London
+address:        Slough Trading Estate,,
+address:        2 Buckingham Ave
+address:        Slough SL1
+address:        United Kingdom
+abuse-c:        ACRO1080-RIPE
+mnt-ref:        MNT-FALCO
+mnt-by:         MNT-FALCO
+created:        2016-03-21T16:30:04Z
+last-modified:  2016-08-17T15:03:05Z
+source:         RIPE # Filtered
+
+person:         Jeroen van veen
+address:        Falco IPR B.V.
+address:        De Hoefsmid 11-13
+address:        1851 PZ Heiloo
+address:        The Netherlands
+phone:          +31 72 532 3744
+nic-hdl:        JVV19-RIPE
+created:        2002-09-16T13:46:49Z
+last-modified:  2018-05-01T12:11:21Z
+source:         RIPE # Filtered
+mnt-by:         MNT-FALCO
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

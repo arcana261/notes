@@ -1,0 +1,58 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.46.219.80 - 89.46.219.87'
+
+% Abuse contact for '89.46.219.80 - 89.46.219.87' is 'abuse@padidar.com'
+
+inetnum:        89.46.219.80 - 89.46.219.87
+netname:        KSRC
+country:        IR
+admin-c:        AA29351-RIPE
+tech-c:         MM40625-RIPE
+status:         ASSIGNED PA
+mnt-by:         Padidar
+created:        2018-04-01T04:49:37Z
+last-modified:  2018-04-01T04:49:37Z
+source:         RIPE
+
+person:         Alireza Akafzadeh
+address:        Kerman steel building, Amir-Kabir blv
+address:        Kerman, Iran
+phone:          +98 913 340 6558
+nic-hdl:        AA29351-RIPE
+mnt-by:         Padidar
+created:        2015-06-08T15:36:08Z
+last-modified:  2015-06-08T15:36:08Z
+source:         RIPE
+
+person:         Milad Maher
+address:        3rd floor, Ansar-al-Rasoul Bldg, Vali-e-Asr crossroad
+address:        Kerman, Iran
+phone:          +98 913 196 5507
+phone:          +98 343 226 3200
+nic-hdl:        MM40625-RIPE
+mnt-by:         Padidar
+created:        2015-01-13T10:44:45Z
+last-modified:  2015-01-13T10:44:45Z
+source:         RIPE
+
+% Information related to '89.46.219.0/24AS198357'
+
+route:          89.46.219.0/24
+descr:          Padidar Technology
+origin:         AS198357
+mnt-by:         Padidar
+created:        2018-12-15T08:12:50Z
+last-modified:  2018-12-15T08:12:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

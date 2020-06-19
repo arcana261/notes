@@ -1,0 +1,58 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.34.161.0 - 46.34.161.255'
+
+% Abuse contact for '46.34.161.0 - 46.34.161.255' is 'abuse@seanet.ir'
+
+inetnum:        46.34.161.0 - 46.34.161.255
+netname:        SEPEHRAVA-SEANET
+descr:          Sepehrava Data Processing co.
+country:        IR
+admin-c:        HRM78-RIPE
+tech-c:         HRM78-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-SADP1-ROUTES
+created:        2015-05-19T17:36:27Z
+last-modified:  2015-05-19T17:36:27Z
+source:         RIPE
+
+person:         Hamid Reza Mohajeri
+address:        IRAN, Zanjan, Emam St, Head-on EmamZadeh Parking, AFRA Building, 3 Floor, NO 10
+phone:          +98 24 3336 4046
+nic-hdl:        HRM78-RIPE
+mnt-by:         MNT-SADP1-ROUTES
+created:        2013-03-25T18:20:04Z
+last-modified:  2017-03-29T05:42:36Z
+source:         RIPE # Filtered
+
+% Information related to '46.34.160.0/22AS202391'
+
+route:          46.34.160.0/22
+origin:         AS202391
+mnt-by:         ir-afrarasa-1-mnt
+mnt-by:         MNT-SADP1-ROUTES
+created:        2018-12-13T05:49:35Z
+last-modified:  2018-12-13T05:49:35Z
+source:         RIPE
+
+% Information related to '46.34.160.0/22AS51541'
+
+route:          46.34.160.0/22
+descr:          SEPEHRAVA-SEANET
+origin:         AS51541
+mnt-by:         MNT-SADP1-ROUTES
+mnt-by:         ir-afrarasa-1-mnt
+created:        2014-08-30T03:47:20Z
+last-modified:  2018-12-12T13:27:33Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

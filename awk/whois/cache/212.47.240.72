@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '212.47.240.0 - 212.47.255.255'
+
+% Abuse contact for '212.47.240.0 - 212.47.255.255' is 'abuse@online.net'
+
+inetnum:        212.47.240.0 - 212.47.255.255
+org:            ORG-ONLI1-RIPE
+netname:        Scaleway
+descr:          Online SAS - Dedibox
+country:        FR
+admin-c:        TTFR1-RIPE
+tech-c:         TTFR1-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-TISCALIFR
+mnt-by:         MNT-TISCALIFR-B2B
+created:        2016-02-23T12:28:34Z
+last-modified:  2016-02-23T16:50:45Z
+source:         RIPE
+
+organisation:   ORG-ONLI1-RIPE
+mnt-ref:        MNT-TISCALIFR-B2B
+org-name:       ONLINE SAS
+org-type:       OTHER
+address:        8 rue de la ville l'eveque 75008 PARIS
+abuse-c:        AR32851-RIPE
+mnt-ref:        ONLINESAS-MNT
+mnt-by:         ONLINESAS-MNT
+created:        2015-07-10T15:20:41Z
+last-modified:  2017-10-30T14:40:53Z
+source:         RIPE # Filtered
+
+role:           SCALEWAY
+remarks:        known as Online S.A.S. / Iliad-Entreprises
+address:        8 rue de la ville l'évèque
+address:        75008 Paris
+address:        France
+abuse-mailbox:  abuse@online.net
+admin-c:        IENT-RIPE
+tech-c:         IENT-RIPE
+tech-c:         NR1053-RIPE
+nic-hdl:        TTFR1-RIPE
+mnt-by:         MNT-TISCALIFR
+created:        2002-09-24T14:16:42Z
+last-modified:  2020-04-09T21:41:10Z
+source:         RIPE # Filtered
+
+% Information related to '212.47.224.0/19AS12876'
+
+route:          212.47.224.0/19
+descr:          Online SAS
+descr:          Paris, France
+origin:         AS12876
+mnt-by:         MNT-TISCALIFR
+created:        2013-08-02T09:11:27Z
+last-modified:  2013-08-02T09:11:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

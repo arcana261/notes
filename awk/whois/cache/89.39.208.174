@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.39.208.0 - 89.39.208.255'
+
+% Abuse contact for '89.39.208.0 - 89.39.208.255' is 'abuse@netmihan.com'
+
+inetnum:        89.39.208.0 - 89.39.208.255
+netname:        IR-MIHAN-20051129
+country:        IR
+org:            ORG-MGEC1-RIPE
+admin-c:        SR11198-RIPE
+tech-c:         SR11198-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT_MWH
+mnt-lower:      mnt_mwh
+mnt-routes:     mnt_mwh
+created:        2017-04-25T10:12:53Z
+last-modified:  2017-04-25T10:12:53Z
+source:         RIPE
+
+organisation:   ORG-MGEC1-RIPE
+org-name:       Netmihan Communication Company Ltd
+org-type:       LIR
+address:        Unit 9,Floor 3,Mahtab Bldg,Mahtab Alley, Ostad Sara St,Sabze
+address:        4154636797
+address:        Rasht
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +981333226666
+fax-no:         +981333226666
+admin-c:        SR11198-RIPE
+tech-c:         SR11198-RIPE
+abuse-c:        AR31713-RIPE
+remarks:        send your abuse for abuse@netmihan.com
+mnt-ref:        MNT_MWH
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT_MWH
+created:        2015-03-30T15:15:31Z
+last-modified:  2018-03-01T09:22:09Z
+source:         RIPE # Filtered
+
+person:         saeed rahmat
+address:        Unit 9,Floor 3,Mahtab Bldg,Mahtab Alley, Ostad Sara St,Sabzeh meidan,rasht,gilan
+remarks:        Unit 9,Floor 3,Mahtab Bldg,Mahtab Alley, Ostad Sara St,Sabze,Rasht,Gilan
+address:        4154636797
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +981333226666
+remarks:        send your abuse for abuse@netmihan.com
+nic-hdl:        SR11198-RIPE
+mnt-by:         ir-mihan-1-mnt
+mnt-by:         mnt_mwh
+created:        2015-03-30T15:15:30Z
+last-modified:  2019-10-22T06:34:44Z
+source:         RIPE
+
+% Information related to '89.39.208.0/24AS204213'
+
+route:          89.39.208.0/24
+origin:         AS204213
+mnt-by:         ir-mihan-1-mnt
+mnt-by:         MNT-gostaresh
+mnt-by:         MNT_MWH
+created:        2017-04-25T11:33:07Z
+last-modified:  2017-04-25T11:33:07Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

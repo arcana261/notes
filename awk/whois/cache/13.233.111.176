@@ -1,0 +1,141 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       13.228.0.0 - 13.239.255.255
+CIDR:           13.228.0.0/14, 13.232.0.0/13
+NetName:        AT-88-Z
+NetHandle:      NET-13-228-0-0-1
+Parent:         NET13 (NET-13-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Amazon Technologies Inc. (AT-88-Z)
+RegDate:        2016-08-09
+Updated:        2016-08-09
+Ref:            https://rdap.arin.net/registry/ip/13.228.0.0
+
+
+
+OrgName:        Amazon Technologies Inc.
+OrgId:          AT-88-Z
+Address:        410 Terry Ave N.
+City:           Seattle
+StateProv:      WA
+PostalCode:     98109
+Country:        US
+RegDate:        2011-12-08
+Updated:        2020-03-31
+Comment:        All abuse reports MUST include:
+Comment:        * src IP
+Comment:        * dest IP (your IP)
+Comment:        * dest port
+Comment:        * Accurate date/timestamp and timezone of activity
+Comment:        * Intensity/frequency (short log extracts)
+Comment:        * Your contact details (phone and email) Without these we will be unable to identify the correct owner of the IP address at that point in time.
+Ref:            https://rdap.arin.net/registry/entity/AT-88-Z
+
+
+OrgRoutingHandle: IPROU3-ARIN
+OrgRoutingName:   IP Routing
+OrgRoutingPhone:  +1-206-266-4064 
+OrgRoutingEmail:  aws-routing-poc@amazon.com
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/IPROU3-ARIN
+
+OrgAbuseHandle: AEA8-ARIN
+OrgAbuseName:   Amazon EC2 Abuse
+OrgAbusePhone:  +1-206-266-4064 
+OrgAbuseEmail:  abuse@amazonaws.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AEA8-ARIN
+
+OrgNOCHandle: AANO1-ARIN
+OrgNOCName:   Amazon AWS Network Operations
+OrgNOCPhone:  +1-206-266-4064 
+OrgNOCEmail:  amzn-noc-contact@amazon.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/AANO1-ARIN
+
+OrgRoutingHandle: ADR29-ARIN
+OrgRoutingName:   AWS Dogfish Routing
+OrgRoutingPhone:  +1-206-266-4064 
+OrgRoutingEmail:  aws-dogfish-routing-poc@amazon.com
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/ADR29-ARIN
+
+OrgTechHandle: ANO24-ARIN
+OrgTechName:   Amazon EC2 Network Operations
+OrgTechPhone:  +1-206-266-4064 
+OrgTechEmail:  amzn-noc-contact@amazon.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ANO24-ARIN
+
+# end
+
+
+# start
+
+NetRange:       13.232.0.0 - 13.235.255.255
+CIDR:           13.232.0.0/14
+NetName:        AMAZON-BOM
+NetHandle:      NET-13-232-0-0-1
+Parent:         AT-88-Z (NET-13-228-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS16509
+Organization:   Amazon Data Services India (ADSI-6)
+RegDate:        2017-06-23
+Updated:        2017-06-23
+Ref:            https://rdap.arin.net/registry/ip/13.232.0.0
+
+
+OrgName:        Amazon Data Services India
+OrgId:          ADSI-6
+Address:        L&T Business Park, Gate No.5, Tower A
+Address:        Ground Floor, Sakivihar Road, Pawai
+City:           Mumbai
+StateProv:      MAHARASHTRA
+PostalCode:     400072
+Country:        IN
+RegDate:        2016-08-05
+Updated:        2019-08-02
+Ref:            https://rdap.arin.net/registry/entity/ADSI-6
+
+
+OrgTechHandle: ANO24-ARIN
+OrgTechName:   Amazon EC2 Network Operations
+OrgTechPhone:  +1-206-266-4064 
+OrgTechEmail:  amzn-noc-contact@amazon.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ANO24-ARIN
+
+OrgNOCHandle: AANO1-ARIN
+OrgNOCName:   Amazon AWS Network Operations
+OrgNOCPhone:  +1-206-266-4064 
+OrgNOCEmail:  amzn-noc-contact@amazon.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/AANO1-ARIN
+
+OrgAbuseHandle: AEA8-ARIN
+OrgAbuseName:   Amazon EC2 Abuse
+OrgAbusePhone:  +1-206-266-4064 
+OrgAbuseEmail:  abuse@amazonaws.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AEA8-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

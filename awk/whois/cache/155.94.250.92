@@ -1,0 +1,154 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       155.94.240.0 - 155.94.255.255
+CIDR:           155.94.240.0/20
+NetName:        QUADRANET-DFW
+NetHandle:      NET-155-94-240-0-1
+Parent:         QUADRANET (NET-155-94-128-0-1)
+NetType:        Reallocated
+OriginAS:       
+Organization:   QuadraNet, Inc (QUADR-25)
+RegDate:        2014-06-12
+Updated:        2014-06-12
+Ref:            https://rdap.arin.net/registry/ip/155.94.240.0
+
+
+OrgName:        QuadraNet, Inc
+OrgId:          QUADR-25
+Address:        3000 Irving Blvd
+City:           Dallas
+StateProv:      TX
+PostalCode:     75247
+Country:        US
+RegDate:        2012-03-27
+Updated:        2018-09-24
+Comment:        Mailing address:
+Comment:        
+Comment:        ATTN: Abuse Team
+Comment:        530 W 6th St, Suite 901
+Comment:        Los Angeles, CA  90014
+Ref:            https://rdap.arin.net/registry/entity/QUADR-25
+
+ReferralServer:  rwhois://rwhois.quadranet.com:4321
+
+OrgTechHandle: DNO97-ARIN
+OrgTechName:   Dallas Network Operations
+OrgTechPhone:  +1-213-614-9371 
+OrgTechEmail:  noc@quadranet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/DNO97-ARIN
+
+OrgTechHandle: QNO6-ARIN
+OrgTechName:   QuadraNet Network Operations
+OrgTechPhone:  +1-213-614-9371 
+OrgTechEmail:  support@quadranet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/QNO6-ARIN
+
+OrgAbuseHandle: DNO97-ARIN
+OrgAbuseName:   Dallas Network Operations
+OrgAbusePhone:  +1-213-614-9371 
+OrgAbuseEmail:  noc@quadranet.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/DNO97-ARIN
+
+# end
+
+
+# start
+
+NetRange:       155.94.128.0 - 155.94.255.255
+CIDR:           155.94.128.0/17
+NetName:        QUADRANET
+NetHandle:      NET-155-94-128-0-1
+Parent:         NET155 (NET-155-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS8100
+Organization:   QuadraNet Enterprises LLC (QEL-5)
+RegDate:        2014-06-11
+Updated:        2018-08-30
+Ref:            https://rdap.arin.net/registry/ip/155.94.128.0
+
+
+OrgName:        QuadraNet Enterprises LLC
+OrgId:          QEL-5
+Address:        19528 Ventura Blvd #433
+City:           Tarzana
+StateProv:      CA
+PostalCode:     91356
+Country:        US
+RegDate:        2018-06-07
+Updated:        2018-10-11
+Ref:            https://rdap.arin.net/registry/entity/QEL-5
+
+ReferralServer:  rwhois://rwhois.quadranet.com:4321
+
+OrgTechHandle: QNO6-ARIN
+OrgTechName:   QuadraNet Network Operations
+OrgTechPhone:  +1-213-614-9371 
+OrgTechEmail:  support@quadranet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/QNO6-ARIN
+
+OrgAbuseHandle: QUADR4-ARIN
+OrgAbuseName:   QuadraNet Abuse
+OrgAbusePhone:  +1-213-614-8371 
+OrgAbuseEmail:  abuse@quadranet.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/QUADR4-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.quadranet.com:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 manage.quadranet.com (Ubersmith RWhois Server V-4.2.4)
+autharea=155.94.240.0/20
+xautharea=155.94.240.0/20
+network:Class-Name:network
+network:Auth-Area:155.94.240.0/20
+network:ID:NET-94959.155.94.250.64/26
+network:Network-Name:Public Network IP Range
+network:IP-Network:155.94.250.64/26
+network:IP-Network-Block:155.94.250.64 - 155.94.250.127
+network:Org-Name:Windscribe Limited
+network:Street-Address:9251 Yonge St #8901
+network:City:Richmond Hill
+network:State:AB
+network:Postal-Code:L4C 9T3
+network:Country-Code:CA
+network:Tech-Contact:MAINT-94959.155.94.250.64/26
+network:Created:20180626211828000
+network:Updated:20200603192219000
+network:Updated-By:support@quadranet.com
+contact:POC-Name:Network Administrator
+contact:POC-Email:support@quadranet.com
+contact:POC-Phone:1-888-5-QUADRA
+contact:Tech-Name:Network Administrator
+contact:Tech-Email:support@quadranet.com
+contact:Tech-Phone:1-888-5-QUADRA
+contact:Abuse-Name:Abuse
+contact:Abuse-Email:abuse@windscribe.com
+contact:Abuse-Phone:
+%ok

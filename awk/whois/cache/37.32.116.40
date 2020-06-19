@@ -1,0 +1,80 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.32.114.0 - 37.32.116.255'
+
+% Abuse contact for '37.32.114.0 - 37.32.116.255' is 'abuse@systec-co.com'
+
+inetnum:        37.32.114.0 - 37.32.116.255
+netname:        SS-SYSTEC
+descr:          Rayan Pardazan Baran Co. Ltd.
+org:            ORG-RPBC1-RIPE
+country:        ir
+remarks:        INFRA-AW
+admin-c:        SS16680-RIPE
+tech-c:         SS16680-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-SSAMAN
+mnt-routes:     MNT-SSAMAN
+created:        2012-10-15T10:42:56Z
+last-modified:  2012-10-15T10:42:56Z
+source:         RIPE
+
+organisation:   ORG-RPBC1-RIPE
+org-name:       Rayaneh Pardazan Baran Co. Ltd.
+org-type:       LIR
+address:        No3 , Floor 13 , Pam Tower, Afrigha Ave
+address:        19686
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982142306
+phone:          +989123512096
+fax-no:         +982142306
+admin-c:        SS16680-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-SSAMAN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-SSAMAN
+abuse-c:        SC14880-RIPE
+created:        2011-06-16T09:44:29Z
+last-modified:  2017-10-30T14:38:32Z
+source:         RIPE # Filtered
+
+person:         Saman Salamat
+address:        No.3 ,Floor 13 ,Pam Tower , Afrigha Ave ,Tehran , Iran
+phone:          +989123512096
+phone:          +982142306
+fax-no:         +982142306
+org:            ORG-RPBC1-RIPE
+remarks:        -------------------------------------------
+remarks:        | I AM !NOT! SPAMMING OR HACKING YOU !!! |
+remarks:        | | |
+remarks:        | If you think I am, please read: |
+remarks:        | http://www.ripe.net/nicdb.html |
+remarks:        | | |
+remarks:        -------------------------------------------
+nic-hdl:        SS16680-RIPE
+mnt-by:         MNT-SSAMAN
+created:        2011-06-26T04:39:27Z
+last-modified:  2018-05-10T16:29:45Z
+source:         RIPE
+
+% Information related to '37.32.116.0/24AS50558'
+
+route:          37.32.116.0/24
+descr:          SYSTEC
+origin:         AS50558
+mnt-by:         MNT-SSAMAN
+created:        2012-10-15T11:01:00Z
+last-modified:  2012-10-15T11:01:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

@@ -1,0 +1,70 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.144.240.0 - 45.144.240.255'
+
+% Abuse contact for '45.144.240.0 - 45.144.240.255' is 'abuse@thinkhuge.net'
+
+inetnum:        45.144.240.0 - 45.144.240.255
+netname:        Think-Huge-Ltd
+descr:          Think Huge
+org:            ORG-THL21-RIPE
+country:        JP
+admin-c:        WT1478-RIPE
+tech-c:         WT1478-RIPE
+mnt-routes:     GLOBALAXS-MNT
+status:         ASSIGNED PA
+mnt-by:         mnt-uk-think-jun1902-1
+created:        2019-08-23T14:14:33Z
+last-modified:  2020-01-24T22:22:12Z
+source:         RIPE
+
+organisation:   ORG-THL21-RIPE
+org-name:       Think Huge Ltd
+org-type:       LIR
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+admin-c:        WT1478-RIPE
+tech-c:         WT1478-RIPE
+abuse-c:        AR50319-RIPE
+mnt-ref:        mnt-uk-think-jan191-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-uk-think-jan191-1
+created:        2019-01-16T13:55:13Z
+last-modified:  2019-01-16T13:55:15Z
+source:         RIPE # Filtered
+phone:          +447415953982
+
+person:         Will Thomas
+address:        288 Oxford Rd
+address:        BD19 4PY
+address:        Cleckheaton
+address:        UNITED KINGDOM
+phone:          +447415953982
+nic-hdl:        WT1478-RIPE
+mnt-by:         mnt-uk-think-jan191-1
+created:        2019-01-16T13:55:12Z
+last-modified:  2019-01-16T13:55:13Z
+source:         RIPE
+
+% Information related to '45.144.240.0/24AS9009'
+
+route:          45.144.240.0/24
+descr:          Think Huge Ltd
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-08-23T14:28:29Z
+last-modified:  2020-01-24T22:23:10Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

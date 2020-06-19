@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.121.134.0 - 188.121.135.255'
+
+% Abuse contact for '188.121.134.0 - 188.121.135.255' is 'abuse@tstonline.com'
+
+inetnum:        188.121.134.0 - 188.121.135.255
+netname:        TSTONLINE
+descr:          TSTonline
+country:        IR
+admin-c:        TST8-RIPE
+tech-c:         TST8-RIPE
+status:         ASSIGNED PA
+mnt-by:         TSTonline-MNT
+mnt-domains:    TSTonline-MNT
+created:        2013-05-11T07:05:16Z
+last-modified:  2013-05-11T07:05:16Z
+source:         RIPE
+remarks:        rev-srv attribute deprecated by RIPE NCC on 11/05/2013
+
+role:           TSTONLINE NetAdmins
+address:        No 217 - North Iranshahr St - Tehran - IRAN
+admin-c:        MD357-RIPE
+admin-c:        KE1046-RIPE
+admin-c:        NN1976-RIPE
+tech-c:         KE1046-RIPE
+tech-c:         NN1976-RIPE
+tech-c:         MD357-RIPE
+remarks:        abuse@tstonline.com is contact for criminal use, spam, etc.
+abuse-mailbox:  abuse@tstonline.com
+nic-hdl:        TST8-RIPE
+mnt-by:         TSTonline-MNT
+created:        2010-06-14T04:59:02Z
+last-modified:  2016-10-24T11:14:56Z
+source:         RIPE # Filtered
+
+% Information related to '188.121.134.0/24AS34513'
+
+route:          188.121.134.0/24
+origin:         AS34513
+mnt-by:         TSTonline-MNT
+created:        2016-09-27T12:14:15Z
+last-modified:  2016-09-27T12:14:15Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '178.240.0.0 - 178.243.255.255'
+
+% Abuse contact for '178.240.0.0 - 178.243.255.255' is 'abuse@turkcell.com.tr'
+
+inetnum:        178.240.0.0 - 178.243.255.255
+netname:        TR-TURKCELL-INTERNET
+descr:          TURKCELL INTERNET
+country:        TR
+admin-c:        TIM96-RIPE
+tech-c:         TIM96-RIPE
+status:         ASSIGNED PA
+mnt-by:         TR-TURKCELL
+created:        2012-04-30T05:53:37Z
+last-modified:  2012-04-30T05:53:37Z
+source:         RIPE
+
+person:         Turkcell IP Manager
+address:        Turkcell Kartal Plaza
+address:        Topselvi Mahallesi Dipcik Sokak No:31
+address:        Kartal ISTANBUL
+phone:          +90 216 458 10 00
+fax-no:         +90 216 427 50 60
+nic-hdl:        TIM96-RIPE
+mnt-by:         tr-turkcell
+created:        2006-04-17T07:04:48Z
+last-modified:  2011-07-17T21:19:30Z
+source:         RIPE # Filtered
+
+% Information related to '178.240.0.0/18AS16135'
+
+route:          178.240.0.0/18
+descr:          Mahmutbey NAT-1
+origin:         AS16135
+mnt-by:         tr-turkcell
+created:        2014-08-06T11:34:51Z
+last-modified:  2014-08-06T11:34:51Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

@@ -1,0 +1,67 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       64.52.81.0 - 64.52.95.255
+CIDR:           64.52.82.0/23, 64.52.84.0/22, 64.52.81.0/24, 64.52.88.0/21
+NetName:        CL-1277
+NetHandle:      NET-64-52-81-0-1
+Parent:         NET64 (NET-64-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS11774, AS6570
+Organization:   CloudRoute, LLC (CL-1277)
+RegDate:        2000-03-06
+Updated:        2017-03-16
+Ref:            https://rdap.arin.net/registry/ip/64.52.81.0
+
+
+OrgName:        CloudRoute, LLC
+OrgId:          CL-1277
+Address:        75 Erieview Plaza
+Address:        Suite 100
+City:           Cleveland
+StateProv:      OH
+PostalCode:     44114
+Country:        US
+RegDate:        2017-01-10
+Updated:        2017-04-25
+Ref:            https://rdap.arin.net/registry/entity/CL-1277
+
+
+OrgNOCHandle: EMDYT1-ARIN
+OrgNOCName:   Emdy, Terrance 
+OrgNOCPhone:  +1-872-814-8008 
+OrgNOCEmail:  ipadmin@cloudroute.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/EMDYT1-ARIN
+
+OrgTechHandle: EMDYT1-ARIN
+OrgTechName:   Emdy, Terrance 
+OrgTechPhone:  +1-872-814-8008 
+OrgTechEmail:  ipadmin@cloudroute.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/EMDYT1-ARIN
+
+OrgAbuseHandle: EMDYT1-ARIN
+OrgAbuseName:   Emdy, Terrance 
+OrgAbusePhone:  +1-872-814-8008 
+OrgAbuseEmail:  ipadmin@cloudroute.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/EMDYT1-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

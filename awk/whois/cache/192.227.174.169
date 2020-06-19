@@ -1,0 +1,67 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       192.227.128.0 - 192.227.255.255
+CIDR:           192.227.128.0/17
+NetName:        CC-12
+NetHandle:      NET-192-227-128-0-1
+Parent:         NET192 (NET-192-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS36352
+Organization:   ColoCrossing (VGS-9)
+RegDate:        2013-01-29
+Updated:        2013-01-29
+Ref:            https://rdap.arin.net/registry/ip/192.227.128.0
+
+
+OrgName:        ColoCrossing
+OrgId:          VGS-9
+Address:        325 Delaware Avenue
+Address:        Suite 300
+City:           Buffalo
+StateProv:      NY
+PostalCode:     14202
+Country:        US
+RegDate:        2005-06-20
+Updated:        2019-10-17
+Ref:            https://rdap.arin.net/registry/entity/VGS-9
+
+
+OrgTechHandle: NETWO882-ARIN
+OrgTechName:   Network Operations
+OrgTechPhone:  +1-800-518-9716 
+OrgTechEmail:  support@colocrossing.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO882-ARIN
+
+OrgNOCHandle: NETWO882-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-800-518-9716 
+OrgNOCEmail:  support@colocrossing.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO882-ARIN
+
+OrgAbuseHandle: ABUSE3246-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-800-518-9716 
+OrgAbuseEmail:  abuse@colocrossing.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3246-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

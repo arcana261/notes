@@ -1,0 +1,76 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.109.16.0 - 91.109.31.255'
+
+% Abuse contact for '91.109.16.0 - 91.109.31.255' is 'abuse@de.leaseweb.com'
+
+inetnum:        91.109.16.0 - 91.109.31.255
+netname:        DE-NETDIRECT-20120618
+country:        DE
+org:            ORG-nA8-RIPE
+admin-c:        LSWG-RIPE
+tech-c:         LSWG-RIPE
+status:         ALLOCATED PA
+remarks:        Please send all abuse notifications to the following email address: abuse@de.leaseweb.com. To ensure proper processing of your abuse notification, please visit the website www.leaseweb.com/abuse for notification requirements. All police and other government agency requests must be sent to subpoenas@de.leaseweb.com.
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         LEASEWEB-DE-MNT
+mnt-lower:      NETDIRECT-MNT
+mnt-lower:      LEASEWEB-DE-MNT
+mnt-domains:    NETDIRECT-MNT
+mnt-routes:     NETDIRECT-MNT
+mnt-routes:     LEASEWEB-DE-MNT
+created:        2012-06-18T11:45:18Z
+last-modified:  2016-08-09T14:35:21Z
+source:         RIPE # Filtered
+
+organisation:   ORG-nA8-RIPE
+org-name:       Leaseweb Deutschland GmbH
+org-type:       LIR
+address:        Kleyerstrasse 75-87
+address:        60326
+address:        Frankfurt am Main
+address:        GERMANY
+phone:          +496924752860
+fax-no:         +496924752861
+admin-c:        LSWG-RIPE
+abuse-c:        LWGA-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        LEASEWEB-DE-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         LEASEWEB-DE-MNT
+created:        2004-04-17T11:10:38Z
+last-modified:  2018-09-28T08:31:55Z
+source:         RIPE # Filtered
+
+person:         RIPE Mann
+address:        Kleyerstrasse 75-87
+address:        60326 Frankfurt am Main
+address:        Germany
+phone:          +49 69 2475 2860
+fax-no:         +49 69 2475 2861
+nic-hdl:        LSWG-RIPE
+mnt-by:         LEASEWEB-DE-MNT
+created:        2012-03-23T15:55:41Z
+last-modified:  2017-10-30T22:18:46Z
+source:         RIPE # Filtered
+
+% Information related to '91.109.16.0/20AS28753'
+
+route:          91.109.16.0/20
+descr:          routed via LeaseWeb DE
+origin:         AS28753
+mnt-by:         LEASEWEB-DE-MNT
+created:        2015-06-04T13:17:40Z
+last-modified:  2015-10-22T11:11:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

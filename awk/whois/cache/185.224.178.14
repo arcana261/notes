@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.224.176.0 - 185.224.179.255'
+
+% Abuse contact for '185.224.176.0 - 185.224.179.255' is 'farhad4t@gmail.com'
+
+inetnum:        185.224.176.0 - 185.224.179.255
+netname:        IR-TECHNO2000NET-20171010
+country:        IR
+org:            ORG-RRRK1-RIPE
+admin-c:        FJ1825-RIPE
+tech-c:         FJ1825-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-techno2000net-1-mnt
+created:        2017-10-10T11:21:13Z
+last-modified:  2017-10-10T11:21:13Z
+source:         RIPE
+
+organisation:   ORG-RRRK1-RIPE
+org-name:       Rahnamoun Rayaneh Robat Karim Company (Ltd.)
+org-type:       LIR
+address:        no.5 Farvardin1 alley 12m sajad soltanabad-Baharestan county
+address:        3757143375
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        FJ1825-RIPE
+tech-c:         FJ1825-RIPE
+abuse-c:        AR43342-RIPE
+mnt-ref:        ir-techno2000net-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-techno2000net-1-mnt
+created:        2017-10-09T09:01:24Z
+last-modified:  2019-07-09T08:32:42Z
+source:         RIPE # Filtered
+phone:          +982156312000
+
+person:         Farhad Janmohammadi
+address:        no.5 Farvardin1 alley 12m sajad soltanabad-Baharestan county
+address:        3757143375
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982156312000
+nic-hdl:        FJ1825-RIPE
+mnt-by:         ir-techno2000net-1-mnt
+created:        2017-10-09T09:01:23Z
+last-modified:  2017-10-09T09:01:24Z
+source:         RIPE
+
+% Information related to '185.224.178.0/24AS205229'
+
+route:          185.224.178.0/24
+origin:         AS205229
+mnt-by:         ir-techno2000net-1-mnt
+created:        2017-10-14T10:23:21Z
+last-modified:  2017-10-14T10:23:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

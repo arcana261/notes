@@ -1,0 +1,54 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '92.119.179.0 - 92.119.179.255'
+
+% Abuse contact for '92.119.179.0 - 92.119.179.255' is 'abuse@m247.ro'
+
+inetnum:        92.119.179.0 - 92.119.179.255
+netname:        M247-LTD-AMSTERDAM
+descr:          M247 LTD Amsterdam Infrastructure
+country:        NL
+geoloc:         52.3740 4.8896
+status:         ASSIGNED PA
+admin-c:        GBXS13-RIPE
+tech-c:         GBXS13-RIPE
+mnt-by:         mnt-ro-m247-feb1901-1
+mnt-by:         GLOBALAXS-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS ----
+created:        2019-06-20T09:53:42Z
+last-modified:  2019-06-20T09:53:42Z
+source:         RIPE
+
+role:           GLOBALAXS NYC NOC
+address:        Equinix NY8 60 Hudson Street, Suite 1602,
+address:        10013 New York, New York, USA
+nic-hdl:        GBXS13-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-07-21T14:54:57Z
+last-modified:  2020-04-24T08:10:05Z
+source:         RIPE # Filtered
+
+% Information related to '92.119.179.0/24AS9009'
+
+route:          92.119.179.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-06-20T09:54:28Z
+last-modified:  2019-06-20T09:54:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

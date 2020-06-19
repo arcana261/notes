@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.169.255.0 - 185.169.255.255'
+
+% Abuse contact for '185.169.255.0 - 185.169.255.255' is 'abuse@nordvpn.com'
+
+inetnum:        185.169.255.0 - 185.169.255.255
+netname:        NORDVPN-L1
+descr:          TEFINCOM S.A.
+country:        GB
+org:            ORG-TS362-RIPE
+admin-c:        SGE17-RIPE
+tech-c:         SGE17-RIPE
+status:         ASSIGNED PA
+mnt-by:         de-net1-1-mnt
+created:        2017-06-21T10:50:39Z
+last-modified:  2020-04-15T11:49:12Z
+source:         RIPE
+
+organisation:   ORG-TS362-RIPE
+org-name:       TEFINCOM S.A.
+org-type:       other
+address:        50th Street, Global Plaza Tower 19th Floor, Suite H
+address:        Panama City
+address:        Panama
+phone:          +6498893645
+admin-c:        SGE17-RIPE
+abuse-c:        ID2154-RIPE
+mnt-by:         TERRATRANSIT-MNT
+mnt-ref:        TERRATRANSIT-MNT
+mnt-ref:        de-net1-1-mnt
+created:        2017-02-20T20:28:27Z
+last-modified:  2017-10-30T15:36:11Z
+source:         RIPE # Filtered
+
+person:         Sandra Gina Esparon
+address:        50th Street, Global Plaza Tower 19th Floor, Suite H
+address:        Panama City
+address:        Panama
+phone:          +6498893645
+nic-hdl:        SGE17-RIPE
+mnt-by:         TERRATRANSIT-MNT
+created:        2017-02-20T20:28:27Z
+last-modified:  2017-02-20T20:28:27Z
+source:         RIPE # Filtered
+
+% Information related to '185.169.255.0/24AS62240'
+
+route:          185.169.255.0/24
+origin:         AS62240
+mnt-by:         de-net1-1-mnt
+created:        2020-04-15T11:49:12Z
+last-modified:  2020-04-15T11:49:12Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

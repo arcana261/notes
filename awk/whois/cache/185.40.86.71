@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.40.86.0 - 185.40.86.255'
+
+% Abuse contact for '185.40.86.0 - 185.40.86.255' is 'abuse@bilrom.com'
+
+inetnum:        185.40.86.0 - 185.40.86.255
+netname:        BLRM_VN_1
+descr:          Bilrom Virtualization Network - 1
+descr:          *** Sanal sunucu agi, lutfen tum blok ile alakali islem yapmayiniz.
+descr:          *** Virtual server network, please do not take action for whole block.
+org:            ORG-BLRM1-RIPE
+country:        TR
+admin-c:        BBM35-RIPE
+tech-c:         BBM35-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-BILROM
+created:        2018-11-13T12:27:48Z
+last-modified:  2018-11-13T13:00:44Z
+source:         RIPE
+
+organisation:   ORG-BLRM1-RIPE
+org-name:       Bilrom Bilisim ve Medya Hiz. San. ve Tic. A.S.
+descr:          *** Bilrom, 5651 sayili kanuna tabi, BTK kayitli bir yer saglayici firmadir.
+org-type:       OTHER
+address:        Alsancak Mh. Kibris Sehitleri Cd. No:20/502 Konak/Izmir Turkey
+phone:          +90 232 277 86 66
+fax-no:         +90 232 278 56 66
+abuse-c:        BBM35-RIPE
+mnt-ref:        MNT-BILROM
+mnt-by:         MNT-BILROM
+created:        2018-11-13T12:43:02Z
+last-modified:  2019-05-21T11:18:57Z
+source:         RIPE # Filtered
+
+role:           Bilrom NOC
+address:        Alsancak Mh. Kibris Sehitleri Cd. No:20/502 Konak/Izmir Turkey
+phone:          +90 232 277 86 66
+fax-no:         +90 232 278 56 66
+admin-c:        BNIU35-RIPE
+tech-c:         BNIU35-RIPE
+nic-hdl:        BBM35-RIPE
+mnt-by:         MNT-BILROM
+created:        2013-11-06T18:17:53Z
+last-modified:  2019-05-21T11:19:35Z
+source:         RIPE # Filtered
+abuse-mailbox:  abuse@bilrom.com
+
+% Information related to '185.40.86.0/24AS199984'
+
+route:          185.40.86.0/24
+descr:          IP Route
+origin:         AS199984
+mnt-by:         MNT-BILROM
+created:        2015-06-09T19:32:00Z
+last-modified:  2015-06-09T19:32:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

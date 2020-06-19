@@ -1,0 +1,71 @@
+query : 218.52.68.116
+
+
+# KOREAN(UTF8)
+
+조회하신 IPv4주소는 한국인터넷진흥원으로부터 아래의 관리대행자에게 할당되었으며, 할당 정보는 다음과 같습니다.
+
+[ 네트워크 할당 정보 ]
+IPv4주소           : 218.50.0.0 - 218.55.255.255 (/14+/15)
+기관명             : 에스케이브로드밴드주식회사
+서비스명           : broadNnet
+주소               : 서울특별시 중구 퇴계로 24
+우편번호           : 04637
+할당일자           : 20011212
+
+이름               : IP주소 담당자
+전화번호           : +82-80-8282-106
+전자우편           : ip-adm@skbroadband.com
+
+조회하신 IPv4주소는 위의 관리대행자로부터 아래의 사용자에게 할당되었으며, 할당 정보는 다음과 같습니다.
+--------------------------------------------------------------------------------
+
+
+[ 네트워크 할당 정보 ]
+IPv4주소           : 218.52.68.0 - 218.52.68.255 (/24)
+기관명             : 에스케이브로드밴드주식회사
+네트워크 구분      : CUSTOMER
+주소               : 서울특별시 중구 퇴계로
+우편번호           : 04637
+할당내역 등록일    : 20121008
+
+이름               : IP주소 담당자
+전화번호           : +82-80-8282-106
+전자우편           : ip-adm@skbroadband.com
+
+
+# ENGLISH
+
+KRNIC is not an ISP but a National Internet Registry similar to APNIC.
+
+[ Network Information ]
+IPv4 Address       : 218.50.0.0 - 218.55.255.255 (/14+/15)
+Organization Name  : SK Broadband Co Ltd
+Service Name       : broadNnet
+Address            : Seoul Jung-gu Toegye-ro 24
+Zip Code           : 04637
+Registration Date  : 20011212
+
+Name               : IP Manager
+Phone              : +82-80-8282-106
+E-Mail             : ip-adm@skbroadband.com
+
+--------------------------------------------------------------------------------
+
+More specific assignment information is as follows.
+
+[ Network Information ]
+IPv4 Address       : 218.52.68.0 - 218.52.68.255 (/24)
+Organization Name  : SK Broadband Co Ltd
+Network Type       : CUSTOMER
+Address            : Seoul Jung-gu Toegye-ro
+Zip Code           : 04637
+Registration Date  : 20121008
+
+Name               : IP Manager
+Phone              : +82-80-8282-106
+E-Mail             : ip-adm@skbroadband.com
+
+
+- KISA/KRNIC WHOIS Service -
+

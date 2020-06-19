@@ -1,0 +1,50 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '14.224.0.0 - 14.255.255.255'
+
+% Abuse contact for '14.224.0.0 - 14.255.255.255' is 'hm-changed@vnnic.vn'
+
+inetnum:        14.224.0.0 - 14.255.255.255
+netname:        VNPT-VN
+descr:          Vietnam Posts and Telecommunications Group
+descr:          No 57, Huynh Thuc Khang Street, Lang Ha ward, Dong Da district, Ha Noi City
+country:        VN
+admin-c:        PTH13-AP
+tech-c:         PTH13-AP
+remarks:        for admin contact mail to Nguyen Xuan Cuong -->NXC1-AP
+remarks:        for Tech contact mail to Nguyen Hien Khanh --> KNH1-AP
+status:         ALLOCATED PORTABLE
+mnt-by:         MAINT-VN-VNNIC
+mnt-lower:      MAINT-VN-VNPT
+mnt-routes:     MAINT-VN-VNPT
+last-modified:  2018-01-25T03:55:18Z
+mnt-irt:        IRT-VNNIC-AP
+source:         APNIC
+
+irt:            IRT-VNNIC-AP
+address:        Ha Noi, VietNam
+phone:          +84-24-35564944
+fax-no:         +84-24-37821462
+e-mail:         hm-changed@vnnic.vn
+abuse-mailbox:  hm-changed@vnnic.vn
+admin-c:        NTTT1-AP
+tech-c:         NTTT1-AP
+auth:           # Filtered
+mnt-by:         MAINT-VN-VNNIC
+last-modified:  2017-11-08T09:40:06Z
+source:         APNIC
+
+person:         Pham Tien Huy
+address:        VNPT-VN
+country:        VN
+phone:          +84-24-37741604
+e-mail:         huypt@vnpt.vn
+nic-hdl:        PTH13-AP
+mnt-by:         MAINT-VN-VNPT
+last-modified:  2017-11-19T07:06:20Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK3)
+
+

@@ -1,0 +1,85 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.239.206.0 - 91.239.207.255'
+
+% Abuse contact for '91.239.206.0 - 91.239.207.255' is 'abuse@proservice.ge'
+
+inetnum:        91.239.206.0 - 91.239.207.255
+netname:        PROSERV-NET-2
+country:        GE
+org:            ORG-PL315-RIPE
+admin-c:        GN4286-RIPE
+tech-c:         AA31212-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-PROSERV
+mnt-routes:     ge-proservice-1-mnt
+mnt-domains:    ge-proservice-1-mnt
+created:        2012-05-25T10:50:49Z
+last-modified:  2016-08-24T10:23:00Z
+source:         RIPE # Filtered
+
+organisation:   ORG-PL315-RIPE
+org-name:       Proservice LLC
+org-type:       LIR
+address:        42 Irakli Abashidze st.
+address:        0179
+address:        Tbilisi
+address:        GEORGIA
+admin-c:        GN4286-RIPE
+admin-c:        AA31212-RIPE
+tech-c:         GN4286-RIPE
+tech-c:         AA31212-RIPE
+abuse-c:        AR37204-RIPE
+mnt-ref:        ge-proservice-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ge-proservice-1-mnt
+created:        2016-08-08T12:24:59Z
+last-modified:  2016-08-16T13:07:06Z
+source:         RIPE # Filtered
+phone:          +995322233005
+
+person:         Alexander Adamia
+address:        42 Irakli Abashidze st.
+address:        0179
+address:        Tbilisi
+address:        GEORGIA
+phone:          +995322233005
+nic-hdl:        AA31212-RIPE
+mnt-by:         ge-proservice-1-mnt
+created:        2016-08-08T12:24:58Z
+last-modified:  2016-08-08T12:24:59Z
+source:         RIPE
+
+person:         George Natroshvili
+address:        42 Irakli Abashidze st.
+address:        0179
+address:        Tbilisi
+address:        GEORGIA
+phone:          +995322233005
+nic-hdl:        GN4286-RIPE
+mnt-by:         ge-proservice-1-mnt
+created:        2016-08-08T12:24:58Z
+last-modified:  2016-08-08T12:24:58Z
+source:         RIPE
+
+% Information related to '91.239.206.0/24AS47810'
+
+route:          91.239.206.0/24
+descr:          Project-Service Network
+origin:         AS47810
+mnt-by:         MNT-PROSERV
+created:        2012-05-25T14:07:32Z
+last-modified:  2012-05-25T14:07:32Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

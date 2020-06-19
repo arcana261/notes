@@ -1,0 +1,119 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       104.128.64.0 - 104.128.67.255
+CIDR:           104.128.64.0/22
+NetName:        KAMAT
+NetHandle:      NET-104-128-64-0-1
+Parent:         NET104 (NET-104-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Kamatera, Inc. (KAMAT)
+RegDate:        2019-01-22
+Updated:        2019-01-22
+Ref:            https://rdap.arin.net/registry/ip/104.128.64.0
+
+
+OrgName:        Kamatera, Inc.
+OrgId:          KAMAT
+Address:        315 Madison Ave.
+City:           New York City
+StateProv:      NY
+PostalCode:     10017
+Country:        US
+RegDate:        2015-06-08
+Updated:        2018-08-13
+Ref:            https://rdap.arin.net/registry/entity/KAMAT
+
+
+OrgNOCHandle: CWM4-ARIN
+OrgNOCName:   Cloud Web Manage
+OrgNOCPhone:  +1-212-738-9657 
+OrgNOCEmail:  abuse@cloudwm.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/CWM4-ARIN
+
+OrgAbuseHandle: CWM4-ARIN
+OrgAbuseName:   Cloud Web Manage
+OrgAbusePhone:  +1-212-738-9657 
+OrgAbuseEmail:  abuse@cloudwm.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/CWM4-ARIN
+
+OrgTechHandle: CWM4-ARIN
+OrgTechName:   Cloud Web Manage
+OrgTechPhone:  +1-212-738-9657 
+OrgTechEmail:  abuse@cloudwm.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/CWM4-ARIN
+
+# end
+
+
+# start
+
+NetRange:       104.128.64.0 - 104.128.64.255
+CIDR:           104.128.64.0/24
+NetName:        KAMAT
+NetHandle:      NET-104-128-64-0-2
+Parent:         KAMAT (NET-104-128-64-0-1)
+NetType:        Reassigned
+OriginAS:       AS36007
+Customer:       Cloud Web Manage (C07564029)
+RegDate:        2020-06-10
+Updated:        2020-06-10
+Comment:        Kamatera is a global cloud services platform providing enterprise-grade cloud infrastructure products to organizations of all types and sizes.
+Ref:            https://rdap.arin.net/registry/ip/104.128.64.0
+
+
+CustName:       Cloud Web Manage
+Address:        315 Madison Ave.
+City:           New York City
+StateProv:      NY
+PostalCode:     10017
+Country:        US
+RegDate:        2020-06-10
+Updated:        2020-06-10
+Ref:            https://rdap.arin.net/registry/entity/C07564029
+
+OrgNOCHandle: CWM4-ARIN
+OrgNOCName:   Cloud Web Manage
+OrgNOCPhone:  +1-212-738-9657 
+OrgNOCEmail:  abuse@cloudwm.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/CWM4-ARIN
+
+OrgAbuseHandle: CWM4-ARIN
+OrgAbuseName:   Cloud Web Manage
+OrgAbusePhone:  +1-212-738-9657 
+OrgAbuseEmail:  abuse@cloudwm.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/CWM4-ARIN
+
+OrgTechHandle: CWM4-ARIN
+OrgTechName:   Cloud Web Manage
+OrgTechPhone:  +1-212-738-9657 
+OrgTechEmail:  abuse@cloudwm.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/CWM4-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

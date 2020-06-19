@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '77.238.126.0 - 77.238.127.255'
+
+% Abuse contact for '77.238.126.0 - 77.238.127.255' is 'Abdoos@tci.ir'
+
+inetnum:        77.238.126.0 - 77.238.127.255
+org:            ORG-TCOS2-RIPE
+netname:        TCS
+descr:          Telecommunication Company of Semnan
+country:        IR
+admin-c:        NA6201-RIPE
+tech-c:         DP14867-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2019-09-30T06:18:01Z
+last-modified:  2019-09-30T06:18:01Z
+source:         RIPE
+
+organisation:   ORG-TCOS2-RIPE
+org-name:       Telecommunication Company of Semnan
+org-type:       other
+address:        Semnan - Hafte tir Square - Telecommunication Company of Semnan
+tech-c:         DP14867-RIPE
+admin-c:        NA6201-RIPE
+abuse-c:        AC26947-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-03T11:20:18Z
+last-modified:  2019-03-02T07:23:49Z
+source:         RIPE # Filtered
+
+role:           Data Planner (Semnan)
+address:        Semnan - Hafte tir Square - Telecommunication Company of Semnan
+admin-c:        HRF24-RIPE
+nic-hdl:        DP14867-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T07:16:59Z
+last-modified:  2019-03-02T07:16:59Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Semnan)
+address:        Semnan - Hafte tir Square - Telecommunication Company of Semnan
+admin-c:        MMS275-RIPE
+nic-hdl:        NA6201-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-03-02T07:11:58Z
+last-modified:  2019-03-02T07:11:58Z
+source:         RIPE # Filtered
+
+% Information related to '77.238.124.0/22AS58224'
+
+route:          77.238.124.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2019-07-17T09:32:54Z
+last-modified:  2019-07-17T09:32:54Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

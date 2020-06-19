@@ -1395,6 +1395,24 @@ function __whoisdb_get_iran_isp_from_mnt(mnt) {
     if (mnt == "MNT-ARP") {
         return "Asan Pardakht Parsian";
     }
+    if (mnt ~ /^IR-SCIENCESHEALTHSERVICES-[0-9]*-MNT$/) {
+        return "Isfahan University Of Medical Sciences & Health Services";
+    }
+    if (mnt ~ /^IR-SADADCO-1-MNT$/) {
+        return "Sadad";
+    }
+    if (mnt ~ /^IR-KISHITGROUP-[0-9]*-MNT$/) {
+        return "Kish Pardis";
+    }
+    if (mnt ~ /^MNT-IR-PARVARESH-[0-9]*$/) {
+        return "Parvaresh Dadeha";
+    }
+    if (mnt ~ /^IR-ATINET-KABODAR-[0-9]*-MNT$/) {
+        return "Ati Net";
+    }
+    if (mnt ~ /^IR-GOSTARESH-[0-9]*-MNT$/) {
+        return "Ertebatat Azin Kia";
+    }
 
     return "-";
 }
@@ -1486,7 +1504,7 @@ function __whoisdb_get_iran_isp_from_owner(owner) {
     if (owner ~ /^IR-SERVCO-AVAGOSTAR/) {
         return "Ava Gostar Sarv";
     }
-    if (owner == "FARAHOOSH-SERVCO-SHIRAZ" || owner == "FARAHOOSHDENA-ADSL") {
+    if (owner == "FARAHOOSH-SERVCO-SHIRAZ" || owner == "FARAHOOSHDENA-ADSL" || owner == "FARAHOOSH-SERVCO-ADSL") {
         return "Farahoosh";
     }
     if (owner == "PARSIAN_BANK") {

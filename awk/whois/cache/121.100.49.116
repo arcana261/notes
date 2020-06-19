@@ -1,0 +1,81 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '121.100.48.0 - 121.100.55.255'
+
+% Abuse contact for '121.100.48.0 - 121.100.55.255' is 'abuse@afghan-wireless.com'
+
+inetnum:        121.100.48.0 - 121.100.55.255
+netname:        AWCC-AF
+descr:          Afghan Wireless Communication Company
+descr:          Afghanistan
+country:        AF
+org:            ORG-AW1-AP
+admin-c:        GMK8-AP
+tech-c:         GMK8-AP
+status:         ALLOCATED PORTABLE
+remarks:        --------------------------------------------------------
+remarks:        To report network abuse, please contact mnt-irt
+remarks:        For troubleshooting, please contact tech-c and admin-c
+remarks:        Report invalid contact via www.apnic.net/invalidcontact
+remarks:        --------------------------------------------------------
+mnt-by:         APNIC-HM
+mnt-lower:      MAINT-AF-AWCC
+mnt-routes:     MAINT-AF-AWCC
+mnt-irt:        IRT-AWCC-AF
+last-modified:  2020-02-06T09:40:09Z
+source:         APNIC
+
+irt:            IRT-AWCC-AF
+address:        Afghan Wireless Communication Company
+address:        Kabul, Afghanistan
+e-mail:         ip.admin@afghan-wireless.com
+abuse-mailbox:  abuse@afghan-wireless.com
+admin-c:        GMK8-AP
+tech-c:         GMK8-AP
+auth:           # Filtered
+remarks:        abuse@afghan-wireless.com was validated on 2020-02-06
+remarks:        ip.admin@afghan-wireless.com was validated on 2020-04-09
+mnt-by:         MAINT-AF-AWCC
+last-modified:  2020-04-09T07:32:53Z
+source:         APNIC
+
+organisation:   ORG-AW1-AP
+org-name:       Afghan Wireless
+country:        AF
+address:        BMC Building
+address:        Near Hajari Najari
+address:        Dar-ul-aman Road
+phone:          +9370028888
+fax-no:         +9320200200
+e-mail:         ip.admin@afghan-wireless.com
+mnt-ref:        APNIC-HM
+mnt-by:         APNIC-HM
+last-modified:  2019-06-03T12:55:57Z
+source:         APNIC
+
+person:         Gull Muhammad Khan
+address:        Yakatoot Compound,Kabul-Jalalabad Highway Kabul, Afghanistan
+country:        AF
+phone:          +93700802482
+e-mail:         gull.mohammad@afghan-wireless.com
+nic-hdl:        GMK8-AP
+mnt-by:         MAINT-AF-AWCC
+last-modified:  2018-11-26T05:35:15Z
+source:         APNIC
+
+% Information related to '121.100.49.0/24AS38742'
+
+route:          121.100.49.0/24
+origin:         AS38742
+descr:          Afghan Wireless
+                BMC Building
+                Near Hajari Najari
+                Dar-ul-aman Road
+mnt-by:         MAINT-AF-AWCC
+last-modified:  2020-04-26T22:12:41Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK3)
+
+

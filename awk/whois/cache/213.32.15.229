@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '213.32.15.224 - 213.32.15.255'
+
+% Abuse contact for '213.32.15.224 - 213.32.15.255' is 'abuse@ovh.net'
+
+inetnum:        213.32.15.224 - 213.32.15.255
+netname:        OVH-DEDICATED-213-32-15-224-FO
+descr:          Ips failover
+country:        PT
+org:            ORG-OL44-RIPE
+admin-c:        OTC6-RIPE
+tech-c:         OTC6-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2016-10-09T21:00:16Z
+last-modified:  2016-10-09T21:00:16Z
+source:         RIPE
+
+organisation:   ORG-OL44-RIPE
+org-name:       OVH Hosting LDA
+org-type:       OTHER
+address:        Avenida Miguel Bombarda, 133 - 6ºA
+address:        1050-164 Lisboa
+address:        Portugal
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2008-12-23T18:00:25Z
+last-modified:  2017-10-30T16:12:20Z
+source:         RIPE # Filtered
+
+role:           OVH PT Technical Contact
+address:        OVH Hosting LDA
+address:        Avenida Miguel Bombarda, 133 - 6ºA
+address:        1050-164 Lisboa
+address:        Portugal
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC6-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2008-12-23T17:48:44Z
+last-modified:  2008-12-23T17:48:44Z
+source:         RIPE # Filtered
+
+% Information related to '213.32.0.0/17AS16276'
+
+route:          213.32.0.0/17
+descr:          OVH
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2016-09-30T09:47:45Z
+last-modified:  2016-09-30T09:47:45Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

@@ -1,0 +1,71 @@
+query : 222.99.68.90
+
+
+# KOREAN(UTF8)
+
+조회하신 IPv4주소는 한국인터넷진흥원으로부터 아래의 관리대행자에게 할당되었으며, 할당 정보는 다음과 같습니다.
+
+[ 네트워크 할당 정보 ]
+IPv4주소           : 222.96.0.0 - 222.122.255.255 (/12+/13+/15+/16)
+기관명             : 주식회사 케이티
+서비스명           : KORNET
+주소               : 경기도 성남시 분당구 불정로 90
+우편번호           : 13606
+할당일자           : 20031110
+
+이름               : IP주소 담당자
+전화번호           : +82-2-500-6630
+전자우편           : kornet_ip@kt.com
+
+조회하신 IPv4주소는 위의 관리대행자로부터 아래의 사용자에게 할당되었으며, 할당 정보는 다음과 같습니다.
+--------------------------------------------------------------------------------
+
+
+[ 네트워크 할당 정보 ]
+IPv4주소           : 222.99.68.64 - 222.99.68.127 (/26)
+기관명             : 수도권강남본부장
+네트워크 구분      : CUSTOMER
+주소               : 경기도 이천시 마장면
+우편번호           : 467-810
+할당내역 등록일    : 20150317
+
+이름               : IP주소 담당자
+전화번호           : +82-2-500-6630
+전자우편           : kornet_ip@kt.com
+
+
+# ENGLISH
+
+KRNIC is not an ISP but a National Internet Registry similar to APNIC.
+
+[ Network Information ]
+IPv4 Address       : 222.96.0.0 - 222.122.255.255 (/12+/13+/15+/16)
+Organization Name  : Korea Telecom
+Service Name       : KORNET
+Address            : Gyeonggi-do Bundang-gu, Seongnam-si Buljeong-ro 90
+Zip Code           : 13606
+Registration Date  : 20031110
+
+Name               : IP Manager
+Phone              : +82-2-500-6630
+E-Mail             : kornet_ip@kt.com
+
+--------------------------------------------------------------------------------
+
+More specific assignment information is as follows.
+
+[ Network Information ]
+IPv4 Address       : 222.99.68.64 - 222.99.68.127 (/26)
+Organization Name  : Sudogwongangnambonbujang
+Network Type       : CUSTOMER
+Address            : Majang-Myeon Icheon-Si Gyeonggi-Do
+Zip Code           : 467-810
+Registration Date  : 20150317
+
+Name               : IP Manager
+Phone              : +82-2-500-6630
+E-Mail             : kornet_ip@kt.com
+
+
+- KISA/KRNIC WHOIS Service -
+

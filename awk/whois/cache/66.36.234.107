@@ -1,0 +1,165 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       66.36.224.0 - 66.36.255.255
+CIDR:           66.36.224.0/19
+NetName:        HOPONE-DCA2-1
+NetHandle:      NET-66-36-224-0-1
+Parent:         NET66 (NET-66-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   HopOne Internet Corporation (HOPO)
+RegDate:        2002-08-27
+Updated:        2019-08-04
+Comment:        
+Comment:        HopOne Internet Corp.(R)
+Comment:        "The Foundation of Internet Success."(R)
+Comment:        www.hopone.net
+Ref:            https://rdap.arin.net/registry/ip/66.36.224.0
+
+
+OrgName:        HopOne Internet Corporation
+OrgId:          HOPO
+Address:        3311 South 120th Place
+City:           Tukwila
+StateProv:      WA
+PostalCode:     98168-5125
+Country:        US
+RegDate:        1999-12-02
+Updated:        2019-08-26
+Comment:        HopOne Internet Corp.(R)
+Comment:        "The Foundation of Internet Success."(R)
+Comment:        www.hopone.net
+Ref:            https://rdap.arin.net/registry/entity/HOPO
+
+ReferralServer:  rwhois://rwhois.hopone.net:4321
+
+OrgRoutingHandle: ROUTI10-ARIN
+OrgRoutingName:   Routing
+OrgRoutingPhone:  +1-703-564-5400 
+OrgRoutingEmail:  routing@hopone.net
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/ROUTI10-ARIN
+
+OrgTechHandle: WESTT37-ARIN
+OrgTechName:   West, Travis 
+OrgTechPhone:  +1-888-354-6128 
+OrgTechEmail:  twest@cherryroad.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/WESTT37-ARIN
+
+OrgTechHandle: RALPH22-ARIN
+OrgTechName:   RALPH, Joseph 
+OrgTechPhone:  +1-973-541-4357 
+OrgTechEmail:  jralph@hopone.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/RALPH22-ARIN
+
+OrgTechHandle: GOULD134-ARIN
+OrgTechName:   Gould, John 
+OrgTechPhone:  +1-703-564-5400 
+OrgTechEmail:  jgould-arin@hopone.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/GOULD134-ARIN
+
+OrgAbuseHandle: ABUSE958-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-206-438-5909 
+OrgAbuseEmail:  abuse@hopone.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE958-ARIN
+
+RTechHandle: HJ48-ARIN
+RTechName:   Jass, Haralds 
+RTechPhone:  +1-206-438-5909 
+RTechEmail:  hjass@hopone.net
+RTechRef:    https://rdap.arin.net/registry/entity/HJ48-ARIN
+
+RAbuseHandle: ABUSE958-ARIN
+RAbuseName:   Abuse Department
+RAbusePhone:  +1-206-438-5909 
+RAbuseEmail:  abuse@hopone.net
+RAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE958-ARIN
+
+RTechHandle: RALPH22-ARIN
+RTechName:   RALPH, Joseph 
+RTechPhone:  +1-973-541-4357 
+RTechEmail:  jralph@hopone.net
+RTechRef:    https://rdap.arin.net/registry/entity/RALPH22-ARIN
+
+# end
+
+
+# start
+
+NetRange:       66.36.234.0 - 66.36.234.255
+CIDR:           66.36.234.0/24
+NetName:        DEDIOUTLET-66-36-234-0-24
+NetHandle:      NET-66-36-234-0-1
+Parent:         HOPONE-DCA2-1 (NET-66-36-224-0-1)
+NetType:        Reassigned
+OriginAS:       
+Organization:   DediOutlet, LLC (DL-715)
+RegDate:        2019-09-30
+Updated:        2019-09-30
+Comment:        For network inquiries, please contact noc@dedioutlet.com
+Comment:        For abuse inquiries, please contact abuse@dedioutlet.com
+Comment:        For support inquiries, please contact support@dedioutlet.com
+Comment:        https://dedioutlet.com
+Ref:            https://rdap.arin.net/registry/ip/66.36.234.0
+
+
+OrgName:        DediOutlet, LLC
+OrgId:          DL-715
+Address:        100 W Church Street
+City:           Smithville
+StateProv:      MO
+PostalCode:     64089
+Country:        US
+RegDate:        2019-08-19
+Updated:        2019-08-19
+Comment:        https://dedioutlet.com
+Comment:        Status: https://status.dedioutlet.com
+Ref:            https://rdap.arin.net/registry/entity/DL-715
+
+
+OrgTechHandle: DEDIO1-ARIN
+OrgTechName:   DediOutlet NOC
+OrgTechPhone:  +1-816-982-0614 
+OrgTechEmail:  noc@dedioutlet.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/DEDIO1-ARIN
+
+OrgAbuseHandle: DAD124-ARIN
+OrgAbuseName:   DediOutlet Abuse Department
+OrgAbusePhone:  +1-816-982-0614 
+OrgAbuseEmail:  abuse@dedioutlet.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/DAD124-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.hopone.net:4321.
+
+%rwhois V-1.5:00ffff:00 rwhois.hopone.net (Network Solutions V-1.5)
+OrgTechName: Private - Superb.net
+OrgTechEmail: abuse@superb.net

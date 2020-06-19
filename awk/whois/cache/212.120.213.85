@@ -1,0 +1,77 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '212.120.213.0 - 212.120.213.127'
+
+% Abuse contact for '212.120.213.0 - 212.120.213.127' is 'info@hamarasystem.net'
+
+inetnum:        212.120.213.0 - 212.120.213.127
+netname:        HAMARASYSTEM
+descr:          HamaraSystem Co.
+country:        IR
+admin-c:        MK7777-RIPE
+admin-c:        RJ1199-RIPE
+tech-c:         MKH-RIPE
+status:         ASSIGNED PA
+remarks:        INFRA-AW
+mnt-by:         HAMARASYSTEM-MNT
+mnt-by:         MK1-MNT
+created:        2009-06-01T19:23:09Z
+last-modified:  2009-06-01T19:23:09Z
+source:         RIPE # Filtered
+
+person:         Mehran Khabbaz Azar
+address:        HamaraSystem Co.
+address:        #44,Baghshomal Ave.
+address:        TABRIZ
+address:        IRAN
+phone:          +98 411 5531188
+fax-no:         +98 411 5535111
+nic-hdl:        MK7777-RIPE
+mnt-by:         MK1-MNT
+created:        2005-04-11T06:24:06Z
+last-modified:  2008-08-19T11:15:41Z
+source:         RIPE # Filtered
+
+person:         Mehran Khabbaz Azar
+address:        HamaraSystem Co.
+address:        #44,Baghshomal Ave.
+address:        Tabriz
+address:        Iran
+phone:          +98 411 5531188
+fax-no:         +98 411 5535111
+nic-hdl:        MKH-RIPE
+mnt-by:         MK1-MNT
+created:        2005-04-12T11:41:38Z
+last-modified:  2008-08-19T13:25:32Z
+source:         RIPE # Filtered
+
+person:         Reza Jalilzadeh
+address:        #44,Baghshomal Ave.,Tabriz,Iran
+phone:          +98 411 553 11 88
+nic-hdl:        RJ1199-RIPE
+mnt-by:         MK1-MNT
+created:        2006-05-07T11:15:09Z
+last-modified:  2008-05-17T09:17:45Z
+source:         RIPE # Filtered
+
+% Information related to '212.120.208.0/20AS47262'
+
+route:          212.120.208.0/20
+descr:          HAMARA-Route
+origin:         AS47262
+mnt-by:         HAMARASYSTEM-MNT
+mnt-by:         MK1-MNT
+created:        2015-01-12T16:54:01Z
+last-modified:  2015-01-12T16:54:01Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

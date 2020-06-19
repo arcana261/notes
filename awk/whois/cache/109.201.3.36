@@ -1,0 +1,54 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '109.201.0.0 - 109.201.7.255'
+
+% Abuse contact for '109.201.0.0 - 109.201.7.255' is 'abuse@fanaptelecom.ir'
+
+inetnum:        109.201.0.0 - 109.201.7.255
+netname:        FANAPTELECOM-NETWORK
+descr:          FANAPTELECOM Whole customers network address space assignment
+country:        IR
+admin-c:        TN3118-RIPE
+tech-c:         TN3118-RIPE
+status:         ASSIGNED PA
+mnt-by:         ir-javidan-1-mnt
+mnt-lower:      ir-javidan-1-mnt
+mnt-domains:    TRG-DMN-MNT
+mnt-routes:     ir-javidan-1-mnt
+created:        2016-10-03T06:04:48Z
+last-modified:  2016-10-03T06:04:48Z
+source:         RIPE
+
+role:           FANAPTELECOM NETWORK
+address:        No6 - 3rd St. - Shams Tabrizi St. - Mirdamad Ave.
+address:        TEHRAN-IRAN
+phone:          +982191031567
+fax-no:         +982122920153
+admin-c:        HS10196-RIPE
+tech-c:         BA82-RIPE
+nic-hdl:        TN3118-RIPE
+mnt-by:         ir-javidan-1-mnt
+created:        2016-04-18T08:46:11Z
+last-modified:  2020-05-27T10:09:51Z
+source:         RIPE # Filtered
+
+% Information related to '109.201.0.0/19AS24631'
+
+route:          109.201.0.0/19
+origin:         AS24631
+mnt-by:         KAVEH-GIS
+mnt-by:         ir-javidan-1-mnt
+created:        2016-11-14T08:52:50Z
+last-modified:  2016-11-14T08:52:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

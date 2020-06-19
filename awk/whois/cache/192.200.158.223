@@ -1,0 +1,109 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       192.200.144.0 - 192.200.159.255
+CIDR:           192.200.144.0/20
+NetName:        RBLHST
+NetHandle:      NET-192-200-144-0-1
+Parent:         NET192 (NET-192-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS22781, AS13926
+Organization:   Strong Technology, LLC. (STL-172)
+RegDate:        2012-09-26
+Updated:        2016-11-04
+Ref:            https://rdap.arin.net/registry/ip/192.200.144.0
+
+
+OrgName:        Strong Technology, LLC.
+OrgId:          STL-172
+Address:        1920 McKinney Ave
+Address:        7th Floor
+City:           Dallas
+StateProv:      TX
+PostalCode:     75201
+Country:        US
+RegDate:        2016-02-19
+Updated:        2017-10-12
+Ref:            https://rdap.arin.net/registry/entity/STL-172
+
+
+OrgAbuseHandle: ABUSE2369-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-415-255-5711 
+OrgAbuseEmail:  abuse@strongtechnology.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE2369-ARIN
+
+OrgTechHandle: IPADM341-ARIN
+OrgTechName:   IP Admin
+OrgTechPhone:  +1-415-255-5711 
+OrgTechEmail:  ipadmin@strongtechnology.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADM341-ARIN
+
+# end
+
+
+# start
+
+NetRange:       192.200.156.0 - 192.200.159.255
+CIDR:           192.200.156.0/22
+NetName:        NETPROTECT-PHX
+NetHandle:      NET-192-200-156-0-1
+Parent:         RBLHST (NET-192-200-144-0-1)
+NetType:        Reassigned
+OriginAS:       AS13926
+Organization:   NETPROTECT-PHX (NETPR-13)
+RegDate:        2019-07-29
+Updated:        2019-07-29
+Ref:            https://rdap.arin.net/registry/ip/192.200.156.0
+
+
+OrgName:        NETPROTECT-PHX
+OrgId:          NETPR-13
+Address:        3402 East University Drive
+City:           Phoenix
+StateProv:      AZ
+PostalCode:     85034
+Country:        US
+RegDate:        2019-07-29
+Updated:        2019-07-29
+Ref:            https://rdap.arin.net/registry/entity/NETPR-13
+
+
+OrgAbuseHandle: ABUSE5222-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-800-591-5241 
+OrgAbuseEmail:  abuse@ipvanish.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE5222-ARIN
+
+OrgTechHandle: ABUSE5222-ARIN
+OrgTechName:   Abuse Department
+OrgTechPhone:  +1-800-591-5241 
+OrgTechEmail:  abuse@ipvanish.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ABUSE5222-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

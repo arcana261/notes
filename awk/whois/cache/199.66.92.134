@@ -1,0 +1,66 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       199.66.88.0 - 199.66.95.255
+CIDR:           199.66.88.0/21
+NetName:        OL-335
+NetHandle:      NET-199-66-88-0-1
+Parent:         NET199 (NET-199-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   NETMINDERS DATA SOLUTION (OL-335)
+RegDate:        2020-01-22
+Updated:        2020-01-22
+Ref:            https://rdap.arin.net/registry/ip/199.66.88.0
+
+
+OrgName:        NETMINDERS DATA SOLUTION
+OrgId:          OL-335
+Address:        PO Box 4016 Cachet Centre P.O
+City:           Markham
+StateProv:      ON
+PostalCode:     L6C 0G5
+Country:        CA
+RegDate:        2019-08-21
+Updated:        2020-01-23
+Ref:            https://rdap.arin.net/registry/entity/OL-335
+
+
+OrgTechHandle: ZHENG102-ARIN
+OrgTechName:   ZHENG, LIANG 
+OrgTechPhone:  +1-647-847-2641 
+OrgTechEmail:  ivan.zheng@net-minders.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ZHENG102-ARIN
+
+OrgNOCHandle: NOC32998-ARIN
+OrgNOCName:   Network Operation Center
+OrgNOCPhone:  +1-647-847-2641 
+OrgNOCEmail:  noc@yesup.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC32998-ARIN
+
+OrgAbuseHandle: NAC101-ARIN
+OrgAbuseName:    Network Abuse Contact
+OrgAbusePhone:  +1-647-847-2641 
+OrgAbuseEmail:  serviceabuse@yesupmail.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NAC101-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

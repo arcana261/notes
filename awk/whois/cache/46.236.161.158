@@ -1,0 +1,54 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.236.160.0 - 46.236.163.255'
+
+% Abuse contact for '46.236.160.0 - 46.236.163.255' is 'abuse@domru.ru'
+
+inetnum:        46.236.160.0 - 46.236.163.255
+netname:        TOMTEL-NET
+descr:          TOMTEL. DOCSIS and FTTH ISP in TOMSK and SEVERSK
+country:        RU
+admin-c:        ERTH70-RIPE
+tech-c:         ERTH70-RIPE
+status:         ASSIGNED PA
+mnt-by:         RAID-MNT
+created:        2012-05-30T06:10:38Z
+last-modified:  2020-03-11T07:05:13Z
+source:         RIPE
+
+role:           Network Operation Center CJSC ER-Telecom Holding Tomsk branch
+address:        CJSC "ER-Telecom Holding" Tomsk branch
+address:        shosse Kosmonavtov, 111
+address:        614099 Perm'
+address:        Russian Federation
+phone:          +7 342 2 195 100
+fax-no:         +7 342 2 195 100
+abuse-mailbox:  abuse@domru.ru
+admin-c:        RAID1-RIPE
+tech-c:         RAID1-RIPE
+nic-hdl:        ERTH70-RIPE
+created:        2011-06-16T11:23:49Z
+last-modified:  2019-06-07T06:21:48Z
+source:         RIPE # Filtered
+mnt-by:         RAID-MNT
+
+% Information related to '46.236.160.0/22AS34145'
+
+route:          46.236.160.0/22
+descr:          TOMTEL networks
+origin:         AS34145
+mnt-by:         TOMTEL-MNT
+created:        2013-06-14T08:17:09Z
+last-modified:  2013-06-14T08:17:09Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

@@ -1,0 +1,53 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.69.128.0 - 188.69.255.255'
+
+% Abuse contact for '188.69.128.0 - 188.69.255.255' is 'abuse@telia.lt'
+
+inetnum:        188.69.128.0 - 188.69.255.255
+netname:        Telia-Lietuva
+descr:          Telia Lietuva, AB
+country:        LT
+status:         ASSIGNED PA
+mnt-by:         AS8764-MNT
+created:        2009-10-13T09:54:55Z
+last-modified:  2019-06-07T06:25:37Z
+source:         RIPE
+admin-c:        LTIN2-RIPE
+tech-c:         LTIN2-RIPE
+
+role:           Telia Lietuva, AB NOC
+address:        Telia Lietuva, AB
+address:        Saltoniskiu g. 7A
+address:        LT-03501 Vilnius
+address:        Lithuania
+mnt-by:         TELECOMLT-MNT
+admin-c:        LTIN1-RIPE
+tech-c:         LTIN1-RIPE
+nic-hdl:        LTIN2-RIPE
+created:        2004-12-17T13:31:31Z
+last-modified:  2019-05-20T03:55:54Z
+source:         RIPE # Filtered
+abuse-mailbox:  abuse@telia.lt
+
+% Information related to '188.69.192.0/22AS8764'
+
+route:          188.69.192.0/22
+descr:          Telia Lietuva, AB
+descr:          GSM communications and data networks
+origin:         AS8764
+mnt-by:         AS8764-MNT
+created:        2018-10-25T09:15:30Z
+last-modified:  2019-06-07T06:24:11Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.9.118.0 - 85.9.118.255'
+
+% Abuse contact for '85.9.118.0 - 85.9.118.255' is 'abuse@pishgaman.net'
+
+inetnum:        85.9.118.0 - 85.9.118.255
+netname:        ADSL-USERS
+descr:          ADSL-users-IP-pools
+country:        IR
+admin-c:        MMT86-RIPE
+tech-c:         MMT86-RIPE
+status:         ASSIGNED PA
+mnt-by:         Pishgaman-MNT
+created:        2013-03-14T06:24:32Z
+last-modified:  2015-12-21T05:28:39Z
+source:         RIPE
+
+person:         Majid Gheibizadeh
+address:        pishgaman,No.30,Shahid Sadoughi Blvd , YAZD ,IRAN
+phone:          +983537253545
+nic-hdl:        MMT86-RIPE
+mnt-by:         Pishgaman-MNT
+created:        2012-07-03T06:44:08Z
+last-modified:  2014-12-30T05:16:10Z
+source:         RIPE
+
+% Information related to '85.9.118.0/24AS34918'
+
+route:          85.9.118.0/24
+origin:         AS34918
+mnt-by:         PISHGAMAN-MNT
+created:        2016-07-24T09:04:19Z
+last-modified:  2016-07-24T09:04:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

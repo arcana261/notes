@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '77.223.128.0 - 77.223.159.255'
+
+% Abuse contact for '77.223.128.0 - 77.223.159.255' is 'abuse@netdirekt.com.tr'
+
+inetnum:        77.223.128.0 - 77.223.159.255
+netname:        TR-TEKNOAS-20070424
+country:        TR
+org:            ORG-TBTL1-RIPE
+admin-c:        NTD35-RIPE
+tech-c:         NTD35-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-NETDIREKT
+mnt-routes:     MNT-NETDIREKT
+mnt-domains:    MNT-NETDIREKT
+created:        2007-04-24T12:39:02Z
+last-modified:  2018-12-04T11:26:59Z
+source:         RIPE # Filtered
+
+organisation:   ORG-TBTL1-RIPE
+org-name:       Netdirekt A.S.
+org-type:       LIR
+address:        AYDINLAR CAD NO 44 ISIKKENT/BORNOVA
+address:        35070
+address:        IZMIR
+address:        TURKEY
+phone:          +908502008899
+fax-no:         +908502008898
+abuse-c:        AR17391-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-NETDIREKT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-NETDIREKT
+created:        2006-11-28T13:02:07Z
+last-modified:  2018-12-04T11:27:01Z
+source:         RIPE # Filtered
+
+person:         Netdirekt Technical Team
+address:        Aydinlar Cad. No: 44 Isikkent Bornova Izmir
+phone:          +90 850 200 88 99
+fax-no:         +90 850 200 88 98
+nic-hdl:        NTD35-RIPE
+mnt-by:         MNT-NETDIREKT
+created:        2009-07-15T19:34:33Z
+last-modified:  2018-12-04T08:55:58Z
+source:         RIPE # Filtered
+
+% Information related to '77.223.128.0/20AS43391'
+
+route:          77.223.128.0/20
+descr:          Netdirekt
+origin:         AS43391
+mnt-by:         MNT-NETDIREKT
+created:        2009-07-03T14:58:25Z
+last-modified:  2009-07-15T19:44:11Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

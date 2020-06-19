@@ -1,0 +1,57 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '180.150.12.0 - 180.150.12.255'
+
+% Abuse contact for '180.150.12.0 - 180.150.12.255' is 'abuse@aussiebroadband.com.au'
+
+inetnum:        180.150.12.0 - 180.150.12.255
+netname:        WIDEBAND
+descr:          Aussie Broadband
+country:        AU
+admin-c:        PB12-AP
+tech-c:         PB12-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         maint-au-wideband1
+mnt-irt:        IRT-WIDEBAND-AU
+last-modified:  2017-11-16T22:17:25Z
+source:         APNIC
+
+irt:            IRT-WIDEBAND-AU
+address:        3 Electra Ave
+address:        Morwell. VIC. 3840
+e-mail:         abuse@aussiebroadband.com.au
+abuse-mailbox:  abuse@aussiebroadband.com.au
+admin-c:        PB12-AP
+tech-c:         PB12-AP
+auth:           # Filtered
+remarks:        abuse@aussiebroadband.com.au was validated on 2020-01-02
+mnt-by:         MAINT-AU-WIDEBAND1
+last-modified:  2020-01-02T03:12:48Z
+source:         APNIC
+
+person:         Phillip Britt
+nic-hdl:        PB12-AP
+e-mail:         apnic@wideband.net.au
+address:        3 Electra Ave
+address:        Morwell.  VIC.  3840
+phone:          +61-3-51650000
+fax-no:         +61-3-51341177
+country:        AU
+mnt-by:         MAINT-AU-WIDEBAND1
+last-modified:  2014-10-08T03:41:49Z
+source:         APNIC
+
+% Information related to '180.150.12.0/24AS4764'
+
+route:          180.150.12.0/24
+origin:         AS4764
+descr:          Wideband Networks Pty Ltd
+                3 Electra Ave
+mnt-by:         MAINT-AU-WIDEBAND1
+last-modified:  2019-05-08T21:18:29Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK3)
+
+

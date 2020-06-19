@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.229.228.202 - 46.229.228.202'
+
+% Abuse contact for '46.229.228.202 - 46.229.228.202' is '46.229.228.202@abuse.vnet.sk'
+
+inetnum:        46.229.228.202 - 46.229.228.202
+netname:        SK-VNET
+descr:          VNET a.s.
+country:        SK
+org:            ORG-VA3529-RIPE
+admin-c:        VN666-RIPE
+tech-c:         VN666-RIPE
+status:         ASSIGNED PA
+mnt-by:         VNET-MNT
+created:        2015-10-21T10:10:49Z
+last-modified:  2015-10-21T10:10:49Z
+source:         RIPE
+
+organisation:   ORG-VA3529-RIPE
+org-name:       VNET-org-46.229.228.202
+org-type:       OTHER
+address:        Namestie Hraniciarov 39
+address:        Bratislava
+address:        811 07 Slovakia
+abuse-c:        VA7261-RIPE
+mnt-by:         VNET-MNT
+mnt-ref:        VNET-MNT
+created:        2015-10-21T10:10:49Z
+last-modified:  2015-10-21T10:10:49Z
+source:         RIPE # Filtered
+
+person:         Vojtech Nemeth
+address:        VNET a.s.
+address:        Nam. Hraniciarov 39
+address:        Bratislava
+address:        85103
+address:        Slovakia
+phone:          +421 2 5292 6151
+fax-no:         +421 2 5296 3540
+nic-hdl:        VN666-RIPE
+mnt-by:         VNET-MNT
+created:        2003-07-16T19:00:18Z
+last-modified:  2018-02-27T12:25:39Z
+source:         RIPE # Filtered
+
+% Information related to '46.229.224.0/20AS29405'
+
+route:          46.229.224.0/20
+descr:          VNET a.s.
+origin:         AS29405
+mnt-by:         VNET-MNT
+created:        2011-02-22T12:29:35Z
+last-modified:  2011-02-22T12:29:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

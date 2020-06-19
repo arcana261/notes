@@ -1,0 +1,134 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       107.150.60.208 - 107.150.60.215
+CIDR:           107.150.60.208/29
+NetName:        DS-107-150-60-209-215
+NetHandle:      NET-107-150-60-208-1
+Parent:         DSV4-8 (NET-107-150-32-0-1)
+NetType:        Reassigned
+OriginAS:       AS33387
+Customer:       mknetwork (C07314582)
+RegDate:        2019-03-22
+Updated:        2019-03-22
+Ref:            https://rdap.arin.net/registry/ip/107.150.60.208
+
+
+CustName:       mknetwork
+Address:        201 E. 16th st
+City:           North Kansas City
+StateProv:      MO
+PostalCode:     64116
+Country:        US
+RegDate:        2019-03-22
+Updated:        2019-03-22
+Ref:            https://rdap.arin.net/registry/entity/C07314582
+
+OrgNOCHandle: IPADM563-ARIN
+OrgNOCName:   IP Admin
+OrgNOCPhone:  +1-816-389-5200 
+OrgNOCEmail:  noc@nocix.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/IPADM563-ARIN
+
+OrgTechHandle: IPADM563-ARIN
+OrgTechName:   IP Admin
+OrgTechPhone:  +1-816-389-5200 
+OrgTechEmail:  noc@nocix.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADM563-ARIN
+
+OrgAbuseHandle: DATAS1-ARIN
+OrgAbuseName:   DataShack Security
+OrgAbusePhone:  +1-816-389-5209 
+OrgAbuseEmail:  security@datashack.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/DATAS1-ARIN
+
+OrgTechHandle: MULLI188-ARIN
+OrgTechName:   Mulligan, Brandon 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  brandon@wholesaleinternet.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/MULLI188-ARIN
+
+OrgTechHandle: REGIO-ARIN
+OrgTechName:   Region, Bob 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  bob@wholesaleinternet.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/REGIO-ARIN
+
+# end
+
+
+# start
+
+NetRange:       107.150.32.0 - 107.150.63.255
+CIDR:           107.150.32.0/19
+NetName:        DSV4-8
+NetHandle:      NET-107-150-32-0-1
+Parent:         NET107 (NET-107-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS33387
+Organization:   DataShack, LC (DL-9)
+RegDate:        2013-12-03
+Updated:        2013-12-03
+Comment:        http://www.datashack.net
+Ref:            https://rdap.arin.net/registry/ip/107.150.32.0
+
+
+DataShack, LC (DL-9)
+
+
+OrgNOCHandle: IPADM563-ARIN
+OrgNOCName:   IP Admin
+OrgNOCPhone:  +1-816-389-5200 
+OrgNOCEmail:  noc@nocix.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/IPADM563-ARIN
+
+OrgTechHandle: IPADM563-ARIN
+OrgTechName:   IP Admin
+OrgTechPhone:  +1-816-389-5200 
+OrgTechEmail:  noc@nocix.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADM563-ARIN
+
+OrgAbuseHandle: DATAS1-ARIN
+OrgAbuseName:   DataShack Security
+OrgAbusePhone:  +1-816-389-5209 
+OrgAbuseEmail:  security@datashack.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/DATAS1-ARIN
+
+OrgTechHandle: MULLI188-ARIN
+OrgTechName:   Mulligan, Brandon 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  brandon@wholesaleinternet.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/MULLI188-ARIN
+
+OrgTechHandle: REGIO-ARIN
+OrgTechName:   Region, Bob 
+OrgTechPhone:  +1-816-256-3031 
+OrgTechEmail:  bob@wholesaleinternet.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/REGIO-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

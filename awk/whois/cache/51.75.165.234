@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '51.75.165.224 - 51.75.165.239'
+
+% Abuse contact for '51.75.165.224 - 51.75.165.239' is 'serverfrus@gmail.com'
+
+inetnum:        51.75.165.224 - 51.75.165.239
+netname:        OVH_198901381
+country:        GB
+descr:          Failover Ips
+org:            ORG-MA1146-RIPE
+admin-c:        OTC14-RIPE
+tech-c:         OTC14-RIPE
+status:         LEGACY
+mnt-by:         OVH-MNT
+created:        2018-11-12T15:56:32Z
+last-modified:  2018-11-12T15:56:32Z
+source:         RIPE
+
+organisation:   ORG-MA1146-RIPE
+org-name:       Serverfrus Amin
+org-type:       OTHER
+address:        6250 Adamants Drive
+address:        80924 Colorado Springs
+address:        US
+phone:          +1.7195518146
+abuse-c:        ACRO12542-RIPE
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2016-07-04T09:42:06Z
+last-modified:  2017-12-20T08:59:15Z
+source:         RIPE # Filtered
+
+role:           OVH UK Technical Contact
+address:        OVH Ltd
+address:        New London House, 6 London Street
+address:        EC3R 7LP, LONDON
+address:        UK
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC14-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T16:09:57Z
+last-modified:  2017-01-17T09:52:03Z
+source:         RIPE # Filtered
+
+% Information related to '51.75.0.0/16AS16276'
+
+route:          51.75.0.0/16
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2018-03-07T09:23:28Z
+last-modified:  2018-03-07T09:23:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

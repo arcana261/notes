@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '78.157.34.0 - 78.157.35.255'
+
+% Abuse contact for '78.157.34.0 - 78.157.35.255' is 'abuse@fanava.net'
+
+inetnum:        78.157.34.0 - 78.157.35.255
+netname:        FANAVA-ISDP-NET1
+descr:          Tehran Infrastructure
+country:        IR
+admin-c:        FNA3-RIPE
+tech-c:         FNA3-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-FANAVA
+created:        2008-10-13T14:30:33Z
+last-modified:  2008-10-13T19:19:37Z
+source:         RIPE
+
+role:           Fanava Network Administrators
+address:        No.39,17th West St. , Kordestan Ave. , Tehran , Iran
+phone:          +98 21 82195450
+fax-no:         +98 21 82195221
+admin-c:        FDP401-RIPE
+tech-c:         FDP401-RIPE
+nic-hdl:        FNA3-RIPE
+mnt-by:         MNT-FANAVA
+created:        2007-07-18T12:14:46Z
+last-modified:  2019-03-02T09:48:30Z
+source:         RIPE # Filtered
+
+% Information related to '78.157.35.0/24AS41881'
+
+route:          78.157.35.0/24
+descr:          Fanava Group
+origin:         AS41881
+mnt-by:         MNT-FANAVA
+created:        2007-10-31T10:35:39Z
+last-modified:  2017-10-02T09:59:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

@@ -1,0 +1,60 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       45.56.192.0 - 45.56.199.255
+CIDR:           45.56.192.0/21
+NetName:        CL-970
+NetHandle:      NET-45-56-192-0-1
+Parent:         NET45 (NET-45-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS21840
+Organization:   CloudIP LLC (CL-970)
+RegDate:        2016-09-28
+Updated:        2016-09-28
+Ref:            https://rdap.arin.net/registry/ip/45.56.192.0
+
+
+OrgName:        CloudIP LLC
+OrgId:          CL-970
+Address:        25 Taylor Street
+City:           San Francisco
+StateProv:      CA
+PostalCode:     94102
+Country:        US
+RegDate:        2015-11-04
+Updated:        2017-01-28
+Ref:            https://rdap.arin.net/registry/entity/CL-970
+
+
+OrgTechHandle: JSM284-ARIN
+OrgTechName:   Mills, John S
+OrgTechPhone:  +1-415-728-5258 
+OrgTechEmail:  sales@ipv4hosting.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/JSM284-ARIN
+
+OrgAbuseHandle: JSM284-ARIN
+OrgAbuseName:   Mills, John S
+OrgAbusePhone:  +1-415-728-5258 
+OrgAbuseEmail:  sales@ipv4hosting.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/JSM284-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '78.109.193.0 - 78.109.193.255'
+
+% Abuse contact for '78.109.193.0 - 78.109.193.255' is 'abuse@afranet.com'
+
+inetnum:        78.109.193.0 - 78.109.193.255
+netname:        khalij-fars-etela-rasan
+country:        IR
+admin-c:        MK23379-RIPE
+tech-c:         MK23379-RIPE
+status:         ASSIGNED PA
+mnt-by:         AFRA-MNT-NESH-1
+created:        2020-04-08T09:53:16Z
+last-modified:  2020-04-08T09:53:16Z
+source:         RIPE
+
+person:         mr khayami
+address:        khalij fars company , upper floor rooz bread, behshti st, emam khomeimi sq, boushehr
+phone:          +987733554443
+nic-hdl:        MK23379-RIPE
+mnt-by:         AFRA-MNT-NESH-1
+created:        2020-04-08T09:52:08Z
+last-modified:  2020-04-08T09:52:08Z
+source:         RIPE
+
+% Information related to '78.109.193.0/24AS25184'
+
+route:          78.109.193.0/24
+descr:          Afranet Co.
+origin:         AS25184
+mnt-routes:     AFRA-MNT-NESH-1
+mnt-by:         AFRA-MNT-NESH-1
+created:        2013-02-17T14:09:30Z
+last-modified:  2013-02-17T14:09:30Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.63.15.0 - 5.63.15.255'
+
+% Abuse contact for '5.63.15.0 - 5.63.15.255' is 'network@kums.ac.ir'
+
+inetnum:        5.63.15.0 - 5.63.15.255
+netname:        KUMS
+descr:          Kermanshah University of Medical Science and Health Service
+org:            ORG-KUOM1-RIPE
+country:        IR
+admin-c:        FH2160-RIPE
+tech-c:         FH2160-RIPE
+status:         ASSIGNED PA
+mnt-by:         FH72714-MNT
+created:        2015-09-06T05:22:50Z
+last-modified:  2017-01-28T14:08:02Z
+source:         RIPE
+
+organisation:   ORG-KUOM1-RIPE
+org-name:       Kermanshah University of Medical Science and Health Service
+org-type:       OTHER
+address:        Beheshti Blvd. Next to Imam Ali Hospital
+abuse-c:        AC32856-RIPE
+mnt-ref:        FH72714-MNT
+mnt-by:         FH72714-MNT
+created:        2015-08-17T04:48:17Z
+last-modified:  2016-05-13T10:45:35Z
+source:         RIPE # Filtered
+
+person:         Farid Hajizeinalabedin
+address:        Unit1 N 61 Teymorian St Taherian St Taleghani St Shariati St
+phone:          +98.2177624118
+nic-hdl:        FH2160-RIPE
+mnt-by:         FH72714-MNT
+created:        2011-11-09T08:24:44Z
+last-modified:  2017-10-30T22:15:47Z
+source:         RIPE # Filtered
+
+% Information related to '5.63.15.0/24AS16292'
+
+route:          5.63.15.0/24
+descr:          Kermanshah University of Medical Science and Health Service
+origin:         AS16292
+mnt-by:         FH72714-MNT
+created:        2015-09-06T05:24:08Z
+last-modified:  2015-09-06T05:24:08Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

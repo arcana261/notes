@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.186.241.0 - 185.186.241.255'
+
+% Abuse contact for '185.186.241.0 - 185.186.241.255' is 'ertebatatazinkia@gmail.com'
+
+inetnum:        185.186.241.0 - 185.186.241.255
+netname:        Poyanazm-Network
+org:            ORG-GEAK1-RIPE
+country:        IR
+admin-c:        MT16714-RIPE
+mnt-routes:     MNT-Pooyanazm
+mnt-routes:     ir-gostaresh-1-mnt
+tech-c:         MT16714-RIPE
+status:         ASSIGNED PA
+mnt-by:         ir-gostaresh-1-mnt
+mnt-by:         MNT-Pooyanazm
+created:        2017-02-07T13:30:38Z
+last-modified:  2018-10-09T13:26:32Z
+source:         RIPE
+
+organisation:   ORG-GEAK1-RIPE
+org-name:       Gostaresh Ertebat Azin Kia Company PJSC
+org-type:       LIR
+address:        hasht behesht St.negin apartment No.7
+address:        8173674936
+address:        Esfahan
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        MT16714-RIPE
+tech-c:         MT16714-RIPE
+abuse-c:        AR38960-RIPE
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         taghiyan
+created:        2017-01-16T16:23:47Z
+last-modified:  2018-10-09T09:14:00Z
+source:         RIPE # Filtered
+phone:          +989131012697
+phone:          +989133025905
+mnt-ref:        taghiyan
+mnt-ref:        ir-gostaresh-1-mnt
+
+person:         Emad Bahmanpour
+address:        iran-isfahan- west hashtbehesh - negin building no 6
+phone:          +989139312316
+nic-hdl:        MT16714-RIPE
+mnt-by:         ir-gostaresh-1-mnt
+mnt-by:         taghiyan
+created:        2017-02-07T11:04:11Z
+last-modified:  2019-12-07T06:35:11Z
+source:         RIPE
+
+% Information related to '185.186.241.0/24AS16235'
+
+route:          185.186.241.0/24
+origin:         AS16235
+mnt-by:         ir-gostaresh-1-mnt
+mnt-by:         MNT-Pooyanazm
+created:        2018-10-09T13:25:27Z
+last-modified:  2018-10-09T13:25:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

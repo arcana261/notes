@@ -1,0 +1,128 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       66.23.200.0 - 66.23.207.255
+CIDR:           66.23.200.0/21
+NetName:        USD-NET-66-23-200-0
+NetHandle:      NET-66-23-200-0-1
+Parent:         NET66 (NET-66-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Dedicated.com (UDL-17)
+RegDate:        2017-12-11
+Updated:        2018-04-06
+Ref:            https://rdap.arin.net/registry/ip/66.23.200.0
+
+
+OrgName:        Dedicated.com
+OrgId:          UDL-17
+Address:        4400 ne 77th ave ste 275
+City:           Vancouver
+StateProv:      WA
+PostalCode:     98662
+Country:        US
+RegDate:        2016-10-05
+Updated:        2019-12-17
+Comment:        dedicated.com
+Ref:            https://rdap.arin.net/registry/entity/UDL-17
+
+
+OrgNOCHandle: HICKS100-ARIN
+OrgNOCName:   Hicks, Robby 
+OrgNOCPhone:  +1-844-533-1300 
+OrgNOCEmail:  admin@dedicated.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/HICKS100-ARIN
+
+OrgTechHandle: HICKS100-ARIN
+OrgTechName:   Hicks, Robby 
+OrgTechPhone:  +1-844-533-1300 
+OrgTechEmail:  admin@dedicated.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/HICKS100-ARIN
+
+OrgTechHandle: MGN4-ARIN
+OrgTechName:   Nappo, Matthew G
+OrgTechPhone:  +1-844-533-1300 
+OrgTechEmail:  admin@usdedicated.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/MGN4-ARIN
+
+OrgAbuseHandle: ABUSE5262-ARIN
+OrgAbuseName:   ABUSE
+OrgAbusePhone:  +1-844-533-1300 
+OrgAbuseEmail:  admin@dedicated.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE5262-ARIN
+
+# end
+
+
+# start
+
+NetRange:       66.23.204.0 - 66.23.207.255
+CIDR:           66.23.204.0/22
+NetName:        NET-66-23-204-0-REASSIGNED
+NetHandle:      NET-66-23-204-0-1
+Parent:         USD-NET-66-23-200-0 (NET-66-23-200-0-1)
+NetType:        Reassigned
+OriginAS:       AS63018
+Organization:   Direct Delivery Group, LLC (DDGL-6)
+RegDate:        2019-03-16
+Updated:        2019-03-16
+Comment:        Direct Delivery Group, LLC
+Ref:            https://rdap.arin.net/registry/ip/66.23.204.0
+
+
+OrgName:        Direct Delivery Group, LLC
+OrgId:          DDGL-6
+Address:        402 N. Division Street
+City:           Carson City
+StateProv:      NV
+PostalCode:     89703
+Country:        US
+RegDate:        2017-08-15
+Updated:        2017-08-15
+Ref:            https://rdap.arin.net/registry/entity/DDGL-6
+
+
+OrgNOCHandle: NOC32704-ARIN
+OrgNOCName:   NOC
+OrgNOCPhone:  +1-775-301-1048 
+OrgNOCEmail:  noc@directdeliverygroup.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC32704-ARIN
+
+OrgAbuseHandle: ABUSE6307-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-775-301-1048 
+OrgAbuseEmail:  abuse@directdeliverygroup.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE6307-ARIN
+
+OrgTechHandle: NOC32704-ARIN
+OrgTechName:   NOC
+OrgTechPhone:  +1-775-301-1048 
+OrgTechEmail:  noc@directdeliverygroup.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC32704-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

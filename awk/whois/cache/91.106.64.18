@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.106.64.0 - 91.106.64.255'
+
+% Abuse contact for '91.106.64.0 - 91.106.64.255' is 'abuse@badrrayan.com'
+
+inetnum:        91.106.64.0 - 91.106.64.255
+netname:        ADAKRAYANEH
+descr:          Adak Rayaneh ADSL Network
+country:        IR
+admin-c:        RRK5-RIPE
+tech-c:         RRK5-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-RAEISI-RIPEMNT
+created:        2012-10-21T10:44:01Z
+last-modified:  2012-10-21T10:44:01Z
+source:         RIPE
+
+person:         Reza Raeisi
+address:        No.1, Saeid mal, Infrom of citypark, Imam st, Sarbandar,Khozestan, IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 916 151 5900
+nic-hdl:        RRK5-RIPE
+mnt-by:         MNT-RAEISI-RIPEMNT
+created:        2011-03-03T09:39:17Z
+last-modified:  2015-12-07T09:04:50Z
+source:         RIPE
+
+% Information related to '91.106.64.0/24AS56503'
+
+route:          91.106.64.0/24
+origin:         AS56503
+mnt-by:         MNT-RAEISI-RIPEMNT
+created:        2016-05-30T10:22:19Z
+last-modified:  2016-05-30T10:22:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

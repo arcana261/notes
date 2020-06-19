@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.104.192.0 - 185.104.192.255'
+
+% Abuse contact for '185.104.192.0 - 185.104.192.255' is 'baabak@gmail.com'
+
+inetnum:        185.104.192.0 - 185.104.192.255
+netname:        IR-EGRK-20150615
+country:        IR
+org:            ORG-EGRK1-RIPE
+admin-c:        BG4754-RIPE
+tech-c:         BG4754-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         EGRK
+mnt-routes:     EGRK
+created:        2020-05-26T12:10:21Z
+last-modified:  2020-05-26T12:10:21Z
+source:         RIPE
+
+organisation:   ORG-EGRK1-RIPE
+org-name:       EGRK-Ertebat Gostaran Rangin Kaman Ltd
+org-type:       LIR
+address:        4th flor - No141-Begining of Pasdaran Street - Tehran
+address:        1664635957
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989126306588
+fax-no:         +982122884775
+abuse-c:        AC28588-RIPE
+mnt-ref:        EGRK
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         EGRK
+created:        2015-06-10T15:47:37Z
+last-modified:  2017-02-21T10:59:56Z
+source:         RIPE # Filtered
+
+person:         Babak Ghadaksaz
+address:        4th floor - No 141 - between 4th & 5th Negarestan - Pasdaran avenue - Tehran - Iran
+phone:          +982122871564-5
+phone:          +989126306588
+nic-hdl:        BG4754-RIPE
+mnt-by:         EGRK
+created:        2015-06-11T17:00:34Z
+last-modified:  2020-04-28T19:29:02Z
+source:         RIPE # Filtered
+
+% Information related to '185.104.192.0/24AS202391'
+
+route:          185.104.192.0/24
+origin:         AS202391
+mnt-by:         EGRK
+mnt-by:         IR-EGRK-20150615
+created:        2018-11-05T16:55:22Z
+last-modified:  2018-11-05T16:55:22Z
+source:         RIPE
+
+% Information related to '185.104.192.0/24AS57625'
+
+route:          185.104.192.0/24
+descr:          EGRK-Route
+origin:         AS57625
+mnt-by:         EGRK
+created:        2015-06-27T09:38:31Z
+last-modified:  2015-06-27T09:38:31Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

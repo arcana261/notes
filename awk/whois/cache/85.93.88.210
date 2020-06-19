@@ -1,0 +1,74 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.93.80.0 - 85.93.95.255'
+
+% Abuse contact for '85.93.80.0 - 85.93.95.255' is 'abuse@hosteurope.de'
+
+inetnum:        85.93.80.0 - 85.93.95.255
+netname:        DE-HEG-MASS
+descr:          Mass Sub Alloc
+country:        DE
+org:            ORG-HM62-RIPE
+admin-c:        HM5126-RIPE
+tech-c:         HM5126-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         GODADDY-MNT
+mnt-lower:      MNT-HEG-MASS
+mnt-domains:    MNT-HEG-MASS
+mnt-routes:     MNT-HEG-MASS
+created:        2015-10-14T16:16:30Z
+last-modified:  2019-06-04T09:15:52Z
+source:         RIPE # Filtered
+
+organisation:   ORG-HM62-RIPE
+org-name:       HEG Mass
+org-type:       OTHER
+address:        Host Europe GmbH
+address:        Daimler Strasse 9-11
+address:        50354 Huerth
+address:        Germany
+phone:          +49 2203 1045 0
+admin-c:        HM5126-RIPE
+tech-c:         HM5126-RIPE
+abuse-c:        HMAH3-RIPE
+mnt-ref:        MNT-HEG-MASS
+mnt-by:         MNT-HEG-MASS
+created:        2015-11-10T12:52:20Z
+last-modified:  2015-11-10T12:52:20Z
+source:         RIPE # Filtered
+
+role:           HEG Mass
+address:        HEG Mass
+address:        Daimler Strasse 9-11
+address:        50354 Huerth
+address:        Germany
+phone:          +49 2203 1045 0
+admin-c:        JUPP
+admin-c:        OUZO
+tech-c:         JUPP
+tech-c:         OUZO
+nic-hdl:        HM5126-RIPE
+mnt-by:         MNT-HEG-MASS
+created:        2015-11-05T11:32:14Z
+last-modified:  2015-12-07T15:15:08Z
+source:         RIPE # Filtered
+
+% Information related to '85.93.88.0/22AS8972'
+
+route:          85.93.88.0/22
+origin:         AS8972
+mnt-by:         INTERGENIA-MNT
+created:        2015-06-09T09:03:08Z
+last-modified:  2016-07-08T12:53:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

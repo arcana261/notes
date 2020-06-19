@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.232.20.0 - 185.232.20.255'
+
+% Abuse contact for '185.232.20.0 - 185.232.20.255' is 'abuse@m247.ro'
+
+inetnum:        185.232.20.0 - 185.232.20.255
+netname:        M247-LTD-Amsterdam
+descr:          M247 LTD Amsterdam Infrastructure
+org:            ORG-MLA21-RIPE
+country:        NL
+geoloc:         52.3740 4.8896
+admin-c:        GBXS13-RIPE
+tech-c:         GBXS13-RIPE
+status:         ASSIGNED PA
+mnt-by:         GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2018-05-17T11:36:37Z
+last-modified:  2018-11-29T11:47:41Z
+source:         RIPE
+
+organisation:   ORG-MLA21-RIPE
+org-name:       M247 Ltd Amsterdam
+org-type:       OTHER
+address:        Street Kuiperbergweg 13
+address:        1101, Amsterdam, Netherlands
+abuse-c:        ME5262-RIPE
+mnt-ref:        GLOBALAXS-MNT
+mnt-by:         GLOBALAXS-MNT
+created:        2018-05-17T11:04:18Z
+last-modified:  2018-05-17T11:31:02Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS NYC NOC
+address:        Equinix NY8 60 Hudson Street, Suite 1602,
+address:        10013 New York, New York, USA
+nic-hdl:        GBXS13-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-07-21T14:54:57Z
+last-modified:  2020-04-24T08:10:05Z
+source:         RIPE # Filtered
+
+% Information related to '185.232.20.0/24AS9009'
+
+route:          185.232.20.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2017-11-15T12:51:13Z
+last-modified:  2017-11-15T12:51:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

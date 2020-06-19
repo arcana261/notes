@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '51.68.180.0 - 51.68.181.255'
+
+% Abuse contact for '51.68.180.0 - 51.68.181.255' is 'abuse@ovh.net'
+
+inetnum:        51.68.180.0 - 51.68.181.255
+netname:        SD-1G-LIM-L112-bis
+country:        DE
+org:            ORG-OG9-RIPE
+admin-c:        OTC13-RIPE
+tech-c:         OTC13-RIPE
+status:         LEGACY
+mnt-by:         OVH-MNT
+created:        2018-07-05T07:48:33Z
+last-modified:  2018-07-31T15:24:23Z
+source:         RIPE
+geoloc:         50.388228 8.073916
+
+organisation:   ORG-OG9-RIPE
+org-name:       OVH GmbH
+org-type:       OTHER
+address:        Dudweiler Landstrasse 5
+address:        66123 Saarbrucken
+address:        Deutschland
+admin-c:        OTC13-RIPE
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2005-09-02T12:40:05Z
+last-modified:  2017-10-30T16:09:25Z
+source:         RIPE # Filtered
+
+role:           OVH DE Technical Contact
+address:        OVH GmbH
+address:        Dudweiler Landstrasse 5
+address:        66123 Saarbrucken
+address:        Deutschland
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC13-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T16:09:57Z
+last-modified:  2011-12-19T13:52:04Z
+source:         RIPE # Filtered
+
+% Information related to '51.68.0.0/16AS16276'
+
+route:          51.68.0.0/16
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2018-03-07T09:22:39Z
+last-modified:  2018-03-07T09:22:39Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

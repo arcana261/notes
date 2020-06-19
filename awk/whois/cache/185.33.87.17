@@ -1,0 +1,45 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.33.86.0 - 185.33.87.255'
+
+% Abuse contact for '185.33.86.0 - 185.33.87.255' is 'abuse@hostzealot.com'
+
+inetnum:        185.33.86.0 - 185.33.87.255
+netname:        HZ-NA24
+country:        US
+admin-c:        VD3206-RIPE
+tech-c:         VD3206-RIPE
+status:         ASSIGNED PA
+mnt-by:         HZ-HOSTING-LTD
+created:        2018-08-03T14:28:28Z
+last-modified:  2018-08-03T14:28:28Z
+source:         RIPE
+
+person:         Vilko Damianov
+address:        4000, Bulgaria, Plovdiv, 2 Lyuben Karavelov, unit 5
+phone:          +35932571279
+nic-hdl:        VD3206-RIPE
+mnt-by:         HZ-HOSTING-LTD
+created:        2016-11-28T15:25:07Z
+last-modified:  2016-11-28T15:25:07Z
+source:         RIPE
+
+% Information related to '185.33.86.0/23AS202015'
+
+route:          185.33.86.0/23
+origin:         AS202015
+mnt-by:         HZ-HOSTING-LTD
+created:        2018-08-03T14:42:37Z
+last-modified:  2018-08-03T14:42:37Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

@@ -1,0 +1,84 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.248.12.0 - 185.248.15.255'
+
+% Abuse contact for '185.248.12.0 - 185.248.15.255' is 'onurzorlu@atlantisnet.com.tr'
+
+inetnum:        185.248.12.0 - 185.248.15.255
+netname:        TR-ATLANTIS-20180306
+geoloc:         41.0186 -28.9647
+country:        TR
+org:            ORG-ATBH1-RIPE
+admin-c:        OZ620-RIPE
+tech-c:         OZ620-RIPE
+tech-c:         SD12478-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         tr-atlantis-1-mnt
+created:        2018-03-06T08:40:29Z
+last-modified:  2019-10-10T07:03:58Z
+source:         RIPE
+
+organisation:   ORG-ATBH1-RIPE
+org-name:       Atlantis Telekomunikasyon Bilisim Hizmetleri San. Tic. Ltd
+org-type:       LIR
+address:        Elmas Sok No:11 Avcilar
+address:        34100
+address:        istanbul
+address:        TURKEY
+admin-c:        OZ620-RIPE
+tech-c:         OZ620-RIPE
+abuse-c:        AR45341-RIPE
+mnt-ref:        tr-atlantis-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         tr-atlantis-1-mnt
+created:        2018-02-28T12:52:09Z
+last-modified:  2018-02-28T12:52:12Z
+source:         RIPE # Filtered
+phone:          +902126904677
+
+person:         Onur Zorlu
+address:        Elmas Sok No:11 Avcilar
+address:        34100
+address:        istanbul
+address:        TURKEY
+phone:          +902126904677
+nic-hdl:        OZ620-RIPE
+mnt-by:         tr-atlantis-1-mnt
+created:        2018-02-28T12:52:09Z
+last-modified:  2018-02-28T12:52:09Z
+source:         RIPE
+
+person:         Yavuz Selim MALKOC
+address:        Sultan Orhan Mah. Ilyasbey Cad, 1812 Sk.
+address:        41400
+address:        Kocaeli
+address:        TURKEY
+phone:          +902626446663
+nic-hdl:        SD12478-RIPE
+mnt-by:         mnt-tr-internetten-1
+created:        2019-09-27T12:14:59Z
+last-modified:  2019-09-30T13:41:16Z
+source:         RIPE
+
+% Information related to '185.248.12.0/22AS204457'
+
+route:          185.248.12.0/22
+descr:          AtlantisTelekom
+origin:         AS204457
+mnt-by:         tr-atlantis-1-mnt
+mnt-by:         mnt-internetten-1
+created:        2018-07-12T08:46:25Z
+last-modified:  2019-10-10T06:54:57Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

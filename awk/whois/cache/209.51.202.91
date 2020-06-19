@@ -1,0 +1,133 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       209.51.192.0 - 209.51.223.255
+CIDR:           209.51.192.0/19
+NetName:        ENETNAP
+NetHandle:      NET-209-51-192-0-1
+Parent:         NET209 (NET-209-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   eNET Inc. (ENET)
+RegDate:        1997-05-06
+Updated:        2008-07-10
+Comment:        ADDRESSES WITHIN THIS BLOCK ARE NON-PORTABLE
+Ref:            https://rdap.arin.net/registry/ip/209.51.192.0
+
+
+OrgName:        eNET Inc.
+OrgId:          ENET
+Address:        3000 East Dublin Granville Rd.
+City:           Columbus
+StateProv:      OH
+PostalCode:     43231
+Country:        US
+RegDate:        1996-04-09
+Updated:        2009-08-20
+Ref:            https://rdap.arin.net/registry/entity/ENET
+
+
+OrgTechHandle: HOSTM634-ARIN
+OrgTechName:   Hostmaster
+OrgTechPhone:  +1-614-508-6450 
+OrgTechEmail:  hostmaster@ee.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+OrgAbuseHandle: ABUSE861-ARIN
+OrgAbuseName:   Abuse Desk
+OrgAbusePhone:  +1-614-508-6450 
+OrgAbuseEmail:  abuse@ee.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE861-ARIN
+
+OrgNOCHandle: HOSTM634-ARIN
+OrgNOCName:   Hostmaster
+OrgNOCPhone:  +1-614-508-6450 
+OrgNOCEmail:  hostmaster@ee.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+RTechHandle: ZN55-ARIN
+RTechName:   eNET Inc
+RTechPhone:  +1-614-794-5971 
+RTechEmail:  president@ee.net
+RTechRef:    https://rdap.arin.net/registry/entity/ZN55-ARIN
+
+# end
+
+
+# start
+
+NetRange:       209.51.202.80 - 209.51.202.95
+CIDR:           209.51.202.80/28
+NetName:        XLHOST-AARABI38-27924
+NetHandle:      NET-209-51-202-80-1
+Parent:         ENETNAP (NET-209-51-192-0-1)
+NetType:        Reassigned
+OriginAS:       
+Customer:       XLHost.com Inc (C06939597)
+RegDate:        2018-04-03
+Updated:        2018-04-03
+Comment:        abuse contact: abuse@ee.net
+Ref:            https://rdap.arin.net/registry/ip/209.51.202.80
+
+
+CustName:       XLHost.com Inc
+Address:        3000 E. Dublin-Granville rd
+Address:        Suite 4
+City:           Columbus
+StateProv:      OH
+PostalCode:     43231
+Country:        US
+RegDate:        2018-04-03
+Updated:        2018-04-03
+Ref:            https://rdap.arin.net/registry/entity/C06939597
+
+OrgTechHandle: HOSTM634-ARIN
+OrgTechName:   Hostmaster
+OrgTechPhone:  +1-614-508-6450 
+OrgTechEmail:  hostmaster@ee.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+OrgAbuseHandle: ABUSE861-ARIN
+OrgAbuseName:   Abuse Desk
+OrgAbusePhone:  +1-614-508-6450 
+OrgAbuseEmail:  abuse@ee.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE861-ARIN
+
+OrgNOCHandle: HOSTM634-ARIN
+OrgNOCName:   Hostmaster
+OrgNOCPhone:  +1-614-508-6450 
+OrgNOCEmail:  hostmaster@ee.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+RTechHandle: ZN55-ARIN
+RTechName:   eNET Inc
+RTechPhone:  +1-614-794-5971 
+RTechEmail:  president@ee.net
+RTechRef:    https://rdap.arin.net/registry/entity/ZN55-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

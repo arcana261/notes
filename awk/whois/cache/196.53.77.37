@@ -1,0 +1,59 @@
+% This is the AfriNIC Whois server.
+% The AFRINIC whois database is subject to  the following terms of Use. See https://afrinic.net/whois/terms
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '196.52.0.0 - 196.55.255.255'
+
+% No abuse contact registered for 196.52.0.0 - 196.55.255.255
+
+inetnum:        196.52.0.0 - 196.55.255.255
+netname:        LogicWeb-Inc
+descr:          LogicWeb Inc.
+descr:          3003 Woodbridge Ave
+descr:          Edison, NJ 08837
+country:        ZA
+org:            ORG-LWI1-AFRINIC
+admin-c:        CA19-AFRINIC
+tech-c:         CA19-AFRINIC
+status:         ALLOCATED PA
+mnt-by:         AFRINIC-HM-MNT
+mnt-lower:      LOGICWEB-MNT
+mnt-domains:    LOGICWEB-MNT
+source:         AFRINIC # Filtered
+parent:         196.0.0.0 - 196.255.255.255
+
+organisation:   ORG-LWI1-AFRINIC
+org-name:       LogicWeb Inc
+org-type:       EU-PI
+country:        ZA
+address:        4509 Steeplechase Dr.
+address:        Easton PA, USA 18040
+phone:          tel:+1-877-564-4293
+fax-no:         tel:+1-718-841-7124
+admin-c:        CA12-AFRINIC
+tech-c:         CA12-AFRINIC
+mnt-ref:        AFRINIC-HM-MNT
+mnt-ref:        LOGICWEB-MNT
+mnt-by:         AFRINIC-HM-MNT
+source:         AFRINIC # Filtered
+
+person:         Chad Abizeid
+address:        4509 Steeplechase Dr.
+address:        Easton, PA 18040
+phone:          tel:+1-866-611-1556
+nic-hdl:        CA19-AFRINIC
+mnt-by:         GENERATED-V2TU2EAHTH8G0OOAAOXPGH35YRHYYDTO-MNT
+source:         AFRINIC # Filtered
+
+% Information related to '196.53.77.0/24AS62904'
+
+route:          196.53.77.0/24
+descr:          Pango
+origin:         AS62904
+mnt-by:         LOGICWEB-MNT
+source:         AFRINIC # Filtered
+
+
+

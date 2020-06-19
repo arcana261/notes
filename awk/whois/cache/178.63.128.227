@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '178.63.128.224 - 178.63.128.231'
+
+% Abuse contact for '178.63.128.224 - 178.63.128.231' is 'abuse@hetzner.de'
+
+inetnum:        178.63.128.224 - 178.63.128.231
+netname:        RAMU-SAGUNALA
+descr:          Ramu Sagunala
+country:        DE
+admin-c:        RS18396-RIPE
+tech-c:         RS18396-RIPE
+status:         ASSIGNED PA
+mnt-by:         HOS-GUN
+created:        2020-01-28T02:25:08Z
+last-modified:  2020-01-28T02:25:08Z
+source:         RIPE # Filtered
+
+person:         Ramu Sagunala
+address:        2-2-23/22/23 D.D Colony, Bagh Amberpet
+address:        50013 Hyderabad
+address:        INDIA
+phone:          +37282873018
+nic-hdl:        RS18396-RIPE
+mnt-by:         HOS-GUN
+created:        2014-08-23T08:21:27Z
+last-modified:  2019-03-01T01:27:23Z
+source:         RIPE # Filtered
+
+% Information related to '178.63.0.0/16AS24940'
+
+route:          178.63.0.0/16
+descr:          HETZNER-RZ-FKS-BLK2
+origin:         AS24940
+org:            ORG-HOA1-RIPE
+mnt-by:         HOS-GUN
+created:        2010-03-02T13:44:55Z
+last-modified:  2010-03-02T13:44:55Z
+source:         RIPE
+
+organisation:   ORG-HOA1-RIPE
+org-name:       Hetzner Online GmbH
+org-type:       LIR
+address:        Industriestrasse 25
+address:        D-91710
+address:        Gunzenhausen
+address:        GERMANY
+phone:          +49 9831 5050
+fax-no:         +49 9831 5053
+admin-c:        TF2013-RIPE
+admin-c:        MF1400-RIPE
+admin-c:        GM834-RIPE
+admin-c:        HOAC1-RIPE
+admin-c:        MH375-RIPE
+admin-c:        SK2374-RIPE
+admin-c:        SK8441-RIPE
+abuse-c:        HOAC1-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        HOS-GUN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HOS-GUN
+created:        2004-04-17T11:07:58Z
+last-modified:  2016-08-25T13:26:09Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

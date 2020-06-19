@@ -1,0 +1,74 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.118.152.0 - 185.118.155.255'
+
+% Abuse contact for '185.118.152.0 - 185.118.155.255' is 'Khaledian@atinet.ir'
+
+inetnum:        185.118.152.0 - 185.118.155.255
+netname:        IR-ATINET-MALAYER-20150923
+country:        IR
+org:            ORG-SAC9-RIPE
+admin-c:        ST10162-RIPE
+tech-c:         ST10162-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-atinet-kabodar-1-mnt
+mnt-lower:      Ir-atinet-kabodar-1-mnt
+mnt-routes:     Ir-atinet-kabodar-1-mnt
+created:        2015-12-24T09:40:53Z
+last-modified:  2019-04-25T12:19:15Z
+source:         RIPE
+
+organisation:   ORG-SAC9-RIPE
+org-name:       SINA ATINET Company (Ltd)
+org-type:       LIR
+address:        3/53-55 Queens Ave
+address:        3108
+address:        Doncaster
+address:        AUSTRALIA
+phone:          +988138278718
+phone:          +989181117551
+admin-c:        ST10162-RIPE
+tech-c:         ST10162-RIPE
+abuse-c:        AA36158-RIPE
+mnt-ref:        ir-atinet-kabodar-1-mnt
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-atinet-kabodar-1-mnt
+created:        2015-09-30T08:28:31Z
+last-modified:  2020-05-23T03:00:12Z
+source:         RIPE # Filtered
+fax-no:         +988138257064
+
+person:         SEYEDMOHAMMADREZA TOUSI
+address:        3/53-55 Queens Ave
+address:        3108
+address:        Doncaster
+address:        AUSTRALIA
+phone:          +988118278718
+nic-hdl:        ST10162-RIPE
+mnt-by:         ir-atinet-malayer-1-mnt
+created:        2015-09-30T08:28:30Z
+last-modified:  2015-09-30T08:28:31Z
+source:         RIPE
+
+% Information related to '185.118.152.0/24AS62250'
+
+route:          185.118.152.0/24
+descr:          Route For AtiNet
+origin:         AS62250
+mnt-by:         ir-atinet-kabodar-1-mnt
+created:        2016-01-21T19:39:55Z
+last-modified:  2016-01-21T19:39:55Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

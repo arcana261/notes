@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.107.30.0 - 185.107.31.255'
+
+% Abuse contact for '185.107.30.0 - 185.107.31.255' is 'abuse@badrrayan.com'
+
+inetnum:        185.107.30.0 - 185.107.31.255
+netname:        IR-Badrrayan
+descr:          Badr Rayan Jonoub .Co
+country:        IR
+admin-c:        RRK5-RIPE
+tech-c:         RRK5-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-RAEISI-RIPEMNT
+created:        2017-01-20T11:08:17Z
+last-modified:  2017-01-20T11:08:17Z
+source:         RIPE
+
+person:         Reza Raeisi
+address:        No.1, Saeid mal, Infrom of citypark, Imam st, Sarbandar,Khozestan, IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 916 151 5900
+nic-hdl:        RRK5-RIPE
+mnt-by:         MNT-RAEISI-RIPEMNT
+created:        2011-03-03T09:39:17Z
+last-modified:  2015-12-07T09:04:50Z
+source:         RIPE
+
+% Information related to '185.107.30.0/23AS56503'
+
+route:          185.107.30.0/23
+origin:         AS56503
+mnt-by:         MNT-RAEISI-RIPEMNT
+created:        2017-08-14T10:55:21Z
+last-modified:  2017-08-14T10:55:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

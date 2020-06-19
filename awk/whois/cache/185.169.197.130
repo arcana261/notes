@@ -1,0 +1,40 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.169.196.0 - 185.169.197.255'
+
+% Abuse contact for '185.169.196.0 - 185.169.197.255' is 'abuse@psychz.net'
+
+inetnum:        185.169.196.0 - 185.169.197.255
+netname:        Amsterdam
+country:        NL
+geoloc:         52.371807 4.896029
+admin-c:        NH4236-RIPE
+tech-c:         NH4236-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         us-profuse-1-mnt
+created:        2017-06-22T20:23:27Z
+last-modified:  2017-06-22T20:23:27Z
+source:         RIPE
+
+person:         NOC HQ
+address:        20687-2 Amar Road # 312
+address:        91789
+address:        Walnut
+address:        UNITED STATES
+phone:          +16265492801
+nic-hdl:        NH4236-RIPE
+mnt-by:         us-profuse-1-mnt
+created:        2016-09-23T07:05:58Z
+last-modified:  2016-09-23T07:05:58Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

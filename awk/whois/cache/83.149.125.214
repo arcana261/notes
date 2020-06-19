@@ -1,0 +1,53 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '83.149.125.192 - 83.149.125.223'
+
+% Abuse contact for '83.149.125.192 - 83.149.125.223' is 'abuse@nl.leaseweb.com'
+
+inetnum:        83.149.125.192 - 83.149.125.223
+netname:        HLSC
+descr:          Helios Cloud Ltd., 1-1-2011
+descr:          HONG KONG
+remarks:        Please send all abuse notifications to the following email address: abuse@nl.leaseweb.com. To ensure proper processing of your abuse notification, please visit the website www.leaseweb.com/abuse for notification requirements. All police and other government agency requests must be sent to subpoenas@nl.leaseweb.com.
+country:        NL
+admin-c:        LSW1-RIPE
+tech-c:         LSW1-RIPE
+status:         ASSIGNED PA
+mnt-by:         LEASEWEB-NL-MNT
+created:        2012-01-13T13:55:23Z
+last-modified:  2015-09-30T22:02:33Z
+source:         RIPE
+
+person:         RIP Mean
+address:        P.O. Box 93054
+address:        1090BB AMSTERDAM
+address:        Netherlands
+phone:          +31 20 3162880
+fax-no:         +31 20 3162890
+nic-hdl:        LSW1-RIPE
+mnt-by:         LEASEWEB-NL-MNT
+created:        2005-06-07T14:36:03Z
+last-modified:  2017-10-30T21:46:47Z
+source:         RIPE # Filtered
+
+% Information related to '83.149.64.0/18AS60781'
+
+route:          83.149.64.0/18
+descr:          LEASEWEB
+origin:         AS60781
+remarks:        Leaseweb
+mnt-by:         LEASEWEB-NL-MNT
+created:        2014-03-10T14:11:29Z
+last-modified:  2015-09-30T23:00:03Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

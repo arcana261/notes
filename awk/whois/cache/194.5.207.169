@@ -1,0 +1,138 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.5.207.0 - 194.5.207.255'
+
+% Abuse contact for '194.5.207.0 - 194.5.207.255' is 'abuse@arvancloud.com'
+
+inetnum:        194.5.207.0 - 194.5.207.255
+netname:        SQ_194-5-207-0_24
+country:        NL
+geoloc:         52.370216 4.895168
+admin-c:        PUYA-RIPE
+admin-c:        FAFA-RIPE
+tech-c:         NFA
+tech-c:         ARMO-RIPE
+status:         ASSIGNED PA
+mnt-by:         Softqloud
+mnt-by:         ArvanCloud
+created:        2019-10-18T11:01:09Z
+last-modified:  2020-04-05T19:51:51Z
+source:         RIPE # Filtered
+
+person:         Ahmad Reza Mollapour
+address:        NA
+phone:          +49
+nic-hdl:        ARMO-RIPE
+mnt-by:         ArvanCloud
+created:        2016-03-17T13:55:31Z
+last-modified:  2020-01-11T01:06:10Z
+source:         RIPE # Filtered
+
+person:         Farhad Fatemi
+address:        NA
+phone:          +49
+nic-hdl:        FAFA-RIPE
+mnt-by:         ArvanCloud
+created:        2016-03-17T14:42:04Z
+last-modified:  2020-01-11T01:05:08Z
+source:         RIPE # Filtered
+
+person:         Naem Farhadian Azizi
+address:        NA
+phone:          +49
+nic-hdl:        NFA
+mnt-by:         ArvanCloud
+created:        2018-05-09T17:29:37Z
+last-modified:  2020-01-11T01:06:22Z
+source:         RIPE # Filtered
+
+person:         Pouya Pirhoseinloo
+address:        NA
+phone:          +49
+nic-hdl:        PUYA-RIPE
+mnt-by:         ArvanCloud
+created:        2016-03-17T14:06:27Z
+last-modified:  2020-01-11T01:05:28Z
+source:         RIPE # Filtered
+
+% Information related to '194.5.207.0/24AS208006'
+
+route:          194.5.207.0/24
+origin:         AS208006
+org:            ORG-SG329-RIPE
+ping-hdl:       FAFA-RIPE
+ping-hdl:       PUYA-RIPE
+ping-hdl:       NFA
+ping-hdl:       ARMO-RIPE
+mnt-by:         ArvanCloud
+mnt-by:         Softqloud
+created:        2019-10-18T11:00:23Z
+last-modified:  2020-01-18T20:29:26Z
+source:         RIPE # Filtered
+
+organisation:   ORG-SG329-RIPE
+org-name:       Softqloud GmbH
+org-type:       LIR
+address:        Hegelstr. 3
+address:        40667
+address:        Meerbusch
+address:        GERMANY
+admin-c:        PUYA-RIPE
+geoloc:         52.370216 4.895168
+tech-c:         ARMO-RIPE
+abuse-c:        AR56256-RIPE
+mnt-ref:        ArvanCloud
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ArvanCloud
+created:        2019-10-17T07:01:23Z
+last-modified:  2020-04-05T19:49:16Z
+source:         RIPE # Filtered
+phone:          +4921329952070
+fax-no:         +49 2132 9952071
+
+person:         Ahmad Reza Mollapour
+address:        NA
+phone:          +49
+nic-hdl:        ARMO-RIPE
+mnt-by:         ArvanCloud
+created:        2016-03-17T13:55:31Z
+last-modified:  2020-01-11T01:06:10Z
+source:         RIPE # Filtered
+
+person:         Farhad Fatemi
+address:        NA
+phone:          +49
+nic-hdl:        FAFA-RIPE
+mnt-by:         ArvanCloud
+created:        2016-03-17T14:42:04Z
+last-modified:  2020-01-11T01:05:08Z
+source:         RIPE # Filtered
+
+person:         Naem Farhadian Azizi
+address:        NA
+phone:          +49
+nic-hdl:        NFA
+mnt-by:         ArvanCloud
+created:        2018-05-09T17:29:37Z
+last-modified:  2020-01-11T01:06:22Z
+source:         RIPE # Filtered
+
+person:         Pouya Pirhoseinloo
+address:        NA
+phone:          +49
+nic-hdl:        PUYA-RIPE
+mnt-by:         ArvanCloud
+created:        2016-03-17T14:06:27Z
+last-modified:  2020-01-11T01:05:28Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

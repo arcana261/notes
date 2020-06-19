@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.132.172.0 - 45.132.175.255'
+
+% Abuse contact for '45.132.172.0 - 45.132.175.255' is 'abuse@raynet.ir'
+
+inetnum:        45.132.172.0 - 45.132.175.255
+netname:        IR-RAYNET1-20190723
+descr:          Raynet Telecom (Rayazma) Network
+country:        IR
+org:            ORG-PRAC2-RIPE
+admin-c:        AR54152-RIPE
+tech-c:         AR54152-RIPE
+status:         ALLOCATED PA
+mnt-by:         mnt-ray2017
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2019-07-23T13:28:18Z
+last-modified:  2019-08-13T07:11:22Z
+source:         RIPE
+
+organisation:   ORG-PRAC2-RIPE
+org-name:       Pardazeshgar Ray Azma Co. Ltd.
+org-type:       LIR
+address:        Rozabi Bldg., Keshavarz St.
+address:        3751879798
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        AR54152-RIPE
+tech-c:         AR54152-RIPE
+abuse-c:        AR54153-RIPE
+mnt-ref:        mnt-ray2017
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-ray2017
+created:        2019-07-22T14:49:58Z
+last-modified:  2019-07-22T14:50:01Z
+source:         RIPE # Filtered
+phone:          +989120560142
+
+person:         Amin Razi
+address:        Rozabi Bldg., Keshavarz St.
+address:        3751879798
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989120560142
+nic-hdl:        AR54152-RIPE
+mnt-by:         mnt-ray2017
+created:        2019-07-22T14:49:58Z
+last-modified:  2019-07-22T14:49:58Z
+source:         RIPE
+
+% Information related to '45.132.175.0/24AS49847'
+
+route:          45.132.175.0/24
+origin:         AS49847
+mnt-by:         mnt-ray2017
+created:        2019-07-24T03:42:14Z
+last-modified:  2019-07-24T03:42:14Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

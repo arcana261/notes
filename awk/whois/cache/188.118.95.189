@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.118.64.0 - 188.118.95.255'
+
+% Abuse contact for '188.118.64.0 - 188.118.95.255' is 'abuse@ut.ac.ir'
+
+inetnum:        188.118.64.0 - 188.118.95.255
+netname:        IR-UTIC-20090622
+descr:          University of Tehran
+country:        IR
+admin-c:        AM4542-RIPE
+tech-c:         BGD11-RIPE
+status:         ASSIGNED PA
+mnt-by:         UTIC-MNT
+created:        2010-06-30T06:42:58Z
+last-modified:  2013-07-02T05:59:39Z
+source:         RIPE # Filtered
+
+person:         Ali Moeini
+address:        Keshavarz Blvd ,No. 268,Tehran
+address:        Information Technology and Cyberspace of Center of University of Tehran
+phone:          +98 21 66406186
+mnt-by:         UTIC-MNT
+nic-hdl:        AM4542-RIPE
+created:        2004-05-29T05:50:52Z
+last-modified:  2017-01-24T07:46:14Z
+source:         RIPE # Filtered
+
+person:         Behrouz Gholampour Dehaki
+address:        University of Tehran Informatics of Center
+address:        Keshavarz Blvd ,No. 268 ,Tehran
+phone:          +98 21 88968573
+fax-no:         +98 21 88965781
+mnt-by:         MNT-DEHAKI
+nic-hdl:        BGD11-RIPE
+created:        1970-01-01T00:00:00Z
+last-modified:  2010-06-30T11:05:57Z
+source:         RIPE # Filtered
+
+% Information related to '188.118.64.0/19as29068'
+
+route:          188.118.64.0/19
+descr:          ut-route
+origin:         as29068
+mnt-by:         utic-mnt
+created:        2010-06-30T06:47:49Z
+last-modified:  2010-06-30T06:47:49Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

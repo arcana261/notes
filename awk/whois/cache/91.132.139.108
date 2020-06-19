@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.132.139.0 - 91.132.139.255'
+
+% Abuse contact for '91.132.139.0 - 91.132.139.255' is 'abuse@m247.ro'
+
+inetnum:        91.132.139.0 - 91.132.139.255
+netname:        M247-LTD-Vienna
+descr:          M247 LTD Vienna Infrastructure
+geoloc:         48.2000 16.3667
+descr:          M247 LTD Vienna
+country:        AT
+admin-c:        GBXS11-RIPE
+tech-c:         GBXS11-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2018-12-27T13:33:21Z
+last-modified:  2018-12-27T13:33:21Z
+source:         RIPE
+
+role:           GLOBALAXS Wien NOC
+address:        Louis-Häfliger-Gasse
+address:        1210 Wien, Austria
+admin-c:        MJ3986-RIPE
+tech-c:         MJ3986-RIPE
+tech-c:         CB2407-RIPE
+tech-c:         PC12694-RIPE
+tech-c:         JB3482-RIPE
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS11-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-06-14T19:18:44Z
+last-modified:  2016-06-14T19:18:44Z
+source:         RIPE # Filtered
+
+% Information related to '91.132.139.0/24AS9009'
+
+route:          91.132.139.0/24
+descr:          M247-LTD-Vienna
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2018-12-27T13:33:51Z
+last-modified:  2018-12-27T13:33:51Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

@@ -1,0 +1,139 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       147.192.0.0 - 147.192.255.255
+CIDR:           147.192.0.0/16
+NetName:        APNIC
+NetHandle:      NET-147-192-0-0-1
+Parent:         NET147 (NET-147-0-0-0-0)
+NetType:        Early Registrations, Transferred to APNIC
+OriginAS:       
+Organization:   Asia Pacific Network Information Centre (APNIC)
+RegDate:        2018-06-20
+Updated:        2018-06-20
+Ref:            https://rdap.arin.net/registry/ip/147.192.0.0
+
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+ResourceLink:  whois://whois.apnic.net
+
+
+OrgName:        Asia Pacific Network Information Centre
+OrgId:          APNIC
+Address:        PO Box 3646
+City:           South Brisbane
+StateProv:      QLD
+PostalCode:     4101
+Country:        AU
+RegDate:        
+Updated:        2012-01-24
+Ref:            https://rdap.arin.net/registry/entity/APNIC
+
+ReferralServer:  whois://whois.apnic.net
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+
+OrgTechHandle: AWC12-ARIN
+OrgTechName:   APNIC Whois Contact
+OrgTechPhone:  +61 7 3858 3188 
+OrgTechEmail:  search-apnic-not-arin@apnic.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+OrgAbuseHandle: AWC12-ARIN
+OrgAbuseName:   APNIC Whois Contact
+OrgAbusePhone:  +61 7 3858 3188 
+OrgAbuseEmail:  search-apnic-not-arin@apnic.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.apnic.net.
+
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '147.192.0.0 - 147.192.255.255'
+
+% Abuse contact for '147.192.0.0 - 147.192.255.255' is 'hostmaster@nic.ad.jp'
+
+inetnum:        147.192.0.0 - 147.192.255.255
+netname:        So-net
+descr:          Sony Network Communications Inc.
+descr:          4-12-3, Higashishinagawa, Shinagawa-ku, Tokyo, 140-0002, Japan
+admin-c:        JNIC1-AP
+tech-c:         JNIC1-AP
+remarks:        Email address for spam or abuse complaints : abuse@so-net.ne.jp
+country:        JP
+mnt-by:         MAINT-JPNIC
+mnt-lower:      MAINT-JPNIC
+mnt-irt:        IRT-JPNIC-JP
+status:         ALLOCATED PORTABLE
+last-modified:  2018-06-20T04:31:36Z
+source:         APNIC
+
+irt:            IRT-JPNIC-JP
+address:        Urbannet-Kanda Bldg 4F, 3-6-2 Uchi-Kanda
+address:        Chiyoda-ku, Tokyo 101-0047, Japan
+e-mail:         hostmaster@nic.ad.jp
+abuse-mailbox:  hostmaster@nic.ad.jp
+admin-c:        JNIC1-AP
+tech-c:         JNIC1-AP
+auth:           # Filtered
+mnt-by:         MAINT-JPNIC
+last-modified:  2017-10-18T10:21:54Z
+source:         APNIC
+
+role:           Japan Network Information Center
+address:        Urbannet-Kanda Bldg 4F
+address:        3-6-2 Uchi-Kanda
+address:        Chiyoda-ku, Tokyo 101-0047,Japan
+country:        JP
+phone:          +81-3-5297-2311
+fax-no:         +81-3-5297-2312
+e-mail:         hostmaster@nic.ad.jp
+admin-c:        JI13-AP
+tech-c:         JE53-AP
+nic-hdl:        JNIC1-AP
+mnt-by:         MAINT-JPNIC
+last-modified:  2012-08-28T07:58:02Z
+source:         APNIC
+
+% Information related to '147.192.96.0 - 147.192.127.255'
+
+inetnum:        147.192.96.0 - 147.192.127.255
+netname:        SO-NET
+descr:          So-net Service
+country:        JP
+admin-c:        JP00001330
+tech-c:         JP00001330
+remarks:        This information has been partially mirrored by APNIC from
+remarks:        JPNIC. To obtain more specific information, please use the
+remarks:        JPNIC WHOIS Gateway at
+remarks:        http://www.nic.ad.jp/en/db/whois/en-gateway.html or
+remarks:        whois.nic.ad.jp for WHOIS client. (The WHOIS client
+remarks:        defaults to Japanese output, use the /e switch for English
+remarks:        output)
+last-modified:  2018-06-29T19:05:03Z
+source:         JPNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

@@ -1,0 +1,25 @@
+[ JPNIC database provides information regarding IP address and ASN. Its use   ]
+[ is restricted to network administration purposes. For further information,  ]
+[ use 'whois -h whois.nic.ad.jp help'. To only display English output,        ]
+[ add '/e' at the end of command, e.g. 'whois -h whois.nic.ad.jp xxx/e'.      ]
+
+Network Information:            
+a. [Network Number]             219.122.236.0/22
+b. [Network Name]               OPTAGE
+g. [Organization]               OPTAGE Inc.
+m. [Administrative Contact]     JP00014196
+n. [Technical Contact]          JP00014196
+p. [Nameserver]                 ns1.eonet.ne.jp
+p. [Nameserver]                 ns7.eonet.ne.jp
+[Assigned Date]                 2019/08/22
+[Return Date]                   
+[Last Update]                   2019/08/22 10:38:03(JST)
+                                
+Less Specific Info.
+----------
+OPTAGE Inc.
+                     [Allocation]                             219.122.128.0/17
+
+More Specific Info.
+----------
+No match!!

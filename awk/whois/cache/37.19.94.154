@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.19.94.0 - 37.19.95.255'
+
+% Abuse contact for '37.19.94.0 - 37.19.95.255' is 'cis.64@hotmail.com'
+
+inetnum:        37.19.94.0 - 37.19.95.255
+netname:        CIS-IT-Group
+country:        IR
+admin-c:        MN6235-RIPE
+descr:          64CIS BroadBand User
+tech-c:         MN6235-RIPE
+status:         ASSIGNED PA
+mnt-by:         CISSUP_MNT
+mnt-by:         mostafanejati
+created:        2018-09-26T12:40:38Z
+last-modified:  2018-09-26T12:40:38Z
+source:         RIPE
+
+person:         Mostafa Nejati
+address:        No 347 - 45 metri Main St - Safadasht - Malard - Tehran - IR Iran
+phone:          +982165438000
+nic-hdl:        MN6235-RIPE
+mnt-by:         mostafanejati
+created:        2011-12-03T19:47:07Z
+last-modified:  2014-06-02T05:33:29Z
+source:         RIPE # Filtered
+
+% Information related to '37.19.94.0/24AS5484'
+
+route:          37.19.94.0/24
+descr:          64CIS
+origin:         AS5484
+mnt-by:         mostafanejati
+created:        2014-12-01T05:53:15Z
+last-modified:  2014-12-01T05:53:15Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

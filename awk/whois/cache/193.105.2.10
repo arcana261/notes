@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '193.105.2.0 - 193.105.2.255'
+
+% Abuse contact for '193.105.2.0 - 193.105.2.255' is 'fsamandari@sapco.com'
+
+inetnum:        193.105.2.0 - 193.105.2.255
+netname:        SAPCO
+country:        IR
+org:            ORG-SAP2-RIPE
+admin-c:        FS877-RIPE
+tech-c:         FS877-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-RSPN
+mnt-routes:     MNT-RSPN
+mnt-domains:    MNT-RSPN
+created:        2010-01-04T15:36:13Z
+last-modified:  2016-04-14T09:49:21Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-RNB1-RIPE
+
+organisation:   ORG-SAP2-RIPE
+org-name:       Engeneering Designing and Supply the parts of Iran Khodro PJSC
+org-type:       OTHER
+address:        12Km Karaj Special road; Tehran ;Iran ; POBox: 13185/743
+abuse-c:        SAD102-RIPE
+mnt-ref:        MNT-RSPN
+mnt-by:         MNT-RSPN
+created:        2009-11-16T13:00:31Z
+last-modified:  2014-05-03T09:20:32Z
+source:         RIPE # Filtered
+
+person:         Farhad Sinaei
+address:        12Km Karaj Special road; Tehran ;Iran ; POBox: 13185/743
+phone:          +98 21 4892 4202
+fax-no:         +98 21 4490 3757
+nic-hdl:        FS877-RIPE
+mnt-by:         MNT-RSPN
+created:        2009-11-16T12:14:41Z
+last-modified:  2009-11-16T12:17:30Z
+source:         RIPE # Filtered
+
+% Information related to '193.105.2.0/24AS42915'
+
+route:          193.105.2.0/24
+descr:          SAPCO Route
+origin:         AS42915
+mnt-by:         MNT-RSPN
+created:        2010-01-16T13:10:52Z
+last-modified:  2010-01-16T13:10:52Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

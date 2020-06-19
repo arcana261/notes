@@ -1,0 +1,86 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '175.41.192.0 - 175.41.223.255'
+
+% Abuse contact for '175.41.192.0 - 175.41.223.255' is 'ec2-abuse@amazon.com'
+
+inetnum:        175.41.192.0 - 175.41.223.255
+netname:        AMAZON-AP-RESOURCES-JP
+descr:          Amazon Web Services, Elastic Compute Cloud, EC2, JP
+remarks:        The activity you have detected originates from a
+                dynamic hosting environment.
+                For fastest response, please submit abuse reports at
+                http://aws-portal.amazon.com/gp/aws/html-forms-controller/contactus/AWSAbuse
+                For more information regarding EC2 see:
+                http://ec2.amazonaws.com/
+                All reports MUST include:
+                * src IP
+                * dest IP (your IP)
+                * dest port
+                * Accurate date/timestamp and timezone of activity
+                * Intensity/frequency (short log extracts)
+                * Your contact details (phone and email)
+                Without these we will be unable to
+                identify the correct owner of the IP address at that
+                point in time.
+                abuse-email: ec2-abuse@amazon.com
+country:        JP
+admin-c:        AARP1-AP
+tech-c:         AARP1-AP
+status:         ASSIGNED NON-PORTABLE
+mnt-by:         MAINT-AMAZON-AP-RESOURCES-JP
+mnt-irt:        IRT-AMAZON-AP-RESOURCES-JP
+last-modified:  2011-04-12T22:59:42Z
+source:         APNIC
+
+irt:            IRT-AMAZON-AP-RESOURCES-JP
+address:        11F Shibuya cross tower, 2-15-1, Shibuya-ku Shibuya, Tokyo 150-0002, Japan
+e-mail:         aes-noc@amazon.com
+abuse-mailbox:  ec2-abuse@amazon.com
+admin-c:        ADSJ1-AP
+tech-c:         ADSJ1-AP
+auth:           # Filtered
+remarks:        ec2-abuse@amazon.com was validated on 2020-04-25
+remarks:        aes-noc@amazon.com was validated on 2020-05-11
+mnt-by:         MAINT-AMAZON-AP-RESOURCES-JP
+last-modified:  2020-05-11T14:59:39Z
+source:         APNIC
+
+role:           AMAZON ASIA-PACIFIC RESOURCES PRIVATE LIMITED - ne
+address:        Bedok Central Post Office PO Box 482
+country:        SG
+phone:          +1 -206-266-2187
+e-mail:         aes-noc@amazon.com
+admin-c:        AARP1-AP
+tech-c:         AARP1-AP
+nic-hdl:        AARP1-AP
+mnt-by:         MAINT-AMAZON-AP-RESOURCES-SG
+last-modified:  2011-04-28T08:05:16Z
+source:         APNIC
+
+% Information related to '175.41.213.0/24AS16509'
+
+route:          175.41.213.0/24
+origin:         AS16509
+descr:          Amazon Data Services Japan KK
+                11F Shibuya Cross Tower
+                2-15-1, Shibuya-ku Shibuya
+mnt-by:         MAINT-AMAZON-AP-RESOURCES-JP
+last-modified:  2019-07-31T23:49:33Z
+source:         APNIC
+
+% Information related to '175.41.213.0/24AS38895'
+
+route:          175.41.213.0/24
+origin:         AS38895
+descr:          Amazon Data Services Japan KK
+                11F Shibuya Cross Tower
+                2-15-1, Shibuya-ku Shibuya
+mnt-by:         MAINT-AMAZON-AP-RESOURCES-JP
+last-modified:  2019-07-31T23:49:41Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

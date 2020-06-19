@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '212.252.136.0 - 212.252.143.255'
+
+% Abuse contact for '212.252.136.0 - 212.252.143.255' is 'ABUSECONTACT@turkcell.com.tr'
+
+inetnum:        212.252.136.0 - 212.252.143.255
+netname:        SOLNET-3
+descr:          SOLNET
+country:        TR
+admin-c:        SOL1-RIPE
+tech-c:         SOL1-RIPE
+status:         ASSIGNED PA
+mnt-by:         SOL-NET
+created:        2013-08-19T06:04:58Z
+last-modified:  2014-05-30T12:29:47Z
+source:         RIPE # Filtered
+
+person:         TEKNIK KONTAK
+address:        Salih Tozan Sk. Karamancilar Is Mrkz. C Blok No:16 34394 Esentepe/Sisli/ISTANBUL TR
+phone:          +90 212 376 76 76
+nic-hdl:        SOL1-RIPE
+mnt-by:         MNT-TELLCOM
+created:        2002-02-26T12:52:01Z
+last-modified:  2017-01-24T04:50:49Z
+source:         RIPE # Filtered
+
+% Information related to '212.252.140.0/23AS34984'
+
+route:          212.252.140.0/23
+descr:          Turkcell Superonline CGN
+origin:         AS34984
+mnt-by:         MNT-TELLCOM
+mnt-routes:     MNT-TELLCOM
+created:        2017-09-26T08:20:48Z
+last-modified:  2017-09-26T08:20:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

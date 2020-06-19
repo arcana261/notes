@@ -1,0 +1,81 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.204.130.0 - 85.204.131.255'
+
+% Abuse contact for '85.204.130.0 - 85.204.131.255' is 'm.behzadi@tci.ir'
+
+inetnum:        85.204.130.0 - 85.204.131.255
+netname:        TCIKHJ
+descr:          Telecommunication Company of Khorasan Jonoubi
+country:        IR
+admin-c:        NAJ17-RIPE
+tech-c:         NJ1452-RIPE
+tech-c:         mb21933-RIPE
+org:            ORG-TCOK6-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+mnt-lower:      TCI-RIPE-MNT
+mnt-routes:     TCI-RIPE-MNT
+created:        2015-06-10T06:45:26Z
+last-modified:  2019-06-25T06:17:30Z
+source:         RIPE
+
+organisation:   ORG-TCOK6-RIPE
+org-name:       Telecommunication Company of Khorasan Jonoubi
+org-type:       other
+address:        Khorasan Jonoubi Telecom
+abuse-c:        AC26447-RIPE
+tech-c:         DPJ10-RIPE
+admin-c:        NAJ17-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-01-16T09:37:49Z
+last-modified:  2019-02-24T05:48:43Z
+source:         RIPE # Filtered
+
+role:           Network Admin (Khorasan Jonubi)
+address:        Birjand- Pasdaran Street - Janbazan Square - Telecommunication Company of Khorasan Jonubi
+admin-c:        MJ83847-RIPE
+nic-hdl:        NAJ17-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-02-24T05:07:41Z
+last-modified:  2019-02-24T05:07:41Z
+source:         RIPE # Filtered
+
+role:           NOC (Khorasan Jonubi)
+address:        Birjand- Pasdaran Street - Janbazan Square - Telecommunication Company of Khorasan Jonubi
+admin-c:        HRT16-RIPE
+nic-hdl:        NJ1452-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2019-06-24T05:50:42Z
+last-modified:  2019-06-24T05:50:42Z
+source:         RIPE # Filtered
+
+person:         mohaddaseh behzadi
+address:        telecommunication company of Khorasan Jonoubi
+phone:          +985612319910
+nic-hdl:        mb21933-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2010-08-21T06:33:12Z
+last-modified:  2013-07-29T07:24:31Z
+source:         RIPE
+
+% Information related to '85.204.128.0/22AS58224'
+
+route:          85.204.128.0/22
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2015-06-09T13:58:06Z
+last-modified:  2018-11-10T12:17:22Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

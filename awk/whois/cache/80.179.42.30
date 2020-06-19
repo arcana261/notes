@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '80.179.42.0 - 80.179.42.63'
+
+% Abuse contact for '80.179.42.0 - 80.179.42.63' is 'abuse@partner.co.il'
+
+inetnum:        80.179.42.0 - 80.179.42.63
+netname:        HQserv_Networks
+descr:          HQserv_network
+country:        IL
+admin-c:        DR5299-RIPE
+tech-c:         DR5299-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS9116-MNT
+mnt-lower:      AS9116-MNT
+created:        2006-07-27T09:10:05Z
+last-modified:  2016-07-14T06:28:13Z
+source:         RIPE # Filtered
+
+role:           DNS REG
+remarks:        Hostmaster and LIR
+remarks:        012 Smile Communications Ltd.
+address:        Hasivim 25 Petach-Tikva,Israel
+nic-hdl:        DR5299-RIPE
+admin-c:        PT5956-RIPE
+admin-c:        AT14340-RIPE
+admin-c:        HAI18-RIPE
+admin-c:        GE1901-RIPE
+admin-c:        IK2932-RIPE
+admin-c:        ENT11-RIPE
+tech-c:         PT5956-RIPE
+tech-c:         HAI18-RIPE
+tech-c:         GE1901-RIPE
+tech-c:         GMLT1-RIPE
+tech-c:         IK2932-RIPE
+tech-c:         ENT11-RIPE
+mnt-by:         AS9116-MNT
+mnt-by:         PARTNERCOM-MNT
+created:        2002-09-19T08:35:05Z
+last-modified:  2019-03-18T09:12:37Z
+source:         RIPE # Filtered
+abuse-mailbox:  abuse@012.net.il
+
+% Information related to '80.179.42.0/24AS9116'
+
+route:          80.179.42.0/24
+descr:          Partner Communications
+origin:         AS9116
+mnt-by:         AS9116-MNT
+created:        2005-06-07T17:23:39Z
+last-modified:  2019-03-17T13:47:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

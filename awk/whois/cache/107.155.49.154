@@ -1,0 +1,124 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       107.155.49.0 - 107.155.49.255
+CIDR:           107.155.49.0/24
+NetName:        ZL-LAX-ZENWORKS-0016
+NetHandle:      NET-107-155-49-0-1
+Parent:         ZL-NET-002 (NET-107-155-0-0-1)
+NetType:        Reassigned
+OriginAS:       AS21859
+Organization:   ZENLA-1 (ZENLA-8)
+RegDate:        2019-07-31
+Updated:        2019-07-31
+Comment:        Abuse please contact: abuse@zenlayer.com
+Ref:            https://rdap.arin.net/registry/ip/107.155.49.0
+
+
+OrgName:        ZENLA-1
+OrgId:          ZENLA-8
+Address:        21680 Gateway Center Dr.
+Address:        Suite 350
+Address:        Diamond Bar, CA 91765
+Address:        U.S. Headquarters
+City:           Los Angeles
+StateProv:      CA
+PostalCode:     91765
+Country:        US
+RegDate:        2019-07-30
+Updated:        2019-07-30
+Ref:            https://rdap.arin.net/registry/entity/ZENLA-8
+
+
+OrgAbuseHandle: ZENLA-ARIN
+OrgAbuseName:   zenlayer-1
+OrgAbusePhone:  +1-626-412-0049 
+OrgAbuseEmail:  abuse@zenlayer.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ZENLA-ARIN
+
+OrgTechHandle: ZENLA-ARIN
+OrgTechName:   zenlayer-1
+OrgTechPhone:  +1-626-412-0049 
+OrgTechEmail:  abuse@zenlayer.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ZENLA-ARIN
+
+# end
+
+
+# start
+
+NetRange:       107.155.0.0 - 107.155.63.255
+CIDR:           107.155.0.0/18
+NetName:        ZL-NET-002
+NetHandle:      NET-107-155-0-0-1
+Parent:         NET107 (NET-107-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS21859
+Organization:   Zenlayer Inc (ZENLA-7)
+RegDate:        2013-12-12
+Updated:        2018-01-12
+Ref:            https://rdap.arin.net/registry/ip/107.155.0.0
+
+
+OrgName:        Zenlayer Inc
+OrgId:          ZENLA-7
+Address:        21680 Gateway Center Dr. Suite 350
+City:           Diamond Bar
+StateProv:      CA
+PostalCode:     91765
+Country:        US
+RegDate:        2017-12-27
+Updated:        2019-09-30
+Ref:            https://rdap.arin.net/registry/entity/ZENLA-7
+
+
+OrgNOCHandle: IPADM641-ARIN
+OrgNOCName:   IP ADMIN
+OrgNOCPhone:  +1-909-718-3558 
+OrgNOCEmail:  ipadmin@zenlayer.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/IPADM641-ARIN
+
+OrgTechHandle: ZHAOH5-ARIN
+OrgTechName:   Zhao, Howard  
+OrgTechPhone:  +1-626-412-0008 
+OrgTechEmail:  howard.zhao@zenlayer.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ZHAOH5-ARIN
+
+OrgAbuseHandle: SOCOP-ARIN
+OrgAbuseName:   SOC Ops
+OrgAbusePhone:  +1-909-718-3558 
+OrgAbuseEmail:  abuse@zenlayer.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/SOCOP-ARIN
+
+OrgTechHandle: IPADM641-ARIN
+OrgTechName:   IP ADMIN
+OrgTechPhone:  +1-909-718-3558 
+OrgTechEmail:  ipadmin@zenlayer.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADM641-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

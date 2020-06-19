@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.92.134.0 - 91.92.134.255'
+
+% Abuse contact for '91.92.134.0 - 91.92.134.255' is 'Abdoos@tci.ir'
+
+inetnum:        91.92.134.0 - 91.92.134.255
+netname:        TCI
+country:        IR
+admin-c:        KZ1283-RIPE
+tech-c:         KZ1283-RIPE
+org:            ORG-TCOS2-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2017-08-29T13:45:19Z
+last-modified:  2018-10-22T06:00:45Z
+source:         RIPE
+
+organisation:   ORG-TCOS2-RIPE
+org-name:       Telecommunication Company of Semnan
+org-type:       other
+address:        Semnan - Hafte tir Square - Telecommunication Company of Semnan
+tech-c:         DP14867-RIPE
+admin-c:        NA6201-RIPE
+abuse-c:        AC26947-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2015-05-03T11:20:18Z
+last-modified:  2019-03-02T07:23:49Z
+source:         RIPE # Filtered
+
+person:         Khadijeh Zahedi Arani
+address:        Telecommunication Company of IRAN
+phone:          +982189797777
+nic-hdl:        KZ1283-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2018-01-06T10:31:08Z
+last-modified:  2018-11-15T22:18:56Z
+source:         RIPE # Filtered
+
+% Information related to '91.92.134.0/23AS58224'
+
+route:          91.92.134.0/23
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2017-08-28T10:01:03Z
+last-modified:  2018-09-25T09:57:01Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

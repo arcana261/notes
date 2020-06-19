@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.209.188.0 - 185.209.189.255'
+
+% Abuse contact for '185.209.188.0 - 185.209.189.255' is 'ict-manager@basu.ac.ir'
+
+inetnum:        185.209.188.0 - 185.209.189.255
+netname:        buali2
+country:        IR
+admin-c:        MYS26-RIPE
+tech-c:         MYS26-RIPE
+status:         ASSIGNED PA
+mnt-by:         ir-buali-1-mnt
+mnt-by:         ict-manager
+created:        2018-11-29T20:31:20Z
+last-modified:  2018-11-29T20:31:20Z
+source:         RIPE
+
+person:         Morteza Yousef Sanati
+address:        Shahid Fahmide St
+address:        6517838695
+address:        Hamedan
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +988138381450
+nic-hdl:        MYS26-RIPE
+mnt-by:         ir-buali-1-mnt
+created:        2017-06-21T13:15:29Z
+last-modified:  2017-06-21T13:15:30Z
+source:         RIPE
+
+% Information related to '185.209.188.0/22AS62250'
+
+route:          185.209.188.0/22
+origin:         AS62250
+mnt-by:         ir-atinet-kabodar-1-mnt
+created:        2017-10-29T07:58:55Z
+last-modified:  2017-10-29T07:58:55Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

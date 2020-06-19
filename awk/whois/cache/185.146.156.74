@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.146.156.0 - 185.146.159.255'
+
+% Abuse contact for '185.146.156.0 - 185.146.159.255' is 'abuse@abusehost.ru'
+
+inetnum:        185.146.156.0 - 185.146.159.255
+netname:        RU-SERVER-20160408
+country:        RU
+org:            ORG-CA1447-RIPE
+admin-c:        AG17932-RIPE
+tech-c:         AG17932-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         CJSCSERVER-MNT
+mnt-lower:      CJSCSERVER-MNT
+mnt-routes:     CJSCSERVER-MNT
+created:        2016-04-20T11:15:29Z
+last-modified:  2016-05-30T04:01:15Z
+source:         RIPE # Filtered
+
+organisation:   ORG-CA1447-RIPE
+org-name:       JSC "Server"
+org-type:       LIR
+address:        m-r Raduzhniy 34a, 3
+address:        664017
+address:        Irkutsk
+address:        RUSSIAN FEDERATION
+phone:          +74956680995
+fax-no:         +73952525096
+abuse-c:        AR34729-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        CJSCSERVER-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         CJSCSERVER-MNT
+created:        2014-06-30T09:09:50Z
+last-modified:  2017-10-26T02:22:42Z
+source:         RIPE # Filtered
+
+person:         Alexander Gubanov
+address:        CJSC Server m-r Raduzhniy 34a, 3 664017 Irkutsk RUSSIAN FEDERATION
+phone:          +7 (495) 668-09-95
+nic-hdl:        AG17932-RIPE
+mnt-by:         CJSCSERVER-MNT
+created:        2014-07-01T07:26:28Z
+last-modified:  2019-04-08T11:41:11Z
+source:         RIPE # Filtered
+
+% Information related to '185.146.156.0/23AS29182'
+
+route:          185.146.156.0/23
+origin:         AS29182
+mnt-by:         CJSCSERVER-MNT
+created:        2016-06-22T06:27:35Z
+last-modified:  2016-06-22T06:27:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

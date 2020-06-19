@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.15.96.0 - 194.15.97.255'
+
+% Abuse contact for '194.15.96.0 - 194.15.97.255' is 'abuse@didi.ir'
+
+inetnum:        194.15.96.0 - 194.15.97.255
+netname:        Didi
+descr:          Didi ADSL Network
+country:        IR
+admin-c:        MB33945-RIPE
+tech-c:         MB33945-RIPE
+status:         ASSIGNED PA
+mnt-by:         Didehbannet
+created:        2019-01-05T08:52:28Z
+last-modified:  2019-01-05T08:52:28Z
+source:         RIPE
+
+person:         Masood Soltani
+address:        Department of information technology of Didehbannet,Eastern Ebnesina Street
+address:        Kerman,Iran
+phone:          +98 34 31243000 Ext.790
+phone:          +989337332790
+nic-hdl:        MB33945-RIPE
+mnt-by:         Didehbannet
+created:        2013-07-09T20:54:34Z
+last-modified:  2017-12-04T12:00:50Z
+source:         RIPE # Filtered
+
+% Information related to '194.15.96.0/22AS201150'
+
+route:          194.15.96.0/22
+origin:         AS201150
+descr:          Didehban Net Company
+mnt-by:         Didehbannet
+created:        2018-11-17T12:19:03Z
+last-modified:  2019-01-06T06:32:57Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

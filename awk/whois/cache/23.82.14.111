@@ -1,0 +1,72 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       23.80.0.0 - 23.83.63.255
+CIDR:           23.82.0.0/16, 23.83.0.0/18, 23.80.0.0/15
+NetName:        NETBLK-NOBIS-TECHNOLOGY-GROUP-17
+NetHandle:      NET-23-80-0-0-1
+Parent:         NET23 (NET-23-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS15003
+Organization:   Nobis Technology Group, LLC (NTGL)
+RegDate:        2013-05-06
+Updated:        2017-04-25
+Comment:        Addresses in this block are non-portable.
+Comment:        For security issues, abuse reports, and
+Comment:        technical issues, please contact the
+Comment:        Nobis Technology Group NOC at admin@nobistech.net
+Ref:            https://rdap.arin.net/registry/ip/23.80.0.0
+
+
+OrgName:        Nobis Technology Group, LLC
+OrgId:          NTGL
+Address:        5350 East High Street
+Address:        Suite 300
+City:           Phoenix
+StateProv:      AZ
+PostalCode:     85054
+Country:        US
+RegDate:        2007-01-30
+Updated:        2019-01-03
+Comment:        Please send all abuse notifications to the following email address: abuse@us.leaseweb.com. To ensure proper processing of your abuse notification, please visit the website www.leaseweb.com/abuse for notification requirements. All police and other government agency requests must be sent to subpoenas@us.leaseweb.com.
+Ref:            https://rdap.arin.net/registry/entity/NTGL
+
+
+OrgAbuseHandle: LUAD3-ARIN
+OrgAbuseName:   Leaseweb US abuse dept
+OrgAbusePhone:  +1-571-814-3777 
+OrgAbuseEmail:  abuse@us.leaseweb.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/LUAD3-ARIN
+
+OrgTechHandle: LEASE-ARIN
+OrgTechName:   Leaseweb ARIN
+OrgTechPhone:  +1-571-814-3777 
+OrgTechEmail:  abuse@us.leaseweb.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/LEASE-ARIN
+
+OrgNOCHandle: LEASE-ARIN
+OrgNOCName:   Leaseweb ARIN
+OrgNOCPhone:  +1-571-814-3777 
+OrgNOCEmail:  abuse@us.leaseweb.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/LEASE-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

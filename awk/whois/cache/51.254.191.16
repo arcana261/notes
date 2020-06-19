@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '51.254.191.16 - 51.254.191.23'
+
+% Abuse contact for '51.254.191.16 - 51.254.191.23' is 'abuse@ovh.net'
+
+inetnum:        51.254.191.16 - 51.254.191.23
+netname:        OVH_158924374
+country:        FR
+descr:          Failover Ips
+org:            ORG-JGM4-RIPE
+admin-c:        OTC2-RIPE
+tech-c:         OTC2-RIPE
+status:         LEGACY
+mnt-by:         OVH-MNT
+created:        2017-11-27T13:47:26Z
+last-modified:  2017-11-27T13:47:26Z
+source:         RIPE
+
+organisation:   ORG-JGM4-RIPE
+org-name:       jalil gol mohamadi
+org-type:       OTHER
+address:        3rd Floor,Emar Gold & Diamond Park 02, Sheikh Zayed Road
+address:        221553 dubai
+address:        AE
+phone:          +971.526240085
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2014-08-08T12:36:02Z
+last-modified:  2017-10-30T16:30:38Z
+source:         RIPE # Filtered
+
+role:           OVH Technical Contact
+address:        OVH SAS
+address:        2 rue Kellermann
+address:        59100 Roubaix
+address:        France
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+tech-c:         SL10162-RIPE
+nic-hdl:        OTC2-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2004-01-28T17:42:29Z
+last-modified:  2014-09-05T10:47:15Z
+source:         RIPE # Filtered
+
+% Information related to '51.254.0.0/15AS16276'
+
+route:          51.254.0.0/15
+descr:          OVH
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2015-05-28T17:50:05Z
+last-modified:  2015-05-28T17:50:05Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

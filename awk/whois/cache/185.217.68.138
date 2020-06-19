@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.217.68.0 - 185.217.68.255'
+
+% Abuse contact for '185.217.68.0 - 185.217.68.255' is 'abuse@m247.ro'
+
+inetnum:        185.217.68.0 - 185.217.68.255
+netname:        RO-M247EUROPE-JULY-20170811
+country:        RO
+admin-c:        PP16418-RIPE
+tech-c:         PP16418-RIPE
+status:         LIR-PARTITIONED PA
+mnt-by:         M247-EU-MNT
+created:        2017-08-18T13:13:54Z
+last-modified:  2017-08-18T13:13:54Z
+source:         RIPE
+
+person:         Paul Pintiliescu
+address:        Sos. Fabrica de Glucoza, Nr 11B, Sector 2
+address:        020331
+address:        BUCURESTI SECTORUL 2
+address:        ROMANIA
+phone:          +40310800700
+nic-hdl:        PP16418-RIPE
+mnt-by:         ro-m247europe-july-1-mnt
+created:        2017-08-11T11:00:51Z
+last-modified:  2017-08-11T11:00:51Z
+source:         RIPE
+
+% Information related to '185.217.68.0/24AS9009'
+
+route:          185.217.68.0/24
+origin:         AS9009
+mnt-by:         M247-EU-MNT
+created:        2017-08-18T13:15:40Z
+last-modified:  2017-08-18T13:15:40Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

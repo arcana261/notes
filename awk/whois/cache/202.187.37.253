@@ -1,0 +1,67 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '202.186.0.0 - 202.187.255.255'
+
+% Abuse contact for '202.186.0.0 - 202.187.255.255' is 'abuse@time.com.my'
+
+inetnum:        202.186.0.0 - 202.187.255.255
+netname:        TTDOTCOM-MY
+descr:          TT DOTCOM SDN BHD
+descr:          LOT 14, JALAN U1/26
+descr:          SEKSYEN U1
+descr:          HICOM GLENMARIE INDUSTRIAL PARK
+descr:          SHAH ALAM, SELANGOR 40150
+country:        MY
+org:            ORG-TDSB1-AP
+admin-c:        TDSB3-AP
+tech-c:         TDSB3-AP
+mnt-by:         APNIC-HM
+mnt-lower:      MAINT-TTDOTCOM-MY
+mnt-irt:        IRT-TTDOTCOM-MY
+status:         ALLOCATED PORTABLE
+last-modified:  2017-08-30T07:18:47Z
+source:         APNIC
+
+irt:            IRT-TTDOTCOM-MY
+address:        LOT 14, JALAN U1/26, SEKSYEN U1, HICOM GLENMARIE INDUSTRIAL PARK, SHAH ALAM SELANGOR 40150
+e-mail:         abuse@time.com.my
+abuse-mailbox:  abuse@time.com.my
+admin-c:        TDSB3-AP
+tech-c:         TDSB3-AP
+auth:           # Filtered
+remarks:        abuse@time.com.my was validated on 2019-12-20
+mnt-by:         MAINT-TTDOTCOM-MY
+last-modified:  2019-12-20T02:10:55Z
+source:         APNIC
+
+organisation:   ORG-TDSB1-AP
+org-name:       TT DOTCOM SDN BHD
+country:        MY
+address:        LOT 14, JALAN U1/26
+address:        SEKSYEN U1
+address:        HICOM GLENMARIE INDUSTRIAL PARK
+phone:          +60-3-5032-6000
+fax-no:         +60-3-5032-6353
+e-mail:         hostmaster@time.com.my
+mnt-ref:        APNIC-HM
+mnt-by:         APNIC-HM
+last-modified:  2019-12-20T12:55:44Z
+source:         APNIC
+
+role:           TT DOTCOM SDN BHD administrator
+address:        LOT 14, JALAN U1/26, SEKSYEN U1, HICOM  GLENMARIE INDUSTRIAL PARK, SHAH ALAM SELANGOR 40150
+country:        MY
+phone:          +60-3-5032-6000
+fax-no:         +60-3-5032-6000
+e-mail:         abuse@time.com.my
+admin-c:        TDSB3-AP
+tech-c:         TDSB3-AP
+nic-hdl:        TDSB3-AP
+mnt-by:         MAINT-TTDOTCOM-MY
+last-modified:  2016-01-25T03:32:49Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

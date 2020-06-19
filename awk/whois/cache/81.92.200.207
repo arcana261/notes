@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '81.92.200.0 - 81.92.203.255'
+
+% Abuse contact for '81.92.200.0 - 81.92.203.255' is 'abuse@m247.ro'
+
+inetnum:        81.92.200.0 - 81.92.203.255
+netname:        M247-LTD-London
+descr:          M247 LTD London Infrastructure
+country:        GB
+geoloc:         51.5285582 -0.2416799
+country:        GB
+org:            ORG-GL37-RIPE
+admin-c:        GBXS-RIPE
+tech-c:         GBXS-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         DATASTATE-MNT
+mnt-by:         VENUS-MNT
+mnt-by:         GLOBALAXS-MNT
+created:        2017-10-18T14:59:34Z
+last-modified:  2019-01-17T15:19:55Z
+source:         RIPE
+
+organisation:   ORG-GL37-RIPE
+org-name:       M247 Ltd
+org-type:       LIR
+address:        1 Ball Green, Cobra Court
+address:        M32 0QT
+address:        Manchester
+address:        UNITED KINGDOM
+phone:          +441616151272
+fax-no:         +441618655763
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        GLOBALAXS-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         GLOBALAXS-MNT
+admin-c:        CB2407-RIPE
+admin-c:        JB3482-RIPE
+abuse-c:        GBXS-RIPE
+created:        2007-03-14T11:11:06Z
+last-modified:  2018-02-21T10:27:01Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS NOC
+remarks:        M247 - Network Management Centre
+address:        1 Ball Green, Cobra Court
+address:        M32 0QT, Manchester - United Kingdom
+tech-c:         JB3482-RIPE
+tech-c:         CB2407-RIPE
+nic-hdl:        GBXS-RIPE
+abuse-mailbox:  abuse@m247.ro
+mnt-by:         GLOBALAXS-MNT
+created:        2006-07-13T15:37:05Z
+last-modified:  2018-09-10T17:32:45Z
+source:         RIPE # Filtered
+
+% Information related to '81.92.200.0/22AS9009'
+
+route:          81.92.200.0/22
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2017-10-18T11:12:14Z
+last-modified:  2017-10-18T11:12:14Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

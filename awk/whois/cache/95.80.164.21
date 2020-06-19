@@ -1,0 +1,53 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.80.164.0 - 95.80.164.255'
+
+% Abuse contact for '95.80.164.0 - 95.80.164.255' is 'abuse@maxnet.ir'
+
+inetnum:        95.80.164.0 - 95.80.164.255
+netname:        SAHANDUNI
+descr:          Sahand industrial university
+country:        IR
+geoloc:         38.07008867362511 46.3097682595253
+admin-c:        AAK228-RIPE
+tech-c:         AAK228-RIPE
+status:         ASSIGNED PA
+mnt-by:         MXNT-MNT
+mnt-lower:      MXNT-MNT
+mnt-routes:     MXNT-MNT
+mnt-domains:    MXNT-MNT
+created:        2011-01-10T08:12:40Z
+last-modified:  2019-02-28T05:35:20Z
+source:         RIPE # Filtered
+
+person:         Abdol Agheli Khosroshahi
+address:        Sahand New Town , East azarbaidjan , Iran
+phone:          +98 412 422 57 60
+nic-hdl:        AAK228-RIPE
+mnt-by:         AAKH-RIPE
+created:        2017-01-23T11:09:39Z
+last-modified:  2017-01-23T11:30:44Z
+source:         RIPE
+
+% Information related to '95.80.160.0/21AS48431'
+
+route:          95.80.160.0/21
+descr:          Maxnet IPv4 Route
+origin:         AS48431
+mnt-by:         MXNT-MNT
+mnt-lower:      MXNT-MNT
+mnt-routes:     MXNT-MNT
+created:        2011-09-19T11:55:26Z
+last-modified:  2014-07-12T13:43:36Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

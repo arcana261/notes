@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.211.128.0 - 46.211.191.255'
+
+% Abuse contact for '46.211.128.0 - 46.211.191.255' is 'abuse@kyivstar.net'
+
+inetnum:        46.211.128.0 - 46.211.191.255
+netname:        KYIVSTAR-NET-10
+descr:          Kyivstar GSM
+descr:          Ukrainian mobile phone operator
+country:        UA
+admin-c:        KSUA-RIPE
+tech-c:         KSUA-RIPE
+status:         ASSIGNED PA
+mnt-by:         KYIVSTAR-MNT
+mnt-lower:      KYIVSTAR-MNT
+mnt-routes:     KYIVSTAR-MNT
+created:        2011-12-07T15:35:12Z
+last-modified:  2011-12-07T15:35:12Z
+source:         RIPE
+
+role:           Kyivstar PJSC
+address:        Degtyarevskaya, 53
+address:        Kiev, Ukraine
+admin-c:        AEL17-RIPE
+tech-c:         MA19315-RIPE
+tech-c:         AEL17-RIPE
+nic-hdl:        KSUA-RIPE
+remarks:        Please send all abuse reports here:
+abuse-mailbox:  abuse@kyivstar.net
+mnt-by:         KYIVSTAR-MNT
+created:        2003-05-19T14:48:31Z
+last-modified:  2016-07-08T10:56:37Z
+source:         RIPE # Filtered
+
+% Information related to '46.211.128.0/17AS15895'
+
+route:          46.211.128.0/17
+descr:          Kyivstar GSM, Kiev, Ukraine
+origin:         AS15895
+mnt-by:         KYIVSTAR-MNT
+created:        2011-01-06T12:39:28Z
+last-modified:  2011-01-06T12:39:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

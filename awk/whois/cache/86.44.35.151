@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '86.44.0.0 - 86.45.255.255'
+
+% Abuse contact for '86.44.0.0 - 86.45.255.255' is 'wmsupport@eir.ie'
+
+inetnum:        86.44.0.0 - 86.45.255.255
+netname:        EIRCOM
+descr:          Eircom
+descr:          IP network infrastructure (Broadband Pool Addresses)
+descr:          Ireland
+descr:          ** Send spam/hack/virus complaints to abuse@eircom.net
+descr:          ** Complaints sent to the contacts listed below will not be
+descr:          ** acted on!
+country:        IE
+admin-c:        EN369-RIPE
+tech-c:         EN369-RIPE
+status:         ASSIGNED PA
+mnt-by:         TE-MNT
+created:        2007-02-09T14:04:56Z
+last-modified:  2015-07-16T10:06:30Z
+source:         RIPE # Filtered
+
+role:           Eircom Networks
+address:        Eircom
+address:        Bianconi Avenue
+address:        Citywest, Dublin 24
+address:        Ireland
+remarks:        -----------------------------------------------------------
+remarks:        For abuse/spam complaints for addresses from within this block please contact abuse@eircom.net
+remarks:        If you are not satisfied please submit a report on the web at http://support.eircom.net/abuse/
+remarks:        For information on abuse and what you can do to report it and prevent it please see http://support.eircom.net/abuse/security.asp
+remarks:        ---------------------------------------------------------
+admin-c:        RC17-RIPE
+admin-c:        LM17406-RIPE
+admin-c:        DC9807-RIPE
+admin-c:        KM7138-RIPE
+admin-c:        MW9186-RIPE
+tech-c:         RC17-RIPE
+tech-c:         LM17406-RIPE
+tech-c:         DC9807-RIPE
+tech-c:         KM7138-RIPE
+tech-c:         MW9186-RIPE
+nic-hdl:        EN369-RIPE
+mnt-by:         TE-MNT
+created:        2006-01-12T16:24:08Z
+last-modified:  2017-11-20T15:47:08Z
+source:         RIPE # Filtered
+
+% Information related to '86.44.0.0/14AS5466'
+
+route:          86.44.0.0/14
+descr:          eircom, Ireland
+origin:         AS5466
+remarks:        For abuse/spam complaints for addresses from this block
+remarks:        please contact the techc and/or adminc for the individual
+remarks:        inetnum objects. If this does not resolve the problem to
+remarks:        your satisfaction please submit a report on the web at
+remarks:        http://support.eircom.net/abuse/
+remarks:        peering@eircom.net should ONLY be used for routing issues.
+mnt-by:         TE-MNT
+created:        2015-11-16T16:28:53Z
+last-modified:  2015-11-16T16:28:53Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

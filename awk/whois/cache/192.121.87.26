@@ -1,0 +1,157 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       192.121.0.0 - 192.121.255.255
+CIDR:           192.121.0.0/16
+NetName:        RIPE-ERX-192-121-0-0
+NetHandle:      NET-192-121-0-0-1
+Parent:         NET192 (NET-192-0-0-0-0)
+NetType:        Early Registrations, Transferred to RIPE NCC
+OriginAS:       
+Organization:   RIPE Network Coordination Centre (RIPE)
+RegDate:        2005-02-28
+Updated:        2005-02-28
+Comment:        These addresses have been further assigned to users in
+Comment:        the RIPE NCC region.  Contact information can be found in
+Comment:        the RIPE database at http://www.ripe.net/whois
+Ref:            https://rdap.arin.net/registry/ip/192.121.0.0
+
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+ResourceLink:  whois.ripe.net
+
+
+OrgName:        RIPE Network Coordination Centre
+OrgId:          RIPE
+Address:        P.O. Box 10096
+City:           Amsterdam
+StateProv:      
+PostalCode:     1001EB
+Country:        NL
+RegDate:        
+Updated:        2013-07-29
+Ref:            https://rdap.arin.net/registry/entity/RIPE
+
+ReferralServer:  whois://whois.ripe.net
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+
+OrgAbuseHandle: ABUSE3850-ARIN
+OrgAbuseName:   Abuse Contact
+OrgAbusePhone:  +31205354444 
+OrgAbuseEmail:  abuse@ripe.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3850-ARIN
+
+OrgTechHandle: RNO29-ARIN
+OrgTechName:   RIPE NCC Operations
+OrgTechPhone:  +31 20 535 4444 
+OrgTechEmail:  hostmaster@ripe.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/RNO29-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.ripe.net.
+
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '192.121.87.0 - 192.121.87.255'
+
+% Abuse contact for '192.121.87.0 - 192.121.87.255' is 'abuse@edis.at'
+
+inetnum:        192.121.87.0 - 192.121.87.255
+netname:        EDIS-NET
+descr:          EDIS Infrastructure in Moldova
+org:            ORG-ABUS1224-RIPE
+country:        MD
+admin-c:        EDIS-RIPE
+admin-c:        GK2
+admin-c:        ISAT
+tech-c:         EDIS-RIPE
+tech-c:         ISAT
+status:         LEGACY
+mnt-by:         RESILANS-MNT
+mnt-routes:     EDIS-MNT
+created:        2018-12-17T14:02:39Z
+last-modified:  2019-03-14T14:25:36Z
+source:         RIPE # Filtered
+
+organisation:   ORG-ABUS1224-RIPE
+org-name:       EDIS GmbH
+org-type:       OTHER
+address:        Hauptplatz 3/3
+address:        8010 GRAZ
+address:        Austria
+abuse-c:        ABUS2725-RIPE
+mnt-ref:        RESILANS-MNT
+mnt-by:         RESILANS-MNT
+created:        2013-03-14T13:51:04Z
+last-modified:  2016-08-12T11:02:57Z
+source:         RIPE # Filtered
+
+person:         Technical Contact
+address:        EDIS GmbH, Hauptplatz 3/3, 8010, GRAZ, Austria
+address:        http://www.edis.at
+phone:          +43 316 827500300
+nic-hdl:        EDIS-RIPE
+mnt-by:         EDIS-MNT
+created:        2011-05-09T14:30:43Z
+last-modified:  2017-10-30T22:13:42Z
+source:         RIPE
+
+person:         Gerhard Kleewein
+address:        EDIS GmbH, Hauptplatz 3/3, 8010, GRAZ, Austria
+address:        http://www.edis.at
+phone:          +43 316 827500300
+nic-hdl:        GK2
+mnt-by:         EDIS-MNT
+created:        2013-07-22T09:30:17Z
+last-modified:  2016-04-08T06:44:45Z
+source:         RIPE # Filtered
+
+person:         Dipl.-Ing. Ismir Saljic
+address:        EDIS GmbH, Hauptplatz 3/3, 8010, GRAZ, Austria
+address:        http://www.edis.at
+phone:          +43 316 827500300
+nic-hdl:        ISAT
+mnt-by:         EDIS-MNT
+created:        2013-12-18T13:29:24Z
+last-modified:  2016-04-08T06:45:49Z
+source:         RIPE # Filtered
+
+% Information related to '192.121.87.0/24AS43289'
+
+route:          192.121.87.0/24
+origin:         AS43289
+mnt-by:         EDIS-MNT
+created:        2019-02-13T09:43:27Z
+last-modified:  2019-02-13T09:43:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

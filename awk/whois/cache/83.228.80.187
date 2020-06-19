@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '83.228.80.0 - 83.228.81.255'
+
+% Abuse contact for '83.228.80.0 - 83.228.81.255' is 'abuse-ip@vivacom.bg'
+
+inetnum:        83.228.80.0 - 83.228.81.255
+netname:        BTC-BROADBAND-NET-42
+descr:          BTC Broadband Service
+country:        BG
+admin-c:        LG700-RIPE
+tech-c:         SS4127-RIPE
+status:         ASSIGNED PA
+mnt-by:         BT95-ADM
+created:        2015-07-02T11:36:12Z
+last-modified:  2015-07-02T11:36:12Z
+source:         RIPE
+
+person:         Lyubomir Georgiev
+address:        BTC Plc
+address:        Bulgarian Telecommunications Company Plc
+address:        Bulgaria
+mnt-by:         BT95-ADM
+phone:          +359 2 932 08 38
+nic-hdl:        LG700-RIPE
+created:        2002-12-27T08:55:53Z
+last-modified:  2015-07-02T14:54:31Z
+source:         RIPE # Filtered
+
+person:         Stanish Stanishev
+address:        BTC-NET Ltd.
+address:        115 I,TSARIGRADSKO CHAUSSEE
+address:        Sofia  1784
+address:        Bulgaria
+mnt-by:         BT95-ADM
+phone:          +359 2 932 08 42
+fax-no:         +359 2 932 08 24
+nic-hdl:        SS4127-RIPE
+created:        2004-05-03T08:50:40Z
+last-modified:  2018-01-08T13:58:02Z
+source:         RIPE # Filtered
+
+% Information related to '83.228.80.0/23AS8866'
+
+route:          83.228.80.0/23
+descr:          BTC-BROADBAND-NET
+origin:         AS8866
+mnt-by:         BT95-ADM
+created:        2015-09-29T08:21:34Z
+last-modified:  2015-09-29T08:21:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

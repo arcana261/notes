@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.128.248.0 - 37.128.255.255'
+
+% Abuse contact for '37.128.248.0 - 37.128.255.255' is 'abuse@askiran.com'
+
+inetnum:        37.128.248.0 - 37.128.255.255
+netname:        ask-adsl-b8
+descr:          Andishe Sabz Khazar ADSL Users
+country:        IR
+admin-c:        MRN1-RIPE
+tech-c:         MRN1-RIPE
+status:         ASSIGNED PA
+mnt-by:         mnt-ask1
+created:        2014-05-11T18:37:38Z
+last-modified:  2014-05-11T18:37:38Z
+source:         RIPE
+
+person:         Mohammad Reza Nikrou
+address:        165 Ave, No 11
+address:        Golsar, Rasht ,Guilan, Iran
+mnt-by:         MNT-ASK1
+phone:          +98(13)3410
+nic-hdl:        MRN1-RIPE
+created:        2001-12-17T06:53:51Z
+last-modified:  2018-12-06T06:53:50Z
+source:         RIPE # Filtered
+
+% Information related to '37.128.240.0/20as39308'
+
+route:          37.128.240.0/20
+descr:          Andishe Sabz Khazar route
+origin:         as39308
+mnt-by:         mnt-ask1
+created:        2012-02-21T18:03:06Z
+last-modified:  2012-02-21T18:03:06Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

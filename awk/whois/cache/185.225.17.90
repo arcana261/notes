@@ -1,0 +1,81 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.225.17.0 - 185.225.17.255'
+
+% Abuse contact for '185.225.17.0 - 185.225.17.255' is 'abuse@mivocloud.com'
+
+inetnum:        185.225.17.0 - 185.225.17.255
+netname:        MIVO-185-225-17-0-24-RO
+descr:          MivoCloud
+country:        RO
+geoloc:         47.165806 27.570070
+org:            ORG-MSS27-RIPE
+admin-c:        MIVO-RIPE
+tech-c:         MIVO-RIPE
+abuse-c:        MIVO-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-MIVOCLOUD
+created:        2020-03-30T13:37:36Z
+last-modified:  2020-03-30T13:37:36Z
+source:         RIPE # Filtered
+
+organisation:   ORG-MSS27-RIPE
+org-name:       MivoCloud Solutions SRL
+org-type:       OTHER
+address:        str. Vl. Korolenko 6
+address:        MD-2028
+address:        Chisinau
+address:        MOLDOVA, REPUBLIC OF
+admin-c:        MIVO-RIPE
+tech-c:         MIVO-RIPE
+abuse-c:        MIVO-RIPE
+mnt-ref:        MNT-MIVOCLOUD
+mnt-by:         MNT-MIVOCLOUD
+created:        2017-10-10T06:52:55Z
+last-modified:  2019-12-23T10:31:43Z
+source:         RIPE # Filtered
+phone:          +40372746283
+
+role:           MivoCloud Administrator
+remarks:
+remarks:        ----------------------------------------------
+remarks:
+remarks:        https://www.mivocloud.com
+remarks:
+abuse-mailbox:  abuse@mivocloud.com
+remarks:
+remarks:        ----------------------------------------------
+remarks:
+address:        MivoCloud
+remarks:
+remarks:        ----------------------------------------------
+remarks:
+org:            ORG-MS430-RIPE
+nic-hdl:        MIVO-RIPE
+mnt-by:         MNT-MIVOCLOUD
+created:        2015-03-18T15:38:12Z
+last-modified:  2017-08-31T11:45:53Z
+source:         RIPE # Filtered
+remarks:
+remarks:        ----------------------------------------------
+
+% Information related to '185.225.17.0/24AS39798'
+
+route:          185.225.17.0/24
+descr:          MivoCloud
+origin:         AS39798
+mnt-by:         MNT-MIVOCLOUD
+created:        2017-10-11T19:57:13Z
+last-modified:  2017-10-11T19:57:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

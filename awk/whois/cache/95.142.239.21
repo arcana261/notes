@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.142.224.0 - 95.142.239.255'
+
+% Abuse contact for '95.142.224.0 - 95.142.239.255' is 'info@armaghan.net'
+
+inetnum:        95.142.224.0 - 95.142.239.255
+netname:        IR-ARMAGHAN-20090811
+country:        IR
+org:            ORG-ART3-RIPE
+admin-c:        SAA190-RIPE
+tech-c:         SAA190-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-ARMAGHAN
+mnt-routes:     MNT-ARMAGHAN
+mnt-domains:    MNT-ARMAGHAN
+created:        2009-08-11T08:19:38Z
+last-modified:  2017-03-17T13:12:08Z
+source:         RIPE # Filtered
+
+organisation:   ORG-ART3-RIPE
+org-name:       Armaghan Rahe Talaie
+org-type:       LIR
+address:        No 12 Mehr2 Complex Palestine St, Enghelab Street
+address:        Tehran
+address:        1416814588
+address:        IRAN, ISLAMIC REPUBLIC OF
+abuse-c:        AR15615-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-ARMAGHAN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-ARMAGHAN
+created:        2009-08-05T08:46:46Z
+last-modified:  2017-03-17T13:12:08Z
+source:         RIPE # Filtered
+phone:          +982166495050
+fax-no:         +982166404146
+
+person:         S Ahmad Abdosalehi
+address:        No 12 Mehr2 Complex Palestine St, Enghelab Street
+phone:          +982166495050
+nic-hdl:        SAA190-RIPE
+created:        2009-08-10T15:20:36Z
+last-modified:  2020-06-04T12:48:32Z
+source:         RIPE
+mnt-by:         MNT-ARMAGHAN
+
+% Information related to '95.142.239.0/24AS49680'
+
+route:          95.142.239.0/24
+origin:         AS49680
+mnt-by:         MNT-ARMAGHAN
+created:        2018-04-18T11:31:13Z
+last-modified:  2018-04-18T11:31:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

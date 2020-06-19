@@ -1,0 +1,54 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '212.120.223.128 - 212.120.223.191'
+
+% Abuse contact for '212.120.223.128 - 212.120.223.191' is 'info@hamarasystem.net'
+
+inetnum:        212.120.223.128 - 212.120.223.191
+netname:        SHANLI-MEHRABAN
+descr:          Shanli System Mehraban ISP
+country:        IR
+admin-c:        VM2498-RIPE
+tech-c:         VM2498-RIPE
+status:         ASSIGNED PA
+mnt-by:         HAMARASYSTEM-MNT
+mnt-by:         MK1-MNT
+created:        2009-05-04T06:17:09Z
+last-modified:  2009-05-04T06:17:09Z
+source:         RIPE # Filtered
+
+person:         Vali Montazer
+address:        Shanli System Co.
+address:        No. 360 - W. Ferdowsi St.
+address:        Sarab
+address:        Iran
+phone:          +98 431 223 6000
+fax-no:         +98 431 223 6000
+nic-hdl:        VM2498-RIPE
+created:        2008-08-20T06:56:30Z
+last-modified:  2020-06-04T10:03:20Z
+source:         RIPE # Filtered
+mnt-by:         HAMARASYSTEM-MNT
+mnt-by:         MK1-MNT
+
+% Information related to '212.120.208.0/20AS47262'
+
+route:          212.120.208.0/20
+descr:          HAMARA-Route
+origin:         AS47262
+mnt-by:         HAMARASYSTEM-MNT
+mnt-by:         MK1-MNT
+created:        2015-01-12T16:54:01Z
+last-modified:  2015-01-12T16:54:01Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

@@ -1,0 +1,110 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       71.80.0.0 - 71.95.255.255
+CIDR:           71.80.0.0/12
+NetName:        NETBLK-CHARTER-NET
+NetHandle:      NET-71-80-0-0-1
+Parent:         NET71 (NET-71-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Charter Communications (CC04)
+RegDate:        2005-05-19
+Updated:        2012-03-02
+Ref:            https://rdap.arin.net/registry/ip/71.80.0.0
+
+
+
+OrgName:        Charter Communications
+OrgId:          CC04
+Address:        6399 S Fiddlers Green Circle
+City:           Greenwood Village
+StateProv:      CO
+PostalCode:     80111
+Country:        US
+RegDate:        
+Updated:        2018-10-10
+Ref:            https://rdap.arin.net/registry/entity/CC04
+
+
+OrgTechHandle: IPADD1-ARIN
+OrgTechName:   IPAddressing
+OrgTechPhone:  +1-314-288-3111 
+OrgTechEmail:  ipaddressing@chartercom.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADD1-ARIN
+
+OrgAbuseHandle: ABUSE19-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-855-222-7342 
+OrgAbuseEmail:  abuse@charter.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE19-ARIN
+
+# end
+
+
+# start
+
+NetRange:       71.94.160.0 - 71.94.191.255
+CIDR:           71.94.160.0/19
+NetName:        KNN-WA-71-94-160
+NetHandle:      NET-71-94-160-0-1
+Parent:         NETBLK-CHARTER-NET (NET-71-80-0-0-1)
+NetType:        Reallocated
+OriginAS:       
+Organization:   Charter Communications (CC04)
+RegDate:        2006-08-01
+Updated:        2006-08-01
+Ref:            https://rdap.arin.net/registry/ip/71.94.160.0
+
+
+
+OrgName:        Charter Communications
+OrgId:          CC04
+Address:        6399 S Fiddlers Green Circle
+City:           Greenwood Village
+StateProv:      CO
+PostalCode:     80111
+Country:        US
+RegDate:        
+Updated:        2018-10-10
+Ref:            https://rdap.arin.net/registry/entity/CC04
+
+
+OrgTechHandle: IPADD1-ARIN
+OrgTechName:   IPAddressing
+OrgTechPhone:  +1-314-288-3111 
+OrgTechEmail:  ipaddressing@chartercom.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/IPADD1-ARIN
+
+OrgAbuseHandle: ABUSE19-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-855-222-7342 
+OrgAbuseEmail:  abuse@charter.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE19-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

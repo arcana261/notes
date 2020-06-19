@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.165.164.0 - 188.165.164.255'
+
+% Abuse contact for '188.165.164.0 - 188.165.164.255' is 'abuse@ovh.net'
+
+inetnum:        188.165.164.0 - 188.165.164.255
+netname:        NL-OVH
+descr:          OVH BV
+country:        NL
+org:            ORG-OB14-RIPE
+admin-c:        OTC7-RIPE
+tech-c:         OTC7-RIPE
+status:         ASSIGNED PA
+remarks:        INFRA-AW
+mnt-by:         OVH-MNT
+created:        2013-04-04T18:49:33Z
+last-modified:  2013-04-04T18:49:33Z
+source:         RIPE
+
+organisation:   ORG-OB14-RIPE
+org-name:       OVH BV
+org-type:       OTHER
+address:        Corkstraat 46
+address:        3047 AC Rotterdam
+address:        The Netherlands
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2009-03-18T15:51:01Z
+last-modified:  2017-10-30T16:12:36Z
+source:         RIPE # Filtered
+
+role:           OVH NL Technical Contact
+address:        OVH BV
+address:        Corkstraat 46
+address:        3047 AC Rotterdam
+address:        The Netherlands
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC7-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-03-18T15:51:01Z
+last-modified:  2009-03-18T15:51:01Z
+source:         RIPE # Filtered
+
+% Information related to '188.165.0.0/16AS16276'
+
+route:          188.165.0.0/16
+descr:          OVH ISP
+descr:          Paris, France
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2009-06-08T16:23:41Z
+last-modified:  2009-06-08T16:23:41Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

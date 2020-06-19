@@ -1,0 +1,72 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.80.132.0 - 95.80.135.255'
+
+% Abuse contact for '95.80.132.0 - 95.80.135.255' is 'abuse@maxnet.ir'
+
+inetnum:        95.80.132.0 - 95.80.135.255
+netname:        MXNT-TBZ-DSL-PHASE-2
+descr:          Maxnet DSL Network (Tabriz)
+country:        IR
+geoloc:         38.07008867362511 46.3097682595253
+admin-c:        MXMG-RIPE
+tech-c:         MXTC-RIPE
+status:         ASSIGNED PA
+mnt-by:         MXNT-MNT
+mnt-lower:      MXNT-MNT
+mnt-domains:    MXNT-MNT
+mnt-routes:     MXNT-MNT
+created:        2011-09-23T12:48:55Z
+last-modified:  2019-02-28T05:27:38Z
+source:         RIPE # Filtered
+
+role:           MAXNET Network Operations Center - Management
+address:        No 537, Maxnet Building, Imam Khomeini Ave
+address:        Tabriz, Iran, 5163774515
+phone:          +984113368500
+fax-no:         +984113368182
+abuse-mailbox:  abuse@maxnet.ir
+admin-c:        MRN44-RIPE
+tech-c:         MRN44-RIPE
+nic-hdl:        MXMG-RIPE
+mnt-by:         MXNT-MNT
+created:        2010-12-03T10:36:52Z
+last-modified:  2014-07-12T13:21:09Z
+source:         RIPE # Filtered
+
+role:           MAXNET Network Operations Center - Technical
+address:        No 537, Maxnet Building, Imam Khomeini Ave
+address:        Tabriz, Iran, 5163774515
+phone:          +984113368500
+fax-no:         +984113368182
+abuse-mailbox:  abuse@maxnet.ir
+admin-c:        MRN44-RIPE
+tech-c:         MRN44-RIPE
+nic-hdl:        MXTC-RIPE
+mnt-by:         MXNT-MNT
+created:        2010-12-03T10:34:24Z
+last-modified:  2014-07-12T13:21:58Z
+source:         RIPE # Filtered
+
+% Information related to '95.80.128.0/21AS48431'
+
+route:          95.80.128.0/21
+descr:          Maxnet IPv4 Route
+origin:         AS48431
+mnt-by:         MXNT-MNT
+mnt-lower:      MXNT-MNT
+mnt-routes:     MXNT-MNT
+created:        2011-09-19T11:50:36Z
+last-modified:  2014-07-12T13:44:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

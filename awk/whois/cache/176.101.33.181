@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '176.101.32.0 - 176.101.47.255'
+
+% Abuse contact for '176.101.32.0 - 176.101.47.255' is 'it@iut.ac.ir'
+
+inetnum:        176.101.32.0 - 176.101.47.255
+netname:        IR-IUT
+org:            ORG-IUoT1-RIPE
+mnt-domains:    MNT-IUT
+country:        IR
+admin-c:        INOC15-RIPE
+tech-c:         INOC15-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MH88663-MNT
+mnt-by:         MNT-IUT
+mnt-by:         MNT-MIHAN
+created:        2011-11-03T11:00:47Z
+last-modified:  2018-05-09T09:08:56Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-MCSC2-RIPE
+
+organisation:   ORG-IUoT1-RIPE
+org-name:       Isfahan University of Technology
+org-type:       Other
+address:        Esteghlal Square, Emam Khomeini st. , Esfahan-Iran
+abuse-c:        AR28508-RIPE
+mnt-ref:        MNT-HAMED
+mnt-by:         MNT-MIHAN
+created:        2010-12-30T15:12:30Z
+last-modified:  2014-11-17T22:36:56Z
+source:         RIPE # Filtered
+
+person:         IUT Network Operations Center
+address:        Isfahan University of Technology,
+address:        Esteghlal Square, Emam Khomeini st,
+address:        Esfahan, Iran
+phone:          +98 31 3915803
+nic-hdl:        INOC15-RIPE
+mnt-by:         MH88663-MNT
+created:        2013-02-07T09:21:08Z
+last-modified:  2017-10-30T22:24:32Z
+source:         RIPE # Filtered
+
+% Information related to '176.101.33.0/24as29577'
+
+route:          176.101.33.0/24
+descr:          Isfahan University Of Technology
+origin:         as29577
+mnt-by:         MNT-IUT
+mnt-by:         MH88663-MNT
+created:        2015-01-17T05:08:51Z
+last-modified:  2015-01-17T05:08:51Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

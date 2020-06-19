@@ -1,0 +1,81 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '94.184.140.0 - 94.184.143.255'
+
+% Abuse contact for '94.184.140.0 - 94.184.143.255' is 'abuse@ipm.ir'
+
+inetnum:        94.184.140.0 - 94.184.143.255
+netname:        ISC
+descr:          ISC (Informatics Services Corporation)
+country:        IR
+admin-c:        HG3873-RIPE
+tech-c:         AF10228-RIPE
+tech-c:         AF15685-RIPE
+tech-c:         AA35641-RIPE
+status:         ASSIGNED PA
+mnt-by:         IPM-MNT
+created:        2015-12-28T09:17:24Z
+last-modified:  2020-01-27T08:23:02Z
+source:         RIPE
+
+person:         Amir Asjodi
+address:        No.2, Shahnazari St., Madar Sq., Mirdamad Blvd., Tehran, Iran
+phone:          +9821 24792383
+fax-no:         +9821 22901552
+nic-hdl:        AA35641-RIPE
+mnt-by:         IPM-MNT
+created:        2020-01-27T08:16:58Z
+last-modified:  2020-01-27T08:16:58Z
+source:         RIPE # Filtered
+
+person:         ABBAS FARAHANI
+address:        No.2, Shahnazari St., Madar Sq., Mirdamad Blvd., Tehran, Iran
+address:        Tehran IRAN
+phone:          +9821 24792390
+fax-no:         +9821 22901552
+nic-hdl:        AF10228-RIPE
+mnt-by:         ipm-mnt
+created:        2012-12-15T07:36:31Z
+last-modified:  2020-01-27T08:21:50Z
+source:         RIPE # Filtered
+
+person:         Ardeshir Feizirad
+address:        No.2, Shahnazari St., Madar Sq., Mirdamad Blvd., Tehran, Iran
+phone:          +9821 24792384
+fax-no:         +9821 22901552
+nic-hdl:        AF15685-RIPE
+mnt-by:         IPM-MNT
+created:        2020-01-27T08:18:42Z
+last-modified:  2020-01-27T08:18:42Z
+source:         RIPE # Filtered
+
+person:         Hamidreza Golparvar
+address:        No.2, Shahnazari St., Madar Sq., Mirdamad Blvd., Tehran, Iran
+phone:          +9821 24792053
+fax-no:         +9821 22901552
+nic-hdl:        HG3873-RIPE
+mnt-by:         IPM-MNT
+created:        2016-07-19T06:27:02Z
+last-modified:  2020-01-27T08:48:24Z
+source:         RIPE # Filtered
+
+% Information related to '94.184.140.0/22AS60638'
+
+route:          94.184.140.0/22
+descr:          Informatics Services Corporation(Private Joint Stock)
+origin:         AS60638
+mnt-by:         IPM-MNT
+created:        2015-12-28T09:21:34Z
+last-modified:  2015-12-28T09:21:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

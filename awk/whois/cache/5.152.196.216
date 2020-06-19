@@ -1,0 +1,72 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.152.196.208 - 5.152.196.223'
+
+% Abuse contact for '5.152.196.208 - 5.152.196.223' is 'abuse@uapeer.eu'
+
+inetnum:        5.152.196.208 - 5.152.196.223
+netname:        RSDEDI-CKOHGAIL
+descr:          UAPEER Hosting Solutions
+country:        GB
+admin-c:        VS9923-RIPE
+tech-c:         VS9923-RIPE
+org:            ORG-UHS2-RIPE
+status:         ASSIGNED PA
+mnt-by:         REDSTATION-MNT
+mnt-domains:    REDSTATION-MNT
+mnt-routes:     REDSTATION-MNT
+created:        2016-02-13T19:36:24Z
+last-modified:  2017-11-01T16:04:33Z
+source:         RIPE
+
+organisation:   ORG-UHS2-RIPE
+org-name:       UAPEER Hosting Solutions Ltd
+org-type:       OTHER
+address:        International House
+address:        10 Churchill Way
+address:        Cardiff
+address:        CF10 2HE
+address:        UK
+phone:          +448000869806
+abuse-c:        ACRO11125-RIPE
+mnt-ref:        RAPIDSWITCH-MNT
+admin-c:        VS9923-RIPE
+mnt-by:         RAPIDSWITCH-MNT
+mnt-by:         REDSTATION-MNT
+created:        2017-11-01T15:55:04Z
+last-modified:  2018-12-17T16:03:33Z
+source:         RIPE # Filtered
+
+person:         Viktor Savchenko
+address:        UAPEER Hosting Solutions Ltd
+address:        International House, 10 Churchill Way
+address:        Cardiff
+address:        CF10 2HE
+address:        UK
+phone:          +448000869806
+nic-hdl:        VS9923-RIPE
+mnt-by:         REDSTATION-MNT
+created:        2017-03-21T16:07:28Z
+last-modified:  2018-12-17T16:04:26Z
+source:         RIPE # Filtered
+
+% Information related to '5.152.192.0/19AS20860'
+
+route:          5.152.192.0/19
+origin:         AS20860
+descr:          IOMART
+mnt-by:         IOMART-MNT
+created:        2017-05-09T15:47:27Z
+last-modified:  2017-05-09T15:47:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

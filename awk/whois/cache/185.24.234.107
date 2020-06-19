@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.24.234.0 - 185.24.234.255'
+
+% Abuse contact for '185.24.234.0 - 185.24.234.255' is 'abuse@servebyte.com'
+
+inetnum:        185.24.234.0 - 185.24.234.255
+netname:        SERVEBYTE-IPV4-03
+descr:          ServeByte VPS
+country:        IE
+geoloc:         53.28674310773993 -6.3655900955200195
+admin-c:        JJ-IE
+tech-c:         JJ-IE
+status:         ASSIGNED PA
+mnt-by:         jjameson
+created:        2013-04-24T16:14:31Z
+last-modified:  2015-03-18T10:31:39Z
+source:         RIPE
+
+person:         Joshua Jameson
+address:        Old School
+address:        Castlerock
+address:        Aclare
+address:        Sligo
+address:        Ireland
+phone:          +353894177338
+nic-hdl:        JJ-IE
+mnt-by:         jjameson
+created:        2013-04-23T13:12:36Z
+last-modified:  2013-04-23T13:12:36Z
+source:         RIPE # Filtered
+
+% Information related to '185.24.232.0/22AS30900'
+
+route:          185.24.232.0/22
+descr:          Servebyte Ltd
+origin:         AS30900
+remarks:
+mnt-by:         jjameson
+created:        2019-02-19T12:19:07Z
+last-modified:  2019-02-19T13:01:21Z
+source:         RIPE
+
+% Information related to '185.24.232.0/22AS60751'
+
+route:          185.24.232.0/22
+descr:          Servebyte Ltd
+origin:         AS60751
+remarks:
+mnt-by:         jjameson
+created:        2019-02-19T12:18:29Z
+last-modified:  2019-02-19T12:18:29Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

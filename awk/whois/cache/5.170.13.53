@@ -1,0 +1,77 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.170.0.0 - 5.171.255.255'
+
+% Abuse contact for '5.170.0.0 - 5.171.255.255' is 'abuse@telecomitalia.it'
+
+inetnum:        5.170.0.0 - 5.171.255.255
+netname:        TIM-NET
+descr:          TIM
+descr:          Telecom Italia Mobile
+descr:          Service Provider
+country:        IT
+admin-c:        EST19-RIPE
+tech-c:         EST19-RIPE
+tech-c:         MM27810-RIPE
+status:         ASSIGNED PA
+remarks:        -------------------------------------
+remarks:        PLEASE NOTE:
+remarks:        For any network abuse issues please contact:
+remarks:        abuse@telecomitalia.it
+remarks:        -------------------------------------
+mnt-by:         TIM-MNT
+mnt-lower:      TIM-MNT
+mnt-routes:     TIM-MNT
+created:        2012-08-07T08:57:06Z
+last-modified:  2019-05-28T13:40:45Z
+source:         RIPE # Filtered
+
+role:           Engineering Staff TIM
+address:        Telecom Italia S.p.A.
+address:        Network Engineering
+address:        Italy
+nic-hdl:        EST19-RIPE
+mnt-by:         TIM-MNT
+created:        2019-05-16T09:23:46Z
+last-modified:  2019-05-16T09:23:46Z
+source:         RIPE # Filtered
+
+person:         Mauro Mecci
+address:        TIM (Telecom Italia Mobile)
+address:        Via Di Val Cannuta, 250
+address:        00166 Roma
+address:        Italy
+phone:          +39 06 3900 9032
+fax-no:         +39 06 4186 8837
+nic-hdl:        MM27810-RIPE
+mnt-by:         TIM-MNT
+created:        1970-01-01T00:00:00Z
+last-modified:  2013-04-17T15:47:52Z
+source:         RIPE # Filtered
+
+% Information related to '5.168.0.0/14AS16232'
+
+route:          5.168.0.0/14
+descr:          TIM
+descr:          (Telecom Italia Mobile)
+origin:         AS16232
+remarks:        -------------------------------------
+remarks:        PLEASE NOTE:
+remarks:        For any network abuse issues please contact:
+remarks:        abuse@telecomitalia.it
+remarks:        -------------------------------------
+mnt-by:         TIM-MNT
+created:        2012-08-07T09:00:39Z
+last-modified:  2012-08-07T09:00:39Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

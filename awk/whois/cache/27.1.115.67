@@ -1,0 +1,83 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '27.1.0.0 - 27.1.255.255'
+
+% Abuse contact for '27.1.0.0 - 27.1.255.255' is 'irt@nic.or.kr'
+
+inetnum:        27.1.0.0 - 27.1.255.255
+netname:        DLIVE
+descr:          DLIVE
+admin-c:        IM636-AP
+tech-c:         IM636-AP
+country:        KR
+status:         ALLOCATED PORTABLE
+mnt-by:         MNT-KRNIC-AP
+mnt-irt:        IRT-KRNIC-KR
+last-modified:  2017-02-02T02:39:06Z
+source:         APNIC
+
+irt:            IRT-KRNIC-KR
+address:        Jeollanam-do Naju-si Jinheung-gil
+e-mail:         irt@nic.or.kr
+abuse-mailbox:  irt@nic.or.kr
+admin-c:        IM574-AP
+tech-c:         IM574-AP
+auth:           # Filtered
+remarks:        irt@nic.or.kr was validated on 2020-04-09
+mnt-by:         MNT-KRNIC-AP
+last-modified:  2020-04-09T10:23:17Z
+source:         APNIC
+
+person:         IP Manager
+address:        Seoul Gangnam-gu Teheran-ro 103-gil 9
+country:        KR
+phone:          +82-70-7410-4749
+e-mail:         greajang@dlive.kr
+nic-hdl:        IM636-AP
+mnt-by:         MNT-KRNIC-AP
+last-modified:  2018-02-02T00:35:02Z
+source:         APNIC
+
+% Information related to '27.1.0.0 - 27.1.255.255'
+
+inetnum:        27.1.0.0 - 27.1.255.255
+netname:        DLIVE-KR
+descr:          DLIVE
+country:        KR
+admin-c:        NA100-KR
+tech-c:         NJ100-KR
+status:         ALLOCATED PORTABLE
+mnt-by:         MNT-KRNIC-AP
+mnt-irt:        IRT-KRNIC-KR
+remarks:        This information has been partially mirrored by APNIC from
+remarks:        KRNIC. To obtain more specific information, please use the
+remarks:        KRNIC whois server at whois.kisa.or.kr.
+changed:        hostmaster@nic.or.kr
+source:         KRNIC
+
+person:         IP Manager
+address:        Seoul Gangnam-gu Teheran-ro 103-gil 9
+address:        Jeil BD 4,6,7F
+country:        KR
+phone:          +82-70-7410-4749
+e-mail:         greajang@dlive.kr
+nic-hdl:        NA100-KR
+mnt-by:         MNT-KRNIC-AP
+changed:        hostmaster@nic.or.kr
+source:         KRNIC
+
+person:         IP Manager
+address:        Seoul Gangnam-gu Teheran-ro 103-gil 9
+address:        Jeil BD 4,6,7F
+country:        KR
+phone:          +82-70-7410-4749
+e-mail:         greajang@dlive.kr
+nic-hdl:        NJ100-KR
+mnt-by:         MNT-KRNIC-AP
+changed:        hostmaster@nic.or.kr
+source:         KRNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK3)
+
+

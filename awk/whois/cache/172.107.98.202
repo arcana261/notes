@@ -1,0 +1,91 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       172.106.0.0 - 172.107.255.255
+CIDR:           172.106.0.0/15
+NetName:        PSYCHZ-NETWORKS
+NetHandle:      NET-172-106-0-0-1
+Parent:         NET172 (NET-172-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS40676
+Organization:   Psychz Networks (PS-184)
+RegDate:        2015-06-22
+Updated:        2015-06-22
+Ref:            https://rdap.arin.net/registry/ip/172.106.0.0
+
+
+OrgName:        Psychz Networks
+OrgId:          PS-184
+Address:        20687-2 Amar Road #312
+City:           Walnut
+StateProv:      CA
+PostalCode:     91789
+Country:        US
+RegDate:        2013-04-17
+Updated:        2013-09-05
+Ref:            https://rdap.arin.net/registry/entity/PS-184
+
+ReferralServer:  rwhois://rwhois.psychz.net:4321
+
+OrgAbuseHandle: NOC3077-ARIN
+OrgAbuseName:   NOC
+OrgAbusePhone:  +1-626-549-2801 
+OrgAbuseEmail:  noc@psychz.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NOC3077-ARIN
+
+OrgTechHandle: NOC3077-ARIN
+OrgTechName:   NOC
+OrgTechPhone:  +1-626-549-2801 
+OrgTechEmail:  noc@psychz.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC3077-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.psychz.net:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 portal.psychz.net (Ubersmith RWhois Server V-4.4.2)
+autharea=172.107.98.0/23
+xautharea=172.107.98.0/23
+network:Class-Name:network
+network:Auth-Area:172.107.98.0/23
+network:ID:NET-104150.172.107.98.200/29
+network:Network-Name:172.107.98.200/29
+network:IP-Network:172.107.98.200/29
+network:IP-Network-Block:172.107.98.200 - 172.107.98.207
+network:Org-Name:Binti Abdul Rahim, Nik Shara
+network:Street-Address:6, Jalan Kenanga 5, Taman Satria
+network:City:Negeri Sembilan
+network:State:Seremban,
+network:Postal-Code:70450
+network:Country-Code:MY
+network:Tech-Contact:MAINT-104150.172.107.98.200/29
+network:Created:20190121195006000
+network:Updated:20190121195006000
+network:Updated-By:abuse@psychz.net
+contact:POC-Name:Network Administrator
+contact:POC-Email:abuse@psychz.net
+contact:POC-Phone:
+contact:Tech-Name:Network Administrator
+contact:Tech-Email:abuse@psychz.net
+contact:Tech-Phone:
+%ok

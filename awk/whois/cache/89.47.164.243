@@ -1,0 +1,74 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.47.160.0 - 89.47.170.255'
+
+% Abuse contact for '89.47.160.0 - 89.47.170.255' is 'abuse@iv.lt'
+
+inetnum:        89.47.160.0 - 89.47.170.255
+netname:        LT-LITHUANIA-20051129
+country:        LT
+org:            ORG-Uv2-RIPE
+admin-c:        IVH-RIPE
+tech-c:         IVH-RIPE
+status:         ALLOCATED PA
+remarks:        www.serveriai.lt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         SERVERIAI-LT
+mnt-lower:      SERVERIAI-LT
+mnt-routes:     MNT-LT-RACKRAY
+created:        2020-05-12T11:32:21Z
+last-modified:  2020-05-12T11:32:21Z
+source:         RIPE # Filtered
+
+organisation:   ORG-UV2-RIPE
+org-name:       UAB "Interneto vizija"
+org-type:       LIR
+address:        J. Kubiliaus g. 6
+address:        08234
+address:        Vilnius
+address:        LITHUANIA
+phone:          +37052324444
+fax-no:         +37052077944
+admin-c:        IVH-RIPE
+abuse-c:        IVAB-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        SERVERIAI-LT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         SERVERIAI-LT
+created:        2007-09-13T12:04:08Z
+last-modified:  2016-08-04T12:37:16Z
+source:         RIPE # Filtered
+
+person:         INTERNETO VIZIJA Hostmaster
+address:        UAB "Interneto vizija"
+address:        J. Kubiliaus g. 6
+address:        08234 Vilnius
+address:        Lithuania
+phone:          +37052324444
+fax-no:         +37052077944
+nic-hdl:        IVH-RIPE
+mnt-by:         SERVERIAI-LT
+created:        2006-04-15T09:22:23Z
+last-modified:  2017-10-30T21:48:54Z
+source:         RIPE # Filtered
+
+% Information related to '89.47.160.0/21AS62282'
+
+route:          89.47.160.0/21
+descr:          LT-RACKRAY
+origin:         AS62282
+mnt-by:         MNT-LT-RACKRAY
+created:        2018-01-08T09:39:04Z
+last-modified:  2018-01-08T09:39:04Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

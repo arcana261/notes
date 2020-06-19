@@ -1,0 +1,26 @@
+[ JPNIC database provides information regarding IP address and ASN. Its use   ]
+[ is restricted to network administration purposes. For further information,  ]
+[ use 'whois -h whois.nic.ad.jp help'. To only display English output,        ]
+[ add '/e' at the end of command, e.g. 'whois -h whois.nic.ad.jp xxx/e'.      ]
+
+Network Information:            
+a. [Network Number]             218.47.164.0-218.47.255.255
+b. [Network Name]               PLALA
+g. [Organization]               NTT Plala Inc.
+m. [Administrative Contact]     JP00064035
+n. [Technical Contact]          JP00064035
+p. [Nameserver]                 dns-cz1.plala.or.jp
+p. [Nameserver]                 dns-cz2.plala.or.jp
+p. [Nameserver]                 ns-tk062.ocn.ad.jp
+[Assigned Date]                 2002/01/29
+[Return Date]                   
+[Last Update]                   2011/01/21 17:32:03(JST)
+                                
+Less Specific Info.
+----------
+NTT COMMUNICATIONS CORPORATION
+                     [Allocation]                                218.47.0.0/16
+
+More Specific Info.
+----------
+No match!!

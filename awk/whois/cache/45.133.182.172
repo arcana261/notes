@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.133.182.0 - 45.133.182.255'
+
+% Abuse contact for '45.133.182.0 - 45.133.182.255' is 'abuse@m247.ro'
+
+inetnum:        45.133.182.0 - 45.133.182.255
+netname:        M247-LTD-Quebec
+descr:          M247 LTD Quebec Infrastructure
+country:        CA
+admin-c:        GBXS34-RIPE
+tech-c:         GBXS34-RIPE
+status:         ASSIGNED PA
+mnt-by:         GLOBALAXS-MNT
+mnt-routes:     GLOBALAXS-MNT
+mnt-domains:    GLOBALAXS-MNT
+remarks:        --------------LEGAL CONCERNS-----------------------------
+remarks:        For any legal requests, please send an email
+remarks:        to ro-legal@m247.com for a maximum 48hours response.
+remarks:        ---------------------------------------------------------
+created:        2019-08-23T09:19:13Z
+last-modified:  2019-08-23T09:20:43Z
+source:         RIPE
+
+role:           GLOBALAXS QUEBEC NOC
+address:        1250 Rene-Levesque Blvd W, Montreal, QC H3B 4W8, Canada
+abuse-mailbox:  abuse@m247.com
+nic-hdl:        GBXS34-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2018-08-22T18:27:55Z
+last-modified:  2019-11-20T08:17:40Z
+source:         RIPE # Filtered
+
+% Information related to '45.133.182.0/24AS9009'
+
+route:          45.133.182.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2019-07-25T11:18:48Z
+last-modified:  2019-07-25T11:18:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

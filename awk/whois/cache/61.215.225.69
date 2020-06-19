@@ -1,0 +1,25 @@
+[ JPNIC database provides information regarding IP address and ASN. Its use   ]
+[ is restricted to network administration purposes. For further information,  ]
+[ use 'whois -h whois.nic.ad.jp help'. To only display English output,        ]
+[ add '/e' at the end of command, e.g. 'whois -h whois.nic.ad.jp xxx/e'.      ]
+
+Network Information:            
+a. [Network Number]             61.215.225.0/24
+b. [Network Name]               CTTNET
+g. [Organization]               CABLE TELEVISION TOYAMA INCORPORETED
+m. [Administrative Contact]     SH475JP
+n. [Technical Contact]          JP00012576
+p. [Nameserver]                 tymwsv02.fitweb.or.jp
+p. [Nameserver]                 cttsv039.ctt.ne.jp
+[Assigned Date]                 2001/08/22
+[Return Date]                   
+[Last Update]                   2009/02/19 12:05:06(JST)
+                                
+Less Specific Info.
+----------
+Hokuden Information System Service Co.,Ltd.
+                     [Allocation]                              61.215.224.0/20
+
+More Specific Info.
+----------
+No match!!

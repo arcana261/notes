@@ -1,0 +1,38 @@
+% This is the AfriNIC Whois server.
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '196.240.57.0 - 196.240.57.255'
+
+% No abuse contact registered for 196.240.57.0 - 196.240.57.255
+
+inetnum:        196.240.57.0 - 196.240.57.255
+netname:        Berlin
+descr:          Berlin
+country:        DE
+admin-c:        DL12-AFRINIC
+tech-c:         DL12-AFRINIC
+status:         ASSIGNED PA
+mnt-by:         FIBERGRID-MNT
+source:         AFRINIC # Filtered
+parent:         196.240.0.0 - 196.241.255.255
+
+person:         Dave Liding
+address:        795 Folsom Street 1st floor
+address:        San Francisco California US
+phone:          tel:+1-415-651-7072
+nic-hdl:        DL12-AFRINIC
+mnt-by:         GENERATED-QLWNLDGRTWP2VDLRYTA2PZNGW3HOIYWI-MNT
+source:         AFRINIC # Filtered
+
+% Information related to '196.240.0.0/15AS37518'
+
+route:          196.240.0.0/15
+descr:          Route
+origin:         AS37518
+mnt-by:         FIBERGRID-MNT
+source:         AFRINIC # Filtered
+
+
+

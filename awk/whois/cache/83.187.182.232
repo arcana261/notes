@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '83.187.160.0 - 83.187.191.255'
+
+% Abuse contact for '83.187.160.0 - 83.187.191.255' is 'abuse@swip.net'
+
+inetnum:        83.187.160.0 - 83.187.191.255
+netname:        SE-TELE2-MBB
+descr:          Mobile Services
+descr:          **********************************************
+                In case of improper use originating from our
+                network, please mail Tele2 Security at
+                <abuse@swip.net>
+                ***********************************************
+country:        SE
+admin-c:        SWIP-RIPE
+tech-c:         SWIP-RIPE
+status:         ASSIGNED PA
+mnt-by:         SWIPNET-LIR-MNT
+created:        2019-12-10T07:42:19Z
+last-modified:  2019-12-10T07:42:19Z
+source:         RIPE # Filtered
+
+role:           Swipnet Staff
+address:        Tele2 AB/Swedish IP Network
+address:        IP Registry
+address:        Torshamnsgatan 17 164 40 Kista SWEDEN
+phone:          +46 8 5626 40 00
+fax-no:         +46 8 5626 42 10
+abuse-mailbox:  abuse@swip.net
+remarks:        The database object describes the staff of SWIPNET LIR.
+admin-c:        ROSI3-RIPE
+admin-c:        TH6544-RIPE
+admin-c:        NR4353-RIPE
+tech-c:         ROSI3-RIPE
+tech-c:         TH6544-RIPE
+tech-c:         NR4353-RIPE
+nic-hdl:        SWIP-RIPE
+mnt-by:         SWIPNET-LIR-MNT
+created:        2002-03-21T14:25:04Z
+last-modified:  2020-02-10T12:06:45Z
+source:         RIPE # Filtered
+
+% Information related to '83.176.0.0/12AS1257'
+
+route:          83.176.0.0/12
+descr:          SWIPNET
+descr:          TELE2/ SWIPNET
+origin:         AS1257
+mnt-by:         AS1257-MNT
+mnt-routes:     COMHEM-MNT
+created:        2004-01-16T18:00:40Z
+last-modified:  2019-10-07T10:35:48Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

@@ -1,0 +1,77 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.238.178.0 - 89.238.178.255'
+
+% Abuse contact for '89.238.178.0 - 89.238.178.255' is 'abuse@m247.ro'
+
+inetnum:        89.238.178.0 - 89.238.178.255
+org:            ORG-GL37-RIPE
+netname:        M247-LTD-Madrid
+descr:          M247 LTD Madrid Infrastructure
+country:        ES
+geoloc:         40.4378698 -3.8196192
+admin-c:        GBXS3-RIPE
+tech-c:         GBXS3-RIPE
+status:         SUB-ALLOCATED PA
+mnt-by:         GLOBALAXS-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2018-04-27T07:25:35Z
+last-modified:  2018-11-29T10:53:51Z
+source:         RIPE
+
+organisation:   ORG-GL37-RIPE
+org-name:       M247 Ltd
+org-type:       LIR
+address:        1 Ball Green, Cobra Court
+address:        M32 0QT
+address:        Manchester
+address:        UNITED KINGDOM
+phone:          +441616151272
+fax-no:         +441618655763
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        GLOBALAXS-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         GLOBALAXS-MNT
+admin-c:        CB2407-RIPE
+admin-c:        JB3482-RIPE
+abuse-c:        GBXS-RIPE
+created:        2007-03-14T11:11:06Z
+last-modified:  2018-02-21T10:27:01Z
+source:         RIPE # Filtered
+
+role:           GLOBALAXS NOC MADRID
+remarks:        M247 - Network Management Centre Madrid
+address:        Calle Albasanz, 71
+address:        28037, Madrid, Spain
+abuse-mailbox:  ro-legal@m247.ro
+tech-c:         PC12694-RIPE
+tech-c:         JB3482-RIPE
+tech-c:         CB2407-RIPE
+nic-hdl:        GBXS3-RIPE
+mnt-by:         GLOBALAXS-MNT
+created:        2016-03-15T14:10:14Z
+last-modified:  2019-06-04T13:28:21Z
+source:         RIPE # Filtered
+
+% Information related to '89.238.178.0/24AS9009'
+
+route:          89.238.178.0/24
+origin:         AS9009
+mnt-by:         GLOBALAXS-MNT
+created:        2016-11-24T11:04:03Z
+last-modified:  2016-11-24T11:04:03Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

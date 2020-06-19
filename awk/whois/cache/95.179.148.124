@@ -1,0 +1,70 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.179.148.0 - 95.179.149.255'
+
+% Abuse contact for '95.179.148.0 - 95.179.149.255' is 'abuse@vultr.com'
+
+inetnum:        95.179.148.0 - 95.179.149.255
+created:        2018-06-14T19:00:04Z
+last-modified:  2018-06-14T19:00:04Z
+source:         RIPE
+netname:        NET-V4-95-179-128-0-17
+descr:          JW Lucasweg 35
+descr:          2031BE, Haarlem
+descr:          Netherlands
+country:        NL
+geoloc:         52.3914 4.6630
+org:            ORG-VHLA2-RIPE
+admin-c:        VHLA1-RIPE
+tech-c:         VHLA2-RIPE
+status:         ASSIGNED PA
+mnt-by:         MAINT-AS20473
+
+organisation:   ORG-VHLA2-RIPE
+created:        2017-12-26T21:38:17Z
+last-modified:  2017-12-26T21:38:17Z
+source:         RIPE # Filtered
+org-name:       Vultr Holdings LLC Amsterdam
+org-type:       OTHER
+address:        JW Lucasweg 35
+address:        2031BE, Haarlem
+address:        Netherlands
+phone:          +1-973-849-0500
+admin-c:        VHLA1-RIPE
+tech-c:         VHLA2-RIPE
+abuse-c:        VHLA3-RIPE
+mnt-by:         MAINT-AS20473
+mnt-ref:        MAINT-AS20473
+
+person:         Vultr Holdings LLC Amsterdam Admin
+created:        2017-12-26T21:38:16Z
+last-modified:  2017-12-26T21:38:16Z
+source:         RIPE # Filtered
+address:        14 Cliffwood Ave Suite 300, Metropark South
+address:        Matawan, NJ 07747
+address:        United States
+phone:          +1-973-849-0500
+mnt-by:         MAINT-AS20473
+nic-hdl:        VHLA1-RIPE
+
+person:         Vultr Holdings LLC Amsterdam Tech
+created:        2017-12-26T21:38:16Z
+last-modified:  2017-12-26T21:38:16Z
+source:         RIPE # Filtered
+address:        14 Cliffwood Ave Suite 300, Metropark South
+address:        Matawan, NJ 07747
+address:        United States
+phone:          +1-973-849-0500
+mnt-by:         MAINT-AS20473
+nic-hdl:        VHLA2-RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

@@ -1,0 +1,82 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '89.37.0.0 - 89.37.15.255'
+
+% Abuse contact for '89.37.0.0 - 89.37.15.255' is 'abuse@mobinnet.net'
+
+inetnum:        89.37.0.0 - 89.37.15.255
+netname:        IR-MOBINNET-20051129
+country:        ir
+org:            ORG-MNCC1-RIPE
+admin-c:        RA4320-RIPE
+tech-c:         RA4320-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-MOBINNET
+mnt-lower:      MNT-MOBINNET
+mnt-lower:      MNT-mobin
+mnt-lower:      MTC-Reza-M
+mnt-domains:    MNT-mobin
+mnt-domains:    MTC-Reza-M
+mnt-routes:     MNT-MOBINNET
+mnt-routes:     MNT-mobin
+mnt-routes:     MTC-Reza-M
+created:        2014-08-22T13:45:50Z
+last-modified:  2016-05-30T08:37:31Z
+source:         RIPE # Filtered
+
+organisation:   ORG-MNCC1-RIPE
+org-name:       Mobin Net Communication Company (Private Joint Stock)
+org-type:       LIR
+remarks:        Nationwide Wimax Broadband Operator
+address:        Motahari St., After Mofatteh St., No.391, 4th floor,
+address:        1575944431
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989371497833
+phone:          +982183869764
+fax-no:         +982177780341
+fax-no:         +982188700396
+abuse-c:        AR15646-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-MOBINNET
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-MOBINNET
+created:        2009-11-30T10:58:57Z
+last-modified:  2019-04-28T11:49:09Z
+source:         RIPE # Filtered
+
+person:         Saeed Osali
+address:        Mobin Net Communication Company
+address:        Sh.Motahari 377
+address:        1595713463 Tehran
+phone:          +98 21 83868
+nic-hdl:        RA4320-RIPE
+mnt-by:         MNT-MOBINNET
+created:        2009-12-01T08:58:59Z
+last-modified:  2015-11-11T15:21:52Z
+source:         RIPE
+
+% Information related to '89.37.12.0/22AS50810'
+
+route:          89.37.12.0/22
+origin:         AS50810
+mnt-by:         MNT-MOBIN
+mnt-by:         MTC-Reza-M
+mnt-by:         MTC-DomainMNT
+mnt-by:         SBU-MNT
+mnt-by:         MNT-MOBINNET
+created:        2018-03-11T12:57:21Z
+last-modified:  2018-03-11T12:57:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

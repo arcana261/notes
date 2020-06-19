@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '94.191.136.0 - 94.191.143.255'
+
+% Abuse contact for '94.191.136.0 - 94.191.143.255' is 'registry@hi3gaccess.se'
+
+inetnum:        94.191.136.0 - 94.191.143.255
+netname:        HI3G-CUSTOMER-NET
+descr:          3 Customer dynamic address pool
+country:        SE
+admin-c:        dawi-ripe
+tech-c:         dawi-ripe
+tech-c:         HNOC1-RIPE
+status:         ASSIGNED PA
+remarks:        INFRA-AW
+mnt-by:         HI3GACCESS-MNT
+created:        2008-09-08T15:16:16Z
+last-modified:  2013-11-25T13:29:17Z
+source:         RIPE
+
+person:         Daniel Wiberg
+address:        Hi3G Access AB
+address:        Pastellvägen 2
+address:        SE-12136 Johanneshov
+address:        Sweden
+mnt-by:         HI3GACCESS-MNT
+phone:          +46 763 333333
+nic-hdl:        DAWI-RIPE
+created:        2003-05-06T13:59:19Z
+last-modified:  2019-05-07T12:33:11Z
+source:         RIPE # Filtered
+
+person:         Hi3G Network Operation Centre
+address:        Hi3G Access AB
+address:        Lindhagensgatan 98
+address:        SE-104 25 Stockholm
+address:        Sweden
+phone:          + 46763337600
+nic-hdl:        HNOC1-RIPE
+created:        2009-11-30T13:45:26Z
+last-modified:  2020-06-04T10:03:21Z
+source:         RIPE # Filtered
+mnt-by:         HI3GACCESS-MNT
+
+% Information related to '94.191.128.0/17AS44034'
+
+route:          94.191.128.0/17
+descr:          HI3G
+origin:         AS44034
+mnt-by:         HI3GACCESS-MNT
+created:        2008-09-01T14:19:11Z
+last-modified:  2008-09-01T14:19:11Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

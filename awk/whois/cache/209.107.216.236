@@ -1,0 +1,126 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       209.107.216.0 - 209.107.216.255
+CIDR:           209.107.216.0/24
+NetName:        SECUREDCONNECTIVITY-209-107-216-0-24
+NetHandle:      NET-209-107-216-0-1
+Parent:         BANDCON (NET-209-107-192-0-1)
+NetType:        Reassigned
+OriginAS:       AS12989
+Organization:   SecuredConnectivity.net (SECUR-169)
+RegDate:        2016-02-08
+Updated:        2016-02-08
+Ref:            https://rdap.arin.net/registry/ip/209.107.216.0
+
+
+OrgName:        SecuredConnectivity.net
+OrgId:          SECUR-169
+Address:        1950 N. Stemmons Freeway
+City:           Dallas
+StateProv:      TX
+PostalCode:     75207
+Country:        US
+RegDate:        2016-02-08
+Updated:        2016-02-08
+Ref:            https://rdap.arin.net/registry/entity/SECUR-169
+
+
+OrgAbuseHandle: ABUSE5222-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-800-591-5241 
+OrgAbuseEmail:  abuse@ipvanish.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE5222-ARIN
+
+OrgTechHandle: ABUSE5222-ARIN
+OrgTechName:   Abuse Department
+OrgTechPhone:  +1-800-591-5241 
+OrgTechEmail:  abuse@ipvanish.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ABUSE5222-ARIN
+
+# end
+
+
+# start
+
+NetRange:       209.107.192.0 - 209.107.223.255
+CIDR:           209.107.192.0/19
+NetName:        BANDCON
+NetHandle:      NET-209-107-192-0-1
+Parent:         NET209 (NET-209-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS26769
+Organization:   BandCon (BANDW-406)
+RegDate:        2009-04-16
+Updated:        2018-03-05
+Ref:            https://rdap.arin.net/registry/ip/209.107.192.0
+
+
+OrgName:        BandCon
+OrgId:          BANDW-406
+Address:        2021 McKinney Avenue Suite 1100
+City:           Dallas
+StateProv:      TX
+PostalCode:     75201
+Country:        US
+RegDate:        2007-01-26
+Updated:        2019-09-05
+Ref:            https://rdap.arin.net/registry/entity/BANDW-406
+
+
+OrgTechHandle: NOC2402-ARIN
+OrgTechName:   Network Operation Center
+OrgTechPhone:  +1-469-899-5729 
+OrgTechEmail:  neteng@stackpath.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC2402-ARIN
+
+OrgAbuseHandle: ABUSE2757-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-469-899-5729 
+OrgAbuseEmail:  abuse@bandcon.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE2757-ARIN
+
+RTechHandle: NOC2402-ARIN
+RTechName:   Network Operation Center
+RTechPhone:  +1-469-899-5729 
+RTechEmail:  neteng@stackpath.com
+RTechRef:    https://rdap.arin.net/registry/entity/NOC2402-ARIN
+
+RAbuseHandle: ABUSE2757-ARIN
+RAbuseName:   Abuse
+RAbusePhone:  +1-469-899-5729 
+RAbuseEmail:  abuse@bandcon.com
+RAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE2757-ARIN
+
+RNOCHandle: NOC2402-ARIN
+RNOCName:   Network Operation Center
+RNOCPhone:  +1-469-899-5729 
+RNOCEmail:  neteng@stackpath.com
+RNOCRef:    https://rdap.arin.net/registry/entity/NOC2402-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.190.120.128 - 5.190.120.255'
+
+% Abuse contact for '5.190.120.128 - 5.190.120.255' is 'LIRadmin@tci.ir'
+
+inetnum:        5.190.120.128 - 5.190.120.255
+descr:          Ertebatat Dorbord Fars Sepidan (1901)
+netname:        ORG-EDFS2-RIPE
+country:        IR
+admin-c:        EDFS1-RIPE
+tech-c:         EDFS1-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-TCF
+created:        2017-01-03T05:47:49Z
+last-modified:  2017-01-03T05:47:49Z
+source:         RIPE
+
+role:           Ertebatat Dorbord Fars Sepidan (1901)
+tech-c:         HB6394-RIPE
+admin-c:        MS29582-RIPE
+abuse-mailbox:  abuse@tcf.ir
+address:        Ertebatat Dorbord Fars - Emam Khomeini street - Sepidan - Fars - Iran
+nic-hdl:        EDFS1-RIPE
+mnt-by:         MNT-TCF
+created:        2017-01-03T05:44:12Z
+last-modified:  2017-01-03T05:44:12Z
+source:         RIPE # Filtered
+
+% Information related to '5.190.0.0/17as58224'
+
+route:          5.190.0.0/17
+origin:         as58224
+mnt-by:         MNT-TCF
+created:        2018-12-03T07:00:34Z
+last-modified:  2018-12-03T07:00:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

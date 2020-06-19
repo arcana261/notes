@@ -1,0 +1,55 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '58.10.0.0 - 58.10.255.255'
+
+% Abuse contact for '58.10.0.0 - 58.10.255.255' is 'abuse@trueinternet.co.th'
+
+inetnum:        58.10.0.0 - 58.10.255.255
+netname:        TRUENET
+descr:          True Internet Co., Ltd.
+country:        TH
+admin-c:        TIA6-AP
+tech-c:         TIA6-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-AP-TRUEINTERNET
+mnt-irt:        IRT-TRUEINTERNET-TH
+last-modified:  2013-07-31T08:13:14Z
+source:         APNIC
+
+irt:            IRT-TRUEINTERNET-TH
+address:        14th,27 th, floor ,Fortune Town
+address:        1 Ratchadaphisek Road, Din Daeng
+address:        Bangkok 10400
+e-mail:         abuse@trueinternet.co.th
+abuse-mailbox:  abuse@trueinternet.co.th
+admin-c:        TIA6-AP
+tech-c:         TIA6-AP
+auth:           # Filtered
+remarks:        abuse@trueinternet.co.th was validated on 2020-01-17
+mnt-by:         MAINT-AP-TRUEINTERNET
+last-modified:  2020-01-17T03:57:50Z
+source:         APNIC
+
+role:           TRUE IP ADMINISTRATION
+address:        1 Fortune Town, 14th, 27th Floor,
+address:        Ratchadapisek Road, Din Daeng
+address:        Din Daeng, Bangkok 10400.
+country:        TH
+phone:          +662 6200400
+fax-no:         +662 6421557
+e-mail:         ipadmin@trueinternet.co.th
+remarks:        abuse@trueinternet.co.th
+admin-c:        AC1013-AP
+admin-c:        WP1-AP
+tech-c:         PY184-AP
+tech-c:         RT271-AP
+nic-hdl:        TIA6-AP
+notify:         ipadmin@trueinternet.co.th
+mnt-by:         MAINT-AP-TRUEINTERNET
+last-modified:  2011-12-06T00:10:15Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

@@ -1,0 +1,73 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       184.154.0.0 - 184.154.255.255
+CIDR:           184.154.0.0/16
+NetName:        SINGLEHOP
+NetHandle:      NET-184-154-0-0-1
+Parent:         NET184 (NET-184-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS32475
+Organization:   SingleHop LLC (SL-1370)
+RegDate:        2010-06-21
+Updated:        2018-02-27
+Ref:            https://rdap.arin.net/registry/ip/184.154.0.0
+
+
+OrgName:        SingleHop LLC
+OrgId:          SL-1370
+Address:        230 S. Clark St.
+Address:        PO Box 415
+City:           Chicago
+StateProv:      IL
+PostalCode:     60604
+Country:        US
+RegDate:        2018-02-15
+Updated:        2018-03-05
+Ref:            https://rdap.arin.net/registry/entity/SL-1370
+
+ReferralServer:  rwhois://rwhois.singlehop.net:4321
+
+OrgAbuseHandle: NETWO1546-ARIN
+OrgAbuseName:   Network Operations
+OrgAbusePhone:  +1-312-386-6210 
+OrgAbuseEmail:  netops@singlehop.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NETWO1546-ARIN
+
+OrgTechHandle: NETWO1546-ARIN
+OrgTechName:   Network Operations
+OrgTechPhone:  +1-312-386-6210 
+OrgTechEmail:  netops@singlehop.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NETWO1546-ARIN
+
+OrgNOCHandle: NETWO1546-ARIN
+OrgNOCName:   Network Operations
+OrgNOCPhone:  +1-312-386-6210 
+OrgNOCEmail:  netops@singlehop.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NETWO1546-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.singlehop.net:4321.
+
+%rwhois V-1.5:003eff:00 rwhois.singlehop.com (by Network Solutions, Inc. V-1.5.9.5)

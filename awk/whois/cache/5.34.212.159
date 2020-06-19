@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.34.212.0 - 5.34.215.255'
+
+% Abuse contact for '5.34.212.0 - 5.34.215.255' is 'ripe.abuse@rasane.com'
+
+inetnum:        5.34.212.0 - 5.34.215.255
+netname:        RTN-CUSTOMER-PPPOE5
+descr:          Samaneh Sama Pishro Persian
+country:        IR
+admin-c:        FS9712-RIPE
+tech-c:         FS9712-RIPE
+status:         ASSIGNED PA
+mnt-by:         RASANE-MNT
+mnt-lower:      RASANE-MNT
+mnt-routes:     RASANE-MNT
+created:        2014-11-22T08:14:40Z
+last-modified:  2017-02-28T16:29:30Z
+source:         RIPE
+
+person:         Fouad Haghshenas Sardorood
+address:        unit 38, #72, Eastern Sarve St.,Saadat Abad,00982122088057
+phone:          +982122088057
+nic-hdl:        FS9712-RIPE
+mnt-by:         rasane-mnt
+created:        2012-05-05T08:30:18Z
+last-modified:  2013-04-10T11:56:35Z
+source:         RIPE # Filtered
+
+% Information related to '5.34.212.0/24AS58142'
+
+route:          5.34.212.0/24
+descr:          Rasaneh Tehran Broadband Customers
+origin:         AS58142
+mnt-by:         RASANE-MNT
+created:        2013-04-09T10:32:06Z
+last-modified:  2013-04-09T10:32:06Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

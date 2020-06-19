@@ -1,0 +1,74 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.61.60.0 - 5.61.61.255'
+
+% Abuse contact for '5.61.60.0 - 5.61.61.255' is 'abuse@ispiria.net'
+
+inetnum:        5.61.60.0 - 5.61.61.255
+netname:        CLOUD-NETWORK-GB
+country:        GB
+descr:          ********************************************************
+descr:          * As ISP we provide IP transit and bandwidth services.
+descr:          *
+descr:          * Those services are self managed by our customers
+descr:          * therefore, we are not using this IP space ourselves
+descr:          * and it could be assigned to various end customers.
+descr:          *
+descr:          * In case of issues related with SPAM, Fraud, Phishing
+descr:          * DDoS, port scans or others, feel free to contact us
+descr:          * with relevant info. Abuse email: abuse@ispiria.net
+descr:          ********************************************************
+admin-c:        ISPR1-RIPE
+org:            ORG-ISPR1-RIPE
+tech-c:         ISPR1-RIPE
+status:         ASSIGNED PA
+remarks:
+remarks:        ISPIRIA Networks Ltd.
+remarks:        Technical issues..............: support@ispiria.net
+remarks:        Services request..............: sales@ispiria.net
+remarks:        Abuse departament.............: abuse@ispiria.net
+remarks:        Corporate web site............: https://ispiria.net
+mnt-by:         MNT-3NT
+created:        2019-10-17T10:20:45Z
+last-modified:  2019-10-17T10:28:57Z
+source:         RIPE
+
+organisation:   ORG-ISPR1-RIPE
+org-name:       ISPIRIA Networks Ltd
+org-type:       OTHER
+address:        100 Johnny Grief Dr., Belize city, Belize
+abuse-c:        ACRO15876-RIPE
+mnt-ref:        MNT-3NT
+mnt-by:         ISPIRIA-MNT
+created:        2018-05-03T08:12:15Z
+last-modified:  2020-05-22T20:10:44Z
+source:         RIPE # Filtered
+
+person:         James Dickins
+address:        100 Johnny Grief Dr., Belize city, Belize
+phone:          +1 (866) 9558855
+nic-hdl:        ISPR1-RIPE
+mnt-by:         ISPIRIA-MNT
+created:        2018-05-03T08:24:33Z
+last-modified:  2020-05-19T10:18:30Z
+source:         RIPE
+
+% Information related to '5.61.60.0/23AS9009'
+
+route:          5.61.60.0/23
+origin:         AS9009
+mnt-by:         MNT-3NT
+created:        2019-10-17T10:33:50Z
+last-modified:  2019-10-17T10:33:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

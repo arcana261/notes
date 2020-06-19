@@ -1,0 +1,81 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       173.224.112.0 - 173.224.127.255
+CIDR:           173.224.112.0/20
+NetName:        GO-DADDY-COM-LLC
+NetHandle:      NET-173-224-112-0-1
+Parent:         NET173 (NET-173-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS30083
+Organization:   GoDaddy.com, LLC (GODAD)
+RegDate:        2010-01-19
+Updated:        2019-08-30
+Ref:            https://rdap.arin.net/registry/ip/173.224.112.0
+
+
+
+OrgName:        GoDaddy.com, LLC
+OrgId:          GODAD
+Address:        14455 N Hayden Road
+Address:        Suite 226
+City:           Scottsdale
+StateProv:      AZ
+PostalCode:     85260
+Country:        US
+RegDate:        2007-06-01
+Updated:        2014-09-10
+Comment:        Please send abuse complaints to abuse@godaddy.com
+Ref:            https://rdap.arin.net/registry/entity/GODAD
+
+
+OrgNOCHandle: NOC124-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-480-505-8809 
+OrgNOCEmail:  noc@godaddy.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC124-ARIN
+
+OrgAbuseHandle: ABUSE51-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-480-624-2505 
+OrgAbuseEmail:  abuse@godaddy.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE51-ARIN
+
+OrgTechHandle: NOC124-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-480-505-8809 
+OrgTechEmail:  noc@godaddy.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC124-ARIN
+
+RAbuseHandle: HUAD-ARIN
+RAbuseName:   HEG US Abuse Department
+RAbusePhone:  +1-314-266-3638 
+RAbuseEmail:  abuse@heg-us.com
+RAbuseRef:    https://rdap.arin.net/registry/entity/HUAD-ARIN
+
+RTechHandle: SWI19-ARIN
+RTechName:   Wintz, Sascha 
+RTechPhone:  +1-314-300-2200 
+RTechEmail:  noc-emea@godaddy.com
+RTechRef:    https://rdap.arin.net/registry/entity/SWI19-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

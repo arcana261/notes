@@ -1,0 +1,61 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.76.248.0 - 185.76.249.255'
+
+% Abuse contact for '185.76.248.0 - 185.76.249.255' is 'abuse@tehran.ir'
+
+inetnum:        185.76.248.0 - 185.76.249.255
+netname:        TEHRAN-MUNICIPALITY
+descr:          TMICTO
+country:        IR
+admin-c:        MN5394-RIPE
+tech-c:         MM39523-RIPE
+status:         ASSIGNED PA
+mnt-by:         MN45442-MNT
+created:        2014-12-28T07:35:50Z
+last-modified:  2014-12-28T07:35:50Z
+source:         RIPE
+
+person:         Mashhood Mohammadi
+address:        Fatemi Sq, Jouybar St, Noorbakhsh St, No 42
+address:        P.O.Box 1415873755
+address:        Tehran , Iran
+phone:          +9821 88894660
+fax-no:         +9821 88894397
+nic-hdl:        MM39523-RIPE
+mnt-by:         MNT-IRITCO
+created:        2014-07-11T19:16:21Z
+last-modified:  2014-12-28T07:41:33Z
+source:         RIPE # Filtered
+
+person:         Mahmoudreza Nazari
+address:        No.743 East Zartosht St., North Hafez Ave.
+address:        1597713111
+address:        Tehran, Iran
+phone:          +982184169030
+nic-hdl:        MN5394-RIPE
+mnt-by:         MN45442-MNT
+created:        2011-02-22T04:13:35Z
+last-modified:  2015-07-13T06:05:56Z
+source:         RIPE # Filtered
+
+% Information related to '185.76.248.0/22AS56547'
+
+route:          185.76.248.0/22
+descr:          TMICTO-NET
+origin:         AS56547
+mnt-by:         TEHRAN-MNT
+created:        2014-12-01T14:22:43Z
+last-modified:  2014-12-01T14:23:12Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

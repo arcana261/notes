@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.225.52.0 - 91.225.55.255'
+
+% Abuse contact for '91.225.52.0 - 91.225.55.255' is 'rezaeian.hmd@gmail.com'
+
+inetnum:        91.225.52.0 - 91.225.55.255
+netname:        EIRIB
+country:        IR
+org:            ORG-Ewan1-RIPE
+admin-c:        HR3611-RIPE
+tech-c:         HR3611-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         eirib-mnt
+mnt-routes:     eirib-mnt
+mnt-domains:    eirib-mnt
+created:        2011-01-31T09:31:42Z
+last-modified:  2017-08-22T11:47:49Z
+source:         RIPE
+descr:          eirib
+sponsoring-org: ORG-SAVC1-RIPE
+
+organisation:   ORG-Ewan1-RIPE
+org-name:       Moavenate rasaneh majazi seda va sima
+org-type:       OTHER
+address:        floor3, No. 26, 9th st., Saadat Abad, Kaj Sq., Tehran, IRAN
+abuse-c:        AC31153-RIPE
+mnt-ref:        SINET-MNT
+mnt-ref:        eirib-mnt
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         SINET-MNT
+created:        2011-01-22T09:45:56Z
+last-modified:  2020-06-01T07:09:47Z
+source:         RIPE # Filtered
+
+person:         Hamed Rezaeian
+address:        floor2, No. 26, 9th st., Saadat Abad, Kaj Sq., Tehran, IRAN
+phone:          +98 21 29152100
+phone:          +989123934620
+nic-hdl:        HR3611-RIPE
+mnt-by:         eirib-mnt
+created:        2017-08-22T11:47:10Z
+last-modified:  2017-09-14T14:18:10Z
+source:         RIPE
+
+% Information related to '91.225.54.0/24as43135'
+
+route:          91.225.54.0/24
+descr:          Sec1
+origin:         as43135
+mnt-by:         eirib-mnt
+created:        2011-02-06T07:44:09Z
+last-modified:  2011-02-06T07:44:09Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

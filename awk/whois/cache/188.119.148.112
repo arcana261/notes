@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.119.148.0 - 188.119.149.255'
+
+% Abuse contact for '188.119.148.0 - 188.119.149.255' is 'abuse@hostzealot.com'
+
+inetnum:        188.119.148.0 - 188.119.149.255
+netname:        BG-HZHOSTING-20090706
+country:        NL
+org:            ORG-FNL9-RIPE
+admin-c:        VD3206-RIPE
+tech-c:         VD3206-RIPE
+status:         ALLOCATED PA
+mnt-by:         HZ-HOSTING-LTD
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2018-12-20T12:03:55Z
+last-modified:  2018-12-20T12:03:55Z
+source:         RIPE
+
+organisation:   ORG-FNL9-RIPE
+org-name:       HZ Hosting Ltd
+org-type:       LIR
+address:        2 Lyuben Karavelov, unit 5
+address:        4002
+address:        Plovdiv
+address:        BULGARIA
+phone:          +18889325681
+fax-no:         +0000000000
+admin-c:        VD3206-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        HZ-HOSTING-LTD
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HZ-HOSTING-LTD
+abuse-c:        HZ1450-RIPE
+created:        2012-06-26T08:14:06Z
+last-modified:  2016-11-28T16:30:23Z
+source:         RIPE # Filtered
+
+person:         Vilko Damianov
+address:        4000, Bulgaria, Plovdiv, 2 Lyuben Karavelov, unit 5
+phone:          +35932571279
+nic-hdl:        VD3206-RIPE
+mnt-by:         HZ-HOSTING-LTD
+created:        2016-11-28T15:25:07Z
+last-modified:  2016-11-28T15:25:07Z
+source:         RIPE
+
+% Information related to '188.119.148.0/23AS61046'
+
+route:          188.119.148.0/23
+origin:         AS61046
+mnt-by:         HZ-HOSTING-LTD
+created:        2019-09-09T15:15:40Z
+last-modified:  2019-09-09T15:15:40Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.183.92.0 - 5.183.93.255'
+
+% Abuse contact for '5.183.92.0 - 5.183.93.255' is 'abuse@netprotect.com'
+
+inetnum:        5.183.92.0 - 5.183.93.255
+netname:        NetProtect-Germany-Frankfurt
+country:        DE
+admin-c:        NA6571-RIPE
+org:            ORG-STL132-RIPE
+tech-c:         NA6571-RIPE
+abuse-c:        NA6571-RIPE
+status:         ASSIGNED PA
+mnt-by:         W2O-MNT
+created:        2020-02-11T15:31:30Z
+last-modified:  2020-06-10T03:35:12Z
+source:         RIPE
+
+organisation:   ORG-STL132-RIPE
+org-name:       Strong Technology, LLC
+org-type:       OTHER
+address:        1524 5th Avenue Suite 300
+address:        Seattle, WA 98101
+phone:          +1.4154087682
+abuse-c:        STRG-RIPE
+admin-c:        STRG-RIPE
+tech-c:         STRG-RIPE
+mnt-ref:        W2O-MNT
+mnt-by:         W2O-MNT
+created:        2020-06-10T03:27:49Z
+last-modified:  2020-06-10T03:27:49Z
+source:         RIPE # Filtered
+
+role:           Netprotect.com Abuse
+address:        Strong Technology, LLC.
+abuse-mailbox:  abuse@netprotect.com
+address:        1920 McKinney Ave
+address:        7th Floor
+address:        Dallas, TX, 75201
+address:        United States
+nic-hdl:        NA6571-RIPE
+mnt-by:         W2O-MNT
+created:        2020-01-31T02:39:32Z
+last-modified:  2020-01-31T02:40:09Z
+source:         RIPE # Filtered
+
+% Information related to '5.183.92.0/22AS12989'
+
+route:          5.183.92.0/22
+origin:         AS12989
+descr:          NetProtect abuse@netprotect.com
+mnt-by:         W2O-MNT
+created:        2020-01-31T02:05:26Z
+last-modified:  2020-01-31T02:05:31Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

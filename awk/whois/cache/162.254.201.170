@@ -1,0 +1,125 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       162.254.201.168 - 162.254.201.175
+CIDR:           162.254.201.168/29
+NetName:        VELIANET-US-ACTMOBILENETWORKSINC
+NetHandle:      NET-162-254-201-168-1
+Parent:         GO-DADDY-COM-LLC (NET-162-254-200-0-1)
+NetType:        Reassigned
+OriginAS:       
+Organization:   Actmobile Networks Inc. (AN-774)
+RegDate:        2019-08-30
+Updated:        2019-08-30
+Comment:        ticket.velia.net 146823
+Ref:            https://rdap.arin.net/registry/ip/162.254.201.168
+
+
+OrgName:        Actmobile Networks Inc.
+OrgId:          AN-774
+Address:        1070
+Address:        Gray Fox Circle
+City:           Pleasonton
+StateProv:      CA
+PostalCode:     94566
+Country:        US
+RegDate:        2019-08-30
+Updated:        2019-08-30
+Ref:            https://rdap.arin.net/registry/entity/AN-774
+
+
+OrgTechHandle: BTC7-ARIN
+OrgTechName:   Bush, Timothy C 
+OrgTechPhone:  +1-800-710-1377 
+OrgTechEmail:  actmobile@actmobile.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/BTC7-ARIN
+
+OrgAbuseHandle: ABUSE7621-ARIN
+OrgAbuseName:   ABUSE MAILBOX
+OrgAbusePhone:  +1-800-710-1377 
+OrgAbuseEmail:  actmobile@actmobile.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7621-ARIN
+
+# end
+
+
+# start
+
+NetRange:       162.254.200.0 - 162.254.207.255
+CIDR:           162.254.200.0/21
+NetName:        GO-DADDY-COM-LLC
+NetHandle:      NET-162-254-200-0-1
+Parent:         NET162 (NET-162-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS29066
+Organization:   GoDaddy.com, LLC (GODAD)
+RegDate:        2014-05-05
+Updated:        2019-08-30
+Ref:            https://rdap.arin.net/registry/ip/162.254.200.0
+
+
+
+OrgName:        GoDaddy.com, LLC
+OrgId:          GODAD
+Address:        14455 N Hayden Road
+Address:        Suite 226
+City:           Scottsdale
+StateProv:      AZ
+PostalCode:     85260
+Country:        US
+RegDate:        2007-06-01
+Updated:        2014-09-10
+Comment:        Please send abuse complaints to abuse@godaddy.com
+Ref:            https://rdap.arin.net/registry/entity/GODAD
+
+
+OrgNOCHandle: NOC124-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-480-505-8809 
+OrgNOCEmail:  noc@godaddy.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/NOC124-ARIN
+
+OrgAbuseHandle: ABUSE51-ARIN
+OrgAbuseName:   Abuse Department
+OrgAbusePhone:  +1-480-624-2505 
+OrgAbuseEmail:  abuse@godaddy.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE51-ARIN
+
+OrgTechHandle: NOC124-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-480-505-8809 
+OrgTechEmail:  noc@godaddy.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC124-ARIN
+
+RTechHandle: VELIA-ARIN
+RTechName:   velianet hostmaster
+RTechPhone:  +49 6181 1898119 
+RTechEmail:  vnid-hostmaster@godaddy.com
+RTechRef:    https://rdap.arin.net/registry/entity/VELIA-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

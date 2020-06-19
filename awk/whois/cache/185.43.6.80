@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.43.6.0 - 185.43.7.255'
+
+% Abuse contact for '185.43.6.0 - 185.43.7.255' is 'abuse@abusehost.ru'
+
+inetnum:        185.43.6.0 - 185.43.7.255
+netname:        SERVER-NET
+org:            ORG-SRV1-RIPE
+descr:          JSC Server WebDC colocation
+country:        RU
+admin-c:        SRV25-RIPE
+tech-c:         SRV25-RIPE
+status:         ASSIGNED PA
+remarks:        INFRA-AW
+mnt-by:         CJSCSERVER-MNT
+created:        2015-12-15T07:24:45Z
+last-modified:  2015-12-15T07:24:45Z
+source:         RIPE
+
+organisation:   ORG-SRV1-RIPE
+org-name:       JSC Server
+org-type:       OTHER
+address:        m-r Raduzhniy 34a, 3
+address:        Irkutsk, 664017
+address:        Russian Federation
+abuse-c:        AR34130-RIPE
+mnt-ref:        CJSCSERVER-MNT
+mnt-by:         CJSCSERVER-MNT
+created:        2014-08-28T06:38:15Z
+last-modified:  2017-10-30T14:49:24Z
+source:         RIPE # Filtered
+
+role:           Server JSC Network Operations
+address:        Server JSC
+address:        Office # 3, 34a, Raduzhny m-r
+address:        664017
+address:        Irkutsk
+address:        Russian Federation
+phone:          +7(495) 662-73-65
+phone:          +7 (3952) 52-50-96
+remarks:        trouble: ----------------------------------------------------
+remarks:        trouble: Points of contact for Server JSC Network Operations
+remarks:        trouble: ----------------------------------------------------
+remarks:        trouble: Routing and peering issues: noc@firstdedic.ru
+remarks:        trouble: SPAM issues: abuse@abusehost.ru
+remarks:        trouble: Mail issues: abuse@abusehost.ru
+remarks:        trouble: General information: admin@firstdedic.ru
+remarks:        trouble: ----------------------------------------------------
+admin-c:        AG17932-RIPE
+tech-c:         AG17932-RIPE
+nic-hdl:        SRV25-RIPE
+mnt-by:         CJSCSERVER-MNT
+created:        2014-09-18T03:05:57Z
+last-modified:  2019-10-01T08:14:40Z
+source:         RIPE # Filtered
+abuse-mailbox:  abuse@abusehost.ru
+
+% Information related to '185.43.6.0/23AS29182'
+
+route:          185.43.6.0/23
+descr:          TheServer-RU
+origin:         AS29182
+mnt-by:         CJSCSERVER-MNT
+created:        2015-12-15T07:16:35Z
+last-modified:  2015-12-15T07:16:35Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

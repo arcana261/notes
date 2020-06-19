@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.239.14.0 - 91.239.14.255'
+
+% Abuse contact for '91.239.14.0 - 91.239.14.255' is 'mreza@tpo.ir'
+
+inetnum:        91.239.14.0 - 91.239.14.255
+netname:        TPO
+country:        ir
+org:            ORG-TPOO1-RIPE
+admin-c:        MRMS10-RIPE
+tech-c:         MRMS10-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         AZMA-MNT
+mnt-routes:     AZMA-MNT
+mnt-domains:    AZMA-MNT
+created:        2012-05-09T13:24:17Z
+last-modified:  2016-04-14T10:39:31Z
+source:         RIPE # Filtered
+sponsoring-org: ORG-FACL1-RIPE
+
+organisation:   ORG-TPOO1-RIPE
+org-name:       Trade Promotion Organization Of Iran
+org-type:       other
+address:        Fannavaresh Bld. Iran International Exhibitions Location, Chamran highway, Tehran, Iran
+abuse-c:        AC30213-RIPE
+mnt-ref:        AZMA-MNT
+mnt-by:         AZMA-MNT
+created:        2012-05-09T08:38:20Z
+last-modified:  2016-02-15T16:52:01Z
+source:         RIPE # Filtered
+
+person:         Mohammad Reza Mashhadi Soleyman
+address:        Fannavaresh Bld. Iran International Exhibitions Location, Chamran highway, Tehran, Iran
+phone:          +982122662523
+nic-hdl:        MRMS10-RIPE
+mnt-by:         AZMA-MNT
+created:        2012-05-09T08:34:01Z
+last-modified:  2012-05-09T08:34:01Z
+source:         RIPE # Filtered
+
+% Information related to '91.239.14.0/24AS58125'
+
+route:          91.239.14.0/24
+descr:          Trade Promotion Organization Of Iran
+origin:         AS58125
+mnt-by:         AZMA-MNT
+created:        2012-07-24T07:57:13Z
+last-modified:  2012-07-24T07:57:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

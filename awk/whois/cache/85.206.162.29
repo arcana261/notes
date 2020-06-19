@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.206.162.0 - 85.206.162.31'
+
+% Abuse contact for '85.206.162.0 - 85.206.162.31' is 'AHMN48@gmail.com'
+
+inetnum:        85.206.162.0 - 85.206.162.31
+netname:        Hossein-MahboobMojaz-NET
+country:        US
+admin-c:        HMPE1-RIPE
+tech-c:         HMPE1-RIPE
+abuse-c:        HMRO2-RIPE
+status:         ASSIGNED PA
+mnt-by:         BACLOUD-MNT
+created:        2019-03-14T09:53:48Z
+last-modified:  2019-03-14T09:53:48Z
+source:         RIPE
+
+person:         Hossein Mahboob Mojaz
+address:        145 N Harper Ave , Los Angeles,  90048, United States
+phone:          +1.7206190615
+mnt-by:         BACLOUD-MNT
+nic-hdl:        HMPE1-RIPE
+created:        2019-03-14T08:12:34Z
+last-modified:  2019-03-14T08:12:34Z
+source:         RIPE # Filtered
+
+% Information related to '85.206.160.0/22AS61272'
+
+route:          85.206.160.0/22
+descr:          BACLOUD-COM
+origin:         AS61272
+mnt-by:         AS61272-MNT
+created:        2020-03-20T08:09:51Z
+last-modified:  2020-03-20T08:13:50Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

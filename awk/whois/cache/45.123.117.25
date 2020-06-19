@@ -1,0 +1,67 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '45.123.117.0 - 45.123.117.255'
+
+% Abuse contact for '45.123.117.0 - 45.123.117.255' is 'info@serverfield.com.tw'
+
+inetnum:        45.123.117.0 - 45.123.117.255
+netname:        SERVERFIELD-TR-45-123-117-0-24
+descr:          SERVERFIELD International Dedicated Server Provider
+country:        TR
+admin-c:        EV71-AP
+tech-c:         EV71-AP
+status:         ASSIGNED NON-PORTABLE
+mnt-by:         MAINT-SCL-TW
+mnt-irt:        IRT-SCL-TW
+remarks:        Serverfield is an International Dedicated Server Provider.
+remarks:        Our headquarter is based in Taichung, Taiwan.
+remarks:        These IP Blocks are being used for allocating customers services.
+remarks:        We don't have control over the customers service nor access to them.
+remarks:        In case of any abusive activity, please contact us via the abuse mailbox.
+remarks:        https://www.serverfield.com.tw - Serverfield Co., Ltd.
+last-modified:  2019-09-04T10:53:37Z
+source:         APNIC
+
+irt:            IRT-SCL-TW
+address:        8F-2 No 442 Sanrong Rd. Sec.2, Wuri
+e-mail:         info@serverfield.com.tw
+abuse-mailbox:  info@serverfield.com.tw
+admin-c:        SCLA21-AP
+tech-c:         SCLA21-AP
+auth:           # Filtered
+remarks:        info@serverfield.com.tw was validated on 2020-05-05
+mnt-by:         MAINT-SCL-TW
+last-modified:  2020-05-05T13:21:45Z
+source:         APNIC
+
+role:           EXPRESS VPN
+address:        113 Barksdale Professional Ctr
+country:        US
+phone:          +13024484260
+e-mail:         info@expressvpn.com
+admin-c:        SLA18-AP
+tech-c:         SLA18-AP
+nic-hdl:        EV71-AP
+mnt-by:         MAINT-SERVERFIELD-AP
+abuse-mailbox:  abuse@expressvpn.com
+remarks:        *****************************************************************
+remarks:        PLEASE CONTACT US FOR ABUSE ACTIVITIES
+remarks:        *****************************************************************
+last-modified:  2017-09-24T04:10:40Z
+source:         APNIC
+
+% Information related to '45.123.117.0/24AS49544'
+
+route:          45.123.117.0/24
+origin:         AS49544
+descr:          Serverfield Ltd.
+                145-157
+                ST JOHN STREET
+mnt-by:         MAINT-SCL-TW
+last-modified:  2019-09-04T10:58:35Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

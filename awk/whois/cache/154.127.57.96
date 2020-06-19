@@ -1,0 +1,38 @@
+% This is the AfriNIC Whois server.
+% The AFRINIC whois database is subject to  the following terms of Use. See https://afrinic.net/whois/terms
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '154.127.57.0 - 154.127.57.255'
+
+% Abuse contact for '154.127.57.0 - 154.127.57.255' is 'abuse@host1plus.com'
+
+inetnum:        154.127.57.0 - 154.127.57.255
+netname:        HEFICED-CLOUD-SERVERS
+descr:          Digital Energy Technologies Limited
+country:        ZA
+admin-c:        ZV1-AFRINIC
+tech-c:         ZV1-AFRINIC
+status:         ASSIGNED PA
+remarks:        HEFICED Cloud servers
+remarks:        http://www.heficed.com
+remarks:        Abuse email: abuse@heficed.com
+mnt-by:         NetStack-MNT
+source:         AFRINIC # Filtered
+parent:         154.127.48.0 - 154.127.63.255
+
+person:         Zilvinas Vaickus
+address:        Le Mans Building
+address:        57 Sloane Street
+address:        Johannesburg
+address:        South Africa
+address:        Johannesburg
+address:        Other
+phone:          tel:+27-10-595-1279
+nic-hdl:        ZV1-AFRINIC
+mnt-by:         GENERATED-YXS5HMAE56ZTVO08UH7F93C6SAW8SPHZ-MNT
+source:         AFRINIC # Filtered
+
+
+

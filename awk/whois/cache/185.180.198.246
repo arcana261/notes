@@ -1,0 +1,50 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.180.198.0 - 185.180.198.255'
+
+% Abuse contact for '185.180.198.0 - 185.180.198.255' is 'abuse@king-servers.com'
+
+inetnum:        185.180.198.0 - 185.180.198.255
+netname:        King-Servers
+country:        US
+geoloc:         37.471829 -121.920298
+admin-c:        ND5550-RIPE
+tech-c:         ND5550-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-KingServers
+created:        2016-12-20T01:54:21Z
+last-modified:  2018-02-27T07:46:55Z
+source:         RIPE
+
+person:         Network Operations
+address:        Ketelskamp 10
+address:        7942KG
+address:        Meppel
+address:        NETHERLANDS
+phone:          +79237486880
+nic-hdl:        ND5550-RIPE
+mnt-by:         MNT-KingServers
+created:        2016-07-11T08:46:39Z
+last-modified:  2020-05-25T15:09:22Z
+source:         RIPE # Filtered
+
+% Information related to '185.180.198.0/24AS14576'
+
+route:          185.180.198.0/24
+descr:          Hosting purposes
+origin:         AS14576
+mnt-by:         MNT-KingServers
+created:        2016-12-20T01:55:42Z
+last-modified:  2018-04-14T13:02:51Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.83.180.0 - 185.83.183.255'
+
+% Abuse contact for '185.83.180.0 - 185.83.183.255' is 'abuse@soshiant.net'
+
+inetnum:        185.83.180.0 - 185.83.183.255
+country:        IR
+language:       FA
+language:       EN
+netname:        IR-SHNT-20150112
+org:            ORG-SFDC3-RIPE
+admin-c:        AB40510-RIPE
+tech-c:         AB40510-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-Soshiant
+mnt-routes:     MNT-Soshiant
+created:        2015-01-12T11:16:28Z
+last-modified:  2020-03-29T18:51:23Z
+source:         RIPE
+
+organisation:   ORG-SFDC3-RIPE
+org-name:       Soshiant Fara Dadeh Co. Ltd
+org-type:       LIR
+address:        Unit no.5,No.110,between golbarg & Niloofar khojastehpour St., next hakim, Sattari highway
+address:        1473655184
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989121277336
+phone:          +982144904470
+fax-no:         +982189784597
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-Soshiant
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-Soshiant
+admin-c:        AB40510-RIPE
+tech-c:         AB40510-RIPE
+created:        2015-01-07T11:00:31Z
+abuse-c:        SAC121-RIPE
+last-modified:  2020-04-02T14:13:50Z
+source:         RIPE # Filtered
+
+person:         Amin Behbahani
+address:        Tehran, Iran
+phone:          +989121277336
+nic-hdl:        AB40510-RIPE
+mnt-by:         MNT-Soshiant
+created:        2020-03-29T17:24:54Z
+last-modified:  2020-03-29T17:24:54Z
+source:         RIPE # Filtered
+
+% Information related to '185.83.183.0/24as202391'
+
+route:          185.83.183.0/24
+origin:         as202391
+mnt-by:         MNT-Soshiant
+created:        2020-01-19T13:49:43Z
+last-modified:  2020-01-19T13:49:43Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

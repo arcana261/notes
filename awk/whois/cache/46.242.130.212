@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.242.128.0 - 46.242.143.255'
+
+% Abuse contact for '46.242.128.0 - 46.242.143.255' is 'abuse@home.pl'
+
+inetnum:        46.242.128.0 - 46.242.143.255
+netname:        HOMEPL
+descr:          home.pl webhosting farm - static allocation
+country:        PL
+admin-c:        hNA8-RIPE
+tech-c:         hNA8-RIPE
+status:         ASSIGNED PA
+mnt-by:         HOMENET-MNT
+created:        2014-02-12T16:32:22Z
+last-modified:  2014-02-12T16:32:22Z
+source:         RIPE
+
+role:           home.pl Network Administrators
+address:        home.pl S.A.
+address:        Zbozowa 4
+address:        70-653 Szczecin
+address:        Poland
+phone:          +48 504 502 500
+fax-no:         +48 91 432 55 99
+admin-c:        DG11796-RIPE
+tech-c:         RAVN-RIPE
+tech-c:         MKAP-RIPE
+nic-hdl:        hNA8-RIPE
+mnt-by:         HOMENET-MNT
+created:        2004-01-28T12:12:16Z
+last-modified:  2019-01-14T10:28:37Z
+source:         RIPE # Filtered
+abuse-mailbox:  abuse@home.pl
+
+% Information related to '46.242.128.0/17AS12824'
+
+route:          46.242.128.0/17
+descr:          home.pl network
+origin:         AS12824
+mnt-by:         HOMENET-MNT
+created:        2011-04-17T11:45:00Z
+last-modified:  2011-04-17T11:45:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

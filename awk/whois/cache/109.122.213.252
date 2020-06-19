@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '109.122.212.0 - 109.122.213.255'
+
+% Abuse contact for '109.122.212.0 - 109.122.213.255' is 'ripe@navitgo.com'
+
+inetnum:        109.122.212.0 - 109.122.213.255
+netname:        Kerman_Telecommunication_Company
+country:        IR
+admin-c:        MA22736-RIPE
+tech-c:         MA22736-RIPE
+status:         ASSIGNED PA
+mnt-by:         mnt-ge-navitgo-1
+created:        2020-04-28T10:13:46Z
+last-modified:  2020-04-28T10:13:46Z
+source:         RIPE
+
+person:         Mariam Akhalaia
+address:        Sulkhan Tsintsadze Street # 26, Entrance 1, Floor 7, Block I,
+address:        0160
+address:        Tbilisi
+address:        GEORGIA
+phone:          +995574585500
+nic-hdl:        MA22736-RIPE
+mnt-by:         mnt-ge-navitgo-1
+created:        2019-06-17T07:35:27Z
+last-modified:  2019-06-17T07:35:28Z
+source:         RIPE
+
+% Information related to '109.122.212.0/23AS58224'
+
+route:          109.122.212.0/23
+origin:         AS58224
+mnt-by:         mnt-ge-navitgo1-1
+mnt-by:         mnt-ge-navitgo-1
+created:        2020-04-28T10:09:53Z
+last-modified:  2020-04-28T10:09:53Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

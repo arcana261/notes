@@ -1,0 +1,25 @@
+[ JPNIC database provides information regarding IP address and ASN. Its use   ]
+[ is restricted to network administration purposes. For further information,  ]
+[ use 'whois -h whois.nic.ad.jp help'. To only display English output,        ]
+[ add '/e' at the end of command, e.g. 'whois -h whois.nic.ad.jp xxx/e'.      ]
+
+Network Information:            
+a. [Network Number]             153.130.128.0/17
+b. [Network Name]               OCN
+g. [Organization]               Open Computer Network
+m. [Administrative Contact]     JP00009614
+n. [Technical Contact]          JP00009427
+p. [Nameserver]                 ns-kg003.ocn.ad.jp
+p. [Nameserver]                 ns-kn003.ocn.ad.jp
+[Assigned Date]                 2011/11/30
+[Return Date]                   
+[Last Update]                   2012/09/18 16:04:02(JST)
+                                
+Less Specific Info.
+----------
+NTT COMMUNICATIONS CORPORATION
+                     [Allocation]                  153.128.0.0-153.253.255.255
+
+More Specific Info.
+----------
+No match!!

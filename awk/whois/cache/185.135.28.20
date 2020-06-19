@@ -1,0 +1,80 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.135.28.0 - 185.135.31.255'
+
+% Abuse contact for '185.135.28.0 - 185.135.31.255' is 'abuse@sadadco.com'
+
+inetnum:        185.135.28.0 - 185.135.31.255
+netname:        IR-SADADCO-20160120
+country:        IR
+org:            ORG-SICD2-RIPE
+admin-c:        HB2949-RIPE
+admin-c:        FH4920-RIPE
+tech-c:         HB2949-RIPE
+tech-c:         FH4920-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-sadadco-1-mnt
+mnt-lower:      ir-sadadco-1-mnt
+mnt-routes:     ir-sadadco-1-mnt
+created:        2016-01-20T10:15:23Z
+last-modified:  2016-08-01T13:40:14Z
+source:         RIPE
+
+organisation:   ORG-SICD2-RIPE
+org-name:       Sadad Informatics Corp. Dadehvarzi Sadad Co. PJSC
+org-type:       LIR
+address:        No34 - Ahmad Ghasir (Bokharest) Ave. - 9th St.
+address:        1513736531
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982188702953
+admin-c:        HB2949-RIPE
+tech-c:         HB2949-RIPE
+abuse-c:        AR34994-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        ir-sadadco-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-sadadco-1-mnt
+created:        2016-01-18T10:19:17Z
+last-modified:  2016-08-01T06:08:17Z
+source:         RIPE # Filtered
+
+person:         Faramarz Hashemi
+address:        No 34, 9th st, Ahmad Ghasir st., Shahid Beheshti st. ,Tehran, Iran
+phone:          +98-2188702953
+nic-hdl:        FH4920-RIPE
+mnt-by:         ir-sadadco-1-mnt
+created:        2016-08-01T11:00:40Z
+last-modified:  2016-08-01T13:56:21Z
+source:         RIPE # Filtered
+
+person:         Houman Baharestani
+address:        N0 34. Ahmad Ghasir street. 9th St.,. Tehran-Iran
+mnt-by:         ir-sadadco-1-mnt
+phone:          +98-88702953
+nic-hdl:        HB2949-RIPE
+created:        2008-01-23T08:58:25Z
+last-modified:  2016-02-06T05:40:23Z
+source:         RIPE # Filtered
+
+% Information related to '185.135.28.0/24AS39571'
+
+route:          185.135.28.0/24
+descr:          Sadad Informatics Route
+origin:         AS39571
+mnt-by:         ir-sadadco-1-mnt
+created:        2016-04-10T04:35:18Z
+last-modified:  2016-04-10T04:35:18Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

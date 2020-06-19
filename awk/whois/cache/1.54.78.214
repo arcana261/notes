@@ -1,0 +1,70 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '1.54.64.0 - 1.54.79.255'
+
+% Abuse contact for '1.54.64.0 - 1.54.79.255' is 'hm-changed@vnnic.vn'
+
+inetnum:        1.54.64.0 - 1.54.79.255
+netname:        FPTDYNAMICIP-NET
+country:        VN
+descr:          FPT Telecom Company
+descr:          2nd floor FPT Building, Pham Hung Road, Cau Giay District, Hanoi
+admin-c:        TTH19-AP
+tech-c:         NOC21-AP
+status:         ASSIGNED NON-PORTABLE
+remarks:        For spamming matters, mail to abuse@fpt.vn
+mnt-by:         MAINT-VN-FPT
+mnt-irt:        IRT-VNNIC-AP
+last-modified:  2017-06-30T07:59:04Z
+source:         APNIC
+
+irt:            IRT-VNNIC-AP
+address:        Ha Noi, VietNam
+phone:          +84-24-35564944
+fax-no:         +84-24-37821462
+e-mail:         hm-changed@vnnic.vn
+abuse-mailbox:  hm-changed@vnnic.vn
+admin-c:        NTTT1-AP
+tech-c:         NTTT1-AP
+auth:           # Filtered
+mnt-by:         MAINT-VN-VNNIC
+last-modified:  2017-11-08T09:40:06Z
+source:         APNIC
+
+person:         Network Operation Center
+nic-hdl:        NOC21-AP
+e-mail:         ftel.noc.net@fpt.com.vn
+address:        FPT Telecom
+phone:          +84-28-73093388
+fax-no:         +84-28-73008889
+country:        VN
+mnt-by:         MAINT-VN-VNNIC
+last-modified:  2017-11-13T06:48:10Z
+source:         APNIC
+
+person:         Tran Thanh Hai
+nic-hdl:        TTH19-AP
+e-mail:         haitt3@fpt.com.vn
+address:        FPT Telecom
+phone:          +84-90-4211450
+fax-no:         +84-24-37262163
+country:        VN
+mnt-by:         MAINT-VN-VNNIC
+last-modified:  2017-11-13T04:26:47Z
+source:         APNIC
+
+% Information related to '1.54.78.0/24AS18403'
+
+route:          1.54.78.0/24
+origin:         AS18403
+descr:          Vietnam Internet Network Information Center (VNNIC)
+                18 Nguyen Du Str, Hai Ba Trung District, Hanoi City, Vietnam
+                10th floor, MITEC Tower, Duong Dinh Nghe, Cau Giay, Hanoi
+mnt-by:         MAINT-VN-FPT
+last-modified:  2019-08-01T06:41:00Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK3)
+
+

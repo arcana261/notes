@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.90.61.0 - 185.90.61.255'
+
+% Abuse contact for '185.90.61.0 - 185.90.61.255' is 'info@oneprovider.com'
+
+inetnum:        185.90.61.0 - 185.90.61.255
+netname:        ONEPROVIDER-NO
+descr:          Oneprovider.com -  Norway Infraestructure
+country:        NO
+admin-c:        ACRO410-RIPE
+tech-c:         ACRO410-RIPE
+org:            ORG-OA765-RIPE
+status:         SUB-ALLOCATED PA
+mnt-routes:     no-terrahost-1-mnt
+mnt-domains:    no-terrahost-1-mnt
+mnt-domains:    no-terrahost-1-mnt
+mnt-by:         WILLIAM-MNT
+mnt-by:         ONEPROVIDER
+created:        2016-03-07T23:25:50Z
+last-modified:  2017-03-16T18:01:00Z
+source:         RIPE
+
+organisation:   ORG-OA765-RIPE
+org-name:       ONEPROVIDER
+org-type:       OTHER
+address:        1500 Ste-Rose, H7S 1S4, Laval, Canada
+abuse-c:        ACRO410-RIPE
+mnt-ref:        WILLIAM-MNT
+mnt-ref:        dagroup
+mnt-by:         ONEPROVIDER
+created:        2016-03-07T23:08:42Z
+last-modified:  2017-02-03T15:51:44Z
+source:         RIPE # Filtered
+
+role:           Abuse contact role object
+address:        1500 Ste-Rose, H7R 1S4, Laval, Canada
+abuse-mailbox:  info@oneprovider.com
+nic-hdl:        ACRO410-RIPE
+mnt-by:         ONEPROVIDER
+created:        2016-03-07T23:07:41Z
+last-modified:  2017-01-17T20:37:35Z
+source:         RIPE # Filtered
+
+% Information related to '185.90.61.0/24AS136258'
+
+route:          185.90.61.0/24
+origin:         AS136258
+mnt-by:         no-terrahost-1-mnt
+created:        2017-03-15T12:47:03Z
+last-modified:  2017-03-15T12:47:03Z
+mnt-by:         ONEPROVIDER
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

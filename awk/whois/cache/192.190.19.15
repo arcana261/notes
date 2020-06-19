@@ -1,0 +1,118 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       192.190.19.0 - 192.190.19.255
+CIDR:           192.190.19.0/24
+NetName:        UNMETERED-EAST
+NetHandle:      NET-192-190-19-0-1
+Parent:         NET192 (NET-192-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS25668, AS394256, AS54527, AS174, AS54133, AS63213
+Organization:   UnmeteredInternet.com (BL-169)
+RegDate:        2019-07-12
+Updated:        2019-08-07
+Comment:        Operated by https://unmetered.io ; Network Status : https://www.twitter.com/unmetered & https://unmetered.global
+Ref:            https://rdap.arin.net/registry/ip/192.190.19.0
+
+
+OrgName:        UnmeteredInternet.com
+OrgId:          BL-169
+Address:        6360 Kingsway
+City:           Burnaby
+StateProv:      BC
+PostalCode:     V5E 1C5
+Country:        CA
+RegDate:        2014-02-04
+Updated:        2018-03-15
+Comment:        NOC Status Updates: http://twitter.com/unmetered
+Ref:            https://rdap.arin.net/registry/entity/BL-169
+
+
+OrgAbuseHandle: AMA311-ARIN
+OrgAbuseName:   Alam, Ahsanul Mohammed
+OrgAbusePhone:  +1-888-638-8681 
+OrgAbuseEmail:  helpdesk@unmetered.io
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AMA311-ARIN
+
+OrgTechHandle: SYSTE469-ARIN
+OrgTechName:   Systems Administrator
+OrgTechPhone:  +1-604-438-7104 
+OrgTechEmail:  helpdesk@unmetered.io
+OrgTechRef:    https://rdap.arin.net/registry/entity/SYSTE469-ARIN
+
+OrgNOCHandle: SYSTE469-ARIN
+OrgNOCName:   Systems Administrator
+OrgNOCPhone:  +1-604-438-7104 
+OrgNOCEmail:  helpdesk@unmetered.io
+OrgNOCRef:    https://rdap.arin.net/registry/entity/SYSTE469-ARIN
+
+# end
+
+
+# start
+
+NetRange:       192.190.19.0 - 192.190.19.255
+CIDR:           192.190.19.0/24
+NetName:        WINDSCRIBE2-TOR-UNMETERED
+NetHandle:      NET-192-190-19-0-2
+Parent:         UNMETERED-EAST (NET-192-190-19-0-1)
+NetType:        Reassigned
+OriginAS:       AS174, AS54133
+Organization:    Windscribe Limited (WL-431)
+RegDate:        2019-07-25
+Updated:        2019-07-25
+Comment:        WindScribe.com Ontario, Canada Server Pool
+Comment:        Routed from 151 Front St, Toronto
+Ref:            https://rdap.arin.net/registry/ip/192.190.19.0
+
+
+OrgName:        	Windscribe Limited
+OrgId:          WL-431
+Address:        9251 Yonge St #8901
+City:           	Richmond Hill
+StateProv:      ON
+PostalCode:     L4C 9T3
+Country:        CA
+RegDate:        2018-02-22
+Updated:        2018-02-22
+Ref:            https://rdap.arin.net/registry/entity/WL-431
+
+
+OrgTechHandle: ABUSE5829-ARIN
+OrgTechName:   Abuse Manager
+OrgTechPhone:  +1-833-266-5287 
+OrgTechEmail:  abuse@windscribe.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ABUSE5829-ARIN
+
+OrgAbuseHandle: ABUSE5829-ARIN
+OrgAbuseName:   Abuse Manager
+OrgAbusePhone:  +1-833-266-5287 
+OrgAbuseEmail:  abuse@windscribe.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE5829-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

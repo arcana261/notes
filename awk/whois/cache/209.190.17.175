@@ -1,0 +1,121 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       209.190.0.0 - 209.190.127.255
+CIDR:           209.190.0.0/17
+NetName:        ENET-XLHOST
+NetHandle:      NET-209-190-0-0-1
+Parent:         NET209 (NET-209-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   eNET Inc. (ENET)
+RegDate:        1997-12-19
+Updated:        2014-04-08
+Ref:            https://rdap.arin.net/registry/ip/209.190.0.0
+
+
+
+OrgName:        eNET Inc.
+OrgId:          ENET
+Address:        3000 East Dublin Granville Rd.
+City:           Columbus
+StateProv:      OH
+PostalCode:     43231
+Country:        US
+RegDate:        1996-04-09
+Updated:        2009-08-20
+Ref:            https://rdap.arin.net/registry/entity/ENET
+
+
+OrgNOCHandle: HOSTM634-ARIN
+OrgNOCName:   Hostmaster
+OrgNOCPhone:  +1-614-508-6450 
+OrgNOCEmail:  hostmaster@ee.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+OrgTechHandle: HOSTM634-ARIN
+OrgTechName:   Hostmaster
+OrgTechPhone:  +1-614-508-6450 
+OrgTechEmail:  hostmaster@ee.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+OrgAbuseHandle: ABUSE861-ARIN
+OrgAbuseName:   Abuse Desk
+OrgAbusePhone:  +1-614-508-6450 
+OrgAbuseEmail:  abuse@ee.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE861-ARIN
+
+# end
+
+
+# start
+
+NetRange:       209.190.17.160 - 209.190.17.191
+CIDR:           209.190.17.160/27
+NetName:        XLHOST-AARABI92-28948
+NetHandle:      NET-209-190-17-160-1
+Parent:         ENET-XLHOST (NET-209-190-0-0-1)
+NetType:        Reassigned
+OriginAS:       
+Customer:       XLHost.com Inc (C07367680)
+RegDate:        2019-06-11
+Updated:        2019-06-11
+Comment:        abuse contact: abuse@ee.net
+Ref:            https://rdap.arin.net/registry/ip/209.190.17.160
+
+
+CustName:       XLHost.com Inc
+Address:        3000 E. Dublin-Granville rd
+Address:        Suite 4
+City:           Columbus
+StateProv:      OH
+PostalCode:     43231
+Country:        US
+RegDate:        2019-06-11
+Updated:        2019-06-11
+Ref:            https://rdap.arin.net/registry/entity/C07367680
+
+OrgNOCHandle: HOSTM634-ARIN
+OrgNOCName:   Hostmaster
+OrgNOCPhone:  +1-614-508-6450 
+OrgNOCEmail:  hostmaster@ee.net
+OrgNOCRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+OrgTechHandle: HOSTM634-ARIN
+OrgTechName:   Hostmaster
+OrgTechPhone:  +1-614-508-6450 
+OrgTechEmail:  hostmaster@ee.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/HOSTM634-ARIN
+
+OrgAbuseHandle: ABUSE861-ARIN
+OrgAbuseName:   Abuse Desk
+OrgAbusePhone:  +1-614-508-6450 
+OrgAbuseEmail:  abuse@ee.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE861-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

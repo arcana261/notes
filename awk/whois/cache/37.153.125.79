@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '37.153.120.0 - 37.153.127.255'
+
+% Abuse contact for '37.153.120.0 - 37.153.127.255' is 'netops@joyent.com'
+
+inetnum:        37.153.120.0 - 37.153.127.255
+geoloc:         52.3000436 4.9416797
+netname:        NL-JOYENT-37-153-120-0-21
+country:        NL
+admin-c:        TZ2536-RIPE
+tech-c:         TZ2536-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-JOYENT-NOC
+created:        2020-02-26T22:29:28Z
+last-modified:  2020-02-26T22:29:28Z
+source:         RIPE
+
+person:         Tim Zollner
+address:        655 Montgomery Street
+address:        San Francisco, CA 94111
+phone:          +16185938701
+nic-hdl:        TZ2536-RIPE
+mnt-by:         MNT-JOYENT-NOC
+created:        2018-11-29T17:00:34Z
+last-modified:  2018-11-29T17:00:34Z
+source:         RIPE
+
+% Information related to '37.153.120.0/21AS26464'
+
+route:          37.153.120.0/21
+descr:          JOYENT-EU-AMS-1
+origin:         AS26464
+mnt-by:         MNT-JOYENT-NOC
+created:        2015-05-30T20:14:34Z
+last-modified:  2015-05-30T20:14:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

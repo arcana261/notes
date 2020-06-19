@@ -1,0 +1,57 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '94.245.0.0 - 94.245.15.255'
+
+% Abuse contact for '94.245.0.0 - 94.245.15.255' is 'abuse@t3.se'
+
+inetnum:        94.245.0.0 - 94.245.15.255
+netname:        TELECOM3-NET
+descr:          LAN clients
+country:        SE
+admin-c:        TA4592-RIPE
+tech-c:         TA4592-RIPE
+remarks:        -----
+remarks:        Please send abuse issues to abuse@t3.se
+remarks:        -----
+status:         SUB-ALLOCATED PA
+mnt-by:         MNT-PERSPEKTIV
+mnt-by:         IT-NORR-MNT
+mnt-lower:      IT-NORR-MNT
+mnt-routes:     IT-NORR-MNT
+mnt-domains:    IT-NORR-MNT
+remarks:        INFRA-AW
+created:        2015-01-09T08:48:18Z
+last-modified:  2015-11-05T11:22:16Z
+source:         RIPE # Filtered
+
+role:           A3 Noc
+address:        Umestan Foretagspark, hus 12
+nic-hdl:        TA4592-RIPE
+admin-c:        UK611-RIPE
+mnt-by:         IT-NORR-MNT
+mnt-by:         ALLTELE-SE-MNT
+created:        2013-11-04T12:50:28Z
+last-modified:  2020-01-30T14:35:05Z
+source:         RIPE # Filtered
+
+% Information related to '94.245.0.0/20AS45011'
+
+route:          94.245.0.0/20
+descr:          A3
+origin:         AS45011
+mnt-by:         IT-NORR-MNT
+mnt-by:         ALLTELE-SE-MNT
+created:        2020-01-29T15:06:27Z
+last-modified:  2020-01-29T15:06:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

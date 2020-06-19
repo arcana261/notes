@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.135.124.248 - 5.135.124.255'
+
+% Abuse contact for '5.135.124.248 - 5.135.124.255' is 'abuse@ovh.net'
+
+inetnum:        5.135.124.248 - 5.135.124.255
+netname:        vpsgol54
+descr:          vpsgol54
+country:        CH
+org:            ORG-OC30-RIPE
+admin-c:        OTC2-RIPE
+tech-c:         OTC2-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2012-10-04T00:11:20Z
+last-modified:  2012-10-04T00:11:20Z
+source:         RIPE
+
+organisation:   ORG-OC30-RIPE
+org-name:       OVH CH
+org-type:       OTHER
+address:        Equinix Zurich1 (ZH1)
+address:        Hardstrasse 235
+address:        8005 Zurich
+address:        Schweiz
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2011-03-03T17:25:07Z
+last-modified:  2017-10-30T16:16:37Z
+source:         RIPE # Filtered
+
+role:           OVH Technical Contact
+address:        OVH SAS
+address:        2 rue Kellermann
+address:        59100 Roubaix
+address:        France
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+tech-c:         SL10162-RIPE
+nic-hdl:        OTC2-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2004-01-28T17:42:29Z
+last-modified:  2014-09-05T10:47:15Z
+source:         RIPE # Filtered
+
+% Information related to '5.135.0.0/16AS16276'
+
+route:          5.135.0.0/16
+descr:          OVH
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2012-07-06T13:00:08Z
+last-modified:  2012-07-06T13:00:08Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

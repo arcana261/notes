@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.214.113.0 - 95.214.113.255'
+
+% Abuse contact for '95.214.113.0 - 95.214.113.255' is 'abuse@dedipath.com'
+
+inetnum:        95.214.113.0 - 95.214.113.255
+netname:        DediPath-L190125
+descr:          DediPath
+country:        US
+org:            ORG-DA869-RIPE
+admin-c:        DK8538-RIPE
+tech-c:         DK8538-RIPE
+status:         ASSIGNED PA
+mnt-by:         de-buechvps1-1-mnt
+mnt-routes:     Dedipath_Noc
+mnt-lower:      Dedipath_Noc
+mnt-domains:    Dedipath_Noc
+mnt-by:         Dedipath_Noc
+created:        2019-01-25T12:47:21Z
+last-modified:  2019-01-25T12:48:58Z
+source:         RIPE
+
+organisation:   ORG-DA869-RIPE
+org-name:       Dedipath
+descr:          Dedipath
+org-type:       OTHER
+address:        700 Wilshire Blvd, Suite 200, Los Angeles, CA 90017, USA
+phone:          +1-877-234-3334
+abuse-c:        AC35118-RIPE
+admin-c:        DK8538-RIPE
+tech-c:         DK8538-RIPE
+mnt-ref:        de-buechvps1-1-mnt
+mnt-by:         de-buechvps1-1-mnt
+mnt-ref:        mnt-de-bnc-1
+mnt-by:         mnt-de-bnc-1
+created:        2017-11-27T10:41:21Z
+last-modified:  2019-07-25T15:30:50Z
+source:         RIPE # Filtered
+
+person:         Dylan Kraklan
+address:        700 Wilshire Blvd, Suite 200, Los Angeles, CA 90017, USA
+phone:          +1-877-234-3334
+nic-hdl:        DK8538-RIPE
+mnt-by:         de-buechvps1-1-mnt
+created:        2017-11-27T10:41:21Z
+last-modified:  2018-01-02T14:59:21Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

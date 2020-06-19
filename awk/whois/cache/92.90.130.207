@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '92.90.128.0 - 92.90.191.255'
+
+% Abuse contact for '92.90.128.0 - 92.90.191.255' is 'abuse@gaoland.net'
+
+inetnum:        92.90.128.0 - 92.90.191.255
+netname:        SFR-USER-DATA
+descr:          DSL - End users
+country:        FR
+admin-c:        LD699-RIPE
+tech-c:         LDC76-RIPE
+status:         ASSIGNED PA
+mnt-by:         SFR-MNT
+created:        2016-05-17T09:08:22Z
+last-modified:  2016-05-17T09:08:22Z
+source:         RIPE
+
+role:           SFR Legal Contact
+address:        Campus SFR
+address:        12 rue Jean-Philippe Rameau
+address:        CS 80001
+address:        93634 La-Plaine-Saint-Denis Cedex
+address:        France
+phone:          +33 1 70 18 52 00
+admin-c:        LDC76-RIPE
+admin-c:        HS10001-RIPE
+tech-c:         RB14609-RIPE
+tech-c:         HS10001-RIPE
+nic-hdl:        LD699-RIPE
+abuse-mailbox:  abuse@gaoland.net
+mnt-by:         LDCOM-MNT
+created:        2003-10-23T09:15:54Z
+last-modified:  2020-01-15T10:44:57Z
+source:         RIPE # Filtered
+
+role:           SFR Tech Contact (formerly Neuf Cegetel / LDCOM Networks)
+address:        SFR
+address:        CAMPUS SFR
+address:        16 rue du General Alain de Boissieu
+address:        CS 68217
+address:        75741 PARIS CEDEX 15
+address:        France
+phone:          +33 1 85 06 00 00
+admin-c:        LD699-RIPE
+admin-c:        LM5867-RIPE
+admin-c:        HS10001-RIPE
+tech-c:         DG1056-RIPE
+nic-hdl:        LDC76-RIPE
+abuse-mailbox:  abuse@gaoland.net
+mnt-by:         LDCOM-MNT
+created:        2001-12-20T14:34:14Z
+last-modified:  2020-01-15T10:52:12Z
+source:         RIPE # Filtered
+
+% Information related to '92.88.0.0/13AS15557'
+
+route:          92.88.0.0/13
+descr:          SFR
+origin:         AS15557
+mnt-by:         SFR-MNT
+created:        2010-03-24T09:30:32Z
+last-modified:  2010-03-24T09:30:32Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '31.25.94.0 - 31.25.94.255'
+
+% Abuse contact for '31.25.94.0 - 31.25.94.255' is 'mehdinozadi@gmail.com'
+
+inetnum:        31.25.94.0 - 31.25.94.255
+netname:        AfraRasa
+descr:          AfraRasa
+country:        IR
+admin-c:        sa6672-RIPE
+tech-c:         sa6672-RIPE
+status:         ASSIGNED PA
+mnt-by:         mehdinozadi-mnt
+mnt-by:         samanakhgar-mnt
+created:        2019-11-18T21:55:23Z
+last-modified:  2019-11-20T19:50:54Z
+source:         RIPE
+
+person:         Mehdi Nozadi
+address:        No. 80/1,Corner of 6 th Adab St., 50 th Emamat Blvd., Mashhad, Iran.
+phone:          +985131668
+nic-hdl:        sa6672-RIPE
+mnt-by:         samanakhgar-mnt
+mnt-by:         mehdinozadi-mnt
+created:        2010-02-16T05:35:17Z
+last-modified:  2019-02-23T18:32:16Z
+source:         RIPE
+
+% Information related to '31.25.94.0/24AS202391'
+
+route:          31.25.94.0/24
+descr:          AFRARASA
+origin:         AS202391
+mnt-by:         mehdinozadi-mnt
+created:        2019-12-09T07:13:43Z
+last-modified:  2019-12-09T07:13:43Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

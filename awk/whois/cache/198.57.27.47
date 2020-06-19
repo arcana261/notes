@@ -1,0 +1,66 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       198.57.26.0 - 198.57.27.255
+CIDR:           198.57.26.0/23
+NetName:        GLOBALTELEHOST
+NetHandle:      NET-198-57-26-0-1
+Parent:         NET198 (NET-198-0-0-0-0)
+NetType:        Direct Assignment
+OriginAS:       AS62563
+Organization:   GLOBALTELEHOST Corp. (GC-152)
+RegDate:        2013-10-01
+Updated:        2013-10-01
+Ref:            https://rdap.arin.net/registry/ip/198.57.26.0
+
+
+OrgName:        GLOBALTELEHOST Corp.
+OrgId:          GC-152
+Address:        95 Mural Street, 6th Floor
+City:           Richmond Hill
+StateProv:      ON
+PostalCode:     L4B 3G2
+Country:        CA
+RegDate:        2013-02-12
+Updated:        2017-08-20
+Ref:            https://rdap.arin.net/registry/entity/GC-152
+
+
+OrgNOCHandle: ADMIN6532-ARIN
+OrgNOCName:   Admin
+OrgNOCPhone:  +1-855-550-1010 
+OrgNOCEmail:  info@globaltelehost.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/ADMIN6532-ARIN
+
+OrgTechHandle: ADMIN6532-ARIN
+OrgTechName:   Admin
+OrgTechPhone:  +1-855-550-1010 
+OrgTechEmail:  info@globaltelehost.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ADMIN6532-ARIN
+
+OrgAbuseHandle: ADMIN6532-ARIN
+OrgAbuseName:   Admin
+OrgAbusePhone:  +1-855-550-1010 
+OrgAbuseEmail:  info@globaltelehost.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ADMIN6532-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

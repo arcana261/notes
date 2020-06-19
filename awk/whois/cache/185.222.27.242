@@ -1,0 +1,45 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.222.27.240 - 185.222.27.255'
+
+% Abuse contact for '185.222.27.240 - 185.222.27.255' is 'abuse@uk.leaseweb.com'
+
+inetnum:        185.222.27.240 - 185.222.27.255
+netname:        shared_rack_assigned_spare
+country:        GB
+status:         ASSIGNED PA
+admin-c:        LUN2-RIPE
+tech-c:         LUN2-RIPE
+mnt-by:         leaseweb-uk-mnt
+created:        2018-11-16T22:50:55Z
+last-modified:  2018-11-16T22:50:55Z
+source:         RIPE
+
+role:           Leaseweb UK NOC
+address:        35 Great St Helens EC3A 6AP London, UK
+nic-hdl:        LUN2-RIPE
+mnt-by:         leaseweb-uk-mnt
+created:        2017-09-21T17:32:46Z
+last-modified:  2017-09-21T17:32:46Z
+source:         RIPE # Filtered
+
+% Information related to '185.222.24.0/22AS205544'
+
+route:          185.222.24.0/22
+descr:          routed via Leaseweb
+origin:         AS205544
+mnt-by:         leaseweb-uk-mnt
+created:        2017-09-22T13:41:52Z
+last-modified:  2018-09-10T14:52:08Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

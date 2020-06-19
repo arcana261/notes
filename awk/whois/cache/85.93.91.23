@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.93.90.0 - 85.93.91.255'
+
+% Abuse contact for '85.93.90.0 - 85.93.91.255' is 'abuse@hosteurope.de'
+
+inetnum:        85.93.90.0 - 85.93.91.255
+netname:        SYNNET-DC3-A4
+descr:          synergetic  AG
+descr:          data center 3
+descr:          various customers
+country:        DE
+admin-c:        MA135-RIPE
+tech-c:         HS2274-RIPE
+status:         ASSIGNED PA
+mnt-by:         SYNNET-MNT
+created:        2013-07-06T22:12:12Z
+last-modified:  2013-07-06T22:12:12Z
+source:         RIPE # Filtered
+
+role:           Hostmaster PlusServer
+address:        PlusServer GmbH
+address:        Hohenzollernring 72
+address:        50672 Köln
+admin-c:        PNO7-RIPE
+abuse-mailbox:  abuse@plusserver.com
+mnt-by:         MNT-PlusServer
+nic-hdl:        HS2274-RIPE
+created:        2004-02-19T06:24:06Z
+last-modified:  2019-10-15T13:35:53Z
+source:         RIPE # Filtered
+
+person:         Murat Aygan
+address:        enoit GmbH
+address:        Am Hohengeren 2
+address:        D-70188 Stuttgart
+phone:          +49 1727203636
+nic-hdl:        MA135-RIPE
+mnt-by:         MNT-PLUSSERVER
+mnt-by:         AYGAN-MNT
+created:        1970-01-01T00:00:00Z
+last-modified:  2019-06-26T13:07:08Z
+source:         RIPE # Filtered
+
+% Information related to '85.93.88.0/22AS8972'
+
+route:          85.93.88.0/22
+origin:         AS8972
+mnt-by:         INTERGENIA-MNT
+created:        2015-06-09T09:03:08Z
+last-modified:  2016-07-08T12:53:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

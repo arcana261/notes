@@ -1,0 +1,59 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.169.196.0 - 185.169.199.255'
+
+% Abuse contact for '185.169.196.0 - 185.169.199.255' is 'abuse@psychz.net'
+
+inetnum:        185.169.196.0 - 185.169.199.255
+netname:        US-PROFUSE-20160926
+country:        GB
+org:            ORG-PSI14-RIPE
+admin-c:        NH4236-RIPE
+tech-c:         NH4236-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         us-profuse-1-mnt
+created:        2016-09-26T14:27:10Z
+last-modified:  2016-09-26T14:27:10Z
+source:         RIPE
+
+organisation:   ORG-PSI14-RIPE
+org-name:       Profuse Solutions INC
+org-type:       LIR
+address:        20687-2 Amar Road #312
+address:        91789
+address:        Walnut
+address:        UNITED STATES
+admin-c:        NH4236-RIPE
+tech-c:         NH4236-RIPE
+abuse-c:        AR37722-RIPE
+mnt-ref:        us-profuse-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         us-profuse-1-mnt
+created:        2016-09-23T07:05:58Z
+last-modified:  2016-09-26T14:26:24Z
+source:         RIPE # Filtered
+phone:          +16265492801
+
+person:         NOC HQ
+address:        20687-2 Amar Road # 312
+address:        91789
+address:        Walnut
+address:        UNITED STATES
+phone:          +16265492801
+nic-hdl:        NH4236-RIPE
+mnt-by:         us-profuse-1-mnt
+created:        2016-09-23T07:05:58Z
+last-modified:  2016-09-23T07:05:58Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

@@ -1,0 +1,66 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       63.246.135.0 - 63.246.135.255
+CIDR:           63.246.135.0/24
+NetName:        SISFL
+NetHandle:      NET-63-246-135-0-1
+Parent:         NET63 (NET-63-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS395374, AS22427, AS21840
+Organization:   Synergy Internet Services Florida (SISFL)
+RegDate:        2002-10-24
+Updated:        2019-04-23
+Ref:            https://rdap.arin.net/registry/ip/63.246.135.0
+
+
+OrgName:        Synergy Internet Services Florida
+OrgId:          SISFL
+Address:        4465 W Gandy Blvd
+City:           Tampa
+StateProv:      FL
+PostalCode:     33611
+Country:        US
+RegDate:        2015-05-04
+Updated:        2017-01-28
+Ref:            https://rdap.arin.net/registry/entity/SISFL
+
+
+OrgNOCHandle: BLANK45-ARIN
+OrgNOCName:   Blanken, Tim 
+OrgNOCPhone:  +1-866-366-3640 
+OrgNOCEmail:  ndejene@synergyisp.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/BLANK45-ARIN
+
+OrgAbuseHandle: BLANK45-ARIN
+OrgAbuseName:   Blanken, Tim 
+OrgAbusePhone:  +1-866-366-3640 
+OrgAbuseEmail:  ndejene@synergyisp.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/BLANK45-ARIN
+
+OrgTechHandle: BLANK45-ARIN
+OrgTechName:   Blanken, Tim 
+OrgTechPhone:  +1-866-366-3640 
+OrgTechEmail:  ndejene@synergyisp.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/BLANK45-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

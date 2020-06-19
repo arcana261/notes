@@ -1,0 +1,99 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       64.31.0.0 - 64.31.63.255
+CIDR:           64.31.0.0/18
+NetName:        LSN-DLLSTX-6
+NetHandle:      NET-64-31-0-0-1
+Parent:         NET64 (NET-64-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS46475
+Organization:   Limestone Networks, Inc. (LIMES-2)
+RegDate:        2010-12-27
+Updated:        2012-02-24
+Comment:        http://limestonenetworks.com/
+Ref:            https://rdap.arin.net/registry/ip/64.31.0.0
+
+
+OrgName:        Limestone Networks, Inc.
+OrgId:          LIMES-2
+Address:        400 S. Akard Street
+Address:        Suite 200
+City:           Dallas
+StateProv:      TX
+PostalCode:     75202
+Country:        US
+RegDate:        2007-12-04
+Updated:        2017-01-28
+Comment:        http://limestonenetworks.com/
+Ref:            https://rdap.arin.net/registry/entity/LIMES-2
+
+ReferralServer:  rwhois://rwhois.limestonenetworks.com:4321
+
+OrgTechHandle: NOC2791-ARIN
+OrgTechName:   Network Operations Center
+OrgTechPhone:  +1-214-242-3600 
+OrgTechEmail:  noc@limestonenetworks.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NOC2791-ARIN
+
+OrgAbuseHandle: ABUSE1804-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-214-586-0555 
+OrgAbuseEmail:  abuse@limestonenetworks.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE1804-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to rwhois.limestonenetworks.com:4321.
+
+%rwhois V-1.5:003fff:00 rwhois.limestonenetworks.com (by Network Solutions, Inc. V-1.5.9.5)
+network:Class-Name:network
+network:ID:LSN-BLK-64.31.0.0/18
+network:Auth-Area:64.31.0.0/18
+network:Network-Name:LSN-64.31.0.0/18
+network:IP-Network:64.31.23.208/28
+network:IP-Network-Block:64.31.23.208 - 64.31.23.223
+network:Organization-Name:Robert Sweigard
+network:Organization-City:Plymouth Meeting
+network:Organization-State:PA
+network:Organization-Zip:19462
+network:Organization-Country:US
+network:Tech-Contact;I:abuse@limestonenetworks.com
+network:Admin-Contact;I:abuse@limestonenetworks.com
+network:Updated-By:admin@limestonenetworks.com
+
+network:Class-Name:network
+network:ID:LSN-BLK-64.31.0.0/18
+network:Auth-Area:64.31.0.0/18
+network:Network-Name:LSN-64.31.0.0/18
+network:IP-Network:64.31.0.0/18
+network:IP-Network-Block:64.31.0.0 - 64.31.63.255
+network:Organization;I:Limestone Networks
+network:Tech-Contact;I:ipadmin@limestonenetworks.com
+network:Admin-Contact;I:admin@limestonenetworks.com
+network:Created:20080129
+network:Updated:20080129
+network:Updated-By:admin@limestonenetworks.com
+
+%referral rwhois://root.rwhois.net:4321/auth-area=.
+%ok

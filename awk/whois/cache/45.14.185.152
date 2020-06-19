@@ -1,0 +1,71 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.14.184.0 - 45.14.187.255'
+
+% Abuse contact for '45.14.184.0 - 45.14.187.255' is 'abuse@servereasy.it'
+
+inetnum:        45.14.184.0 - 45.14.187.255
+netname:        IT-SERVEREASY-3-20190509
+country:        IT
+descr:          Dedicated servers, VPS, DDoS protection
+descr:          www.servereasy.it
+org:            ORG-SS965-RIPE
+admin-c:        SG11340-RIPE
+tech-c:         SG11340-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         SG27331-MNT
+mnt-lower:      SG27331-MNT
+mnt-routes:     SG27331-MNT
+created:        2019-05-09T11:44:19Z
+last-modified:  2019-10-08T09:46:49Z
+source:         RIPE
+
+organisation:   ORG-SS965-RIPE
+org-name:       Servereasy Srl
+org-type:       LIR
+address:        Via di montepoli, 15
+address:        50038
+address:        Scarperia
+address:        ITALY
+admin-c:        SG16402-RIPE
+tech-c:         SG16402-RIPE
+abuse-c:        AR52519-RIPE
+mnt-ref:        SG27331-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         SG27331-MNT
+created:        2019-05-08T08:05:24Z
+last-modified:  2019-05-08T08:05:26Z
+source:         RIPE # Filtered
+phone:          +390557476507
+
+person:         Saverio Giuntini
+address:        Via di Montepoli, 15
+address:        50038 Scarperia (FI)
+address:        Italy
+phone:          +390557476507
+nic-hdl:        SG11340-RIPE
+mnt-by:         SG27331-MNT
+created:        2013-05-07T12:36:53Z
+last-modified:  2015-10-20T13:55:12Z
+source:         RIPE # Filtered
+
+% Information related to '45.14.184.0/22AS60798'
+
+route:          45.14.184.0/22
+origin:         AS60798
+mnt-by:         SG27331-MNT
+created:        2019-05-09T15:33:37Z
+last-modified:  2019-05-09T15:33:37Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

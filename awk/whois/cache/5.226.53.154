@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.226.48.0 - 5.226.55.255'
+
+% Abuse contact for '5.226.48.0 - 5.226.55.255' is 'ghr_saadi@msn.com'
+
+inetnum:        5.226.48.0 - 5.226.55.255
+netname:        IR-KISHITGROUP-20120907
+country:        IR
+org:            ORG-KIGC2-RIPE
+admin-c:        GSK12-RIPE
+tech-c:         GSK12-RIPE
+status:         ALLOCATED PA
+mnt-by:         ir-kishitgroup-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2018-10-22T14:47:47Z
+last-modified:  2018-10-22T14:47:47Z
+source:         RIPE
+
+organisation:   ORG-KIGC2-RIPE
+org-name:       Kish It Group Company Ltd.
+org-type:       LIR
+address:        Ferdousi St. Morvarid Complex  #G705
+address:        7941877119
+address:        Kish Island
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 7644420193
+phone:          +98 912 3843745
+fax-no:         +98 7644426105
+admin-c:        GSK12-RIPE
+tech-c:         GSK12-RIPE
+abuse-c:        AR34751-RIPE
+mnt-ref:        ir-kishitgroup-1-mnt
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-kishitgroup-1-mnt
+created:        2015-12-18T14:05:17Z
+last-modified:  2017-02-23T06:39:55Z
+source:         RIPE # Filtered
+
+person:         Ghr Saadi
+address:        #  G705 Morvarid Complex Ferdousi St.
+address:        7941877119
+address:        KishIsland
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98 912 3843745
+nic-hdl:        GSK12-RIPE
+mnt-by:         ir-kishitgroup-1-mnt
+created:        2015-12-18T14:05:16Z
+last-modified:  2019-02-25T15:53:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '85.203.44.0 - 85.203.44.255'
+
+% Abuse contact for '85.203.44.0 - 85.203.44.255' is 'jeroen@falco-networks.com'
+
+inetnum:        85.203.44.0 - 85.203.44.255
+netname:        Express-Telecity-Amsterdam
+descr:          Kuiperbergweg 13
+descr:          1101 AE Amsterdam
+country:        NL
+admin-c:        JVV19-RIPE
+tech-c:         JVV19-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-FALCO
+mnt-routes:     MNT-NFORCE
+org:            ORG-EA965-RIPE
+created:        2016-02-24T15:01:20Z
+last-modified:  2018-03-06T12:17:07Z
+source:         RIPE
+
+organisation:   ORG-EA965-RIPE
+org-name:       EXPRESS-TELECITY-AMSTERDAM
+org-type:       OTHER
+address:        Kuiperbergweg 13, 1101 AE Amsterdam, The Netherlands
+mnt-ref:        MNT-FALCO
+mnt-by:         MNT-FALCO
+created:        2016-02-24T15:00:16Z
+last-modified:  2016-02-24T15:00:16Z
+source:         RIPE # Filtered
+
+person:         Jeroen van veen
+address:        Falco IPR B.V.
+address:        De Hoefsmid 11-13
+address:        1851 PZ Heiloo
+address:        The Netherlands
+phone:          +31 72 532 3744
+nic-hdl:        JVV19-RIPE
+created:        2002-09-16T13:46:49Z
+last-modified:  2018-05-01T12:11:21Z
+source:         RIPE # Filtered
+mnt-by:         MNT-FALCO
+
+% Information related to '85.203.44.0/24AS43350'
+
+route:          85.203.44.0/24
+descr:          NFOrce Entertainment BV - route 85.203.44.0/24 - Customer 2925
+origin:         AS43350
+mnt-by:         MNT-NFORCE
+created:        2018-03-08T15:56:30Z
+last-modified:  2019-05-14T07:31:07Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

@@ -1,0 +1,92 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '84.33.192.0 - 84.33.255.255'
+
+% Abuse contact for '84.33.192.0 - 84.33.255.255' is 'abuse@incubatec.com'
+
+inetnum:        84.33.192.0 - 84.33.255.255
+netname:        IT-INCUBATEC-COM-20040819
+descr:          PROVIDER Local Registry
+country:        IT
+org:            ORG-iGS2-RIPE
+admin-c:        TM428-RIPE
+tech-c:         MK857-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         INCUBATEC-MNT
+mnt-lower:      INCUBATEC-MNT
+mnt-domains:    INCUBATEC-MNT
+mnt-routes:     INCUBATEC-MNT
+mnt-routes:     LEVEL3-MNT
+created:        2018-02-13T13:58:02Z
+last-modified:  2018-02-13T13:58:02Z
+source:         RIPE # Filtered
+
+organisation:   ORG-iGS2-RIPE
+org-name:       INCUBATEC GmbH - Srl
+org-type:       LIR
+address:        V. Scurciastr. 36
+address:        39046
+address:        Ortisei BZ
+address:        ITALY
+phone:          +39 0471 796829
+fax-no:         +39 0471 797949
+admin-c:        TM428-RIPE
+admin-c:        MK857-RIPE
+abuse-c:        INCU1-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        INCUBATEC-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         INCUBATEC-MNT
+created:        2004-04-17T11:31:34Z
+last-modified:  2019-01-21T16:15:22Z
+source:         RIPE # Filtered
+
+person:         Markus Kasslatter
+org:            ORG-iGS2-RIPE
+address:        INCUBATEC GmbH - Srl
+address:        V. Scurciàstr. 36
+address:        39046 St.Ulrich - Ortisei (BZ)
+address:        ITALY
+phone:          +39 0471 796829
+fax-no:         +39 0471 797949
+nic-hdl:        MK857-RIPE
+mnt-by:         INCUBATEC-MNT
+created:        2003-06-19T17:35:52Z
+last-modified:  2019-07-26T12:26:30Z
+source:         RIPE # Filtered
+
+person:         Thomas Moroder
+org:            ORG-iGS2-RIPE
+address:        INCUBATEC GmbH - Srl
+address:        V. Scurciàstr. 36
+address:        39046 St.Ulrich - Ortisei (BZ)
+address:        ITALY
+phone:          +39 0471 796829
+fax-no:         +39 0471 797949
+nic-hdl:        TM428-RIPE
+mnt-by:         INCUBATEC-MNT
+created:        2003-06-19T17:22:33Z
+last-modified:  2019-07-26T12:25:49Z
+source:         RIPE # Filtered
+
+% Information related to '84.33.192.0/19AS34081'
+
+route:          84.33.192.0/19
+descr:          Server24 Network by INCUBATEC GmbH - Srl Premium Hosting Service Provider
+origin:         AS34081
+mnt-by:         INCUBATEC-MNT
+created:        2013-09-13T08:25:39Z
+last-modified:  2018-09-19T11:06:43Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

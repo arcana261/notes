@@ -1,0 +1,121 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       23.92.221.32 - 23.92.221.47
+CIDR:           23.92.221.32/28
+NetName:        FAAL-23-92-221-32
+NetHandle:      NET-23-92-221-32-1
+Parent:         CUST-NET-9 (NET-23-92-208-0-1)
+NetType:        Reassigned
+OriginAS:       AS31863
+Customer:       Ismaiel Faal (C06779616)
+RegDate:        2017-11-01
+Updated:        2017-11-01
+Ref:            https://rdap.arin.net/registry/ip/23.92.221.32
+
+
+CustName:       Ismaiel Faal
+Address:        Dubai Sheikh Zayed road before mula plaza villa 30
+City:           Dubai
+StateProv:      DUBAI
+PostalCode:     55369
+Country:        AE
+RegDate:        2017-11-01
+Updated:        2017-11-01
+Ref:            https://rdap.arin.net/registry/entity/C06779616
+
+OrgTechHandle: GTG11-ARIN
+OrgTechName:   Giesen, Gary T
+OrgTechPhone:  +1-416-548-7020 
+OrgTechEmail:  ggiesen@centrilogic.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/GTG11-ARIN
+
+OrgTechHandle: CIT3-ARIN
+OrgTechName:   Centrilogic IP Tech
+OrgTechPhone:  +1-888-999-3091 
+OrgTechEmail:  IPtech@centrilogic.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/CIT3-ARIN
+
+OrgAbuseHandle: DACEN-ARIN
+OrgAbuseName:   Dacentec Abuse
+OrgAbusePhone:  +1-828-393-4443 
+OrgAbuseEmail:  abuse@dacentec.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/DACEN-ARIN
+
+OrgNOCHandle: CIT3-ARIN
+OrgNOCName:   Centrilogic IP Tech
+OrgNOCPhone:  +1-888-999-3091 
+OrgNOCEmail:  IPtech@centrilogic.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/CIT3-ARIN
+
+# end
+
+
+# start
+
+NetRange:       23.92.208.0 - 23.92.223.255
+CIDR:           23.92.208.0/20
+NetName:        CUST-NET-9
+NetHandle:      NET-23-92-208-0-1
+Parent:         NET23 (NET-23-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS31863
+Organization:   Centrilogic, Inc. (CENTR-60)
+RegDate:        2014-01-02
+Updated:        2014-06-18
+Ref:            https://rdap.arin.net/registry/ip/23.92.208.0
+
+
+Centrilogic, Inc. (CENTR-60)
+
+
+OrgTechHandle: GTG11-ARIN
+OrgTechName:   Giesen, Gary T
+OrgTechPhone:  +1-416-548-7020 
+OrgTechEmail:  ggiesen@centrilogic.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/GTG11-ARIN
+
+OrgTechHandle: CIT3-ARIN
+OrgTechName:   Centrilogic IP Tech
+OrgTechPhone:  +1-888-999-3091 
+OrgTechEmail:  IPtech@centrilogic.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/CIT3-ARIN
+
+OrgAbuseHandle: DACEN-ARIN
+OrgAbuseName:   Dacentec Abuse
+OrgAbusePhone:  +1-828-393-4443 
+OrgAbuseEmail:  abuse@dacentec.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/DACEN-ARIN
+
+OrgNOCHandle: CIT3-ARIN
+OrgNOCName:   Centrilogic IP Tech
+OrgNOCPhone:  +1-888-999-3091 
+OrgNOCEmail:  IPtech@centrilogic.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/CIT3-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

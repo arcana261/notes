@@ -1,0 +1,80 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '188.132.173.0 - 188.132.173.255'
+
+% Abuse contact for '188.132.173.0 - 188.132.173.255' is 'abuse@sh.com.tr'
+
+inetnum:        188.132.173.0 - 188.132.173.255
+netname:        SH-Customer188
+descr:          SH-Customer188
+remarks:        www.sh.com.tr
+country:        TR
+org:            ORG-HIHL1-RIPE
+admin-c:        SIA97-RIPE
+tech-c:         SN5365-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-SADECEHOSTINGMNT
+created:        2009-10-07T06:46:10Z
+last-modified:  2014-07-25T13:38:29Z
+source:         RIPE # Filtered
+
+organisation:   ORG-HIHL1-RIPE
+org-name:       PremierDC Veri Merkezi Anonim Sirketi
+org-type:       LIR
+address:        Otakcilar Cad. No : 78 Flat Ofis Kat :4 Eyup
+address:        34050
+address:        ISTANBUL
+address:        TURKEY
+phone:          +902124378787
+fax-no:         +902124378560
+abuse-c:        AR17378-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        AS42910
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-SADECEHOSTINGMNT
+created:        2007-05-07T09:23:23Z
+last-modified:  2019-07-29T09:22:43Z
+source:         RIPE # Filtered
+
+person:         SH IP Administrator
+address:        Otakcilar Cad. No: 78 Kat 4 FlatOfis 34050
+address:        EYUP/ISTANBUL/TURKEY
+phone:          +90 212 437 87 87
+fax-no:         +90 212 437 85 60
+nic-hdl:        SIA97-RIPE
+mnt-by:         AS42910
+created:        2014-07-17T13:20:11Z
+last-modified:  2019-07-18T10:56:54Z
+source:         RIPE
+
+person:         SH NOC
+address:        Otakcilar Cad. No:78 Kat:4 FlatOfis 34050
+address:        EYUP/ISTANBUL/TURKEY
+phone:          +90 212 437 87 87
+fax-no:         +90 212 437 85 60
+nic-hdl:        SN5365-RIPE
+mnt-by:         MNT-SADECEHOSTINGMNT
+created:        2014-07-17T14:14:34Z
+last-modified:  2019-07-29T12:06:00Z
+source:         RIPE
+
+% Information related to '188.132.173.0/24AS42910'
+
+route:          188.132.173.0/24
+descr:          Sadecehosting
+origin:         AS42910
+mnt-by:         MNT-SADECEHOSTINGMNT
+created:        2009-10-07T06:44:41Z
+last-modified:  2014-08-05T09:44:54Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

@@ -1,0 +1,71 @@
+query : 221.155.237.187
+
+
+# KOREAN(UTF8)
+
+조회하신 IPv4주소는 한국인터넷진흥원으로부터 아래의 관리대행자에게 할당되었으며, 할당 정보는 다음과 같습니다.
+
+[ 네트워크 할당 정보 ]
+IPv4주소           : 221.144.0.0 - 221.168.255.255 (/12+/13+/16)
+기관명             : 주식회사 케이티
+서비스명           : KORNET
+주소               : 경기도 성남시 분당구 불정로 90
+우편번호           : 13606
+할당일자           : 20030418
+
+이름               : IP주소 담당자
+전화번호           : +82-2-500-6630
+전자우편           : kornet_ip@kt.com
+
+조회하신 IPv4주소는 위의 관리대행자로부터 아래의 사용자에게 할당되었으며, 할당 정보는 다음과 같습니다.
+--------------------------------------------------------------------------------
+
+
+[ 네트워크 할당 정보 ]
+IPv4주소           : 221.155.237.128 - 221.155.237.255 (/25)
+기관명             : 수도권서부본부
+네트워크 구분      : CUSTOMER
+주소               : 경기도 연천군 군남면
+우편번호           : 486820
+할당내역 등록일    : 20190215
+
+이름               : IP주소 담당자
+전화번호           : +82-2-500-6631
+전자우편           : kornet_ip@kt.com
+
+
+# ENGLISH
+
+KRNIC is not an ISP but a National Internet Registry similar to APNIC.
+
+[ Network Information ]
+IPv4 Address       : 221.144.0.0 - 221.168.255.255 (/12+/13+/16)
+Organization Name  : Korea Telecom
+Service Name       : KORNET
+Address            : Gyeonggi-do Bundang-gu, Seongnam-si Buljeong-ro 90
+Zip Code           : 13606
+Registration Date  : 20030418
+
+Name               : IP Manager
+Phone              : +82-2-500-6630
+E-Mail             : kornet_ip@kt.com
+
+--------------------------------------------------------------------------------
+
+More specific assignment information is as follows.
+
+[ Network Information ]
+IPv4 Address       : 221.155.237.128 - 221.155.237.255 (/25)
+Organization Name  : Sudogwonseobubonbu
+Network Type       : CUSTOMER
+Address            : Gunnam-Myeon Yeoncheon-Gun Gyeonggi-Do
+Zip Code           : 486820
+Registration Date  : 20190215
+
+Name               : IP Manager
+Phone              : +82-2-500-6631
+E-Mail             : kornet_ip@kt.com
+
+
+- KISA/KRNIC WHOIS Service -
+

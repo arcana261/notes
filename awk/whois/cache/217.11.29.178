@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '217.11.29.176 - 217.11.29.191'
+
+% Abuse contact for '217.11.29.176 - 217.11.29.191' is 'abuse@afranet.com'
+
+inetnum:        217.11.29.176 - 217.11.29.191
+netname:        JAM-SAZ
+descr:          Jamsaz Co
+country:        ir
+admin-c:        JMSZ5148-RIPE
+tech-c:         JMSZ5148-RIPE
+status:         assigned pa
+mnt-by:         AFRA-MNT-NESH-1
+created:        2012-11-15T08:49:50Z
+last-modified:  2012-11-15T08:49:50Z
+source:         RIPE
+
+person:         Vahid Delaviz
+address:        No.4, Firouzeh Ave, Sohrevardi shomali St, Tehran, Iran
+phone:          +98-936-1790444
+nic-hdl:        JMSZ5148-RIPE
+mnt-by:         AFRA-MNT-NESH-1
+created:        2012-10-25T05:33:37Z
+last-modified:  2012-10-25T05:33:37Z
+source:         RIPE
+
+% Information related to '217.11.29.0/24AS25184'
+
+route:          217.11.29.0/24
+descr:          AFRANET Co.
+origin:         AS25184
+mnt-by:         AFRA-MNT-NESH-1
+created:        2004-08-18T05:47:21Z
+last-modified:  2009-10-21T08:55:57Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

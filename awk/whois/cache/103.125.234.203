@@ -1,0 +1,56 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '103.125.234.0 - 103.125.234.255'
+
+% Abuse contact for '103.125.234.0 - 103.125.234.255' is 'abuse@owl.net'
+
+inetnum:        103.125.234.0 - 103.125.234.255
+netname:        OWL-JP-01
+descr:          Owl Limited
+country:        JP
+admin-c:        OLA15-AP
+tech-c:         OLA15-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-OWL-VU
+mnt-irt:        IRT-OWL1-VU
+last-modified:  2018-12-26T16:28:24Z
+source:         APNIC
+
+irt:            IRT-OWL1-VU
+address:        First Floor B&P House, Lini Highway Port Vila
+e-mail:         abuse@owl.net
+abuse-mailbox:  abuse@owl.net
+admin-c:        OLA15-AP
+tech-c:         OLA15-AP
+auth:           # Filtered
+remarks:        abuse@owl.net was validated on 2020-05-26
+mnt-by:         MAINT-OWL-VU
+last-modified:  2020-05-26T23:00:55Z
+source:         APNIC
+
+role:           Owl Limited administrator
+address:        First Floor B&P House, Lini Highway Port Vila
+country:        VU
+phone:          +61-2-8880-0100
+fax-no:         +61-2-8880-0100
+e-mail:         abuse@owl.net
+admin-c:        OLA15-AP
+tech-c:         OLA15-AP
+nic-hdl:        OLA15-AP
+mnt-by:         MAINT-OWL-VU
+last-modified:  2018-11-22T08:35:01Z
+source:         APNIC
+
+% Information related to '103.125.234.0/24AS4785'
+
+route:          103.125.234.0/24
+origin:         AS4785
+descr:          Owl Limited
+mnt-by:         MAINT-OWL-VU
+last-modified:  2020-04-03T00:42:54Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

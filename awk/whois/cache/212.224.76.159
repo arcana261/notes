@@ -1,0 +1,82 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '212.224.76.0 - 212.224.76.255'
+
+% Abuse contact for '212.224.76.0 - 212.224.76.255' is 'abuse@first-colo.net'
+
+inetnum:        212.224.76.0 - 212.224.76.255
+netname:        DE-FIRSTCOLO-CUSTOMER
+descr:          www.first-colo.net, High Quality Hosting
+country:        DE
+admin-c:        DH5361-RIPE
+tech-c:         COLO-RIPE
+remarks:        -------------------------------------------------------
+remarks:        --- please report spam/abuse to abuse@first-colo.net --
+remarks:        ---- reports to other addresses won't be processed ----
+remarks:        -------------------------------------------------------
+status:         ASSIGNED PA
+mnt-by:         MNT-FIRSTCOLO
+created:        2014-11-05T15:36:43Z
+last-modified:  2014-11-06T09:53:57Z
+source:         RIPE
+
+role:           First Colo Ripe Coordination
+address:        First Colo GmbH
+address:        Hanauer Landstr. 291b
+address:        D-60314 Frankfurt am Main
+address:        Germany
+phone:          +49-(0)69-120069-0
+fax-no:         +49-(0)69-120069-55
+abuse-mailbox:  abuse@first-colo.net
+remarks:
+remarks:        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+remarks:        * Complaints about internet abuse like spam, hack attacks, scans, etc. *
+remarks:        * please mail to: --> abuse [@] first-colo [.] net <-- *
+remarks:        * Requests from law enforcement (only!), send fax to: +49 (0) 69 1200 69 55 *
+remarks:        * Inquiries can only be processed, if sent to the correct address. *
+remarks:        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+remarks:
+admin-c:        LEKR-RIPE
+tech-c:         LEKR-RIPE
+tech-c:         LEKR-RIPE
+nic-hdl:        COLO-RIPE
+mnt-by:         MNT-FIRSTCOLO
+created:        2007-09-28T19:01:39Z
+last-modified:  2018-09-28T08:47:18Z
+source:         RIPE # Filtered
+
+person:         Domain Hostmaster
+address:        CLDR.eu
+address:        The Belfast Office
+address:        The Gasworks 5
+address:        Cromac Avenue
+address:        Belfast
+address:        BT7 2AJ
+address:        UK
+phone:          +442890447644
+nic-hdl:        DH5361-RIPE
+mnt-by:         RAPIDSWITCH-MNT
+created:        2014-06-24T15:24:41Z
+last-modified:  2019-07-08T14:25:42Z
+source:         RIPE # Filtered
+
+% Information related to '212.224.64.0/18AS44066'
+
+route:          212.224.64.0/18
+descr:          First Colo via AS44066
+origin:         AS44066
+mnt-by:         MNT-FIRSTCOLO
+created:        2007-11-30T08:53:42Z
+last-modified:  2007-11-30T08:53:42Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

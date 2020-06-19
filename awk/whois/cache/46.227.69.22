@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '46.227.64.0 - 46.227.71.255'
+
+% Abuse contact for '46.227.64.0 - 46.227.71.255' is 'abuse@obe.net'
+
+inetnum:        46.227.64.0 - 46.227.71.255
+netname:        SE-OBE2-20110127
+country:        SE
+org:            ORG-OA1026-RIPE
+admin-c:        OBE8-RIPE
+tech-c:         OBE8-RIPE
+status:         ALLOCATED PA
+mnt-by:         MNT-OBE
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2020-04-24T12:29:33Z
+last-modified:  2020-04-24T12:29:33Z
+source:         RIPE
+
+organisation:   ORG-OA1026-RIPE
+org-name:       Obehosting AB
+org-type:       LIR
+address:        Box 1342
+address:        172 27
+address:        Sundbyberg
+address:        SWEDEN
+admin-c:        OBE8-RIPE
+tech-c:         OBE8-RIPE
+abuse-c:        OBE8-RIPE
+mnt-ref:        MNT-OBE
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-OBE
+created:        2019-08-30T09:59:12Z
+last-modified:  2019-11-05T13:35:55Z
+source:         RIPE # Filtered
+phone:          +46812441888
+
+role:           Obe NOC
+address:        Box 1342
+address:        172 27 Sundbyberg
+address:        Sweden
+abuse-mailbox:  abuse@obe.net
+nic-hdl:        OBE8-RIPE
+mnt-by:         MNT-OBE
+created:        2018-01-22T21:46:02Z
+last-modified:  2019-10-18T08:13:09Z
+source:         RIPE # Filtered
+
+% Information related to '46.227.64.0/21AS197595'
+
+route:          46.227.64.0/21
+origin:         AS197595
+mnt-by:         MNT-OBE
+created:        2011-02-21T23:47:31Z
+last-modified:  2018-06-26T19:58:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

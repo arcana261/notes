@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '51.210.51.88 - 51.210.51.91'
+
+% Abuse contact for '51.210.51.88 - 51.210.51.91' is 'abuse@ovh.net'
+
+inetnum:        51.210.51.88 - 51.210.51.91
+netname:        OVH_273878497
+country:        ES
+descr:          Failover Ips
+org:            ORG-PP81-RIPE
+admin-c:        OTC11-RIPE
+tech-c:         OTC11-RIPE
+status:         LEGACY
+mnt-by:         OVH-MNT
+created:        2020-05-05T03:31:59Z
+last-modified:  2020-05-05T03:31:59Z
+source:         RIPE
+
+organisation:   ORG-PP81-RIPE
+org-name:       pishtazweb pishtazweb
+org-type:       OTHER
+address:        parkside se
+address:        t2j3z2 calgary
+address:        CA
+phone:          +1.3155122212
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2015-04-27T12:22:03Z
+last-modified:  2017-10-30T16:39:02Z
+source:         RIPE # Filtered
+
+role:           OVH ES Technical Contact
+address:        OVH Hispano
+address:        Calle Princesa, 22 2 Dcha
+address:        Madrid 28008
+address:        Spain
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC11-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T16:09:56Z
+last-modified:  2012-08-08T09:06:53Z
+source:         RIPE # Filtered
+
+% Information related to '51.210.0.0/16AS16276'
+
+route:          51.210.0.0/16
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2020-04-09T10:18:04Z
+last-modified:  2020-04-09T10:18:04Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

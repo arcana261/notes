@@ -1,0 +1,67 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.16.232.0 - 185.16.235.255'
+
+% Abuse contact for '185.16.232.0 - 185.16.235.255' is 'abuse@petiak.com'
+
+inetnum:        185.16.232.0 - 185.16.235.255
+netname:        IR-PETIAK-20130125
+country:        IR
+org:            ORG-PS73-RIPE
+admin-c:        AS16049-RIPE
+tech-c:         AS16049-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-PETIAK
+mnt-routes:     MNT-PETIAK
+created:        2013-01-25T08:59:06Z
+last-modified:  2017-02-05T18:39:53Z
+source:         RIPE # Filtered
+
+organisation:   ORG-PS73-RIPE
+org-name:       Petiak System
+org-type:       LIR
+address:        No.17, South Ghalandari St, Sadr Highway
+address:        1939673963
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +98212349
+fax-no:         +982122632578
+mnt-ref:        MNT-PETIAK
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-PETIAK
+abuse-c:        AH8743-RIPE
+created:        2010-08-26T11:55:28Z
+last-modified:  2019-01-28T14:26:06Z
+source:         RIPE # Filtered
+
+person:         Arash Sadeghi
+address:        No.17, South Ghalandari St. Sadr Highway - Tehran - Iran
+phone:          +98-21-2349
+nic-hdl:        AS16049-RIPE
+mnt-by:         MNT-PETIAK
+created:        2010-08-30T08:03:55Z
+last-modified:  2011-03-08T08:57:19Z
+source:         RIPE
+
+% Information related to '185.16.234.0/23AS51469'
+
+route:          185.16.234.0/23
+descr:          Petiak Route
+origin:         AS51469
+mnt-by:         MNT-PETIAK
+created:        2014-12-14T05:39:15Z
+last-modified:  2014-12-14T05:39:15Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

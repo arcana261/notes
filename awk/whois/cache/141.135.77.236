@@ -1,0 +1,134 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       141.0.0.0 - 141.255.255.255
+CIDR:           141.0.0.0/8
+NetName:        RIPE-ERX-141
+NetHandle:      NET-141-0-0-0-0
+Parent:          ()
+NetType:        Early Registrations, Maintained by RIPE NCC
+OriginAS:       
+Organization:   RIPE Network Coordination Centre (RIPE)
+RegDate:        1993-04-30
+Updated:        2009-05-18
+Comment:        These addresses have been further assigned to users in
+Comment:        the RIPE NCC region.  Contact information can be found in
+Comment:        the RIPE database at http://www.ripe.net/whois
+Ref:            https://rdap.arin.net/registry/ip/141.0.0.0
+
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+ResourceLink:  whois.ripe.net
+
+
+OrgName:        RIPE Network Coordination Centre
+OrgId:          RIPE
+Address:        P.O. Box 10096
+City:           Amsterdam
+StateProv:      
+PostalCode:     1001EB
+Country:        NL
+RegDate:        
+Updated:        2013-07-29
+Ref:            https://rdap.arin.net/registry/entity/RIPE
+
+ReferralServer:  whois://whois.ripe.net
+ResourceLink:  https://apps.db.ripe.net/search/query.html
+
+OrgAbuseHandle: ABUSE3850-ARIN
+OrgAbuseName:   Abuse Contact
+OrgAbusePhone:  +31205354444 
+OrgAbuseEmail:  abuse@ripe.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE3850-ARIN
+
+OrgTechHandle: RNO29-ARIN
+OrgTechName:   RIPE NCC Operations
+OrgTechPhone:  +31 20 535 4444 
+OrgTechEmail:  hostmaster@ripe.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/RNO29-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.ripe.net.
+
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '141.135.0.0 - 141.135.255.255'
+
+% Abuse contact for '141.135.0.0 - 141.135.255.255' is 'abuse@telenetgroup.be'
+
+inetnum:        141.135.0.0 - 141.135.255.255
+netname:        TELENET
+descr:          Telenet N.V. Residentials
+country:        BE
+admin-c:        PS396-RIPE
+tech-c:         PS396-RIPE
+status:         ASSIGNED PA
+mnt-by:         TELENET-DBM
+mnt-lower:      TELENET-DBM
+mnt-routes:     TELENET-OPS-MNT
+created:        2011-11-01T08:29:18Z
+last-modified:  2011-11-01T08:29:18Z
+source:         RIPE
+
+role:           Technical Internet
+address:        Telenet Operaties N.V.
+address:        Liersesteenweg 4
+address:        B-2800 Mechelen
+address:        Belgium
+remarks:        trouble: IMPORTANT: To report intrusion attempts, hacking,
+remarks:        trouble: IMPORTANT: spamming, or other unaccepted behavior
+remarks:        trouble: IMPORTANT: by a Telenet/Pandora customer, please
+remarks:        trouble: IMPORTANT: send a message to abuse@pandora.be
+remarks:        trouble: IMPORTANT: Voor het rapporteren van inbraakpogingen,
+remarks:        trouble: IMPORTANT: hacking, spamming, of ander onaanvaardbaar
+remarks:        trouble: IMPORTANT: gedrag van een Telenet/Pandora klant, gelieve
+remarks:        trouble: IMPORTANT: een bericht te zenden naar abuse@pandora.be
+admin-c:        TNRA1-RIPE
+tech-c:         TNRA1-RIPE
+nic-hdl:        PS396-RIPE
+mnt-by:         TELENET-DBM
+created:        1970-01-01T00:00:00Z
+last-modified:  2020-02-18T09:08:01Z
+source:         RIPE # Filtered
+abuse-mailbox:  abuse@telenetgroup.be
+
+% Information related to '141.135.0.0/17AS6848'
+
+route:          141.135.0.0/17
+descr:          Telenet N.V. Customers
+origin:         AS6848
+mnt-by:         TELENET-OPS-MNT
+created:        2011-11-14T10:52:39Z
+last-modified:  2011-11-14T10:52:39Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

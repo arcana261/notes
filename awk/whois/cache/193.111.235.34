@@ -1,0 +1,47 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '193.111.235.0 - 193.111.235.255'
+
+% Abuse contact for '193.111.235.0 - 193.111.235.255' is 'mahannovin24@gmail.com'
+
+inetnum:        193.111.235.0 - 193.111.235.255
+netname:        WEB-DADEH-PAYDAR
+country:        IR
+admin-c:        AA35418-RIPE
+abuse-c:        AR56179-RIPE
+tech-c:         AA35418-RIPE
+status:         ASSIGNED PA
+mnt-by:         Webdade
+mnt-by:         mnt-ir-mahannovin-1
+created:        2019-12-02T20:12:02Z
+last-modified:  2020-03-28T12:41:25Z
+source:         RIPE
+
+role:           Admin
+address:        No 13, Entrance 1, Parasto Complex, Farvardin Blv, Baharestan, Isfahan, IR
+nic-hdl:        AA35418-RIPE
+mnt-by:         Webdade
+created:        2019-11-27T11:19:39Z
+last-modified:  2019-11-27T11:19:39Z
+source:         RIPE # Filtered
+
+% Information related to '193.111.235.0/24AS44285'
+
+route:          193.111.235.0/24
+origin:         AS44285
+mnt-by:         mnt-ir-mahannovin-1
+mnt-by:         Webdade
+created:        2020-01-12T13:03:32Z
+last-modified:  2020-01-12T13:03:32Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

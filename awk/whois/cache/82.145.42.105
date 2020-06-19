@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '82.145.42.0 - 82.145.42.255'
+
+% Abuse contact for '82.145.42.0 - 82.145.42.255' is 'abuse@rapidswitch.com'
+
+inetnum:        82.145.42.0 - 82.145.42.255
+netname:        Rapidswitch_52
+descr:          Rapidswitch
+country:        GB
+admin-c:        AR6363-RIPE
+tech-c:         AR6363-RIPE
+status:         ASSIGNED PA
+mnt-by:         RAPIDSWITCH-MNT
+created:        2012-10-12T13:10:22Z
+last-modified:  2012-10-12T13:10:22Z
+source:         RIPE
+
+person:         Abuse Robot
+address:        iomart Hosting Ltd t/a RapidSwitch
+address:        Spectrum House
+address:        Clivemont Road
+address:        Maidenhead
+address:        SL6 7FW
+phone:          +44 (0)1753 471 040
+remarks:        ******************************************************
+remarks:        * ABUSE REPORTS                                      *
+remarks:        * https://myservers.rapidswitch.com/reportabuse.aspx *
+remarks:        ******************************************************
+nic-hdl:        AR6363-RIPE
+mnt-by:         RAPIDSWITCH-MNT
+created:        2007-02-11T09:38:19Z
+last-modified:  2017-10-30T21:53:52Z
+source:         RIPE # Filtered
+
+% Information related to '82.145.32.0/19AS20860'
+
+route:          82.145.32.0/19
+descr:          Iomart Hosting Ltd
+origin:         AS20860
+mnt-by:         GB10488-RIPE-MNT
+created:        2011-04-28T23:12:01Z
+last-modified:  2011-04-28T23:12:01Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

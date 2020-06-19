@@ -1,0 +1,65 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '91.134.222.192 - 91.134.222.255'
+
+% Abuse contact for '91.134.222.192 - 91.134.222.255' is 'abuse@ovh.net'
+
+inetnum:        91.134.222.192 - 91.134.222.255
+netname:        OVH-DEDICATED-91-134-222-192-FO
+descr:          Ips failover
+country:        IT
+org:            ORG-OS43-RIPE
+admin-c:        OTC5-RIPE
+tech-c:         OTC5-RIPE
+status:         ASSIGNED PA
+mnt-by:         OVH-MNT
+created:        2016-05-25T09:40:17Z
+last-modified:  2016-05-25T09:40:17Z
+source:         RIPE
+
+organisation:   ORG-OS43-RIPE
+org-name:       OVH Srl
+org-type:       OTHER
+address:        Via Carlo Imbonati, 18
+address:        20159 Milano
+address:        Italia
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2008-09-16T16:36:14Z
+last-modified:  2019-05-24T08:37:53Z
+source:         RIPE # Filtered
+
+role:           OVH IT Technical Contact
+address:        OVH Srl
+address:        Via Carlo Imbonati, 18
+address:        20159 Milano
+address:        Italia
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC5-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2008-09-16T16:47:07Z
+last-modified:  2019-05-24T08:39:22Z
+source:         RIPE # Filtered
+
+% Information related to '91.134.0.0/16AS16276'
+
+route:          91.134.0.0/16
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2016-04-15T11:43:03Z
+last-modified:  2016-04-15T11:43:03Z
+source:         RIPE
+descr:          OVH
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

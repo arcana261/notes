@@ -1,0 +1,63 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.133.245.0 - 185.133.245.255'
+
+% Abuse contact for '185.133.245.0 - 185.133.245.255' is 'net@tsetmc.com'
+
+inetnum:        185.133.245.0 - 185.133.245.255
+netname:        TSE-NET
+descr:          Tehran Stock Exchange Managment
+country:        IR
+admin-c:        GCYL
+tech-c:         GCYL
+status:         ASSIGNED PA
+org:            ORG-TSET1-RIPE
+mnt-by:         mnt-ir-parscyberian-ltd-1
+created:        2016-01-20T07:57:11Z
+last-modified:  2019-02-10T13:26:33Z
+source:         RIPE
+
+organisation:   ORG-TSET1-RIPE
+org-name:       Tehran Securities Exchange Technology Management Co. PLC
+org-type:       OTHER
+address:        37 ,6th st. , Shahid Sarafraz st. ,Shahid Motahari st.
+abuse-c:        AR20380-RIPE
+mnt-ref:        PCC-MNT
+mnt-by:         PCC-MNT
+created:        2013-08-12T07:51:39Z
+last-modified:  2017-10-30T14:49:56Z
+source:         RIPE # Filtered
+
+role:           Gulf Cyberian Local Internet Registery
+address:        P.O.BOX. 118112
+admin-c:        FF822-RIPE
+admin-c:        AYM13-RIPE
+tech-c:         AYM13-RIPE
+tech-c:         FF822-RIPE
+mnt-by:         GCYB-MNT
+nic-hdl:        GCYL
+created:        2010-01-27T13:07:05Z
+last-modified:  2015-06-28T05:32:37Z
+source:         RIPE # Filtered
+
+% Information related to '185.133.244.0/22AS60315'
+
+route:          185.133.244.0/22
+descr:          TSETMC
+origin:         AS60315
+mnt-by:         GCYB-MNT
+mnt-by:         PCC-MNT
+created:        2016-01-20T07:59:41Z
+last-modified:  2016-01-20T07:59:41Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

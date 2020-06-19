@@ -1,0 +1,56 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '88.150.153.0 - 88.150.153.127'
+
+% Abuse contact for '88.150.153.0 - 88.150.153.127' is 'abuse@redstation.com'
+
+inetnum:        88.150.153.0 - 88.150.153.127
+netname:        RSDEDI-372029326
+descr:          Redstation Limited
+country:        GB
+admin-c:        RA1415-RIPE
+tech-c:         RA1415-RIPE
+status:         ASSIGNED PA
+remarks:        ABUSE REPORTS: abuse@redstation.com
+mnt-by:         REDSTATION-MNT
+mnt-domains:    REDSTATION-MNT
+mnt-routes:     REDSTATION-MNT
+created:        2016-09-12T10:36:40Z
+last-modified:  2016-09-12T10:36:40Z
+source:         RIPE
+
+role:           Redstation Admin Role
+address:        Redstation Limited
+address:        2 Frater Gate Business Park
+address:        Aerodrome Road
+address:        Gosport
+address:        Hampshire
+address:        PO13 0GW
+address:        UNITED KINGDOM
+abuse-mailbox:  abuse@redstation.com
+nic-hdl:        RA1415-RIPE
+mnt-by:         REDSTATION-MNT
+created:        2005-04-22T17:34:33Z
+last-modified:  2017-05-02T09:47:13Z
+source:         RIPE # Filtered
+
+% Information related to '88.150.128.0/17AS20860'
+
+route:          88.150.128.0/17
+mnt-by:         IOMART-MNT
+descr:          IOMART
+origin:         AS20860
+created:        2017-05-10T09:45:59Z
+last-modified:  2017-05-10T09:45:59Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

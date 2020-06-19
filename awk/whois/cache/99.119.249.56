@@ -1,0 +1,68 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       99.105.192.0 - 99.127.255.255
+CIDR:           99.108.0.0/14, 99.106.0.0/15, 99.105.192.0/18, 99.112.0.0/12
+NetName:        SBCIS-SBIS
+NetHandle:      NET-99-105-192-0-1
+Parent:         NET99 (NET-99-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS7132
+Organization:   AT&T Corp. (AC-3280)
+RegDate:        2008-02-25
+Updated:        2018-07-19
+Ref:            https://rdap.arin.net/registry/ip/99.105.192.0
+
+
+
+OrgName:        AT&T Corp.
+OrgId:          AC-3280
+Address:        16331 NE 72nd Way
+Address:        Attn: IP Management
+City:           Redmond
+StateProv:      WA
+PostalCode:     98052
+Country:        US
+RegDate:        2018-03-05
+Updated:        2020-02-11
+Comment:        For policy abuse issues contact abuse@att.net
+Comment:        For all subpoena, Internet, court order related matters and emergency requests contact
+Comment:        11760 US Highway 1
+Comment:        North Palm Beach, FL 33408
+Comment:        Main Number: 800-635-6840
+Comment:        Fax: 888-938-4715
+Ref:            https://rdap.arin.net/registry/entity/AC-3280
+
+
+OrgTechHandle: ZS44-ARIN
+OrgTechName:   IPAdmin-ATT Internet Services
+OrgTechPhone:  +1-888-510-5545 
+OrgTechEmail:  ipadmin@semail.att.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ZS44-ARIN
+
+OrgAbuseHandle: ABUSE7-ARIN
+OrgAbuseName:   abuse
+OrgAbusePhone:  +1-919-319-8167 
+OrgAbuseEmail:  abuse@att.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+

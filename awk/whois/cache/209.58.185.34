@@ -1,0 +1,122 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+NetRange:       209.58.176.0 - 209.58.191.255
+CIDR:           209.58.176.0/20
+NetName:        APNIC
+NetHandle:      NET-209-58-176-0-1
+Parent:         NET209 (NET-209-0-0-0-0)
+NetType:        Early Registrations, Transferred to APNIC
+OriginAS:       
+Organization:   Asia Pacific Network Information Centre (APNIC)
+RegDate:        2015-09-18
+Updated:        2015-09-18
+Ref:            https://rdap.arin.net/registry/ip/209.58.176.0
+
+
+
+OrgName:        Asia Pacific Network Information Centre
+OrgId:          APNIC
+Address:        PO Box 3646
+City:           South Brisbane
+StateProv:      QLD
+PostalCode:     4101
+Country:        AU
+RegDate:        
+Updated:        2012-01-24
+Ref:            https://rdap.arin.net/registry/entity/APNIC
+
+ReferralServer:  whois://whois.apnic.net
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+
+OrgAbuseHandle: AWC12-ARIN
+OrgAbuseName:   APNIC Whois Contact
+OrgAbusePhone:  +61 7 3858 3188 
+OrgAbuseEmail:  search-apnic-not-arin@apnic.net
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+OrgTechHandle: AWC12-ARIN
+OrgTechName:   APNIC Whois Contact
+OrgTechPhone:  +61 7 3858 3188 
+OrgTechEmail:  search-apnic-not-arin@apnic.net
+OrgTechRef:    https://rdap.arin.net/registry/entity/AWC12-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to whois.apnic.net.
+
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '209.58.184.0 - 209.58.191.255'
+
+% Abuse contact for '209.58.184.0 - 209.58.191.255' is 'abuse@sg.leaseweb.com'
+
+inetnum:        209.58.184.0 - 209.58.191.255
+netname:        LSW-HKG-10
+descr:          LeaseWeb Asia Pacific - Hong Kong
+descr:          Please send all abuse notifications to the following email address: abuse@sg.leaseweb.com. To ensure proper processing of your abuse notification, please visit the website www.leaseweb.com/abuse for notification requirements. All police and other government agency requests must be sent to subpoenas@sg.leaseweb.com.
+country:        HK
+admin-c:        LA249-AP
+tech-c:         LA249-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-LSW-SG
+mnt-irt:        IRT-LSW-SG
+last-modified:  2016-07-27T07:50:12Z
+source:         APNIC
+
+irt:            IRT-LSW-SG
+address:        18B Keong Saik Road, Singapore 089125
+e-mail:         apnic@sg.leaseweb.com
+abuse-mailbox:  abuse@sg.leaseweb.com
+admin-c:        LAPP1-AP
+tech-c:         LAPP1-AP
+auth:           # Filtered
+remarks:        abuse@sg.leaseweb.com was validated on 2019-12-12
+remarks:        apnic@sg.leaseweb.com was validated on 2020-06-03
+mnt-by:         MAINT-LSW-SG
+last-modified:  2020-06-03T14:50:15Z
+source:         APNIC
+
+person:         LSW Apnic
+address:        18B Keong Saik Road, Singapore 089125
+country:        SG
+phone:          +6531587350
+e-mail:         apnic@sg.leaseweb.com
+nic-hdl:        LA249-AP
+mnt-by:         MAINT-LSW-SG
+last-modified:  2016-06-06T08:59:04Z
+source:         APNIC
+
+% Information related to '209.58.184.0/22AS133752'
+
+route:          209.58.184.0/22
+descr:          LeaseWeb Asia Pacific Hong Kong
+origin:         AS133752
+mnt-by:         MAINT-LSW-SG
+last-modified:  2015-12-11T14:09:49Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

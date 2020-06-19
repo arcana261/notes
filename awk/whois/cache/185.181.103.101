@@ -1,0 +1,74 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.181.100.0 - 185.181.103.255'
+
+% Abuse contact for '185.181.100.0 - 185.181.103.255' is 'abuse@m247.ro'
+
+inetnum:        185.181.100.0 - 185.181.103.255
+netname:        RO-M247EUROPE-20161209
+country:        RO
+org:            ORG-MES8-RIPE
+admin-c:        AS38520-RIPE
+tech-c:         AS38520-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         M247-EU-MNT
+mnt-domains:    M247-EU-MNT
+remarks:        ---- LEGAL CONCERNS ----
+remarks:        For any legal requests, please send an email to
+remarks:        ro-legal@m247.ro for a maximum 48hours response.
+remarks:        ---- LEGAL CONCERNS----
+created:        2016-12-09T13:20:52Z
+last-modified:  2018-11-29T11:24:46Z
+source:         RIPE
+
+organisation:   ORG-MES8-RIPE
+org-name:       M247 Europe SRL
+org-type:       LIR
+address:        Sos. Fabrica de Glucoza, Nr 11B, Sector 2
+address:        020331
+address:        Bucharest
+address:        ROMANIA
+admin-c:        AS38520-RIPE
+tech-c:         AS38520-RIPE
+abuse-c:        AR38608-RIPE
+mnt-ref:        M247-EU-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         M247-EU-MNT
+created:        2016-12-08T16:08:37Z
+last-modified:  2016-12-09T13:23:50Z
+source:         RIPE # Filtered
+phone:          +40310800700
+
+person:         Alin Stefanescu
+address:        Sos. Fabrica de Glucoza, Nr 11B, Sector 2
+address:        020331
+address:        Bucharest
+address:        ROMANIA
+phone:          +40310800700
+nic-hdl:        AS38520-RIPE
+mnt-by:         M247-EU-MNT
+created:        2016-12-08T16:08:36Z
+last-modified:  2016-12-08T16:08:36Z
+source:         RIPE
+
+% Information related to '185.181.102.0/23AS9009'
+
+route:          185.181.102.0/23
+descr:          M247 Europe
+origin:         AS9009
+mnt-by:         M247-EU-MNT
+created:        2016-12-09T15:31:47Z
+last-modified:  2016-12-09T15:31:47Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

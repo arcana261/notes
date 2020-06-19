@@ -1,0 +1,70 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '118.152.0.0 - 118.159.255.255'
+
+% Abuse contact for '118.152.0.0 - 118.159.255.255' is 'hostmaster@nic.ad.jp'
+
+inetnum:        118.152.0.0 - 118.159.255.255
+netname:        KDDI
+descr:          KDDI CORPORATION
+descr:          Garden Air Tower,3-10-10,Iidabashi,Chiyoda-ku,Tokyo,102-8460,Japan
+country:        JP
+admin-c:        JNIC1-AP
+tech-c:         JNIC1-AP
+status:         ALLOCATED PORTABLE
+remarks:        Email address for spam or abuse complaints abuse@dion.ne.jp
+mnt-by:         MAINT-JPNIC
+mnt-irt:        IRT-JPNIC-JP
+mnt-lower:      MAINT-JPNIC
+last-modified:  2015-12-01T22:22:42Z
+source:         APNIC
+
+irt:            IRT-JPNIC-JP
+address:        Urbannet-Kanda Bldg 4F, 3-6-2 Uchi-Kanda
+address:        Chiyoda-ku, Tokyo 101-0047, Japan
+e-mail:         hostmaster@nic.ad.jp
+abuse-mailbox:  hostmaster@nic.ad.jp
+admin-c:        JNIC1-AP
+tech-c:         JNIC1-AP
+auth:           # Filtered
+mnt-by:         MAINT-JPNIC
+last-modified:  2017-10-18T10:21:54Z
+source:         APNIC
+
+role:           Japan Network Information Center
+address:        Urbannet-Kanda Bldg 4F
+address:        3-6-2 Uchi-Kanda
+address:        Chiyoda-ku, Tokyo 101-0047,Japan
+country:        JP
+phone:          +81-3-5297-2311
+fax-no:         +81-3-5297-2312
+e-mail:         hostmaster@nic.ad.jp
+admin-c:        JI13-AP
+tech-c:         JE53-AP
+nic-hdl:        JNIC1-AP
+mnt-by:         MAINT-JPNIC
+last-modified:  2012-08-28T07:58:02Z
+source:         APNIC
+
+% Information related to '118.157.166.0 - 118.157.166.255'
+
+inetnum:        118.157.166.0 - 118.157.166.255
+netname:        KDDI-NET
+descr:          DION (KDDI CORPORATION)
+country:        JP
+admin-c:        JP00000127
+tech-c:         JP00000181
+remarks:        This information has been partially mirrored by APNIC from
+remarks:        JPNIC. To obtain more specific information, please use the
+remarks:        JPNIC WHOIS Gateway at
+remarks:        http://www.nic.ad.jp/en/db/whois/en-gateway.html or
+remarks:        whois.nic.ad.jp for WHOIS client. (The WHOIS client
+remarks:        defaults to Japanese output, use the /e switch for English
+remarks:        output)
+last-modified:  2008-10-09T18:53:06Z
+source:         JPNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

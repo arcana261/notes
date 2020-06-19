@@ -1,0 +1,84 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '77.68.32.0 - 77.68.63.255'
+
+% Abuse contact for '77.68.32.0 - 77.68.63.255' is 'abuse@fasthosts.co.uk'
+
+inetnum:        77.68.32.0 - 77.68.63.255
+netname:        FASTHOSTS-UK-DS-NETWORK
+org:            ORG-FHL1-RIPE
+descr:          Dedicated Servers
+country:        GB
+admin-c:        FHUK-RIPE
+tech-c:         FHUK-RIPE
+status:         ASSIGNED PA
+mnt-by:         AS15418-MNT
+mnt-by:         AS8560-MNT
+created:        2011-03-22T16:43:52Z
+last-modified:  2019-01-24T10:42:00Z
+source:         RIPE
+
+organisation:   ORG-FHL1-RIPE
+org-name:       Fasthosts Internet Limited
+org-type:       LIR
+address:        Discovery House 154 Southgate Street
+address:        GL1 2EX
+address:        Gloucester
+address:        UNITED KINGDOM
+phone:          +448445830777
+fax-no:         +441452541633
+mnt-ref:        AS15418-MNT
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AS15418-MNT
+admin-c:        FHUK-RIPE
+tech-c:         FHUK-RIPE
+abuse-c:        FH4126-RIPE
+created:        2004-04-17T12:14:35Z
+last-modified:  2019-02-15T10:21:18Z
+source:         RIPE # Filtered
+
+role:           Fasthosts Networks UK
+address:        Fasthosts Internet Limited
+address:        Discovery House
+address:        154 Southgate Street
+address:        Gloucester, GL1 2EX
+phone:          +44 1452 561874
+abuse-mailbox:  abuse@fasthosts.co.uk
+nic-hdl:        FHUK-RIPE
+remarks:        -----------------------------------------------
+remarks:        Please report abuse to abuse@fasthosts.co.uk
+remarks:        Abuse reports via other channels may be ignored
+remarks:        -----------------------------------------------
+org:            ORG-FHL1-RIPE
+admin-c:        GD8691-RIPE
+admin-c:        MM24449-RIPE
+tech-c:         GD8691-RIPE
+tech-c:         MM24449-RIPE
+mnt-by:         AS15418-MNT
+mnt-by:         AS8560-MNT
+created:        2015-02-26T14:57:35Z
+last-modified:  2019-01-28T10:09:16Z
+source:         RIPE # Filtered
+
+% Information related to '77.68.0.0/17AS8560'
+
+route:          77.68.0.0/17
+descr:          Fasthosts Internet Ltd
+origin:         AS8560
+mnt-by:         AS15418-MNT
+mnt-by:         AS8560-MNT
+created:        2014-12-12T12:16:25Z
+last-modified:  2014-12-12T12:16:25Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

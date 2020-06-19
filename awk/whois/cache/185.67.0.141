@@ -1,0 +1,57 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.67.0.0 - 185.67.0.255'
+
+% Abuse contact for '185.67.0.0 - 185.67.0.255' is 'abuse@hostprolab.com.ua'
+
+inetnum:        185.67.0.0 - 185.67.0.255
+netname:        UA-HOSTPRO-20140812
+descr:          Hostpro Ltd.
+country:        NL
+admin-c:        RS9768-RIPE
+tech-c:         DK584-RIPE
+status:         ASSIGNED PA
+mnt-by:         HOSTPRO-MNT
+mnt-routes:     serverius-mnt
+created:        2014-10-28T07:51:44Z
+last-modified:  2014-10-28T07:51:44Z
+source:         RIPE
+
+person:         Hostpro LLC
+address:        Kyiv, Ukraine
+phone:          +380 44 585-77-96
+nic-hdl:        DK584-RIPE
+created:        2010-04-23T11:08:06Z
+last-modified:  2017-10-17T11:17:48Z
+source:         RIPE # Filtered
+mnt-by:         HOSTPRO-MNT
+
+person:         Hostpro LLC
+address:        Ukriane, Kyiv, 02095,str. Knyazhiy Zaton 2/30
+phone:          +38(044)5857796
+nic-hdl:        RS9768-RIPE
+created:        2009-12-10T11:47:43Z
+last-modified:  2017-10-17T11:16:38Z
+source:         RIPE
+mnt-by:         HOSTPRO-MNT
+
+% Information related to '185.67.0.0/24AS50673'
+
+route:          185.67.0.0/24
+descr:          Hostpro Ltd.
+origin:         AS50673
+mnt-by:         SERVERIUS-MNT
+created:        2014-11-05T19:27:19Z
+last-modified:  2014-11-05T19:27:19Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

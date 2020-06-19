@@ -1,0 +1,50 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '114.69.0.0 - 114.69.63.255'
+
+% Abuse contact for '114.69.0.0 - 114.69.63.255' is 'rmi-as138384@mail.rakuten.com'
+
+inetnum:        114.69.0.0 - 114.69.63.255
+netname:        GOL-RBBPOOL-1
+descr:          Rakuten Broadband Dynamic Endpoints
+descr:          abuse point of contact: abuse@gol.com
+country:        JP
+admin-c:        DV14-AP
+tech-c:         DV14-AP
+status:         ALLOCATED NON-PORTABLE
+mnt-by:         MAINT-RMNI-JP
+mnt-irt:        IRT-RMNI-JP
+last-modified:  2020-03-02T23:23:32Z
+source:         APNIC
+
+irt:            IRT-RMNI-JP
+address:        1-14-1 Tamagawa, Setagaya-ku, Tokyo
+e-mail:         rmi-as138384@mail.rakuten.com
+abuse-mailbox:  rmi-as138384@mail.rakuten.com
+admin-c:        RMNI1-AP
+tech-c:         RMNI1-AP
+auth:           # Filtered
+remarks:        rmi-as138384@mail.rakuten.com was validated on 2020-04-14
+mnt-by:         MAINT-RMNI-JP
+last-modified:  2020-04-14T23:41:11Z
+source:         APNIC
+
+person:         David Van Cleef
+nic-hdl:        DV14-AP
+e-mail:         d-vancleef@fusiongol.com
+address:        Fusion Network Services Corp.
+address:        Aoba Daiichi Bldg 6F
+address:        2-3-1 Kudan-minami
+address:        Chiyoda-ku, Tokyo 102-0074
+address:        JAPAN
+phone:          +81-3-3239-6827
+fax-no:         +81-3-5276-5230
+country:        JP
+mnt-by:         MAINT-NEW
+last-modified:  2008-09-04T07:29:20Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.15-SNAPSHOT (WHOIS-UK4)
+
+

@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '51.83.194.56 - 51.83.194.63'
+
+% Abuse contact for '51.83.194.56 - 51.83.194.63' is 'info@google.com'
+
+inetnum:        51.83.194.56 - 51.83.194.63
+netname:        OVH_270706239
+country:        PL
+descr:          Failover Ips
+org:            ORG-GIGI4-RIPE
+admin-c:        OTC12-RIPE
+tech-c:         OTC12-RIPE
+status:         LEGACY
+mnt-by:         OVH-MNT
+created:        2020-04-29T11:26:26Z
+last-modified:  2020-04-29T11:26:26Z
+source:         RIPE
+
+organisation:   ORG-GIGI4-RIPE
+org-name:       Google Inc Google Inc
+org-type:       OTHER
+address:        CA, brooks street number 68
+address:        17234 Paris
+address:        FR
+phone:          +33.434513411
+abuse-c:        ACRO30998-RIPE
+mnt-ref:        OVH-MNT
+mnt-by:         OVH-MNT
+created:        2020-03-07T22:40:13Z
+last-modified:  2020-03-07T22:40:13Z
+source:         RIPE # Filtered
+
+role:           OVH PL Technical Contact
+address:        OVH Sp. z o. o.
+address:        ul. Swobodna 1
+address:        54-088 Wroclaw
+address:        Poland
+admin-c:        OK217-RIPE
+tech-c:         GM84-RIPE
+nic-hdl:        OTC12-RIPE
+abuse-mailbox:  abuse@ovh.net
+mnt-by:         OVH-MNT
+created:        2009-09-16T16:09:56Z
+last-modified:  2019-08-08T07:50:01Z
+source:         RIPE # Filtered
+
+% Information related to '51.83.0.0/16AS16276'
+
+route:          51.83.0.0/16
+origin:         AS16276
+mnt-by:         OVH-MNT
+created:        2019-02-13T09:04:13Z
+last-modified:  2019-02-13T09:04:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

@@ -1,0 +1,51 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '178.159.3.192 - 178.159.3.255'
+
+% Abuse contact for '178.159.3.192 - 178.159.3.255' is 'abuse@ukservers.com'
+
+inetnum:        178.159.3.192 - 178.159.3.255
+netname:        RUS001
+descr:          RUS001
+country:        GB
+admin-c:        DH1778-RIPE
+tech-c:         DH1778-RIPE
+status:         ASSIGNED PA
+mnt-by:         UKSERVERS-MNT
+created:        2020-04-29T08:15:02Z
+last-modified:  2020-04-29T08:15:02Z
+source:         RIPE
+
+person:         David Howes
+address:        UK Dedicated Servers Ltd
+address:        Unit 21 West Park
+address:        211 Torrington Avenue
+address:        Coventry
+address:        CV4 9HN
+mnt-by:         UKSERVERS-MNT
+phone:          +44 (0)800 610 1 620
+nic-hdl:        DH1778-RIPE
+created:        2007-04-23T09:45:22Z
+last-modified:  2020-02-14T18:29:25Z
+source:         RIPE
+
+% Information related to '178.159.0.0/20AS42831'
+
+route:          178.159.0.0/20
+descr:          UK Dedicated Servers Limited
+origin:         AS42831
+mnt-by:         UKSERVERS-MNT
+created:        2014-09-26T15:27:21Z
+last-modified:  2014-09-26T15:27:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

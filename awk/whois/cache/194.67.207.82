@@ -1,0 +1,76 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.67.200.0 - 194.67.207.255'
+
+% Abuse contact for '194.67.200.0 - 194.67.207.255' is 'audit@ihor-hosting.ru'
+
+inetnum:        194.67.200.0 - 194.67.207.255
+org:            ORG-IP78-RIPE
+netname:        Ihor_project
+descr:          Ihor enterprise network
+country:        RU
+geoloc:         55.755768 37.617671
+admin-c:        VC6067-RIPE
+tech-c:         AS43527-RIPE
+status:         ASSIGNED PA
+mnt-by:         NETWORK-SUPPORT-MNT
+created:        2016-02-23T19:38:56Z
+last-modified:  2020-01-11T20:31:24Z
+source:         RIPE
+
+organisation:   ORG-IP78-RIPE
+org-name:       IHOR SERVERS
+org-type:       OTHER
+address:        127410, Moscow, Altuf'yevskoye sh., 33G
+phone:          +7 (499) 380-67-84
+remarks:        trouble: ------------------------------------------------------
+remarks:        trouble: About any problems please contact us
+remarks:        trouble: ------------------------------------------------------
+remarks:        trouble: Routing and peering issues: noc@ihor-hosting.ru
+remarks:        trouble: SPAM issues: audit@ihor-hosting.ru
+remarks:        trouble: Network security issues: noc@ihor-hosting.ru
+remarks:        trouble: ------------------------------------------------------
+abuse-c:        ACRO29385-RIPE
+mnt-ref:        IHOR-MNT
+mnt-by:         IHOR-MNT
+created:        2019-12-23T18:32:33Z
+last-modified:  2020-04-03T11:21:39Z
+source:         RIPE # Filtered
+
+person:         Andrey Simonov
+address:        111024, Moscow, ul. Aviamotornaya, 69
+phone:          +7 499 380 67 84
+nic-hdl:        AS43527-RIPE
+mnt-by:         IHOR-MNT
+created:        2019-12-23T18:42:44Z
+last-modified:  2020-03-13T11:00:07Z
+source:         RIPE
+
+person:         Vasiliy Chesnokov
+address:        111024, Moscow, ul. Aviamotornaya, 69
+phone:          +7 499 380 67 84
+nic-hdl:        VC6067-RIPE
+mnt-by:         IHOR-MNT
+created:        2019-12-23T18:42:12Z
+last-modified:  2020-03-13T11:00:35Z
+source:         RIPE
+
+% Information related to '194.67.200.0/21AS35196'
+
+route:          194.67.200.0/21
+origin:         AS35196
+mnt-by:         IHOR-MNT
+created:        2020-01-11T16:59:41Z
+last-modified:  2020-01-11T16:59:41Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

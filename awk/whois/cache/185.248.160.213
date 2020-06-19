@@ -1,0 +1,52 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.248.160.0 - 185.248.160.255'
+
+% Abuse contact for '185.248.160.0 - 185.248.160.255' is 'abuse@seedvps.com'
+
+inetnum:        185.248.160.0 - 185.248.160.255
+netname:        SeedVPS
+descr:          SeedVPS IP Space
+country:        NL
+admin-c:        EP11644-RIPE
+tech-c:         EP11644-RIPE
+status:         ASSIGNED PA
+mnt-by:         il-seedvps-1-mnt
+mnt-lower:      il-seedvps-1-mnt
+mnt-routes:     il-seedvps-1-mnt
+created:        2018-03-08T19:09:39Z
+last-modified:  2018-03-08T19:09:39Z
+source:         RIPE
+
+person:         Eldar Perez
+address:        Ilanot 7
+address:        2907565
+address:        Kiryat Yam
+address:        ISRAEL
+phone:          +972 3 6679043
+nic-hdl:        EP11644-RIPE
+mnt-by:         il-seedvps-1-mnt
+created:        2018-03-06T16:26:05Z
+last-modified:  2018-03-06T16:26:06Z
+source:         RIPE
+
+% Information related to '185.248.160.0/22AS43350'
+
+route:          185.248.160.0/22
+descr:          SeedVPS - route 185.248.160.0/22
+origin:         AS43350
+mnt-by:         MNT-NFORCE
+created:        2018-03-08T19:08:28Z
+last-modified:  2018-03-08T19:08:28Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

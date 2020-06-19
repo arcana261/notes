@@ -1,0 +1,53 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.9.144.0 - 45.9.144.255'
+
+% Abuse contact for '45.9.144.0 - 45.9.144.255' is 'saber.boland@gmail.com'
+
+inetnum:        45.9.144.0 - 45.9.144.255
+netname:        IR-AYANDEH-GOSTAR-BASTAK
+country:        IR
+admin-c:        SB26684-RIPE
+tech-c:         SB26684-RIPE
+status:         ASSIGNED PA
+mnt-by:         mnt-ir-ayandeh2-1
+mnt-by:         mnt-ir-ayandeh3-1
+created:        2019-07-13T20:01:51Z
+last-modified:  2019-07-13T20:02:25Z
+source:         RIPE
+
+person:         Saber boland
+address:        Unit3, 3rd floor, No.26, Valiasr Dead End, Sindokht St, Shahrivar St, North Kargar Ave
+address:        1411955195
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989173641252
+nic-hdl:        SB26684-RIPE
+mnt-by:         mnt-ir-ayandeh2-1
+created:        2019-04-16T14:08:15Z
+last-modified:  2019-04-16T14:08:16Z
+source:         RIPE
+
+% Information related to '45.9.144.0/24AS62284'
+
+route:          45.9.144.0/24
+descr:          Ayandeh Gostar Bastak Co. P. J. S.
+origin:         AS62284
+mnt-by:         mnt-ir-ayandeh2-1
+mnt-by:         mnt-ir-ayandeh3-1
+mnt-by:         mnt-ir-ayandeh4-1
+mnt-by:         ir-ayandeh-1-mnt
+created:        2020-03-19T14:47:57Z
+last-modified:  2020-03-19T14:47:57Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

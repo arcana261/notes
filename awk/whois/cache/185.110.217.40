@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.110.216.0 - 185.110.219.255'
+
+% Abuse contact for '185.110.216.0 - 185.110.219.255' is 'abuse@dabco.ir'
+
+inetnum:        185.110.216.0 - 185.110.219.255
+netname:        IR-BARTAR-20150727
+country:        IR
+org:            ORG-BAAB1-RIPE
+geoloc:         27.1865 56.2808
+descr:          DABCO - Kavoshgaran Ertebat Pardis
+admin-c:        PY566-RIPE
+tech-c:         PY566-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-bartar-1-mnt
+mnt-lower:      ir-bartar-1-mnt
+mnt-domains:    IR-RCP
+mnt-domains:    ir-bartar-1-mnt
+mnt-routes:     ir-bartar-1-mnt
+created:        2015-07-27T11:50:25Z
+last-modified:  2019-05-18T06:42:08Z
+source:         RIPE
+
+organisation:   ORG-BAAB1-RIPE
+org-name:       Bartar Andishan Avaye Bandar PJSC
+org-type:       LIR
+address:        Eisar street-Sharifi Passge
+address:        7917775895
+address:        Bandar e Abbas
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +987635650000
+phone:          +987632242192
+phone:          +98763565
+descr:          DABCO - Kavoshgaran Ertebat Pardis
+admin-c:        PY566-RIPE
+tech-c:         PY566-RIPE
+abuse-c:        ACRO19756-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        ir-bartar-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-bartar-1-mnt
+created:        2015-07-23T13:30:28Z
+last-modified:  2019-10-21T14:54:58Z
+source:         RIPE # Filtered
+
+person:         Parsa Yousefi
+address:        Hor Str,Emam blv , BandarAbbas, Tehran ,IRAN
+phone:          +98763565
+nic-hdl:        PY566-RIPE
+mnt-by:         IR-RCP
+created:        2016-12-09T12:54:30Z
+last-modified:  2018-07-02T19:25:45Z
+source:         RIPE
+
+% Information related to '185.110.217.0/24AS60932'
+
+route:          185.110.217.0/24
+origin:         AS60932
+mnt-by:         ir-bartar-1-mnt
+created:        2017-04-05T11:01:48Z
+last-modified:  2017-04-05T11:01:48Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (WAGYU)
+
+

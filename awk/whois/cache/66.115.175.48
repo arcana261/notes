@@ -1,0 +1,124 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       66.115.128.0 - 66.115.191.255
+CIDR:           66.115.128.0/18
+NetName:        NATIONALNET-1
+NetHandle:      NET-66-115-128-0-1
+Parent:         NET66 (NET-66-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS22384
+Organization:   Total Server Solutions L.L.C. (TSSL-2)
+RegDate:        2001-05-09
+Updated:        2019-04-22
+Ref:            https://rdap.arin.net/registry/ip/66.115.128.0
+
+
+OrgName:        Total Server Solutions L.L.C.
+OrgId:          TSSL-2
+Address:        34 Peachtree ST
+Address:        Suite 400
+City:           Atlanta
+StateProv:      GA
+PostalCode:     30303
+Country:        US
+RegDate:        2007-02-13
+Updated:        2019-10-01
+Ref:            https://rdap.arin.net/registry/entity/TSSL-2
+
+ReferralServer:  rwhois://208.78.43.3:4321
+
+OrgAbuseHandle: ABUSE7667-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-877-391-9909 
+OrgAbuseEmail:  abuse@totalserversolutions.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7667-ARIN
+
+OrgNOCHandle: TSSNO-ARIN
+OrgNOCName:   TSS NOC
+OrgNOCPhone:  +1-877-391-9909 
+OrgNOCEmail:  noc@totalserversolutions.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+OrgTechHandle: TSSNO-ARIN
+OrgTechName:   TSS NOC
+OrgTechPhone:  +1-877-391-9909 
+OrgTechEmail:  noc@totalserversolutions.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+# end
+
+
+# start
+
+NetRange:       66.115.175.0 - 66.115.175.63
+CIDR:           66.115.175.0/26
+NetName:        10107-VL7-BLK1
+NetHandle:      NET-66-115-175-0-1
+Parent:         NATIONALNET-1 (NET-66-115-128-0-1)
+NetType:        Reassigned
+OriginAS:       AS22384
+Customer:       Private Customer (C04666944)
+RegDate:        2013-08-12
+Updated:        2013-08-12
+Ref:            https://rdap.arin.net/registry/ip/66.115.175.0
+
+
+CustName:       Private Customer
+Address:        Private Residence
+City:           Kosice
+StateProv:      
+PostalCode:     SK-040 01
+Country:        SK
+RegDate:        2013-08-12
+Updated:        2013-08-12
+Ref:            https://rdap.arin.net/registry/entity/C04666944
+
+OrgAbuseHandle: ABUSE7667-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-877-391-9909 
+OrgAbuseEmail:  abuse@totalserversolutions.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE7667-ARIN
+
+OrgNOCHandle: TSSNO-ARIN
+OrgNOCName:   TSS NOC
+OrgNOCPhone:  +1-877-391-9909 
+OrgNOCEmail:  noc@totalserversolutions.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+OrgTechHandle: TSSNO-ARIN
+OrgTechName:   TSS NOC
+OrgTechPhone:  +1-877-391-9909 
+OrgTechEmail:  noc@totalserversolutions.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/TSSNO-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+Found a referral to 208.78.43.3:4321.
+

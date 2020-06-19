@@ -1,0 +1,48 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '78.109.204.0 - 78.109.204.63'
+
+% Abuse contact for '78.109.204.0 - 78.109.204.63' is 'abuse@afranet.com'
+
+inetnum:        78.109.204.0 - 78.109.204.63
+netname:        Ghalamchi
+descr:          Ghalamchi
+country:        IR
+admin-c:        MONU2015-RIPE
+tech-c:         MONU2015-RIPE
+status:         ASSIGNED PA
+mnt-by:         AFRA-MNT-NESH-1
+created:        2015-11-22T13:00:29Z
+last-modified:  2015-11-22T13:00:29Z
+source:         RIPE
+
+person:         Mr. Molaie
+address:        NO.10, Taghato Phelestin, Enghelab St., Tehran,Iran
+phone:          +98-9124301949
+nic-hdl:        MONU2015-RIPE
+mnt-by:         AFRA-MNT-NESH-1
+created:        2015-11-17T08:18:45Z
+last-modified:  2015-11-17T08:18:45Z
+source:         RIPE
+
+% Information related to '78.109.204.0/24AS25184'
+
+route:          78.109.204.0/24
+descr:          Afranet co.
+origin:         AS25184
+mnt-routes:     AFRA-MNT-NESH-1
+mnt-by:         AFRA-MNT-NESH-1
+created:        2010-08-05T04:37:24Z
+last-modified:  2010-08-05T04:37:24Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

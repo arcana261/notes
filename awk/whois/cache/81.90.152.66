@@ -1,0 +1,46 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '81.90.152.64 - 81.90.152.79'
+
+% Abuse contact for '81.90.152.64 - 81.90.152.79' is 'abuse@afranet.com'
+
+inetnum:        81.90.152.64 - 81.90.152.79
+netname:        Sayalat-Hafari-Pars
+country:        IR
+admin-c:        MSF61-RIPE
+tech-c:         MSF61-RIPE
+status:         ASSIGNED PA
+mnt-by:         AFRA-MNT-NESH-1
+created:        2019-08-28T11:15:30Z
+last-modified:  2019-08-28T11:15:30Z
+source:         RIPE
+
+person:         Mr Salman Fakheri
+address:        No.43, Souri (3) Aven, Niayesh Bridge, Ashrafi Isfahani Highway, Tehran
+phone:          +989194759053
+nic-hdl:        MSF61-RIPE
+mnt-by:         AFRA-MNT-NESH-1
+created:        2019-08-28T11:14:18Z
+last-modified:  2019-08-28T11:14:18Z
+source:         RIPE
+
+% Information related to '81.90.152.0/24AS25184'
+
+route:          81.90.152.0/24
+descr:          Afranet Co
+origin:         AS25184
+mnt-by:         AFRA-MNT-NESH-1
+created:        2006-02-21T08:26:01Z
+last-modified:  2009-10-21T11:37:21Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

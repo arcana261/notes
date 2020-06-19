@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '78.158.160.0 - 78.158.160.255'
+
+% Abuse contact for '78.158.160.0 - 78.158.160.255' is 'abuse@aryasat.ir'
+
+inetnum:        78.158.160.0 - 78.158.160.255
+netname:        ARYASAT
+country:        IR
+admin-c:        MP30941-RIPE
+tech-c:         MP30941-RIPE
+status:         ASSIGNED PA
+mnt-by:         aryasat
+mnt-by:         aryasat-sepehr-tehran
+mnt-by:         MNT-ARYASAT
+created:        2019-02-27T07:52:50Z
+last-modified:  2019-02-27T07:52:50Z
+source:         RIPE
+
+person:         Mehdi Pourali
+address:        Farhang Bldg-E 42 Ally-S Allameh St-Modiriat Bridge Apt # 23, TEHRAN, IRAN, ISLAMIC REPUBLIC OF
+phone:          +982188689966
+nic-hdl:        MP30941-RIPE
+mnt-by:         MNT-ARYASAT
+created:        2017-05-10T17:38:04Z
+last-modified:  2017-05-10T17:38:04Z
+source:         RIPE
+
+% Information related to '78.158.160.0/24AS43343'
+
+route:          78.158.160.0/24
+origin:         AS43343
+mnt-by:         aryasat
+mnt-by:         aryasat-sepehr-tehran
+mnt-by:         MNT-ARYASAT
+created:        2018-01-24T16:09:57Z
+last-modified:  2018-01-24T16:09:57Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

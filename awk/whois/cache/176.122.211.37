@@ -1,0 +1,77 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '176.122.210.0 - 176.122.211.255'
+
+% Abuse contact for '176.122.210.0 - 176.122.211.255' is 'info@akoit.ir'
+
+inetnum:        176.122.210.0 - 176.122.211.255
+netname:        AKOFanavaran
+country:        IR
+org:            ORG-PSK5-RIPE
+sponsoring-org: ORG-GDAF1-RIPE
+admin-c:        DD7899-RIPE
+tech-c:         DD7899-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         MNT-AKO
+mnt-routes:     MNT-AKO
+mnt-domains:    MNT-AKO
+created:        2012-07-26T12:30:03Z
+last-modified:  2016-04-14T11:13:23Z
+source:         RIPE # Filtered
+geoloc:         35.431895 51.242138
+
+organisation:   ORG-PSK5-RIPE
+org-name:       Pars Shabakeh Kazerun Company Ltd.
+admin-c:        DD7899-RIPE
+org-type:       OTHER
+address:        Khalije Fars Bilding, Hazrati Street, Kazerun , Shiraz
+abuse-c:        AA33836-RIPE
+mnt-by:         MNT-AKO
+mnt-ref:        MNT-AKO
+created:        2012-07-23T08:46:20Z
+last-modified:  2018-08-12T04:49:36Z
+source:         RIPE # Filtered
+geoloc:         35.431895 51.242138
+
+person:         Davood Delavarbahr
+address:        Asadabadi , 161 Unit
+address:        1436883113
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982188035178
+nic-hdl:        DD7899-RIPE
+mnt-by:         MNT-AKO
+created:        2015-07-23T09:40:54Z
+last-modified:  2015-09-25T22:19:37Z
+source:         RIPE
+
+% Information related to '176.122.211.0/24AS21005'
+
+route:          176.122.211.0/24
+origin:         AS21005
+mnt-by:         MNT-AKO
+mnt-by:         ir-ako-1-mnt
+created:        2019-02-11T09:31:19Z
+last-modified:  2019-02-11T09:31:19Z
+source:         RIPE
+
+% Information related to '176.122.211.0/24AS47796'
+
+route:          176.122.211.0/24
+origin:         AS47796
+mnt-by:         MNT-AKO
+created:        2019-12-24T12:35:40Z
+last-modified:  2019-12-24T12:35:40Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (HEREFORD)
+
+

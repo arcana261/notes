@@ -1,0 +1,75 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.117.136.0 - 185.117.139.255'
+
+% Abuse contact for '185.117.136.0 - 185.117.139.255' is 'arash.naderpour@gmail.com'
+
+inetnum:        185.117.136.0 - 185.117.139.255
+netname:        IR-NIKRAYAN-20150916
+descr:          Ertebatat Sabet Parsian FCP.ir
+country:        IR
+org:            ORG-NRPC1-RIPE
+admin-c:        YT1028-RIPE
+tech-c:         YT1028-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-nikrayan-1-mnt
+mnt-lower:      ir-nikrayan-1-mnt
+mnt-routes:     ir-nikrayan-1-mnt
+mnt-domains:    ir-nikrayan-1-mnt
+created:        2015-09-16T09:09:37Z
+last-modified:  2019-08-23T15:47:47Z
+source:         RIPE
+
+organisation:   ORG-NRPC1-RIPE
+org-name:       Nik Rayan Parsian Computer Services Cooperative Company
+org-type:       LIR
+address:        # 5 Saadi Ave
+address:        7814766681
+address:        Sirjan
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989132453760
+phone:          +983442271400
+fax-no:         +982189781444
+admin-c:        YT1028-RIPE
+tech-c:         YT1028-RIPE
+abuse-c:        AR33501-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        ir-nikrayan-1-mnt
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         ir-nikrayan-1-mnt
+created:        2015-09-15T07:23:35Z
+last-modified:  2018-06-22T19:50:14Z
+source:         RIPE # Filtered
+
+person:         Yaser Taheri
+address:        # 5 Saadi Ave
+address:        7814766681
+address:        Sirjan
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +983442271400
+nic-hdl:        YT1028-RIPE
+mnt-by:         ir-nikrayan-1-mnt
+created:        2015-09-15T07:23:34Z
+last-modified:  2015-09-27T10:04:39Z
+source:         RIPE
+
+% Information related to '185.117.136.0/22AS44400'
+
+route:          185.117.136.0/22
+origin:         AS44400
+mnt-by:         ir-nikrayan-1-mnt
+created:        2019-08-23T15:00:33Z
+last-modified:  2019-08-23T15:00:33Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

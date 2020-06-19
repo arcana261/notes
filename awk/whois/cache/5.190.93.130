@@ -1,0 +1,55 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '5.190.93.128 - 5.190.94.255'
+
+% Abuse contact for '5.190.93.128 - 5.190.94.255' is 'LIRadmin@tci.ir'
+
+inetnum:        5.190.93.128 - 5.190.94.255
+descr:          Azin Kiya Firoozabad (1967)
+netname:        ORG-AF90-RIPE
+country:        IR
+admin-c:        PT8452-RIPE
+tech-c:         JN4841-RIPE
+status:         ASSIGNED PA
+mnt-by:         MNT-TCF
+created:        2017-07-19T09:27:37Z
+last-modified:  2019-03-13T07:03:56Z
+source:         RIPE
+
+person:         Jafar Nezhad
+address:        St. Modares - Moalem square - Firozabad - Fars - Iran
+phone:          +987126236112
+nic-hdl:        JN4841-RIPE
+mnt-by:         MNT-TCF
+created:        2016-07-02T07:11:08Z
+last-modified:  2016-07-02T07:11:08Z
+source:         RIPE
+
+person:         Parisa Tavakoli
+address:        7183893995,Ghasredasht, Shiraz, IR.
+phone:          +987136112145
+nic-hdl:        PT8452-RIPE
+mnt-by:         MNT-TCF
+created:        2018-06-26T08:12:11Z
+last-modified:  2018-06-26T08:12:11Z
+source:         RIPE
+
+% Information related to '5.190.0.0/17as58224'
+
+route:          5.190.0.0/17
+origin:         as58224
+mnt-by:         MNT-TCF
+created:        2018-12-03T07:00:34Z
+last-modified:  2018-12-03T07:00:34Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+

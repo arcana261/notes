@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.92.4.0 - 185.92.7.255'
+
+% Abuse contact for '185.92.4.0 - 185.92.7.255' is 'abuse@mehrfcp.ir'
+
+inetnum:        185.92.4.0 - 185.92.7.255
+netname:        IR-MEHRFCP-20150316
+country:        IR
+org:            ORG-RMVC1-RIPE
+admin-c:        RMVN1-RIPE
+tech-c:         RMVN1-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MehrFCP-MNT
+mnt-lower:      MehrFCP-MNT
+mnt-routes:     MehrFCP-MNT
+created:        2017-08-01T13:03:30Z
+last-modified:  2017-08-01T13:03:30Z
+source:         RIPE
+
+organisation:   ORG-RMVC1-RIPE
+org-name:       Rasaneh Mehr Vatan Co. PJS
+org-type:       LIR
+address:        No.57, Akhtaran alley, West Nahid St, Nelson Mandela Blvd
+address:        1967773314
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982196996000
+admin-c:        RMVN1-RIPE
+tech-c:         RMVN1-RIPE
+abuse-c:        AR35438-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MehrFCP-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MehrFCP-MNT
+created:        2016-02-17T13:53:54Z
+last-modified:  2017-08-07T13:41:02Z
+source:         RIPE # Filtered
+fax-no:         +982196669030
+
+role:           Rasaneh Mehr Vatan NOC
+address:        No.57, Akhtaran alley, West Nahid St, Nelson Mandela Blvd
+phone:          +982196996000
+nic-hdl:        RMVN1-RIPE
+mnt-by:         MehrFCP-MNT
+created:        2016-02-20T09:11:26Z
+last-modified:  2017-08-07T13:40:29Z
+source:         RIPE # Filtered
+
+% Information related to '185.92.4.0/22AS48903'
+
+route:          185.92.4.0/22
+origin:         AS48903
+mnt-by:         MehrFCP-MNT
+created:        2017-02-01T09:10:29Z
+last-modified:  2017-08-07T13:42:39Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

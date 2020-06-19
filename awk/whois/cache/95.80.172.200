@@ -1,0 +1,62 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '95.80.172.0 - 95.80.172.255'
+
+% Abuse contact for '95.80.172.0 - 95.80.172.255' is 'abuse@maxnet.ir'
+
+inetnum:        95.80.172.0 - 95.80.172.255
+netname:        MAXNET_INFRA
+descr:          TD-LTE-Maxnet (Tabriz)
+country:        IR
+geoloc:         38.07008867362511 46.3097682595253
+admin-c:        SS14491-RIPE
+tech-c:         SZ2011-RIPE
+status:         ASSIGNED PA
+mnt-by:         MXNT-MNT
+mnt-lower:      MXNT-MNT
+mnt-routes:     MXNT-MNT
+mnt-domains:    MXNT-MNT
+created:        2011-01-10T08:21:54Z
+last-modified:  2019-07-31T09:30:57Z
+source:         RIPE # Filtered
+
+person:         Sohrab Safiyari
+address:        6th Floor, Sahand Tower, Kalantari Alley, Abresan, Tabriz, Iran
+phone:          +984113375551
+nic-hdl:        SS14491-RIPE
+mnt-by:         SSafiyari-MNT
+created:        2010-12-04T13:34:58Z
+last-modified:  2010-12-04T13:34:58Z
+source:         RIPE # Filtered
+
+person:         Sepehr Zarieh
+address:        6th Floor, Sahand Tower, Kalantari Alley, Abresan, Tabriz, Iran
+phone:          +984113375551
+nic-hdl:        SZ2011-RIPE
+mnt-by:         SZarieh-MNT
+created:        2010-12-04T13:36:21Z
+last-modified:  2010-12-04T13:36:21Z
+source:         RIPE # Filtered
+
+% Information related to '95.80.168.0/21AS48431'
+
+route:          95.80.168.0/21
+descr:          Maxnet IPv4 Route
+origin:         AS48431
+mnt-by:         MXNT-MNT
+mnt-lower:      MXNT-MNT
+mnt-routes:     MXNT-MNT
+created:        2011-09-19T11:56:26Z
+last-modified:  2014-07-12T13:39:42Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (BLAARKOP)
+
+

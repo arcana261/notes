@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '45.132.227.0 - 45.132.227.255'
+
+% Abuse contact for '45.132.227.0 - 45.132.227.255' is 'support@syndesi-networks.nl'
+
+inetnum:        45.132.227.0 - 45.132.227.255
+netname:        VCUS-45-132-227-0
+country:        US
+geoloc:         40.7573494 -74.0648319
+org:            ORG-VA29471-RIPE
+admin-c:        GH5201-RIPE
+tech-c:         GH5201-RIPE
+status:         ASSIGNED PA
+mnt-by:         PREFIXBROKER-MNT
+created:        2020-03-27T18:26:33Z
+last-modified:  2020-03-27T18:26:33Z
+source:         RIPE
+
+organisation:   ORG-VA29471-RIPE
+org-name:       VPN-Consumer-US
+org-type:       OTHER
+address:        800 Secaucus Rd
+address:        Secaucus
+address:        NJ 07094
+address:        United States
+abuse-c:        AR54173-RIPE
+mnt-ref:        PREFIXBROKER-MNT
+mnt-by:         PREFIXBROKER-MNT
+created:        2020-03-27T18:26:33Z
+last-modified:  2020-03-27T18:26:33Z
+source:         RIPE # Filtered
+
+person:         Gerdien Huntelerslag
+address:        Ekenstein 22
+address:        8226RH
+address:        Lelystad
+address:        NETHERLANDS
+phone:          +31646187690
+nic-hdl:        GH5201-RIPE
+mnt-by:         mnt-nl-syndesi-1
+created:        2019-07-23T07:54:25Z
+last-modified:  2019-07-23T07:54:25Z
+source:         RIPE
+
+% Information related to '45.132.227.0/24AS35913'
+
+route:          45.132.227.0/24
+origin:         AS35913
+mnt-by:         PREFIXBROKER-MNT
+created:        2020-03-27T18:26:33Z
+last-modified:  2020-03-27T18:26:33Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.1 (ANGUS)
+
+
