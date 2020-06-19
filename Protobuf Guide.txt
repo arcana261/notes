@@ -22,7 +22,7 @@ mkdir -p ~/.local/bin
 mkdir -p ~/.local/include
 
 cd ~/Downloads
-curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protoc-3.7.1-linux-x86_64.zip
+curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.12.3/protoc-3.12.3-linux-x86_64.zip
 unzip protoc-3.7.1-linux-x86_64.zip -d protoc3
 mv protoc3/bin/* ~/.local/bin/
 mv protoc3/include/* ~/.local/include/

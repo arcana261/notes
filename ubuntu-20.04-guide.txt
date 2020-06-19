@@ -130,4 +130,348 @@ update-initramfs -u -k all
 ################################################
 ################################################
 
+# change mirror to Main Server
+Activities -> Software & Updates -> Ubuntu Software -> Download from: -> Main Server 
+
+# update system
+sudo -i
+  apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get -y autoremove && do-release-upgrade
+  reboot
+  
+# install tools
+sudo apt-get install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois
+
+# setup RSA key
+ssh-keygen -t rsa
+
+# setup language
+Settings -> Reguin and Language -> setup persian
+
+## reboot
+
+## Tweaks -> Apperance -> Application -> Yaru-dark
+## Gedit -> colors -> solatized dark
+## Caps As Ctrl
+
+## Settings -> Keyboard Shortcuts -> Switch to next input source -> Ctrl + Space
+## Settings -> Keyboard Shortcuts -> Move to workspace above -> Ctrl + Alt + k
+## Settings -> Keyboard Shortcuts -> Move to workspace blow -> Ctrl + Alt + j
+## Settings -> Keyboard Shortcuts -> Close window -> Ctrl + x
+
+## Setup VPN
+
+## install chrome
+
+# setup python
+python3 -m venv ~/.venv3
+source ~/.venv3/bin/activate
+pip install --upgrade pip
+pip install wheel
+pip install pysocks
+pip install awscli
+pip install pylint flake8 mypy
+
+# create bash completion for pip
+mkdir -p ~/.bash_completions
+pip completion --bash > ~/.bash_completions/pip3
+vim ~/.bashrc
+............................
+source $HOME/.bash_completions/pip3
+............................
+
+# update profile
+mkdir -p ~/.local/{bin,lib,src,include}
+vim ~/.profile
+............................
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib:$HOME/.local/lib"
+............................
+
+# configure firewall
+sudo systemctl enable ufw
+sudo systemctl restart ufw
+sudo ufw enable
+
+# configure ssh
+sudo vim /etc/ssh/sshd_config
+...
+Port 2122
+PermitRootLogin no
+...
+sudo ufw reload
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 2122/tcp
+sudo ufw reload
+sudo systemctl enable sshd
+sudo systemctl restart sshd
+
+# enable upnp
+sudo ufw reload
+sudo ufw allow 1900/udp
+sudo ufw reload
+
+# configure sysctl
+sudo vim /etc/sysctl.conf
+..........................................
+fs.inotify.max_user_watches = 524288
+..........................................
+
+# reload sysctl
+sudo sysctl -p --system
+
+# set default editor to vim
+sudo update-alternatives --config editor
+
+# install other restricted areas
+sudo apt-get install ubuntu-restricted-extras
+
+# install smplayer
+sudo apt-get install smplayer
+
+# install mplayer2
+sudo apt-get install mplayer
+
+# install vlc
+sudo apt-get install vlc vlc-data 
+
+# configure git
+git config --global user.name "Mohamadmehdi Kharatizadeh:
+git config --global user.email "info@ucoder.ir"
+git config --global credential.helper store
+vim ~/.git-credentials
+...........................................
+https://arcana261:xxxxxxxxxx@github.com
+https://oauth2:xxxxxxxxxxx@git.cafebazaar.ir
+...........................................
+
+# install samba server
+sudo apt-get install samba samba-common 
+sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+
+# create shared folder configuration
+mkdir -p ~/.local/share
+sudo vim /etc/samba/smb.conf
+.....
+[general]
+       map to guest = bad user
+
+[junk]
+       comment = share
+       path = /home/arcana/.local/share
+       browsable = yes
+       writable = yes
+       guest ok = yes
+       read only = no
+       force user = arcana
+       force group = arcana
+.....
+
+# enable and restart samba service
+sudo systemctl restart smbd
+sudo systemctl enable smbd
+sudo systemctl status smbd
+
+# allow ports through firewall
+sudo ufw reload
+sudo ufw allow 139/tcp
+sudo ufw allow 445/tcp
+sudo ufw reload
+
+# configure bash completion
+# Install or update bash-complete-partial-path
+mkdir -p "$HOME/.config/bash-complete-partial-path/" && \
+curl \
+ -o "$HOME/.config/bash-complete-partial-path/bash_completion" \
+  "https://raw.githubusercontent.com/sio/bash-complete-partial-path/stable/bash_completion"
+
+## Install extended bashrc from Notes!
+
+## Install extended tmux conf from Notes!
+
+# setup dns resolver
+sudo vim /etc/systemd/resolved.conf
+..........................
+DNS=4.2.2.4 8.8.8.8
+Domains=~
+..........................
+sudo systemctl restart systemd-resolved.service
+
+# flush dns
+systemd-resolve --flush-caches
+
+# view dns resolver status
+systemd-resolve --status
+
+## Install fuzzy finder
+mkdir -p ~/.local/src
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.local/src/fzf
+~/.local/src/fzf/install
+
+## Install VIM plugins
+mkdir -p ~/.vim/pack/vendor/start
+# install nerdtree
+git clone --depth 1 https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
+git clone --depth 1 https://github.com/ciaranm/detectindent.git ~/.vim/pack/vendor/start/detectindent
+# install ale
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.vim/pack/git-plugins/start/ale
+# install fzf
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.vim/pack/git-plugins/start/fzf
+
+# create a good vimrc
+vim ~/.vimrc
+.................
+.................
+
+## Disable swap
+# find swap
+cat /etc/fstab
+# turn it off
+sudo swapoff /swapfile
+# remove entry from fstab
+sudo vim /etc/fstab
+[x] .................
+/swapfile .........
+.................
+# remove swap file
+sudo rm -f /swapfile
+
+## Install protoc from guide
+
+## Install Go from guide
+
+## Install Slack
+
+## Install Extensions
+Drop Down Terminal
+ -> Hotkey: F1
+ -> Height: 100%
+ -> Transparency: 100
+ -> Command: tmux attach
+Persian Calendar
+
+## Install Kubectl
+# create bash completion for kubectl
+mkdir -p ~/.bash_completions
+kubectl completion bash > ~/.bash_completions/kubectl
+vim ~/.bashrc
+............................
+source $HOME/.bash_completions/kubectl
+............................
+
+## Configure Ocean Bashrc
+
+## Autohide dock
+Settings -> Apperance -> Autohide dock
+
+## Install discord
+
+## Install Docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker 
+
+## Install VsCode
+ -> Python
+ -> Go
+   ->> Go: Install or update tools
+ -> Git Blame
+ -> Diff
+ -> Vim
+ -> Docker
+
+## Rebuild whois cache
+cd ~/Documents/notes/awk/whois
+./rebuild-from-cache.sh
+
+## Fix ir routes
+## NOTE: set device link name in ~/.bashrc
+fix-ir-routes
+
+## Setup Cafe VPN
+
+## Install skype
+
+## Configure Dual Monitor
+
+## Configure Sound Settings
+
+## Install Telepresence
+
+# Better config SSH
+vim ~/.ssh/config
+................................
+Host *
+  StrictHostKeyChecking no
+................................
+chmod 600 ~/.ssh/config
+
+# Configure my server's SSH
+vim ~/.ssh/config
+................................
+Host ucoder
+  Hostname srv4.ucoder.ir
+  Port xxxx
+  User xxxx
+................................
+
+## Configure ocean SSH
+
+## Configure AWS keys
+mkdir -p ~/.aws
+vim ~/.aws/credentials
+..............................
+[name]
+aws_access_key_id=xxxxxxxxxxxxxx
+aws_secret_access_key=xxxxxxxxxxxxx
+..............................
+
+## Install Youtube Music
+
+## Change Wallpaper
+
+## Change Avatar
+
+## Install MineCraft Client
+# create desktop entry
+vim ~/.local/share/applications/minecraft.desktop
+..........................................
+[Desktop Entry]                          
+Version=1.0                              
+Name=Minecraft                           
+Type=Application                         
+Comment=Launch Minecraft                 
+Exec=/home/arcana/.local/bin/minecraft   
+Categories=Game;                         
+GenericName=Minecraft                    
+..........................................
+desktop-file-validate ~/.local/share/applications/minecraft.desktop
+update-desktop-database
+
+## Install OBS Studio
+
+## Install OpenShot
+
+## Configure SSH/VPN for
+  -> DBS
+
+## Remove `Help` from favorites
+
+## install pg_config
+sudo apt install libpq-dev
+ 
+
+=====================================================================================================
+=====================================================================================================
+=====================================================================================================
+=====================================================================================================
+=====================================================================================================
+
+# cat to a file
+cat >myfile.txt <<EOL
+some blah
+EOL
+
 

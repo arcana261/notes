@@ -1,12 +1,9 @@
 source $HOME/.bashrc
-source $HOME/no-proxy.source
 
 _KUBECTL_PATH=`which kubectl`
 
 function _ocean_set_ps() {
-    #echo ">'" $PS1 "'"
-    export PS1="(\[${BLUE}\]k8s: $1\[${NC}\]) "$(echo $PS1 | sed 's|([^(]*k8s: [^)]*)\s*||g' | sed 's|\s*$||g')" "
-    #echo ">>'" $PS1 "'"
+    export PS1="(\[${OCEAN_COLOR}\]k8s: $1\[${NC}\]) "$(echo $PS1 | sed 's|([^(]*k8s: [^)]*)\s*||g' | sed 's|\s*$||g')" "
 }
 
 _ocean_set_ps ''
@@ -17,7 +14,7 @@ function swim() {
 }
 
 function kubectl() {
-    ${_KUBECTL_PATH} --namespace=$OCEAN_NAMESPACE --kubeconfig=$HOME/.kube/ocean.config.yaml "$@"
+    ${_KUBECTL_PATH} --namespace=$OCEAN_NAMESPACE --kubeconfig=$HOME/.kube/config "$@"
 }
 
 function divar-infra() {
@@ -106,8 +103,12 @@ alias kgpowg="kubectl get pods -owide | grep"
 alias kgd="kubectl get deployments"
 alias kgdg="kubectl get deployments | grep"
 alias ked="kubectl edit deployment"
+alias kgdoy="kubectl get deployment -oyaml"
+alias kdp="kubectl delete pod"
+alias kdpfgp0="kubectl delete pod --force --grace-period=0"
 
 alias kl="kubectl logs"
+alias klt100f="kubectl logs --tail=100 -f"
 
 alias kaf="kubectl apply -f"
 alias kcf="kubectl create -f"
@@ -118,6 +119,7 @@ alias krf="kubectl replace -f"
 alias kgcm="kubectl get configmap"
 alias kgcmg="kubectl get configmap | grep"
 alias kecm="kubectl edit configmap"
+alias kgcmoy="kubectl get configmap -oyaml"
 
 alias kgs="kubectl get svc"
 alias kgsg="kubectl get svc | grep"
@@ -133,10 +135,14 @@ alias kgcrg="kubectl get cronjob | grep"
 alias kdcr="kubectl delete cronjob"
 alias kecr="kubectl edit cronjob"
 
+alias kpf="kubectl port-forward"
+
 alias keit="kubectl exec -it"
 function keitb() {
     kubectl exec -it $1 bash
 }
+
+alias kcp="kubectl cp"
 
 swim divar-infra
 

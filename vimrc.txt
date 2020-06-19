@@ -1,0 +1,161 @@
+set smartindent
+set shiftwidth=2
+set expandtab
+set tabstop=2
+set relativenumber
+set number
+set hlsearch
+set wildmenu
+set cursorline
+set incsearch
+color darkblue
+
+"ts = 'number of spaces that <Tab> in file uses' sts = 'number of spaces that <Tab> uses while editing' sw = 'number of spaces to use for (auto)indent step'
+"autocmd Filetype python setlocal ts=4 sw=4 sts=0 noexpandtab
+autocmd Filetype python setlocal ts=4 sw=4 sts=4 expandtab
+autocmd Filetype python DetectIndent
+autocmd Filetype awk DetectIndent
+
+" uncomment to auto-open nerdtree
+"autocmd VimEnter * :NERDTree
+
+map <F2> :NERDTreeToggle<CR>
+map <F3> :FZF<CR>
+
+function s:SetClip()
+  let tmp = $HOME . '/.clipboard.vim.tmp'
+  call writefile(getreg('0', 1, 1), tmp)
+  call system("cat " . tmp . " | xclip -selection c")
+endfunction
+
+command -nargs=0 SetClip :call s:SetClip()
+
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+
+function! s:DiffWithGITCheckedOut()
+  let filetype=&ft
+  diffthis
+  vnew | exe "%!git diff " . fnameescape( expand("#:p") ) . "| patch -p 1 -Rs -o -"
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+  diffthis
+endfunction
+com! DiffGIT call s:DiffWithGITCheckedOut()
+
+function s:Qin(term)
+  bo 10new | exe "%!grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude=*.pyc --exclude=*.swp --exclude=*.db --exclude-dir=.git " . a:term
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro hlsearch"
+  exe "match Identifier /" . a:term . "/"
+endfunction
+command -nargs=1 Qin :call s:Qin(<f-args>)
+
+function s:Qind(term)
+  bo 10new | exe "%!find . -not -path *.venv* -not -path *.git* -not -path *.mehdi* -iname '*" . a:term . "*'"
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro hlsearch"
+  exe "match Identifier /" . a:term . "/"
+endfunction
+command -nargs=1 Qind :call s:Qind(<f-args>)
+
+function s:VQin()
+  let term = s:get_visual_selection()
+  execute "Qin " . term
+endfunction
+command -range VQin :call s:VQin()
+
+function s:VTabEdit()
+  let term = s:get_visual_selection()
+  execute "tabedit " . term
+endfunction
+command -range VTabEdit :call s:VTabEdit()
+
+function! s:get_visual_selection()
+    " Why is this not a built-in Vim script function?!
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+
+set tabline=%!MyTabLine()  " custom tab pages line
+function MyTabLine()
+        let s = '' " complete tabline goes here
+        " loop through each tab page
+        for t in range(tabpagenr('$'))
+                " set highlight
+                if t + 1 == tabpagenr()
+                        let s .= '%#TabLineSel#'
+                else
+                        let s .= '%#TabLine#'
+                endif
+                " set the tab page number (for mouse clicks)
+                let s .= '%' . (t + 1) . 'T'
+                let s .= ' '
+                " set page number string
+                let s .= t + 1 . ' '
+                " get buffer names and statuses
+                let n = ''      "temp string for buffer names while we loop and check buftype
+                let m = 0       " &modified counter
+                let bc = len(tabpagebuflist(t + 1))     "counter to avoid last ' '
+                " loop through each buffer in a tab
+                for b in tabpagebuflist(t + 1)
+                        " buffer types: quickfix gets a [Q], help gets [H]{base fname}
+                        " others get 1dir/2dir/3dir/fname shortened to 1/2/3/fname
+                        if getbufvar( b, "&buftype" ) == 'help'
+                                let n .= '[H]' . fnamemodify( bufname(b), ':t:s/.txt$//' )
+                        elseif getbufvar( b, "&buftype" ) == 'quickfix'
+                                let n .= '[Q]'
+                        else
+                                let n .= pathshorten(bufname(b))
+                        endif
+                        " check and ++ tab's &modified count
+                        if getbufvar( b, "&modified" )
+                                let m += 1
+                        endif
+                        " no final ' ' added...formatting looks better done later
+                        if bc > 1
+                                let n .= ' '
+                        endif
+                        let bc -= 1
+                endfor
+                " add modified label [n+] where n pages in tab are modified
+                if m > 0
+                        let s .= '[' . m . '+]'
+                endif
+                " select the highlighting for the buffer names
+                " my default highlighting only underlines the active tab
+                " buffer names.
+                if t + 1 == tabpagenr()
+                        let s .= '%#TabLineSel#'
+                else
+                        let s .= '%#TabLine#'
+                endif
+                " add buffer names
+                if n == ''
+                        let s.= '[New]'
+                else
+                        let s .= n
+                endif
+                " switch to no underlining and add final space to buffer list
+                let s .= ' '
+        endfor
+        " after the last tab fill with TabLineFill and reset tab page nr
+        let s .= '%#TabLineFill#%T'
+        " right-align the label to close the current tab page
+        if tabpagenr('$') > 1
+                let s .= '%=%#TabLineFill#%999Xclose'
+        endif
+        return s
+endfunction
+
+
