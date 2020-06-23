@@ -8,7 +8,12 @@ set hlsearch
 set wildmenu
 set cursorline
 set incsearch
-color darkblue
+set t_Co=256
+set backup
+set backupcopy=auto
+set backupdir=~/.local/tmp
+set autoread
+color OceanicNext
 
 "ts = 'number of spaces that <Tab> in file uses' sts = 'number of spaces that <Tab> uses while editing' sw = 'number of spaces to use for (auto)indent step'
 "autocmd Filetype python setlocal ts=4 sw=4 sts=0 noexpandtab
@@ -20,14 +25,92 @@ autocmd Filetype awk DetectIndent
 "autocmd VimEnter * :NERDTree
 
 map <F2> :NERDTreeToggle<CR>
-map <F3> :FZF<CR>
+map <C-t> :Windows<CR>
+map <C-f> :BLines<CR>
+map <C-e> :Commands<CR>
+map <C-p> :Files<CR>
+map <C-o> :Ag<Space>
+map <C-i> :OpenTerminal<CR>
+
+let g:deoplete#enable_at_startup = 1
+
+let b:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+command -nargs=0 Gcom :G checkout master
+command -nargs=0 Gp :G pull
+command -nargs=1 Gcob :G checkout -b <f-args>
+command -nargs=1 -complete=file Ga :G add <f-args>
+command -nargs=0 Gc :G commit
+command -nargs=0 Gpp :call s:GitPush()
+command -nargs=0 Gppf :call s:GitPushF()
+command -nargs=0 Gd :G diff
+command -nargs=0 Gds :G diff --staged
+command -nargs=1 -complete=file Grr :G reset <f-args>
+command -nargs=0 Grrsh :G reset --soft HEAD^
+command -nargs=1 Grrh :G reset --hard <f-args>
+command -nargs=0 Gl :G log
+command -nargs=1 -complete=file Gco :G checkout <f-args>
+command -nargs=0 Gbl :G blame
+command -nargs=0 Gsubuir :G submodule update --init --recursive
+command -nargs=1 Grb :G rebase <f-args>
+
+let g:vimspector_enable_mappings = 'HUMAN'
+packadd! vimspector
+
+function s:GitPush()
+  let branch_name = system("git rev-parse --abbrev-ref HEAD")
+  "execute "echo '" . branch_name . "'"
+  execute "!git push --set-upstream origin " . branch_name
+endfunction
+
+function s:GitPushF()
+  let branch_name = system("git rev-parse --abbrev-ref HEAD")
+  "execute "echo '" . branch_name . "'"
+  execute "!git push -f --set-upstream origin " . branch_name
+endfunction
+
+" let g:terminal_is_open = 0
+" let g:terminal_is_hidden = 0
+function s:OpenTerminal()
+"   if g:terminal_is_open
+"     if g:terminal_is_hidden
+"       let g:terminal_return_nr = winnr()
+"       bo 10new | exe g:terminal_buf_nr . "b"
+"       let g:terminal_nr = winnr()
+"       let g:terminal_is_hidden = 0
+"       execute "startinsert!"
+"     else
+"       execute g:terminal_nr . "wincmd w"
+"       execute "hide"
+"       let g:terminal_is_hidden = 1
+"       execute g:terminal_return_nr . "wincmd w"
+"     endif
+"   else
+"     let g:terminal_return_nr = winnr()
+"     TerminalSplit /bin/bash
+"     exe "res 10"
+"     exe "set relativenumber"
+"     exe "set number"
+"     let g:terminal_nr = winnr()
+"     let g:terminal_buf_nr = bufnr('%')
+"     let g:terminal_is_open = 1
+"   endif
+    TerminalSplit /bin/bash
+    exe "res 10"
+    exe "set relativenumber"
+    exe "set number"
+endfunction
+command -nargs=0 OpenTerminal :call s:OpenTerminal()
 
 function s:SetClip()
   let tmp = $HOME . '/.clipboard.vim.tmp'
   call writefile(getreg('0', 1, 1), tmp)
   call system("cat " . tmp . " | xclip -selection c")
 endfunction
-
 command -nargs=0 SetClip :call s:SetClip()
 
 function! s:DiffWithSaved()
@@ -49,9 +132,10 @@ endfunction
 com! DiffGIT call s:DiffWithGITCheckedOut()
 
 function s:Qin(term)
-  bo 10new | exe "%!grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude=*.pyc --exclude=*.swp --exclude=*.db --exclude-dir=.git " . a:term
+  bo 10new | exe "%!grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude=*.pyc --exclude=*.swp --exclude=*.swo --exclude=*.db --exclude-dir=.git " . a:term
   exe "setlocal bt=nofile bh=wipe nobl noswf ro hlsearch"
   exe "match Identifier /" . a:term . "/"
+  exe "2match Comment /^[^:]*:[0-9]*:/"
 endfunction
 command -nargs=1 Qin :call s:Qin(<f-args>)
 
@@ -59,6 +143,7 @@ function s:Qind(term)
   bo 10new | exe "%!find . -not -path *.venv* -not -path *.git* -not -path *.mehdi* -iname '*" . a:term . "*'"
   exe "setlocal bt=nofile bh=wipe nobl noswf ro hlsearch"
   exe "match Identifier /" . a:term . "/"
+  exe "2match Comment /^[^:]*:[0-9]*:/"
 endfunction
 command -nargs=1 Qind :call s:Qind(<f-args>)
 
@@ -157,5 +242,3 @@ function MyTabLine()
         endif
         return s
 endfunction
-
-

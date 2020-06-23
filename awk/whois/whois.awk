@@ -1281,9 +1281,6 @@ function __whoisdb_get_iran_isp_from_mnt(mnt) {
     if (mnt ~ /^IR-YAGHOOT-[0-9]*-MNT$/) {
         return "Yaghoot";
     }
-    if (mnt ~ /^IR-EBTEKARANDISHAN-[0-9]*-MNT$/) {
-        return "Parsian FCB";
-    }
     if (mnt == "MNT-ARYASAT" || mnt == "ARYASAT" || mnt ~ /^ARYASAT-/) {
         return "Arya Sat";
     }
@@ -1296,7 +1293,7 @@ function __whoisdb_get_iran_isp_from_mnt(mnt) {
     if (mnt == "JN-IP") {
         return "Mysha Net";
     }
-    if (mnt == "WCD" || mnt ~ /^SUNINTERNET$/) {
+    if (mnt == "WCD" || mnt ~ /^SUNINTERNET$/ || mnt ~ /^IR-LESUN-[0-9]*-MNT$/) {
         return "Sun Internet";
     }
     if (mnt == "MNT-SHAHRAD" || mnt == "MNT-AMIRSABET") {
@@ -1377,7 +1374,7 @@ function __whoisdb_get_iran_isp_from_mnt(mnt) {
     if (mnt ~ /^IR-KHORSHIDNET-[0-9]*-MNT$/) {
         return "Khorshid Net";
     }
-    if (mnt ~ /^IR-FCP-[0-9]*-MNT$/) {
+    if (mnt ~ /^IR-FCP-[0-9]*-MNT$/ || mnt ~ /^IR-EBTEKARANDISHAN-[0-9]*-MNT$/) {
         return "Ertebat Sabet Parsian";
     }
     if (mnt ~ /^IR-AUOS-[0-9]*-MNT$/) {
@@ -1398,7 +1395,7 @@ function __whoisdb_get_iran_isp_from_mnt(mnt) {
     if (mnt ~ /^IR-SCIENCESHEALTHSERVICES-[0-9]*-MNT$/) {
         return "Isfahan University Of Medical Sciences & Health Services";
     }
-    if (mnt ~ /^IR-SADADCO-1-MNT$/) {
+    if (mnt ~ /^IR-SADADCO-[0-9]*-MNT$/ || mnt ~ /^IR-SADAD-[0-9]*-MNT$/) {
         return "Sadad";
     }
     if (mnt ~ /^IR-KISHITGROUP-[0-9]*-MNT$/) {
@@ -1412,6 +1409,102 @@ function __whoisdb_get_iran_isp_from_mnt(mnt) {
     }
     if (mnt ~ /^IR-GOSTARESH-[0-9]*-MNT$/) {
         return "Ertebatat Azin Kia";
+    }
+    if (mnt ~ /^IR-RASANEH-[0-9]*-MNT$/) {
+        return "IR Rasaneh"
+    }
+    if (mnt ~ /^IR-EDBI-[0-9]*-MNT$/) {
+        return "Bank Tosee Saderat"
+    }
+    if (mnt == "MNT-AKO") {
+        return "Pars Shabakeh Kazerun"
+    }
+    if (mnt == "TSTONLINE-MNT") {
+        return "Tarasheh Sabz Tehran"
+    }
+    if (mnt ~ /^IR-AFAGHANDISH-[0-9]*-MNT$/ || mnt == "MNT-AFAGHANDISH") {
+        return "Makna Net"
+    }
+    if (mnt ~ /^IR-NIKRAYAN-[0-9]*-MNT$/) {
+        return "Nik Rayan"
+    }
+    if (mnt == "MEHRFCP-MNT") {
+        return "Rasaneh Mehr Vatan";
+    }
+    if (mnt ~ /^MNT-IR-MAHANNOVIN-[0-9]*$/) {
+        return "Mehr Dade"
+    }
+    if (mnt == "CHAPAR-MNT") {
+        return "Chapar Net";
+    }
+    if (mnt ~ /^IR-KMU-[0-9]*-MNT$/) {
+        return "Kerman ICT Center"
+    }
+    if (mnt ~ /^IR-ARIYA-[0-9]*-MNT$/) {
+        return "Aria Net";
+    }
+    if (mnt ~ /^IR-ERTEBATDEHI-ILAM-[0-9]*-MNT$/) {
+        return "Ertebat Dehi Ilam";
+    }
+    if (mnt ~ /^IR-HEALTH-[0-9]*-MNT$/) {
+        return "Vezarat Behdasht";
+    }
+    if (mnt == "EGRK") {
+        return "Ertebat Gostaran Rangin Kaman";
+    }
+    if (mnt ~ /^IR-GSC[0-9]*-[0-9]*-MNT$/ || mnt ~ /^IR-EGRK-[0-9]*$/) {
+        return "Golrang System";
+    }
+    if (mnt == "MNT-SHARIFISPNET") {
+        return "Tarahan Shabake Sharif";
+    }
+    if (mnt ~ /^MNT-RAY[0-9]*$/) {
+        return "Ray Net";
+    }
+    if (mnt == "PADIDAR") {
+        return "Padidar";
+    }
+    if (mnt == "MNT-IRITCO") {
+        return "Shardari Tehran";
+    }
+    if (mnt ~ /^IR-PUZZLENET-[0-9]*-MNT$/ || mnt == "MNT-PUZZLE-H") {
+        return "Puzzle Net";
+    }
+    if (mnt == "EIRIB-MNT") {
+        return "Seda Sima";
+    }
+    if (mnt == "RASANE-MNT") {
+        return "Rasaneh Tehran";
+    }
+    if (mnt ~ /^IR-BARTAR-[0-9]*-MNT$/) {
+        return "Bartar Andishan Avaye Bandar";
+    }
+    if (mnt ~ /^IR-CRA-[0-9]*-MNT$/) {
+        return "Sazman Tanzimat Moghararat Radioii";
+    }
+    if (mnt ~ /^IR-TECHNO2000NET-[0-9]*-MNT$/) {
+        return "Rahnamoun Rayaneh Robot Karim";
+    }
+    if (mnt ~ /^IR-SINDAD-[0-9]*-[0-9]*-MNT$/) {
+        return "AriaSet Tabriz";
+    }
+    if (mnt == "SINET-MNT") {
+        return "Soroush Resaneh";
+    }
+    if (mnt == "ALMASNET-MNT" || mnt ~ /^IR-ALMASNET-[0-9]*-MNT$/) {
+        return "Almas Net";
+    }
+    if (mnt == "MNT-SOSHIANT") {
+        return "Soshiant Fara Dadeh";
+    }
+    if (mnt == "MNT-HOOSHERTEBAT") {
+        return "Hooshe Ertebat";
+    }
+    if (mnt == "ONLINESERVER") {
+        return "onlineserver.ir";
+    }
+    if (mnt == "MNT-ARMAGHAN") {
+        return "Armaghan Rahe Talaii"
     }
 
     return "-";
@@ -1474,7 +1567,7 @@ function __whoisdb_get_iran_isp_from_owner(owner) {
     if (owner ~ /^IR-REFATEC-/) {
         return "Refah Tech";
     }
-    if (owner == "KHALIJ-FARS-ONLINE" || owner == "KHALIJ-FARS-ETELA-RESAN") {
+    if (owner == "KHALIJ-FARS-ONLINE" || owner == "KHALIJ-FARS-ETELA-RESAN" || owner == "KHALIJE-FARS-ETELA-RESAN") {
         return "Khalij Fars Online";
     }
     if (owner == "CIS-IT-GROUP") {
@@ -1501,7 +1594,7 @@ function __whoisdb_get_iran_isp_from_owner(owner) {
     if (owner ~ /^IR-DORNA/) {
         return "Uz Net";
     }
-    if (owner ~ /^IR-SERVCO-AVAGOSTAR/) {
+    if (owner ~ /^IR-SERVCO-AVAGOSTAR/ || owner == "AVAGOSTAR") {
         return "Ava Gostar Sarv";
     }
     if (owner == "FARAHOOSH-SERVCO-SHIRAZ" || owner == "FARAHOOSHDENA-ADSL" || owner == "FARAHOOSH-SERVCO-ADSL") {
@@ -1522,11 +1615,38 @@ function __whoisdb_get_iran_isp_from_owner(owner) {
     if (owner == "VALAPAYAMFARDA") {
         return "Vala Payam Farda";
     }
-    if (owner == "MAHANNET-TDLTE") {
+    if (owner == "MAHANNET-TDLTE" || owner == "MAHANNET") {
         return "Mahan Net";
     }
     if (owner == "BUMSACIR") {
         return "Birjand University of Medical Sciences";
+    }
+    if (owner == "TSE-NET") {
+        return "Boors Tehran";
+    }
+    if (owner ~ /^IR-HPKWXW-[0-9]*$/) {
+        return "Shabake Gostar Shahryar";
+    }
+		if (owner == "PARSPACK") { 
+        return "ParsPack";
+    }
+    if (owner ~ /^IR-PARDAKHT-[0-9]*$/) {
+        return "Pardakht Electronic Pasargad";
+    }
+    if (owner == "KAYSON-CO") {
+        return "Kayson";
+    }
+    if (owner == "CIS-IT-GROUP-ADSL") {
+        return "CIS IT ADSL";
+    }
+    if (owner ~ /^IR-ONLINESERVER-[0-9]*$/) {
+        return "onlineserver.ir";
+    }
+    if (owner ~ /^PCOMTELECOM-/) {
+        return "PCom Telecom";
+    }
+    if (owner == "KUMS") {
+        return "Kermanshah University of Medical Science and Health Service";
     }
 
     return "-";

@@ -105,14 +105,14 @@ lvdisplay
 >>> Post Installation
 
 mount /dev/mapper/vg-root /target
-for n in proc sys dev etc/resolv.conf; do mount --rbind /$n /target/$n; done 
+for n in proc sys dev etc/resolv.conf; do mount --rbind /$n /target/$n; done
 chroot /target
 mount -a
 
 apt install -y cryptsetup-initramfs
 
-echo "KEYFILE_PATTERN=/etc/luks/*.keyfile" >> /etc/cryptsetup-initramfs/conf-hook 
-echo "UMASK=0077" >> /etc/initramfs-tools/initramfs.conf 
+echo "KEYFILE_PATTERN=/etc/luks/*.keyfile" >> /etc/cryptsetup-initramfs/conf-hook
+echo "UMASK=0077" >> /etc/initramfs-tools/initramfs.conf
 
 mkdir /etc/luks
 dd if=/dev/urandom of=/etc/luks/boot_os.keyfile bs=4096 count=1
@@ -120,7 +120,7 @@ dd if=/dev/urandom of=/etc/luks/boot_os.keyfile bs=4096 count=1
 chmod u=rx,go-rwx /etc/luks
 chmod u=r,go-rwx /etc/luks/boot_os.keyfile
 
-cryptsetup luksAddKey /dev/nvme0n1p5 /etc/luks/boot_os.keyfile 
+cryptsetup luksAddKey /dev/nvme0n1p5 /etc/luks/boot_os.keyfile
 
 echo "enc UUID=$(blkid -s UUID -o value /dev/nvme0n1p5) /etc/luks/boot_os.keyfile luks,discard" >> /etc/crypttab
 
@@ -131,15 +131,15 @@ update-initramfs -u -k all
 ################################################
 
 # change mirror to Main Server
-Activities -> Software & Updates -> Ubuntu Software -> Download from: -> Main Server 
+Activities -> Software & Updates -> Ubuntu Software -> Download from: -> Main Server
 
 # update system
 sudo -i
   apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get -y autoremove && do-release-upgrade
   reboot
-  
+
 # install tools
-sudo apt-get install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois
+sudo apt-get install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox
 
 # setup RSA key
 ssh-keygen -t rsa
@@ -156,7 +156,7 @@ Settings -> Reguin and Language -> setup persian
 ## Settings -> Keyboard Shortcuts -> Switch to next input source -> Ctrl + Space
 ## Settings -> Keyboard Shortcuts -> Move to workspace above -> Ctrl + Alt + k
 ## Settings -> Keyboard Shortcuts -> Move to workspace blow -> Ctrl + Alt + j
-## Settings -> Keyboard Shortcuts -> Close window -> Ctrl + x
+## Settings -> Keyboard Shortcuts -> Close window -> Ctrl + Backspace
 
 ## Setup VPN
 
@@ -170,6 +170,7 @@ pip install wheel
 pip install pysocks
 pip install awscli
 pip install pylint flake8 mypy
+pip install msgpack
 
 # create bash completion for pip
 mkdir -p ~/.bash_completions
@@ -180,7 +181,7 @@ source $HOME/.bash_completions/pip3
 ............................
 
 # update profile
-mkdir -p ~/.local/{bin,lib,src,include}
+mkdir -p ~/.local/{bin,lib,src,include,opt,tmp}
 vim ~/.profile
 ............................
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
@@ -233,7 +234,7 @@ sudo apt-get install smplayer
 sudo apt-get install mplayer
 
 # install vlc
-sudo apt-get install vlc vlc-data 
+sudo apt-get install vlc vlc-data
 
 # configure git
 git config --global user.name "Mohamadmehdi Kharatizadeh:
@@ -246,7 +247,7 @@ https://oauth2:xxxxxxxxxxx@git.cafebazaar.ir
 ...........................................
 
 # install samba server
-sudo apt-get install samba samba-common 
+sudo apt-get install samba samba-common
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
 
 # create shared folder configuration
@@ -319,6 +320,30 @@ git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.vim/pack/git-pl
 # install fzf
 mkdir -p ~/.vim/pack/git-plugins/start
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.vim/pack/git-plugins/start/fzf
+git clone --depth 1 https://github.com/junegunn/fzf.vim.git ~/.vim/pack/git-plugins/start/fzf.vim
+# install deoplete
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/roxma/nvim-yarp.git ~/.vim/pack/git-plugins/start/nvim-yarp
+git clone --depth 1 https://github.com/roxma/vim-hug-neovim-rpc.git ~/.vim/pack/git-plugins/start/vim-hug-neovim-rpc
+git clone --depth 1 https://github.com/Shougo/deoplete.nvim.git ~/.vim/pack/git-plugins/start/deoplete
+source ~/.venv3/bin/activate
+pip install pynvim
+# install theme
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/mhartington/oceanic-next.git ~/.vim/pack/git-plugins/start/oceanic-next
+# install airline
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/vim-airline/vim-airline.git ~/.vim/pack/git-plugins/start/vim-airline
+# install fugitive.vim
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/tpope/vim-fugitive.git ~/.vim/pack/git-plugins/start/vim-fugitive
+# install vim-terminal
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/tc50cal/vim-terminal.git ~/.vim/pack/git-plugins/start/vim-terminal
+# install vimspector
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone https://github.com/puremourning/vimspector ~/.vim/pack/vimspector/opt/vimspector
+~/.vim/pack/vimspector/opt/vimspector/install_gadget.py --all --disable-tcl
 
 # create a good vimrc
 vim ~/.vimrc
@@ -367,11 +392,12 @@ source $HOME/.bash_completions/kubectl
 Settings -> Apperance -> Autohide dock
 
 ## Install discord
+  ## -> F10 -> Toggle Mute
 
 ## Install Docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
-newgrp docker 
+newgrp docker
 
 ## Install VsCode
  -> Python
@@ -438,14 +464,14 @@ aws_secret_access_key=xxxxxxxxxxxxx
 # create desktop entry
 vim ~/.local/share/applications/minecraft.desktop
 ..........................................
-[Desktop Entry]                          
-Version=1.0                              
-Name=Minecraft                           
-Type=Application                         
-Comment=Launch Minecraft                 
-Exec=/home/arcana/.local/bin/minecraft   
-Categories=Game;                         
-GenericName=Minecraft                    
+[Desktop Entry]
+Version=1.0
+Name=Minecraft
+Type=Application
+Comment=Launch Minecraft
+Exec=/home/arcana/.local/bin/minecraft
+Categories=Game;
+GenericName=Minecraft
 ..........................................
 desktop-file-validate ~/.local/share/applications/minecraft.desktop
 update-desktop-database
@@ -459,9 +485,11 @@ update-desktop-database
 
 ## Remove `Help` from favorites
 
+## Install Charles Proxy
+
 ## install pg_config
 sudo apt install libpq-dev
- 
+
 
 =====================================================================================================
 =====================================================================================================
@@ -473,5 +501,3 @@ sudo apt install libpq-dev
 cat >myfile.txt <<EOL
 some blah
 EOL
-
-

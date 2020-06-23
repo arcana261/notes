@@ -135,7 +135,14 @@ alias kgcrg="kubectl get cronjob | grep"
 alias kdcr="kubectl delete cronjob"
 alias kecr="kubectl edit cronjob"
 
+alias kgi="kubectl get ingress"
+alias kgig="kubectl get ingress | grep"
+alias kgioy="kubectl get ingress -oyaml"
+alias kei="kubectl edit ingress"
+
 alias kpf="kubectl port-forward"
+
+alias keqd="kubectl edit quota default"
 
 alias keit="kubectl exec -it"
 function keitb() {

@@ -1,3 +1,7 @@
+# Good command to print linux network stuff
+ss -a -t -m -o --info
+
+
 ############# IPTABLES ################
 
 iptables -I INPUT -p tcp --destination 192.168.1.1 --dport 5672 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT

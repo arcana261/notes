@@ -1,11 +1,12 @@
+alias ocean="bash --rcfile $HOME/Documents/notes/sysconfig/ocean.bashrc.sh"
+
 # CafeBazaar
-export CI_BUILD_USERNAME=oauth2
-export CI_JOB_USERNAME=oauth2
-export CI_BUILD_TOKEN=XXXXXXXXXXXX
-export CI_JOB_TOKEN=XXXXXXX
+export CI_BUILD_USERNAME=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+export CI_JOB_USERNAME=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+export CI_BUILD_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+export CI_JOB_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 export GOPRIVATE="git.cafebazaar.ir"
 # End CafeBazaar
-
 
 export BLACK='\033[0;30m'
 export RED='\033[0;31m'
@@ -34,6 +35,9 @@ function changelog()
     git fetch --tags
     git log --pretty=oneline `git describe --abbrev=0`..HEAD | grep Merge
 }
+
+alias tmux="TERM=xterm-256color tmux -2"
+alias attach="TERM=xterm-256color tmux -2 attach"
 
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
@@ -167,21 +171,65 @@ function qind() {
 }
 
 function qin() {
-    grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude=*.pyc --exclude=*.swp --exclude=*.db --exclude-dir=.git "$@" .
+    grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude=*.pyc --exclude=*.swp --exclude=*.swo --exclude=*.db --exclude-dir=.git "$@" .
 }
 
 function vv() {
     name=$(echo $PWD | grep -o '[^/]*$')
     NAME=${name^^}
-    tmux split-window -v -c $(echo $PWD) -l 10 
+    tmux split-window -v -c $(echo $PWD) -l 10
     tmux rename-window "V:${NAME}"
+    tmux select-pane -P 'fg=colour15'
     tmux select-pane -U
-    source $HOME/.venv3/bin/activate
+    tmux resize-pane -Z
     vim
+}
+
+function pyvv() {
+  venv
+  vv
+}
+
+function venv() {
+  if [ ! -f .venv/bin/activate ]; then
+    python3 -m 'venv' .venv
+  fi
+
+  source .venv/bin/activate
+  export PS1="\[${ARROW_COLOR}\]#>\[${NC}\] "
+  _regit
+
+  if [ "$(pip freeze | grep wheel)" == "" ]; then
+    pip install wheel
+  fi
+
+  if [ "$(which flake8 | grep -v $HOME/.venv)" == "" ]; then
+    pip install flake8
+  fi
+
+  if [ "$(which mypy | grep -v $HOME/.venv)" == "" ]; then
+    pip install mypy
+  fi
+
+  if [ "$(which pylint | grep -v $HOME/.venv)" == "" ]; then
+    pip install pylint
+  fi
+
+  if [ "$(which py | grep -v $HOME/.venv)" == "" ]; then
+    pip install pylint
+  fi
+
+  if [ "$(pip freeze | grep pynvim)" == "" ]; then
+    pip install pynvim
+  fi
+
+  export VIRTUAL_ENV="$PWD/.venv"
+  export MYPYPATH="$PWD"
 }
 
 PROMPT_COMMAND="_regit"
 
+[ -f $HOME/.venv3/bin/activate ] && source $HOME/.venv3/bin/activate
 export PS1="\[${ARROW_COLOR}\]#>\[${NC}\] "
 _regit
 
@@ -197,6 +245,7 @@ alias y30="tmux resize-pane -y 30"
 alias y40="tmux resize-pane -y 40"
 alias y50="tmux resize-pane -y 50"
 alias yf="tmux resize-pane -Z"
+alias x10="tmux resize-pane -x 10"
 alias x50="tmux resize-pane -x 50"
 alias x100="tmux resize-pane -x 100"
 alias x150="tmux resize-pane -x 150"
@@ -309,4 +358,5 @@ fi
 export _ORIG_LS_COLORS="$LS_COLORS"
 export LS_COLORS=$_ORIG_LS_COLORS:'di=0;31:'
 
+if [ "$TERM" == "screen-256color" ]; then export TERM="xterm-256color"; fi
 
