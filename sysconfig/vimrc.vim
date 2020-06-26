@@ -13,13 +13,19 @@ set backup
 set backupcopy=auto
 set backupdir=~/.local/tmp
 set autoread
+set list
+cnoremap kj <C-C>
+cnoremap jk <C-C>
 color OceanicNext
 
 "ts = 'number of spaces that <Tab> in file uses' sts = 'number of spaces that <Tab> uses while editing' sw = 'number of spaces to use for (auto)indent step'
 "autocmd Filetype python setlocal ts=4 sw=4 sts=0 noexpandtab
 autocmd Filetype python setlocal ts=4 sw=4 sts=4 expandtab
 autocmd Filetype python DetectIndent
+autocmd Filetype python setlocal autowrite
 autocmd Filetype awk DetectIndent
+autocmd BufEnter,BufNew Dockerfile.base setlocal ft=dockerfile
+autocmd BufEnter,BufNew Dockerfile.build setlocal ft=dockerfile
 
 " uncomment to auto-open nerdtree
 "autocmd VimEnter * :NERDTree
@@ -57,6 +63,21 @@ command -nargs=1 -complete=file Gco :G checkout <f-args>
 command -nargs=0 Gbl :G blame
 command -nargs=0 Gsubuir :G submodule update --init --recursive
 command -nargs=1 Grb :G rebase <f-args>
+
+command -nargs=0 Vsconsole :VimspectorShowOutput Console
+command -nargs=0 Vstelemtry :VimspectorShowOutput Telemetry
+command -nargs=0 Vsvsout :VimspectorShowOutput Vimspector-out
+command -nargs=0 Vsvserr :VimspectorShowOutput Vimspector-err
+command -nargs=0 Vsserver :VimspectorShowOutput server
+command -nargs=0 Vsstderr :VimspectorShowOutput stderr
+command -nargs=0 Vs1 :Vsconsole
+command -nargs=0 Vs2 :Vstelemtry
+command -nargs=0 Vs3 :Vsvsout
+command -nargs=0 Vs4 :Vsvserr
+command -nargs=0 Vs5 :Vsserver
+command -nargs=0 Vs6 :Vsstderr
+command -nargs=0 VsClearBreakpoints :call vimspector#ClearBreakpoints()
+command -nargs=0 VsReset :VimspectorReset
 
 let g:vimspector_enable_mappings = 'HUMAN'
 packadd! vimspector
@@ -109,7 +130,10 @@ command -nargs=0 OpenTerminal :call s:OpenTerminal()
 function s:SetClip()
   let tmp = $HOME . '/.clipboard.vim.tmp'
   call writefile(getreg('0', 1, 1), tmp)
-  call system("cat " . tmp . " | xclip -selection c")
+  "call system("cat " . tmp . " | xclip -selection c")
+  let msg = system("xclip -i " . tmp . " -selection c")
+  echo msg
+  "exe "!xclip -i " . tmp . " -selection c"
 endfunction
 command -nargs=0 SetClip :call s:SetClip()
 

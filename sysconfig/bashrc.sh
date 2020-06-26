@@ -36,8 +36,8 @@ function changelog()
     git log --pretty=oneline `git describe --abbrev=0`..HEAD | grep Merge
 }
 
-alias tmux="TERM=xterm-256color tmux -2"
-alias attach="TERM=xterm-256color tmux -2 attach"
+alias tmux-new-session="TERM=xterm-256color tmux -2 -c $HOME/Documents/notes/sysconfig/tmux.conf"
+alias tmux-attach="TERM=xterm-256color tmux -2 attach"
 
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
@@ -147,6 +147,8 @@ function gsubuir() {
   git submodule update --init --recursive $@
 }
 
+alias gclone="git clone"
+
 export DIR_COLOR="${YELLOW}"
 export OCEAN_COLOR="${CYAN}"
 export ARROW_COLOR="${RED}"
@@ -230,6 +232,8 @@ function venv() {
 PROMPT_COMMAND="_regit"
 
 [ -f $HOME/.venv3/bin/activate ] && source $HOME/.venv3/bin/activate
+[ -f .venv/bin/activate ] && source .venv/bin/activate
+
 export PS1="\[${ARROW_COLOR}\]#>\[${NC}\] "
 _regit
 
