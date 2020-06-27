@@ -16,6 +16,8 @@ export BLUE='\033[0;34m'
 export CYAN='\033[0;36m'
 export LIGHT_BLUE='\033[1;34m'
 export YELLOW='\033[1;33m'
+export YELLOW_BGRED='\033[1;41;33m'
+export RED_BGRED='\033[1;41;31m'
 
 export NC='\033[0m' # No Color
 
@@ -36,7 +38,7 @@ function changelog()
     git log --pretty=oneline `git describe --abbrev=0`..HEAD | grep Merge
 }
 
-alias tmux-new-session="TERM=xterm-256color tmux -2 -c $HOME/Documents/notes/sysconfig/tmux.conf"
+alias tmux-new-session="TERM=xterm-256color tmux -2 -f $HOME/Documents/notes/sysconfig/tmux.conf"
 alias tmux-attach="TERM=xterm-256color tmux -2 attach"
 
 alias setclip="xclip -selection c"
@@ -152,20 +154,16 @@ alias gclone="git clone"
 export DIR_COLOR="${YELLOW}"
 export OCEAN_COLOR="${CYAN}"
 export ARROW_COLOR="${RED}"
+export SECOND_ARROW_COLOR="${RED}"
 
 function _regit() {
     ISGIT=$(git status 1>/dev/null 2>&1 || echo "NOGIT")
     if [ "$ISGIT" != "NOGIT" ]; then
-        #export PS1="(${ORANGE}git: "$(git rev-parse --abbrev-ref HEAD)"${NC}) "$(echo $PS1 | sed 's|([^(]*git: [^)]*)\s*||g' | sed 's|\s*$||g')" "
-        export PS1=$(echo $PS1 | sed 's|#.*$||g')"# \[${DIR_COLOR}\]"$(pwd | sed 's|[^/]*/||g')"\[${ARROW_COLOR}\]>\[${NC}\] "
-
         tmux set -g status-right '#[fg=red](git: '$(git rev-parse --abbrev-ref HEAD)') #[fg=yellow]'$(pwd)' #[fg=Cyan]#S #[fg=white]%a %d %b %R'
     else
-        #export PS1=$(echo $PS1 | sed 's|([^(]*git: [^)]*)\s*||g' | sed 's|\s*$||g')" "
-        export PS1=$(echo $PS1 | sed 's|#.*$||g')"# \[${DIR_COLOR}\]"$(pwd | sed 's|[^/]*/||g')"\[${ARROW_COLOR}\]>\[${NC}\] "
-
         tmux set -g status-right '#[fg=yellow]'$(pwd)' #[fg=Cyan]#S #[fg=white]%a %d %b %R'
     fi
+    export PS1=$(echo $PS1 | sed $'s|\u25A0.*$||g')$'\u25A0'" \[${DIR_COLOR}\]"$(pwd | sed 's|[^/]*/||g')"\[${SECOND_ARROW_COLOR}\]"$'\u2771'"\[${NC}\] "
 }
 
 function qind() {
@@ -198,7 +196,7 @@ function venv() {
   fi
 
   source .venv/bin/activate
-  export PS1="\[${ARROW_COLOR}\]#>\[${NC}\] "
+  export PS1="\[${ARROW_COLOR}\]"$'\u25A0'">\[${NC}\] "
   _regit
 
   if [ "$(pip freeze | grep wheel)" == "" ]; then
@@ -234,7 +232,7 @@ PROMPT_COMMAND="_regit"
 [ -f $HOME/.venv3/bin/activate ] && source $HOME/.venv3/bin/activate
 [ -f .venv/bin/activate ] && source .venv/bin/activate
 
-export PS1="\[${ARROW_COLOR}\]#>\[${NC}\] "
+export PS1="\[${ARROW_COLOR}\]"$'\u25A0'">\[${NC}\] "
 _regit
 
 function y0() {
