@@ -49,6 +49,18 @@ function pp() {
 }
 alias ee="exit"
 
+function watcha {
+  args="-c"
+  if [ "$1" == "-n" ]; then
+    args="$args $1 $2"
+    shift
+    shift
+  fi
+  cmd=$(alias "$1" | cut -d\' -f2)
+  shift
+  watch $args $cmd $@
+}
+
 function routes() {
     for addr in $(nslookup $1 | grep -v '127.0.0.1' | grep -o -P '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'); do echo $addr $(ip route get $addr | grep -o -P 'dev\s+\S+' | awk '{print $2}'); done
 }

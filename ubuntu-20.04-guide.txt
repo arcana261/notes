@@ -348,6 +348,11 @@ git clone --depth 1 https://github.com/tc50cal/vim-terminal.git ~/.vim/pack/git-
 mkdir -p ~/.vim/pack/git-plugins/start
 git clone https://github.com/puremourning/vimspector ~/.vim/pack/vimspector/opt/vimspector
 ~/.vim/pack/vimspector/opt/vimspector/install_gadget.py --all --disable-tcl
+# install deoplete-go
+go get -u -v github.com/stamblerre/gocode
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/deoplete-plugins/deoplete-go.git ~/.vim/pack/git-plugins/start/deoplete-go
+(cd ~/.vim/pack/git-plugins/start/deoplete-go && make)
 
 # create a good vimrc
 vim ~/.vimrc

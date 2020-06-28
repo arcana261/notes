@@ -24,8 +24,11 @@ autocmd Filetype python setlocal ts=4 sw=4 sts=4 expandtab
 autocmd Filetype python DetectIndent
 autocmd Filetype python setlocal autowrite
 autocmd Filetype awk DetectIndent
+autocmd Filetype go setlocal ts=4 sw=4 sts=4 expandtab
+autocmd Filetype go DetectIndent
 autocmd BufEnter,BufNew Dockerfile.base setlocal ft=dockerfile
 autocmd BufEnter,BufNew Dockerfile.build setlocal ft=dockerfile
+autocmd BufEnter,BufNew *.conf setlocal ft=conf
 
 " uncomment to auto-open nerdtree
 "autocmd VimEnter * :NERDTree
@@ -39,8 +42,10 @@ map <C-o> :Ag<Space>
 map <C-i> :OpenTerminal<CR>
 
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
-let b:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'go': ['gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace']}
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -58,6 +63,7 @@ command -nargs=0 Gds :G diff --staged
 command -nargs=1 -complete=file Grr :G reset <f-args>
 command -nargs=0 Grrsh :G reset --soft HEAD^
 command -nargs=1 Grrh :G reset --hard <f-args>
+command -nargs=0 Grrh0 :execute "G reset --hard " . @0
 command -nargs=0 Gl :G log
 command -nargs=1 -complete=file Gco :G checkout <f-args>
 command -nargs=0 Gbl :G blame
