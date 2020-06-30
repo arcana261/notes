@@ -46,10 +46,23 @@ let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'go': ['gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace']}
+let g:ale_linters = {'python': ['flake8', 'mypy', 'pylint', 'pyls'], 'go': ['gofmt', 'golint', 'govet', 'golangserver']}
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+command -nargs=0 Ah :ALEHover
+command -nargs=0 Agtd :ALEGoToDefinition
+"ALEGoToDefinition  ALEGoToDefinitionInSplit  ALEGoToDefinitionInTab  ALEGoToDefinitionInVSplit  ALEGoToTypeDefinition  ALEGoToTypeDefinitionInSplit  ALEGoToTypeDefinitionInTab  ALEGoToTypeDefinitionInVSplit
+command -nargs=0 Agtdit :ALEGoToDefinitionInTab
+command -nargs=0 Agtdis :ALEGoToDefinitionInSplit
+command -nargs=0 Agtdivs :ALEGoToDefinitionInVSplit
+command -nargs=0 Agttd :ALEGoToTypeDefinition
+command -nargs=0 Agttdit :ALEGoToTypeDefinitionInTab
+command -nargs=0 Agttdis :ALEGoToTypeDefinitionInSplit
+command -nargs=0 Agttdivs :ALEGoToTypeDefinitionInVSplit
+command -nargs=0 Afr :ALEFindReferences
 
 command -nargs=0 Gcom :G checkout master
 command -nargs=0 Gp :G pull

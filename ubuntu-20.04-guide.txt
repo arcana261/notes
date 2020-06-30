@@ -353,6 +353,11 @@ go get -u -v github.com/stamblerre/gocode
 mkdir -p ~/.vim/pack/git-plugins/start
 git clone --depth 1 https://github.com/deoplete-plugins/deoplete-go.git ~/.vim/pack/git-plugins/start/deoplete-go
 (cd ~/.vim/pack/git-plugins/start/deoplete-go && make)
+# install vim-jsonnet
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/google/vim-jsonnet.git ~/.vim/pack/git-plugins/start/vim-jsonnet
+# install go-langserver for ALE
+go get -v -u github.com/sourcegraph/go-langserver
 
 # create a good vimrc
 vim ~/.vimrc

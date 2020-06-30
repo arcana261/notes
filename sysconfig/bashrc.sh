@@ -235,6 +235,10 @@ function venv() {
     pip install pynvim
   fi
 
+  if [ "$(pip freeze | grep pyls)" == "" ]; then
+    pip install pyls
+  fi
+
   export VIRTUAL_ENV="$PWD/.venv"
   export MYPYPATH="$PWD"
 }
