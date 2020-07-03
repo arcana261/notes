@@ -126,6 +126,12 @@ function kdespff() {
   cat $HOME/.local/tmp/.ocean.kdespff | fzf
 }
 
+alias kroll="kubectl rollout restart"
+function krollf() {
+  deployment=$(kgdf | awk '{print $1}')
+  kroll deployment/$deployment
+}
+
 alias kgd="kubectl get deployments"
 alias kgdg="kubectl get deployments | grep"
 alias kgdf="kubectl get deployments | fzf"
@@ -147,6 +153,15 @@ function kgdoyf() {
 function kgdoyff() {
   kgdoyf > $HOME/.local/tmp/.ocean.kgdoyff
   cat $HOME/.local/tmp/.ocean.kgdoyff | fzf
+}
+
+alias kdrs="kubectl delete rs"
+alias kgrs="kubectl get rs"
+alias kgrsg="kubectl get rs | grep"
+alias kgrsf="kubectl get rs | fzf"
+function kdrsf() {
+  rs=$(kgrsf | awk '{print $1}')
+  kdrs $rs
 }
 
 alias kl="kubectl logs"
@@ -213,7 +228,7 @@ alias kgsg="kubectl get svc | grep"
 alias kgsf="kubectl get svc | fzf"
 alias kes="kubectl edit svc"
 function kesf() {
-  svc=$(kgs | awk '{print $1}')
+  svc=$(kgsf | awk '{print $1}')
   kes $svc
 }
 alias kgsoy="kubectl get svc -oyaml"
@@ -280,6 +295,10 @@ alias kpf="kubectl port-forward"
 function kpff() {
   pod=$(kgpf | awk '{print $1}')
   kpf $pod $@
+}
+function kpfsf() {
+  svc=$(kgsf | awk '{print $1}')
+  kpf svc/$svc $@
 }
 
 alias keqd="kubectl edit quota default"

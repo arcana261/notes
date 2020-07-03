@@ -139,7 +139,7 @@ sudo -i
   reboot
 
 # install tools
-sudo apt-get install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp
+sudo apt-get install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags
 
 # setup RSA key
 ssh-keygen -t rsa
@@ -358,6 +358,24 @@ mkdir -p ~/.vim/pack/git-plugins/start
 git clone --depth 1 https://github.com/google/vim-jsonnet.git ~/.vim/pack/git-plugins/start/vim-jsonnet
 # install go-langserver for ALE
 go get -v -u github.com/sourcegraph/go-langserver
+# install vim indent guide plugin
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/nathanaelkane/vim-indent-guides.git ~/.vim/pack/git-plugins/start/vim-indent-guides
+# install vim quickfix toggle plugin
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/milkypostman/vim-togglelist.git ~/.vim/pack/git-plugins/start/vim-togglelist
+# install vim tmuxline plugin
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/edkolev/tmuxline.vim.git ~/.vim/pack/git-plugins/start/tmuxline
+# install tagbar plugin
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/majutsushi/tagbar.git ~/.vim/pack/git-plugins/start/tagbar
+# install vim notes plugin
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/xolox/vim-notes.git ~/.vim/pack/git-plugins/start/vim-notes
+# install vim misc plugin
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/xolox/vim-misc.git ~/.vim/pack/git-plugins/start/vim-misc
 
 # create a good vimrc
 vim ~/.vimrc
@@ -522,6 +540,17 @@ cat >myfile.txt <<EOL
 some blah
 EOL
 
+# give multiline input
+grpcurl -d @ grpc.server.com:443 my.custom.server.Service/Method <<EOM
+{
+  "id": 1234,
+  "tags": [
+    "foor",
+    "bar"
+  ]
+}
+EOM
+
 
 =====================================================================================================
 =====================================================================================================
@@ -561,6 +590,7 @@ ${cwd} - the current working directory of the active window on launch
 ## Python Remote Debug with `debugpy`
 ## python -m debugpy --listen 0.0.0.0:5678 program.py
 ## python -m debugpy --listen 0.0.0.0:5678 -m module
+## .vimspector.json
 {
   "configurations": {
     "Python Attach": {

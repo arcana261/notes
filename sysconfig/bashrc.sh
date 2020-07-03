@@ -81,86 +81,42 @@ function gca() {
     git commit --amend
 }
 
-function gco() {
-    git checkout $@
+alias gco="git checkout "
+function gcobrf() {
+  branch=$(git branch | fzf | sed 's/\s*//g' | sed 's/\*//g')
+  gco $branch
 }
-
-function gcob() {
-    git checkout -b $@
+alias gcob="git checkout -b "
+alias gcom="git checkout master "
+alias gcomgp="gcom && gp"
+alias ga="git add "
+function gaf() {
+  file=$(fzf)
+  ga $file
 }
-
-function gcom() {
-    git checkout master $@
-}
-
-function ga() {
-    git add $@
-}
-
-function gd() {
-    git diff $@
-}
-
+alias gd="git diff "
 function gp() {
-    git pull origin $(git rev-parse --abbrev-ref HEAD)
+    git pull origin $(git rev-parse --abbrev-ref HEAD) $@
 }
-
 function gpp() {
-    git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+    git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) $@
 }
-
 function gppf() {
-    git push -f --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+    git push -f --set-upstream origin $(git rev-parse --abbrev-ref HEAD) $@
 }
-
-function gb() {
-    git branch $@
-}
-
-function gr() {
-    git rebase -i $@
-}
-
-function grc() {
-    git rebase --continue $@
-}
-
-function gra() {
-    git rebase --abort $@
-}
-
-function gl() {
-    git log $@
-}
-
-function grm() {
-    git rm $@
-}
-
-function grr() {
-    git reset $@
-}
-
-function grrh() {
-    git reset --hard $@
-}
-
-function gss() {
-    git stash $@
-}
-
-function gssa() {
-    git stash apply $@
-}
-
-function gb() {
-    git blame $@
-}
-
-function gsubuir() {
-  git submodule update --init --recursive $@
-}
-
+alias gb="git branch "
+alias gr="git rebase -i "
+alias grc="git rebase --continue "
+alias gra="git rebase --abort "
+alias gl="git log "
+alias grm="git rm "
+alias grr="git reset "
+alias grrh="git reset --hard "
+alias gss="git stash "
+alias gssa="git stash apply "
+alias gbl="git blame "
+alias gsmuir="git submodule update --init --recursive "
+alias gcl="git clone "
 alias gclone="git clone"
 
 export DIR_COLOR="${YELLOW}"

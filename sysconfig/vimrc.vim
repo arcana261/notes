@@ -26,6 +26,7 @@ autocmd Filetype python setlocal autowrite
 autocmd Filetype awk DetectIndent
 autocmd Filetype go setlocal ts=4 sw=4 sts=4 expandtab
 autocmd Filetype go DetectIndent
+autocmd Filetype go setlocal autowrite
 autocmd BufEnter,BufNew Dockerfile.base setlocal ft=dockerfile
 autocmd BufEnter,BufNew Dockerfile.build setlocal ft=dockerfile
 autocmd BufEnter,BufNew *.conf setlocal ft=conf
@@ -40,6 +41,12 @@ map <C-e> :Commands<CR>
 map <C-p> :Files<CR>
 map <C-o> :Ag<Space>
 map <C-i> :OpenTerminal<CR>
+map <C-l> :TagbarToggle<CR>
+
+let g:notes_directories = ['$HOME/Documents/vim-notes']
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
@@ -49,8 +56,15 @@ let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'go': ['g
 let g:ale_linters = {'python': ['flake8', 'mypy', 'pylint', 'pyls'], 'go': ['gofmt', 'golint', 'govet', 'golangserver']}
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
+let g:ale_open_list = 1
+let g:ale_set_quickfix = 1
+
+let g:indent_guides_enable_on_vim_startup = 1
+
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+command -nargs=0 Qf :call ToggleQuickfixList()
 
 command -nargs=0 Ah :ALEHover
 command -nargs=0 Agtd :ALEGoToDefinition
@@ -215,7 +229,7 @@ function! s:get_visual_selection()
     return join(lines, "\n")
 endfunction
 
-set tabline=%!MyTabLine()  " custom tab pages line
+"set tabline=%!MyTabLine()  " custom tab pages line
 function MyTabLine()
         let s = '' " complete tabline goes here
         " loop through each tab page
