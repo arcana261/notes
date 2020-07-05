@@ -86,12 +86,16 @@ function gcobrf() {
   branch=$(git branch | fzf | sed 's/\s*//g' | sed 's/\*//g')
   gco $branch
 }
+function gcoff() {
+  file=$(git ls-files --modified --others --deleted --directory | fzf --preview='git diff {}')
+  gco $file
+}
 alias gcob="git checkout -b "
 alias gcom="git checkout master "
 alias gcomgp="gcom && gp"
 alias ga="git add "
 function gaf() {
-  file=$(fzf)
+  file=$(git ls-files --modified --others --directory | fzf --preview='git diff {}')
   ga $file
 }
 alias gd="git diff "
@@ -104,6 +108,7 @@ function gpp() {
 function gppf() {
     git push -f --set-upstream origin $(git rev-parse --abbrev-ref HEAD) $@
 }
+alias gfa="git fetch --all"
 alias gb="git branch "
 alias gr="git rebase -i "
 alias grc="git rebase --continue "

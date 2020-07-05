@@ -102,24 +102,33 @@ function run_bash() {
 alias kgp="kubectl get pods"
 alias kgpow="kubectl get pods -owide"
 alias kgpg="kubectl get pods | grep"
-alias kgpf="kubectl get pods | fzf"
+function kgpf() {
+}
 alias wn1kgpg="watcha -n 1 kgpg"
 alias kgpowg="kubectl get pods -owide | grep"
-alias kgpowf="kubectl get pods -owide | fzf"
+function kgpowf() {
+  kubectl get pods -owide | fzf --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods -owide)" --header 'Press CTRL-R to reload' --header-lines=1
+}
 alias kdp="kubectl delete pod"
 function kdpf() {
   pod=$(kgpf | awk '{print $1}')
-  kdp $pod
+  if [ "$pod" != "" ]; then
+    kdp $pod
+  fi
 }
 alias kdpfgp0="kubectl delete pod --force --grace-period=0"
 function kdpfgp0f() {
   pod=$(kgpf | awk '{print $1}')
-  kdpfgp0 $pod
+  if [ "$pod" != "" ]; then
+    kdpfgp0 $pod
+  fi
 }
 alias kdesp="kubectl describe pod"
 function kdespf() {
   pod=$(kgpf | awk '{print $1}')
-  kdesp $pod
+  if [ "$pod" != "" ]; then
+    kdesp $pod
+  fi
 }
 function kdespff() {
   kdespf > $HOME/.local/tmp/.ocean.kdespff
@@ -129,26 +138,36 @@ function kdespff() {
 alias kroll="kubectl rollout restart"
 function krollf() {
   deployment=$(kgdf | awk '{print $1}')
-  kroll deployment/$deployment
+  if [ "$deployment" != "" ]; then
+    kroll deployment/$deployment
+  fi
 }
 
 alias kgd="kubectl get deployments"
 alias kgdg="kubectl get deployments | grep"
-alias kgdf="kubectl get deployments | fzf"
+function kgdf() {
+  kubectl get deployments | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get deployment -oyaml {1}"
+}
 alias ked="kubectl edit deployment"
 function kedf() {
   deployment=$(kgdf | awk '{print $1}')
-  ked $deployment
+  if [ "$deployment" != "" ]; then
+    ked $deployment
+  fi
 }
 alias kdd="kubectl delete deployment"
 function kddf() {
   deployment=$(kgdf | awk '{print $1}')
-  kdd $deployment
+  if [ "$deployment" != "" ]; then
+    kdd $deployment
+  fi
 }
 alias kgdoy="kubectl get deployment -oyaml"
 function kgdoyf() {
   deployment=$(kgdf | awk '{print $1}')
-  kgdoy $deployment
+  if [ "$deployment" != "" ]; then
+    kgdoy $deployment
+  fi
 }
 function kgdoyff() {
   kgdoyf > $HOME/.local/tmp/.ocean.kgdoyff
@@ -167,15 +186,15 @@ function kdrsf() {
 alias kl="kubectl logs"
 alias klt100f="kubectl logs --tail=100 -f"
 function klf() {
-  pod=$(kgpf | awk '{print $1}')
+  pod=$(kgpf --preview="kubectl logs --namespace=$OCEAN_NAMESPACE --tail=50 {1}" | awk '{print $1}')
   kl $pod
 }
 function klff() {
-  pod=$(kgpf | awk '{print $1}')
+  pod=$(kgpf --preview="kubectl logs --namespace=$OCEAN_NAMESPACE --tail=50 {1}" | awk '{print $1}')
   kl $pod | fzf
 }
 function klt100ff() {
-  pod=$(kgpf | awk '{print $1}')
+  pod=$(kgpf --preview="kubectl logs --namespace=$OCEAN_NAMESPACE --tail=50 {1}" | awk '{print $1}')
   klt100f $pod
 }
 
@@ -207,16 +226,22 @@ function krff() {
 
 alias kgcm="kubectl get configmap"
 alias kgcmg="kubectl get configmap | grep"
-alias kgcmf="kubectl get configmap | fzf"
+function kgcmf() {
+  kubectl get configmap | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get configmap -oyaml {1}"
+}
 alias kecm="kubectl edit configmap"
 function kecmf() {
   cm=$(kgcmf | awk '{print $1}')
-  kecm $cm
+  if [ "$cm" != "" ]; then
+    kecm $cm
+  fi
 }
 alias kgcmoy="kubectl get configmap -oyaml"
 function kgcmoyf() {
   cm=$(kgcmf | awk '{print $1}')
-  kgcmoy $cm
+  if [ "$cm" != ""]; then
+    kgcmoy $cm
+  fi
 }
 function kgcmoyff() {
   kgcmoyf > $HOME/.local/tmp/.ocean.kgcmoyff
@@ -225,16 +250,22 @@ function kgcmoyff() {
 
 alias kgs="kubectl get svc"
 alias kgsg="kubectl get svc | grep"
-alias kgsf="kubectl get svc | fzf"
+function kgsf() { 
+  kubectl get svc | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get svc -oyaml {1}"
+}
 alias kes="kubectl edit svc"
 function kesf() {
   svc=$(kgsf | awk '{print $1}')
-  kes $svc
+  if [ "$svc" != "" ]; then
+    kes $svc
+  fi
 }
 alias kgsoy="kubectl get svc -oyaml"
 function kgsoyf() {
   svc=$(kgsf | awk '{print $1}')
-  kgsoy $svc
+  if [ "$svc" != "" ]; then
+    kgsoy $svc
+  fi
 }
 function kgsoyff() {
   kgsoyf > $HOME/.local/tmp/.ocean.kgsoyff
@@ -243,11 +274,15 @@ function kgsoyff() {
 
 alias kgsm="kubectl get ServiceMonitor"
 alias kgsmg="kubectl get ServiceMonitor | grep"
-alias kgsmf="kubectl get ServiceMonitor | fzf"
+function kgsmf() { 
+  kubectl get ServiceMonitor | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get ServiceMonitor -oyaml {1}"
+}
 alias kgsmoy="kubectl get ServiceMonitor -o yaml"
 function kgsmoyf() {
   sm=$(kgsmf | awk '{print $1}')
-  kgsmoy $sm
+  if [ "$sm" != "" ]; then
+    kgsmoy $sm
+  fi
 }
 function kgsmoyff() {
   kgsmoyf > $HOME/.local/tmp/.ocean.kgsmoyff
@@ -256,12 +291,16 @@ function kgsmoyff() {
 
 alias kgcr="kubectl get cronjob"
 alias kgcrg="kubectl get cronjob | grep"
-alias kgcrf="kubectl get cronjob | fzf"
+function kgcrf() {
+  kubectl get cronjob | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get cronjob -oyaml {1}"
+}
 alias kdcr="kubectl delete cronjob"
 alias kecr="kubectl edit cronjob"
 function kecrf() {
   cr=$(kgcr | awk '{print $1}')
-  kecr $cr
+  if [ "$cr" != "" ]; then
+    kecr $cr
+  fi
 }
 alias kgcroy="kubectl get cronjob -oyaml"
 function kgcroyf() {
@@ -275,16 +314,22 @@ function kgcroyff() {
 
 alias kgi="kubectl get ingress"
 alias kgig="kubectl get ingress | grep"
-alias kgif="kubectl get ingress | fzf"
+function kgif() { 
+  kubectl get ingress | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get ingress -oyaml {1}"
+}
 alias kei="kubectl edit ingress"
 function keif() {
   ingress=$(kgif | awk '{print $1}')
-  kei $ingress
+  if [ "$ingress" != "" ]; then
+    kei $ingress
+  fi
 }
 alias kgioy="kubectl get ingress -oyaml"
 function kgioyf() {
   ingress=$(kgif | awk '{print $1}')
-  kgioy $ingress
+  if [ "$ingress" != "" ]; then
+    kgioy $ingress
+  fi
 }
 function kgioyff() {
   kgioyf > $HOME/.local/tmp/.ocean.kgioyff
