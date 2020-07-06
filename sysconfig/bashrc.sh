@@ -96,9 +96,17 @@ alias gcomgp="gcom && gp"
 alias ga="git add "
 function gaf() {
   file=$(git ls-files --modified --others --directory | fzf --preview='git diff {}')
-  ga $file
+  if [ "$file" != "" ]; then
+    ga $file
+  fi
 }
 alias gd="git diff "
+function gdf() {
+  file=$(git ls-files --modified | fzf --preview='git diff {}')
+  if [ "$file" != "" ]; then
+    gd $file
+  fi
+}
 function gp() {
     git pull origin $(git rev-parse --abbrev-ref HEAD) $@
 }

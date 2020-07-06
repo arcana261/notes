@@ -103,6 +103,7 @@ alias kgp="kubectl get pods"
 alias kgpow="kubectl get pods -owide"
 alias kgpg="kubectl get pods | grep"
 function kgpf() {
+  kubectl get pods | fzf --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods)" --header 'Press CTRL-R to reload' --header-lines=1
 }
 alias wn1kgpg="watcha -n 1 kgpg"
 alias kgpowg="kubectl get pods -owide | grep"

@@ -163,12 +163,18 @@ command -nargs=0 OpenTerminal :call s:OpenTerminal()
 function s:SetClip()
   let tmp = $HOME . '/.clipboard.vim.tmp'
   call writefile(getreg('0', 1, 1), tmp)
-  "call system("cat " . tmp . " | xclip -selection c")
   let msg = system("xclip -i " . tmp . " -selection c")
   echo msg
-  "exe "!xclip -i " . tmp . " -selection c"
 endfunction
 command -nargs=0 SetClip :call s:SetClip()
+
+function s:GetClip()
+  let tmp = $HOME . '/.clipboard.vim.tmp'
+  let msg = system("xclip -selection c -o > " . tmp)
+  echo msg
+  let @0 = system("cat " . tmp)
+endfunction
+command -nargs=0 GetClip :call s:GetClip()
 
 function! s:DiffWithSaved()
   let filetype=&ft
