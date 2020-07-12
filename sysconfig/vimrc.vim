@@ -28,6 +28,7 @@ autocmd Filetype go setlocal ts=4 sw=4 sts=4 expandtab
 autocmd Filetype go DetectIndent
 autocmd Filetype go setlocal autowrite
 autocmd BufEnter,BufNew Dockerfile.base setlocal ft=dockerfile
+autocmd BufEnter,BufNew Dockerfile.test setlocal ft=dockerfile
 autocmd BufEnter,BufNew Dockerfile.build setlocal ft=dockerfile
 autocmd BufEnter,BufNew *.conf setlocal ft=conf
 

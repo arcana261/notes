@@ -1,0 +1,49 @@
+- name: Allow port through firewall
+  ufw:
+    rule: allow
+    port: 444
+    proto: tcp
+
+- name: allow pre-routing
+  lineinfile:
+    path: /etc/ufw/before.rules
+    state: present
+    regexp: ':PREROUTING ACCEPT \[0:0\]'
+    line: ':PREROUTING ACCEPT [0:0]'
+    insertbefore: '^\s*COMMIT\s*$'
+    firstmatch: true
+
+- name: block ir port others
+  lineinfile:
+    path: /etc/ufw/before.rules
+    state: present
+    regexp: '{{ item | replace("*", "\*") | replace("[", "\[") | replace("]", "\]") }} -j REDIRECT --to-ports 9999'
+    line: '-I PREROUTING -p tcp -s 192.168.199.0/24 -d {{ item }} -j REDIRECT --to-ports 9999'
+    insertbefore: '^\s*COMMIT\s*$'
+    firstmatch: true
+  when: "'#' not in item"
+  loop: "{{ lookup('file', 'roles/blockir/files/cidr.txt').splitlines() }}"
+
+- name: block ir port 80
+  lineinfile: 
+    path: /etc/ufw/before.rules
+    state: present
+    regexp: '{{ item | replace("*", "\*") | replace("[", "\[") | replace("]", "\]") }} -j REDIRECT --to-ports 80'
+    line: '-I PREROUTING -p tcp -s 192.168.199.0/24 -d {{ item }} --dport 80 -j REDIRECT --to-ports 80'
+    insertbefore: '^\s*COMMIT\s*$'
+    firstmatch: true
+  when: "'#' not in item"
+  loop: "{{ lookup('file', 'roles/blockir/files/cidr.txt').splitlines() }}"
+
+- name: block ir port 443
+  lineinfile:
+    path: /etc/ufw/before.rules
+    state: present
+    regexp: '{{ item | replace("*", "\*") | replace("[", "\[") | replace("]", "\]") }} -j REDIRECT --to-ports 444'
+    line: '-I PREROUTING -p tcp -s 192.168.199.0/24 -d {{ item }} --dport 443 -j REDIRECT --to-ports 444'
+    insertbefore: '^\s*COMMIT\s*$'
+    firstmatch: true
+  when: "'#' not in item"
+  loop: "{{ lookup('file', 'roles/blockir/files/cidr.txt').splitlines() }}"
+
+

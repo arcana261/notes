@@ -9,6 +9,36 @@ iptables -I INPUT -p tcp --destination 192.168.1.1 --dport 5672 -m conntrack --c
 iptables -I INPUT -p tcp -s 192.168.1.0/24 --dport 5672 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 
 
+
+## Random balancing
+To really load balance traffic on 3 different servers, the previous three rules become:
+
+iptables -A PREROUTING -t nat -p tcp -d 192.168.1.1 --dport 27017 \
+         -m statistic --mode random --probability 0.33            \
+         -j DNAT --to-destination 10.0.0.2:1234
+iptables -A PREROUTING -t nat -p tcp -d 192.168.1.1 --dport 27017 \
+         -m statistic --mode random --probability 0.5             \
+         -j DNAT --to-destination 10.0.0.3:1234
+iptables -A PREROUTING -t nat -p tcp -d 192.168.1.1 --dport 27017 \
+         -j DNAT --to-destination 10.0.0.4:1234
+
+
+## Round Robin
+The other way to do this is to use the nth algorithm. This algorithm implements a round robin algorithm.
+
+This algorithm takes two different parameters: every (n) and packet(p). The rule will be evaluated every n packet starting at the packet p.
+
+To load balance between three different hosts you will need to create those three rules:
+
+iptables -A PREROUTING -t nat -p tcp -d 192.168.1.1 --dport 27017 \
+         -m statistic --mode nth --every 3 --packet 0              \
+         -j DNAT --to-destination 10.0.0.2:1234
+iptables -A PREROUTING -t nat -p tcp -d 192.168.1.1 --dport 27017 \
+         -m statistic --mode nth --every 2 --packet 0              \
+         -j DNAT --to-destination 10.0.0.3:1234
+iptables -A PREROUTING -t nat -p tcp -d 192.168.1.1 --dport 27017 \
+         -j DNAT --to-destination 10.0.0.4:1234
+
 ############################ OVS #################################
 
 # print version

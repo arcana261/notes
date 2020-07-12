@@ -38,6 +38,10 @@ NS="$NS cdn.yektanet.com"
 NS="$NS logo.samandehi.ir"
 NS="$NS survey.porsline.ir"
 NS="$NS pec.shaparak.ir"
+NS="$NS chishi.ir"
+NS="$NS nikstar.ir"
+NS="$NS asriran.com"
+NS="$NS sarashpazpapion.com"
 
 ARGS=""
 

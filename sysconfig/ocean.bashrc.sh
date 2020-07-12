@@ -57,6 +57,10 @@ function divar-real-estate() {
   swim divar-real-estate
 }
 
+function divar-customer-trust() {
+  swim divar-customer-trust
+}
+
 function secret() {
     for key in $(kubectl get secret $1 -ojson | jq -r '.data | keys | @tsv' | tr '\t' ' '); do echo $key; kubectl get secret $1 -ojson | jq -r ".data.$key" | base64 -d -w 0; echo ""; echo ""; done
 }
@@ -74,7 +78,7 @@ function pod() {
 }
 
 function pods() {
-    kubectl get pods | grep "^$1-[^-]*-[^-]*$" | sort 
+    kubectl get pods | grep "^$1-[^-]*-[^-]*$" | sort
 }
 
 function events() {
@@ -99,11 +103,527 @@ function run_bash() {
     kubectl exec -it $p -- bash
 }
 
+function k() {
+  if [ "$1" != "" ]; then
+    cmd="$1"
+    shift
+  else
+    cmd=$(echo $'pod\ndeployment\ningress\nconfigmap\ncronjob\nservice' | fzf)
+  fi
+
+  if [ "$cmd" == "" ]; then
+    return 0
+  fi
+
+  if [ "$cmd" == "service" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    service=$(kubectl get service $options | fzf \
+      --preview="kubectl --namespace $OCEAN_NAMESPACE get service -oyaml {1}" \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
+      --bind "ctrl-p:execute(echo 'FORWARD:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --query "$query" \
+      --header 'c^r[reload], c^o[wide], c^d[delete], c^p[forward], c^e[edit], c^b[back]' \
+      --header-lines=1)
+
+    if [ "$pod" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EDIT" ]; then
+        query="$(cat $tmp | sed 's|^EDIT:||g')"
+        kubectl edit service $query
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "FORWARD" ]; then
+        query="$(cat $tmp | sed 's|^FORWARD:||g')"
+        ports=$(kubectl get service $query -ojson | jq '.spec.ports | map (.name + " " + (.port|tostring)) | flatten+["<Custom>"] | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
+        if [ "$ports" == "" ]; then
+          return 0
+        fi
+
+        if [ "$ports" == "<Custom>" ]; then
+          echo "Enter remote port:> "
+          read port
+        else
+          port=$(echo $ports | awk '{print $1}')
+        fi
+
+        echo "Enter local port:> "
+        read localport
+
+        if [ "$localport" == "" ]; then
+          return 0
+        fi
+
+        kubectl port-forward svc/$query $localport:$port
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      return 0
+    fi
+  elif [ "$cmd" == "pod" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    pod=$(kubectl get pods $options | fzf \
+      --preview="kubectl --namespace $OCEAN_NAMESPACE describe pod {1}" \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-d:execute(kubectl --namespace $OCEAN_NAMESPACE delete pod {1})+reload(kubectl --namespace $OCEAN_NAMESPACE get pods $options)" \
+      --bind "ctrl-l:execute(echo 'LOG:{1}' > $tmp)+abort" \
+      --bind "ctrl-p:execute(echo 'FORWARD:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EXECUTE:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --query "$query" \
+      --header 'c^r[reload], c^o[wide], c^d[delete], c^l[logs], c^p[forward], c^e[execute], c^b[back]' \
+      --header-lines=1)
+
+    if [ "$pod" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "LOG" ]; then
+        query="$(cat $tmp | sed 's|^LOG:||g')"
+
+        num_containers=$(kubectl get pod $query -ojson | jq '.spec.containers | length')
+        options=""
+        if [ "$num_containers" != "1" ]; then
+          containers=$(kubectl get pod $query -ojson | jq '.spec.containers | map(.name) | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
+          options="-c $containers"
+        fi
+
+        kubectl logs --tail=100 -f $query $options
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EXECUTE" ]; then
+        query="$(cat $tmp | sed 's|^EXECUTE:||g')"
+
+        num_containers=$(kubectl get pod $query -ojson | jq '.spec.containers | length')
+        options=""
+        if [ "$num_containers" != "1" ]; then
+          containers=$(kubectl get pod $query -ojson | jq '.spec.containers | map(.name) | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
+          options="-c $containers"
+        fi
+
+        echo "Enter executable(bash):> "
+        read binary
+        if [ "$binary" == "" ]; then
+          binary="bash"
+        fi
+
+        kubectl exec -it $options $query -- $binary
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "FORWARD" ]; then
+        query="$(cat $tmp | sed 's|^FORWARD:||g')"
+        ports=$(kubectl get pod $query -ojson | jq '.spec.containers | map(.ports | map (.name + " " + (.containerPort|tostring))) | flatten+["<Custom>"] | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
+        if [ "$ports" == "" ]; then
+          return 0
+        fi
+
+        if [ "$ports" == "<Custom>" ]; then
+          echo "Enter remote port:> "
+          read port
+        else
+          port=$(echo $ports | awk '{print $1}')
+        fi
+
+        echo "Enter local port:> "
+        read localport
+
+        if [ "$localport" == "" ]; then
+          return 0
+        fi
+
+        kubectl port-forward $query $localport:$port
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      echo $pod
+      return 0
+    fi
+
+    echo $pod
+
+  elif [ "$cmd" == "ingress" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    ings=$(kubectl get ingress $options | fzf \
+      --preview="kubectl --namespace $OCEAN_NAMESPACE get ingress {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get ingress $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --header 'c^r[reload], c^o[wide], c^u[delete], c^e[edit], c^b[back]' \
+      --query "$query" \
+      --header-lines=1)
+
+    if [ "$ings" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "DELETE" ]; then
+        query="$(cat $tmp | sed 's|^DELETE:||g')"
+        echo "Enter (YES) to delete deployment '$query':> "
+        read confirm
+
+        if [ "$confirm" == "YES" ]; then
+          kubectl delete ingress $query
+        fi
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EDIT" ]; then
+        query="$(cat $tmp | sed 's|^EDIT:||g')"
+        kubectl edit ingress $query
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      return 0
+    fi
+
+    echo $ings
+    return 0
+
+  elif [ "$cmd" == "configmap" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    configmap=$(kubectl get configmap $options | fzf \
+      --preview="kubectl --namespace $OCEAN_NAMESPACE get configmap {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get configmap $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --header 'c^r[reload], c^o[wide], c^u[delete], c^e[edit], c^b[back]' \
+      --query "$query" \
+      --header-lines=1)
+
+    if [ "$configmap" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "DELETE" ]; then
+        query="$(cat $tmp | sed 's|^DELETE:||g')"
+        echo "Enter (YES) to delete configmap '$query':> "
+        read confirm
+
+        if [ "$confirm" == "YES" ]; then
+          kubectl delete configmap $query
+        fi
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EDIT" ]; then
+        query="$(cat $tmp | sed 's|^EDIT:||g')"
+        kubectl edit configmap $query
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      return 0
+    fi
+
+    echo $configmap
+    return 0
+
+  elif [ "$cmd" == "cronjob" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    cronjob=$(kubectl get cronjob $options | fzf \
+      --preview="kubectl --namespace $OCEAN_NAMESPACE get cronjob {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get cronjob $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --bind "ctrl-p:execute(echo 'PODS:{1}' > $tmp)+abort" \
+      --header 'c^r[reload], c^o[wide], c^u[delete], c^e[edit], c^p[pods], c^b[back]' \
+      --query "$query" \
+      --header-lines=1)
+
+    if [ "$cronjob" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "PODS" ]; then
+        query="$(cat $tmp | sed 's|^PODS:||g')"
+
+        k pod $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "DELETE" ]; then
+        query="$(cat $tmp | sed 's|^DELETE:||g')"
+        echo "Enter (YES) to delete cronjob '$query':> "
+        read confirm
+
+        if [ "$confirm" == "YES" ]; then
+          kubectl delete cronjob $query
+        fi
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EDIT" ]; then
+        query="$(cat $tmp | sed 's|^EDIT:||g')"
+        kubectl edit cronjob $query
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      echo $cronjob
+      return 0
+    fi
+
+  elif [ "$cmd" == "deployment" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    deployment=$(kubectl get deployments $options | fzf \
+      --preview="kubectl --namespace $OCEAN_NAMESPACE get deployment {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get deployments $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --bind "ctrl-p:execute(echo 'PODS:{1}' > $tmp)+abort" \
+      --bind "ctrl-l:execute(echo 'ROLLOUT:{1}' > $tmp)+abort" \
+      --header 'c^r[reload], c^o[wide], c^u[delete], c^e[edit], c^p[pods], c^l[rollout], c^b[back]' \
+      --query "$query" \
+      --header-lines=1)
+
+    if [ "$deployment" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "ROLLOUT" ]; then
+        query="$(cat $tmp | sed 's|^ROLLOUT:||g')"
+
+        kubectl rollout restart deployment/$query
+
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "PODS" ]; then
+        query="$(cat $tmp | sed 's|^PODS:||g')"
+
+        k pod $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "DELETE" ]; then
+        query="$(cat $tmp | sed 's|^DELETE:||g')"
+        echo "Enter (YES) to delete deployment '$query':> "
+        read confirm
+
+        if [ "$confirm" == "YES" ]; then
+          kubectl delete deployment $query
+        fi
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EDIT" ]; then
+        query="$(cat $tmp | sed 's|^EDIT:||g')"
+        kubectl edit deployment $query
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      echo $deployment
+      return 0
+    fi
+
+    return 0
+
+  fi
+}
+
 alias kgp="kubectl get pods"
 alias kgpow="kubectl get pods -owide"
 alias kgpg="kubectl get pods | grep"
 function kgpf() {
-  kubectl get pods | fzf --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods)" --header 'Press CTRL-R to reload' --header-lines=1
+  kubectl get pods | fzf --preview="kubectl --namespace $OCEAN_NAMESPACE describe pod {1}" --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods)" --header 'Press CTRL-R to reload' --header-lines=1
 }
 alias wn1kgpg="watcha -n 1 kgpg"
 alias kgpowg="kubectl get pods -owide | grep"
@@ -147,7 +667,7 @@ function krollf() {
 alias kgd="kubectl get deployments"
 alias kgdg="kubectl get deployments | grep"
 function kgdf() {
-  kubectl get deployments | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get deployment -oyaml {1}"
+  kubectl get deployments | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get deployment -oyaml {1}" --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get deployments)" --header 'Press CTRL-R to reload' --header-lines=1
 }
 alias ked="kubectl edit deployment"
 function kedf() {
@@ -251,7 +771,7 @@ function kgcmoyff() {
 
 alias kgs="kubectl get svc"
 alias kgsg="kubectl get svc | grep"
-function kgsf() { 
+function kgsf() {
   kubectl get svc | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get svc -oyaml {1}"
 }
 alias kes="kubectl edit svc"
@@ -275,7 +795,7 @@ function kgsoyff() {
 
 alias kgsm="kubectl get ServiceMonitor"
 alias kgsmg="kubectl get ServiceMonitor | grep"
-function kgsmf() { 
+function kgsmf() {
   kubectl get ServiceMonitor | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get ServiceMonitor -oyaml {1}"
 }
 alias kgsmoy="kubectl get ServiceMonitor -o yaml"
@@ -315,7 +835,7 @@ function kgcroyff() {
 
 alias kgi="kubectl get ingress"
 alias kgig="kubectl get ingress | grep"
-function kgif() { 
+function kgif() {
   kubectl get ingress | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get ingress -oyaml {1}"
 }
 alias kei="kubectl edit ingress"
@@ -361,4 +881,3 @@ function keitbf() {
 alias kcp="kubectl cp"
 
 swim divar-infra
-

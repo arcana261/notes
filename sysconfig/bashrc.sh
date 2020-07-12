@@ -95,7 +95,7 @@ alias gcom="git checkout master "
 alias gcomgp="gcom && gp"
 alias ga="git add "
 function gaf() {
-  file=$(git ls-files --modified --others --directory | fzf --preview='git diff {}')
+  file=$(git ls-files --modified --others --exclude-standard --directory | fzf --preview='git diff {}' --bind "ctrl-a:execute(git add {1})+reload(git ls-files --modified --others --exclude-standard --directory)" --header 'Press CTRL-A to Git ADD')
   if [ "$file" != "" ]; then
     ga $file
   fi
@@ -346,4 +346,3 @@ export _ORIG_LS_COLORS="$LS_COLORS"
 export LS_COLORS=$_ORIG_LS_COLORS:'di=0;31:'
 
 if [ "$TERM" == "screen-256color" ]; then export TERM="xterm-256color"; fi
-
