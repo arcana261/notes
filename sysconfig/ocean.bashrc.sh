@@ -224,8 +224,9 @@ function k() {
       --bind "ctrl-p:execute(echo 'FORWARD:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EXECUTE:{1}' > $tmp)+abort" \
       --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --bind "ctrl-w:toggle-preview" \
       --query "$query" \
-      --header 'c^r[reload], c^o[wide], c^d[delete], c^l[logs], c^p[forward], c^e[execute], c^b[back]' \
+      --header 'c^r[reload], c^o[wide], c^d[delete], c^l[logs], c^p[forward], c^e[execute], c^b[back], c^w[preview]' \
       --header-lines=1)
 
     if [ "$pod" == "" ]; then

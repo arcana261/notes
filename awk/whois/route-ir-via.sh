@@ -12,6 +12,7 @@ fi
 
 NS=""
 NS="$NS digikala.com"
+NS="$NS www.digikala.com"
 NS="$NS okala.com"
 NS="$NS sep.shaparak.ir"
 NS="$NS bpm.shaparak.ir"
@@ -42,6 +43,9 @@ NS="$NS chishi.ir"
 NS="$NS nikstar.ir"
 NS="$NS asriran.com"
 NS="$NS sarashpazpapion.com"
+NS="$NS aloaz.ir"
+NS="$NS golestan.iust.ac.ir"
+NS="$NS emdadsaipa.ir"
 
 ARGS=""
 
@@ -50,4 +54,3 @@ for ns in $NS; do
 done
 
 (cd $DIR && ./route-add-via-ns.sh $ARGS)
-

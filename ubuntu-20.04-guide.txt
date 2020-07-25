@@ -313,6 +313,10 @@ mkdir -p ~/.local/src
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.local/src/fzf
 ~/.local/src/fzf/install
 
+## install up from
+## https://github.com/akavel/up
+## install it to $HOME/.local/bin
+
 ## Install VIM plugins
 mkdir -p ~/.vim/pack/vendor/start
 # install nerdtree

@@ -62,7 +62,7 @@ function watcha {
 }
 
 function routes() {
-    for addr in $(nslookup $1 | grep -v '127.0.0.1' | grep -o -P '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'); do echo $addr $(ip route get $addr | grep -o -P 'dev\s+\S+' | awk '{print $2}'); done
+    for addr in $(nslookup $1 | grep -v '127.0.0.[0-9]' | grep -o -P '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'); do echo $addr $(ip route get $addr | grep -o -P 'dev\s+\S+' | awk '{print $2}'); done
 }
 
 function fix-ir-routes() {
@@ -87,7 +87,7 @@ function gcobrf() {
   gco $branch
 }
 function gcoff() {
-  file=$(git ls-files --modified --others --deleted --directory | fzf --preview='git diff {}')
+  file=$(git ls-files --modified --others --exclude-standard --deleted --directory | fzf --preview='git diff {}')
   gco $file
 }
 alias gcob="git checkout -b "

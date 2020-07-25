@@ -1,0 +1,57 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.105.100.0 - 185.105.101.255'
+
+% Abuse contact for '185.105.100.0 - 185.105.101.255' is 'a.azadi@tci.ir'
+
+inetnum:        185.105.100.0 - 185.105.101.255
+netname:        Data-Center
+country:        IR
+admin-c:        AA32137-RIPE
+tech-c:         AA32137-RIPE
+org:            ORG-TCOI3-RIPE
+status:         ASSIGNED PA
+mnt-by:         TCI-RIPE-MNT
+created:        2017-11-13T11:29:45Z
+last-modified:  2017-11-13T11:29:45Z
+source:         RIPE
+
+organisation:   ORG-TCOI3-RIPE
+org-name:       Telecommunication Company of Iran
+org-type:       OTHER
+address:        Tehran, Iran Telecom
+abuse-c:        AC34350-RIPE
+mnt-ref:        TCI-RIPE-MNT
+mnt-by:         TCI-RIPE-MNT
+created:        2017-04-15T11:57:45Z
+last-modified:  2017-10-30T14:40:29Z
+source:         RIPE # Filtered
+
+person:         Alireza Azadi
+address:        Telecommunication Company of Iran
+phone:          +98 21 47232111
+nic-hdl:        AA32137-RIPE
+mnt-by:         TCI-RIPE-MNT
+created:        2017-04-15T11:46:00Z
+last-modified:  2017-04-15T11:46:00Z
+source:         RIPE
+
+% Information related to '185.105.100.0/23AS58224'
+
+route:          185.105.100.0/23
+origin:         AS58224
+mnt-by:         TCI-RIPE-MNT
+created:        2017-11-13T11:28:02Z
+last-modified:  2018-10-06T11:30:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.2 (ANGUS)
+
+
