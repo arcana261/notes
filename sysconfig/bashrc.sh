@@ -110,6 +110,9 @@ function gdf() {
 function gp() {
     git pull origin $(git rev-parse --abbrev-ref HEAD) $@
 }
+function gpr() {
+    git pull --rebase origin $(git rev-parse --abbrev-ref HEAD) $@
+}
 function gpp() {
     git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) $@
 }
@@ -136,6 +139,13 @@ export DIR_COLOR="${YELLOW}"
 export OCEAN_COLOR="${CYAN}"
 export ARROW_COLOR="${RED}"
 export SECOND_ARROW_COLOR="${RED}"
+export FZF_STYLE="--color='bg:#262626,bg+:#5fafaf,preview-bg:#303030' --preview='cat {}' --border=rounded"
+
+alias fzf="fzf ${FZF_STYLE}"
+alias jq="jq -C"
+alias less="less -r"
+alias redis-cli="docker run -it --network host --rm --entrypoint redis-cli redis"
+alias redis-cli-pipe="docker run -i --network host --rm --entrypoint redis-cli redis"
 
 function _regit() {
     ISGIT=$(git status 1>/dev/null 2>&1 || echo "NOGIT")

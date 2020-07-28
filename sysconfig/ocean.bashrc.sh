@@ -62,7 +62,7 @@ function divar-customer-trust() {
 }
 
 function secret() {
-    for key in $(kubectl get secret $1 -ojson | jq -r '.data | keys | @tsv' | tr '\t' ' '); do echo $key; kubectl get secret $1 -ojson | jq -r ".data.$key" | base64 -d -w 0; echo ""; echo ""; done
+    for key in $(kubectl get secret $1 -ojson | jq -M -r '.data | keys | @tsv' | tr '\t' ' '); do echo $key; kubectl get secret $1 -ojson | jq -M -r ".data.$key" | base64 -d -w 0; echo ""; echo ""; done
 }
 
 function noevict() {
@@ -108,14 +108,28 @@ function k() {
     cmd="$1"
     shift
   else
-    cmd=$(echo $'pod\ndeployment\ningress\nconfigmap\ncronjob\nservice' | fzf)
+    cmd=$(echo $'pod\ndeployment\ningress\nconfigmap\ncronjob\nservice\nevents\nprometheusRule' | fzf)
   fi
 
   if [ "$cmd" == "" ]; then
     return 0
   fi
 
-  if [ "$cmd" == "service" ]; then
+  if [ "$cmd" == "events" ]; then
+    event=$(kubectl get events --sort-by='{.lastTimestamp}' | grep -v 'Scaled up' | grep -v 'Scaled down' | grep -v 'Deleted pod' | grep -v 'Stopping container' | grep -v 'Created pod' | grep -v 'Created container' | grep -v 'Started container' | grep -v 'Successfully pulled image' | grep -v 'already present on machine' | grep -v 'Successfully assigned' | grep -v 'Pulling image' | fzf \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get events --sort-by='{.lastTimestamp}' | grep -v 'Scaled up' | grep -v 'Scaled down' | grep -v 'Deleted pod' | grep -v 'Stopping container' | grep -v 'Created pod' | grep -v 'Created container' | grep -v 'Started container' | grep -v 'Successfully pulled image' | grep -v 'already present on machine' | grep -v 'Successfully assigned' | grep -v 'Pulling image')" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --header 'c^r[reload], c^b[back]')
+
+    if [ "$event" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      return 0
+    fi
+  elif [ "$cmd" == "service" ]; then
     options=""
     wide=""
     query=""
@@ -168,7 +182,7 @@ function k() {
 
       if [ "$(cat $tmp | sed 's|:.*||g')" == "FORWARD" ]; then
         query="$(cat $tmp | sed 's|^FORWARD:||g')"
-        ports=$(kubectl get service $query -ojson | jq '.spec.ports | map (.name + " " + (.port|tostring)) | flatten+["<Custom>"] | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
+        ports=$(kubectl get service $query -ojson | jq -M '.spec.ports | map (.name + " " + (.port|tostring)) | flatten+["<Custom>"] | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
         if [ "$ports" == "" ]; then
           return 0
         fi
@@ -244,10 +258,10 @@ function k() {
       if [ "$(cat $tmp | sed 's|:.*||g')" == "LOG" ]; then
         query="$(cat $tmp | sed 's|^LOG:||g')"
 
-        num_containers=$(kubectl get pod $query -ojson | jq '.spec.containers | length')
+        num_containers=$(kubectl get pod $query -ojson | jq -M '.spec.containers | length')
         options=""
         if [ "$num_containers" != "1" ]; then
-          containers=$(kubectl get pod $query -ojson | jq '.spec.containers | map(.name) | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
+          containers=$(kubectl get pod $query -ojson | jq -M '.spec.containers | map(.name) | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
           options="-c $containers"
         fi
 
@@ -260,10 +274,10 @@ function k() {
       if [ "$(cat $tmp | sed 's|:.*||g')" == "EXECUTE" ]; then
         query="$(cat $tmp | sed 's|^EXECUTE:||g')"
 
-        num_containers=$(kubectl get pod $query -ojson | jq '.spec.containers | length')
+        num_containers=$(kubectl get pod $query -ojson | jq -M '.spec.containers | length')
         options=""
         if [ "$num_containers" != "1" ]; then
-          containers=$(kubectl get pod $query -ojson | jq '.spec.containers | map(.name) | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
+          containers=$(kubectl get pod $query -ojson | jq -M '.spec.containers | map(.name) | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
           options="-c $containers"
         fi
 
@@ -282,7 +296,7 @@ function k() {
 
       if [ "$(cat $tmp | sed 's|:.*||g')" == "FORWARD" ]; then
         query="$(cat $tmp | sed 's|^FORWARD:||g')"
-        ports=$(kubectl get pod $query -ojson | jq '.spec.containers | map(.ports | map (.name + " " + (.containerPort|tostring))) | flatten+["<Custom>"] | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
+        ports=$(kubectl get pod $query -ojson | jq -M '.spec.containers | map(.ports | map (.name + " " + (.containerPort|tostring))) | flatten+["<Custom>"] | join(",")' | sed 's|"||g' | tr ',' '\n' | fzf)
         if [ "$ports" == "" ]; then
           return 0
         fi
@@ -381,6 +395,76 @@ function k() {
     fi
 
     echo $ings
+    return 0
+
+  elif [ "$cmd" == "prometheusRule" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    prometheusRule=$(kubectl get PrometheusRule $options | fzf \
+      --preview="kubectl --namespace $OCEAN_NAMESPACE get PrometheusRule {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get PrometheusRule $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --header 'c^r[reload], c^o[wide], c^u[delete], c^e[edit], c^b[back]' \
+      --query "$query" \
+      --header-lines=1)
+
+    if [ "$prometheusRule" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "DELETE" ]; then
+        query="$(cat $tmp | sed 's|^DELETE:||g')"
+        echo "Enter (YES) to delete prometheusRule '$query':> "
+        read confirm
+
+        if [ "$confirm" == "YES" ]; then
+          kubectl delete PrometheusRule $query
+        fi
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EDIT" ]; then
+        query="$(cat $tmp | sed 's|^EDIT:||g')"
+        kubectl edit PrometheusRule $query
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      return 0
+    fi
+
+    echo $prometheusRule
     return 0
 
   elif [ "$cmd" == "configmap" ]; then
@@ -558,7 +642,8 @@ function k() {
       --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
       --bind "ctrl-p:execute(echo 'PODS:{1}' > $tmp)+abort" \
       --bind "ctrl-l:execute(echo 'ROLLOUT:{1}' > $tmp)+abort" \
-      --header 'c^r[reload], c^o[wide], c^u[delete], c^e[edit], c^p[pods], c^l[rollout], c^b[back]' \
+      --bind "ctrl-w:toggle-preview" \
+      --header 'c^r[reload], c^w[preview], c^o[wide], c^u[delete], c^e[edit], c^p[pods], c^l[rollout], c^b[back]' \
       --query "$query" \
       --header-lines=1)
 

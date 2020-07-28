@@ -46,6 +46,7 @@ NS="$NS sarashpazpapion.com"
 NS="$NS aloaz.ir"
 NS="$NS golestan.iust.ac.ir"
 NS="$NS emdadsaipa.ir"
+NS="$NS api.cedarmaps.com"
 
 ARGS=""
 
