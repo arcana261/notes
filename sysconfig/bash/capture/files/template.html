@@ -1,0 +1,176 @@
+<html>
+<head>
+  <title>Capture</title>
+  <script>
+    var exports = window;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/zlibjs@0.3.1/bin/gunzip.min.js"></script>
+
+  <script language="javascript">
+    var capture_frames='<RAW>';
+    capture_frames = atob(capture_frames);
+
+    var arr = new Uint8Array(capture_frames.length);
+    for (var i=0; i<capture_frames.length; i++) {
+      arr[i] = capture_frames.charCodeAt(i);
+    }
+    capture_frames = arr;
+    arr = undefined;
+
+    capture_frames = (new Zlib.Gunzip(capture_frames)).decompress();
+    capture_frames = new Uint16Array(capture_frames);
+
+    arr = [];
+    var buff = '';
+    copy_mode = 0;
+    const GUARD='[[[FRAME]]]';
+    for (var i=0; i<capture_frames.length; i++) {
+      var tmp = String.fromCharCode(capture_frames[i]);
+      buff = buff + tmp;
+      if (tmp == GUARD[copy_mode]) {
+        copy_mode = copy_mode + 1;
+        if (copy_mode >= GUARD.length) {
+          buff = buff.substr(0, buff.length - GUARD.length);
+          if (buff != '') {
+            arr.push(buff);
+          }
+          buff = '';
+          copy_mode = 0;
+        }
+      } else {
+        copy_mode = 0;
+      }
+    }
+    if (buff != '') {
+      arr.push(buff);
+    }
+
+    capture_frames = arr;
+    arr = undefined;
+  </script>
+
+  <style>
+    .movie {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    #slider {
+      width: 90%;
+    }
+
+    #control_container {
+      position: fixed;
+      width: 100%;
+      padding: 5px 20px 5px 20px;
+      left: 0px;
+      top: 0px;
+    }
+
+    #counter {
+      background: lightyellow;
+      padding: 5px;
+      display: table-cell;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="control_container">
+
+<input type="range" min="0" max="100" value="0" class="slider" id="slider"></input>
+<span id="counter">00:00:00 / 00:00:00</span>
+<input type="button" value="Play/Pause" id="playbtn"></input>
+
+</div>
+
+<div id="frame_container">
+  <iframe id="movie" class="movie"></iframe>
+</div>
+
+<script language="javascript">
+
+function main() {
+  document.getElementById('slider').max = capture_frames.length - 1;
+  playing = true;
+  has_rendered_end = false;
+  FPS = 2;
+
+  last_render = (new Date()).getTime();
+  offset_render = 0;
+
+  document.getElementById('playbtn').onclick = function() {
+    playing = !playing;
+  }
+
+  setInterval(function() {
+    current_render = (new Date()).getTime();
+
+    if (!playing) {
+      last_render = current_render;
+      return;
+    }
+
+    value = Math.floor((current_render - last_render + offset_render) / (1000/FPS)) + Number(document.getElementById('slider').value)
+    offset_render = ((current_render - last_render + offset_render) % (1000/FPS));
+
+    if (value >= capture_frames.length) {
+      if (has_rendered_end) {
+        last_render = current_render;
+        return;
+      }
+      value = capture_frames.length - 1;
+    }
+
+    has_rendered_end = value == (capture_frames.length - 1);
+
+    document.getElementById('slider').value = value
+    displayFrame(value);
+    document.getElementById('counter').innerHTML = frame_to_timerange(value);
+
+    last_render = current_render;
+  }, (1000/FPS));
+
+  function frame_to_timerange(frame) {
+    return frame_to_time(frame) + ' / ' + frame_to_time(capture_frames.length);
+  }
+
+  function frame_to_time(frame) {
+    seconds = Math.floor(frame/FPS);
+    minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+
+    return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
+  }
+
+  function pad(n) {
+    if (n < 10) {
+      return '0' + n;
+    }
+    return '' + n;
+  }
+
+  var movie = document.getElementById('movie');
+  function displayFrame(frame) {
+    movie.src = "data:text/html;charset=utf-8," + escape(capture_frames[frame]);
+  }
+}
+
+main();
+
+</script>
+
+</body>
+
+</html>

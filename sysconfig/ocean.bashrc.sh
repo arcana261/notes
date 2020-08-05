@@ -108,7 +108,7 @@ function k() {
     cmd="$1"
     shift
   else
-    cmd=$(echo $'pod\ndeployment\ningress\nconfigmap\ncronjob\nservice\nevents\nprometheusRule' | fzf)
+    cmd=$(echo $'pod\ndeployment\ningress\nconfigmap\ncronjob\nservice\nevents\nprometheusRule\nstatefulset' | fzf)
   fi
 
   if [ "$cmd" == "" ]; then
@@ -116,10 +116,34 @@ function k() {
   fi
 
   if [ "$cmd" == "events" ]; then
-    event=$(kubectl get events --sort-by='{.lastTimestamp}' | grep -v 'Scaled up' | grep -v 'Scaled down' | grep -v 'Deleted pod' | grep -v 'Stopping container' | grep -v 'Created pod' | grep -v 'Created container' | grep -v 'Started container' | grep -v 'Successfully pulled image' | grep -v 'already present on machine' | grep -v 'Successfully assigned' | grep -v 'Pulling image' | fzf \
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    event=$(kubectl get events $options --sort-by='{.lastTimestamp}' | grep -v 'Scaled up' | grep -v 'Scaled down' | grep -v 'Deleted pod' | grep -v 'Stopping container' | grep -v 'Created pod' | grep -v 'Created container' | grep -v 'Started container' | grep -v 'Successfully pulled image' | grep -v 'already present on machine' | grep -v 'Successfully assigned' | grep -v 'Pulling image' | fzf \
       --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get events --sort-by='{.lastTimestamp}' | grep -v 'Scaled up' | grep -v 'Scaled down' | grep -v 'Deleted pod' | grep -v 'Stopping container' | grep -v 'Created pod' | grep -v 'Created container' | grep -v 'Started container' | grep -v 'Successfully pulled image' | grep -v 'already present on machine' | grep -v 'Successfully assigned' | grep -v 'Pulling image')" \
       --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
-      --header 'c^r[reload], c^b[back]')
+      --query "$query" \
+      --no-sort \
+      --tac \
+      --preview-window=right:hidden \
+      --header 'c^r[reload], c^b[back]' \
+      --header-lines=1)
 
     if [ "$event" == "" ]; then
       if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
@@ -129,6 +153,10 @@ function k() {
 
       return 0
     fi
+
+    echo $event
+    return 0
+
   elif [ "$cmd" == "service" ]; then
     options=""
     wide=""
@@ -160,7 +188,7 @@ function k() {
       --header 'c^r[reload], c^o[wide], c^d[delete], c^p[forward], c^e[edit], c^b[back]' \
       --header-lines=1)
 
-    if [ "$pod" == "" ]; then
+    if [ "$service" == "" ]; then
       if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
         query="$(cat $tmp | sed 's|^WIDE:||g')"
         k $cmd "wide" "query" $query $@
@@ -209,6 +237,10 @@ function k() {
 
       return 0
     fi
+
+    echo $service
+    return 0
+
   elif [ "$cmd" == "pod" ]; then
     options=""
     wide=""
@@ -326,6 +358,7 @@ function k() {
     fi
 
     echo $pod
+    return 0
 
   elif [ "$cmd" == "ingress" ]; then
     options=""
@@ -613,6 +646,98 @@ function k() {
       return 0
     fi
 
+    echo $cronjob
+    return 0
+
+  elif [ "$cmd" == "statefulset" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    statefulset=$(kubectl get statefulset $options | fzf \
+      --preview="kubectl --namespace $OCEAN_NAMESPACE get statefulset {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get statefulset $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --bind "ctrl-p:execute(echo 'PODS:{1}' > $tmp)+abort" \
+      --bind "ctrl-l:execute(echo 'ROLLOUT:{1}' > $tmp)+abort" \
+      --bind "ctrl-w:toggle-preview" \
+      --header 'c^r[reload], c^w[preview], c^o[wide], c^u[delete], c^e[edit], c^p[pods], c^l[rollout], c^b[back]' \
+      --query "$query" \
+      --header-lines=1)
+
+    if [ "$statefulset" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "ROLLOUT" ]; then
+        query="$(cat $tmp | sed 's|^ROLLOUT:||g')"
+
+        kubectl rollout restart statefulset/$query
+
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "PODS" ]; then
+        query="$(cat $tmp | sed 's|^PODS:||g')"
+
+        k pod $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "DELETE" ]; then
+        query="$(cat $tmp | sed 's|^DELETE:||g')"
+        echo "Enter (YES) to delete statefulset '$query':> "
+        read confirm
+
+        if [ "$confirm" == "YES" ]; then
+          kubectl delete statefulset $query
+        fi
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EDIT" ]; then
+        query="$(cat $tmp | sed 's|^EDIT:||g')"
+        kubectl edit statefulset $query
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      return 0
+    fi
+
+    echo $statefulset
+    return 0
+
   elif [ "$cmd" == "deployment" ]; then
     options=""
     wide=""
@@ -696,10 +821,10 @@ function k() {
         return 0
       fi
 
-      echo $deployment
       return 0
     fi
 
+    echo $deployment
     return 0
 
   fi

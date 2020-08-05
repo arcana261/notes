@@ -47,6 +47,9 @@ NS="$NS aloaz.ir"
 NS="$NS golestan.iust.ac.ir"
 NS="$NS emdadsaipa.ir"
 NS="$NS api.cedarmaps.com"
+NS="$NS kalleh.com"
+NS="$NS shop.mci.ir"
+NS="$NS anyazma.com"
 
 ARGS=""
 

@@ -161,6 +161,16 @@ function s:OpenTerminal()
 endfunction
 command -nargs=0 OpenTerminal :call s:OpenTerminal()
 
+function s:SnapShot(path)
+  let tmp = $HOME . '/.snapshot.vim.tmp'
+  let msg = system("tmux capture-pane -e")
+  let msg = msg . system("tmux save-buffer " . tmp)
+  let msg = msg . system("cat " . tmp . " | aha -l --black > " . a:path)
+  let msg = msg . system("tmux delete-buffer")
+  echo msg
+endfunction
+command -nargs=1 SnapShot :call s:SnapShot(<f-args>)
+
 function s:SetClip()
   let tmp = $HOME . '/.clipboard.vim.tmp'
   call writefile(getreg('0', 1, 1), tmp)

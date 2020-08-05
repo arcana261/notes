@@ -18,6 +18,10 @@ export LIGHT_BLUE='\033[1;34m'
 export YELLOW='\033[1;33m'
 export YELLOW_BGRED='\033[1;41;33m'
 export RED_BGRED='\033[1;41;31m'
+export RED_BGBLACK_BOLD='\033[0;21;40;31m'
+export YELLOW_BGBLACK_BOLD='\033[0;21;40;33m'
+export WHITE_BGBLACK_BOLD='\033[0;21;40;97m'
+export CYAN_BGBLACK_BOLD='\033[0;21;40;36m'
 
 export NC='\033[0m' # No Color
 
@@ -135,10 +139,11 @@ alias gsmuir="git submodule update --init --recursive "
 alias gcl="git clone "
 alias gclone="git clone"
 
-export DIR_COLOR="${YELLOW}"
-export OCEAN_COLOR="${CYAN}"
-export ARROW_COLOR="${RED}"
-export SECOND_ARROW_COLOR="${RED}"
+export DIR_COLOR="${YELLOW_BGBLACK_BOLD}"
+export OCEAN_COLOR="${CYAN_BGBLACK_BOLD}"
+export ARROW_COLOR="${RED_BGBLACK_BOLD}"
+export SECOND_ARROW_COLOR="${RED_BGBLACK_BOLD}"
+export TEXT_COLOR="${WHITE_BGBLACK_BOLD}"
 export FZF_STYLE="--color='bg:#262626,bg+:#5fafaf,preview-bg:#303030' --preview='cat {}' --border=rounded"
 
 alias fzf="fzf ${FZF_STYLE}"
@@ -154,7 +159,7 @@ function _regit() {
     else
         tmux set -g status-right '#[fg=yellow]'$(pwd)' #[fg=Cyan]#S #[fg=white]%a %d %b %R'
     fi
-    export PS1=$(echo $PS1 | sed $'s|\u25A0.*$||g')$'\u25A0'" \[${DIR_COLOR}\]"$(pwd | sed 's|[^/]*/||g')"\[${SECOND_ARROW_COLOR}\]"$'\u2771'"\[${NC}\] "
+    export PS1=$(echo $PS1 | sed $'s|\u25A0.*$||g')$'\u25A0'" \[${DIR_COLOR}\]"$(pwd | sed 's|[^/]*/||g')"\[${SECOND_ARROW_COLOR}\]"$'\u2771'"\[${TEXT_COLOR}\] "
 }
 
 function qind() {
@@ -187,7 +192,7 @@ function venv() {
   fi
 
   source .venv/bin/activate
-  export PS1="\[${ARROW_COLOR}\]"$'\u25A0'">\[${NC}\] "
+  export PS1="\[${ARROW_COLOR}\]"$'\u25A0'">\[${TEXT_COLOR}\] "
   _regit
 
   if [ "$(pip freeze | grep wheel)" == "" ]; then
@@ -227,7 +232,7 @@ PROMPT_COMMAND="_regit"
 [ -f $HOME/.venv3/bin/activate ] && source $HOME/.venv3/bin/activate
 [ -f .venv/bin/activate ] && source .venv/bin/activate
 
-export PS1="\[${ARROW_COLOR}\]"$'\u25A0'">\[${NC}\] "
+export PS1="\[${ARROW_COLOR}\]"$'\u25A0'">\[${TEXT_COLOR}\] "
 _regit
 
 function y0() {
@@ -277,10 +282,10 @@ function bgblue_fgwhite() {
     export LS_COLORS=$_ORIG_LS_COLORS:'di=0;93:'
 }
 function pipe() {
-    tmux pipe-pane -o 'cat >>'"$1"
+    tmux pipe-pane -o 'cat | aha -l --black >'"$1"
 }
 
-tmux select-pane -P 'fg=colour15'
+tmux select-pane -P 'bg=black,fg=colour15'
 
 # Enhanced file path completion in bash - https://github.com/sio/bash-complete-partial-path
 if [ -s "$HOME/.config/bash-complete-partial-path/bash_completion" ]
@@ -356,3 +361,5 @@ export _ORIG_LS_COLORS="$LS_COLORS"
 export LS_COLORS=$_ORIG_LS_COLORS:'di=0;31:'
 
 if [ "$TERM" == "screen-256color" ]; then export TERM="xterm-256color"; fi
+
+source $HOME/Documents/notes/sysconfig/bash/capture/capture.sh
