@@ -1,5 +1,8 @@
-<html>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+  <meta http-equiv="Content-Type" content="application/xml+xhtml; charset=UTF-8" />
   <title>Capture</title>
   <script>
     var exports = window;
@@ -7,11 +10,11 @@
   <script src="https://cdn.jsdelivr.net/npm/zlibjs@0.3.1/bin/gunzip.min.js"></script>
 
   <script language="javascript">
-    var capture_frames='<RAW>';
+    let capture_frames='<RAW>';
     capture_frames = atob(capture_frames);
 
-    var arr = new Uint8Array(capture_frames.length);
-    for (var i=0; i<capture_frames.length; i++) {
+    let arr = new Uint8Array(capture_frames.length);
+    for (let i=0; i<capture_frames.length; i++) {
       arr[i] = capture_frames.charCodeAt(i);
     }
     capture_frames = arr;
@@ -21,28 +24,41 @@
     capture_frames = new Uint16Array(capture_frames);
 
     arr = [];
-    var buff = '';
-    copy_mode = 0;
-    const GUARD='[[[FRAME]]]';
-    for (var i=0; i<capture_frames.length; i++) {
-      var tmp = String.fromCharCode(capture_frames[i]);
-      buff = buff + tmp;
-      if (tmp == GUARD[copy_mode]) {
-        copy_mode = copy_mode + 1;
-        if (copy_mode >= GUARD.length) {
-          buff = buff.substr(0, buff.length - GUARD.length);
-          if (buff != '') {
-            arr.push(buff);
+    const GUARD_1='[[[FRAME:';
+    const GUARD_2 = ']]]';
+    let i = 0;
+    let frame_timestamp = 0;
+
+    function read_guarded(guard) {
+      let copy_mode = 0;
+      let buff = '';
+      for (; i<capture_frames.length; i++) {
+        let tmp = String.fromCharCode(capture_frames[i]);
+        buff += tmp;
+        if (tmp == guard[copy_mode]) {
+          copy_mode += 1;
+          if (copy_mode >= guard.length) {
+            buff = buff.slice(0, buff.length - guard.length);
+            i += 1;
+            return buff;
           }
-          buff = '';
+        } else {
           copy_mode = 0;
         }
-      } else {
-        copy_mode = 0;
       }
+      return buff;
     }
-    if (buff != '') {
-      arr.push(buff);
+
+    for (; i<capture_frames.length;) {
+      frame = read_guarded(GUARD_1);
+      if (frame !== '') {
+        arr.push({'frame': frame, 'ts': frame_timestamp});
+      }
+
+      timestamp = read_guarded(GUARD_2);
+      if (timestamp !== '') {
+        frame_timestamp = Math.floor(Number(timestamp) / 1000000);
+      }
     }
 
     capture_frames = arr;
@@ -72,6 +88,7 @@
 
     #counter {
       background: lightyellow;
+      color: black;
       padding: 5px;
       display: table-cell;
     }
@@ -80,10 +97,18 @@
       margin: 0;
       padding: 0;
     }
+
+    #frame_container {
+      position: absolute;
+      top: 90px;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
   </style>
 </head>
 
-<body>
+<body style="color:white; background-color:black">
 
 <div id="control_container">
 
@@ -94,64 +119,254 @@
 </div>
 
 <div id="frame_container">
-  <iframe id="movie" class="movie"></iframe>
 </div>
 
 <script language="javascript">
 
-function main() {
-  document.getElementById('slider').max = capture_frames.length - 1;
-  playing = true;
-  has_rendered_end = false;
-  FPS = 2;
+function apply_leven_diff(str, diff) {
+  const read_length = (str, i, len) => {
+    let result = 0;
+    for (let j = 0; j < len; j++) {
+      result = (result * 10) + Number((str.charCodeAt(i + j) - 48));
+    }
 
-  last_render = (new Date()).getTime();
-  offset_render = 0;
+    return result;
+  };
+
+  const keep_commands = [
+    'a', 'b', 'c',
+    'd', 'e', 'f',
+    'g', 'h', 'i',
+  ];
+
+  const insert_commands = [
+    'j', 'k', 'l',
+    'm', 'o', 'p',
+    'q', 'r', 's',
+  ];
+
+  const delete_commands = [
+    't', 'u' , 'v',
+    'w', 'x', 'y',
+    'z', '0', '1',
+  ];
+
+  const replace_commands = [
+    '2', '3', '4',
+    '5', '6', '7',
+    '8', '9', 'A',
+  ];
+
+  let i = 0;
+  let j = 0;
+
+  let result = '';
+
+  while (j < diff.length) {
+    cmd = diff[j];
+
+    let index = keep_commands.indexOf(cmd)
+    if (index >= 0) {
+      let len = read_length(diff, j + 1, index + 1);
+      result += str.slice(i, i + len);
+      i += len;
+      j += 2 + index;
+      continue;
+    }
+
+    index = insert_commands.indexOf(cmd);
+    if (index >= 0) {
+      let len = read_length(diff, j + 1, index + 1);
+      result += diff.slice(j + 2 + index, j + 2 + index + len);
+      j += 2 + index + len;
+      continue;
+    }
+
+    index = delete_commands.indexOf(cmd);
+    if (index >= 0) {
+      let len = read_length(diff, j + 1, index + 1);
+      i += len;
+      j += 2 + index;
+      continue;
+    }
+
+    index = replace_commands.indexOf(cmd);
+    if (index >= 0) {
+      let len = read_length(diff, j + 1, index + 1);
+      result += diff.slice(j + 2 + index, j + 2 + index + len);
+      j += 2 + index + len;
+      i += len;
+      continue;
+    }
+
+    // unknown command sequence
+    console.log('WARNING: unknown command sequence: "' + cmd + '" (char code ' + diff.charCodeAt(j) + ')  at j=' + j + ' of ' + diff.length);
+    j = j + 1;
+    //throw new Error('unknown command sequence: "' + cmd + '" at j=' + j + ' of ' + diff.length);
+  }
+
+  return result;
+}
+
+function main() {
+  let playing = true;
+  let slider_pausing = false;
+  let has_reached_end = false;
+  const FPS = 10;
+
+  let render_start_at = 0;
+  if (capture_frames.length > 0) {
+    render_start_at = capture_frames[0]['ts']
+  }
+  let render_offset = 0;
+  let screen_render_offset = 0;
+  let render_last = render_start_at;
+  let value = -1;
+  let intended_html = '';
+
+  screen_render_start_at = (new Date()).getTime();
 
   document.getElementById('playbtn').onclick = function() {
     playing = !playing;
   }
 
-  setInterval(function() {
-    current_render = (new Date()).getTime();
+  let frame_container = document.getElementById('frame_container');
+  let slider = document.getElementById('slider');
+  let counter = document.getElementById('counter');
 
-    if (!playing) {
-      last_render = current_render;
+  const fullRenderFrame = (frame, offset_time=0) => {
+    intended_html = '';
+
+    for (let i = 0; i <= frame && i < capture_frames.length; i++) {
+      intended_html = apply_leven_diff(intended_html, capture_frames[i]['frame']);
+    }
+
+    frame_container.innerHTML = intended_html;
+    show_frame_time(frame, offset_time);
+    has_reached_end = false;
+  }
+
+  slider.value = 0;
+  slider.max = 0;
+
+  if (capture_frames.length > 0) {
+    slider.max = Math.ceil((capture_frames[capture_frames.length - 1]['ts'] - capture_frames[0]['ts']) / 1000);
+  }
+
+  const slider_onchange = function (e) {
+    let new_value = absolute_time_to_frame(Number(slider.value) * 1000);
+    let value_absolute_time = frame_absolute_time(value);
+    let new_value_absolute_time = frame_absolute_time(new_value);
+    let offset_time = (Number(slider.value) * 1000) - new_value_absolute_time;
+    let current_screen_render = (new Date()).getTime();
+    screen_render_offset += new_value_absolute_time - value_absolute_time + offset_time;
+    console.log('screen_render_offset=', screen_render_offset, 'new_value=', new_value, 'value=', value, 'slider.value=', slider.value, 'this.value=', this.value);
+    value = new_value;
+    fullRenderFrame(value, offset_time);
+  };
+
+  if (slider.addEventListener) {
+    slider.addEventListener("click", slider_onchange, false);
+    slider.addEventListener("mousedown", () => { slider_pausing = true; });
+    slider.addEventListener("mouseup", () => { slider_pausing = false; });
+  }
+  else if (buttonInput.attachEvent) {
+    slider.attachEvent('onclick', testtest);
+  }
+
+  setInterval(function() {
+    let current_screen_render = (new Date()).getTime();
+    let current_render = (current_screen_render - screen_render_start_at + screen_render_offset) + render_start_at;
+
+    if (!playing || slider_pausing || has_reached_end) {
+      render_offset += current_render - render_last;
+      render_last = current_render;
       return;
     }
 
-    value = Math.floor((current_render - last_render + offset_render) / (1000/FPS)) + Number(document.getElementById('slider').value)
-    offset_render = ((current_render - last_render + offset_render) % (1000/FPS));
+    render_last = current_render;
+    current_render -= render_offset;
 
-    if (value >= capture_frames.length) {
-      if (has_rendered_end) {
-        last_render = current_render;
-        return;
-      }
-      value = capture_frames.length - 1;
+    let display_value = value + 1;
+    while (display_value < capture_frames.length && capture_frames[display_value]['ts'] < current_render) {
+      display_value = display_value + 1;
+    }
+    display_value = display_value - 1;
+
+    if (capture_frames.length > 0 && (display_value + 1) == capture_frames.length && current_render >= capture_frames[display_value]['ts']) {
+      has_reached_end = true;
     }
 
-    has_rendered_end = value == (capture_frames.length - 1);
+    for (let i = value + 1; i <= display_value; i++) {
+      intended_html = apply_leven_diff(intended_html, capture_frames[i]['frame']);
+    }
 
-    document.getElementById('slider').value = value
-    displayFrame(value);
-    document.getElementById('counter').innerHTML = frame_to_timerange(value);
+    if (value != display_value) {
+      frame_container.innerHTML = intended_html
+      slider.value = display_value;
+      value = display_value;
+    }
 
-    last_render = current_render;
+    show_frame_time(value, (current_render - render_start_at) - frame_absolute_time(value));
+
   }, (1000/FPS));
 
-  function frame_to_timerange(frame) {
-    return frame_to_time(frame) + ' / ' + frame_to_time(capture_frames.length);
+  function absolute_time_to_frame(absolute_time) {
+    if (capture_frames.length == 0) {
+      return 0;
+    }
+
+    let ts = capture_frames[0]['ts'] + absolute_time;
+
+    let lo = 0;
+    let hi = capture_frames.length - 1;
+
+    while (lo < hi) {
+      let mid = Math.floor((lo + hi) / 2);
+
+      if (capture_frames[mid]['ts'] < ts) {
+        lo = mid + 1;
+      } else {
+        hi = mid;
+      }
+    }
+
+    return lo;
   }
 
-  function frame_to_time(frame) {
-    seconds = Math.floor(frame/FPS);
-    minutes = Math.floor(seconds / 60);
+  function show_frame_time(frame, offset_time=0) {
+    counter.innerHTML = frame_to_timerange(frame, offset_time);
+    slider.value = Math.round((frame_absolute_time(frame) + offset_time) / 1000);
+  }
+
+  function frame_to_timerange(frame, offset_time=0) {
+    return frame_to_time(frame, offset_time) + ' / ' + frame_to_time(capture_frames.length - 1);
+  }
+
+  function frame_to_time(frame, offset_time=0) {
+    let seconds = Math.floor(Math.min(capture_length_absolute_time(), (frame_absolute_time(frame) + offset_time)) / 1000);
+    let minutes = Math.floor(seconds / 60);
     seconds = seconds % 60;
-    hours = Math.floor(minutes / 60);
+    let hours = Math.floor(minutes / 60);
     minutes = minutes % 60;
 
     return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
+  }
+
+  function frame_absolute_time(frame) {
+    if (frame < capture_frames.length) {
+      return capture_frames[frame]['ts'] - capture_frames[0]['ts'];
+    }
+
+    if (frame >= capture_frames.length && capture_frames.length > 0) {
+      return capture_frames[capture_frames.length - 1]['ts'] - capture_frames[0]['ts'];
+    }
+
+    return 0;
+  }
+
+  function capture_length_absolute_time() {
+    return frame_absolute_time(capture_frames.length);
   }
 
   function pad(n) {

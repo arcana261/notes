@@ -50,6 +50,7 @@ NS="$NS api.cedarmaps.com"
 NS="$NS kalleh.com"
 NS="$NS shop.mci.ir"
 NS="$NS anyazma.com"
+NS="$NS room.gharar.ir"
 
 ARGS=""
 
