@@ -10,11 +10,6 @@ function capture() {
   export CAPTURE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
   export CAPTURE_OUTPUT=$(realpath $1)
 
-#  export CAPTURE_FRAMES="$CAPTURE_OUTPUT.frames"
-#  export CAPTURE_LAST_FRAME="$CAPTURE_OUTPUT.frames.last"
-#  export CAPTURE_NEXT_FRAME="$CAPTURE_OUTPUT.frames.next"
-#  export CAPTURE_BUFFER="$CAPTURE_OUTPUT.buffer"
-
   export CAPTURE_FRAMES="$(mktemp)"
   export CAPTURE_LAST_FRAME="$(mktemp)"
   export CAPTURE_NEXT_FRAME="$(mktemp)"
@@ -38,16 +33,20 @@ function capture() {
       tmux capture-pane -e;
       tmux save-buffer $CAPTURE_BUFFER;
       tmux delete-buffer;
-      cat $CAPTURE_BUFFER | aha --black | sed -z 's|<head[^>\\n\\r]*>.*</head>||g' | sed 's|<?.*||g' | sed 's|<!DOCTYPE.*||g' | sed 's|<!--.*-->||g' | sed 's|<html[^>]*>||g' | sed 's|<body[^>]*>||g' | sed 's|</body>||g' | sed 's|</html>||g' > $CAPTURE_NEXT_FRAME;
+      echo -n '<pre>' > \$CAPTURE_NEXT_FRAME;
+      aha --black -l -n -f $CAPTURE_BUFFER | sed 's|style="color:white;background-color:white;"|style="color:white;background-color:black;"|g' >> \$CAPTURE_NEXT_FRAME;
+      echo -n '</pre>' >> \$CAPTURE_NEXT_FRAME;
       echo -n "[[[FRAME:" >> $CAPTURE_FRAMES;
       echo -n \$CAPTURE_TICK >> $CAPTURE_FRAMES;
       echo -n "]]]" >> $CAPTURE_FRAMES;
-      if [ -f $CAPTURE_LAST_FRAME ]; then
-        $CAPTURE_DIR/leven $CAPTURE_LAST_FRAME $CAPTURE_NEXT_FRAME 32 >> $CAPTURE_FRAMES;
+      if [ -f \$CAPTURE_LAST_FRAME ]; then
+        $CAPTURE_DIR/leven \$CAPTURE_LAST_FRAME \$CAPTURE_NEXT_FRAME 32 >> $CAPTURE_FRAMES;
       else
-        $CAPTURE_DIR/leven $CAPTURE_NEXT_FRAME >> $CAPTURE_FRAMES;
+        $CAPTURE_DIR/leven \$CAPTURE_NEXT_FRAME >> $CAPTURE_FRAMES;
       fi;
-      cp $CAPTURE_NEXT_FRAME $CAPTURE_LAST_FRAME;
+      export CAPTURE_TEMP_VAR=\$CAPTURE_NEXT_FRAME;
+      export CAPTURE_NEXT_FRAME=\$CAPTURE_LAST_FRAME;
+      export CAPTURE_LAST_FRAME=\$CAPTURE_TEMP_VAR;
     fi;
     sleep 0.01;
   done;
@@ -63,9 +62,20 @@ function end_capture() {
   kill -9 $CAPTURE_PID
 
   export CAPTURE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-  CAPTURE_CONTENT=$(cat $CAPTURE_FRAMES | gzip -9 | base64 -w 0)
-  cat $CAPTURE_DIR/files/template.html | sed "s|<RAW>|$CAPTURE_CONTENT|g" > $CAPTURE_OUTPUT
+  CAPTURE_CONTENT_FILE=$(mktemp)
+  CAPTURE_CONTENT=$()
 
-  #rm -f $CAPTURE_BUFFER
-  #rm -f $CAPTURE_FRAMES
+  rm -f $CAPTURE_OUTPUT
+
+  DELIMETER='<RAW>'
+  INDEX=$(grep -abo $DELIMETER $CAPTURE_DIR/files/template.html | cut -d ':' -f 1)
+  dd if=$CAPTURE_DIR/files/template.html of=$CAPTURE_OUTPUT count=$INDEX bs=1
+  gzip -c9 $CAPTURE_FRAMES | base64 -w 0 >> $CAPTURE_OUTPUT
+  INDEX=$(( $INDEX + ${#DELIMETER} ))
+  dd if=$CAPTURE_DIR/files/template.html skip=$INDEX of=$CAPTURE_OUTPUT bs=1 oflag=append conv=notrunc
+
+  rm -f $CAPTURE_BUFFER
+  rm -f $CAPTURE_FRAMES
+  rm -f $CAPTURE_LAST_FRAME
+  rm -f $CAPTURE_NEXT_FRAME
 }

@@ -252,7 +252,6 @@ function main() {
     let offset_time = (Number(slider.value) * 1000) - new_value_absolute_time;
     let current_screen_render = (new Date()).getTime();
     screen_render_offset += new_value_absolute_time - value_absolute_time + offset_time;
-    console.log('screen_render_offset=', screen_render_offset, 'new_value=', new_value, 'value=', value, 'slider.value=', slider.value, 'this.value=', this.value);
     value = new_value;
     fullRenderFrame(value, offset_time);
   };
