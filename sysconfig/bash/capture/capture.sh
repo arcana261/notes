@@ -1,4 +1,8 @@
 
+# <audio controls src="data:audio/ogg;base64,T2dnUwACAAAAAAAAAAA+..........+fm5nB6slBlZ3Fcha363d5ut7u3ni1rLoPf728l3KcK" />
+# ffmpeg -f pulse -i default output.ogg
+
+
 function capture() {
   if [ "$1" == "" ]; then
     echo "Usage: capture out.html"
