@@ -233,15 +233,17 @@ void fill_calculate_rec_result(
 
     // insert cmd
     result.add(command::insert(0, j, y_end - j));
+    return;
   }
 
   if (j >= y_end) {
     // delete cmd
     result.add(command::remove(0, x_end - i));
+    return;
   }
 
   command c = d[i - x_start][j - y_start];
-  //cout << "get(" << i - x_start << ", " << j - y_start << ") = " << c.cost << endl;
+  //cout << "get(" << i - x_start << ", " << j - y_start << ") = " << c.cost << ", valid=" << c.valid() << ", i=" << i << ", j=" << j << ", x_end=" << x_end << ", y_end=" << y_end << endl;
   if (!c.valid()) {
     throw runtime_error("bad memoize detected!");
   }
@@ -416,6 +418,8 @@ wstring calculate_blocked(wstring const& x, wstring const& y, size_t block) {
     size_t actual_j_end = min(block + j, y.length());
 
     command** d = make_table(actual_i_end - actual_i, actual_j_end - actual_j);
+
+    //cout << "------------------- block=" << index << endl;
 
     calculate_strings(cmd_result, x, y, d, actual_i, actual_j, actual_i_end, actual_j_end, index);
 
