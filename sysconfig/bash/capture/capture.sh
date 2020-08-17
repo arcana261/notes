@@ -5,20 +5,27 @@ function capture() {
     return -1
   fi
 
-  kill -9 $CAPTURE_PID
+  CAPTURE_ENV_FILE=$HOME/.config/tmux_capture.env
+
+  if [ -f $CAPTURE_ENV_FILE ]; then
+    source $CAPTURE_ENV_FILE
+  fi
+
+  kill -9 $CAPTURE_PID 1>/dev/null 2>&1
 
   export CAPTURE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-  export CAPTURE_OUTPUT=$(realpath $1)
 
-  export CAPTURE_FRAMES="$(mktemp)"
-  export CAPTURE_LAST_FRAME="$(mktemp)"
-  export CAPTURE_NEXT_FRAME="$(mktemp)"
-  export CAPTURE_BUFFER="$(mktemp)"
+  echo "export CAPTURE_OUTPUT=$(realpath $1)" > $CAPTURE_ENV_FILE
+  echo "export CAPTURE_FRAMES=$(mktemp)" >> $CAPTURE_ENV_FILE
+  echo "export CAPTURE_LAST_FRAME=$(mktemp)" >> $CAPTURE_ENV_FILE
+  echo "export CAPTURE_NEXT_FRAME=$(mktemp)" >> $CAPTURE_ENV_FILE
+  echo "export CAPTURE_BUFFER=$(mktemp)" >> $CAPTURE_ENV_FILE
+  source $CAPTURE_ENV_FILE
+
   export CAPTURE_CURRENT_FRAME_NUMBER=0
-
   export CAPTURE_LAST_TICK=$(date +%s%N);
 
-  make -C $CAPTURE_DIR
+  make -C $CAPTURE_DIR 1>/dev/null
 
   truncate -s 0 $CAPTURE_FRAMES
   rm -f $CAPTURE_FRAMES
@@ -64,7 +71,11 @@ EOM
 }
 
 function end_capture() {
-  kill -9 $CAPTURE_PID
+  if [ -f $CAPTURE_ENV_FILE ]; then
+    source $CAPTURE_ENV_FILE
+  fi
+
+  kill -9 $CAPTURE_PID 1>/dev/null 2>&1
 
   export CAPTURE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
   CAPTURE_CONTENT_FILE=$(mktemp)
@@ -74,10 +85,10 @@ function end_capture() {
 
   DELIMETER='<RAW>'
   INDEX=$(grep -abo $DELIMETER $CAPTURE_DIR/files/template.html | cut -d ':' -f 1)
-  dd if=$CAPTURE_DIR/files/template.html of=$CAPTURE_OUTPUT count=$INDEX bs=1
+  dd if=$CAPTURE_DIR/files/template.html of=$CAPTURE_OUTPUT count=$INDEX bs=1 2>/dev/null
   gzip -c9 $CAPTURE_FRAMES | base64 -w 0 >> $CAPTURE_OUTPUT
   INDEX=$(( $INDEX + ${#DELIMETER} ))
-  dd if=$CAPTURE_DIR/files/template.html skip=$INDEX of=$CAPTURE_OUTPUT bs=1 oflag=append conv=notrunc
+  dd if=$CAPTURE_DIR/files/template.html skip=$INDEX of=$CAPTURE_OUTPUT bs=1 oflag=append conv=notrunc 2>/dev/null
 
   rm -f $CAPTURE_BUFFER
   rm -f $CAPTURE_FRAMES
