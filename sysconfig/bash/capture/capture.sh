@@ -40,7 +40,7 @@ function capture() {
       echo -n \$CAPTURE_TICK >> $CAPTURE_FRAMES;
       echo -n "]]]" >> $CAPTURE_FRAMES;
       if [ -f \$CAPTURE_LAST_FRAME ]; then
-        $CAPTURE_DIR/leven \$CAPTURE_LAST_FRAME \$CAPTURE_NEXT_FRAME 32 >> $CAPTURE_FRAMES;
+        $CAPTURE_DIR/leven \$CAPTURE_LAST_FRAME \$CAPTURE_NEXT_FRAME 128 >> $CAPTURE_FRAMES;
       else
         $CAPTURE_DIR/leven \$CAPTURE_NEXT_FRAME >> $CAPTURE_FRAMES;
       fi;

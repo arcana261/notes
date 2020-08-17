@@ -89,42 +89,185 @@ size_t itoa_length(size_t len) {
   }
 }
 
-size_t estimate_insert_command_length(size_t length) {
-  return 1 + itoa_length(length) + length;
-}
+struct command {
+  char cmd; // K(Keep), I(Insert), D(Delete), R(Replace)
+  size_t arg1; // K(length), I(start index), D(length), R(start index)
+  size_t arg2; // K(unused), I(length), D(unused), R(length)
+  size_t cost; // dynamic programming cost
 
-void fill_insert_command(wstringstream& result, wstring const& s, size_t i, size_t length) {
-  result.put(insert_commands[itoa_length(length) - 1]);
-  result << length;
-  result.write(s.c_str() + i, length);
-}
+  bool valid() const {
+    return cmd != '\0';
+  }
 
-size_t estimate_keep_command_length(size_t length) {
-  return 1 + itoa_length(length);
-}
+  void fill(wstringstream& result, wstring const& other) const {
+    switch (this->cmd) {
+      case 'K':
+        result.put(keep_commands[itoa_length(this->arg1) - 1]);
+        result << this->arg1;
+        break;
 
-void fill_keep_command(wstringstream& result, size_t length) {
-  result.put(keep_commands[itoa_length(length) - 1]);
-  result << length;
-}
+      case 'I':
+        result.put(insert_commands[itoa_length(this->arg2) - 1]);
+        result << this->arg2;
+        result.write(other.c_str() + this->arg1, this->arg2);
+        break;
 
-size_t estimate_delete_command_length(size_t length) {
-  return 1 + itoa_length(length);
-}
+      case 'D':
+        result.put(delete_commands[itoa_length(this->arg1) - 1]);
+        result << this->arg1;
+        break;
 
-void fill_delete_command(wstringstream& result, size_t length) {
-  result.put(delete_commands[itoa_length(length) - 1]);
-  result << length;
-}
+      case 'R':
+        result.put(replace_commands[itoa_length(this->arg2) - 1]);
+        result << this->arg2;
+        result.write(other.c_str() + this->arg1, this->arg2);
+        break;
 
-size_t estimate_replace_command_length(size_t length) {
-  return 1 + itoa_length(length) + length;
-}
+      default:
+        throw runtime_error("unsupported command in command::fill");
+    }
+  }
 
-void fill_replace_command(wstringstream& result, wstring const& s, size_t i, size_t length) {
-  result.put(replace_commands[itoa_length(length) - 1]);
-  result << length;
-  result.write(s.c_str() + i, length);
+  static command keep(size_t cost, size_t length) {
+    return command('K', cost, length, 0);
+  }
+
+  static command insert(size_t cost, size_t index, size_t length) {
+    return command('I', cost, index, length);
+  }
+
+  static command remove(size_t cost, size_t length) {
+    return command('D', cost, length, 0);
+  }
+
+  static command replace(size_t cost, size_t index, size_t length) {
+    return command('R', cost, index, length);
+  }
+
+  static command empty() {
+    return command('\0', numeric_limits<size_t>::max(), 0, 0);
+  }
+
+private:
+  command(char cmd, size_t cost, size_t arg1, size_t arg2) {
+    this->cmd = cmd;
+    this->cost = cost;
+    this->arg1 = arg1;
+    this->arg2 = arg2;
+  }
+};
+
+struct command_set {
+  vector< command > commands;
+
+  void fill(wstringstream& result, wstring const& other) {
+    for (auto i = commands.begin(); i != commands.end(); ++i) {
+      i->fill(result, other);
+    }
+  }
+
+  void add(command const& x) {
+    if (commands.empty()) {
+      commands.push_back(x);
+      return;
+    }
+
+    command& last = commands.back();
+
+    if (last.cmd != x.cmd) {
+      commands.push_back(x);
+      return;
+    }
+
+    bool merged = false;
+
+    switch (x.cmd) {
+      case 'K':
+        last.arg1 += x.arg1;
+        merged = true;
+        break;
+
+      case 'I':
+        if (x.arg1 == (last.arg1 + last.arg2)) {
+          last.arg2 += x.arg2;
+          merged = true;
+        }
+        break;
+
+      case 'D':
+        last.arg1 += x.arg1;
+        merged = true;
+        break;
+
+      case 'R':
+        if (x.arg1 == (last.arg1 + last.arg2)) {
+          last.arg2 += x.arg2;
+          merged = true;
+        }
+        break;
+
+      default:
+        throw runtime_error("invalid command at command_set::add");
+    }
+
+    if (!merged) {
+      commands.push_back(x);
+    }
+  }
+};
+
+void fill_calculate_rec_result(
+  command_set& result,
+  size_t i,
+  size_t j,
+  size_t x_end,
+  size_t y_end,
+  size_t x_start,
+  size_t y_start,
+  command** d) {
+
+  if (i >= x_end) {
+    if (j >= y_end) {
+      return;
+    }
+
+    // insert cmd
+    result.add(command::insert(0, j, y_end - j));
+  }
+
+  if (j >= y_end) {
+    // delete cmd
+    result.add(command::remove(0, x_end - i));
+  }
+
+  command c = d[i - x_start][j - y_start];
+  //cout << "get(" << i - x_start << ", " << j - y_start << ") = " << c.cost << endl;
+  if (!c.valid()) {
+    throw runtime_error("bad memoize detected!");
+  }
+
+  result.add(c);
+
+  switch (c.cmd) {
+    case 'K':
+      fill_calculate_rec_result(result, i + c.arg1, j + c.arg1, x_end, y_end, x_start, y_start, d);
+      break;
+
+    case 'I':
+      fill_calculate_rec_result(result, i, j + c.arg2, x_end, y_end, x_start, y_start, d);
+      break;
+
+    case 'D':
+      fill_calculate_rec_result(result, i + c.arg1, j, x_end, y_end, x_start, y_start, d);
+      break;
+
+    case 'R':
+      fill_calculate_rec_result(result, i + c.arg2, j + c.arg2, x_end, y_end, x_start, y_start, d);
+      break;
+
+    default:
+      throw runtime_error("command not detected while rebuilding memoize");
+  }
 }
 
 size_t calculate_rec(
@@ -136,9 +279,7 @@ size_t calculate_rec(
   size_t y_end,
   size_t x_start,
   size_t y_start,
-  size_t** d,
-  wstringstream *str_result,
-  size_t target_c,
+  command** d,
   size_t depth,
   size_t block) {
 
@@ -148,142 +289,61 @@ size_t calculate_rec(
     }
 
     // insert cmd
-    size_t result = estimate_insert_command_length(y_end - j);
-
-    if (str_result != NULL && result == target_c) {
-      fill_insert_command(*str_result, y, j, y_end - j);
-    }
-
-    return result;
+    return y_end - j;
   }
 
   if (j >= y_end) {
     // delete cmd
-    size_t result = estimate_delete_command_length(x_end - i);
-
-    if (str_result != NULL && result == target_c) {
-      fill_delete_command(*str_result, x_end - i);
-    }
-
-    return result;
+    return x_end - i;
   }
 
-  if (str_result == NULL) {
-    if (d[i - x_start][j - y_start]) {
-      return d[i - x_start][j - y_start];
-    } else {
-    }
+  if (d[i - x_start][j - y_start].valid()) {
+    return d[i - x_start][j - y_start].cost;
   }
 
-  size_t c = numeric_limits<size_t>::max();
-
-  size_t max_equal = 0;
-  for (size_t k = 1; k <= min(x_end - i, y_end - j); k++) {
-    if (x[i + k -1] == y[j + k - 1]) {
-      max_equal = max_equal + 1;
-    } else {
-      break;
-    }
-  }
+  command c = command::empty();
 
   // calculate keeps
-  if (max_equal > 0) {
-    size_t local_cost = estimate_keep_command_length(max_equal);
-    size_t next_cost = calculate_rec(x, y, i + max_equal, j + max_equal, x_end, y_end, x_start, y_start, d, NULL, numeric_limits<size_t>::max(), depth + 1, block);
+  if (x[i] == y[j]) {
+    size_t new_cost = calculate_rec(x, y, i + 1, j + 1, x_end, y_end, x_start, y_start, d, depth + 1, block);
 
-    if (next_cost != numeric_limits<size_t>::max()) {
-      size_t new_cost = local_cost + next_cost;
-
-      if (str_result != NULL && new_cost == target_c) {
-        fill_keep_command(*str_result, max_equal);
-        calculate_rec(x, y, i + max_equal, j + max_equal, x_end, y_end, x_start, y_start, d, str_result, target_c - local_cost, depth + 1, block);
-        return new_cost;
-      }
-
-      if (new_cost < c) {
-        c = new_cost;
-      }
+    if (new_cost < c.cost) {
+      c = command::keep(new_cost, 1);
     }
   }
 
   // calculate deletes
-  for (size_t k = 1; k <= x_end - i; k++) {
-    size_t local_cost = estimate_delete_command_length(k);
-    size_t next_cost = calculate_rec(x, y, i + k, j, x_end, y_end, x_start, y_start, d, NULL, numeric_limits<size_t>::max(), depth + 1, block);
-
-    if (next_cost != numeric_limits<size_t>::max()) {
-      size_t new_cost = local_cost + next_cost;
-
-      if (str_result != NULL && new_cost == target_c) {
-        fill_delete_command(*str_result, k);
-        calculate_rec(x, y, i + k, j, x_end, y_end, x_start, y_start, d, str_result, target_c - local_cost, depth + 1, block);
-        return new_cost;
-      }
-
-      if (new_cost < c) {
-        c = new_cost;
-      }
-    } else {
-      break;
-    }
+  size_t new_cost = 1 + calculate_rec(x, y, i + 1, j, x_end, y_end, x_start, y_start, d, depth + 1, block);
+  if (new_cost < c.cost) {
+    c = command::remove(new_cost, 1);
   }
 
   // calculate inserts
-  for (size_t k = 1; k <= y_end - j; k++) {
-    size_t local_cost = estimate_insert_command_length(k);
-    size_t next_cost = calculate_rec(x, y, i, j + k, x_end, y_end, x_start, y_start, d, NULL, numeric_limits<size_t>::max(), depth + 1, block);
-
-    if (next_cost != numeric_limits<size_t>::max()) {
-      size_t new_cost = local_cost + next_cost;
-
-      if (str_result != NULL && new_cost == target_c) {
-        fill_insert_command(*str_result, y, j, k);
-        calculate_rec(x, y, i, j + k, x_end, y_end, x_start, y_start, d, str_result, target_c - local_cost, depth + 1, block);
-        return new_cost;
-      }
-
-      if (new_cost < c) {
-        c = new_cost;
-      }
-    } else {
-      break;
-    }
+  new_cost = 1 + calculate_rec(x, y, i, j + 1, x_end, y_end, x_start, y_start, d, depth + 1, block);
+  if (new_cost < c.cost) {
+    c = command::insert(new_cost, j, 1);
   }
 
   // calculate for replace
-  for (size_t k = 1; k <= min(x_end - i, y_end - j); k++) {
-    size_t local_cost = estimate_replace_command_length(k);
-    size_t next_cost = calculate_rec(x, y, i + k, j + k, x_end, y_end, x_start, y_start, d, NULL, numeric_limits<size_t>::max(), depth + 1, block);
+  if (x[i] != y[j]) {
+    new_cost = 1 + calculate_rec(x, y, i + 1, j + 1, x_end, y_end, x_start, y_start, d, depth + 1, block);
 
-    if (next_cost != numeric_limits<size_t>::max()) {
-      size_t new_cost = local_cost + next_cost;
-
-      if (str_result != NULL && new_cost == target_c) {
-        fill_replace_command(*str_result, y, j, k);
-        calculate_rec(x, y, i + k, j + k, x_end, y_end, x_start, y_start, d, str_result, target_c - local_cost, depth + 1, block);
-        return new_cost;
-      }
-
-      if (new_cost < c) {
-        c = new_cost;
-      }
-    } else {
-      break;
+    if (new_cost < c.cost) {
+      c = command::replace(new_cost, j, 1);
     }
   }
 
-  if (str_result == NULL) {
-    d[i - x_start][j - y_start] = c;
-  }
+  d[i - x_start][j - y_start] = c;
+  //cout << "set(" << i - x_start << "," << j - y_start << ") = " << c.cost << endl;
 
-  return c;
+  return c.cost;
 }
 
-size_t** make_table(size_t x_length, size_t y_length) {
-  static size_t* raw_d = NULL;
+command** make_table(size_t x_length, size_t y_length) {
+  static command* raw_d = NULL;
   static size_t full_size = 0;
 
-  static size_t** d = NULL;
+  static command** d = NULL;
   static size_t x_size = 0;
   static size_t y_size = 0;
 
@@ -301,7 +361,7 @@ size_t** make_table(size_t x_length, size_t y_length) {
       y_size = 0;
     }
 
-    raw_d = (size_t*)malloc(size * sizeof(size_t));
+    raw_d = (command*)malloc(size * sizeof(command));
     full_size = size;
   }
 
@@ -310,7 +370,7 @@ size_t** make_table(size_t x_length, size_t y_length) {
       free(d);
     }
 
-    d = (size_t**)malloc(x_length * sizeof(size_t*));
+    d = (command**)malloc(x_length * sizeof(command*));
     x_size = x_length;
     y_size = 0;
   }
@@ -322,20 +382,22 @@ size_t** make_table(size_t x_length, size_t y_length) {
     y_size = y_length;
   }
 
-  memset(raw_d, 0, full_size * sizeof(size_t));
+  memset(raw_d, 0, full_size * sizeof(command));
 
   return d;
 }
 
-void calculate_strings(wstringstream& result, wstring const& x, wstring const& y, size_t** d, size_t i, size_t j, size_t x_end, size_t y_end, size_t block) {
-  size_t cost = calculate_rec(x, y, i, j, x_end, y_end, i, j, d, NULL, numeric_limits<size_t>::max(), 0, block);
-  calculate_rec(x, y, i, j, x_end, y_end, i, j, d, &result, cost, 0, block);
+void calculate_strings(command_set& result, wstring const& x, wstring const& y, command** d, size_t i, size_t j, size_t x_end, size_t y_end, size_t block) {
+  calculate_rec(x, y, i, j, x_end, y_end, i, j, d, 0, block);
+  fill_calculate_rec_result(result, i, j, x_end, y_end, i, j, d);
 }
 
 wstring calculate(wstring const& x, wstring const& y) {
   wstringstream result;
-  size_t** d = make_table(x.length(), y.length());
-  calculate_strings(result, x, y, d, 0, 0, x.length(), y.length(), 0);
+  command_set cmd_result;
+  command** d = make_table(x.length(), y.length());
+  calculate_strings(cmd_result, x, y, d, 0, 0, x.length(), y.length(), 0);
+  cmd_result.fill(result, y);
   return result.str();
 }
 
@@ -343,6 +405,7 @@ wstring calculate_blocked(wstring const& x, wstring const& y, size_t block) {
   size_t i = 0;
   size_t j = 0;
   wstringstream result;
+  command_set cmd_result;
 
   size_t index = 0;
 
@@ -352,9 +415,9 @@ wstring calculate_blocked(wstring const& x, wstring const& y, size_t block) {
     size_t actual_i_end = min(block + i, x.length());
     size_t actual_j_end = min(block + j, y.length());
 
-    size_t** d = make_table(actual_i_end - actual_i, actual_j_end - actual_j);
+    command** d = make_table(actual_i_end - actual_i, actual_j_end - actual_j);
 
-    calculate_strings(result, x, y, d, actual_i, actual_j, actual_i_end, actual_j_end, index);
+    calculate_strings(cmd_result, x, y, d, actual_i, actual_j, actual_i_end, actual_j_end, index);
 
     i = i + block;
     j = j + block;
@@ -363,6 +426,7 @@ wstring calculate_blocked(wstring const& x, wstring const& y, size_t block) {
     //report("progress", (i * 100) / max(x.length(), y.length()), false);
   }
 
+  cmd_result.fill(result, y);
   return result.str();
 }
 
@@ -426,194 +490,35 @@ wstring calculate_file(string const& x) {
   return calculate_blocked(left_file, right_file, BUCKET);
 }
 
-size_t read_command_size(wstring const& str, size_t i, size_t len) {
-  size_t result = 0;
-
-  for (size_t j = 0; j < len; j++) {
-    result = result * 10 + (str[i + j] - '0');
-  }
-
-  return result;
-}
-
-bool is_keep_command(wstring const& str, size_t i, size_t& len, size_t& next_i) {
-  for (size_t j = 0; j < sizeof(keep_commands) / sizeof(wchar_t); j++) {
-    if (keep_commands[j] == str[i]) {
-      len = read_command_size(str, i + 1, j + 1);
-      next_i = i + 2 + j;
-
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool is_insert_command(wstring const& str, size_t i, size_t& len, size_t& str_begin, size_t& next_i) {
-  for (size_t j = 0; j < sizeof(insert_commands) / sizeof(wchar_t); j++) {
-    if (insert_commands[j] == str[i]) {
-      len = read_command_size(str, i + 1, j + 1);
-      str_begin = i + 2 + j;
-      next_i = i + 2 + j + len;
-
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool is_delete_command(wstring const& str, size_t i, size_t& len, size_t& next_i) {
-  for (size_t j = 0; j < sizeof(delete_commands) / sizeof(wchar_t); j++) {
-    if (delete_commands[j] == str[i]) {
-      len = read_command_size(str, i + 1, j + 1);
-      next_i = i + 2 + j;
-
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool is_replace_command(wstring const& str, size_t i, size_t& len, size_t& str_begin, size_t& next_i) {
-  for (size_t j = 0; j < sizeof(replace_commands) / sizeof(wchar_t); j++) {
-    if (replace_commands[j] == str[i]) {
-      len = read_command_size(str, i + 1, j + 1);
-      str_begin = i + 2 + j;
-      next_i = i + 2 + j + len;
-
-      return true;
-    }
-  }
-
-  return false;
-}
-
-char get_command(wstring const& str, size_t i, size_t& arg, pair<size_t, size_t>& string_arg, size_t& next_i) {
-  if (is_keep_command(str, i, arg, next_i)) {
-    return 'K';
-  }
-
-  if (is_insert_command(str, i, string_arg.second, string_arg.first, next_i)) {
-    arg = string_arg.second;
-    return 'I';
-  }
-
-  if (is_delete_command(str, i, arg, next_i)) {
-    return 'D';
-  }
-
-  if (is_replace_command(str, i, string_arg.second, string_arg.first, next_i)) {
-    arg = string_arg.second;
-    return 'R';
-  }
-
-  throw runtime_error("unknown command sequence");
-}
-
-void merge_command(char command, size_t& arg, vector< pair<size_t, size_t> >& string_arg_list, size_t new_arg, pair<size_t, size_t> new_string_arg) {
-  if (command == 'K') {
-    arg = arg + new_arg;
-  } else if (command == 'I') {
-    arg = arg + new_arg;
-    string_arg_list.push_back(new_string_arg);
-  } else if (command == 'D') {
-    arg = arg + new_arg;
-  } else if (command == 'R') {
-    arg = arg + new_arg;
-    string_arg_list.push_back(new_string_arg);
-  } else {
-    throw runtime_error("unknown command sequence");
-  }
-}
-
-void inject_command(wstringstream& result, wstring const& s, char command, size_t arg, vector< pair<size_t, size_t> > const& string_arg) {
-  if (command == '\0') {
-    return;
-  }
-
-  if (command == 'K') {
-    fill_keep_command(result, arg);
-  } else if (command == 'I') {
-    result.put(insert_commands[itoa_length(arg) - 1]);
-    result << arg;
-
-    for (size_t i = 0; i < string_arg.size(); i++) {
-      result.write(s.c_str() + string_arg[i].first, string_arg[i].second);
-    }
-  } else if (command == 'D') {
-    fill_delete_command(result, arg);
-  } else if (command == 'R') {
-    result.put(replace_commands[itoa_length(arg) - 1]);
-    result << arg;
-
-    for (size_t i = 0; i < string_arg.size(); i++) {
-      result.write(s.c_str() + string_arg[i].first, string_arg[i].second);
-    }
-  } else {
-    throw runtime_error("unknown command sequence");
-  }
-}
-
-wstring compress_adjacent_commands(wstring const& str) {
-  wstringstream result;
-  char last_command = '\0';
-  size_t last_command_integer_arg = 0;
-  vector< pair<size_t, size_t> > last_command_string_arg;
-  size_t i = 0;
-
-  while (i < str.length()) {
-    size_t next_i;
-    size_t arg;
-    pair<size_t, size_t> string_arg;
-
-    char command = get_command(str, i, arg, string_arg, next_i);
-
-    if (command != last_command) {
-      inject_command(result, str, last_command, last_command_integer_arg, last_command_string_arg);
-      last_command = command;
-      last_command_integer_arg = arg;
-      last_command_string_arg.clear();
-      last_command_string_arg.push_back(string_arg);
-    } else {
-      merge_command(command, last_command_integer_arg, last_command_string_arg, arg, string_arg);
-    }
-
-    i = next_i;
-  }
-
-  inject_command(result, str, last_command, last_command_integer_arg, last_command_string_arg);
-
-  return result.str();
-}
-
 void print_usage() {
+  cout << "./leven <fname>" << endl;
+  cout << "./leven <fname> <fname>" << endl;
+  cout << "./leven <fname> <fname> <block size>" << endl;
 }
 
 int main(int argc, char**argv) {
   if (argc == 3 || argc == 4 || argc == 5) {
     if (argc == 4) {
       if (!strcmp(argv[1], "debug")) {
-        wcout << compress_adjacent_commands(calculate(make_wstring(argv[2]), make_wstring(argv[3])));
+        wcout << calculate(make_wstring(argv[2]), make_wstring(argv[3]));
         return 0;
       }
       size_t block = atol(argv[3]);
-      wcout << compress_adjacent_commands(calculate_files(argv[1], argv[2], block));
+      wcout << calculate_files(argv[1], argv[2], block);
     } else if (argc == 5) {
       if (!strcmp(argv[1], "debug")) {
         size_t block = atol(argv[4]);
-        wcout << compress_adjacent_commands(calculate_blocked(make_wstring(argv[2]), make_wstring(argv[3]), block));
+        wcout << calculate_blocked(make_wstring(argv[2]), make_wstring(argv[3]), block);
       }
     } else {
       if (!strcmp(argv[1], "debug")) {
-        wcout << compress_adjacent_commands(calculate(L"", make_wstring(argv[2])));
+        wcout << calculate(L"", make_wstring(argv[2]));
         return 0;
       }
-      wcout << compress_adjacent_commands(calculate_files(argv[1], argv[2], BUCKET));
+      wcout << calculate_files(argv[1], argv[2], BUCKET);
     }
   } else if (argc == 2) {
-    wcout << compress_adjacent_commands(calculate_file(argv[1]));
+    wcout << calculate_file(argv[1]);
   } else {
     print_usage();
   }
