@@ -14,6 +14,7 @@ function capture() {
   export CAPTURE_LAST_FRAME="$(mktemp)"
   export CAPTURE_NEXT_FRAME="$(mktemp)"
   export CAPTURE_BUFFER="$(mktemp)"
+  export CAPTURE_CURRENT_FRAME_NUMBER=0
 
   export CAPTURE_LAST_TICK=$(date +%s%N);
 
@@ -30,6 +31,10 @@ function capture() {
     export CAPTURE_TICK_DIFF=\$(( \$CAPTURE_TICK - \$CAPTURE_LAST_TICK ));
     if [ \$CAPTURE_TICK_DIFF -gt 250000000 ]; then
       export CAPTURE_LAST_TICK=\$CAPTURE_TICK;
+      if [ \$(( \$CAPTURE_CURRENT_FRAME_NUMBER % 1024 )) -eq 0 ]; then
+        rm -f $CAPTURE_LAST_FRAME;
+      fi;
+      export CAPTURE_CURRENT_FRAME_NUMBER=\$(( \$CAPTURE_CURRENT_FRAME_NUMBER + 1))
       tmux capture-pane -e;
       tmux save-buffer $CAPTURE_BUFFER;
       tmux delete-buffer;

@@ -273,6 +273,7 @@ function main() {
   let slider_pausing = false;
   let has_reached_end = false;
   const FPS = 10;
+  const COMPLETE_FRAME_EVERY = 1024;
 
   let render_start_at = 0;
   if (capture_frames.length > 0) {
@@ -297,7 +298,7 @@ function main() {
   const fullRenderFrame = (frame, offset_time=0) => {
     intended_html = '';
 
-    for (let i = 0; i <= frame && i < capture_frames.length; i++) {
+    for (let i = Math.floor(frame / COMPLETE_FRAME_EVERY) * COMPLETE_FRAME_EVERY; i <= frame && i < capture_frames.length; i++) {
       intended_html = apply_leven_diff(intended_html, capture_frames[i]['frame']);
     }
 
@@ -357,6 +358,9 @@ function main() {
     }
 
     for (let i = value + 1; i <= display_value; i++) {
+      if (i % COMPLETE_FRAME_EVERY == 0) {
+        intended_html = '';
+      }
       intended_html = apply_leven_diff(intended_html, capture_frames[i]['frame']);
     }
 
