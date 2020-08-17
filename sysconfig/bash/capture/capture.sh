@@ -34,7 +34,7 @@ function capture() {
       tmux save-buffer $CAPTURE_BUFFER;
       tmux delete-buffer;
       echo -n '<pre>' > \$CAPTURE_NEXT_FRAME;
-      aha --black -l -n -f $CAPTURE_BUFFER | sed 's|style="color:white;background-color:white;"|style="color:white;background-color:black;"|g' | sed 's|style="font-weight:bold;color:white;background-color:white;"|style="font-weight:bold;color:white;background-color:black;"|g' | sed 's|style="filter:[^;]*;|style="|g' | sed 's|style="color:aqua;background-color:white;"|style="color:aqua;background-color:black;"|g' | sed 's|style="color:lime;background-color:white;"|style="color:lime;background-color:black;"|g' | sed 's|style="font-weight:bold;filter:[^;]*;|style="font-weight:bold;|g' | sed 's|style="font-weight:bold;color:dimgray;background-color:white;"|style="font-weight:bold;color:lightgray;background-color:black;"|g' | sed 's|style="color:yellow;background-color:white;"|style="color:yellow;background-color:black;"|g' | sed 's|style="color:red;background-color:white;"|style="color:red;background-color:black;"|g' | sed 's|style="font-weight:bold;color:red;background-color:white;"|style="font-weight:bold;color:red;background-color:black;"|g' | sed 's|style="text-decoration:underline;color:white;background-color:white;"|style="text-decoration:underline;color:white;background-color:black;"|g' >> \$CAPTURE_NEXT_FRAME;
+      aha --black -l -n -s -f $CAPTURE_BUFFER >> \$CAPTURE_NEXT_FRAME;
       echo -n '</pre>' >> \$CAPTURE_NEXT_FRAME;
       echo -n "[[[FRAME:" >> $CAPTURE_FRAMES;
       echo -n \$CAPTURE_TICK >> $CAPTURE_FRAMES;
