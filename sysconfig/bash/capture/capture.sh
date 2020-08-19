@@ -72,9 +72,12 @@ EOM
   bash -c "$CMD"&
 
   export CAPTURE_PID=$!
+  echo "export CAPTURE_PID=$CAPTURE_PID" >> $CAPTURE_ENV_FILE
 }
 
 function end_capture() {
+  CAPTURE_ENV_FILE=$HOME/.config/tmux_capture.env
+
   if [ -f $CAPTURE_ENV_FILE ]; then
     source $CAPTURE_ENV_FILE
   fi

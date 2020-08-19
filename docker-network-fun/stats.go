@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"sync"
 	"time"
 )
@@ -17,8 +18,16 @@ type statsItem struct {
 }
 
 type stats struct {
-	items map[string]*statsItem
-	mutex sync.Mutex
+	items  map[string]*statsItem
+	gauges map[string]float64
+	mutex  sync.Mutex
+}
+
+func NewStats() stats {
+	return stats{
+		items:  make(map[string]*statsItem),
+		gauges: make(map[string]float64),
+	}
 }
 
 func (s *stats) Observe(name string, value float64) {
@@ -43,12 +52,30 @@ func (s *stats) Observe(name string, value float64) {
 	}
 }
 
+func (s *stats) Set(name string, value float64) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	s.gauges[name] = value
+}
+
+func (s *stats) Increment(name string, value float64) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	s.gauges[name] = s.gauges[name] + value
+}
+
 func (s *stats) Report() {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
 	for name, item := range s.items {
-		fmt.Printf("%s: %v/s\n", name, item.ReportPerSecond())
+		fmt.Fprintf(os.Stderr, "%s: %v/s\n", name, item.ReportPerSecond())
+	}
+
+	for name, value := range s.gauges {
+		fmt.Fprintf(os.Stderr, "%s: %v\n", name, value)
 	}
 }
 
@@ -69,13 +96,19 @@ func (s *statsItem) ReportPerSecond() float64 {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	s.pruneUntil(time.Now().Add(-1 * time.Minute))
+	now := time.Now()
+	s.pruneUntil(now.Add(-1 * time.Minute))
 
 	if len(s.records) == 0 {
 		return 0
 	}
 
-	return (s.records[len(s.records)-1].value - s.records[0].value) / 60.0
+	timeDiff := float64(now.Sub(s.records[0].time) / time.Second)
+	if timeDiff < 0.001 {
+		return 0
+	}
+
+	return (s.records[len(s.records)-1].value - s.records[0].value) / timeDiff
 }
 
 func (s *statsItem) pruneUntil(t time.Time) {
