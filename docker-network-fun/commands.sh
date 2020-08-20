@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# https://wiki.linuxfoundation.org/networking/netem
+
 export TEST_RABBITMQ_VOLUME_MB=512
 export TEST_RABBITMQ_MEMORY_MB=1024
 
@@ -52,11 +54,14 @@ function rabbitmq_rebalance_service_ip() {
   upnodes_list=""
   for i in $(seq 0 $n); do
     if [ "$(nc -w 1 -vz $(rabbitmq_virtual_ip_address $i) 5672 1>/dev/null 2>&1 || echo 'failure')" == "" ]; then
-      upnodes=$(( $upnodes + 1))
-      if [ "$first_upnode" == "" ]; then
-        first_upnode=$(rabbitmq_virtual_ip_address $i)
-      else
-        upnodes_list="$upnodes_list $(rabbitmq_virtual_ip_address $i)"
+      # check liveness
+      if [ "$(sudo docker exec rabbitmq$i rabbitmq-diagnostics -q ping 1>/dev/null 2>&1 || echo "failure")" == "" ]; then
+        upnodes=$(( $upnodes + 1))
+        if [ "$first_upnode" == "" ]; then
+          first_upnode=$(rabbitmq_virtual_ip_address $i)
+        else
+          upnodes_list="$upnodes_list $(rabbitmq_virtual_ip_address $i)"
+        fi
       fi
     fi
   done
@@ -119,7 +124,10 @@ function create_rabbitmq_container() {
   sudo docker run -td --name rabbitmq$1 --network rabbitmq$1 --hostname rabbitmq$1 -e RABBITMQ_ERLANG_COOKIE='1234' -m ${TEST_RABBITMQ_MEMORY_MB}m --ip 192.168.$range.2 -v rabbitmq$1:/var/lib/rabbitmq rabbitmq:mehdi
 
   # wait for rabbitmq to boot up (a.k.a. liveness)
-  sudo docker exec rabbitmq$1 bash -c 'while [ "$(rabbitmq-diagnostics -q status 1>/dev/null 2>&1 || echo 0)" == "0" ]; do echo "RabbitMQ not started..."; sleep 1; done'
+  sudo docker exec rabbitmq$1 bash -c 'while [ "$(rabbitmq-diagnostics -q ping 1>/dev/null 2>&1 || echo 0)" == "0" ]; do echo "RabbitMQ not live yet..."; sleep 1; done'
+
+  # wait for rabbitmq to be ready (a.k.a. readiness probe)
+  sudo docker exec rabbitmq$1 bash -c 'while [ "$(rabbitmq-diagnostics -q status 1>/dev/null 2>&1 || echo 0)" == "0" ]; do echo "RabbitMQ not ready yet..."; sleep 1; done'
 
   # configure hostnames
   n=$(($2 - 1))
@@ -164,6 +172,27 @@ function create_docker_volume() {
   if [ "$existing" == "" ]; then
     sudo docker volume create --driver local --opt type=tmpfs --opt device=tmpfs --opt o=size=${TEST_RABBITMQ_VOLUME_MB}m,uid=1000 rabbitmq$1
   fi
+}
+
+function mangle_plug_out_network() {
+  # plug target network out
+  # usage: mangle_plugin_out_network <0-based index>
+
+  sudo ip netns exec rabbitmq$1 ip link set dev rabbit-in$1pr down
+  sudo ip netns exec rabbitmq$1 ip link set dev rabbit-out$1pr down
+
+  rabbitmq_rebalance_service_ip
+}
+
+
+function mangle_plug_in_network() {
+  # plug target network out
+  # usage: mangle_plugin_out_network <0-based index>
+
+  sudo ip netns exec rabbitmq$1 ip link set dev rabbit-in$1pr up
+  sudo ip netns exec rabbitmq$1 ip link set dev rabbit-out$1pr up
+
+  rabbitmq_rebalance_service_ip
 }
 
 function create_docker_bridge() {

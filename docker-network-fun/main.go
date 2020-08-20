@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"flag"
 	"fmt"
 	"os"
@@ -14,7 +15,10 @@ import (
 )
 
 const (
-	backoff = 5 * time.Second
+	backoff           = 100 * time.Millisecond
+	publishTimeout    = 1 * time.Second
+	connectionTimeout = 5 * time.Second
+	maxRetry          = -1
 )
 
 type stringListFlagType []string
@@ -29,11 +33,11 @@ var (
 	maxPublishCountFlag    *int
 	checkDataLossFlag      *bool
 
-	wg         sync.WaitGroup
-	reporterWg sync.WaitGroup
-	done       chan struct{}
-	publishMsg amqp.Publishing
-	appStatus  stats
+	wg            sync.WaitGroup
+	reporterWg    sync.WaitGroup
+	globalContext context.Context
+	publishMsg    amqp.Publishing
+	appStatus     stats
 )
 
 func (i *stringListFlagType) String() string {
@@ -64,7 +68,6 @@ func init() {
 		Body:         []byte("Hello"),
 	}
 
-	done = make(chan struct{})
 	appStatus = NewStats()
 
 	flag.Usage = func(original func()) func() {
@@ -83,34 +86,59 @@ func init() {
 func publisherOnEndpointQueue(endpoint string, queue string, rate float64, confirm bool, incremental bool, maxCount int, checkDataLoss bool) {
 	defer wg.Done()
 
-	t := time.NewTicker(backoff)
-	defer t.Stop()
-
 	counter := 0
-	reconnectionStatusName := fmt.Sprintf("Publish Reconnection  %s:%s", endpoint, queue)
+
+	fmt.Fprintf(os.Stderr, "Attemting to make session to %s\n", endpoint)
+	session, err := NewPublisher(globalContext, endpoint, "guest", "guest", "", confirm, func(amqp.Return) {}, connectionTimeout, backoff, maxRetry, publishTimeout)
+	if err != nil {
+		if err != context.DeadlineExceeded && err != context.Canceled {
+			panic(fmt.Sprintf("could not create session to %s with %v", endpoint, err))
+		}
+		return
+	}
+
+	session = newPublishRateLimiter(session, rate)
+	if session == nil {
+		return
+	}
+
+	metricPrefix := fmt.Sprintf("%s_%s", endpoint, queue)
+	session = newMonitoringSession(session, func(event string) {
+		appStatus.Increment(fmt.Sprintf("%s_%s", metricPrefix, event), 1.0)
+	})
+	if session == nil {
+		return
+	}
+
+	defer session.Close()
+
+	fmt.Fprintf(os.Stderr, "Session established to %s\n", endpoint)
+
+	metricPublish := fmt.Sprintf("%s_publish", metricPrefix)
 
 	for {
 		select {
-		case <-done:
+		case <-globalContext.Done():
 			return
 
 		default:
 		}
 
-		counter = publisherOnEndpointQueueLoop(endpoint, queue, rate, confirm, incremental, counter, maxCount, checkDataLoss)
+		publishing := makePublishing(incremental, counter, maxCount, checkDataLoss)
+		err = session.Publish(globalContext, "", queue, publishing)
+		if err != nil {
+			if err != context.DeadlineExceeded && err != ErrClosed {
+				panic(fmt.Sprintf("could not publish to %s with %v", endpoint, err))
+			}
+			return
+		}
+
+		counter = counter + 1
+		appStatus.Observe(metricPublish, 1.0)
 
 		if maxCount > 0 && counter >= maxCount {
 			return
 		}
-
-		select {
-		case <-done:
-			return
-
-		case <-t.C:
-		}
-
-		appStatus.Increment(reconnectionStatusName, 1.0)
 	}
 }
 
@@ -142,155 +170,6 @@ func makePublishing(incremental bool, counter int, maxCount int, checkDataLoss b
 	return result
 }
 
-func publisherOnEndpointQueueLoop(endpoint string, queue string, rate float64, confirm bool, incremental bool, counter int, maxCount int, checkDataLoss bool) int {
-	fmt.Fprintf(os.Stderr, "Attemting to connect to %s\n", endpoint)
-
-	var err error
-	var connection *amqp.Connection
-	var channel *amqp.Channel
-
-	defer func() {
-		go func() {
-			if channel != nil {
-				err = channel.Close()
-				if err != nil {
-					fmt.Fprintf(os.Stderr, "WARN can not close channel to %s with %v", endpoint, err)
-				}
-			}
-
-			if connection != nil {
-				err = connection.Close()
-				if err != nil {
-					fmt.Fprintf(os.Stderr, "WARN can not close connection to %s with %v", endpoint, err)
-				}
-			}
-		}()
-	}()
-
-	connection, err = amqp.Dial(fmt.Sprintf("amqp://guest:guest@%s/", endpoint))
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "ERR connecting to %s with %v\n", endpoint, err)
-		return counter
-	}
-
-	fmt.Fprintf(os.Stderr, "Connection to %s succeeded!\n", endpoint)
-
-	channel, err = connection.Channel()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "ERR opening channel to %s with %v\n", endpoint, err)
-		return counter
-	}
-
-	var confirms chan amqp.Confirmation
-
-	if confirm {
-		confirms = channel.NotifyPublish(make(chan amqp.Confirmation, 1))
-
-		if err := channel.Confirm(false); err != nil {
-			fmt.Fprintf(os.Stderr, "ERR putting channel into confirmation mode on %s with %v", endpoint, err)
-			return counter
-		}
-	}
-
-	notifyBlock := connection.NotifyBlocked(make(chan amqp.Blocking, 1))
-
-	sleep := time.Duration(float64(time.Second) / rate)
-	t := time.NewTicker(sleep)
-	defer t.Stop()
-
-	rateStatusName := fmt.Sprintf("Publish Rate %s:%s", endpoint, queue)
-	countStatusName := fmt.Sprintf("Publish Count %s:%s", endpoint, queue)
-	blockingStatusName := fmt.Sprintf("Publish Blocking %s:%s", endpoint, queue)
-
-	appStatus.Set(blockingStatusName, 0.0)
-
-	eventMonitor := make(chan struct{})
-	defer close(eventMonitor)
-
-	ignoreBlockedPublished := make(chan struct{})
-
-	go func() {
-		for {
-			select {
-			case <-eventMonitor:
-				return
-
-			case blocking := <-notifyBlock:
-				fmt.Fprintf(os.Stderr, "ERR: Publishing blocked on %s with `%v`\n", endpoint, blocking.Reason)
-				appStatus.Set(blockingStatusName, 1.0)
-				close(ignoreBlockedPublished)
-			}
-		}
-	}()
-
-	var publishing amqp.Publishing
-
-	for {
-		select {
-		case <-done:
-			return counter
-
-		default:
-		}
-
-		errChannel := make(chan error, 1)
-
-		go func() {
-			publishing = makePublishing(incremental, counter, maxCount, checkDataLoss)
-			err = channel.Publish("", queue, true, false, publishing)
-			if err != nil {
-				errChannel <- fmt.Errorf("%w: ERR publishing to %s", err, endpoint)
-				return
-			}
-
-			if confirm {
-				select {
-				case <-ignoreBlockedPublished:
-					errChannel <- nil
-					return
-
-				case confirmed := <-confirms:
-					if !confirmed.Ack {
-						errChannel <- fmt.Errorf("%w: ERR publisher confirm failed to %s", err, endpoint)
-						return
-					}
-				}
-
-				errChannel <- nil
-			}
-		}()
-
-		select {
-		case <-ignoreBlockedPublished:
-			return counter
-
-		case err = <-errChannel:
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "%v\n", err)
-				return counter
-			}
-		}
-
-		counter = counter + 1
-		appStatus.Observe(rateStatusName, 1.0)
-
-		if incremental {
-			appStatus.Set(countStatusName, float64(counter))
-		}
-
-		if maxCount > 0 && counter >= maxCount {
-			return counter
-		}
-
-		select {
-		case <-done:
-			return counter
-
-		case <-t.C:
-		}
-	}
-}
-
 func reporter() {
 	defer reporterWg.Done()
 
@@ -299,7 +178,7 @@ func reporter() {
 
 	for {
 		select {
-		case <-done:
+		case <-globalContext.Done():
 			report()
 			return
 
@@ -383,6 +262,9 @@ func main() {
 		return
 	}
 
+	var globalCancel context.CancelFunc
+	globalContext, globalCancel = context.WithCancel(context.Background())
+
 	publishMsg.Body = []byte(generateString(*messageSizeFlag))
 	maxPublishCount := *maxPublishCountFlag
 
@@ -414,12 +296,13 @@ func main() {
 
 	select {
 	case <-workersDone:
-		close(done)
+		globalCancel()
 		reporterWg.Wait()
 
 	case <-signalChannel:
-		close(done)
-		wg.Wait()
-		reporterWg.Wait()
+		globalCancel()
 	}
+
+	wg.Wait()
+	reporterWg.Wait()
 }
