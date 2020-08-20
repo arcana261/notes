@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -1376,7 +1377,9 @@ func (s *monitoringSession) hookFlow(args ...interface{}) {
 }
 
 func (s *monitoringSession) hookConnectionBlocked(args ...interface{}) {
+	reason := args[0].(string)
 	s.observer("event_connection_blocked")
+	s.observer(fmt.Sprintf("event_connection_blocked_%s", strings.ReplaceAll(reason, " ", "_")))
 }
 
 func (s *monitoringSession) hookPublisherConfirmTimeout(args ...interface{}) {
