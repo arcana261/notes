@@ -53,14 +53,6 @@ type publisherFactoryFn func(ctx context.Context) (Publisher, error)
 
 type UndeliverableHandlerFn func(amqp.Return)
 
-func (f publisherFactoryFn) New(ctx context.Context) (Publisher, error) {
-	return f(ctx)
-}
-
-func (f publisherFactoryFn) Close() error {
-	return nil
-}
-
 func NewPublisher(ctx context.Context, endpoint string, username string, password string, vhost string, confirm bool, undeliverableHandler UndeliverableHandlerFn, connectionTimeout time.Duration, backoff time.Duration, maxRetry int, perPublishTimeout time.Duration) (Publisher, error) {
 
 	var publisherFactory publisherFactoryFn = func(ctx context.Context) (Publisher, error) {
@@ -109,7 +101,7 @@ func NewPublisher(ctx context.Context, endpoint string, username string, passwor
 }
 
 type retrySession struct {
-	factory             publisherFactory
+	factory             publisherFactoryFn
 	s                   Publisher
 	m                   sync.Mutex
 	newSessions         chan *retrySessionFactoryResult
@@ -137,7 +129,7 @@ type retrySessionHookRequests struct {
 	hook     hookFn
 }
 
-func newRetrySession(connectionTimeout time.Duration, backoff time.Duration, maxRetry int, factory publisherFactory) Publisher {
+func newRetrySession(connectionTimeout time.Duration, backoff time.Duration, maxRetry int, factory publisherFactoryFn) Publisher {
 	result := &retrySession{
 		factory:             factory,
 		newSessions:         make(chan *retrySessionFactoryResult),
@@ -501,7 +493,7 @@ func (s *retrySession) makeConnectionsLoop() {
 	case s.newSessions <- nil:
 	}
 
-	session, err := factory.New(ctx)
+	session, err := factory(ctx)
 	for _, hook := range s.getDialHookListeners() {
 		hook(err)
 	}
@@ -577,7 +569,7 @@ func (s *retrySession) getDialHookListeners() []hookFn {
 	return s.dialHooks
 }
 
-func (s *retrySession) getFactory() publisherFactory {
+func (s *retrySession) getFactory() publisherFactoryFn {
 	s.m.Lock()
 	defer s.m.Unlock()
 
