@@ -43,12 +43,6 @@ type Publisher interface {
 
 type hookFn func(args ...interface{})
 
-type publisherFactory interface {
-	io.Closer
-
-	New(ctx context.Context) (Publisher, error)
-}
-
 type publisherFactoryFn func(ctx context.Context) (Publisher, error)
 
 type UndeliverableHandlerFn func(amqp.Return)
