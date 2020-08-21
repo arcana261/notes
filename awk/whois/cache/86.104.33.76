@@ -1,0 +1,68 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '86.104.32.0 - 86.104.47.255'
+
+% Abuse contact for '86.104.32.0 - 86.104.47.255' is 'abuse@afranet.com'
+
+inetnum:        86.104.32.0 - 86.104.47.255
+netname:        IR-AFRANET-20050418
+org:            ORG-AA32-RIPE
+country:        IR
+admin-c:        AFR81189-RIPE
+tech-c:         AFR81189-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AFRA-MNT-NESH-1
+mnt-routes:     AFRA-MNT-NESH-1
+mnt-domains:    AFRA-MNT-NESH-1
+created:        2014-09-17T15:53:35Z
+last-modified:  2019-04-15T05:49:33Z
+source:         RIPE # Filtered
+
+organisation:   ORG-AA32-RIPE
+org-name:       Afranet
+org-type:       LIR
+address:        7th Floor, No. 12, Sahand Street, Beheshti Avenue
+address:        15598-36111
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982181180000
+fax-no:         +982188737133
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        AFRA-MNT-NESH-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         AFRA-MNT-NESH-1
+admin-c:        MRA99-RIPE
+abuse-c:        AFAR1000-RIPE
+created:        2004-04-17T11:28:03Z
+last-modified:  2019-04-15T05:49:35Z
+source:         RIPE # Filtered
+
+person:         Afranet Co
+address:        No 12 ,Sahand St,Beheshti Ave,Tehran, Iran
+mnt-by:         AFRA-MNT-NESH-1
+phone:          +98-21-81180
+nic-hdl:        AFR81189-RIPE
+created:        2009-10-17T10:58:44Z
+last-modified:  2018-02-12T10:21:00Z
+source:         RIPE # Filtered
+
+% Information related to '86.104.33.0/24AS25184'
+
+route:          86.104.33.0/24
+origin:         AS25184
+mnt-by:         AFRA-MNT-NESH-1
+created:        2020-04-07T07:06:11Z
+last-modified:  2020-04-07T07:06:11Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.2 (ANGUS)
+
+

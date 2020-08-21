@@ -51,6 +51,8 @@ NS="$NS kalleh.com"
 NS="$NS shop.mci.ir"
 NS="$NS anyazma.com"
 NS="$NS room.gharar.ir"
+NS="$NS dkstatics-public.digikala.com"
+NS="$NS pe.agahpardazan.ir"
 
 ARGS=""
 

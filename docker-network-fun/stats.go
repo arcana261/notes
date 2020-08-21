@@ -97,7 +97,7 @@ func (s *statsItem) ReportPerSecond() float64 {
 	defer s.mutex.Unlock()
 
 	now := time.Now()
-	s.pruneUntil(now.Add(-1 * time.Minute))
+	s.pruneUntil(now.Add(-10 * time.Second))
 
 	if len(s.records) == 0 {
 		return 0
