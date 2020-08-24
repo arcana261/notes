@@ -2,12 +2,13 @@
 
 # usage:
 # ./route-ir-via.sh wlp3s0
+#
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 METRIC="$3"
 if [ "$METRIC" = "" ]; then
- METRIC="2"
+ METRIC="10"
 fi
 
 NS=""
@@ -53,6 +54,9 @@ NS="$NS anyazma.com"
 NS="$NS room.gharar.ir"
 NS="$NS dkstatics-public.digikala.com"
 NS="$NS pe.agahpardazan.ir"
+NS="$NS taci.ir"
+
+OTHER_NS="medium.com"
 
 ARGS=""
 
