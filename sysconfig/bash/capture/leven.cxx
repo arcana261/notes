@@ -9,34 +9,41 @@
 #include <fstream>
 #include <chrono>
 #include <cstring>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 using namespace std;
 
 #define BUCKET 1024
 
-const wchar_t keep_commands[] = {
-  'a', 'b', 'c',
-  'd', 'e', 'f',
-  'g', 'h', 'i',
-};
+void write_size(size_t size) {
+  if (size <= 0x7F) {
+    uint8_t x = (uint8_t)size;
+    cout.write((char*)&x, 1);
+  } else {
+    uint8_t x = (uint8_t)((size & 0x7F) | 0x80);
+    cout.write((char*)&x, 1);
+    write_size(size >> 7);
+  }
+}
 
-const wchar_t insert_commands[] = {
-  'j', 'k', 'l',
-  'm', 'o', 'p',
-  'q', 'r', 's',
-};
+size_t estimate_size(size_t size) {
+  if (size <= 0x7F) {
+    return 1;
+  } else {
+    return 1 + estimate_size(size >> 7);
+  }
+}
 
-const wchar_t delete_commands[] = {
-  't', 'u' , 'v',
-  'w', 'x', 'y',
-  'z', '0', '1',
-};
+#define KEEP_COMMAND 'K'
+#define INSERT_COMMAND 'I'
+#define DELETE_COMMAND 'D'
+#define REPLACE_COMMAND 'R'
 
-const wchar_t replace_commands[] = {
-  '2', '3', '4',
-  '5', '6', '7',
-  '8', '9', 'A',
-};
+void write_cmd(char cmd) {
+  cout.write(&cmd, 1);
+}
 
 size_t tick_count() {
   using namespace std::chrono;
@@ -65,30 +72,6 @@ void report(string const& item, size_t value, bool increment=true) {
   }
 }
 
-size_t itoa_length(size_t len) {
-  if (len < 10) {
-    return 1;
-  } else if (len < 100) {
-    return 2;
-  } else if (len < 1000) {
-    return 3;
-  } else if (len < 10000) {
-    return 4;
-  } else if (len < 100000) {
-    return 5;
-  } else if (len < 1000000) {
-    return 6;
-  } else if (len < 10000000) {
-    return 7;
-  } else if (len < 100000000) {
-    return 8;
-  } else if (len < 1000000000) {
-    return 9;
-  } else {
-    throw runtime_error("out of range");
-  }
-}
-
 struct command {
   char cmd; // K(Keep), I(Insert), D(Delete), R(Replace)
   size_t arg1; // K(length), I(start index), D(length), R(start index)
@@ -99,28 +82,32 @@ struct command {
     return cmd != '\0';
   }
 
-  void fill(wstringstream& result, wstring const& other) const {
+  void fill(const char* other, int* index) const {
+    write_cmd(this->cmd);
     switch (this->cmd) {
-      case 'K':
-        result.put(keep_commands[itoa_length(this->arg1) - 1]);
-        result << this->arg1;
+      case KEEP_COMMAND:
+        write_size(this->arg1);
+        *index += this->arg1;
+        cerr << "KEEP COMMAND, size= " << this->arg1 << ", index=" << *index << endl;
         break;
 
-      case 'I':
-        result.put(insert_commands[itoa_length(this->arg2) - 1]);
-        result << this->arg2;
-        result.write(other.c_str() + this->arg1, this->arg2);
+      case INSERT_COMMAND:
+        write_size(this->arg2);
+        cout.write(other + this->arg1, this->arg2);
+        cerr << "INSERT COMMAND, size= " << this->arg2 << endl;
         break;
 
-      case 'D':
-        result.put(delete_commands[itoa_length(this->arg1) - 1]);
-        result << this->arg1;
+      case DELETE_COMMAND:
+        write_size(this->arg1);
+        *index += this->arg1;
+        cerr << "DELETE COMMAND, size= " << this->arg1 << ", index=" << *index << endl;
         break;
 
-      case 'R':
-        result.put(replace_commands[itoa_length(this->arg2) - 1]);
-        result << this->arg2;
-        result.write(other.c_str() + this->arg1, this->arg2);
+      case REPLACE_COMMAND:
+        write_size(this->arg2);
+        cout.write(other + this->arg1, this->arg2);
+        *index += this->arg2;
+        cerr << "REPLACE COMMAND, size= " << this->arg2 << ", index=" << *index << endl;
         break;
 
       default:
@@ -129,19 +116,19 @@ struct command {
   }
 
   static command keep(size_t cost, size_t length) {
-    return command('K', cost, length, 0);
+    return command(KEEP_COMMAND, cost, length, 0);
   }
 
   static command insert(size_t cost, size_t index, size_t length) {
-    return command('I', cost, index, length);
+    return command(INSERT_COMMAND, cost, index, length);
   }
 
   static command remove(size_t cost, size_t length) {
-    return command('D', cost, length, 0);
+    return command(DELETE_COMMAND, cost, length, 0);
   }
 
   static command replace(size_t cost, size_t index, size_t length) {
-    return command('R', cost, index, length);
+    return command(REPLACE_COMMAND, cost, index, length);
   }
 
   static command empty() {
@@ -160,9 +147,10 @@ private:
 struct command_set {
   vector< command > commands;
 
-  void fill(wstringstream& result, wstring const& other) {
+  void fill(const char* other) {
+    int index = 0;
     for (auto i = commands.begin(); i != commands.end(); ++i) {
-      i->fill(result, other);
+      i->fill(other, &index);
     }
   }
 
@@ -182,24 +170,24 @@ struct command_set {
     bool merged = false;
 
     switch (x.cmd) {
-      case 'K':
+      case KEEP_COMMAND:
         last.arg1 += x.arg1;
         merged = true;
         break;
 
-      case 'I':
+      case INSERT_COMMAND:
         if (x.arg1 == (last.arg1 + last.arg2)) {
           last.arg2 += x.arg2;
           merged = true;
         }
         break;
 
-      case 'D':
+      case DELETE_COMMAND:
         last.arg1 += x.arg1;
         merged = true;
         break;
 
-      case 'R':
+      case REPLACE_COMMAND:
         if (x.arg1 == (last.arg1 + last.arg2)) {
           last.arg2 += x.arg2;
           merged = true;
@@ -273,8 +261,8 @@ void fill_calculate_rec_result(
 }
 
 size_t calculate_rec(
-  wstring const& x,
-  wstring const& y,
+  const char* x,
+  const char* y,
   size_t i,
   size_t j,
   size_t x_end,
@@ -284,6 +272,7 @@ size_t calculate_rec(
   command** d,
   size_t depth,
   size_t block) {
+
 
   if (i >= x_end) {
     if (j >= y_end) {
@@ -306,32 +295,96 @@ size_t calculate_rec(
   command c = command::empty();
 
   // calculate keeps
-  if (x[i] == y[j]) {
-    size_t new_cost = calculate_rec(x, y, i + 1, j + 1, x_end, y_end, x_start, y_start, d, depth + 1, block);
+  {
+    size_t equal_range = 0;
+    for (size_t k = 0; k < min(x_end - i, y_end - j); k++) {
+      if (x[i + k] == y[j + k]) {
+        equal_range++;
+      } else {
+        break;
+      }
+    }
 
-    if (new_cost < c.cost) {
-      c = command::keep(new_cost, 1);
+    if (equal_range > 0) {
+      size_t ks[3] = {1, 0, 0};
+      size_t kss = 1;
+
+      if (equal_range > 1) {
+        ks[1] = equal_range / 2;
+        ks[2] = equal_range;
+        kss = 3;
+      }
+
+      for (size_t ki = 0; ki < kss; ki++) {
+        size_t k = ks[ki];
+        size_t new_cost = 1 + estimate_size(k) + calculate_rec(x, y, i + k, j + k, x_end, y_end, x_start, y_start, d, depth + 1, block);
+        if (new_cost < c.cost) {
+          c = command::keep(new_cost, k);
+        }
+      }
     }
   }
 
   // calculate deletes
-  size_t new_cost = 1 + calculate_rec(x, y, i + 1, j, x_end, y_end, x_start, y_start, d, depth + 1, block);
-  if (new_cost < c.cost) {
-    c = command::remove(new_cost, 1);
+  {
+    size_t ks[3] = {1, 0, 0};
+    size_t kss = 1;
+    size_t k_max = x_end - i;
+
+    if (k_max > 1) {
+      ks[1] = k_max / 2;
+      ks[2] = k_max;
+      kss = 3;
+    }
+
+    for (size_t ki = 0; ki < kss; ki++) {
+      size_t k = ks[ki];
+      size_t new_cost = 1 + estimate_size(k) + calculate_rec(x, y, i + k, j, x_end, y_end, x_start, y_start, d, depth + 1, block);
+      if (new_cost < c.cost) {
+        c = command::remove(new_cost, k);
+      }
+    }
   }
 
   // calculate inserts
-  new_cost = 1 + calculate_rec(x, y, i, j + 1, x_end, y_end, x_start, y_start, d, depth + 1, block);
-  if (new_cost < c.cost) {
-    c = command::insert(new_cost, j, 1);
+  {
+    size_t ks[3] = {1, 0, 0};
+    size_t kss = 1;
+    size_t k_max = y_end - j;
+
+    if ((y_end - j) > 1) {
+      ks[1] = k_max / 2;
+      ks[2] = k_max;
+      kss = 3;
+    }
+
+    for (size_t ki = 0; ki < kss; ki++) {
+      size_t k = ks[ki];
+      size_t new_cost = 1 + estimate_size(k) + (k) + calculate_rec(x, y, i, j + k, x_end, y_end, x_start, y_start, d, depth + 1, block);
+      if (new_cost < c.cost) {
+        c = command::insert(new_cost, j, k);
+      }
+    }
   }
 
   // calculate for replace
-  if (x[i] != y[j]) {
-    new_cost = 1 + calculate_rec(x, y, i + 1, j + 1, x_end, y_end, x_start, y_start, d, depth + 1, block);
+  {
+    size_t ks[3] = {1, 0, 0};
+    size_t kss = 1;
+    size_t k_max = min(x_end - i, y_end - j);
 
-    if (new_cost < c.cost) {
-      c = command::replace(new_cost, j, 1);
+    if (min(x_end - i, y_end - j) > 1) {
+      ks[1] = k_max / 2;
+      ks[2] = k_max;
+      kss = 3;
+    }
+
+    for (size_t ki = 0; ki < kss; ki++) {
+      size_t k = ks[ki];
+      size_t new_cost = 1 + estimate_size(k) + (k) + calculate_rec(x, y, i + k, j + k, x_end, y_end, x_start, y_start, d, depth + 1, block);
+      if (new_cost < c.cost) {
+        c = command::replace(new_cost, j, k);
+      }
     }
   }
 
@@ -389,33 +442,30 @@ command** make_table(size_t x_length, size_t y_length) {
   return d;
 }
 
-void calculate_strings(command_set& result, wstring const& x, wstring const& y, command** d, size_t i, size_t j, size_t x_end, size_t y_end, size_t block) {
+void calculate_strings(command_set& result, const char* x, const char* y, command** d, size_t i, size_t j, size_t x_end, size_t y_end, size_t block) {
   calculate_rec(x, y, i, j, x_end, y_end, i, j, d, 0, block);
   fill_calculate_rec_result(result, i, j, x_end, y_end, i, j, d);
 }
 
-wstring calculate(wstring const& x, wstring const& y) {
-  wstringstream result;
+void calculate(const char* x, const char* y, size_t x_length, size_t y_length) {
   command_set cmd_result;
-  command** d = make_table(x.length(), y.length());
-  calculate_strings(cmd_result, x, y, d, 0, 0, x.length(), y.length(), 0);
-  cmd_result.fill(result, y);
-  return result.str();
+  command** d = make_table(x_length, y_length);
+  calculate_strings(cmd_result, x, y, d, 0, 0, x_length, y_length, 0);
+  cmd_result.fill(y);
 }
 
-wstring calculate_blocked(wstring const& x, wstring const& y, size_t block) {
+void calculate_blocked(const char* x, const char* y, size_t x_length, size_t y_length, size_t block) {
   size_t i = 0;
   size_t j = 0;
-  wstringstream result;
   command_set cmd_result;
 
   size_t index = 0;
 
-  while (i < x.length() || j < y.length()) {
-    size_t actual_i = min(i, x.length());
-    size_t actual_j = min(j, y.length());
-    size_t actual_i_end = min(block + i, x.length());
-    size_t actual_j_end = min(block + j, y.length());
+  while (i < x_length || j < y_length) {
+    size_t actual_i = min(i, x_length);
+    size_t actual_j = min(j, y_length);
+    size_t actual_i_end = min(block + i, x_length);
+    size_t actual_j_end = min(block + j, y_length);
 
     command** d = make_table(actual_i_end - actual_i, actual_j_end - actual_j);
 
@@ -430,68 +480,77 @@ wstring calculate_blocked(wstring const& x, wstring const& y, size_t block) {
     //report("progress", (i * 100) / max(x.length(), y.length()), false);
   }
 
-  cmd_result.fill(result, y);
-  return result.str();
+  cmd_result.fill(y);
 }
 
-wstring make_wstring(string const& s) {
-  wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
-  return converter.from_bytes(s);
-}
-
-std::wstring readFile(string const& filename)
-{
-  std::wifstream wif(filename);
-
-  if (!wif.is_open()) {
-    char buff[4096];
-    sprintf(buff, "failed to open file '%s'", filename.c_str());
-    throw runtime_error(buff);
+int calculate_files(const char* x, const char* y, size_t block) {
+  struct stat info;
+  if (stat(x, &info) != 0) {
+    cerr << "can not stat file '" << x << "'" << endl;
+    return -1;
   }
-
-  wif.imbue(locale("en_US.UTF-8"));
-
-  wif.seekg(0, std::ios::end);
-  size_t size = wif.tellg();
-  std::wstring buffer(size, ' ');
-  wif.seekg(0);
-  size_t read = 0;
-
-  while (read < size) {
-    if (wif.bad()) {
-      throw runtime_error("failed to read from input device");
-    }
-
-    if (wif.eof()) {
-      return buffer.substr(0, read);
-    }
-
-    if (wif.fail()) {
-      wif.seekg(read + 1);
-      read = read + 1;
-      size = size - 1;
-    }
-
-    wif.read(&buffer[read], size);
-    read = read + wif.gcount();
-    size = size - read;
+  char* left_file = (char*)malloc(info.st_size);
+  size_t left_size = info.st_size;
+  FILE *fp = fopen(x, "rb");
+  if (fp == NULL) {
+    cerr << "can not open file '" << x << "' for reading" << endl;
+    return -1;
   }
+  size_t blocks_read = fread(left_file, info.st_size, 1, fp);
+  if (blocks_read != 1) {
+    cerr << "can not read file '" << x << "' for reading" << endl;
+    return -1;
+  }
+  fclose(fp);
 
-  return buffer;
+  if (stat(y, &info) != 0) {
+    cerr << "can not stat file '" << y << "'" << endl;
+    return -1;
+  }
+  char* right_file = (char*)malloc(info.st_size);
+  size_t right_size = info.st_size;
+  fp = fopen(y, "rb");
+  if (fp == NULL) {
+    cerr << "can not open file '" << y << "' for reading" << endl;
+    return -1;
+  }
+  blocks_read = fread(right_file, info.st_size, 1, fp);
+  if (blocks_read != 1) {
+    cerr << "can not read file '" << y << "' for reading" << endl;
+    return -1;
+  }
+  fclose(fp);
+
+  calculate_blocked(left_file, right_file, left_size, right_size, block);
+
+  free(left_file);
+  free(right_file);
+
+  return 0;
 }
 
-wstring calculate_files(string const &x, string const& y, size_t block) {
-  wstring left_file = readFile(x);
-  wstring right_file = readFile(y);
+int calculate_file(const char* x) {
+  struct stat info;
+  if (stat(x, &info) != 0) {
+    cerr << "can not stat file '" << x << "'" << endl;
+    return -1;
+  }
+  char* left_file = (char*)malloc(info.st_size);
+  size_t left_size = info.st_size;
+  FILE *fp = fopen(x, "rb");
+  if (fp == NULL) {
+    cerr << "can not open file '" << x << "' for reading" << endl;
+    return -1;
+  }
+  size_t blocks_read = fread(left_file, info.st_size, 1, fp);
+  if (blocks_read != 1) {
+    cerr << "can not read file '" << x << "' for reading" << endl;
+    return -1;
+  }
+  fclose(fp);
 
-  return calculate_blocked(left_file, right_file, block);
-}
-
-wstring calculate_file(string const& x) {
-  wstring left_file = L"";
-  wstring right_file = readFile(x);
-
-  return calculate_blocked(left_file, right_file, BUCKET);
+  calculate_blocked("", left_file, 0, left_size, BUCKET);
+  return 0;
 }
 
 void print_usage() {
@@ -504,25 +563,26 @@ int main(int argc, char**argv) {
   if (argc == 3 || argc == 4 || argc == 5) {
     if (argc == 4) {
       if (!strcmp(argv[1], "debug")) {
-        wcout << calculate(make_wstring(argv[2]), make_wstring(argv[3]));
+        calculate(argv[2], argv[3], strlen(argv[2]), strlen(argv[3]));
         return 0;
       }
       size_t block = atol(argv[3]);
-      wcout << calculate_files(argv[1], argv[2], block);
+      return calculate_files(argv[1], argv[2], block);
     } else if (argc == 5) {
       if (!strcmp(argv[1], "debug")) {
         size_t block = atol(argv[4]);
-        wcout << calculate_blocked(make_wstring(argv[2]), make_wstring(argv[3]), block);
+        calculate_blocked(argv[2], argv[3], strlen(argv[2]), strlen(argv[3]), block);
+        return 0;
       }
     } else {
       if (!strcmp(argv[1], "debug")) {
-        wcout << calculate(L"", make_wstring(argv[2]));
+        calculate("", argv[2], 0, strlen(argv[2]));
         return 0;
       }
-      wcout << calculate_files(argv[1], argv[2], BUCKET);
+      return calculate_files(argv[1], argv[2], BUCKET);
     }
   } else if (argc == 2) {
-    wcout << calculate_file(argv[1]);
+    return calculate_file(argv[1]);
   } else {
     print_usage();
   }

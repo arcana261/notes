@@ -24,12 +24,19 @@ function capture() {
   echo "export CAPTURE_LAST_FRAME=$(mktemp)" >> $CAPTURE_ENV_FILE
   echo "export CAPTURE_NEXT_FRAME=$(mktemp)" >> $CAPTURE_ENV_FILE
   echo "export CAPTURE_BUFFER=$(mktemp)" >> $CAPTURE_ENV_FILE
+
+  echo "export CAPTURE_FRAMES=$(realpath $1).capture.frames" >> $CAPTURE_ENV_FILE
+  echo "export CAPTURE_LAST_FRAME=$(realpath $1).capture.last.frame" >> $CAPTURE_ENV_FILE
+  echo "export CAPTURE_NEXT_FRAME=$(realpath $1).capture.next.frame" >> $CAPTURE_ENV_FILE
+  echo "export CAPTURE_BUFFER=$(realpath $1).capture.buffer" >> $CAPTURE_ENV_FILE
+
   source $CAPTURE_ENV_FILE
 
   export CAPTURE_CURRENT_FRAME_NUMBER=0
   export CAPTURE_LAST_TICK=$(date +%s%N);
 
-  make -C $CAPTURE_DIR 1>/dev/null
+  make -C $CAPTURE_DIR leven 1>/dev/null
+  make -C $CAPTURE_DIR binerize 1>/dev/null
 
   truncate -s 0 $CAPTURE_FRAMES
   rm -f $CAPTURE_FRAMES
@@ -49,14 +56,12 @@ function capture() {
       tmux capture-pane -e;
       tmux save-buffer $CAPTURE_BUFFER;
       tmux delete-buffer;
-      echo -n '<pre>' > \$CAPTURE_NEXT_FRAME;
-      aha --black -l -n -s -f $CAPTURE_BUFFER >> \$CAPTURE_NEXT_FRAME;
-      echo -n '</pre>' >> \$CAPTURE_NEXT_FRAME;
+      aha --black -l -n -s -f $CAPTURE_BUFFER | $CAPTURE_DIR/binerize > \$CAPTURE_NEXT_FRAME;
       echo -n "[[[FRAME:" >> $CAPTURE_FRAMES;
       echo -n \$CAPTURE_TICK >> $CAPTURE_FRAMES;
       echo -n "]]]" >> $CAPTURE_FRAMES;
       if [ -f \$CAPTURE_LAST_FRAME ]; then
-        $CAPTURE_DIR/leven \$CAPTURE_LAST_FRAME \$CAPTURE_NEXT_FRAME 128 >> $CAPTURE_FRAMES;
+        $CAPTURE_DIR/leven \$CAPTURE_LAST_FRAME \$CAPTURE_NEXT_FRAME 64 >> $CAPTURE_FRAMES;
       else
         $CAPTURE_DIR/leven \$CAPTURE_NEXT_FRAME >> $CAPTURE_FRAMES;
       fi;
