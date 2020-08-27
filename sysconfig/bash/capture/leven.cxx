@@ -40,6 +40,23 @@ size_t estimate_size(size_t size) {
 #define INSERT_COMMAND 'I'
 #define DELETE_COMMAND 'D'
 #define REPLACE_COMMAND 'R'
+#define NEW_COMMAND_COST 2
+
+size_t get_command_dynamic_index(char cmd) {
+  switch (cmd) {
+    case INSERT_COMMAND:
+      return 0;
+    case KEEP_COMMAND:
+      return 1;
+    case DELETE_COMMAND:
+      return 2;
+    case REPLACE_COMMAND:
+      return 3;
+    default:
+      cerr << "UNKNOWN COMMAND: " << cmd << flush << endl;
+      throw runtime_error("command not detected while rebuilding memoize");
+  }
+}
 
 void write_cmd(char cmd) {
   cout.write(&cmd, 1);
@@ -282,7 +299,8 @@ void fill_calculate_rec_result(
   size_t y_end,
   size_t x_start,
   size_t y_start,
-  command** d) {
+  char last_cmd,
+  command*** d) {
 
   if (i >= x_end) {
     if (j >= y_end) {
@@ -300,7 +318,8 @@ void fill_calculate_rec_result(
     return;
   }
 
-  command c = d[i - x_start][j - y_start];
+  size_t last_cmd_index = get_command_dynamic_index(last_cmd);
+  command c = d[i - x_start][j - y_start][last_cmd_index];
   //cout << "get(" << i - x_start << ", " << j - y_start << ") = " << c.cost << ", valid=" << c.valid() << ", i=" << i << ", j=" << j << ", x_end=" << x_end << ", y_end=" << y_end << endl;
   if (!c.valid()) {
     throw runtime_error("bad memoize detected!");
@@ -309,23 +328,24 @@ void fill_calculate_rec_result(
   result.add(c);
 
   switch (c.cmd) {
-    case 'K':
-      fill_calculate_rec_result(result, i + c.arg1, j + c.arg1, x_end, y_end, x_start, y_start, d);
+    case KEEP_COMMAND:
+      fill_calculate_rec_result(result, i + c.arg1, j + c.arg1, x_end, y_end, x_start, y_start, KEEP_COMMAND, d);
       break;
 
-    case 'I':
-      fill_calculate_rec_result(result, i, j + c.arg2, x_end, y_end, x_start, y_start, d);
+    case INSERT_COMMAND:
+      fill_calculate_rec_result(result, i, j + c.arg2, x_end, y_end, x_start, y_start, INSERT_COMMAND, d);
       break;
 
-    case 'D':
-      fill_calculate_rec_result(result, i + c.arg1, j, x_end, y_end, x_start, y_start, d);
+    case DELETE_COMMAND:
+      fill_calculate_rec_result(result, i + c.arg1, j, x_end, y_end, x_start, y_start, DELETE_COMMAND, d);
       break;
 
-    case 'R':
-      fill_calculate_rec_result(result, i + c.arg2, j + c.arg2, x_end, y_end, x_start, y_start, d);
+    case REPLACE_COMMAND:
+      fill_calculate_rec_result(result, i + c.arg2, j + c.arg2, x_end, y_end, x_start, y_start, REPLACE_COMMAND, d);
       break;
 
     default:
+      cerr << "UNKNOWN COMMAND: " << c.cmd << flush << endl;
       throw runtime_error("command not detected while rebuilding memoize");
   }
 }
@@ -339,7 +359,8 @@ size_t calculate_rec(
   size_t y_end,
   size_t x_start,
   size_t y_start,
-  command** d,
+  char last_cmd,
+  command*** d,
   size_t depth,
   size_t block) {
 
@@ -350,176 +371,169 @@ size_t calculate_rec(
     }
 
     // insert cmd
-    return y_end - j;
+    size_t new_cost = y_end - j;
+    if (last_cmd != INSERT_COMMAND) {
+      new_cost += NEW_COMMAND_COST;
+    }
+    return new_cost;
   }
 
   if (j >= y_end) {
     // delete cmd
-    return x_end - i;
+    size_t new_cost = x_end - i;
+    if (last_cmd != DELETE_COMMAND) {
+      new_cost += NEW_COMMAND_COST;
+    }
+    return new_cost;
   }
 
-  if (d[i - x_start][j - y_start].valid()) {
-    return d[i - x_start][j - y_start].cost;
+  size_t last_cmd_index = get_command_dynamic_index(last_cmd);
+
+  if (d[i - x_start][j - y_start][last_cmd_index].valid()) {
+    return d[i - x_start][j - y_start][last_cmd_index].cost;
   }
 
   command c = command::empty();
 
   // calculate keeps
-  {
-    size_t equal_range = 0;
-    for (size_t k = 0; k < min(x_end - i, y_end - j); k++) {
-      if (x[i + k] == y[j + k]) {
-        equal_range++;
-      } else {
-        break;
-      }
+  if (x[i] == y[j]) {
+    size_t new_cost = calculate_rec(x, y, i + 1, j + 1, x_end, y_end, x_start, y_start, KEEP_COMMAND, d, depth + 1, block);
+    if (last_cmd != KEEP_COMMAND) {
+      new_cost += NEW_COMMAND_COST;
     }
 
-    if (equal_range > 0) {
-      size_t ks[3] = {1, 0, 0};
-      size_t kss = 1;
-
-      if (equal_range > 1) {
-        ks[1] = equal_range / 2;
-        ks[2] = equal_range;
-        kss = 3;
-      }
-
-      for (size_t ki = 0; ki < kss; ki++) {
-        size_t k = ks[ki];
-        size_t new_cost = 1 + estimate_size(k) + calculate_rec(x, y, i + k, j + k, x_end, y_end, x_start, y_start, d, depth + 1, block);
-        if (new_cost < c.cost) {
-          c = command::keep(new_cost, k);
-        }
-      }
+    if (new_cost < c.cost) {
+      c = command::keep(new_cost, 1);
     }
   }
 
   // calculate deletes
   {
-    size_t ks[3] = {1, 0, 0};
-    size_t kss = 1;
-    size_t k_max = x_end - i;
-
-    if (k_max > 1) {
-      ks[1] = k_max / 2;
-      ks[2] = k_max;
-      kss = 3;
+    size_t new_cost = calculate_rec(x, y, i + 1, j, x_end, y_end, x_start, y_start, DELETE_COMMAND, d, depth + 1, block);
+    if (last_cmd != DELETE_COMMAND) {
+      new_cost += NEW_COMMAND_COST;
     }
 
-    for (size_t ki = 0; ki < kss; ki++) {
-      size_t k = ks[ki];
-      size_t new_cost = 1 + estimate_size(k) + calculate_rec(x, y, i + k, j, x_end, y_end, x_start, y_start, d, depth + 1, block);
-      if (new_cost < c.cost) {
-        c = command::remove(new_cost, k);
-      }
+    if (new_cost < c.cost) {
+      c = command::remove(new_cost, 1);
     }
   }
 
   // calculate inserts
   {
-    size_t ks[3] = {1, 0, 0};
-    size_t kss = 1;
-    size_t k_max = y_end - j;
-
-    if ((y_end - j) > 1) {
-      ks[1] = k_max / 2;
-      ks[2] = k_max;
-      kss = 3;
+    size_t new_cost = 1 + calculate_rec(x, y, i, j + 1, x_end, y_end, x_start, y_start, INSERT_COMMAND, d, depth + 1, block);
+    if (last_cmd != INSERT_COMMAND) {
+      new_cost += NEW_COMMAND_COST;
     }
 
-    for (size_t ki = 0; ki < kss; ki++) {
-      size_t k = ks[ki];
-      size_t new_cost = 1 + estimate_size(k) + (k) + calculate_rec(x, y, i, j + k, x_end, y_end, x_start, y_start, d, depth + 1, block);
-      if (new_cost < c.cost) {
-        c = command::insert(new_cost, j, k);
-      }
+    if (new_cost < c.cost) {
+      c = command::insert(new_cost, j, 1);
     }
   }
 
   // calculate for replace
   {
-    size_t ks[3] = {1, 0, 0};
-    size_t kss = 1;
-    size_t k_max = min(x_end - i, y_end - j);
-
-    if (min(x_end - i, y_end - j) > 1) {
-      ks[1] = k_max / 2;
-      ks[2] = k_max;
-      kss = 3;
+    size_t new_cost = 1 + calculate_rec(x, y, i + 1, j + 1, x_end, y_end, x_start, y_start, REPLACE_COMMAND, d, depth + 1, block);
+    if (last_cmd != REPLACE_COMMAND) {
+      new_cost += NEW_COMMAND_COST;
     }
 
-    for (size_t ki = 0; ki < kss; ki++) {
-      size_t k = ks[ki];
-      size_t new_cost = 1 + estimate_size(k) + (k) + calculate_rec(x, y, i + k, j + k, x_end, y_end, x_start, y_start, d, depth + 1, block);
-      if (new_cost < c.cost) {
-        c = command::replace(new_cost, j, k);
-      }
+    if (new_cost < c.cost) {
+      c = command::replace(new_cost, j, 1);
     }
   }
 
-  d[i - x_start][j - y_start] = c;
+  d[i - x_start][j - y_start][last_cmd_index] = c;
   //cout << "set(" << i - x_start << "," << j - y_start << ") = " << c.cost << endl;
 
   return c.cost;
 }
 
-command** make_table(size_t x_length, size_t y_length) {
-  static command* raw_d = NULL;
-  static size_t full_size = 0;
-
-  static command** d = NULL;
+command*** make_table(size_t x_length, size_t y_length) {
+  static command*** d = NULL;
   static size_t x_size = 0;
   static size_t y_size = 0;
 
-  size_t size = x_length * y_length;
-  if (size > full_size) {
-    if (raw_d != NULL) {
-      free(raw_d);
-
-      if (d != NULL) {
-        free(d);
+  if (x_length != x_size || y_length != y_size) {
+    for (size_t i = 0; i < x_size; i++) {
+      command** row = d[i];
+      for (size_t j = 0; j < y_size; j++) {
+        free(row[j]);
       }
-
-      d = NULL;
-      x_size = 0;
-      y_size = 0;
+      free(row);
     }
-
-    raw_d = (command*)malloc(size * sizeof(command));
-    full_size = size;
-  }
-
-  if (x_length > x_size) {
     if (d != NULL) {
       free(d);
     }
 
-    d = (command**)malloc(x_length * sizeof(command*));
-    x_size = x_length;
-    y_size = 0;
-  }
-
-  if (y_length > y_size) {
-    for (size_t i = 0; i < x_length; i++) {
-      d[i] = raw_d + (i * y_length);
+    if (x_length > 0 && y_length > 0)  {
+      d = (command***)malloc(x_length * sizeof(command**));
+      for (size_t i = 0; i < x_length; i++) {
+        command** new_row = (command**)malloc(y_length * sizeof(command*));
+        d[i] = new_row;
+        for (size_t j = 0; j < y_length; j++) {
+          command* new_arr = (command*)malloc(4 * sizeof(command));
+          memset(new_arr, 0, 4 * sizeof(command));
+          new_row[j] = new_arr;
+        }
+      }
+    } else {
+      d = NULL;
     }
-    y_size = y_length;
-  }
 
-  memset(raw_d, 0, full_size * sizeof(command));
+    x_size = x_length;
+    y_size = y_length;
+  } else {
+    for (size_t i = 0; i < x_size; i++) {
+      command** row = d[i];
+      for (size_t j = 0; j < y_size; j++) {
+        memset(row[j], 0, 4 * sizeof(command));
+      }
+    }
+  }
 
   return d;
 }
 
-void calculate_strings(command_set& result, const char* x, const char* y, command** d, size_t i, size_t j, size_t x_end, size_t y_end, size_t block) {
-  calculate_rec(x, y, i, j, x_end, y_end, i, j, d, 0, block);
-  fill_calculate_rec_result(result, i, j, x_end, y_end, i, j, d);
+void calculate_strings(command_set& result, const char* x, const char* y, command*** d, size_t i, size_t j, size_t x_end, size_t y_end, size_t block) {
+  if (i >= x_end || j >= y_end) {
+    calculate_rec(x, y, i, j, x_end, y_end, i, j, KEEP_COMMAND, d, 0, block);
+    fill_calculate_rec_result(result, i, j, x_end, y_end, i, j, KEEP_COMMAND, d);
+    return;
+  }
+
+  calculate_rec(x, y, i, j, x_end, y_end, i, j, KEEP_COMMAND, d, 0, block);
+  calculate_rec(x, y, i, j, x_end, y_end, i, j, INSERT_COMMAND, d, 0, block);
+  calculate_rec(x, y, i, j, x_end, y_end, i, j, DELETE_COMMAND, d, 0, block);
+  calculate_rec(x, y, i, j, x_end, y_end, i, j, REPLACE_COMMAND, d, 0, block);
+
+  size_t keep_cost = d[0][0][get_command_dynamic_index(KEEP_COMMAND)].cost;
+  size_t insert_cost = d[0][0][get_command_dynamic_index(INSERT_COMMAND)].cost;
+  size_t delete_cost = d[0][0][get_command_dynamic_index(DELETE_COMMAND)].cost;
+  size_t replace_cost = d[0][0][get_command_dynamic_index(REPLACE_COMMAND)].cost;
+
+  char min_command = KEEP_COMMAND;
+  size_t min_cost = keep_cost;
+
+  if (insert_cost < min_cost) {
+    min_command = INSERT_COMMAND;
+    min_cost = insert_cost;
+  }
+  if (delete_cost < min_cost) {
+    min_command = DELETE_COMMAND;
+    min_cost = delete_cost;
+  }
+  if (replace_cost < min_cost) {
+    min_command = REPLACE_COMMAND;
+    min_cost = replace_cost;
+  }
+
+  fill_calculate_rec_result(result, i, j, x_end, y_end, i, j, min_command, d);
 }
 
 void calculate(const char* x, const char* y, size_t x_length, size_t y_length) {
   command_set cmd_result;
-  command** d = make_table(x_length, y_length);
+  command*** d = make_table(x_length, y_length);
   calculate_strings(cmd_result, x, y, d, 0, 0, x_length, y_length, 0);
   cmd_result.fill(y);
 }
@@ -537,7 +551,7 @@ void calculate_blocked(const char* x, const char* y, size_t x_length, size_t y_l
     size_t actual_i_end = min(block + i, x_length);
     size_t actual_j_end = min(block + j, y_length);
 
-    command** d = make_table(actual_i_end - actual_i, actual_j_end - actual_j);
+    command*** d = make_table(actual_i_end - actual_i, actual_j_end - actual_j);
 
     //cout << "------------------- block=" << index << endl;
 
