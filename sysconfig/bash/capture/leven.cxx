@@ -202,6 +202,76 @@ struct command_set {
       commands.push_back(x);
     }
   }
+
+  bool remerge() {
+    if (commands.empty()) {
+      return false;
+    }
+
+    bool result = false;
+
+    vector< command > new_commands;
+    new_commands.push_back(commands[0]);
+
+    for (size_t i = 1; i < commands.size(); i++) {
+      command& last = new_commands.back();
+      command const& x = commands[i];
+
+      if (last.cmd != x.cmd) {
+        if (last.cmd == DELETE_COMMAND && x.cmd == INSERT_COMMAND && last.arg1 == x.arg2) {
+          last = x;
+          last.cmd = REPLACE_COMMAND;
+          result = true;
+        } else if (last.cmd == INSERT_COMMAND && x.cmd == DELETE_COMMAND && last.arg2 == x.arg1) {
+          last.cmd = REPLACE_COMMAND;
+          result = true;
+        } else {
+          new_commands.push_back(x);
+        }
+        continue;
+      }
+
+      bool merged = false;
+
+      switch (x.cmd) {
+        case KEEP_COMMAND:
+          last.arg1 += x.arg1;
+          merged = true;
+          break;
+
+        case INSERT_COMMAND:
+          if (x.arg1 == (last.arg1 + last.arg2)) {
+            last.arg2 += x.arg2;
+            merged = true;
+          }
+          break;
+
+        case DELETE_COMMAND:
+          last.arg1 += x.arg1;
+          merged = true;
+          break;
+
+        case REPLACE_COMMAND:
+          if (x.arg1 == (last.arg1 + last.arg2)) {
+            last.arg2 += x.arg2;
+            merged = true;
+          }
+          break;
+
+        default:
+          throw runtime_error("invalid command at command_set::add");
+      }
+
+      if (!merged) {
+        new_commands.push_back(x);
+      } else {
+        result = true;
+      }
+    }
+
+    commands = new_commands;
+    return result;
+  }
 };
 
 void fill_calculate_rec_result(
@@ -478,6 +548,9 @@ void calculate_blocked(const char* x, const char* y, size_t x_length, size_t y_l
     index = index + 1;
 
     //report("progress", (i * 100) / max(x.length(), y.length()), false);
+  }
+
+  while (cmd_result.remerge()) {
   }
 
   cmd_result.fill(y);
