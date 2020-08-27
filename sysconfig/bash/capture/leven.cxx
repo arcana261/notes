@@ -105,26 +105,26 @@ struct command {
       case KEEP_COMMAND:
         write_size(this->arg1);
         *index += this->arg1;
-        cerr << "KEEP COMMAND, size= " << this->arg1 << ", index=" << *index << endl;
+        //DEBUG(cerr << "KEEP COMMAND, size= " << this->arg1 << ", index=" << *index << endl);
         break;
 
       case INSERT_COMMAND:
         write_size(this->arg2);
         cout.write(other + this->arg1, this->arg2);
-        cerr << "INSERT COMMAND, size= " << this->arg2 << endl;
+        //DEBUG(cerr << "INSERT COMMAND, size= " << this->arg2 << endl);
         break;
 
       case DELETE_COMMAND:
         write_size(this->arg1);
         *index += this->arg1;
-        cerr << "DELETE COMMAND, size= " << this->arg1 << ", index=" << *index << endl;
+        //DEBUG(cerr << "DELETE COMMAND, size= " << this->arg1 << ", index=" << *index << endl);
         break;
 
       case REPLACE_COMMAND:
         write_size(this->arg2);
         cout.write(other + this->arg1, this->arg2);
         *index += this->arg2;
-        cerr << "REPLACE COMMAND, size= " << this->arg2 << ", index=" << *index << endl;
+        //DEBUG(cerr << "REPLACE COMMAND, size= " << this->arg2 << ", index=" << *index << endl);
         break;
 
       default:
@@ -454,6 +454,8 @@ command*** make_table(size_t x_length, size_t y_length) {
   static size_t x_size = 0;
   static size_t y_size = 0;
 
+  //cerr << "make_table begin.." << x_length << "," << y_length << flush << endl;
+
   if (x_length != x_size || y_length != y_size) {
     for (size_t i = 0; i < x_size; i++) {
       command** row = d[i];
@@ -466,19 +468,15 @@ command*** make_table(size_t x_length, size_t y_length) {
       free(d);
     }
 
-    if (x_length > 0 && y_length > 0)  {
-      d = (command***)malloc(x_length * sizeof(command**));
-      for (size_t i = 0; i < x_length; i++) {
-        command** new_row = (command**)malloc(y_length * sizeof(command*));
-        d[i] = new_row;
-        for (size_t j = 0; j < y_length; j++) {
-          command* new_arr = (command*)malloc(4 * sizeof(command));
-          memset(new_arr, 0, 4 * sizeof(command));
-          new_row[j] = new_arr;
-        }
+    d = (command***)malloc(x_length * sizeof(command**));
+    for (size_t i = 0; i < x_length; i++) {
+      command** new_row = (command**)malloc(y_length * sizeof(command*));
+      d[i] = new_row;
+      for (size_t j = 0; j < y_length; j++) {
+        command* new_arr = (command*)malloc(4 * sizeof(command));
+        memset(new_arr, 0, 4 * sizeof(command));
+        new_row[j] = new_arr;
       }
-    } else {
-      d = NULL;
     }
 
     x_size = x_length;
@@ -491,6 +489,8 @@ command*** make_table(size_t x_length, size_t y_length) {
       }
     }
   }
+
+  //cerr << "make_table end.." << x_length << "," << y_length << flush << endl;
 
   return d;
 }
@@ -584,7 +584,7 @@ int calculate_files(const char* x, const char* y, size_t block) {
     return -1;
   }
   size_t blocks_read = fread(left_file, info.st_size, 1, fp);
-  if (blocks_read != 1) {
+  if (left_size > 0 && blocks_read != 1) {
     cerr << "can not read file '" << x << "' for reading" << endl;
     return -1;
   }
@@ -602,7 +602,7 @@ int calculate_files(const char* x, const char* y, size_t block) {
     return -1;
   }
   blocks_read = fread(right_file, info.st_size, 1, fp);
-  if (blocks_read != 1) {
+  if (right_size > 0 && blocks_read != 1) {
     cerr << "can not read file '" << y << "' for reading" << endl;
     return -1;
   }

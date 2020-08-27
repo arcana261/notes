@@ -78,6 +78,8 @@
   <script src="https://cdn.jsdelivr.net/npm/zlibjs@0.3.1/bin/gunzip.min.js"></script>
 
   <script language="javascript">
+    const COMPLETE_FRAME_EVERY = 1024;
+
     let capture_frames='<RAW>';
     capture_frames = atob(capture_frames);
 
@@ -89,7 +91,6 @@
     arr = undefined;
 
     capture_frames = (new Zlib.Gunzip(capture_frames)).decompress();
-    capture_frames = new Uint16Array(capture_frames);
 
     arr = [];
     const GUARD_1='[[[FRAME:';
@@ -99,38 +100,117 @@
 
     function read_guarded(guard) {
       let copy_mode = 0;
-      let buff = '';
+      let buff = [];
       for (; i<capture_frames.length; i++) {
-        let tmp = String.fromCharCode(capture_frames[i]);
-        buff += tmp;
-        if (tmp == guard[copy_mode]) {
+        let ch = capture_frames[i];
+        buff.push(ch)
+        if (ch == guard.charCodeAt(copy_mode)) {
           copy_mode += 1;
           if (copy_mode >= guard.length) {
             buff = buff.slice(0, buff.length - guard.length);
             i += 1;
-            return buff;
+            return new Uint8Array(buff);
           }
         } else {
           copy_mode = 0;
         }
       }
-      return buff;
+      return new Uint8Array(buff);
     }
 
-    for (; i<capture_frames.length;) {
-      frame = read_guarded(GUARD_1);
-      if (frame !== '') {
-        arr.push({'frame': frame, 'ts': frame_timestamp});
-      }
+    // skip first header
+    read_guarded(GUARD_1);
 
-      timestamp = read_guarded(GUARD_2);
-      if (timestamp !== '') {
-        frame_timestamp = Math.floor(Number(timestamp) / 1000000);
-      }
+    for (; i<capture_frames.length;) {
+      let frame_timestamp = read_guarded(GUARD_2);
+      frame_timestamp = (new TextDecoder("utf-8")).decode(frame_timestamp);
+      frame_timestamp = Math.floor(Number(frame_timestamp) / 1000000);
+      let frame = read_guarded(GUARD_1);
+      arr.push({'frame': frame, 'ts': frame_timestamp});
     }
 
     capture_frames = arr;
     arr = undefined;
+
+    function get_frame_diff(index) {
+      return (new Zlib.Gunzip(capture_frames[index]['frame'])).decompress();
+    }
+
+    let _get_frame_binary_last_index = -1000;
+    let _get_frame_binary_result = new Uint8Array(0);
+    let _get_frame_binary_result_length = 0;
+    let _get_frame_binary_next_result = new Uint8Array(0);
+    function get_frame_binary(index) {
+      if (index < 0) {
+        return get_frame_binary(0);
+      }
+      if (index >= capture_frames.length) {
+        return get_frame_binary(capture_frames.length - 1);
+      }
+      if (capture_frames.length == 0) {
+        return new Uint8Array(0);
+      }
+      console.log('get_frame_binary', index);
+      if (index == _get_frame_binary_last_index) {
+        return {
+          'result': _get_frame_binary_result,
+          'length': _get_frame_binary_result_length
+        };
+      }
+      let diff = get_frame_diff(index);
+      if (index == 0) {
+        result = undiff(new Uint8Array(0), 0, diff, _get_frame_binary_next_result);
+        _get_frame_binary_next_result = _get_frame_binary_result;
+        _get_frame_binary_result = result['result'];
+        _get_frame_binary_result_length = result['length'];
+        _get_frame_binary_last_index = index;
+        return {
+          'result': _get_frame_binary_result,
+          'length': _get_frame_binary_result_length
+        };
+      } else if (index == _get_frame_binary_last_index + 1) {
+        try {
+          result = undiff(_get_frame_binary_result, _get_frame_binary_result_length, diff, _get_frame_binary_next_result);
+        } catch (e) {
+          throw e + ' ON FRAME ' + index;
+        }
+        _get_frame_binary_next_result = _get_frame_binary_result;
+        _get_frame_binary_result = result['result'];
+        _get_frame_binary_result_length = result['length'];
+        _get_frame_binary_last_index = index;
+        return {
+          'result': _get_frame_binary_result,
+          'length': _get_frame_binary_result_length
+        };
+      } else {
+        console.log('-------------------------------');
+        last_full_frame = Math.floor(index / COMPLETE_FRAME_EVERY) * COMPLETE_FRAME_EVERY;
+        let result = null;
+
+        if (index > _get_frame_binary_last_index && (index - _get_frame_binary_last_index) < (index - last_full_frame)) {
+          console.log('--> fast forward');
+          for (let i = _get_frame_binary_last_index; i <= index; i++) {
+            result = get_frame_binary(i);
+          }
+        } else {
+          console.log('--> rebuild');
+          for (let i = last_full_frame; i <= index; i++) {
+            result = get_frame_binary(i);
+          }
+        }
+        console.log('-------------------------------');
+        return result;
+      }
+    }
+
+    function get_frame_html(index) {
+      let binary = get_frame_binary(index);
+      return '<pre>' + unbinary(binary['result'], binary['length']) + '</pre>';
+    }
+
+//function undiff(current, current_length, diff, result) {
+//function unbinary(buffer, buffer_length) {
+
   </script>
 
   <style>
@@ -183,92 +263,11 @@
 
 <script language="javascript">
 
-function apply_leven_diff(str, diff) {
-  const read_length = (str, i, len) => {
-    let result = 0;
-    for (let j = 0; j < len; j++) {
-      result = (result * 10) + Number((str.charCodeAt(i + j) - 48));
-    }
-
-    return result;
-  };
-
-  const keep_commands = [
-    'a', 'b', 'c',
-    'd', 'e', 'f',
-    'g', 'h', 'i',
-  ];
-
-  const insert_commands = [
-    'j', 'k', 'l',
-    'm', 'o', 'p',
-    'q', 'r', 's',
-  ];
-
-  const delete_commands = [
-    't', 'u', 'v',
-    'w', 'x', 'y',
-    'z', '0', '1',
-  ];
-
-  const replace_commands = [
-    '2', '3', '4',
-    '5', '6', '7',
-    '8', '9', 'A',
-  ];
-
-  let i = 0;
-  let j = 0;
-
-  let result = '';
-
-  while (j < diff.length) {
-    cmd = diff[j];
-
-    let index = keep_commands.indexOf(cmd)
-    if (index >= 0) {
-      let len = read_length(diff, j + 1, index + 1);
-      result += str.slice(i, i + len);
-      i += len;
-      j += 2 + index;
-      continue;
-    }
-
-    index = insert_commands.indexOf(cmd);
-    if (index >= 0) {
-      let len = read_length(diff, j + 1, index + 1);
-      result += diff.slice(j + 2 + index, j + 2 + index + len);
-      j += 2 + index + len;
-      continue;
-    }
-
-    index = delete_commands.indexOf(cmd);
-    if (index >= 0) {
-      let len = read_length(diff, j + 1, index + 1);
-      i += len;
-      j += 2 + index;
-      continue;
-    }
-
-    index = replace_commands.indexOf(cmd);
-    if (index >= 0) {
-      let len = read_length(diff, j + 1, index + 1);
-      result += diff.slice(j + 2 + index, j + 2 + index + len);
-      j += 2 + index + len;
-      i += len;
-      continue;
-    }
-
-    // unknown command sequence
-    console.log('WARNING: unknown command sequence: "' + cmd + '" (char code ' + diff.charCodeAt(j) + ')  at j=' + j + ' of ' + diff.length);
-    j = j + 1;
-    //throw new Error('unknown command sequence: "' + cmd + '" at j=' + j + ' of ' + diff.length);
-  }
-
-  return result;
-}
+insert_unbinary;
+insert_undiff;
 
 function main() {
+
   let playing = true;
   let slider_pausing = false;
   let has_reached_end = false;
@@ -283,7 +282,6 @@ function main() {
   let screen_render_offset = 0;
   let render_last = render_start_at;
   let value = -1;
-  let intended_html = '';
 
   screen_render_start_at = (new Date()).getTime();
 
@@ -296,13 +294,7 @@ function main() {
   let counter = document.getElementById('counter');
 
   const fullRenderFrame = (frame, offset_time=0) => {
-    intended_html = '';
-
-    for (let i = Math.floor(frame / COMPLETE_FRAME_EVERY) * COMPLETE_FRAME_EVERY; i <= frame && i < capture_frames.length; i++) {
-      intended_html = apply_leven_diff(intended_html, capture_frames[i]['frame']);
-    }
-
-    frame_container.innerHTML = intended_html;
+    frame_container.innerHTML = get_frame_html(frame);
     show_frame_time(frame, offset_time);
     has_reached_end = false;
   }
@@ -357,15 +349,8 @@ function main() {
       has_reached_end = true;
     }
 
-    for (let i = value + 1; i <= display_value; i++) {
-      if (i % COMPLETE_FRAME_EVERY == 0) {
-        intended_html = '';
-      }
-      intended_html = apply_leven_diff(intended_html, capture_frames[i]['frame']);
-    }
-
     if (value != display_value) {
-      frame_container.innerHTML = intended_html
+      frame_container.innerHTML = get_frame_html(display_value);
       slider.value = display_value;
       value = display_value;
     }

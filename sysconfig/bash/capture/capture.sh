@@ -24,6 +24,7 @@ function capture() {
   echo "export CAPTURE_LAST_FRAME=$(mktemp)" >> $CAPTURE_ENV_FILE
   echo "export CAPTURE_NEXT_FRAME=$(mktemp)" >> $CAPTURE_ENV_FILE
   echo "export CAPTURE_BUFFER=$(mktemp)" >> $CAPTURE_ENV_FILE
+  echo "export CAPTURE_IS_DEBUG=0" >> $CAPTURE_ENV_FILE
 
   echo "export CAPTURE_FRAMES=$(realpath $1).capture.frames" >> $CAPTURE_ENV_FILE
   echo "export CAPTURE_LAST_FRAME=$(realpath $1).capture.last.frame" >> $CAPTURE_ENV_FILE
@@ -56,14 +57,17 @@ function capture() {
       tmux capture-pane -e;
       tmux save-buffer $CAPTURE_BUFFER;
       tmux delete-buffer;
-      aha --black -l -n -s -f $CAPTURE_BUFFER | $CAPTURE_DIR/binerize > \$CAPTURE_NEXT_FRAME;
+      if [ "$CAPTURE_IS_DEBUG" == "1" ]; then
+        cp $CAPTURE_BUFFER $CAPTURE_OUTPUT.raw.buffer.\$CAPTURE_CURRENT_FRAME_NUMBER;
+      fi;
+      aha --black -l -n -s -f $CAPTURE_BUFFER | $CAPTURE_DIR/binerize 1> \$CAPTURE_NEXT_FRAME;
       echo -n "[[[FRAME:" >> $CAPTURE_FRAMES;
       echo -n \$CAPTURE_TICK >> $CAPTURE_FRAMES;
       echo -n "]]]" >> $CAPTURE_FRAMES;
       if [ -f \$CAPTURE_LAST_FRAME ]; then
-        $CAPTURE_DIR/leven \$CAPTURE_LAST_FRAME \$CAPTURE_NEXT_FRAME 64 >> $CAPTURE_FRAMES;
+        $CAPTURE_DIR/leven \$CAPTURE_LAST_FRAME \$CAPTURE_NEXT_FRAME 256 | gzip -9 1>> $CAPTURE_FRAMES;
       else
-        $CAPTURE_DIR/leven \$CAPTURE_NEXT_FRAME >> $CAPTURE_FRAMES;
+        $CAPTURE_DIR/leven \$CAPTURE_NEXT_FRAME | gzip -9 1>> $CAPTURE_FRAMES;
       fi;
       export CAPTURE_TEMP_VAR=\$CAPTURE_NEXT_FRAME;
       export CAPTURE_NEXT_FRAME=\$CAPTURE_LAST_FRAME;
@@ -94,13 +98,38 @@ function end_capture() {
   CAPTURE_CONTENT=$()
 
   rm -f $CAPTURE_OUTPUT
+  #insert_unbinary;
+  #insert_undiff;
+
+  cp $CAPTURE_DIR/files/template.html $CAPTURE_OUTPUT
+
+  BEGIN_INDEX=$(grep -abo '///BEGIN:' $CAPTURE_DIR/unbinary.js | cut -d ':' -f 1)
+  END_INDEX=$(grep -abo '///END:' $CAPTURE_DIR/unbinary.js | cut -d ':' -f 1)
+  DELIMETER='insert_unbinary;'
+  INDEX=$(grep -abo $DELIMETER $CAPTURE_OUTPUT | cut -d ':' -f 1)
+  NEW_FILE_NAME=$(mktemp)
+  dd if=$CAPTURE_OUTPUT of=$NEW_FILE_NAME count=$INDEX bs=1 1>/dev/null
+  dd if=$CAPTURE_DIR/unbinary.js skip=$BEGIN_INDEX of=$NEW_FILE_NAME bs=1 oflag=append conv=notrunc count=$(( $END_INDEX - $BEGIN_INDEX )) 1>/dev/null
+  dd if=$CAPTURE_OUTPUT skip=$(( $INDEX + ${#DELIMETER} )) of=$NEW_FILE_NAME bs=1 oflag=append conv=notrunc 1>/dev/null
+  mv $NEW_FILE_NAME $CAPTURE_OUTPUT
+
+  BEGIN_INDEX=$(grep -abo '///BEGIN:' $CAPTURE_DIR/undiff.js | cut -d ':' -f 1)
+  END_INDEX=$(grep -abo '///END:' $CAPTURE_DIR/undiff.js | cut -d ':' -f 1)
+  DELIMETER='insert_undiff;'
+  INDEX=$(grep -abo $DELIMETER $CAPTURE_OUTPUT | cut -d ':' -f 1)
+  NEW_FILE_NAME=$(mktemp)
+  dd if=$CAPTURE_OUTPUT of=$NEW_FILE_NAME count=$INDEX bs=1 1>/dev/null
+  dd if=$CAPTURE_DIR/undiff.js skip=$BEGIN_INDEX of=$NEW_FILE_NAME bs=1 oflag=append conv=notrunc count=$(( $END_INDEX - $BEGIN_INDEX )) 1>/dev/null
+  dd if=$CAPTURE_OUTPUT skip=$(( $INDEX + ${#DELIMETER} )) of=$NEW_FILE_NAME bs=1 oflag=append conv=notrunc 1>/dev/null
+  mv $NEW_FILE_NAME $CAPTURE_OUTPUT
 
   DELIMETER='<RAW>'
-  INDEX=$(grep -abo $DELIMETER $CAPTURE_DIR/files/template.html | cut -d ':' -f 1)
-  dd if=$CAPTURE_DIR/files/template.html of=$CAPTURE_OUTPUT count=$INDEX bs=1 2>/dev/null
-  gzip -c9 $CAPTURE_FRAMES | base64 -w 0 >> $CAPTURE_OUTPUT
-  INDEX=$(( $INDEX + ${#DELIMETER} ))
-  dd if=$CAPTURE_DIR/files/template.html skip=$INDEX of=$CAPTURE_OUTPUT bs=1 oflag=append conv=notrunc 2>/dev/null
+  NEW_FILE_NAME=$(mktemp)
+  INDEX=$(grep -abo $DELIMETER $CAPTURE_OUTPUT | cut -d ':' -f 1)
+  dd if=$CAPTURE_OUTPUT of=$NEW_FILE_NAME count=$INDEX bs=1 1>/dev/null
+  gzip -c9 $CAPTURE_FRAMES | base64 -w 0 >> $NEW_FILE_NAME
+  dd if=$CAPTURE_OUTPUT skip=$(( $INDEX + ${#DELIMETER} )) of=$NEW_FILE_NAME bs=1 oflag=append conv=notrunc 1>/dev/null
+  mv $NEW_FILE_NAME $CAPTURE_OUTPUT
 
   rm -f $CAPTURE_BUFFER
   rm -f $CAPTURE_FRAMES

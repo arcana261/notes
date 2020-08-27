@@ -1,3 +1,4 @@
+///BEGIN: undiff
 // current, diff, result are Uint8Array
 function undiff(current, current_length, diff, result) {
   let current_index = 0;
@@ -95,6 +96,7 @@ function undiff(current, current_length, diff, result) {
     'length': result_index,
   };
 }
+///END: undiff
 
 const fs = require("fs");
 

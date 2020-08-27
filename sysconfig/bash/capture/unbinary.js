@@ -1,3 +1,4 @@
+///BEGIN: unbinary
 // buffer is Uint8Array
 function unbinary(buffer, buffer_length) {
   let index = 0;
@@ -205,6 +206,7 @@ function unbinary(buffer, buffer_length) {
 
   return result;
 }
+///END: unbinary
 
 const fs = require("fs");
 
