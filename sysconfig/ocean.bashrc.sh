@@ -1,20 +1,33 @@
 source $HOME/.bashrc
 
 _KUBECTL_PATH=`which kubectl`
+export OCEAN_CONTEXT="afra"
 
 function _ocean_set_ps() {
+  if [ $OCEAN_CONTEXT == "afra" ]; then
     export PS1="(\[${OCEAN_COLOR}\]k8s: $1\[${NC}\]) "$(echo $PS1 | sed 's|([^(]*k8s: [^)]*)\s*||g' | sed 's|\s*$||g')" "
+  else
+    export PS1="(\[${OCEAN_COLOR}\]k8s: $1 ($OCEAN_CONTEXT)\[${NC}\]) "$(echo $PS1 | sed 's|([^(]*k8s: [^)]*)\s*||g' | sed 's|\s*$||g')" "
+  fi
 }
 
 _ocean_set_ps ''
 
 function swim() {
-    export OCEAN_NAMESPACE="$1"
-    _ocean_set_ps $1
+  export OCEAN_NAMESPACE="$1"
+  _ocean_set_ps $1
+}
+
+function afra() {
+  export OCEAN_CONTEXT="afra"
+}
+
+function feynman() {
+  export OCEAN_CONTEXT="feynman"
 }
 
 function kubectl() {
-    ${_KUBECTL_PATH} --namespace=$OCEAN_NAMESPACE --kubeconfig=$HOME/.kube/config "$@"
+    ${_KUBECTL_PATH} --context=$OCEAN_CONTEXT --namespace=$OCEAN_NAMESPACE --kubeconfig=$HOME/.kube/config "$@"
 }
 
 function divar-infra() {
@@ -59,6 +72,10 @@ function divar-real-estate() {
 
 function divar-customer-trust() {
   swim divar-customer-trust
+}
+
+function divar() {
+	swim divar
 }
 
 function secret() {
@@ -108,7 +125,7 @@ function k() {
     cmd="$1"
     shift
   else
-    cmd=$(echo $'pod\ndeployment\ningress\nconfigmap\ncronjob\nservice\nevents\nprometheusRule\nstatefulset' | fzf)
+    cmd=$(echo $'pod\ndeployment\ningress\nconfigmap\ncronjob\nservice\nevents\nprometheusRule\nstatefulset\ninstance' | fzf --preview-window=right:hidden)
   fi
 
   if [ "$cmd" == "" ]; then
@@ -136,7 +153,7 @@ function k() {
 
     tmp=$(mktemp)
     event=$(kubectl get events $options --sort-by='{.lastTimestamp}' | grep -v 'Scaled up' | grep -v 'Scaled down' | grep -v 'Deleted pod' | grep -v 'Stopping container' | grep -v 'Created pod' | grep -v 'Created container' | grep -v 'Started container' | grep -v 'Successfully pulled image' | grep -v 'already present on machine' | grep -v 'Successfully assigned' | grep -v 'Pulling image' | fzf \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get events --sort-by='{.lastTimestamp}' | grep -v 'Scaled up' | grep -v 'Scaled down' | grep -v 'Deleted pod' | grep -v 'Stopping container' | grep -v 'Created pod' | grep -v 'Created container' | grep -v 'Started container' | grep -v 'Successfully pulled image' | grep -v 'already present on machine' | grep -v 'Successfully assigned' | grep -v 'Pulling image')" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get events --sort-by='{.lastTimestamp}' | grep -v 'Scaled up' | grep -v 'Scaled down' | grep -v 'Deleted pod' | grep -v 'Stopping container' | grep -v 'Created pod' | grep -v 'Created container' | grep -v 'Started container' | grep -v 'Successfully pulled image' | grep -v 'already present on machine' | grep -v 'Successfully assigned' | grep -v 'Pulling image')" \
       --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
       --query "$query" \
       --no-sort \
@@ -178,8 +195,8 @@ function k() {
 
     tmp=$(mktemp)
     service=$(kubectl get service $options | fzf \
-      --preview="kubectl --namespace $OCEAN_NAMESPACE get service -oyaml {1}" \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods $options)" \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE get service -oyaml {1}" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get pods $options)" \
       --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
       --bind "ctrl-p:execute(echo 'FORWARD:{1}' > $tmp)+abort" \
@@ -262,10 +279,10 @@ function k() {
 
     tmp=$(mktemp)
     pod=$(kubectl get pods $options | fzf \
-      --preview="kubectl --namespace $OCEAN_NAMESPACE describe pod {1}" \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods $options)" \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE describe pod {1}" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get pods $options)" \
       --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
-      --bind "ctrl-d:execute(kubectl --namespace $OCEAN_NAMESPACE delete pod {1})+reload(kubectl --namespace $OCEAN_NAMESPACE get pods $options)" \
+      --bind "ctrl-d:execute(kubectl --namespace=$OCEAN_NAMESPACE delete pod {1})+reload(kubectl --namespace=$OCEAN_NAMESPACE get pods $options)" \
       --bind "ctrl-l:execute(echo 'LOG:{1}' > $tmp)+abort" \
       --bind "ctrl-p:execute(echo 'FORWARD:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EXECUTE:{1}' > $tmp)+abort" \
@@ -381,8 +398,8 @@ function k() {
 
     tmp=$(mktemp)
     ings=$(kubectl get ingress $options | fzf \
-      --preview="kubectl --namespace $OCEAN_NAMESPACE get ingress {1} -oyaml" \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get ingress $options)" \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE get ingress {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get ingress $options)" \
       --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
       --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
@@ -451,8 +468,8 @@ function k() {
 
     tmp=$(mktemp)
     prometheusRule=$(kubectl get PrometheusRule $options | fzf \
-      --preview="kubectl --namespace $OCEAN_NAMESPACE get PrometheusRule {1} -oyaml" \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get PrometheusRule $options)" \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE get PrometheusRule {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get PrometheusRule $options)" \
       --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
       --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
@@ -500,6 +517,76 @@ function k() {
     echo $prometheusRule
     return 0
 
+  elif [ "$cmd" == "instance" ]; then
+    options=""
+    wide=""
+    query=""
+
+    while [ "$1" != "" ]; do
+      if [ "$1" == "wide" ]; then
+        options="-owide"
+        wide="wide"
+        shift
+      elif [ "$1" == "query" ]; then
+        shift
+        query="$1"
+        shift
+      else
+        shift
+      fi
+    done
+
+    tmp=$(mktemp)
+    instance=$(kubectl get instance $options | fzf \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE get instance {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get instance $options)" \
+      --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
+      --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
+      --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
+      --bind "ctrl-b:execute(echo 'BACK:{1}' > $tmp)+abort" \
+      --header 'c^r[reload], c^o[wide], c^u[delete], c^e[edit], c^b[back]' \
+      --query "$query" \
+      --header-lines=1)
+
+    if [ "$instance" == "" ]; then
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "WIDE" ]; then
+        query="$(cat $tmp | sed 's|^WIDE:||g')"
+        k $cmd "wide" "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "BACK" ]; then
+        k
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "DELETE" ]; then
+        query="$(cat $tmp | sed 's|^DELETE:||g')"
+        echo "Enter (YES) to delete instance '$query':> "
+        read confirm
+
+        if [ "$confirm" == "YES" ]; then
+          kubectl delete instance $query
+        fi
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      if [ "$(cat $tmp | sed 's|:.*||g')" == "EDIT" ]; then
+        query="$(cat $tmp | sed 's|^EDIT:||g')"
+        kubectl edit instance $query
+
+        k $cmd $wide "query" $query $@
+        return 0
+      fi
+
+      return 0
+    fi
+
+    echo $instance
+    return 0
+
   elif [ "$cmd" == "configmap" ]; then
     options=""
     wide=""
@@ -521,8 +608,8 @@ function k() {
 
     tmp=$(mktemp)
     configmap=$(kubectl get configmap $options | fzf \
-      --preview="kubectl --namespace $OCEAN_NAMESPACE get configmap {1} -oyaml" \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get configmap $options)" \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE get configmap {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get configmap $options)" \
       --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
       --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
@@ -591,8 +678,8 @@ function k() {
 
     tmp=$(mktemp)
     cronjob=$(kubectl get cronjob $options | fzf \
-      --preview="kubectl --namespace $OCEAN_NAMESPACE get cronjob {1} -oyaml" \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get cronjob $options)" \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE get cronjob {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get cronjob $options)" \
       --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
       --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
@@ -670,8 +757,8 @@ function k() {
 
     tmp=$(mktemp)
     statefulset=$(kubectl get statefulset $options | fzf \
-      --preview="kubectl --namespace $OCEAN_NAMESPACE get statefulset {1} -oyaml" \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get statefulset $options)" \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE get statefulset {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get statefulset $options)" \
       --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
       --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
@@ -759,8 +846,8 @@ function k() {
 
     tmp=$(mktemp)
     deployment=$(kubectl get deployments $options | fzf \
-      --preview="kubectl --namespace $OCEAN_NAMESPACE get deployment {1} -oyaml" \
-      --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get deployments $options)" \
+      --preview="kubectl --namespace=$OCEAN_NAMESPACE get deployment {1} -oyaml" \
+      --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get deployments $options)" \
       --bind "ctrl-o:execute(echo 'WIDE:{1}' > $tmp)+abort" \
       --bind "ctrl-u:execute(echo 'DELETE:{1}' > $tmp)+abort" \
       --bind "ctrl-e:execute(echo 'EDIT:{1}' > $tmp)+abort" \
@@ -834,12 +921,12 @@ alias kgp="kubectl get pods"
 alias kgpow="kubectl get pods -owide"
 alias kgpg="kubectl get pods | grep"
 function kgpf() {
-  kubectl get pods | fzf --preview="kubectl --namespace $OCEAN_NAMESPACE describe pod {1}" --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods)" --header 'Press CTRL-R to reload' --header-lines=1
+  kubectl get pods | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE describe pod {1}" --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get pods)" --header 'Press CTRL-R to reload' --header-lines=1
 }
 alias wn1kgpg="watcha -n 1 kgpg"
 alias kgpowg="kubectl get pods -owide | grep"
 function kgpowf() {
-  kubectl get pods -owide | fzf --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get pods -owide)" --header 'Press CTRL-R to reload' --header-lines=1
+  kubectl get pods -owide | fzf --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get pods -owide)" --header 'Press CTRL-R to reload' --header-lines=1
 }
 alias kdp="kubectl delete pod"
 function kdpf() {
@@ -878,7 +965,7 @@ function krollf() {
 alias kgd="kubectl get deployments"
 alias kgdg="kubectl get deployments | grep"
 function kgdf() {
-  kubectl get deployments | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get deployment -oyaml {1}" --bind "ctrl-r:reload(kubectl --namespace $OCEAN_NAMESPACE get deployments)" --header 'Press CTRL-R to reload' --header-lines=1
+  kubectl get deployments | fzf --preview="kubectl --namespace=$OCEAN_NAMESPACE get deployment -oyaml {1}" --bind "ctrl-r:reload(kubectl --namespace=$OCEAN_NAMESPACE get deployments)" --header 'Press CTRL-R to reload' --header-lines=1
 }
 alias ked="kubectl edit deployment"
 function kedf() {
@@ -1092,3 +1179,24 @@ function keitbf() {
 alias kcp="kubectl cp"
 
 swim divar-infra
+
+
+function machine() {
+	RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
+  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+	docker build -t ocean:machine $SCRIPT_DIR/ocean/machine
+	telepresence \
+		--context afra \
+		--namespace divar-infra \
+		--new-deployment ubuntu-$RND \
+		--method container \
+		--docker-run \
+			-it \
+			--rm \
+			--mount type=bind,source=/tmp,target=/tmp \
+			--mount type=bind,source=$HOME,target=$HOME \
+			-v /etc/group:/etc/group \
+			-v /etc/passwd:/etc/passwd \
+			-u $(id -u):$(id -g) \
+			ocean:machine
+}

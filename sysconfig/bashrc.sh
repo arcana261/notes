@@ -153,7 +153,7 @@ alias redis-cli="docker run -it --network host --rm --entrypoint redis-cli redis
 alias redis-cli-pipe="docker run -i --network host --rm --entrypoint redis-cli redis"
 alias rabbitmqctl="docker run -it --network host --rm --entrypoint rabbitmqctl rabbitmq"
 alias rabbitmqadmin="docker run -it --network host --rm --entrypoint /usr/local/bin/rabbitmqadmin rabbitmq:management"
-alias node="docker run -it --network host --rm --entrypoint /usr/local/bin/node -w /srv$(pwd) -v /:/srv -u $(id -u):$(id -g) node"
+alias node="docker run -it --network host --rm --entrypoint /usr/local/bin/node -w /srv\$(pwd) -v /:/srv -u $(id -u):$(id -g) node"
 
 function _regit() {
     ISGIT=$(git status 1>/dev/null 2>&1 || echo "NOGIT")
@@ -162,7 +162,11 @@ function _regit() {
     else
         tmux set -g status-right '#[fg=yellow]'$(pwd)' #[fg=Cyan]#S #[fg=white]%a %d %b %R'
     fi
-    export PS1=$(echo $PS1 | sed $'s|\u25A0.*$||g')$'\u25A0'" \[${DIR_COLOR}\]"$(pwd | sed 's|[^/]*/||g')"\[${SECOND_ARROW_COLOR}\]"$'\u2771'"\[${TEXT_COLOR}\] "
+		DIR_NAME=$(pwd | sed 's|[^/]*/||g')
+		if [ "$PS_PREFIX" != "" ]; then
+			DIR_NAME="($PS_PREFIX:$DIR_NAME)"
+		fi
+    export PS1=$(echo $PS1 | sed $'s|\u25A0.*$||g')$'\u25A0'" \[${DIR_COLOR}\]"$DIR_NAME"\[${SECOND_ARROW_COLOR}\]"$'\u2771'"\[${TEXT_COLOR}\] "
 }
 
 function qind() {
@@ -170,7 +174,7 @@ function qind() {
 }
 
 function qin() {
-    grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude=*.pyc --exclude=*.swp --exclude=*.swo --exclude=*.db --exclude-dir=.git "$@" .
+    grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude-dir=.mypy_cache --exclude=*.pyc --exclude=*.swp --exclude=*.swo --exclude=*.db --exclude-dir=.git "$@" .
 }
 
 function vv() {

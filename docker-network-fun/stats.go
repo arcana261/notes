@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 	"sync"
 	"time"
 )
@@ -70,12 +71,26 @@ func (s *stats) Report() {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	for name, item := range s.items {
+	var names []string
+	for name := range s.items {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+
+	for _, name := range names {
+		item := s.items[name]
 		fmt.Fprintf(os.Stderr, "%s: %v/s\n", name, item.ReportPerSecond())
 	}
 
-	for name, value := range s.gauges {
-		fmt.Fprintf(os.Stderr, "%s: %v\n", name, value)
+	names = make([]string, 0)
+	for name := range s.gauges {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+
+	for _, name := range names {
+		item := s.gauges[name]
+		fmt.Fprintf(os.Stderr, "%s: %v\n", name, item)
 	}
 }
 

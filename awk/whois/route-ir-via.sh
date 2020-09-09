@@ -55,6 +55,10 @@ NS="$NS room.gharar.ir"
 NS="$NS dkstatics-public.digikala.com"
 NS="$NS pe.agahpardazan.ir"
 NS="$NS taci.ir"
+NS="$NS tehran.ir"
+NS="$NS myservices.tehran.ir"
+NS="$NS webanalytics.tehran.ir"
+NS="$NS dl.nkmn.ir"
 
 OTHER_NS="medium.com"
 

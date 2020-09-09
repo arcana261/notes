@@ -1,0 +1,34 @@
+{
+  "configurations": {
+    "run": {
+      "adapter": "vscode-go",
+      "configuration": {
+        "request": "launch",
+        "program": "${workspaceRoot}/main.go",
+        "mode": "debug",
+        "dlvToolPath": "$HOME/go/bin/dlv",
+        "args": [
+          "-endpoint",
+          "192.168.238.1",
+          "-queue",
+          "most.queue",
+          "-queue",
+          "all.queue",
+          "-queue",
+          "quorum.queue",
+          "-consumerate",
+          "1000",
+          "-prefetch",
+          "50",
+          "-publishrate",
+          "500",
+          "-checkdataloss",
+          "-maxpublishcount",
+          "150000",
+          "-size",
+          "2048"
+        ]
+      }
+    }
+  }
+}

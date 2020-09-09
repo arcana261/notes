@@ -2,8 +2,9 @@
 
 # https://wiki.linuxfoundation.org/networking/netem
 
-export TEST_RABBITMQ_VOLUME_MB=512
+export TEST_RABBITMQ_VOLUME_MB=4096
 export TEST_RABBITMQ_MEMORY_MB=1024
+export RABBITMQ_CACHE_PATH=$HOME/.cache/docker-network-fun
 
 function create_rabbitmq_cluster() {
   # usage: create_rabbitmq_cluster <count>
@@ -109,6 +110,8 @@ function cleanup_rabbitmq() {
   delete_iptables_chain nat rabbit-balancer-post-routing
 
   iplink_delete_bridge rabbit-balancer
+
+  sudo rm -rfv $RABBITMQ_CACHE_PATH
 }
 
 function create_rabbitmq_container() {
@@ -121,24 +124,51 @@ function create_rabbitmq_container() {
   create_docker_volume $1
   range=$((250 + $1))
 
-  sudo docker run -td --name rabbitmq$1 --network rabbitmq$1 --hostname rabbitmq$1 -e RABBITMQ_ERLANG_COOKIE='1234' -m ${TEST_RABBITMQ_MEMORY_MB}m --ip 192.168.$range.2 -v rabbitmq$1:/var/lib/rabbitmq rabbitmq:mehdi
+  if [ "$(sudo docker ps -a --format '{{.Names}}' | grep "^rabbitmq$1$")" == "" ]; then
+    #sudo docker run -td --name rabbitmq$1 --network rabbitmq$1 --hostname rabbitmq$1 -e RABBITMQ_ERLANG_COOKIE='1234' -m ${TEST_RABBITMQ_MEMORY_MB}m --ip 192.168.$range.2 -v rabbitmq$1:/var/lib/rabbitmq rabbitmq:mehdi
+    sudo docker run -td --name rabbitmq$1 --network rabbitmq$1 --hostname rabbitmq$1 -e RABBITMQ_ERLANG_COOKIE='1234' -m ${TEST_RABBITMQ_MEMORY_MB}m --ip 192.168.$range.2 -v $(rabbitmq_volume_mount_path $1):/var/lib/rabbitmq rabbitmq:mehdi
+  fi
 
   # wait for rabbitmq to boot up (a.k.a. liveness)
-  sudo docker exec rabbitmq$1 bash -c 'while [ "$(rabbitmq-diagnostics -q ping 1>/dev/null 2>&1 || echo 0)" == "0" ]; do echo "RabbitMQ not live yet..."; sleep 1; done'
+  rabbitmq_container_wait_liveness $1
 
   # wait for rabbitmq to be ready (a.k.a. readiness probe)
+  rabbitmq_container_wait_readiness $1
+
+  rabbitmq_configure_container_hostnames $1 $2
+
+  # configure default prefetch
+  sudo docker exec rabbitmq$1 rabbitmqctl eval 'application:set_env(rabbit, default_consumer_prefetch, {false, 1}).'
+}
+
+function rabbitmq_container_wait_liveness() {
+  # usage: rabbitmq_container_wait_liveness <0-based index>
+
+  sudo docker exec rabbitmq$1 bash -c 'while [ "$(rabbitmq-diagnostics -q ping 1>/dev/null 2>&1 || echo 0)" == "0" ]; do echo "RabbitMQ not live yet..."; sleep 1; done'
+}
+
+function rabbitmq_container_wait_readiness() {
+  # usage: rabbitmq_container_wait_readiness <0-based index>
+
   sudo docker exec rabbitmq$1 bash -c 'while [ "$(rabbitmq-diagnostics -q status 1>/dev/null 2>&1 || echo 0)" == "0" ]; do echo "RabbitMQ not ready yet..."; sleep 1; done'
+}
+
+function rabbitmq_configure_container_hostnames() {
+  # usage: rabbitmq_configure_container_hostnames <0-based index>
+  # usage: rabbitmq_configure_container_hostnames <0-based index> <cluster count>
+
+  count=$2
+  if [ "$count" == "" ]; then
+    count=10
+  fi
 
   # configure hostnames
-  n=$(($2 - 1))
+  n=$(($count - 1))
   for j in $(seq 0 $n); do
     if [ "$1" != "$j" ]; then
       sudo docker exec rabbitmq$1 bash -c 'echo '"$(rabbitmq_virtual_ip_address $j) rabbitmq$j"' >> /etc/hosts'
     fi
   done
-
-  # configure default prefetch
-  sudo docker exec rabbitmq$1 rabbitmqctl eval 'application:set_env(rabbit, default_consumer_prefetch, {false, 1}).'
 }
 
 function login_rabbitmq_container() {
@@ -160,17 +190,86 @@ function delete_rabbitmq_container() {
 
 function delete_docker_volume() {
   # usage: delete_docker_volume <0-based index>
-  existing=$(sudo docker volume ls | awk '{print $2}' | grep "^rabbitmq$1$")
-  if [ "$existing" != "" ]; then
-    sudo docker volume rm rabbitmq$1
+  volume_base_paths=$RABBITMQ_CACHE_PATH/volumes
+  images_path=$volume_base_paths/images
+  mounts_path=$volume_base_paths/mounts
+
+  image_path=$images_path/rabbitmq$1.img
+  mount_path=$mounts_path/rabbitmq$1
+
+  if [ "$(cat /etc/mtab | awk '{print $2}' | grep "^$mount_path$")" != "" ]; then
+    sudo umount $mount_path
   fi
+
+  if [ -f $image_path ]; then
+    sudo rm -f $image_path
+  fi
+}
+
+function rabbitmq_volume_mount_path() {
+  # usage: rabbitmq_volume_mount_path <0-based index>
+
+  volume_base_paths=$RABBITMQ_CACHE_PATH/volumes
+  mounts_path=$volume_base_paths/mounts
+  mount_path=$mounts_path/rabbitmq$1
+
+  echo $mount_path
 }
 
 function create_docker_volume() {
   # usage: create_docker_volume <0-based index>
-  existing=$(sudo docker volume ls | awk '{print $2}' | grep "^rabbitmq$1$")
-  if [ "$existing" == "" ]; then
-    sudo docker volume create --driver local --opt type=tmpfs --opt device=tmpfs --opt o=size=${TEST_RABBITMQ_VOLUME_MB}m,uid=1000 rabbitmq$1
+
+  volume_base_paths=$RABBITMQ_CACHE_PATH/volumes
+  images_path=$volume_base_paths/images
+  mounts_path=$volume_base_paths/mounts
+  mkdir -p $images_path
+  mkdir -p $mounts_path
+
+  image_path=$images_path/rabbitmq$1.img
+  mount_path=$mounts_path/rabbitmq$1
+  mkdir -p $mount_path
+
+  if [ ! -f $image_path ]; then
+    truncate -s ${TEST_RABBITMQ_VOLUME_MB}MB $image_path
+    mkfs.ext4 $image_path
+  fi
+
+  if [ "$(cat /etc/mtab | awk '{print $2}' | grep "^$mount_path$")" == "" ]; then
+    sudo mount -t ext4 -o loop $image_path $mount_path
+  fi
+
+  #existing=$(sudo docker volume ls | awk '{print $2}' | grep "^rabbitmq$1$")
+  #if [ "$existing" == "" ]; then
+   # sudo docker volume create --driver local --opt type=tmpfs --opt device=tmpfs --opt o=size=${TEST_RABBITMQ_VOLUME_MB}m,uid=1000 rabbitmq$1
+  #fi
+}
+
+function mangle_packet_loss() {
+  # usage: mangle_packet_loss <0-based index> <percent>
+  # example: `mangle_packet_loss 1 90%`
+
+  if [ "$(sudo ip netns exec rabbitmq$1 tc qdisc | grep 'dev \s*rabbit-in' | grep '\sloss\s')" == "" ]; then
+    sudo ip netns exec rabbitmq$1 tc qdisc add dev rabbit-in$1pr root netem loss $2
+  else
+    sudo ip netns exec rabbitmq$1 tc qdisc change dev rabbit-in$1pr root netem loss $2
+  fi
+
+  if [ "$(sudo ip netns exec rabbitmq$1 tc qdisc | grep 'dev \s*rabbit-out' | grep '\sloss\s')" == "" ]; then
+    sudo ip netns exec rabbitmq$1 tc qdisc add dev rabbit-out$1pr root netem loss $2
+  else
+    sudo ip netns exec rabbitmq$1 tc qdisc change dev rabbit-out$1pr root netem loss $2
+  fi
+}
+
+function mangle_no_packet_loss() {
+  # usage: mangle_no_packet_loss <0-based index>
+
+  if [ "$(sudo ip netns exec rabbitmq$1 tc qdisc | grep 'dev \s*rabbit-in' | grep '\sloss\s')" != "" ]; then
+    sudo ip netns exec rabbitmq$1 tc qdisc del dev rabbit-in$1pr root netem
+  fi
+
+  if [ "$(sudo ip netns exec rabbitmq$1 tc qdisc | grep 'dev \s*rabbit-out' | grep '\sloss\s')" == "" ]; then
+    sudo ip netns exec rabbitmq$1 tc qdisc del dev rabbit-out$1pr root netem
   fi
 }
 
@@ -192,7 +291,76 @@ function mangle_plug_in_network() {
   sudo ip netns exec rabbitmq$1 ip link set dev rabbit-in$1pr up
   sudo ip netns exec rabbitmq$1 ip link set dev rabbit-out$1pr up
 
+  # wait for rabbitmq to boot up (a.k.a. liveness)
+  rabbitmq_container_wait_liveness $1
+
+  # wait for rabbitmq to be ready (a.k.a. readiness probe)
+  rabbitmq_container_wait_readiness $1
+
   rabbitmq_rebalance_service_ip
+}
+
+function mangle_kill_container() {
+  # usage: mangle_kill_container <0-based index>
+
+  sudo docker kill --signal=9 rabbitmq$1
+  sudo docker stop -t 0 rabbitmq$1
+  rabbitmq_rebalance_service_ip
+}
+
+function mangle_kill_all_containers() {
+  # usage: mangle_kill_all_conainers
+
+  n=$RABBITMQ_CLUSTER_N
+  if [ "$n" == "" ]; then
+    n=10
+  fi
+
+  n_1=$(( $n - 1 ))
+
+  for i in $(seq 0 $n_1); do
+    sudo docker kill --signal=9 rabbitmq$i
+  done
+  rabbitmq_rebalance_service_ip
+}
+
+function mangle_start_container() {
+  # usage: mangle_start_container <0-based index>
+
+  sudo docker start rabbitmq$1
+  rabbitmq_configure_container_hostnames $1
+
+  # wait for rabbitmq to boot up (a.k.a. liveness)
+  rabbitmq_container_wait_liveness $1
+
+  # wait for rabbitmq to be ready (a.k.a. readiness probe)
+  rabbitmq_container_wait_readiness $1
+
+  rabbitmq_rebalance_service_ip
+}
+
+function mangle_start_all_containers() {
+  # usage: mangle_start_all_containers
+
+  n=$RABBITMQ_CLUSTER_N
+  if [ "$n" == "" ]; then
+    n=10
+  fi
+
+  n_1=$(( $n - 1 ))
+
+  for i in $(seq 0 $n_1); do
+    sudo docker start rabbitmq$i
+    rabbitmq_configure_container_hostnames $i
+  done
+
+  for i in $(seq 0 $n_1); do
+    # wait for rabbitmq to boot up (a.k.a. liveness)
+    rabbitmq_container_wait_liveness $i
+    # wait for rabbitmq to be ready (a.k.a. readiness probe)
+    rabbitmq_container_wait_readiness $i
+    rabbitmq_rebalance_service_ip
+  done
 }
 
 function create_docker_bridge() {
@@ -281,7 +449,7 @@ function delete_docker_bridge() {
 }
 
 function build_docker_image() {
-  sudo docker build --build-arg MEMORY_WATERMARK=$(( ($TEST_RABBITMQ_MEMORY_MB * 4) / 10 )) --build-arg DISK_WATERMARK=$(( ($TEST_RABBITMQ_MEMORY_MB * 4) / 10 )) -t rabbitmq:mehdi .
+  sudo docker build --build-arg MEMORY_WATERMARK=$(( ($TEST_RABBITMQ_MEMORY_MB * 4) / 10 )) --build-arg DISK_WATERMARK=$(( ($TEST_RABBITMQ_VOLUME_MB * 4) / 10 )) -t rabbitmq:mehdi .
 }
 
 function rabbitmq_outbound_virtual_ip_range() {

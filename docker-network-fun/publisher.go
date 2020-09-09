@@ -545,7 +545,7 @@ func (s *retrySession) acknowledgeNoRetry(ctx context.Context, delivery Delivery
 	}
 
 	err = session.Acknowledge(ctx, delivery)
-	if err != nil {
+	if err != nil && err != ErrIncorrectConsumerId {
 		s.discardSession(session)
 		return err
 	}
@@ -669,6 +669,9 @@ func (s *retrySession) currentPublisher(ctx context.Context) (Publisher, error) 
 	if err != nil {
 		return nil, err
 	}
+	if session == nil {
+		return nil, nil
+	}
 
 	return session.(Publisher), nil
 }
@@ -677,6 +680,9 @@ func (s *retrySession) currentConsumer(ctx context.Context) (Consumer, error) {
 	session, err := s.currentSession(ctx)
 	if err != nil {
 		return nil, err
+	}
+	if session == nil {
+		return nil, nil
 	}
 
 	return session.(Consumer), nil
@@ -869,9 +875,13 @@ func (s *retrySession) watchConsumerCancel(session Session, ch <-chan Delivery) 
 	case <-s.done.Done():
 		return
 
-	case <-canceler:
-		s.fireCanceled()
+	case _, ok := <-canceler:
+		if !ok {
+			s.discardChannel(ch)
+			return
+		}
 
+		s.fireCanceled()
 		s.discardChannel(ch)
 		return
 	}
@@ -935,9 +945,13 @@ func (s *retrySession) watchConnectionBlock(session Session) {
 	case <-s.done.Done():
 		return
 
-	case blocking := <-ch:
-		s.fireBlocked(blocking.Reason)
+	case blocking, ok := <-ch:
+		if !ok {
+			s.discardSession(session)
+			return
+		}
 
+		s.fireBlocked(blocking.Reason)
 		s.discardSession(session)
 		return
 	}
@@ -972,7 +986,7 @@ func (s *retrySession) watchChannelClose(session Session) {
 		return
 
 	case err := <-ch:
-		if err.Server {
+		if err != nil && err.Server {
 			fmt.Fprintf(os.Stderr, "channel closed suddenly: %s\n", err.Reason)
 		}
 
@@ -1000,7 +1014,12 @@ func (s *retrySession) watchConnectionClose(session Session) {
 	case <-s.done.Done():
 		return
 
-	case err := <-ch:
+	case err, ok := <-ch:
+		if !ok {
+			s.discardSession(session)
+			return
+		}
+
 		if err.Server {
 			fmt.Fprintf(os.Stderr, "connection closed suddenly: %s\n", err.Reason)
 		}
@@ -1092,6 +1111,9 @@ func (s *retrySession) makeChannelsLoop() {
 	consumer, err := s.currentConsumer(ctx)
 	if err != nil {
 		s.fireConsumerCreationFailed()
+		return
+	}
+	if consumer == nil {
 		return
 	}
 
@@ -1684,7 +1706,7 @@ func (s *operationTimeoutSession) Consume(ctx context.Context) (<-chan Delivery,
 
 	type DeliveryCh <-chan Delivery
 	result := make(chan DeliveryCh, 1)
-	errChannel := make(chan error)
+	errChannel := make(chan error, 1)
 
 	s.wg.Add(1)
 	go func() {
@@ -1704,7 +1726,6 @@ func (s *operationTimeoutSession) Consume(ctx context.Context) (<-chan Delivery,
 
 	case <-newCtx.Done():
 		if newCtx.Err() == context.DeadlineExceeded {
-			s.fireConsumeHooks()
 			return nil, context.DeadlineExceeded
 		}
 		return nil, nil
@@ -3087,23 +3108,14 @@ func (s *basicSession) closeInternal() {
 	s.pending.Wait()
 	s.closeDelivery()
 
-	go func(channel *amqp.Channel, connection *amqp.Connection) {
-		var err error
+	var err error
 
-		if s.amqpChannel != nil {
-			err = s.amqpChannel.Close()
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "WARN can not close channel to %s with %v", s.endpoint, err)
-			}
+	if s.amqpConnection != nil {
+		err = s.amqpConnection.Close()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "WARN can not close connection to %s with %v", s.amqpEndpoint, err)
 		}
-
-		if s.amqpConnection != nil {
-			err = s.amqpConnection.Close()
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "WARN can not close connection to %s with %v", s.endpoint, err)
-			}
-		}
-	}(s.amqpChannel, s.amqpConnection)
+	}
 
 	s.amqpChannel = nil
 	s.amqpConnection = nil

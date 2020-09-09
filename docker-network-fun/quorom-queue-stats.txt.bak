@@ -1,0 +1,10 @@
+RPC_RPDFHD291GN19R	rpc rpc.email.email_service.Email-quorum 8 4096
+RPC_RPGQCYWAT6SMUI	rpc rpc.image_coordinator_cron.image.ImageCoordinatorCronTasks-quorum 8 4096
+RPC_RPZVAWWCR588BK	rpc rpc.image_coordinator.image.ImageCoordinator-quorum 8 4096
+RPC_RP5IJMQQ5V2TR6	rpc rpc.image.image.ImageCronTasks-quorum 8 8192
+RPC_RPK5RBMZSVW5MU	rpc rpc.paymentcore.paymentcore.PaymentCore-quorum 8 4096
+RPC_RPZ4CKGR6YAXD6	rpc rpc.payment.payment.Payment-quorum 4549650 0
+RPC_RPNYI5DAKUVSY1	rpc rpc.payment.payment.PaymentTasks-quorum 8 4096
+RPC_RP0L4C7MUOMRF8	rpc rpc.peyk.sms.SMS-quorum 38334086 4096
+RPC_RP65WNUUOAFY7L	rpc rpc.post_storage.post.PostStorage-quorum 8 4096
+RPC_RPCT191E0VQNNN	rpc rpc.post_storage.post.PostStorageTasks-quorum 3345248 4096

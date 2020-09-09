@@ -35,6 +35,7 @@ var (
 	maxPublishCountFlag    *int
 	maxConsumeCountFlag    *int
 	checkDataLossFlag      *bool
+	consumeProcessTimeFlag *int
 
 	wg            sync.WaitGroup
 	reporterWg    sync.WaitGroup
@@ -68,6 +69,7 @@ func init() {
 	maxPublishCountFlag = flag.Int("maxpublishcount", 0, "publish at most this number of messages to each queue+endpoint")
 	maxConsumeCountFlag = flag.Int("maxconsumecount", 0, "consume at most this number of messages from each queue+endpoint")
 	checkDataLossFlag = flag.Bool("checkdataloss", false, "publish/consume such at we could check for data loss.")
+	consumeProcessTimeFlag = flag.Int("consumeprocesstime", 0, "amount of time in `ms` to wait before consuming another message")
 
 	publishMsg = amqp.Publishing{
 		DeliveryMode: 2,
@@ -92,7 +94,7 @@ func init() {
 	}(flag.Usage)
 }
 
-func consumerOnEndpointQueue(endpoint string, queue string, rate float64, prefetch int, maxCount int, checkDataLoss bool) {
+func consumerOnEndpointQueue(endpoint string, queue string, rate float64, prefetch int, maxCount int, checkDataLoss bool, processTime time.Duration) {
 	defer wg.Done()
 
 	counter := 0
@@ -100,6 +102,7 @@ func consumerOnEndpointQueue(endpoint string, queue string, rate float64, prefet
 	metricPrefix := fmt.Sprintf("%s_%s", endpoint, queue)
 	metricConsume := fmt.Sprintf("%s_consume", metricPrefix)
 	metricDataLoss := fmt.Sprintf("%s_data_loss", metricPrefix)
+	metricReDelivery := fmt.Sprintf("%s_redelivery", metricPrefix)
 
 	if checkDataLoss {
 		appStatus.Set(metricDataLoss, 0.0)
@@ -137,6 +140,14 @@ func consumerOnEndpointQueue(endpoint string, queue string, rate float64, prefet
 
 	foundFirstPacket := false
 
+	var processTimeTicker *time.Ticker
+	if processTime > 0 {
+		processTimeTicker = time.NewTicker(processTime)
+		defer processTimeTicker.Stop()
+	}
+
+	lossed := make(map[int]bool)
+
 	for {
 		select {
 		case <-globalContext.Done():
@@ -168,16 +179,41 @@ func consumerOnEndpointQueue(endpoint string, queue string, rate float64, prefet
 					if counter+1 < maxCount {
 						var n int
 						if count, err := fmt.Sscanf(msg, "ITEM:%d:", &n); err != nil || count != 1 {
-							fmt.Fprintf(os.Stderr, "Expected packet <ITEM> but found: %v...\n", msg[:10])
+							fmt.Fprintf(os.Stderr, "%s: %s: Expected packet <ITEM> but found: %v...\n", endpoint, queue, msg[:10])
 							reject = true
 							appStatus.Increment(metricDataLoss, 1.0)
 						} else if n != counter {
-							fmt.Fprintf(os.Stderr, "Expected packet number %v but found: %v...\n", counter, n)
+							if n > counter {
+								fmt.Fprintf(os.Stderr, "%s: %s: Expected packet number %v but found: %v, possible dataloss from [%v, %v]...\n", endpoint, queue, counter, n, counter, n-1)
+								for i := counter; i < n; i++ {
+									lossed[i] = true
+									appStatus.Increment(metricDataLoss, 1.0)
+								}
+								counter = n
+							} else {
+								if lossed[n] {
+									var lossedSoFar bytes.Buffer
+									first := true
+									delete(lossed, n)
+									for key := range lossed {
+										if first {
+											first = false
+										} else {
+											lossedSoFar.WriteString(",")
+										}
+										lossedSoFar.WriteString(fmt.Sprint(key))
+									}
+									fmt.Fprintf(os.Stderr, "%s: %s: Re-found previously lost packet %v, now conceived lost packets are: %v\n", endpoint, queue, n, lossedSoFar.String())
+									appStatus.Increment(metricDataLoss, -1.0)
+								} else {
+									//fmt.Fprintf(os.Stderr, "%s: %s: Re-Delivery found on packet %v", endpoint, queue, n)
+									appStatus.Increment(metricReDelivery, 1.0)
+								}
+							}
 							reject = true
-							appStatus.Increment(metricDataLoss, 1.0)
 						}
 					} else if strings.Index(msg, "TAIL:") != 0 {
-						fmt.Fprintf(os.Stderr, "Can not find data checking tail, found: %v...\n", msg[:10])
+						fmt.Fprintf(os.Stderr, "%s: %s: Can not find data checking tail, found: %v...\n", endpoint, queue, msg[:10])
 						reject = true
 						appStatus.Increment(metricDataLoss, 1.0)
 					}
@@ -206,6 +242,20 @@ func consumerOnEndpointQueue(endpoint string, queue string, rate float64, prefet
 
 			if maxCount > 0 && counter >= maxCount {
 				return
+			}
+
+			if processTimeTicker != nil {
+				startTime := time.Now()
+				doSleep := true
+				for doSleep {
+					select {
+					case <-globalContext.Done():
+						return
+
+					case <-processTimeTicker.C:
+						doSleep = time.Now().Sub(startTime) < processTime
+					}
+				}
 			}
 		}
 	}
@@ -398,6 +448,10 @@ func main() {
 			fmt.Fprintf(os.Stderr, "-maxconsumecount provided but no -consumerate is provided\n")
 			flagsAreSane = false
 		}
+
+		if *consumeProcessTimeFlag > 0 {
+			fmt.Fprintf(os.Stderr, "-consumeprocesstime provided but no -consumerate is provided\n")
+		}
 	} else {
 		if *prefetchFlag == 0 {
 			fmt.Fprintf(os.Stderr, "-consumerate provided but also -prefetch should be provided\n")
@@ -438,7 +492,7 @@ func main() {
 		for _, endpoint := range endpointsFlag {
 			for _, queue := range queuesFlag {
 				wg.Add(1)
-				go consumerOnEndpointQueue(endpoint, queue, *consumeRateFlag, *prefetchFlag, *maxConsumeCountFlag, *checkDataLossFlag)
+				go consumerOnEndpointQueue(endpoint, queue, *consumeRateFlag, *prefetchFlag, *maxConsumeCountFlag, *checkDataLossFlag, time.Duration(*consumeProcessTimeFlag)*time.Millisecond)
 			}
 		}
 	}
