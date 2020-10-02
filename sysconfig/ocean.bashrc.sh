@@ -20,10 +20,12 @@ function swim() {
 
 function afra() {
   export OCEAN_CONTEXT="afra"
+  _ocean_set_ps $OCEAN_NAMESPACE
 }
 
 function feynman() {
   export OCEAN_CONTEXT="feynman"
+  _ocean_set_ps $OCEAN_NAMESPACE
 }
 
 function kubectl() {
@@ -1182,21 +1184,27 @@ swim divar-infra
 
 
 function machine() {
-	RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
-  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-	docker build -t ocean:machine $SCRIPT_DIR/ocean/machine
-	telepresence \
-		--context afra \
-		--namespace divar-infra \
-		--new-deployment ubuntu-$RND \
-		--method container \
-		--docker-run \
-			-it \
-			--rm \
-			--mount type=bind,source=/tmp,target=/tmp \
-			--mount type=bind,source=$HOME,target=$HOME \
-			-v /etc/group:/etc/group \
-			-v /etc/passwd:/etc/passwd \
-			-u $(id -u):$(id -g) \
-			ocean:machine
+  if [ "$(docker ps | awk '{if ($2 == "ocean:machine") {print $1} }')" != "" ]; then
+    docker exec -it $(docker ps | awk '{if ($2 == "ocean:machine") {print $1} }') bash
+  else
+    RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+    docker build -t ocean:machine $SCRIPT_DIR/ocean/machine
+    telepresence \
+      --context afra \
+      --namespace divar-infra \
+      --new-deployment ubuntu-$RND \
+      --method container \
+      --docker-run \
+        -it \
+        --rm \
+        --mount type=bind,source=/tmp,target=/tmp \
+        --mount type=bind,source=$HOME,target=$HOME \
+        -v /etc/group:/etc/group \
+        -v /etc/passwd:/etc/passwd \
+        -v /etc/shadow:/etc/shadow \
+        -u $(id -u):$(id -g) \
+        -w $PWD \
+        ocean:machine
+  fi
 }

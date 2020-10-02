@@ -1,0 +1,69 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.5.175.0 - 194.5.175.255'
+
+% Abuse contact for '194.5.175.0 - 194.5.175.255' is 'report@parspack.com'
+
+inetnum:        194.5.175.0 - 194.5.175.255
+netname:        IR-PARSPARVA6-20191120
+country:        IR
+org:            ORG-PPSC6-RIPE
+admin-c:        HM6186-RIPE
+tech-c:         HM6186-RIPE
+status:         ALLOCATED PA
+mnt-by:         mnt-ir-parsparva6-1
+mnt-by:         RIPE-NCC-HM-MNT
+created:        2019-11-20T09:44:25Z
+last-modified:  2019-11-25T06:21:24Z
+source:         RIPE
+
+organisation:   ORG-PPSC6-RIPE
+org-name:       Pars Parva System Co. Ltd.
+org-type:       LIR
+address:        Unit 2,  No 2, 35th west st, south Sarafha st, Saadatabad
+address:        1998865778
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+admin-c:        HM6186-RIPE
+tech-c:         HM6186-RIPE
+abuse-c:        AR56875-RIPE
+mnt-ref:        mnt-ir-parsparva6-1
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         mnt-ir-parsparva6-1
+created:        2019-11-19T12:46:51Z
+last-modified:  2019-11-19T12:46:53Z
+source:         RIPE # Filtered
+phone:          +982141807
+
+role:           Hadi Mobini
+address:        Unit 2, No 2, 35th west st, south Sarafha st, Saadatabad
+address:        1998865778
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982141807
+nic-hdl:        HM6186-RIPE
+mnt-by:         mnt-ir-parsparva6-1
+created:        2019-11-19T12:46:50Z
+last-modified:  2019-11-19T12:46:51Z
+source:         RIPE # Filtered
+
+% Information related to '194.5.175.0/24AS60631'
+
+route:          194.5.175.0/24
+origin:         AS60631
+descr:          Pars Parva System LTD.
+mnt-by:         mnt-ir-parsparva6-1
+created:        2019-11-25T06:23:15Z
+last-modified:  2019-11-25T06:23:15Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.2 (ANGUS)
+
+

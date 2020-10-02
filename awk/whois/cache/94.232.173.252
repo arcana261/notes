@@ -1,0 +1,78 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '94.232.168.0 - 94.232.175.255'
+
+% Abuse contact for '94.232.168.0 - 94.232.175.255' is 'abuse@tebyanidc.ir'
+
+inetnum:        94.232.168.0 - 94.232.175.255
+netname:        Tebyan-IDC
+country:        IR
+org:            ORG-TCI2-RIPE
+admin-c:        HY344-RIPE
+admin-c:        AG20989-RIPE
+tech-c:         HY344-RIPE
+tech-c:         AG20989-RIPE
+status:         ASSIGNED PI
+mnt-by:         RIPE-NCC-END-MNT
+mnt-by:         TBYN-MNT
+mnt-routes:     TBYN-MNT
+mnt-domains:    TBYN-MNT
+created:        2008-11-24T15:54:01Z
+last-modified:  2018-02-20T11:44:30Z
+source:         RIPE # Filtered
+
+organisation:   ORG-TCI2-RIPE
+org-name:       Tebyan-e-Noor Cultural-Artistic Institute
+org-type:       LIR
+address:        Keshavarz Blv.
+address:        1416614633
+address:        Tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +982181200000
+fax-no:         +982181202180
+abuse-c:        TTS29-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        TBYN-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         TBYN-MNT
+created:        2010-04-08T14:50:09Z
+last-modified:  2017-10-30T14:38:06Z
+source:         RIPE # Filtered
+
+person:         Alireza Ghazazani
+address:        No.44 , Naderi Str, Keshavarz Blv, Tehran, Iran
+phone:          +982181200000
+nic-hdl:        AG20989-RIPE
+mnt-by:         TBYN-MNT
+created:        2016-11-22T06:08:45Z
+last-modified:  2016-11-22T06:09:55Z
+source:         RIPE # Filtered
+
+person:         Hossein Yousefi
+address:        No.44 , Naderi Str, Keshavarz Blv, Tehran, Iran
+phone:          +982181200000
+nic-hdl:        HY344-RIPE
+mnt-by:         TBYN-MNT
+created:        2013-10-02T06:55:52Z
+last-modified:  2013-10-24T15:33:35Z
+source:         RIPE # Filtered
+
+% Information related to '94.232.173.0/24AS48434'
+
+route:          94.232.173.0/24
+origin:         AS48434
+mnt-by:         TBYN-MNT
+created:        2017-11-22T06:34:52Z
+last-modified:  2017-11-22T06:34:52Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.2 (WAGYU)
+
+

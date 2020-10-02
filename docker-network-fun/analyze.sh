@@ -6,39 +6,39 @@ function analyze() {
   QUOROM_WAL_SIZE=$(kubectl exec -t $POD -- bash -c "ls -l /var/lib/rabbitmq/mnesia/rabbit@$POD/quorum/rabbit@$POD/*.wal" | awk '{x+=$5}END{print x}')
   echo " Quorom Wal Size: $QUOROM_WAL_SIZE"
 
-  #echo -n "Probing Quorum Queue Ids..."
+  echo -n "Probing Quorum Queue Ids..."
   #QUOROM_QUEUE_STATS=$(mktemp)
   QUOROM_QUEUE_STATS=quorom-queue-stats.txt
-#  kubectl exec -t $POD -- bash -c "find /var/lib/rabbitmq/mnesia/rabbit@$POD/quorum/rabbit@$POD/ -maxdepth 1 -type d" | sed 's|\([^/]*/\)*||g' | grep -v '^$' > $QUOROM_QUEUE_STATS
-#  echo " Found $(cat $QUOROM_QUEUE_STATS | wc -l) queues"
-#
-#  QUOROM_QUEUE_ADDITION=$(mktemp)
-#  QUOROM_QUEUE_NEXT=$(mktemp)
-#  for queue_id in $(cat $QUOROM_QUEUE_STATS); do
-#    echo -n "Probing Quorum Queue $queue_id..."
-#    result=$(mktemp)
-#    kubectl exec -t $POD -- bash -c "cat /var/lib/rabbitmq/mnesia/rabbit@$POD/quorum/rabbit@$POD/$queue_id/config" | tr -d '\n' | grep -o 'cluster_name\s*=>\s*\S*' | grep -o "'.*'" | tr -d "'" | sed 's|_| |' | tr -d '\n' > $result
-#    echo -n " Found in vhost $(cat $result | awk '{print $1}') and name $(cat $result | awk '{print $2}')"
-#    echo -n ". Probing segments..."
-#    segment_size=$(kubectl exec -t $POD -- bash -c "ls -l /var/lib/rabbitmq/mnesia/$USER@$POD/quorum/$USER@$POD/$queue_id/*.segment" | awk '{x+=$5}END{print x}')
-#    echo -n " $segment_size" >> $result
-#    echo -n " Found: $segment_size"
-#    echo -n ". Probing snapshots..."
-#    snapshot_size=$(kubectl exec -t $POD -- bash -c "du -d 0 /var/lib/rabbitmq/mnesia/$USER@$POD/quorum/$USER@$POD/$queue_id/snapshots/" | awk '{print $1 * 1024}')
-#    echo -n " $snapshot_size" >> $result
-#    echo " Found: $snapshot_size"
-#
-#    echo "" >> $result
-#    cat $result >> $QUOROM_QUEUE_ADDITION
-#    rm -f $result
-#  done
-#
-#  echo -n "Appending data..."
-#  paste $QUOROM_QUEUE_STATS $QUOROM_QUEUE_ADDITION | sort -k3 > $QUOROM_QUEUE_NEXT
-#  rm -f $QUOROM_QUEUE_ADDITION
-#  mv -f $QUOROM_QUEUE_NEXT $QUOROM_QUEUE_STATS
-#  echo " done"
-#
+  kubectl exec -t $POD -- bash -c "find /var/lib/rabbitmq/mnesia/rabbit@$POD/quorum/rabbit@$POD/ -maxdepth 1 -type d" | sed 's|\([^/]*/\)*||g' | grep -v '^$' > $QUOROM_QUEUE_STATS
+  echo " Found $(cat $QUOROM_QUEUE_STATS | wc -l) queues"
+
+  QUOROM_QUEUE_ADDITION=$(mktemp)
+  QUOROM_QUEUE_NEXT=$(mktemp)
+  for queue_id in $(cat $QUOROM_QUEUE_STATS); do
+    echo -n "Probing Quorum Queue $queue_id..."
+    result=$(mktemp)
+    kubectl exec -t $POD -- bash -c "cat /var/lib/rabbitmq/mnesia/rabbit@$POD/quorum/rabbit@$POD/$queue_id/config" | tr -d '\n' | grep -o 'cluster_name\s*=>\s*\S*' | grep -o "'.*'" | tr -d "'" | sed 's|_| |' | tr -d '\n' > $result
+    echo -n " Found in vhost $(cat $result | awk '{print $1}') and name $(cat $result | awk '{print $2}')"
+    echo -n ". Probing segments..."
+    segment_size=$(kubectl exec -t $POD -- bash -c "ls -l /var/lib/rabbitmq/mnesia/$USER@$POD/quorum/$USER@$POD/$queue_id/*.segment" | awk '{x+=$5}END{print x}')
+    echo -n " $segment_size" >> $result
+    echo -n " Found: $segment_size"
+    echo -n ". Probing snapshots..."
+    snapshot_size=$(kubectl exec -t $POD -- bash -c "du -d 0 /var/lib/rabbitmq/mnesia/$USER@$POD/quorum/$USER@$POD/$queue_id/snapshots/" | awk '{print $1 * 1024}')
+    echo -n " $snapshot_size" >> $result
+    echo " Found: $snapshot_size"
+
+    echo "" >> $result
+    cat $result >> $QUOROM_QUEUE_ADDITION
+    rm -f $result
+  done
+
+  echo -n "Appending data..."
+  paste $QUOROM_QUEUE_STATS $QUOROM_QUEUE_ADDITION | sort -k3 > $QUOROM_QUEUE_NEXT
+  rm -f $QUOROM_QUEUE_ADDITION
+  mv -f $QUOROM_QUEUE_NEXT $QUOROM_QUEUE_STATS
+  echo " done"
+
 #  return
 
   echo -n "Generating list of vhosts... ["

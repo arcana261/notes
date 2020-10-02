@@ -545,6 +545,11 @@ sudo apt install libpq-dev
 ## Install helm
 sudo snap install helm --classic
 
+## Install git-secret
+sudo apt install -y git-secret
+
+## Remove thunderbird from favorites
+
 =====================================================================================================
 =====================================================================================================
 =====================================================================================================
@@ -567,6 +572,10 @@ grpcurl -d @ grpc.server.com:443 my.custom.server.Service/Method <<EOM
 }
 EOM
 
+# read multiline from file
+while IFS='' read -r line || [ -n "${line}" ]; do
+  ...
+done < $QUOROM_QUEUE_STATS
 
 =====================================================================================================
 =====================================================================================================
@@ -620,6 +629,29 @@ ${cwd} - the current working directory of the active window on launch
             "remoteRoot": "."
           }
         ]
+      }
+    }
+  }
+}
+
+## Go Remote Debug with 'dlv'
+## dlv debug --headless --listen 0.0.0.0:5678
+## .vimspector.json
+{
+  "configurations": {
+    "run": {
+      "adapter": "vscode-go",
+      "configuration": {
+        "request": "launch",
+        "program": "${fileDirname}",
+        "mode": "debug",
+        "dlvToolPath": "$HOME/go/bin/dlv"
+      },
+      "breakpoints": {
+        "exception": {
+          "caught": "N",
+          "uncaught": "N"
+        }
       }
     }
   }

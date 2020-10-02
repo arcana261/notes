@@ -170,7 +170,7 @@ function _regit() {
 }
 
 function qind() {
-    find . -not -path *.venv* -not -path *.git* -not -path *.mehdi* -iname "*$1*"
+    find . -not -path *.venv* -not -path *.git* -not -path *.mehdi* -not -path *.mypy_cache* -iname "*$1*"
 }
 
 function qin() {

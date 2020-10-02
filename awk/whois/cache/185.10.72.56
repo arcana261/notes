@@ -1,0 +1,66 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.10.72.0 - 185.10.72.127'
+
+% Abuse contact for '185.10.72.0 - 185.10.72.127' is 'abuse@iranhost.com'
+
+inetnum:        185.10.72.0 - 185.10.72.127
+org:            ORG-RRTC5-RIPE
+netname:        IRANHOST-CORE-1
+descr:          Roshangar Rayaneh Tehran Co. Ltd.
+country:        IR
+admin-c:        PS15231-RIPE
+tech-c:         PS15231-RIPE
+status:         ASSIGNED PA
+mnt-by:         IRANHost-MNT
+created:        2012-11-19T16:25:55Z
+last-modified:  2014-01-02T20:14:24Z
+source:         RIPE
+
+organisation:   ORG-RRTC5-RIPE
+org-name:       Roshangar Rayaneh Tehran Co. Ltd.
+org-type:       LIR
+address:        Unit 4 No 10, Qabousnameh st. Motahari ave
+address:        15888
+address:        tehran
+address:        IRAN, ISLAMIC REPUBLIC OF
+mnt-ref:        IRANHost-MNT
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         IranHOST-MNT
+abuse-c:        IHAC1-RIPE
+created:        2012-11-09T14:47:48Z
+last-modified:  2017-10-30T14:42:46Z
+source:         RIPE # Filtered
+phone:          +982183305000
+fax-no:         +982183305000
+
+person:         Peyman Shahidnoorai
+address:        Unit 4, No 10, Qabousnameh st. Motahari ave. Tehran-Iran
+phone:          +98 21 83305
+nic-hdl:        PS15231-RIPE
+mnt-by:         IranHOST-MNT
+created:        2012-11-09T19:55:08Z
+last-modified:  2012-11-09T19:55:09Z
+source:         RIPE # Filtered
+
+% Information related to '185.10.72.0/24AS61055'
+
+route:          185.10.72.0/24
+descr:          IRH-185-10-72-0/24
+origin:         AS61055
+mnt-by:         IRANHost-MNT
+created:        2014-02-01T08:42:09Z
+last-modified:  2014-02-01T08:42:09Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.2 (WAGYU)
+
+

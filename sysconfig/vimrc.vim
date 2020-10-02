@@ -181,6 +181,14 @@ function s:SetClip()
 endfunction
 command -nargs=0 SetClip :call s:SetClip()
 
+function s:SetBuffer()
+  let tmp = $HOME . '/.clipboard.vim.tmp'
+  call writefile(getreg('0', 1, 1), tmp)
+  let msg = system("tmux load-buffer " . tmp)
+  echo msg
+endfunction
+command -nargs=0 SetBuffer :call s:SetBuffer()
+
 function s:GetClip()
   let tmp = $HOME . '/.clipboard.vim.tmp'
   let msg = system("xclip -selection c -o > " . tmp)
