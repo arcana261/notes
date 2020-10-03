@@ -577,6 +577,20 @@ while IFS='' read -r line || [ -n "${line}" ]; do
   ...
 done < $QUOROM_QUEUE_STATS
 
+## create iso from cd/dvd
+# find block size
+isoinfo -d -i /dev/cdrom | grep -i -E 'block size|volume size'
+# start copying iso
+dd if=/dev/cdrom of=test.iso bs=<block size from above> count=<volume size from above>
+# send progress signal from another terminal
+watch -n 1 killall -USR1 dd
+
+## create usb flash drive from iso
+sudo dd bs=4M if=input.iso of=/dev/sd<?> conv=fdatasync
+sync
+sudo sync
+# send progress signal from another terminal
+sudo watch -n 1 killall -USR1 dd
 =====================================================================================================
 =====================================================================================================
 =====================================================================================================
