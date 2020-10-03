@@ -292,6 +292,32 @@ function pipe() {
     tmux pipe-pane -o 'cat | aha -l --black >'"$1"
 }
 
+function __vim() {
+  if [ "$(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') vim
+  else
+    RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+    docker build -t mehdi:vim -f $SCRIPT_DIR/bash/vim.dockerfile $SCRIPT_DIR/bash
+    docker \
+      run \
+        -it \
+        --rm \
+        --mount type=bind,source=/tmp,target=/tmp \
+        --mount type=bind,source=$HOME,target=$HOME \
+        -v /etc/group:/etc/group \
+        -v /etc/passwd:/etc/passwd \
+        -v /etc/shadow:/etc/shadow \
+        -u $(id -u):$(id -g) \
+        -w $PWD \
+        mehdi:vim \
+          /bin/bash \
+          -l \
+          -c "vim $@"
+  fi
+}
+alias nvim="__vim"
+
 tmux select-pane -P 'bg=black,fg=colour15'
 
 # Enhanced file path completion in bash - https://github.com/sio/bash-complete-partial-path

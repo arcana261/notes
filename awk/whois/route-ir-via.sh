@@ -71,6 +71,9 @@ NS="$NS keycloak.hezardastan.net"
 NS="$NS amlaktehran.org"
 NS="$NS dabi.ir"
 NS="$NS edu.sharif.edu"
+NS="$NS rrk.ir"
+NS="$NS rooznamehrasmi.ir"
+NS="$NS resalat-news.com"
 
 OTHER_NS="medium.com"
 

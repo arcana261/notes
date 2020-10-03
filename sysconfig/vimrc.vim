@@ -1,3 +1,8 @@
+set encoding=utf-8
+filetype off
+filetype plugin indent on
+syntax on
+
 set smartindent
 set shiftwidth=2
 set expandtab
@@ -32,6 +37,7 @@ autocmd Filetype html setlocal expandtab
 autocmd BufEnter,BufNew Dockerfile.base setlocal ft=dockerfile
 autocmd BufEnter,BufNew Dockerfile.test setlocal ft=dockerfile
 autocmd BufEnter,BufNew Dockerfile.build setlocal ft=dockerfile
+autocmd BufEnter,BufNew *.dockerfile setlocal ft=dockerfile
 autocmd BufEnter,BufNew *.conf setlocal ft=conf
 
 " uncomment to auto-open nerdtree
