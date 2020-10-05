@@ -1,0 +1,49 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.55.226.0 - 185.55.227.255'
+
+% Abuse contact for '185.55.226.0 - 185.55.227.255' is 'abuse@dnswebhost.com'
+
+inetnum:        185.55.226.0 - 185.55.227.255
+netname:        SERVERPARS-Net02
+descr:          Serverpars Webhosting (Pars.host)
+country:        IR
+admin-c:        SW4341-RIPE
+tech-c:         SW4341-RIPE
+status:         ASSIGNED PA
+mnt-by:         mnt-serverpars
+mnt-lower:      mnt-serverpars
+mnt-routes:     mnt-serverpars
+created:        2014-05-14T09:35:55Z
+last-modified:  2017-09-20T06:09:50Z
+source:         RIPE
+
+person:         Serverpars Webhosting
+address:        1th Floor, No 22, Mina Blv, Africa Street.
+phone:          +982188850179
+nic-hdl:        SW4341-RIPE
+mnt-by:         Serverpars
+created:        2014-04-25T07:40:44Z
+last-modified:  2017-10-30T22:34:48Z
+source:         RIPE # Filtered
+
+% Information related to '185.55.226.0/24AS201999'
+
+route:          185.55.226.0/24
+descr:          Serverpars Webhosting
+origin:         AS201999
+mnt-by:         MNT-serverpars
+created:        2015-01-17T12:40:27Z
+last-modified:  2015-01-17T12:40:27Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.98 (BLAARKOP)
+
+
