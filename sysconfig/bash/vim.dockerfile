@@ -8,7 +8,7 @@ RUN \
     tzdata git gcc libncurses-dev make python3-dev \
     libtool-bin ruby-dev libperl-dev libpthread-stubs0-dev \
     libcanberra-dev ctags gettext liblua5.3-dev tmux \
-    silversearcher-ag python3-pip fzf && \
+    silversearcher-ag python3-pip fzf xclip && \
   ln -s /usr/include/lua5.3 /usr/include/lua && \
   ln -s /usr/lib/x86_64-linux-gnu/liblua5.3.so /usr/local/lib/liblua.so && \
   mkdir /build && \

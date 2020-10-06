@@ -74,6 +74,8 @@ NS="$NS edu.sharif.edu"
 NS="$NS rrk.ir"
 NS="$NS rooznamehrasmi.ir"
 NS="$NS resalat-news.com"
+NS="$NS paper.resalatnews.com"
+NS="$NS organicminded.org"
 
 OTHER_NS="medium.com"
 

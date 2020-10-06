@@ -187,10 +187,24 @@ function vv() {
     tmux resize-pane -Z
     vim
 }
+function nvv() {
+    name=$(echo $PWD | grep -o '[^/]*$')
+    NAME=${name^^}
+    tmux split-window -v -c $(echo $PWD) -l 10
+    tmux rename-window "V:${NAME}"
+    tmux select-pane -P 'fg=colour15'
+    tmux select-pane -U
+    tmux resize-pane -Z
+    __vim
+}
 
 function pyvv() {
   venv
   vv
+}
+function npyvv() {
+  venv
+  nvv
 }
 
 function venv() {
@@ -294,15 +308,17 @@ function pipe() {
 
 function __vim() {
   if [ "$(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') vim
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim $@'
   else
     RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
     docker build -t mehdi:vim -f $SCRIPT_DIR/bash/vim.dockerfile $SCRIPT_DIR/bash
     docker \
       run \
-        -it \
+        -td \
         --rm \
+        --name vim \
+        --network host \
         --mount type=bind,source=/tmp,target=/tmp \
         --mount type=bind,source=$HOME,target=$HOME \
         -v /etc/group:/etc/group \
@@ -313,7 +329,8 @@ function __vim() {
         mehdi:vim \
           /bin/bash \
           -l \
-          -c "vim $@"
+          -c "while [ 1 ]; do sleep 10; done"
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim $@'
   fi
 }
 alias nvim="__vim"
@@ -326,6 +343,10 @@ then
         source "$HOME/.config/bash-complete-partial-path/bash_completion"
         _bcpp --defaults
 fi
+
+for f in $(ls $HOME/.config/bash_completions/); do
+  source $HOME/.config/bash_completions/$f
+done
 
 # Blue = 34
 # Green = 32
