@@ -70,7 +70,7 @@ function routes() {
 }
 
 function fix-ir-routes() {
-    (cd $HOME/Documents/notes/awk/whois && sudo ./route-ir-via.sh wlo1)
+    (cd $HOME/Documents/notes/awk/whois && sudo ./route-ir-via.sh $IR_LINK_NAME)
 }
 
 function gs() {
