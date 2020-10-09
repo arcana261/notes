@@ -3,4 +3,5 @@
 .venv
 /sysconfig/bash/capture/leven
 /sysconfig/bash/capture/binerize
+telepresence.log
 

@@ -534,6 +534,8 @@ aws_secret_access_key=xxxxxxxxxxxxx
 ..............................
 
 ## Install Youtube Music
+## Add youtube music to favorites
+## Put it below firefox
 
 ## Change Wallpaper
 
@@ -553,7 +555,7 @@ Categories=Game;
 GenericName=Minecraft
 ..........................................
 desktop-file-validate ~/.local/share/applications/minecraft.desktop
-update-desktop-database
+sudo update-desktop-database
 
 ## Install OBS Studio
 
@@ -565,6 +567,7 @@ update-desktop-database
 ## Remove `Help` from favorites
 
 ## Add chrome to favorites
+## Put chrome below firefox
 
 ## Install Charles Proxy
 
@@ -587,10 +590,10 @@ sudo apt install libpq-dev
 ## Install helm
 sudo snap install helm --classic
 
-## Install git-secret
-sudo apt install -y git-secret
-
 ## Remove thunderbird from favorites
+
+## Install fluxbox
+sudo apt install fluxbox
 
 =====================================================================================================
 =====================================================================================================

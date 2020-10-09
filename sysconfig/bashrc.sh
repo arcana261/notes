@@ -308,7 +308,7 @@ function pipe() {
 
 function __vim() {
   if [ "$(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim $@'
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim '"$@"
   else
     RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -330,7 +330,7 @@ function __vim() {
           /bin/bash \
           -l \
           -c "while [ 1 ]; do sleep 10; done"
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim $@'
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim '"$@"
   fi
 }
 alias nvim="__vim"
