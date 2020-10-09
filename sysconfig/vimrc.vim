@@ -28,6 +28,7 @@ color OceanicNext
 autocmd Filetype python setlocal ts=4 sw=4 sts=4 expandtab
 autocmd Filetype python DetectIndent
 autocmd Filetype python setlocal autowrite
+autocmd Filetype python setlocal foldmethod=indent
 autocmd Filetype awk DetectIndent
 autocmd Filetype go setlocal ts=4 sw=4 sts=4 expandtab
 autocmd Filetype go DetectIndent

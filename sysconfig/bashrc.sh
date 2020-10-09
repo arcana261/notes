@@ -321,9 +321,13 @@ function __vim() {
         --network host \
         --mount type=bind,source=/tmp,target=/tmp \
         --mount type=bind,source=$HOME,target=$HOME \
+        --mount type=bind,source=/var/run,target=/var/run \
+        --mount type=bind,source=/etc/cups,target=/etc/cups \
+        -e DISPLAY \
         -v /etc/group:/etc/group \
         -v /etc/passwd:/etc/passwd \
         -v /etc/shadow:/etc/shadow \
+        -v /etc/printcap:/etc/printcap \
         -u $(id -u):$(id -g) \
         -w $PWD \
         mehdi:vim \
@@ -333,7 +337,41 @@ function __vim() {
     docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim '"$@"
   fi
 }
+function __gvim() {
+  if [ "$(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && gvim '"$@"
+  else
+    RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+    docker build -t mehdi:vim -f $SCRIPT_DIR/bash/vim.dockerfile $SCRIPT_DIR/bash
+    docker \
+      run \
+        -td \
+        --rm \
+        --name vim \
+        --network host \
+        --mount type=bind,source=/tmp,target=/tmp \
+        --mount type=bind,source=$HOME,target=$HOME \
+        --mount type=bind,source=/var/run,target=/var/run \
+        --mount type=bind,source=/etc/cups,target=/etc/cups \
+        -e DISPLAY \
+        -v /etc/group:/etc/group \
+        -v /etc/passwd:/etc/passwd \
+        -v /etc/shadow:/etc/shadow \
+        -v /etc/printcap:/etc/printcap \
+        -u $(id -u):$(id -g) \
+        -w $PWD \
+        mehdi:vim \
+          /bin/bash \
+          -l \
+          -c "while [ 1 ]; do sleep 10; done"
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && gvim '"$@"
+  fi
+}
 alias nvim="__vim"
+alias ovim="$(which vim)"
+alias vim="__vim"
+alias gvim="__gvim"
 
 tmux select-pane -P 'bg=black,fg=colour15'
 

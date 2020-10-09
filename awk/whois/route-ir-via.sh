@@ -76,6 +76,7 @@ NS="$NS rooznamehrasmi.ir"
 NS="$NS resalat-news.com"
 NS="$NS paper.resalatnews.com"
 NS="$NS organicminded.org"
+NS="$NS parsiday.com"
 
 OTHER_NS="medium.com"
 

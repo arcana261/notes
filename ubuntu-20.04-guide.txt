@@ -582,6 +582,7 @@ sudo apt install libpq-dev
 ## to ~/.local/bin
 
 ## Update kernel to latest
+## Install the `lowlatency` kernel
 ## from http://kernel.ubuntu.com/~kernel-ppa/mainline/
 
 ## Install delve from
