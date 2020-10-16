@@ -349,10 +349,6 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.local/src/fzf
 ## Install go
 tar -C ~/.local -xzf golang.tar.gz
 rm -f golang.tar.gz
-sudo vim /etc/environment
-....................................
-PATH+="/usr/local/go/bin"
-....................................
 vim ~/.profile
 ....................................
 export GOPATH=$HOME/go

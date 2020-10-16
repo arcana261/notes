@@ -45,7 +45,7 @@ fi
 
 if [ ! -f /var/lib/.container_initialized ]; then
   echo $DIVIDER
-  echo ">> Checking root permission..."
+  echo -n ">> Checking root permission..."
   sudo ls > /dev/null
   echo " done"
 
@@ -137,9 +137,21 @@ if [ ! -f /var/lib/.container_initialized ]; then
 
   echo $DIVIDER
   echo -n ">> Installing unrestricted packages..."
-  #sudo apt update
-  #sudo apt install -y ubuntu-restricted-extras
-  echo " done"
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? ([y]/n): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    sudo apt update
+    sudo apt install -y ubuntu-restricted-extras
+    echo " done"
+  else
+    echo " skipped"
+  fi
 
   echo $DIVIDER
   echo -n ">> Configuring samba"
@@ -176,6 +188,11 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo " done"
 
   echo $DIVIDER
+  echo -n ">> Updating notes..."
+  (cd $HOME/Documents/notes && git checkout master && git pull origin master)
+  echo " done"
+
+  echo $DIVIDER
   echo -n ">> Configuring tmux..."
   echo "source-file $HOME/Documents/notes/sysconfig/tmux.conf" > $HOME/.tmux.conf
   echo " done"
@@ -186,6 +203,227 @@ if [ ! -f /var/lib/.container_initialized ]; then
     echo "source $HOME/Documents/notes/sysconfig/bashrc.sh" > $HOME/.bashrc
     echo " done"
   fi
+
+  echo $DIVIDER
+  echo -n ">> Reloading bashrc"
+  source $HOME/.bashrc
+  echo " done"
+
+  echo $DIVIDER
+  echo -n ">> Installing dockerized VIM..."
+  __vim --version
+  echo " done"
+
+  if [ "$(which fzf)" == "" ]; then
+    echo $DIVIDER
+    echo -n ">> Installing fuzzy finder..."
+    mkdir -p $HOME/.local/src
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.local/src/fzf
+    $HOME/.local/src/fzf/install
+    echo " done"
+  fi
+
+  if [ "$(which go)" == "" ]; then
+    echo "$DIVIDER"
+    echo -n ">> Installing Golang..."
+    wget -O $HOME/.cache/go_installer_linux https://storage.googleapis.com/golang/getgo/installer_linux
+    chmod +x $HOME/.cache/go_installer_linux
+    $HOME/.cache/go_installer_linux
+    if [ "$(cat $HOME/.profile | grep GOPATH)" == "" ]; then
+      echo "export GOPATH=$HOME/go" >> $HOME/.profile
+    fi
+    if [ "$(cat $HOME/.profile | grep GOROOT)" == "" ]; then
+      echo "export GOROOT=$HOME/.go" >> $HOME/.profile
+    fi
+    if [ "$(cat $HOME/.profile | grep GOBIN)" == "" ]; then
+      echo 'export GOBIN=$GOPATH/bin' >> $HOME/.profile
+      echo 'export PATH=$PATH:$GOROOT/bin:$GOBIN' >> $HOME/.profile
+    fi
+    if [ "$(cat $HOME/.bashrc | grep GOPATH)" == "" ]; then
+      echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
+    fi
+    if [ "$(cat $HOME/.bashrc | grep GOROOT)" == "" ]; then
+      echo "export GOROOT=$HOME/.go" >> $HOME/.bashrc
+    fi
+    if [ "$(cat $HOME/.bashrc | grep GOBIN)" == "" ]; then
+      echo 'export GOBIN=$GOPATH/bin' >> $HOME/.bashrc
+      echo 'export PATH=$PATH:$GOROOT/bin:$GOBIN' >> $HOME/.bashrc
+    fi
+    source $HOME/.bashrc
+    rm -f $HOME/.cache/go_installer_linux
+    echo " done"
+  fi
+
+  if [ "$(which up)" == "" ]; then
+    echo $DIVIDER
+    echo -n ">> Installing up..."
+    go get -v -u github.com/akavel/up
+    echo " done"
+  fi
+
+  echo $DIVIDER
+  echo -n ">> Installing VIM plugins"
+  mkdir -p $HOME/.vim/pack/vendor/start
+  # install nerdtree
+  if [ ! -d $HOME/.vim/pack/vendor/start/nerdtree ]; then
+    git clone --depth 1 https://github.com/preservim/nerdtree.git $HOME/.vim/pack/vendor/start/nerdtree
+  fi
+  (cd $HOME/.vim/pack/vendor/start/nerdtree && git pull origin master)
+  if [ ! -d $HOME/.vim/pack/vendor/start/detectindent ]; then
+    git clone --depth 1 https://github.com/ciaranm/detectindent.git $HOME/.vim/pack/vendor/start/detectindent
+  fi
+  (cd $HOME/.vim/pack/vendor/start/detectindent && git pull origin master)
+  # install ale
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/ale ]; then
+    git clone --depth 1 https://github.com/dense-analysis/ale.git $HOME/.vim/pack/git-plugins/start/ale
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/ale && git pull origin master)
+  # install fzf
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/fzf ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.vim/pack/git-plugins/start/fzf
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/fzf && git pull origin master)
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/fzf.vim ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.vim.git $HOME/.vim/pack/git-plugins/start/fzf.vim
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/fzf.vim && git pull origin master)
+  # install deoplete
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/nvim-yarp ]; then
+    git clone --depth 1 https://github.com/roxma/nvim-yarp.git $HOME/.vim/pack/git-plugins/start/nvim-yarp
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/nvim-yarp && git pull origin master)
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/vim-hug-neovim-rpc ]; then
+    git clone --depth 1 https://github.com/roxma/vim-hug-neovim-rpc.git $HOME/.vim/pack/git-plugins/start/vim-hug-neovim-rpc
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/vim-hug-neovim-rpc && git pull origin master)
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/deoplete ]; then
+    git clone --depth 1 https://github.com/Shougo/deoplete.nvim.git $HOME/.vim/pack/git-plugins/start/deoplete
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/deoplete && git pull origin master)
+  pip install pynvim
+  # install theme
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/oceanic-next ]; then
+    git clone --depth 1 https://github.com/mhartington/oceanic-next.git $HOME/.vim/pack/git-plugins/start/oceanic-next
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/oceanic-next && git pull origin master)
+  # install airline
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/vim-airline ]; then
+    git clone --depth 1 https://github.com/vim-airline/vim-airline.git $HOME/.vim/pack/git-plugins/start/vim-airline
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/vim-airline && git pull origin master)
+  # install fugitive.vim
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/vim-fugitive ]; then
+    git clone --depth 1 https://github.com/tpope/vim-fugitive.git $HOME/.vim/pack/git-plugins/start/vim-fugitive
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/vim-fugitive && git pull origin master)
+  # install vimspector
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/vimspector/opt/vimspector ]; then
+    git clone https://github.com/puremourning/vimspector $HOME/.vim/pack/vimspector/opt/vimspector
+  fi
+  (cd $HOME/.vim/pack/vimspector/opt/vimspector && git pull origin master)
+  echo -n "Install vimspector gadgets"
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? ([y]/n): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    $HOME/.vim/pack/vimspector/opt/vimspector/install_gadget.py --all --disable-tcl
+  fi
+  # install deoplete-go
+  echo -n "Update github.com/stamblerre/gocode"
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? ([y]/n): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    go get -u -v github.com/stamblerre/gocode
+  else
+    go get -v github.com/stamblerre/gocode
+  fi
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/deoplete-go ]; then
+    git clone --depth 1 https://github.com/deoplete-plugins/deoplete-go.git $HOME/.vim/pack/git-plugins/start/deoplete-go
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/deoplete-go && git pull origin master)
+  (cd $HOME/.vim/pack/git-plugins/start/deoplete-go && make)
+  # install vim-jsonnet
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/vim-jsonnet ]; then
+    git clone --depth 1 https://github.com/google/vim-jsonnet.git $HOME/.vim/pack/git-plugins/start/vim-jsonnet
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/vim-jsonnet && git pull origin master)
+  # install go-langserver for ALE
+  echo -n "Update github.com/sourcegraph/go-langserver"
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? ([y]/n): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    go get -v -u github.com/sourcegraph/go-langserver
+  else
+    go get -v github.com/sourcegraph/go-langserver
+  fi
+  # install vim indent guide plugin
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/vim-indent-guides ]; then
+    git clone --depth 1 https://github.com/nathanaelkane/vim-indent-guides.git $HOME/.vim/pack/git-plugins/start/vim-indent-guides
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/vim-indent-guides && git pull origin master)
+  # install vim quickfix toggle plugin
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/vim-togglelist ]; then
+    git clone --depth 1 https://github.com/milkypostman/vim-togglelist.git $HOME/.vim/pack/git-plugins/start/vim-togglelist
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/vim-togglelist && git pull origin master)
+  # install vim tmuxline plugin
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/tmuxline ]; then
+    git clone --depth 1 https://github.com/edkolev/tmuxline.vim.git $HOME/.vim/pack/git-plugins/start/tmuxline
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/tmuxline && git pull origin master)
+  # install tagbar plugin
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/tagbar ]; then
+    git clone --depth 1 https://github.com/majutsushi/tagbar.git $HOME/.vim/pack/git-plugins/start/tagbar
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/tagbar && git pull origin master)
+  # install vim notes plugin
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/vim-notes ]; then
+    git clone --depth 1 https://github.com/xolox/vim-notes.git $HOME/.vim/pack/git-plugins/start/vim-notes
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/vim-notes && git pull origin master)
+  # install vim misc plugin
+  mkdir -p $HOME/.vim/pack/git-plugins/start
+  if [ ! -d $HOME/.vim/pack/git-plugins/start/vim-misc ]; then
+    git clone --depth 1 https://github.com/xolox/vim-misc.git $HOME/.vim/pack/git-plugins/start/vim-misc
+  fi
+  (cd $HOME/.vim/pack/git-plugins/start/vim-misc && git pull origin master)
+  echo " done"
+
+  echo $DIVIDER
+  echo -n ">> Configuring VIM..."
+  echo "source $HOME/Documents/notes/sysconfig/vimrc.vim" > $HOME/.vimrc
+  echo " done"
 
   echo $DIVIDER
   echo -n ">> Finalizing initialization..."

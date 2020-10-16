@@ -312,11 +312,22 @@ function __vim() {
     DOCKER="sudo docker"
   fi
 
-  if [ "$($DOCKER ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
-    $DOCKER exec -it $($DOCKER ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/vim '"$@"
+  container_name=vim
+  if [ "$PS_PREFIX" != "" ]; then
+    container_name="vim_$PS_PREFIX"
+  fi
+  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "mehdi:vim" && $3 == "'"$container_name"'") {print $1} }')
+
+  if [ "$running_container_id" != "" ]; then
+    $DOCKER exec -it $running_container_id bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/vim '"$@"
   else
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
     $DOCKER build -t mehdi:vim -f $SCRIPT_DIR/bash/vim.dockerfile $SCRIPT_DIR/bash
+    mount_home="--mount type=bind,source=$HOME,target=$HOME"
+    if [ "$PS_PREFIX" == "LINUX" ]; then
+      mount_home="-v linux:/home/$(whoami)"
+    fi
+
     $DOCKER \
       run \
         -td \
@@ -324,7 +335,7 @@ function __vim() {
         --name vim \
         --network host \
         --mount type=bind,source=/tmp,target=/tmp \
-        --mount type=bind,source=$HOME,target=$HOME \
+        $mount_home \
         --mount type=bind,source=/var/run,target=/var/run \
         --mount type=bind,source=/etc/cups,target=/etc/cups \
         -e DISPLAY=$DISPLAY \

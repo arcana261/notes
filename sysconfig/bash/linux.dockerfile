@@ -76,6 +76,10 @@ RUN \
   apt install -y \
     strace
 
+RUN \
+  apt install -y \
+    mc
+
 ADD linux-entrypoint.sh /bin/entrypoint.sh
 
 RUN \
