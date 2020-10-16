@@ -170,11 +170,11 @@ function _regit() {
 }
 
 function qind() {
-    find . -not -path *.venv* -not -path *.git* -not -path *.mehdi* -not -path *.mypy_cache* -iname "*$1*"
+    find . -not -path *.venv* -not -path *.git* -not -path *.mehdi* -not -path *.mypy_cache* -not -path *__pycache__* -iname "*$1*"
 }
 
 function qin() {
-    grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude-dir=.mypy_cache --exclude=*.pyc --exclude=*.swp --exclude=*.swo --exclude=*.db --exclude-dir=.git "$@" .
+    grep -irn --exclude-dir=.venv --exclude-dir=.venv2 --exclude-dir=.venv3 --exclude-dir=.mypy_cache -not -path *__pycache__* --exclude=*.pyc --exclude=*.swp --exclude=*.swo --exclude=*.db --exclude-dir=.git "$@" .
 }
 
 function vv() {
@@ -200,7 +200,7 @@ function nvv() {
 
 function pyvv() {
   venv
-  vv
+  nvv
 }
 function npyvv() {
   venv
@@ -307,13 +307,17 @@ function pipe() {
 }
 
 function __vim() {
-  if [ "$(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim '"$@"
+  DOCKER="docker"
+  if [ "$(groups | grep docker)" == "" ]; then
+    DOCKER="sudo docker"
+  fi
+
+  if [ "$($DOCKER ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
+    $DOCKER exec -it $($DOCKER ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/vim '"$@"
   else
-    RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-    docker build -t mehdi:vim -f $SCRIPT_DIR/bash/vim.dockerfile $SCRIPT_DIR/bash
-    docker \
+    $DOCKER build -t mehdi:vim -f $SCRIPT_DIR/bash/vim.dockerfile $SCRIPT_DIR/bash
+    $DOCKER \
       run \
         -td \
         --rm \
@@ -323,7 +327,7 @@ function __vim() {
         --mount type=bind,source=$HOME,target=$HOME \
         --mount type=bind,source=/var/run,target=/var/run \
         --mount type=bind,source=/etc/cups,target=/etc/cups \
-        -e DISPLAY \
+        -e DISPLAY=$DISPLAY \
         -v /etc/group:/etc/group \
         -v /etc/passwd:/etc/passwd \
         -v /etc/shadow:/etc/shadow \
@@ -333,45 +337,105 @@ function __vim() {
         mehdi:vim \
           /bin/bash \
           -l \
-          -c "while [ 1 ]; do sleep 10; done"
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && vim '"$@"
+          -c "while [ 1 ]; do sleep 1; done"
+    $DOCKER exec -it $($DOCKER ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/vim '"$@"
   fi
 }
 function __gvim() {
   if [ "$(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && gvim '"$@"
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/gvim '"$@"
   else
-    RND=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
-    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-    docker build -t mehdi:vim -f $SCRIPT_DIR/bash/vim.dockerfile $SCRIPT_DIR/bash
-    docker \
-      run \
-        -td \
-        --rm \
-        --name vim \
-        --network host \
-        --mount type=bind,source=/tmp,target=/tmp \
-        --mount type=bind,source=$HOME,target=$HOME \
-        --mount type=bind,source=/var/run,target=/var/run \
-        --mount type=bind,source=/etc/cups,target=/etc/cups \
-        -e DISPLAY \
-        -v /etc/group:/etc/group \
-        -v /etc/passwd:/etc/passwd \
-        -v /etc/shadow:/etc/shadow \
-        -v /etc/printcap:/etc/printcap \
-        -u $(id -u):$(id -g) \
-        -w $PWD \
-        mehdi:vim \
-          /bin/bash \
-          -l \
-          -c "while [ 1 ]; do sleep 10; done"
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && gvim '"$@"
+    __vim --version
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/gvim '"$@"
   fi
 }
 alias nvim="__vim"
 alias ovim="$(which vim)"
 alias vim="__vim"
 alias gvim="__gvim"
+
+function linux() {
+  if [ "$(docker volume ls | awk '{if ($2 == "linux") {print $1} }')" == "" ]; then
+    docker volume create linux
+  fi
+
+  if [ "$(docker network ls | awk '{if ($2 == "linux") {print $1} }')" == "" ]; then
+    docker network create \
+      --opt com.docker.network.bridge.name=linux \
+      --opt com.docker.network.container_interface_prefix=linux- \
+      --opt com.docker.network.bridge.enable_ip_masquerade=true \
+      linux
+  fi
+
+  if [ "$(docker ps | awk '{if ($2 == "mehdi:linux") {print $1} }')" != "" ]; then
+    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:linux") {print $1} }') bash -c 'export DISPLAY="'"$DISPLAY"'" && /bin/entrypoint.sh '"$@"
+  else
+    if [ "$(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }')" != "" ]; then
+      docker start $(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }')
+      docker exec -it $(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }') bash -c 'export DISPLAY="'"$DISPLAY"'" && /bin/entrypoint.sh '"$@"
+    else
+      SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+      docker build -t mehdi:linux -f $SCRIPT_DIR/bash/linux.dockerfile $SCRIPT_DIR/bash
+      docker \
+        run \
+          -td \
+          --name linux \
+          --network linux \
+          --mount type=bind,source=/tmp/tmux-$(id -u),target=/tmp/tmux-$(id -u) \
+          --mount type=bind,source=$HOME,target=/home/host/$(whoami) \
+          --mount type=bind,source=/etc/cups,target=/etc/cups \
+          --mount type=bind,source=/lib/modules,target=/lib/modules \
+          -e DISPLAY=$DISPLAY \
+          -v linux:/home/$(whoami) \
+          -v /etc/group:/etc/group \
+          -v /etc/passwd:/etc/passwd \
+          -v /etc/shadow:/etc/shadow \
+          -v /etc/printcap:/etc/printcap \
+          -v $HOME/.git-credentials:$HOME/.git-credentials \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          -u $(id -u):$(id -g) \
+          -w /home/$(whoami) \
+          --group-add docker \
+          --group-add sudo \
+          --cap-add=NET_ADMIN \
+          --cap-add=NET_RAW \
+          --cap-add=NET_BROADCAST \
+          --cap-add=NET_BIND_SERVICE \
+          --cap-add=MKNOD \
+          --cap-add=SYS_ADMIN \
+          --cap-add=SYS_MODULE \
+          --cap-add=SYSLOG \
+          --cap-add=SYS_RAWIO \
+          --cap-add=SYS_PACCT \
+          --cap-add=SYS_PTRACE \
+          --cap-add=SYS_CHROOT \
+          --cap-add=SYS_BOOT \
+          --cap-add=SYS_NICE \
+          --cap-add=SYS_RESOURCE \
+          --cap-add=SYS_TIME \
+          --cap-add=SYS_TTY_CONFIG \
+          --cap-add=AUDIT_CONTROL \
+          --cap-add=AUDIT_READ \
+          --cap-add=AUDIT_WRITE \
+          --cap-add=BLOCK_SUSPEND \
+          --cap-add=IPC_OWNER \
+          --cap-add=KILL \
+          --cap-add=LEASE \
+          --cap-add=MAC_ADMIN \
+          --cap-add=MAC_OVERRIDE \
+          --cap-add=WAKE_ALARM \
+          --cap-add=SETFCAP \
+          --cap-add=SETPCAP \
+          --cap-add=SETGID \
+          --cap-add=SETUID \
+          mehdi:linux \
+            /bin/bash \
+            -l \
+            -c "while [ 1 ]; do sleep 1; done"
+      docker exec -it $(docker ps | awk '{if ($2 == "mehdi:linux") {print $1} }') bash -c 'export DISPLAY="'"$DISPLAY"'" && /bin/entrypoint.sh '"$@"
+    fi
+  fi
+}
 
 tmux select-pane -P 'bg=black,fg=colour15'
 

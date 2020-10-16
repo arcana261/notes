@@ -307,7 +307,7 @@ sudo usermod -aG docker $USER
 newgrp docker
 
 ## Install extended tmux conf from Notes!
-vim ~/tmux.conf
+vim ~/.tmux.conf
 ..........................
 source-file $HOME/Documents/notes/sysconfig/tmux.conf
 ..........................
