@@ -332,7 +332,7 @@ function __vim() {
       run \
         -td \
         --rm \
-        --name vim \
+        --name $container_name \
         --network host \
         --mount type=bind,source=/tmp,target=/tmp \
         $mount_home \
