@@ -382,6 +382,7 @@ alias nvim="__vim"
 alias ovim="$(which vim)"
 alias vim="__vim"
 alias gvim="__gvim"
+alias ogvim="$(which gvim)"
 
 function linux() {
   if [ "$(docker volume ls | awk '{if ($2 == "linux") {print $1} }')" == "" ]; then

@@ -136,24 +136,6 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo " done"
 
   echo $DIVIDER
-  echo -n ">> Installing unrestricted packages..."
-  cont="1"
-  while [ "$cont" == "1" ]; do
-    echo -n "? ([y]/n): "
-    read resp
-    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
-      cont="0"
-    fi
-  done
-  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
-    sudo apt update
-    sudo apt install -y ubuntu-restricted-extras
-    echo " done"
-  else
-    echo " skipped"
-  fi
-
-  echo $DIVIDER
   echo -n ">> Configuring samba"
   mkdir -p $HOME/.local/share
   sudo apt install samba samba-common

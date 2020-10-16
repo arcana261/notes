@@ -106,6 +106,16 @@ RUN \
   apt install -y \
     x11vnc xvfb fluxbox
 
+RUN \
+    curl -fsSL -o /tmp/get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && \
+    chmod 700 /tmp/get_helm.sh && \
+    /tmp/get_helm.sh && \
+    rm -f /tmp/get_helm.sh
+
+RUN \
+  apt install -y \
+    vim-gtk3 nautilus firefox
+
 ADD linux-entrypoint.sh /bin/entrypoint.sh
 
 RUN \
