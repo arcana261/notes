@@ -324,8 +324,11 @@ function __vim() {
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
     $DOCKER build -t mehdi:vim -f $SCRIPT_DIR/bash/vim.dockerfile $SCRIPT_DIR/bash
     mount_home="--mount type=bind,source=$HOME,target=$HOME"
+    mount_x11=""
     if [ "$PS_PREFIX" == "LINUX" ]; then
       mount_home="-v linux:/home/$(whoami)"
+      mkdir -p /tmp/linux-x11-unix
+      mount_x11="--mount type=bind,source=/tmp/linux-x11-unix,target=/tmp/.X11-unix"
     fi
 
     $DOCKER \
@@ -336,6 +339,7 @@ function __vim() {
         --network host \
         --mount type=bind,source=/tmp,target=/tmp \
         $mount_home \
+        $mount_x11 \
         --mount type=bind,source=/var/run,target=/var/run \
         --mount type=bind,source=/etc/cups,target=/etc/cups \
         -e DISPLAY=$DISPLAY \
@@ -401,11 +405,13 @@ function linux() {
     else
       SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
       docker build -t mehdi:linux -f $SCRIPT_DIR/bash/linux.dockerfile $SCRIPT_DIR/bash
+      mkdir -p /tmp/linux-x11-unix
       docker \
         run \
           -td \
           --name linux \
           --network linux \
+          --mount type=bind,source=/tmp/linux-x11-unix,target=/tmp/.X11-unix \
           --mount type=bind,source=/tmp/tmux-$(id -u),target=/tmp/tmux-$(id -u) \
           --mount type=bind,source=$HOME,target=/home/host/$(whoami) \
           --mount type=bind,source=/etc/cups,target=/etc/cups \
