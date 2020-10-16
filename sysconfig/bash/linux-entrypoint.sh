@@ -501,6 +501,13 @@ if [ ! -f /var/lib/.container_initialized ]; then
   fi
 
   echo $DIVIDER
+  echo -n ">> Opening firewall ports for VNC"
+  sudo ufw reload
+  sudo ufw allow 5900:5910/tcp
+  sudo ufw reload
+  echo " done"
+
+  echo $DIVIDER
   echo -n ">> Finalizing initialization..."
   sudo touch /var/lib/.container_initialized
   echo " done"

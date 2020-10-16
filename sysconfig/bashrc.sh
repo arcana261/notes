@@ -355,11 +355,23 @@ function __vim() {
   fi
 }
 function __gvim() {
-  if [ "$(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }')" != "" ]; then
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/gvim '"$@"
+  DOCKER="docker"
+  if [ "$(groups | grep docker)" == "" ]; then
+    DOCKER="sudo docker"
+  fi
+
+  container_name=vim
+  if [ "$PS_PREFIX" != "" ]; then
+    container_name="vim_$PS_PREFIX"
+  fi
+  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "mehdi:vim" && $3 == "'"$container_name"'") {print $1} }')
+
+  if [ "$running_container_id" != "" ]; then
+    $DOCKER exec -it $running_container_id bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/gvim '"$@"
   else
     __vim --version
-    docker exec -it $(docker ps | awk '{if ($2 == "mehdi:vim") {print $1} }') bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/gvim '"$@"
+    running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "mehdi:vim" && $3 == "'"$container_name"'") {print $1} }')
+    $DOCKER exec -it $running_container_id bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /usr/bin/gvim '"$@"
   fi
 }
 alias nvim="__vim"
@@ -410,6 +422,11 @@ function linux() {
           -w /home/$(whoami) \
           -p 2123:2122 \
           -p 5900:5900 \
+          -p 5901:5901 \
+          -p 5902:5902 \
+          -p 5903:5903 \
+          -p 5904:5904 \
+          -p 5905:5905 \
           --group-add docker \
           --group-add sudo \
           --cap-add=NET_ADMIN \
