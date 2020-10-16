@@ -408,6 +408,8 @@ function linux() {
           -v /var/run/docker.sock:/var/run/docker.sock \
           -u $(id -u):$(id -g) \
           -w /home/$(whoami) \
+          -p 2123:2122 \
+          -p 5900:5900 \
           --group-add docker \
           --group-add sudo \
           --cap-add=NET_ADMIN \
@@ -448,6 +450,10 @@ function linux() {
       docker exec -it $(docker ps | awk '{if ($2 == "mehdi:linux") {print $1} }') bash -c 'export DISPLAY="'"$DISPLAY"'" && /bin/entrypoint.sh '"$@"
     fi
   fi
+}
+
+function start_virtual_vnc_server() {
+  x11vnc -create -listen 0.0.0.0 -env PATH=$PATH -env FD_PROG=/usr/bin/fluxbox -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env X11VNC_CREATE_GEOM=${1:-1920x1080x16} -gone 'killall Xvfb' -bg -nopw
 }
 
 tmux select-pane -P 'bg=black,fg=colour15'

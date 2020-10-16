@@ -425,6 +425,81 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo "source $HOME/Documents/notes/sysconfig/vimrc.vim" > $HOME/.vimrc
   echo " done"
 
+
+  echo $DIVIDER
+  echo -n ">> Rebuilding WHOIS cache..."
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? ([y]/n): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    (cd $HOME/Documents/notes/awk/whois && ./rebuild-from-cache.sh)
+    echo " done"
+  else
+    echo " skipped"
+  fi
+
+  echo $DIVIDER
+  echo -n ">> Configuring ethernet name in bashrc..."
+  echo 'export IR_LINK_NAME="eth0"' >> $HOME/.bashrc
+  source $HOME/.bashrc
+  echo " done"
+
+  echo $DIVIDER
+  echo -n ">> Configuring SSH client..."
+  echo "Host *" > $HOME/.ssh/config
+  echo "  StrictHostKeyChecking no" >> $HOME/.ssh/config
+  chmod 600 ~/.ssh/config
+  echo " done"
+
+  echo $DIVIDER
+  echo -n ">> Update stern"
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? ([y]/n): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    go get -v -u github.com/wercker/stern
+  else
+    go get -v github.com/wercker/stern
+  fi
+  echo " done"
+
+  echo $DIVIDER
+  echo -n ">> Update delve"
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? ([y]/n): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    go get -v -u github.com/go-delve/delve/cmd/dlv
+  else
+    go get -v github.com/go-delve/delve/cmd/dlv
+  fi
+  echo " done"
+
+  if [ "$(which helm)" == "" ]; then
+    echo $DIVIDER
+    echo -n ">> Installing helm"
+    curl -fsSL -o $HOME/.cache/get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    chmod 700 $HOME/.cache/get_helm.sh
+    $HOME/.cache/get_helm.sh
+    rm -f $HOME/.cache/get_helm.sh
+    echo " done"
+  fi
+
   echo $DIVIDER
   echo -n ">> Finalizing initialization..."
   sudo touch /var/lib/.container_initialized
