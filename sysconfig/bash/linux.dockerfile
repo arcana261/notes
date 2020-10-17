@@ -5,57 +5,84 @@ RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   ln -fs /usr/share/zoneinfo/Asia/Tehran /etc/localtime && \
   apt update && \
-  apt install -y tzdata && \
+  apt install -y \
+    tzdata
+
+RUN \
+  apt update && \
   apt -y upgrade && \
   apt -y dist-upgrade && \
   apt -y autoremove
 
 RUN \
+  apt update && \
   apt install -y \
-    tmux screen htop psmisc wget xz-utils mlocate uuid-runtime \
-    tcpdump man-db traceroute w3m bridge-utils default-jdk git \
-    rar unrar iputils-arping iperf curl python3-pip p7zip-full \
-    p7zip net-tools clang xclip python3-venv gawk jq sshpass \
-    jsonnet whois ncat silversearcher-ag gimp ctags aha nodejs \
-    git-secret
+    tmux screen htop psmisc wget xz-utils mlocate uuid-runtime
 
 RUN \
+  apt update && \
   apt install -y \
-    sudo
+    tcpdump man-db traceroute w3m bridge-utils default-jdk git
 
 RUN \
+  apt update && \
   apt install -y \
-    ufw
+    rar unrar iputils-arping iperf curl python3-pip p7zip-full
 
 RUN \
+  apt update && \
   apt install -y \
-    kmod
+    p7zip net-tools clang xclip python3-venv gawk jq sshpass
 
 RUN \
+  apt update && \
   apt install -y \
-    iproute2 vim vim-nox nano
+    jsonnet whois ncat silversearcher-ag gimp ctags aha nodejs
 
 RUN \
+  apt update && \
   apt install -y \
-    iputils-ping
+    git-secret sudo ufw kmod iproute2 vim vim-nox nano
 
 RUN \
+  apt update && \
   apt install -y \
-    systemd
+    iputils-ping systemd openssh-server samba samba-common
 
 RUN \
+  apt update && \
   apt install -y \
-    openssh-server
+    apt-transport-https ca-certificates gnupg-agent
 
 RUN \
+  apt update && \
   apt install -y \
-    samba samba-common && \
-  cp /etc/samba/smb.conf /etc/samba/smb.conf.org
+    software-properties-common dbus dbus-tests strace mc
 
 RUN \
+  apt update && \
   apt install -y \
-    apt-transport-https ca-certificates curl \
-    gnupg-agent software-properties-common && \
+    libprotoc-dev protobuf-compiler gnupg2 libpq-dev snap snapd
+
+RUN \
+  apt update && \
+  apt install -y \
+    x11vnc xvfb fluxbox vim-gtk3 nautilus firefox
+
+RUN \
+  export DEBIAN_FRONTEND=noninteractive && \
+  apt update && \
+  apt install -y \
+    gnome-terminal arandr gnome-system-monitor
+
+RUN \
+  dbus-uuidgen > /var/lib/dbus/machine-id && \
+  cp /etc/samba/smb.conf /etc/samba/smb.conf.org && \
+  echo "XKBLAYOUT=us,ir" > /etc/default/keyboard && \
+  echo "XKBVARIANT=,pes_keypad" >> /etc/default/keyboard && \
+  echo "BACKSPACE=guess" >> /etc/default/keyboard
+
+RUN \
   (curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -) && \
   add-apt-repository \
     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
@@ -66,55 +93,22 @@ RUN \
     docker-ce docker-ce-cli containerd.io
 
 RUN \
-  dbus-uuidgen > /var/lib/dbus/machine-id
-
-RUN \
-  apt install -y \
-    dbus dbus-tests
-
-RUN \
-  apt install -y \
-    strace
-
-RUN \
-  apt install -y \
-    mc
-
-RUN \
-  apt install -y \
-    libprotoc-dev protobuf-compiler gnupg2 libpq-dev
-
-RUN \
   curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
   echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list && \
   apt update && \
-  apt install -y kubectl
+  apt install -y \
+    kubectl
 
 RUN \
   curl -s https://packagecloud.io/install/repositories/datawireio/telepresence/script.deb.sh | bash && \
-  apt install -y --no-install-recommends telepresence
+  apt install -y --no-install-recommends \
+    telepresence
 
 RUN \
-  apt install -y \
-    snap
-
-RUN \
-  apt install -y \
-    snapd
-
-RUN \
-  apt install -y \
-    x11vnc xvfb fluxbox
-
-RUN \
-    curl -fsSL -o /tmp/get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && \
-    chmod 700 /tmp/get_helm.sh && \
-    /tmp/get_helm.sh && \
-    rm -f /tmp/get_helm.sh
-
-RUN \
-  apt install -y \
-    vim-gtk3 nautilus firefox
+  curl -fsSL -o /tmp/get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && \
+  chmod 700 /tmp/get_helm.sh && \
+  /tmp/get_helm.sh && \
+  rm -f /tmp/get_helm.sh
 
 ADD linux-entrypoint.sh /bin/entrypoint.sh
 

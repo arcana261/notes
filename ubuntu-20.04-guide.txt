@@ -590,7 +590,16 @@ sudo snap install helm --classic
 ## Remove thunderbird from favorites
 
 ## Install fluxbox
-sudo apt install fluxbox
+sudo apt install fluxbox arandr
+
+## Configure fluxbox
+mkdir -p ~/.fluxbox
+echo "[begin] (fluxbox)" > ~/.fluxbox/menu
+echo "[include] (/etc/X11/fluxbox/fluxbox-menu)" >> ~/.fluxbox/menu
+echo "[submenu] (Keyboards)" >> ~/.fluxbox/menu
+echo "[exec] (us) {setxkbmap us}" >> ~/.fluxbox/menu
+echo "[exec] (ir) {setxkbmap ir}" >> ~/.fluxbox/menu
+echo "[end]" >> ~/.fluxbox/menu
 
 =====================================================================================================
 =====================================================================================================

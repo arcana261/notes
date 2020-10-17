@@ -480,6 +480,17 @@ function start_virtual_vnc_server() {
   x11vnc -create -listen 0.0.0.0 -env PATH=$PATH -env FD_PROG=/usr/bin/fluxbox -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env X11VNC_CREATE_GEOM=${1:-1920x1080x16} -gone 'killall Xvfb' -bg -nopw
 }
 
+function x-key-swap-caps() {
+  echo "!Swap Caps Lock with the Left Control key" > $HOME/.Xmodmap
+  echo "remove Lock = Caps_Lock" >> $HOME/.Xmodmap
+  echo "remove Control = Control_L" >> $HOME/.Xmodmap
+  echo "keysym Caps_Lock = Control_L" >> $HOME/.Xmodmap
+  echo "keysym Control_L = Caps_Lock" >> $HOME/.Xmodmap
+  echo "add Lock = Caps_Lock" >> $HOME/.Xmodmap
+  echo "add Control = Control_L" >> $HOME/.Xmodmap
+  xmodmap $HOME/.Xmodmap
+}
+
 tmux select-pane -P 'bg=black,fg=colour15'
 
 # Enhanced file path completion in bash - https://github.com/sio/bash-complete-partial-path

@@ -21,7 +21,7 @@ else
   echo $DIVIDER
   echo -n ">> Starting system dbus..."
   sudo mkdir -p /var/run/dbus
-  sudo /usr/bin/dbus-daemon --system --address=unix:path=/var/run/dbus/system_bus_socket --fork --systemd-activation --print-pid
+  sudo /usr/bin/dbus-daemon --system --address=unix:path=/var/run/dbus/system_bus_socket --fork --systemd-activation --print-pid 1> /dev/null
   echo " done"
 fi
 
@@ -38,7 +38,8 @@ else
   echo $DIVIDER
   echo -n ">> Starting session dbus..."
   pid=$(/usr/bin/dbus-daemon --session --address=unix:tmpdir=/tmp --fork --systemd-activation --print-pid)
-  mkdir -p $HOME/.cache
+  sudo mkdir -p $HOME/.cache
+  sudo chown -R $(id -u):$(id -g) $HOME/.cache
   echo "$pid" > $HOME/.cache/dbus.pid
   echo " done"
 fi
@@ -236,11 +237,19 @@ if [ ! -f /var/lib/.container_initialized ]; then
     echo " done"
   fi
 
-  if [ "$(which up)" == "" ]; then
-    echo $DIVIDER
-    echo -n ">> Installing up..."
-    go get -v -u github.com/akavel/up
-    echo " done"
+  echo -n "Update up"
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? (y/[n]): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ]; then
+    go get -v github.com/akavel/up@latest
+  else
+    go get -v github.com/akavel/up
   fi
 
   echo $DIVIDER
@@ -326,13 +335,13 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo -n "Update github.com/stamblerre/gocode"
   cont="1"
   while [ "$cont" == "1" ]; do
-    echo -n "? ([y]/n): "
+    echo -n "? (y/[n]): "
     read resp
     if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
       cont="0"
     fi
   done
-  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ]; then
     go get -u -v github.com/stamblerre/gocode
   else
     go get -v github.com/stamblerre/gocode
@@ -353,14 +362,14 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo -n "Update github.com/sourcegraph/go-langserver"
   cont="1"
   while [ "$cont" == "1" ]; do
-    echo -n "? ([y]/n): "
+    echo -n "? (y/[n]): "
     read resp
     if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
       cont="0"
     fi
   done
-  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
-    go get -v -u github.com/sourcegraph/go-langserver
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ]; then
+    go get -v github.com/sourcegraph/go-langserver@latest
   else
     go get -v github.com/sourcegraph/go-langserver
   fi
@@ -442,14 +451,14 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo -n ">> Update stern"
   cont="1"
   while [ "$cont" == "1" ]; do
-    echo -n "? ([y]/n): "
+    echo -n "? (y/[n]): "
     read resp
     if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
       cont="0"
     fi
   done
-  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
-    go get -v -u github.com/wercker/stern
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ]; then
+    go get -v github.com/wercker/stern@latest
   else
     go get -v github.com/wercker/stern
   fi
@@ -459,34 +468,35 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo -n ">> Update delve"
   cont="1"
   while [ "$cont" == "1" ]; do
-    echo -n "? ([y]/n): "
+    echo -n "? (y/[n]): "
     read resp
     if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
       cont="0"
     fi
   done
   if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
-    go get -v -u github.com/go-delve/delve/cmd/dlv
+    go get -v github.com/go-delve/delve/cmd/dlv@latest
   else
     go get -v github.com/go-delve/delve/cmd/dlv
   fi
   echo " done"
-
-  if [ "$(which helm)" == "" ]; then
-    echo $DIVIDER
-    echo -n ">> Installing helm"
-    curl -fsSL -o $HOME/.cache/get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-    chmod 700 $HOME/.cache/get_helm.sh
-    $HOME/.cache/get_helm.sh
-    rm -f $HOME/.cache/get_helm.sh
-    echo " done"
-  fi
 
   echo $DIVIDER
   echo -n ">> Opening firewall ports for VNC"
   sudo ufw reload
   sudo ufw allow 5900:5910/tcp
   sudo ufw reload
+  echo " done"
+
+  echo $DIVIDER
+  echo -n ">> Configuring fluxbox"
+  mkdir -p $HOME/.fluxbox
+  echo "[begin] (fluxbox)" > $HOME/.fluxbox/menu
+  echo "[include] (/etc/X11/fluxbox/fluxbox-menu)" >> $HOME/.fluxbox/menu
+  echo "[submenu] (Keyboards)" >> $HOME/.fluxbox/menu
+  echo "[exec] (us) {setxkbmap us}" >> $HOME/.fluxbox/menu
+  echo "[exec] (ir) {setxkbmap ir}" >> $HOME/.fluxbox/menu
+  echo "[end]" >> ~/.fluxbox/menu
   echo " done"
 
   echo $DIVIDER
