@@ -73,7 +73,7 @@ RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt update && \
   apt install -y \
-    gnome-terminal arandr gnome-system-monitor
+    gnome-terminal arandr gnome-system-monitor ibus ibus-m17n network-manager
 
 RUN \
   dbus-uuidgen > /var/lib/dbus/machine-id && \
@@ -110,6 +110,30 @@ RUN \
   /tmp/get_helm.sh && \
   rm -f /tmp/get_helm.sh
 
+RUN \
+  apt update && \
+  apt install -y \
+    python2 && \
+  curl https://bootstrap.pypa.io/get-pip.py --output /tmp/get-pip.py && \
+  python2 /tmp/get-pip.py && \
+  rm -f /tmp/get-pip.py
+
+RUN \
+  apt update && \
+  apt install -y \
+    alsa-utils alsamixergui gstreamer1.0-alsa pavucontrol \
+    libasound2-plugin-equal pulsemixer python-dbus
+
+RUN \
+  apt update && \
+  apt install -y \
+    alsa
+
+RUN \
+  apt update && \
+  apt install -y \
+    cgroup-tools gedit
+
 ADD linux-entrypoint.sh /bin/entrypoint.sh
 
 RUN \
@@ -117,5 +141,14 @@ RUN \
 
 ENV TERM xterm-256color
 ENV LANG en_US.utf-8
+ENV LC_ADDRESS en_US.UTF-8
+ENV LC_NAME en_US.UTF-8
+ENV LC_MONETARY en_US.UTF-8
+ENV LC_PAPER en_US.UTF-8
+ENV LC_IDENTIFICATION en_US.UTF-8
+ENV LC_TELEPHONE en_US.UTF-8
+ENV LC_MEASUREMENT en_US.UTF-8
+ENV LC_TIME en_US.UTF-8
+ENV LC_NUMERIC en_US.UTF-8
 ENV PS_PREFIX LINUX
 ENV EDITOR /usr/bin/vim.nox

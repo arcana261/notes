@@ -34,8 +34,7 @@ export NC='\033[0m' # No Color
 #Cyan         0;36     Light Cyan    1;36
 #Light Gray   0;37     White         1;37
 
-function changelog()
-{
+function changelog() {
     git checkout master
     git pull origin master
     git fetch --tags
@@ -269,7 +268,14 @@ alias y40="tmux resize-pane -y 40"
 alias y50="tmux resize-pane -y 50"
 alias yf="tmux resize-pane -Z"
 alias x10="tmux resize-pane -x 10"
+alias x20="tmux resize-pane -x 20"
+alias x30="tmux resize-pane -x 30"
+alias x40="tmux resize-pane -x 40"
 alias x50="tmux resize-pane -x 50"
+alias x60="tmux resize-pane -x 60"
+alias x70="tmux resize-pane -x 70"
+alias x80="tmux resize-pane -x 80"
+alias x90="tmux resize-pane -x 90"
 alias x100="tmux resize-pane -x 100"
 alias x150="tmux resize-pane -x 150"
 alias x200="tmux resize-pane -x 200"
@@ -331,6 +337,11 @@ function __vim() {
       mount_x11="--mount type=bind,source=/tmp/linux-x11-unix,target=/tmp/.X11-unix"
     fi
 
+    extra_options=""
+    if [ "$VIM_MEMORY_LIMIT" != "" ]; then
+      extra_options="$extra_options --memory=$VIM_MEMORY_LIMIT --oom-kill-disable"
+    fi
+
     $DOCKER \
       run \
         -td \
@@ -340,6 +351,7 @@ function __vim() {
         --mount type=bind,source=/tmp,target=/tmp \
         $mount_home \
         $mount_x11 \
+        $extra_options \
         --mount type=bind,source=/var/run,target=/var/run \
         --mount type=bind,source=/etc/cups,target=/etc/cups \
         -e DISPLAY=$DISPLAY \
@@ -384,6 +396,94 @@ alias vim="__vim"
 alias gvim="__gvim"
 alias ogvim="$(which gvim)"
 
+function rfirefox() {
+  if [ ! -d /sys/fs/cgroup/memory/firefox ]; then
+    sudo cgcreate -g memory:firefox
+  fi
+  echo "$FIREFOX_MEMORY_LIMIT" | sudo tee /sys/fs/cgroup/memory/firefox/memory.limit_in_bytes
+  echo "0" | sudo tee /sys/fs/cgroup/memory/firefox/memory.oom_control
+  sudo cgexec -g memory:firefox sudo -u $(whoami) bash -c "export XMODIFIERS="@im=ibus" && firefox&"
+
+  while [ 1 ]; do
+    echo "==== firefox stats ===="
+    total_rss=$(cat /sys/fs/cgroup/memory/firefox/memory.stat | grep total_rss | grep -v huge | awk '{print $2}' | tr -d '\n')
+    total_shmem=$(cat /sys/fs/cgroup/memory/firefox/memory.stat | grep total_shmem | awk '{print $2}' | tr -d '\n')
+    total_mem=$(cat /sys/fs/cgroup/memory/firefox/memory.limit_in_bytes | tr -d '\n')
+
+    echo -n "RSS: "
+    beautify $total_rss
+    echo -n " / "
+    beautify $total_mem
+    echo " ($(( ($total_rss * 100) / $total_mem )) %)"
+
+    echo -n "SHMEM: "
+    beautify $total_shmem
+    echo ""
+
+    sleep 1
+  done
+}
+
+function beautify() {
+  if [ $1 -lt 1000 ]; then
+    echo -n "$1b"
+  elif [ $1 -lt 1000000 ]; then
+    echo -n "$(($1 / 1000))kb"
+  else
+    echo -n "$(($1 / 1000000))mb"
+  fi
+}
+
+function vfirefox() {
+  extra_options=""
+  if [ "$FIREFOX_MEMORY_LIMIT" != "" ]; then
+    extra_options="$extra_options --memory=$FIREFOX_MEMORY_LIMIT --oom-kill-disable"
+  fi
+  if [ "$FIREFOX_SHM_LIMIT" != "" ]; then
+    extra_options="$extra_options --shm-size=$FIREFOX_SHM_LIMIT"
+  fi
+
+  env_file=$(mktemp)
+  env > $env_file
+
+  docker run \
+    -d \
+    --name firefox \
+    --rm \
+    --network host \
+    --hostname $(echo $HOSTNAME) \
+    -e PS_PREFIX=FIREFOX \
+    -e GTK_IM_MODULE=ibus \
+    -e XMODIFIERS="@im=ibus" \
+    -e QT_IM_MODULE=ibus \
+    --mount type=bind,source=$HOME,target=$HOME \
+    --mount type=bind,source=/usr,target=/usr \
+    --mount type=bind,source=/bin,target=/bin \
+    --mount type=bind,source=/etc,target=/etc \
+    --mount type=bind,source=/tmp,target=/tmp \
+    --mount type=bind,source=/var,target=/var \
+    --mount type=bind,source=/run,target=/run \
+    --mount type=bind,source=/proc,target=/proc \
+    --mount type=bind,source=/sys,target=/sys \
+    -u $(id -u):$(id -g) \
+    -w /home/$(whoami) \
+    --entrypoint $(which firefox) \
+    --privileged \
+    --env-file $env_file \
+    $extra_options \
+    ubuntu:20.04
+
+  rm -f $env_file
+}
+
+function relinux() {
+    if [ "$(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }')" != "" ]; then
+      docker stop $(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }')
+      docker rm $(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }')
+    fi
+    linux
+}
+
 function linux() {
   if [ "$(docker volume ls | awk '{if ($2 == "linux") {print $1} }')" == "" ]; then
     docker volume create linux
@@ -401,12 +501,20 @@ function linux() {
     docker exec -it $(docker ps | awk '{if ($2 == "mehdi:linux") {print $1} }') bash -c 'export DISPLAY="'"$DISPLAY"'" && /bin/entrypoint.sh '"$@"
   else
     if [ "$(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }')" != "" ]; then
+      mkdir -p /tmp/linux-x11-unix
       docker start $(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }')
       docker exec -it $(docker ps -a | awk '{if ($2 == "mehdi:linux") {print $1} }') bash -c 'export DISPLAY="'"$DISPLAY"'" && /bin/entrypoint.sh '"$@"
     else
       SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
       docker build -t mehdi:linux -f $SCRIPT_DIR/bash/linux.dockerfile $SCRIPT_DIR/bash
+      if [ "$?" != "0" ]; then
+        return -1
+      fi
       mkdir -p /tmp/linux-x11-unix
+      extra_options=""
+      if [ "$LINUX_MEMORY_LIMIT" != "" ]; then
+        extra_options="$extra_options --memory=$LINUX_MEMORY_LIMIT --oom-kill-disable"
+      fi
       docker \
         run \
           -td \
@@ -417,6 +525,8 @@ function linux() {
           --mount type=bind,source=$HOME,target=/home/host/$(whoami) \
           --mount type=bind,source=/etc/cups,target=/etc/cups \
           --mount type=bind,source=/lib/modules,target=/lib/modules \
+          --mount type=bind,source=/var/lib/alsa,target=/var/lib/alsa \
+          $extra_options \
           -e DISPLAY=$DISPLAY \
           -v linux:/home/$(whoami) \
           -v /etc/group:/etc/group \
@@ -491,6 +601,35 @@ function x-key-swap-caps() {
   xmodmap $HOME/.Xmodmap
 }
 
+function x-start-ibus() {
+  ibus-daemon --xim&
+}
+
+function x-suspend() {
+  sudo systemctl suspend
+}
+
+function x-screen-external-right() {
+  kill -9 $(ps aux | grep screenlayout | grep -v grep | awk '{print $2}')
+  bash -c "while [ 1 ]; do if [ "'"$('"cat /proc/acpi/button/lid/LID0/state | awk '{print "'$2'"}')"'"'" == "'"'"open"'"'" ]; then $HOME/.screenlayout/dual-extended-external-primary-right.sh; else $HOME/.screenlayout/external-only.sh; fi; sleep 1; done"&
+}
+
+function x-screen-external-left() {
+  kill -9 $(ps aux | grep screenlayout | grep -v grep | awk '{print $2}')
+  bash -c "while [ 1 ]; do if [ "'"$('"cat /proc/acpi/button/lid/LID0/state | awk '{print "'$2'"}')"'"'" == "'"'"open"'"'" ]; then $HOME/.screenlayout/dual-extended-external-primary-left.sh; else $HOME/.screenlayout/external-only.sh; fi; sleep 1; done"&
+}
+
+function x-screen-internal() {
+  kill -9 $(ps aux | grep screenlayout | grep -v grep | awk '{print $2}')
+  $HOME/.screenlayout/internal-only.sh
+}
+
+function x-screen-external() {
+  kill -9 $(ps aux | grep screenlayout | grep -v grep | awk '{print $2}')
+  $HOME/.screenlayout/external-only.sh
+}
+alias x-audio="pavucontrol"
+
 tmux select-pane -P 'bg=black,fg=colour15'
 
 # Enhanced file path completion in bash - https://github.com/sio/bash-complete-partial-path
@@ -503,6 +642,40 @@ fi
 for f in $(ls $HOME/.config/bash_completions/); do
   source $HOME/.config/bash_completions/$f
 done
+
+export GRADLE_VERSION=6.7.0
+export JDK_VERSION=jdk14
+
+function gradle() {
+  volume_name="gradle_$(echo $GRADLE_VERSION | tr '.' '_')__$JDK_VERSION"
+
+  if [ "$(docker volume ls | awk '{print $2}' | grep $volume_name)" == "" ]; then
+    docker volume create $volume_name
+    docker run -it --rm -v $volume_name:/home/gradle/.gradle gradle:${GRADLE_VERSION}-${JDK_VERSION} bash -c "gradle -v && chown -R $(id -u):$(id -g) /home/gradle/.gradle"
+  fi
+
+  docker run \
+    -it \
+    --network host \
+    --rm \
+    -w /srv/$(pwd) \
+    -v /:/srv \
+    -u $(id -u):$(id -g) \
+    --mount type=bind,source=/tmp,target=/tmp \
+    -v $volume_name:/home/$(whoami)/.gradle \
+    --mount type=bind,source=/var/run,target=/var/run \
+    --mount type=bind,source=/etc/cups,target=/etc/cups \
+    -e DISPLAY=$DISPLAY \
+    -v /etc/group:/etc/group \
+    -v /etc/passwd:/etc/passwd \
+    -v /etc/shadow:/etc/shadow \
+    -v /etc/printcap:/etc/printcap \
+    --entrypoint /usr/bin/gradle \
+    gradle:${GRADLE_VERSION}-${JDK_VERSION} \
+    $@
+}
+#alias node="docker run -it --network host --rm --entrypoint /usr/local/bin/node -w /srv\$(pwd) -v /:/srv -u $(id -u):$(id -g) node"
+
 
 # Blue = 34
 # Green = 32

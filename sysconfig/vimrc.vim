@@ -50,7 +50,6 @@ map <C-f> :BLines<CR>
 map <C-e> :Commands<CR>
 map <C-p> :Files<CR>
 map <C-o> :Ag<Space>
-map <C-i> :OpenTerminal<CR>
 map <C-l> :TagbarToggle<CR>
 
 let g:notes_directories = ['$HOME/Documents/vim-notes']
