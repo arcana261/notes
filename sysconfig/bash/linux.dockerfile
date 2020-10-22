@@ -134,6 +134,11 @@ RUN \
   apt install -y \
     cgroup-tools gedit
 
+RUN \
+  apt update && \
+  apt install -y \
+    pulseaudio-utils
+
 ADD linux-entrypoint.sh /bin/entrypoint.sh
 
 RUN \

@@ -154,7 +154,7 @@ sudo -i
   reboot
 
 # install tools
-sudo apt update && sudo apt install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags aha nodejs git-secret dbus-tests cgroup-tools
+sudo apt update && sudo apt install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio pulseaudio-utils snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags aha nodejs git-secret dbus-tests cgroup-tools
 
 # clone notes
 cd Documents/
@@ -700,6 +700,12 @@ export LINUX_MEMORY_LIMIT="500m"
 
 >> gnome-control-center
 ## login in to `Google` and `Microsoft`
+
+## install gradle
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D7CC6F019D06AF36
+add-apt-repository ppa:cwchien/gradle
+apt-get update -y
+apt-get install gradle -y
 
 =====================================================================================================
 =====================================================================================================

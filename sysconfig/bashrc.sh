@@ -443,11 +443,22 @@ function vfirefox() {
     extra_options="$extra_options --shm-size=$FIREFOX_SHM_LIMIT"
   fi
 
-  env_file=$(mktemp)
-  env > $env_file
+  config_volume_name="firefox-config-$(whoami)"
+  cache_volume_name="firefox-cache-$(whoami)"
+  if [ "$(docker volume ls | awk '{print $2}' | grep $config_volume_name)" == "" ]; then
+    docker volume create $config_volume_name
+    docker run -it --rm -v $config_volume_name:/srv ubuntu:20.04 bash -c "chown -R $(id -u):$(id -g) /srv"
+  fi
+  if [ "$(docker volume ls | awk '{print $2}' | grep $cache_volume_name)" == "" ]; then
+    docker volume create $cache_volume_name
+    docker run -it --rm -v $cache_volume_name:/srv ubuntu:20.04 bash -c "chown -R $(id -u):$(id -g) /srv"
+  fi
+
+  pulse_socket_file="$HOME/.config/pulse/firefox.sock"
+  pactl load-module module-native-protocol-unix socket=$pulse_socket_file
 
   docker run \
-    -d \
+    -td \
     --name firefox \
     --rm \
     --network host \
@@ -456,24 +467,42 @@ function vfirefox() {
     -e GTK_IM_MODULE=ibus \
     -e XMODIFIERS="@im=ibus" \
     -e QT_IM_MODULE=ibus \
-    --mount type=bind,source=$HOME,target=$HOME \
-    --mount type=bind,source=/usr,target=/usr \
-    --mount type=bind,source=/bin,target=/bin \
-    --mount type=bind,source=/etc,target=/etc \
-    --mount type=bind,source=/tmp,target=/tmp \
-    --mount type=bind,source=/var,target=/var \
-    --mount type=bind,source=/run,target=/run \
-    --mount type=bind,source=/proc,target=/proc \
-    --mount type=bind,source=/sys,target=/sys \
+    -e DISPLAY=$DISPLAY \
+    -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS \
+    -e PULSE_COOKIE=$HOME/.config/pulse/cookie \
+    -e PULSE_SERVER=$pulse_socket_file \
+    --mount type=bind,source=$HOME/.config/ibus,target=$HOME/.config/ibus \
+    -v $config_volume_name:$HOME/.mozilla \
+    -v $cache_volume_name:$HOME/.cache/mozilla \
+    --mount type=bind,source=$HOME/.cache/dconf,target=$HOME/.cache/dconf \
+    --mount type=bind,source=$HOME/.config/pulse,target=$HOME/.config/pulse \
+    --mount type=bind,source=$HOME/.dbus,target=$HOME/.dbus \
+    --mount type=bind,source=/dev/dri,target=/dev/dri \
+    --mount type=bind,source=/usr/lib,target=/usr/lib \
+    --mount type=bind,source=/usr/bin,target=/usr/bin \
+    --mount type=bind,source=/usr/share,target=/usr/share \
+    --mount type=bind,source=/etc/fonts,target=/etc/fonts \
+    --mount type=bind,source=/etc/firefox,target=/etc/firefox \
+    --mount type=bind,source=/etc/pulse,target=/etc/pulse \
+    --mount type=bind,source=/tmp/tmux-$(id -u),target=/tmp/tmux-$(id -u) \
+    --mount type=bind,source=/var/cache/fontconfig,target=/var/cache/fontconfig \
+    --mount type=bind,source=/var/run/dbus,target=/var/run/dbus \
+    -v /etc/machine-id:/etc/machine-id \
+    -v /etc/os-release:/etc/os-release \
+    -v /etc/ld.so.cache:/etc/ld.so.cache \
+    -v /etc/ld.so.conf:/etc/ld.so.conf \
+    -v /etc/shadow:/etc/shadow \
+    -v /etc/passwd:/etc/passwd \
+    -v /etc/localtime:/etc/localtime \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v /tmp/.XIM-unix:/tmp/.XIM-unix \
+    -v /run/user/$(id -u)/bus:/run/user/$(id -u)/bus \
+    --mount type=bind,source=$HOME/Public,target=$HOME/Public \
     -u $(id -u):$(id -g) \
     -w /home/$(whoami) \
     --entrypoint $(which firefox) \
-    --privileged \
-    --env-file $env_file \
     $extra_options \
     ubuntu:20.04
-
-  rm -f $env_file
 }
 
 function relinux() {
