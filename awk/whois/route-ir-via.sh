@@ -79,6 +79,7 @@ NS="$NS organicminded.org"
 NS="$NS parsiday.com"
 NS="$NS mail.divar.ir"
 NS="$NS smiranianco.ir"
+NS="$NS nic.ir"
 
 OTHER_NS="medium.com"
 

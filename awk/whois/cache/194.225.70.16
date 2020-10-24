@@ -1,0 +1,54 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '194.225.70.0 - 194.225.71.255'
+
+% Abuse contact for '194.225.70.0 - 194.225.71.255' is 'abuse@ipm.ir'
+
+inetnum:        194.225.70.0 - 194.225.71.255
+netname:        IRANET
+descr:          Institute for Studies in Theoretical in Physics
+descr:          and Mathematics
+descr:          Tehran
+country:        IR
+admin-c:        SK28-RIPE
+tech-c:         SK28-RIPE
+abuse-c:        IAO17-RIPE
+status:         ASSIGNED PA
+mnt-by:         IPM-MNT
+created:        1970-01-01T00:00:00Z
+last-modified:  2020-08-23T07:05:12Z
+source:         RIPE
+
+person:         Saeed Khademi
+address:        IPM / IRANET
+address:        Pasdaran, 8'th koohestan, Azar-Mina, Mehran, No 7
+address:        P.O.Box 19395-1795
+address:        Tehran, Iran
+phone:          +9821 22291812
+fax-no:         +9821 23977777
+nic-hdl:        SK28-RIPE
+mnt-by:         IPM-MNT
+created:        1970-01-01T00:00:00Z
+last-modified:  2016-12-20T05:06:19Z
+source:         RIPE # Filtered
+
+% Information related to '194.225.70.0/24AS6736'
+
+route:          194.225.70.0/24
+descr:          IPM Block
+origin:         AS6736
+mnt-by:         IPM-MNT
+created:        2008-07-14T08:28:13Z
+last-modified:  2008-07-14T08:28:13Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.98 (ANGUS)
+
+

@@ -139,11 +139,6 @@ RUN \
   apt install -y \
     pulseaudio-utils
 
-ADD linux-entrypoint.sh /bin/entrypoint.sh
-
-RUN \
-  chmod +x /bin/entrypoint.sh
-
 ENV TERM xterm-256color
 ENV LANG en_US.utf-8
 ENV LC_ADDRESS en_US.UTF-8
@@ -157,3 +152,8 @@ ENV LC_TIME en_US.UTF-8
 ENV LC_NUMERIC en_US.UTF-8
 ENV PS_PREFIX LINUX
 ENV EDITOR /usr/bin/vim.nox
+
+ADD linux-entrypoint.sh /bin/entrypoint.sh
+
+RUN \
+  chmod +x /bin/entrypoint.sh

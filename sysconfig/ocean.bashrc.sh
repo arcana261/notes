@@ -32,54 +32,6 @@ function kubectl() {
     ${_KUBECTL_PATH} --context=$OCEAN_CONTEXT --namespace=$OCEAN_NAMESPACE --kubeconfig=$HOME/.kube/config "$@"
 }
 
-function divar-infra() {
-    swim divar-infra
-}
-
-function divar-classified() {
-    swim divar-classified
-}
-
-function divar-communications() {
-    swim divar-communications
-}
-
-function divar-explorers() {
-    swim divar-explorers
-}
-
-function divar-development() {
-    swim divar-development
-}
-
-function divar-web() {
-    swim divar-web
-}
-
-function divar-marketplace() {
-    swim divar-marketplace
-}
-
-function divar-review() {
-    swim divar-review
-}
-
-function divar-car-business() {
-    swim divar-car-business
-}
-
-function divar-real-estate() {
-  swim divar-real-estate
-}
-
-function divar-customer-trust() {
-  swim divar-customer-trust
-}
-
-function divar() {
-	swim divar
-}
-
 function secret() {
     for key in $(kubectl get secret $1 -ojson | jq -M -r '.data | keys | @tsv' | tr '\t' ' '); do echo $key; kubectl get secret $1 -ojson | jq -M -r ".data.$key" | base64 -d -w 0; echo ""; echo ""; done
 }
@@ -1180,9 +1132,6 @@ function keitbf() {
 
 alias kcp="kubectl cp"
 
-swim divar-infra
-
-
 function machine() {
   if [ "$(docker ps | awk '{if ($2 == "ocean:machine") {print $1} }')" != "" ]; then
     docker exec -it $(docker ps | awk '{if ($2 == "ocean:machine") {print $1} }') bash
@@ -1192,7 +1141,7 @@ function machine() {
     docker build -t ocean:machine $SCRIPT_DIR/ocean/machine
     telepresence \
       --context afra \
-      --namespace divar-infra \
+      --namespace NAMESPACE \
       --new-deployment ubuntu-$RND \
       --method container \
       --docker-run \

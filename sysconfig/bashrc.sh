@@ -493,11 +493,18 @@ function vfirefox() {
     -v /etc/ld.so.conf:/etc/ld.so.conf \
     -v /etc/shadow:/etc/shadow \
     -v /etc/passwd:/etc/passwd \
+    -v /etc/group:/etc/group \
     -v /etc/localtime:/etc/localtime \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v /tmp/.XIM-unix:/tmp/.XIM-unix \
     -v /run/user/$(id -u)/bus:/run/user/$(id -u)/bus \
     --mount type=bind,source=$HOME/Public,target=$HOME/Public \
+    --mount type=bind,source=$HOME/Downloads,target=$HOME/Downloads \
+    --mount type=bind,source=$HOME/Pictures,target=$HOME/Pictures \
+    --mount type=bind,source=$HOME/Music,target=$HOME/Music \
+    --mount type=bind,source=$HOME/Videos,target=$HOME/Videos \
+    --mount type=bind,source=$HOME/Documents,target=$HOME/Documents \
+    --mount type=bind,source=$HOME/Desktop,target=$HOME/Desktop \
     -u $(id -u):$(id -g) \
     -w /home/$(whoami) \
     --entrypoint $(which firefox) \
