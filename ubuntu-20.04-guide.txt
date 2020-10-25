@@ -701,12 +701,6 @@ export LINUX_MEMORY_LIMIT="500m"
 >> gnome-control-center
 ## login in to `Google` and `Microsoft`
 
-## install gradle
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D7CC6F019D06AF36
-add-apt-repository ppa:cwchien/gradle
-apt-get update -y
-apt-get install gradle -y
-
 =====================================================================================================
 =====================================================================================================
 =====================================================================================================

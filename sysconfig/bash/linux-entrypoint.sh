@@ -788,6 +788,23 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo " done"
 
   echo $DIVIDER
+  echo -n ">> Unminifying..."
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? ([y]/n): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
+  fi
+  sudo unminimize
+  if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
+  echo " done"
+
+  echo $DIVIDER
   echo -n ">> Finalizing initialization..."
   sudo touch /var/lib/.container_initialized
   if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
