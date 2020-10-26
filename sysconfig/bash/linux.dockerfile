@@ -139,6 +139,16 @@ RUN \
   apt install -y \
     pulseaudio-utils
 
+RUN \
+  apt update && \
+  apt install -y \
+    python2-dev
+
+RUN \
+  apt update && \
+  apt install -y \
+    acpi
+
 ENV TERM xterm-256color
 ENV LANG en_US.utf-8
 ENV LC_ADDRESS en_US.UTF-8

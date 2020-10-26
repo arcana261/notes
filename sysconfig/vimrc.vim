@@ -1,4 +1,5 @@
 set encoding=utf-8
+"source /usr/share/vim/vim82/keymap/persian-iranian_utf-8.vim
 filetype off
 filetype plugin indent on
 syntax on

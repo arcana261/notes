@@ -55,6 +55,7 @@ else
   echo " done"
 fi
 if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
 
 if [ ! -f /var/lib/.container_initialized ]; then
   echo $DIVIDER
@@ -788,7 +789,7 @@ if [ ! -f /var/lib/.container_initialized ]; then
   echo " done"
 
   echo $DIVIDER
-  echo -n ">> Unminifying..."
+  echo -n ">> Unminify"
   cont="1"
   while [ "$cont" == "1" ]; do
     echo -n "? ([y]/n): "
@@ -798,9 +799,9 @@ if [ ! -f /var/lib/.container_initialized ]; then
     fi
   done
   if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "" ]; then
+    sudo unminimize
     if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
   fi
-  sudo unminimize
   if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
   echo " done"
 

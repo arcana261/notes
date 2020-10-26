@@ -680,7 +680,9 @@ for f in $(ls $HOME/.config/bash_completions/); do
 done
 
 export GRADLE_VERSION=6.7.0
+export MAVEN_VERSION=3.6.3
 export JDK_VERSION=jdk14
+export GLASSFISH_VERSION=4.1
 
 function gradle() {
   volume_name="gradle_$(echo $GRADLE_VERSION | tr '.' '_')__$JDK_VERSION"
@@ -710,6 +712,96 @@ function gradle() {
     gradle:${GRADLE_VERSION}-${JDK_VERSION} \
     $@
 }
+
+function mvn() {
+  jdk_name=$(echo $JDK_VERSION | sed 's|jdk|jdk-|g')
+  volume_name="maven_$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
+
+  if [ "$(docker volume ls | awk '{print $2}' | grep $volume_name)" == "" ]; then
+    docker volume create $volume_name
+    docker run -it --rm -v $volume_name:/root/.m2 maven:${MAVEN_VERSION}-${jdk_name} bash -c "mvn -v && chown -R $(id -u):$(id -g) /root/.m2"
+  fi
+
+  docker run \
+    -it \
+    --network host \
+    --rm \
+    -w /srv/$(pwd) \
+    -v /:/srv \
+    -u $(id -u):$(id -g) \
+    --mount type=bind,source=/tmp,target=/tmp \
+    -v $volume_name:/home/$(whoami)/.m2 \
+    --mount type=bind,source=/var/run,target=/var/run \
+    --mount type=bind,source=/etc/cups,target=/etc/cups \
+    -e DISPLAY=$DISPLAY \
+    -v /etc/group:/etc/group \
+    -v /etc/passwd:/etc/passwd \
+    -v /etc/shadow:/etc/shadow \
+    -v /etc/printcap:/etc/printcap \
+    --entrypoint /usr/bin/mvn \
+    maven:${MAVEN_VERSION}-${jdk_name} \
+    $@
+}
+
+function __glassfish() {
+  DOCKER="docker"
+  if [ "$(groups | grep docker)" == "" ]; then
+    DOCKER="sudo docker"
+  fi
+
+  container_name=glassfish
+  if [ "$PS_PREFIX" != "" ]; then
+    container_name="glassfish_$PS_PREFIX"
+  fi
+  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "mehdi:glassfish" && $3 == "'"$container_name"'") {print $1} }')
+
+  if [ "$running_container_id" != "" ]; then
+    $DOCKER exec -it $running_container_id bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /bin/bash '"$@"
+  else
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+    $DOCKER build -t mehdi:glassfish -f $SCRIPT_DIR/bash/glassfish.dockerfile $SCRIPT_DIR/bash
+    mount_home="--mount type=bind,source=$HOME,target=$HOME"
+    mount_x11=""
+    if [ "$PS_PREFIX" == "LINUX" ]; then
+      mount_home="-v linux:/home/$(whoami)"
+      mkdir -p /tmp/linux-x11-unix
+      mount_x11="--mount type=bind,source=/tmp/linux-x11-unix,target=/tmp/.X11-unix"
+    fi
+
+    extra_options=""
+    if [ "$VIM_MEMORY_LIMIT" != "" ]; then
+      extra_options="$extra_options --memory=$VIM_MEMORY_LIMIT --oom-kill-disable"
+    fi
+
+    $DOCKER \
+      run \
+        -td \
+        --rm \
+        --name $container_name \
+        --network host \
+        --mount type=bind,source=/tmp,target=/tmp \
+        $mount_home \
+        $mount_x11 \
+        $extra_options \
+        --mount type=bind,source=/var/run,target=/var/run \
+        --mount type=bind,source=/etc/cups,target=/etc/cups \
+        -e DISPLAY=$DISPLAY \
+        -v /etc/group:/etc/group \
+        -v /etc/passwd:/etc/passwd \
+        -v /etc/shadow:/etc/shadow \
+        -v /etc/printcap:/etc/printcap \
+        -u $(id -u):$(id -g) \
+        -w $PWD \
+        mehdi:glassfish \
+          /bin/bash \
+          -l \
+          -c "while [ 1 ]; do sleep 1; done"
+
+    running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "mehdi:glassfish" && $3 == "'"$container_name"'") {print $1} }')
+    $DOCKER exec -it $running_container_id bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /bin/bash '"$@"
+  fi
+}
+
 #alias node="docker run -it --network host --rm --entrypoint /usr/local/bin/node -w /srv\$(pwd) -v /:/srv -u $(id -u):$(id -g) node"
 
 

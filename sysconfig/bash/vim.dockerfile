@@ -76,6 +76,14 @@ RUN \
     wheel pysocks awscli pylint flake8 mypy msgpack pynvim
 
 RUN \
+  apt update && \
+  apt install -y \
+    python2 python2-dev && \
+  curl https://bootstrap.pypa.io/get-pip.py --output /tmp/get-pip.py && \
+  python2 /tmp/get-pip.py && \
+  rm -f /tmp/get-pip.py
+
+RUN \
   cd /build/vim && \
   ./configure \
     --prefix=/usr \
@@ -84,16 +92,19 @@ RUN \
     --enable-rightleft \
     --enable-arabic \
     --enable-multibyte \
+    --enable-pythoninterp \
     --enable-python3interp \
     --enable-perlinterp \
     --enable-luainterp \
     --enable-cscope \
     --enable-tclinterp \
     --enable-rubyinterp \
+    --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
     --with-python3-config-dir=/usr/lib/python3.8/config-3.8-x86_64-linux-gnu \
     --enable-fail-if-missing \
     --enable-fontset \
     --enable-gui=gtk2 \
+    --enable-fontset \
     --with-x && \
   make -j8 && \
   make install
