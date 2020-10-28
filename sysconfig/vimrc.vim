@@ -41,6 +41,7 @@ autocmd BufEnter,BufNew Dockerfile.test setlocal ft=dockerfile
 autocmd BufEnter,BufNew Dockerfile.build setlocal ft=dockerfile
 autocmd BufEnter,BufNew *.dockerfile setlocal ft=dockerfile
 autocmd BufEnter,BufNew *.conf setlocal ft=conf
+autocmd BufEnter,BufNew *.bashrc setlocal ft=sh
 
 " uncomment to auto-open nerdtree
 "autocmd VimEnter * :NERDTree

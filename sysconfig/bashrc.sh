@@ -341,6 +341,9 @@ function __vim() {
     if [ "$VIM_MEMORY_LIMIT" != "" ]; then
       extra_options="$extra_options --memory=$VIM_MEMORY_LIMIT --oom-kill-disable"
     fi
+    if [ "$VIM_SHM_LIMIT" != "" ]; then
+      extra_options="$extra_options --shm-size=$VIM_SHM_LIMIT"
+    fi
 
     $DOCKER \
       run \
@@ -551,6 +554,12 @@ function linux() {
       if [ "$LINUX_MEMORY_LIMIT" != "" ]; then
         extra_options="$extra_options --memory=$LINUX_MEMORY_LIMIT --oom-kill-disable"
       fi
+      if [ "$LINUX_SHM_LIMIT" != "" ]; then
+        extra_options="$extra_options --shm-size=$LINUX_SHM_LIMIT"
+      fi
+      if [ -f $HOME/.config/resources.bashrc ]; then
+        extra_options="$extra_options -v $HOME/.config/resources.bashrc:$HOME/.config/resources.bashrc"
+      fi
       docker \
         run \
           -td \
@@ -681,8 +690,8 @@ done
 
 export GRADLE_VERSION=6.7.0
 export MAVEN_VERSION=3.6.3
-export JDK_VERSION=jdk14
-export GLASSFISH_VERSION=4.1
+export JDK_VERSION=jdk8
+export GLASSFISH_VERSION=5.0.1
 
 function gradle() {
   volume_name="gradle_$(echo $GRADLE_VERSION | tr '.' '_')__$JDK_VERSION"
@@ -716,11 +725,19 @@ function gradle() {
 function mvn() {
   jdk_name=$(echo $JDK_VERSION | sed 's|jdk|jdk-|g')
   volume_name="maven_$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
+  gfclient_volume_name="glassfish_gfclient_$(echo $GLASSFISH_VERSION | tr '.' '_')__$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
 
   if [ "$(docker volume ls | awk '{print $2}' | grep $volume_name)" == "" ]; then
     docker volume create $volume_name
     docker run -it --rm -v $volume_name:/root/.m2 maven:${MAVEN_VERSION}-${jdk_name} bash -c "mvn -v && chown -R $(id -u):$(id -g) /root/.m2"
   fi
+  if [ "$(docker volume ls | awk '{print $2}' | grep $gfclient_volume_name)" == "" ]; then
+    docker volume create $gfclient_volume_name
+    docker run -it --rm -v $gfclient_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
+  fi
+
+  glassfish_major_version=$(echo $GLASSFISH_VERSION | cut -d . -f 1)
+  mkdir -p $HOME/.config/glassfish-$GLASSFISH_VERSION/glassfish/domains
 
   docker run \
     -it \
@@ -730,7 +747,9 @@ function mvn() {
     -v /:/srv \
     -u $(id -u):$(id -g) \
     --mount type=bind,source=/tmp,target=/tmp \
+    --mount type=bind,source=$HOME/.config/glassfish-$GLASSFISH_VERSION,target=/home/$(whoami)/glassfish$glassfish_major_version \
     -v $volume_name:/home/$(whoami)/.m2 \
+    -v $gfclient_volume_name:/home/$(whoami)/.gfclient \
     --mount type=bind,source=/var/run,target=/var/run \
     --mount type=bind,source=/etc/cups,target=/etc/cups \
     -e DISPLAY=$DISPLAY \
@@ -749,60 +768,84 @@ function __glassfish() {
     DOCKER="sudo docker"
   fi
 
-  container_name=glassfish
-  if [ "$PS_PREFIX" != "" ]; then
-    container_name="glassfish_$PS_PREFIX"
-  fi
-  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "mehdi:glassfish" && $3 == "'"$container_name"'") {print $1} }')
+  container_name="glassfish"
+  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "'"$image_name"'" && $3 == "'"$container_name"'") {print $1} }')
+
+  jdk_name=$(echo $JDK_VERSION | sed 's|jdk|jdk-|g')
+  maven_volume_name="maven_$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
+  gfclient_volume_name="glassfish_gfclient_$(echo $GLASSFISH_VERSION | tr '.' '_')__$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
+  image_name="mehdi:glassfish-$GLASSFISH_VERSION-$MAVEN_VERSION-$jdk_name"
+  version="$MAVEN_VERSION-$jdk_name"
+  glassfish_major_version=$(echo $GLASSFISH_VERSION | cut -d . -f 1)
+  zip_file=glassfish-$GLASSFISH_VERSION.zip
 
   if [ "$running_container_id" != "" ]; then
-    $DOCKER exec -it $running_container_id bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /bin/bash '"$@"
+    $DOCKER exec -it $running_container_id /opt/entrypoint.sh $zip_file $glassfish_major_version client $@
   else
-    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-    $DOCKER build -t mehdi:glassfish -f $SCRIPT_DIR/bash/glassfish.dockerfile $SCRIPT_DIR/bash
-    mount_home="--mount type=bind,source=$HOME,target=$HOME"
-    mount_x11=""
-    if [ "$PS_PREFIX" == "LINUX" ]; then
-      mount_home="-v linux:/home/$(whoami)"
-      mkdir -p /tmp/linux-x11-unix
-      mount_x11="--mount type=bind,source=/tmp/linux-x11-unix,target=/tmp/.X11-unix"
+    if [ "$1" == "build" ]; then
+      shift
+
+      SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+      dockerdir=$(mktemp -d)
+      cp $SCRIPT_DIR/bash/glassfish/glassfish.dockerfile $dockerdir/Dockerfile
+      cp $SCRIPT_DIR/bash/glassfish/entrypoint.sh $dockerdir/entrypoint.sh
+      sed -i 's|{version}|'"$version"'|g' $dockerdir/Dockerfile
+      cp $HOME/Downloads/$zip_file $dockerdir/
+      $DOCKER build -t $image_name --build-arg major_version=$major_version -f $dockerdir/Dockerfile $dockerdir/
+      rm -rf $dockerdir
     fi
 
+    if [ "$(docker volume ls | awk '{print $2}' | grep $maven_volume_name)" == "" ]; then
+      docker volume create $maven_volume_name
+      docker run -it --rm -v $maven_volume_name:/root/.m2 maven:${MAVEN_VERSION}-${jdk_name} bash -c "mvn -v && chown -R $(id -u):$(id -g) /root/.m2"
+    fi
+
+    if [ "$(docker volume ls | awk '{print $2}' | grep $gfclient_volume_name)" == "" ]; then
+      docker volume create $gfclient_volume_name
+      docker run -it --rm -v $gfclient_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
+    fi
+
+    mkdir -p $HOME/.config/glassfish-$GLASSFISH_VERSION
+
     extra_options=""
-    if [ "$VIM_MEMORY_LIMIT" != "" ]; then
-      extra_options="$extra_options --memory=$VIM_MEMORY_LIMIT --oom-kill-disable"
+    if [ "$GLASSFISH_MEMORY_LIMIT" != "" ]; then
+      extra_options="$extra_options --memory=$GLASSFISH_MEMORY_LIMIT --oom-kill-disable"
+    fi
+    if [ "$GLASSFISH_SHM_LIMIT" != "" ]; then
+      extra_options="$extra_options --shm-size=$GLASSFISH_SHM_LIMIT"
     fi
 
     $DOCKER \
       run \
         -td \
         --rm \
-        --name $container_name \
         --network host \
+        --name $container_name \
         --mount type=bind,source=/tmp,target=/tmp \
-        $mount_home \
-        $mount_x11 \
-        $extra_options \
+        -v $maven_volume_name:/home/$(whoami)/.m2 \
+        -v $gfclient_volume_name:/home/$(whoami)/.gfclient \
+        -v /:/srv \
         --mount type=bind,source=/var/run,target=/var/run \
         --mount type=bind,source=/etc/cups,target=/etc/cups \
-        -e DISPLAY=$DISPLAY \
+        --mount type=bind,source=$HOME/.config/glassfish-$GLASSFISH_VERSION,target=/opt/glassfish/glassfish$glassfish_major_version \
+        $extra_options \
         -v /etc/group:/etc/group \
         -v /etc/passwd:/etc/passwd \
         -v /etc/shadow:/etc/shadow \
         -v /etc/printcap:/etc/printcap \
         -u $(id -u):$(id -g) \
-        -w $PWD \
-        mehdi:glassfish \
-          /bin/bash \
-          -l \
-          -c "while [ 1 ]; do sleep 1; done"
+        $image_name \
+        $zip_file \
+        $glassfish_major_version \
+        daemon
 
-    running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "mehdi:glassfish" && $3 == "'"$container_name"'") {print $1} }')
-    $DOCKER exec -it $running_container_id bash -c 'cd '"$PWD"' && export DISPLAY="'"$DISPLAY"'" && /bin/bash '"$@"
+    running_container_id=$($DOCKER ps --format='{{.ID}} {{.Image}} {{.Names}}' | awk '{ if ($2 == "'"$image_name"'" && $3 == "'"$container_name"'") {print $1} }')
+    $DOCKER exec -it $running_container_id /opt/entrypoint.sh $zip_file $glassfish_major_version client $@
   fi
 }
 
-#alias node="docker run -it --network host --rm --entrypoint /usr/local/bin/node -w /srv\$(pwd) -v /:/srv -u $(id -u):$(id -g) node"
+alias build-glassfish="__glassfish build version"
+alias asadmin="__glassfish"
 
 
 # Blue = 34
@@ -874,3 +917,7 @@ export LS_COLORS=$_ORIG_LS_COLORS:'di=0;31:'
 if [ "$TERM" == "screen-256color" ]; then export TERM="xterm-256color"; fi
 
 source $HOME/Documents/notes/sysconfig/bash/capture/capture.sh
+
+if [ -f $HOME/.config/resources.bashrc ]; then
+  source $HOME/.config/resources.bashrc
+fi

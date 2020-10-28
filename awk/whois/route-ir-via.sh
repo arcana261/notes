@@ -80,6 +80,9 @@ NS="$NS parsiday.com"
 NS="$NS mail.divar.ir"
 NS="$NS smiranianco.ir"
 NS="$NS nic.ir"
+NS="$NS p30download.ir"
+NS="$NS cdn.p30download.ir"
+NS="$NS cld2.cdn.p30download.ir"
 
 OTHER_NS="medium.com"
 

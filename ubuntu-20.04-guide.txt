@@ -690,12 +690,16 @@ arandr
 
 ## set firefox and vim memory limit
 ## value is example only
-vim ~/.bashrc
+vim ~/.config/resources.bashrc
 ................................................
-export FIREFOX_MEMORY_LIMIT="1500m"
-export FIREFOX_SHM_LIMIT="500m"
-export VIM_MEMORY_LIMIT="750m"
-export LINUX_MEMORY_LIMIT="500m"
+export FIREFOX_MEMORY_LIMIT="1700m"
+export FIREFOX_SHM_LIMIT="250m"
+export VIM_MEMORY_LIMIT="500m"
+export VIM_SHM_LIMIT="30m"
+export LINUX_MEMORY_LIMIT="50m"
+export LINUX_SHM_LIMIT="30m"
+export GLASSFISH_MEMORY_LIMIT="660m"
+export GLASSFISH_SHM_LIMIT="30m"
 ................................................
 
 >> gnome-control-center
@@ -705,6 +709,12 @@ export LINUX_MEMORY_LIMIT="500m"
 
 ## install vim vixen for firefox
 -> properties -> colorscheme -> dark
+
+## setup glassfish server
+# download glassfish from https://javaee.github.io/glassfish/download
+# put it temporarily in ~/Downloads/
+build-glassfish
+# delete after build is done
 
 =====================================================================================================
 =====================================================================================================
