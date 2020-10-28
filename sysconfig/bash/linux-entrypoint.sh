@@ -316,6 +316,25 @@ if [ ! -f /var/lib/.container_initialized ]; then
     $HOME/.local/src/fzf/install
     if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
     echo " done"
+  else
+    echo -n "Update fzf"
+    cont="1"
+    while [ "$cont" == "1" ]; do
+      echo -n "? (y/[n]): "
+      read resp
+      if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+        cont="0"
+      fi
+    done
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ]; then
+    echo $DIVIDER
+    echo -n ">> Updating fuzzy finder..."
+      (cd $HOME/.local/src/fzf && git checkout master && git pull origin master)
+      if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
+      $HOME/.local/src/fzf/install
+      if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
+      echo " done"
+    fi
   fi
 
   if [ "$(which go)" == "" ]; then
