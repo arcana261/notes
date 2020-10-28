@@ -471,6 +471,7 @@ function vnautilus() {
     -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS \
     -e PULSE_COOKIE=$HOME/.config/pulse/cookie \
     -e PULSE_SERVER=$pulse_socket_file \
+    -e TERM=xterm-256color \
     --mount type=bind,source=/dev/dri,target=/dev/dri \
     --mount type=bind,source=/usr,target=/usr \
     --mount type=bind,source=/etc,target=/etc \
