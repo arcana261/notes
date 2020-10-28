@@ -455,7 +455,6 @@ function vnautilus() {
     extra_options="$extra_options --shm-size=$NAUTILUS_SHM_LIMIT"
   fi
 
-  pulse_socket_file="$HOME/.config/pulse/nautilus.sock"
   pactl load-module module-native-protocol-unix socket=$pulse_socket_file
 
   $DOCKER run \
@@ -472,37 +471,13 @@ function vnautilus() {
     -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS \
     -e PULSE_COOKIE=$HOME/.config/pulse/cookie \
     -e PULSE_SERVER=$pulse_socket_file \
-    --mount type=bind,source=$HOME/.config/ibus,target=$HOME/.config/ibus \
-    --mount type=bind,source=$HOME/.cache/dconf,target=$HOME/.cache/dconf \
-    --mount type=bind,source=$HOME/.config/pulse,target=$HOME/.config/pulse \
-    --mount type=bind,source=$HOME/.dbus,target=$HOME/.dbus \
     --mount type=bind,source=/dev/dri,target=/dev/dri \
-    --mount type=bind,source=/usr/lib,target=/usr/lib \
-    --mount type=bind,source=/usr/bin,target=/usr/bin \
-    --mount type=bind,source=/usr/share,target=/usr/share \
-    --mount type=bind,source=/etc/fonts,target=/etc/fonts \
-    --mount type=bind,source=/etc/pulse,target=/etc/pulse \
-    --mount type=bind,source=/tmp/tmux-$(id -u),target=/tmp/tmux-$(id -u) \
-    --mount type=bind,source=/var/cache/fontconfig,target=/var/cache/fontconfig \
-    --mount type=bind,source=/var/run/dbus,target=/var/run/dbus \
-    -v /etc/machine-id:/etc/machine-id \
-    -v /etc/os-release:/etc/os-release \
-    -v /etc/ld.so.cache:/etc/ld.so.cache \
-    -v /etc/ld.so.conf:/etc/ld.so.conf \
-    -v /etc/shadow:/etc/shadow \
-    -v /etc/passwd:/etc/passwd \
-    -v /etc/group:/etc/group \
-    -v /etc/localtime:/etc/localtime \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v /tmp/.XIM-unix:/tmp/.XIM-unix \
-    -v /run/user/$(id -u)/bus:/run/user/$(id -u)/bus \
-    --mount type=bind,source=$HOME/Public,target=$HOME/Public \
-    --mount type=bind,source=$HOME/Downloads,target=$HOME/Downloads \
-    --mount type=bind,source=$HOME/Pictures,target=$HOME/Pictures \
-    --mount type=bind,source=$HOME/Music,target=$HOME/Music \
-    --mount type=bind,source=$HOME/Videos,target=$HOME/Videos \
-    --mount type=bind,source=$HOME/Documents,target=$HOME/Documents \
-    --mount type=bind,source=$HOME/Desktop,target=$HOME/Desktop \
+    --mount type=bind,source=/usr,target=/usr \
+    --mount type=bind,source=/etc,target=/etc \
+    --mount type=bind,source=/tmp,target=/tmp \
+    --mount type=bind,source=/var,target=/var \
+    --mount type=bind,source=/run,target=/run \
+    --mount type=bind,source=$HOME,target=$HOME \
     -u $(id -u):$(id -g) \
     -w /home/$(whoami) \
     --entrypoint $(which nautilus) \
