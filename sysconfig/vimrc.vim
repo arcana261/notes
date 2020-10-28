@@ -172,7 +172,7 @@ endfunction
 command -nargs=0 OpenTerminal :call s:OpenTerminal()
 
 function s:SnapShot(path)
-  let tmp = $HOME . '/.snapshot.vim.tmp'
+  let tmp = $HOME . '/.cache/snapshot.vim.tmp'
   let msg = system("tmux capture-pane -e")
   let msg = msg . system("tmux save-buffer " . tmp)
   let msg = msg . system("cat " . tmp . " | aha -l --black > " . a:path)
@@ -182,7 +182,7 @@ endfunction
 command -nargs=1 SnapShot :call s:SnapShot(<f-args>)
 
 function s:SetClip()
-  let tmp = $HOME . '/.clipboard.vim.tmp'
+  let tmp = $HOME . '/.cache/clipboard.vim.tmp'
   call writefile(getreg('0', 1, 1), tmp)
   let msg = system("xclip -i " . tmp . " -selection c")
   echo msg
@@ -190,7 +190,7 @@ endfunction
 command -nargs=0 SetClip :call s:SetClip()
 
 function s:SetBuffer()
-  let tmp = $HOME . '/.clipboard.vim.tmp'
+  let tmp = $HOME . '/.cache/buffer.vim.tmp'
   call writefile(getreg('0', 1, 1), tmp)
   let msg = system("tmux load-buffer " . tmp)
   echo msg
@@ -198,7 +198,7 @@ endfunction
 command -nargs=0 SetBuffer :call s:SetBuffer()
 
 function s:GetClip()
-  let tmp = $HOME . '/.clipboard.vim.tmp'
+  let tmp = $HOME . '/.cache/clipboard.vim.tmp'
   let msg = system("xclip -selection c -o > " . tmp)
   echo msg
   let @0 = system("cat " . tmp)

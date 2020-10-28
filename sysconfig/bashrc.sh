@@ -46,6 +46,7 @@ alias tmux-attach="TERM=xterm-256color tmux -2 attach"
 
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
+alias setbuffer="tee $HOME/.cache/buffer.bash.tmp; tmux load-buffer $HOME/.cache/buffer.bash.tmp"
 alias cc="tmux show-buffer | setclip"
 function pp() {
     tmux set-buffer $(getclip)
@@ -439,6 +440,63 @@ function beautify() {
   else
     echo -n "$(($1 / 1000000))mb"
   fi
+}
+
+function vbash() {
+  DOCKER="docker"
+  if [ "$(groups | grep docker)" == "" ]; then
+    DOCKER="sudo docker"
+  fi
+
+  extra_options=""
+  if [ "$BASH_MEMORY_LIMIT" != "" ]; then
+    extra_options="$extra_options --memory=$BASH_MEMORY_LIMIT --oom-kill-disable"
+  fi
+  if [ "$BASH_SHM_LIMIT" != "" ]; then
+    extra_options="$extra_options --shm-size=$BASH_SHM_LIMIT"
+  fi
+
+  pactl load-module module-native-protocol-unix socket=$pulse_socket_file
+
+  $DOCKER run \
+    -td \
+    --name bash \
+    --rm \
+    --network host \
+    --hostname $(echo $HOSTNAME) \
+    -e PS_PREFIX=BASH \
+    -e GTK_IM_MODULE=ibus \
+    -e XMODIFIERS="@im=ibus" \
+    -e QT_IM_MODULE=ibus \
+    -e DISPLAY=$DISPLAY \
+    -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS \
+    -e PULSE_COOKIE=$HOME/.config/pulse/cookie \
+    -e PULSE_SERVER=$pulse_socket_file \
+    -e TERM=xterm-256color \
+    --mount type=bind,source=/dev/dri,target=/dev/dri \
+    --mount type=bind,source=/bin,target=/bin \
+    --mount type=bind,source=/media,target=/media \
+    --mount type=bind,source=/mnt,target=/mnt \
+    --mount type=bind,source=/sys,target=/sys \
+    --mount type=bind,source=/boot,target=/boot \
+    --mount type=bind,source=/lib,target=/lib \
+    --mount type=bind,source=/lib32,target=/lib32 \
+    --mount type=bind,source=/lib64,target=/lib64 \
+    --mount type=bind,source=/libx32,target=/libx32 \
+    --mount type=bind,source=/sbin,target=/sbin \
+    --mount type=bind,source=/usr,target=/usr \
+    --mount type=bind,source=/etc,target=/etc \
+    --mount type=bind,source=/tmp,target=/tmp \
+    --mount type=bind,source=/var,target=/var \
+    --mount type=bind,source=/run,target=/run \
+    --mount type=bind,source=/home,target=/home \
+    --privileged \
+    -u $(id -u):$(id -g) \
+    -w /home/$(whoami) \
+    --entrypoint $(which bash) \
+    $extra_options \
+    ubuntu:20.04 \
+    $@
 }
 
 function vnautilus() {

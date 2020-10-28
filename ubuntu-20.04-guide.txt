@@ -692,11 +692,11 @@ arandr
 ## value is example only
 vim ~/.config/resources.bashrc
 ................................................
-export FIREFOX_MEMORY_LIMIT="1700m"
+export FIREFOX_MEMORY_LIMIT="1600m"
 export FIREFOX_SHM_LIMIT="250m"
 export VIM_MEMORY_LIMIT="500m"
 export VIM_SHM_LIMIT="30m"
-export LINUX_MEMORY_LIMIT="50m"
+export LINUX_MEMORY_LIMIT="150m"
 export LINUX_SHM_LIMIT="30m"
 export GLASSFISH_MEMORY_LIMIT="660m"
 export GLASSFISH_SHM_LIMIT="30m"
