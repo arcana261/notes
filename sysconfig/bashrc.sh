@@ -44,6 +44,68 @@ function changelog() {
 alias tmux-new-session="TERM=xterm-256color tmux -2 -f $HOME/Documents/notes/sysconfig/tmux.conf"
 alias tmux-attach="TERM=xterm-256color tmux -2 attach"
 
+alias trim="tr -s [:blank:] | tr -s [:space:]"
+alias bsv2tsv="trim | tr [:blank:] '\t'"
+alias csv2json="jc --csv"
+alias tsv2csv="tr ',' '-' | tr '\t' ','"
+alias bsv2csv="trim | tr ',' '-' | tr [:blank:] ','"
+alias tsv2json="tsv2csv | csv2json"
+alias bsv2json="bsv2csv | csv2json"
+alias json2csv="jq -r '([.[0] | to_entries | map(.key)] + (. | map(to_entries | map(.value) ) ) ) as "'$'"rows | "'$'"rows[] | @csv' | tr -d '"'"'"'"
+alias csv2tsv="tr '\t' ' ' | tr ',' '\t'"
+alias csv2bsv="tr ' ' '-' | tr ',' ' '"
+alias json2tsv="json2csv | csv2tsv"
+alias json2bsv="json2csv | csv2bsv"
+
+function dictionary-add() {
+  dictionary_word=""
+  dictionary_meaning=""
+
+  echo "Word?"
+  while [ "$dictionary_word" == "" ]; do
+    read -r dictionary_word
+  done
+
+  echo "Meaning?"
+  while [ "$dictionary_meaning" == "" ]; do
+    read -r dictionary_meaning
+  done
+
+  if [ ! -f $HOME/Documents/notes/dictionary/db.txt ]; then
+    mkdir -p $HOME/Documents/notes/dictionary
+    echo "$dictionary_word|$dictionary_meaning" > $HOME/Documents/notes/dictionary/db.txt
+  else
+    tmp1=$(mktemp)
+    tmp2=$(mktemp)
+    echo "$dictionary_word|$dictionary_meaning" > $tmp1
+    sort -m -t '|' -k 1,1 $HOME/Documents/notes/dictionary/db.txt $tmp1 > $tmp2
+    cp -f $tmp2 $HOME/Documents/notes/dictionary/db.txt
+    rm -f $tmp1
+    rm -f $tmp2
+  fi
+}
+
+function dictionary-ask() {
+  N=$(cat $HOME/Documents/notes/dictionary/db.txt | wc -l)
+  n="$(cat /dev/urandom | tr -d -c '1-9' | head -c 1)$(cat /dev/urandom | tr -d -c '0-9'| head -c 5)"
+  i=$(( 1 + ($n % $N) ))
+  line=$(cat $HOME/Documents/notes/dictionary/db.txt | awk '{ if(NR == '"$i"') { print $0 } }')
+  word=$(echo $line | cut -d '|' -f 1)
+  meaning=$(echo $line | cut -d '|' -f 2)
+
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "Print meaning of word ($word)? [Y/n] "
+    read -r choice
+
+    if [ "$choice" == "y" ] || [ "$choice" == "Y" ] || [ "$choice" == "" ]; then
+      cont="0"
+    fi
+  done
+
+  echo $meaning
+}
+
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
 alias setbuffer="tee $HOME/.cache/buffer.bash.tmp; tmux load-buffer $HOME/.cache/buffer.bash.tmp"
@@ -153,7 +215,48 @@ alias redis-cli="docker run -it --network host --rm --entrypoint redis-cli redis
 alias redis-cli-pipe="docker run -i --network host --rm --entrypoint redis-cli redis"
 alias rabbitmqctl="docker run -it --network host --rm --entrypoint rabbitmqctl rabbitmq"
 alias rabbitmqadmin="docker run -it --network host --rm --entrypoint /usr/local/bin/rabbitmqadmin rabbitmq:management"
-alias node="docker run -it --network host --rm --entrypoint /usr/local/bin/node -w /srv\$(pwd) -v /:/srv -u $(id -u):$(id -g) node"
+function node() {
+  DOCKER="docker"
+  if [ "$(groups | grep docker)" == "" ]; then
+    DOCKER="sudo docker"
+  fi
+
+  $DOCKER run \
+    -it \
+    --network host \
+    --rm \
+    --entrypoint /usr/local/bin/node \
+    -w /srv:$(pwd) \
+    -v /:/srv \
+    -v /home:/home \
+    -v /etc/group:/etc/group \
+    -v /etc/passwd:/etc/passwd \
+    -v /etc/shadow:/etc/shadow \
+    -u $(id -u):$(id -g) \
+    node \
+    $@
+}
+function npm() {
+  DOCKER="docker"
+  if [ "$(groups | grep docker)" == "" ]; then
+    DOCKER="sudo docker"
+  fi
+
+  $DOCKER run \
+    -it \
+    --network host \
+    --rm \
+    --entrypoint /usr/local/bin/npm \
+    -w /srv$(pwd) \
+    -v /:/srv \
+    -v /home:/home \
+    -v /etc/group:/etc/group \
+    -v /etc/passwd:/etc/passwd \
+    -v /etc/shadow:/etc/shadow \
+    -u $(id -u):$(id -g) \
+    node \
+    $@
+}
 
 function _regit() {
     ISGIT=$(git status 1>/dev/null 2>&1 || echo "NOGIT")
@@ -456,15 +559,23 @@ function vbash() {
     extra_options="$extra_options --shm-size=$BASH_SHM_LIMIT"
   fi
 
+  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Names}}' | awk '{ if ($2 == "'"bash"'") {print $1} }')
+
+  if [ "$running_container_id" != "" ]; then
+    docker exec -it $running_container_id /bin/bash $@
+  else
+    pactl load-module module-native-protocol-unix socket=$pulse_socket_file
+
+  pulse_socket_file="$HOME/.config/pulse/firefox.sock"
   pactl load-module module-native-protocol-unix socket=$pulse_socket_file
 
   $DOCKER run \
     -td \
-    --name bash \
+    --name firefox \
     --rm \
     --network host \
     --hostname $(echo $HOSTNAME) \
-    -e PS_PREFIX=BASH \
+    -e PS_PREFIX=FIREFOX \
     -e GTK_IM_MODULE=ibus \
     -e XMODIFIERS="@im=ibus" \
     -e QT_IM_MODULE=ibus \
@@ -472,37 +583,74 @@ function vbash() {
     -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS \
     -e PULSE_COOKIE=$HOME/.config/pulse/cookie \
     -e PULSE_SERVER=$pulse_socket_file \
-    -e TERM=xterm-256color \
-    --mount type=bind,source=/dev/dri,target=/dev/dri \
-    --mount type=bind,source=/bin,target=/bin \
-    --mount type=bind,source=/media,target=/media \
-    --mount type=bind,source=/mnt,target=/mnt \
-    --mount type=bind,source=/sys,target=/sys \
-    --mount type=bind,source=/boot,target=/boot \
-    --mount type=bind,source=/lib,target=/lib \
-    --mount type=bind,source=/lib32,target=/lib32 \
-    --mount type=bind,source=/lib64,target=/lib64 \
-    --mount type=bind,source=/libx32,target=/libx32 \
-    --mount type=bind,source=/sbin,target=/sbin \
-    --mount type=bind,source=/usr,target=/usr \
-    --mount type=bind,source=/etc,target=/etc \
-    --mount type=bind,source=/tmp,target=/tmp \
-    --mount type=bind,source=/var,target=/var \
-    --mount type=bind,source=/run,target=/run \
-    --mount type=bind,source=/home,target=/home \
-    --privileged \
-    -u $(id -u):$(id -g) \
-    -w /home/$(whoami) \
-    --entrypoint $(which bash) \
-    $extra_options \
-    ubuntu:20.04 \
-    $@
+
+    $DOCKER run \
+      -td \
+      --name bash \
+      --rm \
+      --network host \
+      --hostname $(echo $HOSTNAME) \
+      -e PS_PREFIX=BASH \
+      -e GTK_IM_MODULE=ibus \
+      -e XMODIFIERS="@im=ibus" \
+      -e QT_IM_MODULE=ibus \
+      -e DISPLAY=$DISPLAY \
+      -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS \
+      -e PULSE_COOKIE=$HOME/.config/pulse/cookie \
+      -e PULSE_SERVER=$pulse_socket_file \
+      -e TERM=xterm-256color \
+      -e LANG=en_US.utf-8 \
+      -e LC_ADDRESS=en_US.utf-8 \
+      -e LC_NAME=en_US.utf-8 \
+      -e LC_MONETARY=en_US.utf-8 \
+      -e LC_PAPER=en_US.utf-8 \
+      -e LC_IDENTIFICATION=en_US.utf-8 \
+      -e LC_TELEPHONE=en_US.utf-8 \
+      -e LC_MEASUREMENT=en_US.utf-8 \
+      -e LC_TIME=en_US.utf-8 \
+      -e LC_NUMERIC=en_US.utf-8 \
+      -e EDITOR=/usr/bin/vim.nox \
+      --mount type=bind,source=/dev/dri,target=/dev/dri \
+      --mount type=bind,source=/bin,target=/bin \
+      --mount type=bind,source=/media,target=/media \
+      --mount type=bind,source=/mnt,target=/mnt \
+      --mount type=bind,source=/sys,target=/sys \
+      --mount type=bind,source=/boot,target=/boot \
+      --mount type=bind,source=/lib,target=/lib \
+      --mount type=bind,source=/lib32,target=/lib32 \
+      --mount type=bind,source=/lib64,target=/lib64 \
+      --mount type=bind,source=/libx32,target=/libx32 \
+      --mount type=bind,source=/sbin,target=/sbin \
+      --mount type=bind,source=/usr,target=/usr \
+      --mount type=bind,source=/etc,target=/etc \
+      --mount type=bind,source=/tmp,target=/tmp \
+      --mount type=bind,source=/var,target=/var \
+      --mount type=bind,source=/run,target=/run \
+      --mount type=bind,source=/home,target=/home \
+      --privileged \
+      -u $(id -u):$(id -g) \
+      -w /home/$(whoami) \
+      --entrypoint $(which bash) \
+      $extra_options \
+      ubuntu:20.04 \
+        -l \
+        -c "while [ 1 ]; do sleep 1; done"
+
+    running_container_id=$($DOCKER ps --format='{{.ID}} {{.Names}}' | awk '{ if ($2 == "'"bash"'") {print $1} }')
+    docker exec -it $running_container_id /bin/bash $@
+  fi
 }
 
 function vnautilus() {
   DOCKER="docker"
   if [ "$(groups | grep docker)" == "" ]; then
     DOCKER="sudo docker"
+  fi
+
+  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Names}}' | awk '{ if ($2 ~ /nonautilus/) {print $1} }')
+  if [ "$running_container_id" != "" ]; then
+    echo "ERR: a container is running in nonautilus conflict mode"
+    return 1
   fi
 
   extra_options=""
@@ -544,22 +692,95 @@ function vnautilus() {
     ubuntu:20.04
 }
 
+function vfirefox-noglassfish() {
+  vfirefox conflict glassfish $@
+}
+
+function vfirefox-noglassfish-nonautilus() {
+  vfirefox conflict glassfish conflict nautilus $@
+}
+
+function vfirefox-nonautilus() {
+  vfirefox conflict nautilus $@
+}
+
 function vfirefox() {
   DOCKER="docker"
   if [ "$(groups | grep docker)" == "" ]; then
     DOCKER="sudo docker"
   fi
 
-  extra_options=""
-  if [ "$FIREFOX_MEMORY_LIMIT" != "" ]; then
-    extra_options="$extra_options --memory=$FIREFOX_MEMORY_LIMIT --oom-kill-disable"
-  fi
-  if [ "$FIREFOX_SHM_LIMIT" != "" ]; then
-    extra_options="$extra_options --shm-size=$FIREFOX_SHM_LIMIT"
+  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Names}}' | awk '{ if ($2 ~ /^firefox/) {print $1} }')
+  if [ "$running_container_id" != "" ]; then
+    echo "ERR: Already running"
+    return 1
   fi
 
-  config_volume_name="firefox-config-$(whoami)"
-  cache_volume_name="firefox-cache-$(whoami)"
+  firefox_postfix=""
+  volume_prefix=""
+  memory_limit=$FIREFOX_MEMORY_LIMIT
+  shm_limit=$FIREFOX_SHM_LIMIT
+
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    if [ "$1" == "conflict" ]; then
+      firefox_postfix="$firefox_postfix-no$2"
+
+      running_container_id=$($DOCKER ps --format='{{.ID}} {{.Names}}' | awk '{ if ($2 ~ /^'"$2"'/) {print $1} }')
+      if [ "$running_container_id" != "" ]; then
+        echo "ERR: conflict, $2 is already running"
+        return 1
+      fi
+
+      if [ "$2" == "glassfish" ]; then
+        if [ "$memory_limit" == "" ]; then
+          memory_limit=$GLASSFISH_MEMORY_LIMIT
+        elif [ "$GLASSFISH_MEMORY_LIMIT" != "" ]; then
+          memory_limit=$(( $(echo $memory_limit | tr -d 'm') + $(echo $GLASSFISH_MEMORY_LIMIT | tr -d 'm') ))m
+        fi
+
+        if [ "$shm_limit" == "" ]; then
+          shm_limit=$GLASSFISH_SHM_LIMIT
+        elif [ "$GLASSFISH_SHM_LIMIT" != "" ]; then
+          shm_limit=$(( $(echo $shm_limit | tr -d 'm') + $(echo $GLASSFISH_SHM_LIMIT | tr -d 'm') ))m
+        fi
+      fi
+
+      if [ "$2" == "nautilus" ]; then
+        if [ "$memory_limit" == "" ]; then
+          memory_limit=$NAUTILUS_MEMORY_LIMIT
+        elif [ "NAUTILUS_MEMORY_LIMIT" != "" ]; then
+          memory_limit=$(( $(echo $memory_limit | tr -d 'm') + $(echo $NAUTILUS_MEMORY_LIMIT | tr -d 'm') ))m
+        fi
+
+        if [ "$shm_limit" == "" ]; then
+          shm_limit=$NAUTILUS_SHM_LIMIT
+        elif [ "$NAUTILUS_SHM_LIMIT" != "" ]; then
+          shm_limit=$(( $(echo $shm_limit | tr -d 'm') + $(echo $NAUTILUS_SHM_LIMIT | tr -d 'm') ))m
+        fi
+      fi
+
+      shift
+      shift
+    elif [ "$1" == "volumeprefix" ]; then
+      volume_prefix=$2
+      shift
+      shift
+    else
+      cont="0"
+    fi
+  done
+
+  extra_options=""
+  if [ "$memory_limit" != "" ]; then
+    extra_options="$extra_options --memory=$memory_limit --oom-kill-disable"
+  fi
+  if [ "$shm_limit" != "" ]; then
+    extra_options="$extra_options --shm-size=$shm_limit"
+  fi
+
+  config_volume_name="${volume_prefix}firefox-config-$(whoami)"
+  cache_volume_name="${volume_prefix}firefox-cache-$(whoami)"
   if [ "$($DOCKER volume ls | awk '{print $2}' | grep $config_volume_name)" == "" ]; then
     $DOCKER volume create $config_volume_name
     $DOCKER run -it --rm -v $config_volume_name:/srv ubuntu:20.04 bash -c "chown -R $(id -u):$(id -g) /srv"
@@ -574,7 +795,7 @@ function vfirefox() {
 
   $DOCKER run \
     -td \
-    --name firefox \
+    --name firefox$firefox_postfix \
     --rm \
     --network host \
     --hostname $(echo $HOSTNAME) \
@@ -624,7 +845,8 @@ function vfirefox() {
     -w /home/$(whoami) \
     --entrypoint $(which firefox) \
     $extra_options \
-    ubuntu:20.04
+    ubuntu:20.04 \
+    $@
 }
 
 function relinux() {
@@ -834,24 +1056,67 @@ function gradle() {
     $@
 }
 
+function x-java-init-maven-glassfish() {
+  group_id=""
+  artifact_id=""
+
+  while [ "$1" != "" ]; do
+    case "$1" in
+      -groupid)
+        group_id=$2
+        shift
+        shift
+        ;;
+
+      -artifactid)
+        artifact_id=$2
+        shift
+        shift
+        ;;
+
+      *)
+        echo "ERR: usage: x-java-init-maven-glassifish [-groupid <group_id> e.g. com.mycompany.app] [-artifactid <artifact_id> e.g. my-app]"
+        return 1
+        ;;
+      esac
+  done
+
+  if [ "$group_id" == "" ] || [ "$artifact_id" == "" ]; then
+    echo "ERR: usage: x-java-init-maven-glassifish [-groupid <group_id> e.g. com.mycompany.app] [-artifactid <artifact_id> e.g. my-app]"
+    return 1
+  fi
+
+  mvn -B \
+    archetype:generate \
+    -DgroupId=$group_id \
+    -DartifactId=$artifact_id \
+    -DarchetypeArtifactId=maven-archetype-j2ee-simple \
+    -DarchetypeVersion=1.4
+}
+
 function mvn() {
+  DOCKER="docker"
+  if [ "$(groups | grep docker)" == "" ]; then
+    DOCKER="sudo docker"
+  fi
+
   jdk_name=$(echo $JDK_VERSION | sed 's|jdk|jdk-|g')
   volume_name="maven_$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
   gfclient_volume_name="glassfish_gfclient_$(echo $GLASSFISH_VERSION | tr '.' '_')__$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
 
-  if [ "$(docker volume ls | awk '{print $2}' | grep $volume_name)" == "" ]; then
-    docker volume create $volume_name
-    docker run -it --rm -v $volume_name:/root/.m2 maven:${MAVEN_VERSION}-${jdk_name} bash -c "mvn -v && chown -R $(id -u):$(id -g) /root/.m2"
+  if [ "$($DOCKER volume ls | awk '{print $2}' | grep $volume_name)" == "" ]; then
+    $DOCKER volume create $volume_name
+    $DOCKER run -it --rm -v $volume_name:/root/.m2 maven:${MAVEN_VERSION}-${jdk_name} bash -c "mvn -v && chown -R $(id -u):$(id -g) /root/.m2"
   fi
-  if [ "$(docker volume ls | awk '{print $2}' | grep $gfclient_volume_name)" == "" ]; then
-    docker volume create $gfclient_volume_name
-    docker run -it --rm -v $gfclient_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
+  if [ "$($DOCKER volume ls | awk '{print $2}' | grep $gfclient_volume_name)" == "" ]; then
+    $DOCKER volume create $gfclient_volume_name
+    $DOCKER run -it --rm -v $gfclient_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
   fi
 
   glassfish_major_version=$(echo $GLASSFISH_VERSION | cut -d . -f 1)
   mkdir -p $HOME/.config/glassfish-$GLASSFISH_VERSION/glassfish/domains
 
-  docker run \
+  $DOCKER run \
     -it \
     --network host \
     --rm \
@@ -878,6 +1143,12 @@ function __glassfish() {
   DOCKER="docker"
   if [ "$(groups | grep docker)" == "" ]; then
     DOCKER="sudo docker"
+  fi
+
+  running_container_id=$($DOCKER ps --format='{{.ID}} {{.Names}}' | awk '{ if ($2 ~ /noglassfish/) {print $1} }')
+  if [ "$running_container_id" != "" ]; then
+    echo "ERR: a container is running in noglassfish conflict mode"
+    return 1
   fi
 
   container_name="glassfish"

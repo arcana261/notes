@@ -154,7 +154,7 @@ sudo -i
   reboot
 
 # install tools
-sudo apt update && sudo apt install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio pulseaudio-utils snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags aha nodejs git-secret dbus-tests cgroup-tools acpi
+sudo apt update && sudo apt install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio pulseaudio-utils snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags aha nodejs git-secret dbus-tests cgroup-tools acpi mc
 
 # clone notes
 cd Documents/
@@ -197,6 +197,7 @@ pip install pysocks
 pip install awscli
 pip install pylint flake8 mypy
 pip install msgpack
+pip install jc
 
 # create bash completion for pip
 mkdir -p ~/.config/bash_completions
@@ -421,6 +422,72 @@ git clone --depth 1 https://github.com/xolox/vim-notes.git ~/.vim/pack/git-plugi
 # install vim misc plugin
 mkdir -p ~/.vim/pack/git-plugins/start
 git clone --depth 1 https://github.com/xolox/vim-misc.git ~/.vim/pack/git-plugins/start/vim-misc
+# install pathogen
+mkdir -p ~/.vim/autoload ~/.vim/bundle
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+# install vim-javacomplete2
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/artur-shaik/vim-javacomplete2.git ~/.vim/pack/git-plugins/start/vim-javacomplete2
+# install vim ultisnips
+mkdir -p ~/.vim/pack/git-plugins/start
+git clone --depth 1 https://github.com/SirVer/ultisnips.git ~/.vim/pack/git-plugins/start/ultisnips
+mkdir -p ~/.vim/UltiSnips/
+vim ~/.vim/UltiSnips/java.snippets
+.....................................................
+priority 10
+
+
+# System.out.println();
+snippet sout "System.out.println();" bA
+System.out.println($0);
+endsnippet
+
+snippet br "break" bA
+break;
+endsnippet
+
+snippet cs "case" b
+case $1:
+    $2
+$0
+endsnippet
+
+snippet ca "catch" b
+catch (${1:Exception} ${2:e})`!p nl(snip)`{
+    $0
+}
+endsnippet
+
+# Main method for Java Class
+snippet main "public static void main()" bA
+public static void main (String[] args){
+    $0
+}
+endsnippet
+
+# if statement
+snippet if "If this then that" bA
+if ($1){
+    $2
+}
+$3
+endsnippet
+
+# Else if statement
+snippet elif "else if this then that" bA
+else if ($1){
+    $2
+}
+$3
+endsnippet
+
+snippet for "for(int i; i < imax; i++)" bA
+for ($1; $2; $3){
+    $4
+}
+
+endsnippet
+.....................................................
 
 # create a good vimrc
 vim ~/.vimrc

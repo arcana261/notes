@@ -42,6 +42,9 @@ autocmd BufEnter,BufNew Dockerfile.build setlocal ft=dockerfile
 autocmd BufEnter,BufNew *.dockerfile setlocal ft=dockerfile
 autocmd BufEnter,BufNew *.conf setlocal ft=conf
 autocmd BufEnter,BufNew *.bashrc setlocal ft=sh
+autocmd BufEnter,BufNew *.sh setlocal ft=sh
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+"autocmd FileType java JCEnable
 
 " uncomment to auto-open nerdtree
 "autocmd VimEnter * :NERDTree
@@ -62,9 +65,10 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#java = ['jc', 'javacomplete2', 'file', 'buffer', 'ultisnips']
 
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'go': ['gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace']}
-let g:ale_linters = {'python': ['flake8', 'mypy', 'pylint', 'pyls'], 'go': ['gofmt', 'golint', 'govet', 'golangserver']}
+let g:ale_linters = {'python': ['flake8', 'mypy', 'pylint', 'pyls'], 'go': ['gofmt', 'golint', 'govet', 'golangserver'], 'java':['javac']}
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 let g:ale_open_list = 1

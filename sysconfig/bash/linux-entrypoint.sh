@@ -118,7 +118,7 @@ if [ ! -f /var/lib/.container_initialized ]; then
   if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
   install_list=""
   upgrade_list=""
-  for pkg in $(echo "wheel pysocks awscli pylint flake8 mypy msgpack" | tr ' ' '\n'); do
+  for pkg in $(echo "wheel pysocks awscli pylint flake8 mypy msgpack jc" | tr ' ' '\n'); do
     if [ "$(pip freeze | grep $pkg)" == "" ]; then
       install_list="$install_list $pkg"
     else
@@ -806,6 +806,21 @@ if [ ! -f /var/lib/.container_initialized ]; then
   sudo alsactl nrestore
   if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
   echo " done"
+
+  echo $DIVIDER
+  echo -n ">> Build glassfish"
+  cont="1"
+  while [ "$cont" == "1" ]; do
+    echo -n "? (y/[n]): "
+    read resp
+    if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then
+      cont="0"
+    fi
+  done
+  if [ "$resp" == "y" ] || [ "$resp" == "Y" ]; then
+    build-glassfish
+    if [ "$?" != "0" ]; then echo " failed"; cont="1"; while [ "$cont" == "1" ]; do echo -n "Continue? (y/[n]): "; read resp; if [ "$resp" == "y" ] || [ "$resp" == "Y" ] || [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then cont="0"; fi; done; if [ "$resp" == "n" ] || [ "$resp" == "N" ] || [ "$resp" == "" ]; then return 9; fi; fi;
+  fi
 
   echo $DIVIDER
   echo -n ">> Unminify"

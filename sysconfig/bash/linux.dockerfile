@@ -149,6 +149,11 @@ RUN \
   apt install -y \
     acpi
 
+RUN \
+  apt update && \
+  apt install -y \
+    mc
+
 ENV TERM xterm-256color
 ENV LANG en_US.utf-8
 ENV LC_ADDRESS en_US.UTF-8

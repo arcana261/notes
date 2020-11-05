@@ -84,6 +84,18 @@ RUN \
   rm -f /tmp/get-pip.py
 
 RUN \
+  pip3 install \
+    jc && \
+  apt update && \
+  apt install -y \
+    default-jdk
+
+RUN \
+  apt update && \
+  apt install -y \
+    maven
+
+RUN \
   cd /build/vim && \
   ./configure \
     --prefix=/usr \
