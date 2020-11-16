@@ -226,7 +226,7 @@ function node() {
     --network host \
     --rm \
     --entrypoint /usr/local/bin/node \
-    -w /srv:$(pwd) \
+    -w /srv/$(pwd) \
     -v /:/srv \
     -v /home:/home \
     -v /etc/group:/etc/group \
@@ -453,6 +453,19 @@ function __vim() {
       extra_options="$extra_options -v $(which fzf):/usr/bin/fzf"
     fi
 
+    jdk_name=$(echo $JDK_VERSION | sed 's|jdk|jdk-|g')
+    volume_name="maven_$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
+    gfclient_volume_name="glassfish_gfclient_$(echo $GLASSFISH_VERSION | tr '.' '_')__$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
+
+    if [ "$($DOCKER volume ls | awk '{print $2}' | grep $volume_name)" == "" ]; then
+      $DOCKER volume create $volume_name
+      $DOCKER run -it --rm -v $volume_name:/root/.m2 maven:${MAVEN_VERSION}-${jdk_name} bash -c "mvn -v && chown -R $(id -u):$(id -g) /root/.m2"
+    fi
+    if [ "$($DOCKER volume ls | awk '{print $2}' | grep $gfclient_volume_name)" == "" ]; then
+      $DOCKER volume create $gfclient_volume_name
+      $DOCKER run -it --rm -v $gfclient_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
+    fi
+
     $DOCKER \
       run \
         -td \
@@ -470,6 +483,8 @@ function __vim() {
         -v /etc/passwd:/etc/passwd \
         -v /etc/shadow:/etc/shadow \
         -v /etc/printcap:/etc/printcap \
+        -v $volume_name:/home/$(whoami)/.m2 \
+        -v $gfclient_volume_name:/home/$(whoami)/.gfclient \
         -u $(id -u):$(id -g) \
         -w $PWD \
         mehdi:vim \
@@ -566,23 +581,8 @@ function vbash() {
   else
     pactl load-module module-native-protocol-unix socket=$pulse_socket_file
 
-  pulse_socket_file="$HOME/.config/pulse/firefox.sock"
-  pactl load-module module-native-protocol-unix socket=$pulse_socket_file
-
-  $DOCKER run \
-    -td \
-    --name firefox \
-    --rm \
-    --network host \
-    --hostname $(echo $HOSTNAME) \
-    -e PS_PREFIX=FIREFOX \
-    -e GTK_IM_MODULE=ibus \
-    -e XMODIFIERS="@im=ibus" \
-    -e QT_IM_MODULE=ibus \
-    -e DISPLAY=$DISPLAY \
-    -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS \
-    -e PULSE_COOKIE=$HOME/.config/pulse/cookie \
-    -e PULSE_SERVER=$pulse_socket_file \
+    pulse_socket_file="$HOME/.config/pulse/bash.sock"
+    pactl load-module module-native-protocol-unix socket=$pulse_socket_file
 
     $DOCKER run \
       -td \
@@ -1092,6 +1092,12 @@ function x-java-init-maven-glassfish() {
     -DartifactId=$artifact_id \
     -DarchetypeArtifactId=maven-archetype-j2ee-simple \
     -DarchetypeVersion=1.4
+
+  sed -i 's|/project.build.sourceEncoding>|/project.build.sourceEncoding><maven.deploy.skip>true</maven.deploy.skip>|g' $artifact_id/pom.xml
+  sed -i 's|</plugins>|<plugin><groupId>org.codehaus.cargo</groupId><artifactId>cargo-maven2-plugin</artifactId><version>1.7.7</version></plugin></plugins>|g' $artifact_id/pom.xml
+  sed -i 's|</pluginManagement>|</pluginManagement><plugins><plugin><groupId>org.codehaus.cargo</groupId><artifactId>cargo-maven2-plugin</artifactId><inherited>true</inherited><executions><execution><id>deploy</id><phase>integration-test</phase><goals><goal>redeploy</goal></goals></execution></executions><configuration><container><containerId>glassfish4x</containerId><type>installed</type><home>${user.home}/glassfish5</home></container><configuration><type>existing</type><home>${user.home}/glassfish5/glassfish/domains</home><properties><cargo.glassfish.domain.name>domain1</cargo.glassfish.domain.name><!--cargo.remote.username></cargo.remote.username--><cargo.remote.password /></properties></configuration></configuration></plugin></plugins>|g' $artifact_id/pom.xml
+  sed -i 's|</dependencyManagement>|</dependencyManagement><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>8.0</version><scope>provided</scope></dependency><dependency><groupId>javax.ws.rs</groupId><artifactId>javax.ws.rs-api</artifactId><version>2.1.1</version></dependency></dependencies>|g' $artifact_id/pom.xml
+
 }
 
 function mvn() {
@@ -1103,6 +1109,7 @@ function mvn() {
   jdk_name=$(echo $JDK_VERSION | sed 's|jdk|jdk-|g')
   volume_name="maven_$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
   gfclient_volume_name="glassfish_gfclient_$(echo $GLASSFISH_VERSION | tr '.' '_')__$(echo $MAVEN_VERSION | tr '.' '_')__$JDK_VERSION"
+  home_volume_name="maven_$(echo $MAVEN_VERSION | tr '.' '_')__${JDK_VERSION}_home"
 
   if [ "$($DOCKER volume ls | awk '{print $2}' | grep $volume_name)" == "" ]; then
     $DOCKER volume create $volume_name
@@ -1111,6 +1118,10 @@ function mvn() {
   if [ "$($DOCKER volume ls | awk '{print $2}' | grep $gfclient_volume_name)" == "" ]; then
     $DOCKER volume create $gfclient_volume_name
     $DOCKER run -it --rm -v $gfclient_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
+  fi
+  if [ "$($DOCKER volume ls | awk '{print $2}' | grep $home_volume_name)" == "" ]; then
+    $DOCKER volume create $home_volume_name
+    $DOCKER run -it --rm -v $home_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
   fi
 
   glassfish_major_version=$(echo $GLASSFISH_VERSION | cut -d . -f 1)
@@ -1126,6 +1137,7 @@ function mvn() {
     --mount type=bind,source=/tmp,target=/tmp \
     --mount type=bind,source=$HOME/.config/glassfish-$GLASSFISH_VERSION,target=/home/$(whoami)/glassfish$glassfish_major_version \
     -v $volume_name:/home/$(whoami)/.m2 \
+    -v $home_volume_name:/home/$(whoami) \
     -v $gfclient_volume_name:/home/$(whoami)/.gfclient \
     --mount type=bind,source=/var/run,target=/var/run \
     --mount type=bind,source=/etc/cups,target=/etc/cups \
@@ -1178,14 +1190,14 @@ function __glassfish() {
       rm -rf $dockerdir
     fi
 
-    if [ "$(docker volume ls | awk '{print $2}' | grep $maven_volume_name)" == "" ]; then
-      docker volume create $maven_volume_name
-      docker run -it --rm -v $maven_volume_name:/root/.m2 maven:${MAVEN_VERSION}-${jdk_name} bash -c "mvn -v && chown -R $(id -u):$(id -g) /root/.m2"
+    if [ "$($DOCKER volume ls | awk '{print $2}' | grep $maven_volume_name)" == "" ]; then
+      $DOCKER volume create $maven_volume_name
+      $DOCKER run -it --rm -v $maven_volume_name:/root/.m2 maven:${MAVEN_VERSION}-${jdk_name} bash -c "mvn -v && chown -R $(id -u):$(id -g) /root/.m2"
     fi
 
-    if [ "$(docker volume ls | awk '{print $2}' | grep $gfclient_volume_name)" == "" ]; then
-      docker volume create $gfclient_volume_name
-      docker run -it --rm -v $gfclient_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
+    if [ "$($DOCKER volume ls | awk '{print $2}' | grep $gfclient_volume_name)" == "" ]; then
+      $DOCKER volume create $gfclient_volume_name
+      $DOCKER run -it --rm -v $gfclient_volume_name:/build maven:${MAVEN_VERSION}-${jdk_name} bash -c "chown -R $(id -u):$(id -g) /build"
     fi
 
     mkdir -p $HOME/.config/glassfish-$GLASSFISH_VERSION

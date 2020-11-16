@@ -76,6 +76,9 @@ let g:ale_set_quickfix = 1
 
 let g:indent_guides_enable_on_vim_startup = 1
 
+let g:JavaComplete_MavenRespositoryDisable = 1
+let g:JavaComplete_LibsPath = '$HOME/.m2/repository/javax/javaee-api/8.0/javaee-api-8.0:$HOME/.m2/repository/javax/ws/rs/javax.ws.rs-api/2.1.1'
+
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 

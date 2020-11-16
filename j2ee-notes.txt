@@ -1,0 +1,25 @@
+=-=-=-=-=-=- List of good imports to remember =-=-=-=-=-
+
+import javax.ejb.Stateless;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+EJB -> Session Beans
+        -> Stateful
+        -> Stateless
+        -> Singleton
+    -> Message Driven Beans
+
+@javax.enterprise.context.RequestScoped
+public class CurrencyConverter {...}
+
+This tells that a managed bean is only valid during handling of a single request
+
+## Classic Multi-Layered Architecture
+Presentation Layer -> Business Logic Layer -> Persistence Layer -> Database Layer
+
+## Domain Driven Design
+Presentation Layer -> Application/Service Layer -> Domain Layer -> Infrastructure Layer
