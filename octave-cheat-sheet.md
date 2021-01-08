@@ -141,7 +141,7 @@ size(size(A))
 size(A, 1)          % get number of rows
 size(A, 2)          % get number of columns
 length([1 2 3 4])   % gives size of longest dimention, in this case 4
-``
+```
 
 ## Loading and Saving data
 
