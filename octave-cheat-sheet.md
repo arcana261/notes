@@ -123,3 +123,68 @@ help eye    % get help about identity function
 help rand   % get help about rand
 help help   % get help about help
 ```
+
+# Moving Data Around
+
+## Getting information about matrix
+
+```
+size(A)
+% ans =
+%       3 2
+% this shows that matrix is a 3x2 matrix (3 rows 2 columns)
+
+size(size(A))
+% ans =
+%       1 2
+
+size(A, 1)          % get number of rows
+size(A, 2)          % get number of columns
+length([1 2 3 4])   % gives size of longest dimention, in this case 4
+``
+
+## Loading and Saving data
+
+```
+pwd                      % get current working directory
+cd '/path'               % change directory to path
+ls                       % list files in pwd
+load file.dat            % load file.dat into variable file
+load('file.dat')         % load file.dat into variable file
+who                      % list variables
+whos                     % list variables with their sizes
+clear file               % delete variable file
+save hello.mat v         % save variable v into file hello.mat in a compressed format
+save hello.txt v  -ascii % save variable v into file hello.txt in a human readable format
+```
+
+## Manipulate data
+```
+A(3,2)                % return cell at row 3, column 2
+v(1:10)               % returns first 10 rows of data
+A(2,:)                % fetch everything in the second row
+A(:,2)                % everything in the second column
+A([1 3],:)            % first and third row only
+A(:,2) = [10; 11; 12] % assign 10,11,12 to second column
+A = [A, [1; 2; 3;]];  % append a new column vector to the right
+A(:)                  % put all elements of A inside a column vector
+C = [A B]             % concatenate A and B together from right of A
+C = [A, B]            % concatenate A and B together from right of A
+C = [A; B]            % concatenate A and B together from bottom of A
+```
+
+# Computing on Data
+
+## Basic computation
+
+```
+A * C                 % multiply matrices A, C
+A .* B                % multiply matrices A, B element-wise instead of normal matrix multiplication
+A .^ 2                % element-wise squaring of A
+1 ./ v                % element-wise inverse
+log(v)                % element-wise logarithm
+exp(v)                % element-wise exponentiotion
+abs(v)                % element-wise absolute value
+-v                    % same as -1 * v
+v + ones(length(v),1) % increment each element of vector v by 1
+```
