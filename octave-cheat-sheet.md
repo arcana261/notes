@@ -10,6 +10,11 @@
 2^6       % power
 ```
 
+```
+quit      % exit octave
+exit      % exit octave
+```
+
 ## Logical Operations
 
 ```
@@ -39,6 +44,7 @@ disp(sprintf('2 decimals: %0.2f', pi)) % advanced c-like string formatting
 disp(sprintf('6 decimals: %0.6f', pi)) % advanced c-like string formatting
 format long                            % print long version of numbers
 format short                           % print short version of numbers
+a=1, b=2, c=3;                         % comma-chaining multiple commands
 ```
 
 ## Matrices
@@ -182,9 +188,175 @@ A * C                 % multiply matrices A, C
 A .* B                % multiply matrices A, B element-wise instead of normal matrix multiplication
 A .^ 2                % element-wise squaring of A
 1 ./ v                % element-wise inverse
+a < 3                 % element-wise comparison
+find(a < 3)           % returns a vector of indices, where a was < 3
 log(v)                % element-wise logarithm
 exp(v)                % element-wise exponentiotion
 abs(v)                % element-wise absolute value
 -v                    % same as -1 * v
 v + ones(length(v),1) % increment each element of vector v by 1
+v + 1                 % increment each element of vector v by 1, much simpler version!
+A'                    % transpose of matrix A
+```
+
+## Useful functions
+
+```
+max(a)                % maximum of vector a
+[val, ind] = max(a)   % maximum of vector a and it's column
+max(A)                % column-wise maximum of A
+magic(4)              % return a 4x4 "magic" matrix
+[r, c] = find(A >= 7) % return r,c as column vectors holding indices of locations A >=7
+sum(a)                % adds all elements of vector a
+sum(A,1)              % take column-wise sum of matrix A
+sum(A,2)              % take row-wise sum of matrix A
+prod(a)               % product of all elements of vector a
+floor(a)              % element-wise floor
+ceil(a)               % element-wise ceiling
+max(A, B)             % take element-wise maximum of two matrices
+max(A,[],1)           % take column-wise maximum of A
+max(A)                % take column-wise maximum of A
+max(A, [], 2)         % take row-wise maximum of A
+max(max(A))           % maximum element in matrix A
+sum(sum(A .* eye(9))) % sum main diagonal
+flipud(A)             % flip up-down matrix
+sum(sum(A .* flipud(eye(9)))) % sum secondary diagonal
+pinv(A)               % return inverse of matrix A
+std(a)                % standard deviation of vector a
+
+# Plotting Data
+
+```
+t =[0:0.1:1];
+y1=sin(2*pi*4*t);
+y1=cos(2*pi*4*t);         % suppose we have these variables
+
+plot(t, y1);              % plot sin(x)
+plot(t, y2, 'r');         % plot cos(x) in red color
+
+plot(t, y1);
+hold on;                  % plot y1, y2 on each other
+plot(t, y2, 'r');
+xlabel('time');           % label horizontal axis
+ylabel('value');          % label vertical axis
+legend('sin', 'cos');     % add legend to plot
+title('my plot');         % gives a title to entire plot
+print -dpng 'myPlot.png'  % save plot in png format
+close                     % close open plot
+
+figure(1);
+plot(t, y1);
+figure(2);
+plot(t, y2);              % don't override previous plot, simply open a new window instead
+
+subplot(2, 1, 1);         % divide plot into 2x1 grid and start accessing first element
+plot(t, y1);              % plot in first element of grid
+subplot(2, 1, 2);         % access second element
+plot(t, y2);              % plot in second element of grid
+
+axis(0.5 1 -1 1);         % change axis: x-range and y-range of plot
+
+clf                       % clears the figure
+
+A=magic(5);
+imagesc(A);                           % show a colorful heatmap of A
+imagesc(A), colorbar, colorbar gray;  % show a grayscale heatmap of A
+
+plot(t, y1, 'rx')         % plot data in scattered mode
+```
+# Control Statements
+
+## for loop
+
+```
+v = zeros(10,1)
+
+for i = 1:10,
+  v(i) = 2^i,
+end;
+```
+
+```
+indices = 1:10;
+
+for i = indices,
+  disp(i),
+end;
+```
+
+## while loop
+
+```
+i = 1;
+while i <= 5,
+  v(i) = 100,
+  i = i+1,
+end;
+```
+
+```
+while true,
+  v(i) = 999,
+  i = i+1;
+  if i == 6,
+    break,
+  end,
+end;
+```
+
+## if statement
+
+```
+if v(1) == 1,
+  disp('The value is 1');
+elseif v(1) == 2,
+  disp('The value is 2');
+else,
+  disp('The value is neither 1 or 2');
+end;
+```
+
+# Functions
+
+## Declaring
+
+To define function `squareThisNumber` we have to put definition inside file `squareThisNumber.m` and it should be accessible via:
+
+1. either `pwd` which can be navigated by `cd`
+2. search directory which can be appended by `addpath('path')`
+
+```
+function y = squareThisNumber(x)
+
+y = x ^ 2;
+```
+
+## Functions with Multiple Outputs
+
+```
+function [y1,y2] = squareAndCubeThisNumber(x)
+
+y1 = x^2;
+y2 = x^3;
+```
+
+This declaration can be invoked using:
+
+```
+[a, b] = squareAndCubeThisNumber(5);
+```
+
+## Linear Regression Cost Function
+
+```
+function J = function(X, y, theta)
+
+% X is the "design matrix" containing our training examples
+% y is the class labels
+
+m = size(X, 1)                      % number of training examples
+predictions = X * theta             % predictions of hypothesis on all m examples
+sqrErrors = (predictions - y).^2    % squared errors
+
+J = 1/(2*m) * sum(sqrErrors)
 ```
