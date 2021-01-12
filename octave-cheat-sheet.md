@@ -223,6 +223,7 @@ flipud(A)             % flip up-down matrix
 sum(sum(A .* flipud(eye(9)))) % sum secondary diagonal
 pinv(A)               % return inverse of matrix A
 std(a)                % standard deviation of vector a
+```
 
 # Plotting Data
 
