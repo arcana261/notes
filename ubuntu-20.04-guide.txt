@@ -154,7 +154,7 @@ sudo -i
   reboot
 
 # install tools
-sudo apt update && sudo apt install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio pulseaudio-utils snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags aha nodejs git-secret dbus-tests cgroup-tools acpi mc x11vnc x11vnc xvfb fluxbox vim-gtk3 nautilus firefox gnome-terminal gnome-shell
+sudo apt update && sudo apt install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio pulseaudio-utils snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags aha nodejs git-secret dbus-tests cgroup-tools acpi mc x11vnc x11vnc xvfb fluxbox vim-gtk3 nautilus firefox gnome-terminal gnome-shell x11-apps gedit
 
 # clone notes
 mkdir -p ~/Documents

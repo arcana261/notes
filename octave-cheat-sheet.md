@@ -263,7 +263,12 @@ A=magic(5);
 imagesc(A);                           % show a colorful heatmap of A
 imagesc(A), colorbar, colorbar gray;  % show a grayscale heatmap of A
 
-plot(t, y1, 'rx')         % plot data in scattered mode
+plot(t, y1, 'rx');                    % plot data in scattered mode using * sign
+plot(t, y1, 'rx', 'MarkerSize', 10);  % plot data in scattered mode and with custom marker size
+plot(t, y1, 'k+');                    % plot data in scattered using + sign
+plot(t, y1, 'ko');                    % plot data in scattered using o sign
+plot(t, y1, 'LineWidth', 2);          % adjust border size
+plot(t, y1, 'MarkerFaceColor', 'y');  % set color of sign to yellow
 ```
 # Control Statements
 
@@ -360,4 +365,37 @@ predictions = X * theta             % predictions of hypothesis on all m example
 sqrErrors = (predictions - y).^2    % squared errors
 
 J = 1/(2*m) * sum(sqrErrors)
+```
+
+# Optimization
+
+## When number of features is low:
+
+Use `fminunc` function.
+
+```
+options = optimset('GradObj', 'on', 'MaxIter', 100);
+initialTheta = zeros(size(data,2),1);
+[optTheta, functionVal, exitFlag] = fminunc(@(t)(costFunction(t, X, y)), initialTheta, options);
+
+```
+
+## When number of features is high:
+
+Use `fmincg` function.
+
+```
+options = optimset('GradObj', 'on', 'MaxIter', 100);
+initialTheta = zeros(size(data,2),1);
+[optTheta, functionVal, exitFlag] = fmincg(@(t)(costFunction(t, X, y)), initialTheta, options);
+
+```
+
+# Rolling/Unrolling
+
+```
+thetaVec = [ Theta1(:); Theta2(:); Theta3(:) ]
+Theta1 = reshape(thetaVec(1:110), 10, 11)
+Theta2 = reshape(thetaVec(111:220), 10, 11)
+Theta3 = reshape(thetaVec(221:231), 1, 11)
 ```
