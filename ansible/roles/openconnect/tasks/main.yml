@@ -74,20 +74,20 @@
         regexp: '^\s*ipv4-network\s*=\s*'
         line: 'ipv4-network = 192.168.199.0/24'
       notify: restart_openconnect
-    - name: change systemd socket listen stream
-      lineinfile:
-        path: /lib/systemd/system/ocserv.socket
-        state: present
-        regexp: '^\s*ListenStream\s*='
-        line: 'ListenStream=445'
-      notify: restart_openconnect
-    - name: change systemd socket listen datagram
-      lineinfile:
-        path: /lib/systemd/system/ocserv.socket
-        state: present
-        regexp: '^\s*ListenDatagram\s*='
-        line: 'ListenDatagram=445'
-      notify: restart_openconnect
+#    - name: change systemd socket listen stream
+#      lineinfile:
+#        path: /lib/systemd/system/ocserv.socket
+#        state: present
+#        regexp: '^\s*ListenStream\s*='
+#        line: 'ListenStream=445'
+#      notify: restart_openconnect
+#    - name: change systemd socket listen datagram
+#      lineinfile:
+#        path: /lib/systemd/system/ocserv.socket
+#        state: present
+#        regexp: '^\s*ListenDatagram\s*='
+#        line: 'ListenDatagram=445'
+#      notify: restart_openconnect
     - name: reload systemd daemon
       shell: systemctl daemon-reload
 

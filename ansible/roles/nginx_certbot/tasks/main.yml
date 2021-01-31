@@ -72,11 +72,16 @@
   check_mode: no
   register: webroot
 
-- name: Install certbot
-  get_url:
-    url: https://dl.eff.org/certbot-auto
-    dest: /usr/bin/certbot-auto
-    mode: "a+x"
+#- name: Install certbot
+#  snap:
+#    name: certbot
+#    classic: true
+
+- name: Create certbot link
+  file:
+    src: /snap/bin/certbot
+    dest: /usr/bin/certbot
+    state: link
 
 - name: Enable sites for ACME protocol
   block:
@@ -111,13 +116,13 @@
     - nginxinstalled is success
 
 - name: Generate certs (first time)
-  command: certbot-auto certonly --webroot -w /var/www/{{ item.key }} -d {{ item.value.domains | join(' -d ') }} --email {{ item.value.letsencrypt_email }} --non-interactive --cert-name {{ item.key }} --agree-tos creates=/etc/letsencrypt/live/{{ item.key }}/fullchain.pem
+  command: /usr/bin/certbot certonly --webroot -w /var/www/{{ item.key }} -d {{ item.value.domains | join(' -d ') }} -m {{ item.value.letsencrypt_email }} --non-interactive --cert-name {{ item.key }} --agree-tos creates=/etc/letsencrypt/live/{{ item.key }}/fullchain.pem
   with_dict: "{{ nginx_certbot_domains }}"
 
 - name: Insert cert-bot renew in crontab
   cron:
     name: "cert-bot renew"
-    job: 'certbot-auto renew --post-hook "systemctl reload nginx" >> /var/log/letsencrypt/letsencrypt-update.log 2>&1'
+    job: '/usr/bin/certbot renew --post-hook "systemctl reload nginx" >> /var/log/letsencrypt/letsencrypt-update.log 2>&1'
     hour: 3
     minute: 30
     weekday: 1

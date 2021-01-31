@@ -1,5 +1,5 @@
 - name: install sniproxy
-  hosts: all
+  hosts: vpn
   become: true
   roles:
   - sniproxy

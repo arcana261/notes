@@ -23,3 +23,6 @@
     force: true
   notify:
   - install_sniproxy
+
+#- name: force install
+  #include: install_sniproxy.yml

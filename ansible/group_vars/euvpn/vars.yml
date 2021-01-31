@@ -1,0 +1,6 @@
+openconnect_domain: ocs.ucoder.ir
+nginx_certbot_domains:
+  ocs.ucoder.ir:
+    domains:
+    - ocs.ucoder.ir
+    letsencrypt_email: info@ucoder.ir

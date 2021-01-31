@@ -1,2 +1,15 @@
 [srv4]
 srv4.ucoder.ir
+
+[srv7]
+srv7.ucoder.ir
+
+[irvpn]
+srv7.ucoder.ir
+
+[euvpn]
+srv4.ucoder.ir
+
+[vpn]
+srv4.ucoder.ir
+srv7.ucoder.ir
