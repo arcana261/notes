@@ -1,17 +1,6 @@
 - name: install blog
-  hosts: all
+  hosts: blog
   become: true
-  vars:
-    blog_domain: ucoder.ir
-    blog_subdomains:
-    - www.ucoder.ir
-    nginx_certbot_domains:
-      ucoder.ir:
-        domains:
-        - www.ucoder.ir
-        - ucoder.ir
-        letsencrypt_email: info@ucoder.ir
-
   roles:
   - nginx_certbot
   - blog

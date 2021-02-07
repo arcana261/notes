@@ -7,8 +7,5 @@
 - name: restart_nginx
   service: name=nginx state=restarted
 
-- name: redeploy
-  include: redeploy.yml
-
 - name: reload_sniproxy
   service: name=sniproxy state=restarted

@@ -14,7 +14,6 @@
   git:
     repo: https://github.com/arcana261/ucoder.git
     dest: /usr/share/nginx/{{ blog_domain }}
-  notify: redeploy
 
 - name: Ensure /usr/share/nginx{{ blog_domain }}/public exists
   shell: creates=/usr/share/nginx/{{ blog_domain }}/public warn=no mkdir -p /usr/share/nginx/{{ blog_domain }}/public
@@ -77,3 +76,6 @@
   with_items: 
   - '{{ blog_subdomains }}'
   notify: reload_sniproxy
+
+- name: redeploy
+  include: redeploy.yml

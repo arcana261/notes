@@ -72,10 +72,10 @@
   check_mode: no
   register: webroot
 
-#- name: Install certbot
-#  snap:
-#    name: certbot
-#    classic: true
+- name: Install certbot
+  snap:
+    name: certbot
+    classic: true
 
 - name: Create certbot link
   file:

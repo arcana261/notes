@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: prometheus
   roles:
     - nginx_certbot
     - nginx_revproxy
@@ -10,11 +10,6 @@
         - prometheus.ucoder.ir
         letsencrypt_email: info@ucoder.ir
 
-      grafana.ucoder.ir:
-        domains:
-        - grafana.ucoder.ir
-        letsencrypt_email: info@ucoder.ir
-
     nginx_revproxy_sites:
       prometheus.ucoder.ir:
         domains:
@@ -24,6 +19,19 @@
         ssl: true
         letsencrypt: true
 
+- hosts: grafana
+  roles:
+    - nginx_certbot
+    - nginx_revproxy
+  become: true
+  vars:
+    nginx_certbot_domains:
+      grafana.ucoder.ir:
+        domains:
+        - grafana.ucoder.ir
+        letsencrypt_email: info@ucoder.ir
+
+    nginx_revproxy_sites:
       grafana.ucoder.ir:
         domains:
           - grafana.ucoder.ir

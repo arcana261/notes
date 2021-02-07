@@ -1,0 +1,5 @@
+- name: Allow access to node exporter
+  ufw:
+    rule: allow
+    port: 3000
+    proto: tcp

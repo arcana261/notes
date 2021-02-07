@@ -1,5 +1,5 @@
 - name: install webhook
-  hosts: all
+  hosts: blog
   become: true
   vars:
     nginx_certbot_domains:
