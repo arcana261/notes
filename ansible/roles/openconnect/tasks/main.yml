@@ -146,5 +146,5 @@
   - '-N FORWARD'
   - '-A FORWARD -o any -j ACCEPT'
   - '-A POSTROUTING -s 192.168.199.0/24 -o eth0 -j MASQUERADE'
-  - 'COMMIT'
+  - 'COMMIT # post-routing'
   notify: reload_ufw

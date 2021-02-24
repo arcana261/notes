@@ -8,12 +8,12 @@
     owner: root
     group: root
     mode: '0755'
-  notify: redeploy
 
 - name: clone blog
   git:
     repo: https://github.com/arcana261/ucoder.git
     dest: /usr/share/nginx/{{ blog_domain }}
+    force: yes
 
 - name: Ensure /usr/share/nginx{{ blog_domain }}/public exists
   shell: creates=/usr/share/nginx/{{ blog_domain }}/public warn=no mkdir -p /usr/share/nginx/{{ blog_domain }}/public

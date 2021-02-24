@@ -21,8 +21,6 @@
     dest: '/srv/sniproxy/src'
     version: '0.6.0'
     force: true
-  notify:
-  - install_sniproxy
 
 - name: force install
   include: install_sniproxy.yml

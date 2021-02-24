@@ -4,14 +4,13 @@ prometheus_storage_retention: "7d"
 prometheus_targets:
   node:
     - targets:
-        - "srv7.ucoder.ir:9100"
-        - "srv8.ucoder.ir:9100"
+        - "srv9.ucoder.ir:9100"
   grafana:
     - targets:
       - "grafana.ucoder.ir:3000"
   nginx:
     - targets:
-      - "srv8.ucoder.ir:9113"
+      - "srv9.ucoder.ir:9113"
 prometheus_scrape_configs:
 - job_name: "prometheus"
   metrics_path: "/metrics"

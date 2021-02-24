@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: registry
 
   vars:
     pip_install_packages:

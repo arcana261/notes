@@ -1,6 +1,13 @@
 - name: install blog
   hosts: blog
   become: true
+  vars:
+    nginx_certbot_domains:
+      ucoder.ir:
+        domains:
+        - www.ucoder.ir
+        - ucoder.ir
+        letsencrypt_email: info@ucoder.ir
   roles:
   - nginx_certbot
   - blog

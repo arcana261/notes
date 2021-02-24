@@ -1,5 +1,5 @@
 - name: install sniproxy
-  hosts: srv8
+  hosts: all
   become: true
   roles:
   - sniproxy

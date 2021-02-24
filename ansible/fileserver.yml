@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: fileserver
 
   vars:
     fileserver_domain: files.ucoder.ir

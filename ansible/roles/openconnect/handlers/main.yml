@@ -1,5 +1,5 @@
 - name: start_openconnect
-  service: name=ocserv state=present enabled=yes
+  service: name=ocserv state=started enabled=yes
 
 - name: restart_openconnect
   service: name=ocserv state=restarted
