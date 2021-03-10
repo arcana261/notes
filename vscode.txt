@@ -1,3 +1,6 @@
+# windows powershell
+Set-ExecutionPolicy Unrestricted -Scope Process
+
 # setup template for tests
         {
             "name": "Test",
