@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="application/xml+xhtml; charset=UTF-8" />
+  <title>Capture</title>
+
+  <style type="text/css">
+    body         {color: white; background-color: black;}
+    .reset       {color: white;}
+    .bg-reset    {background-color: black;}
+    .inverted    {color: black;}
+    .bg-inverted {background-color: white;}
+    .dimgray     {color: dimgray;}
+    .red         {color: red;}
+    .green       {color: lime;}
+    .yellow      {color: yellow;}
+    .blue        {color: #3333FF;}
+    .purple      {color: fuchsia;}
+    .cyan        {color: aqua;}
+    .white       {color: white;}
+    .bg-black    {background-color: black;}
+    .bg-red      {background-color: red;}
+    .bg-green    {background-color: lime;}
+    .bg-yellow   {background-color: yellow;}
+    .bg-blue     {background-color: #3333FF;}
+    .bg-purple   {background-color: fuchsia;}
+    .bg-cyan     {background-color: aqua;}
+    .bg-white    {background-color: white;}
+    .underline   {text-decoration: underline;}
+    .bold        {font-weight: bold;}
+    .italic      {font-style: italic;}
+    .blink       {text-decoration: blink;}
+    .crossed-out {text-decoration: line-through;}
+    .highlighted {filter: contrast(70%) brightness(190%);}
+
+    .reset.bg-inverted {
+      background-color: black !important;
+    }
+
+    .cyan.bg-inverted {
+      background-color: black !important;
+    }
+
+    .red.bg-inverted {
+      background-color: black !important;
+    }
+
+    .dimgray.bg-inverted {
+      color: lightgray !important;
+      background-color: black !important;
+    }
+
+    .green.bg-inverted {
+      background-color: black !important;
+    }
+
+    .yellow.bg-inverted {
+      background-color: black !important;
+    }
+
+    .blue.bg-inverted {
+      background-color: black !important;
+    }
+
+    .purple.bg-inverted {
+      background-color: black !important;
+    }
+
+    .white.bg-black.highlighted {
+      filter: none !important;
+    }
+  </style>
+
+  <script>
+    var exports = window;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/zlibjs@0.3.1/bin/gunzip.min.js"></script>
+
+  <script language="javascript">
+    const COMPLETE_FRAME_EVERY = 1024;
+
+    let capture_frames='<RAW>';
+    capture_frames = atob(capture_frames);
+
+    let arr = new Uint8Array(capture_frames.length);
+    for (let i=0; i<capture_frames.length; i++) {
+      arr[i] = capture_frames.charCodeAt(i);
+    }
+    capture_frames = arr;
+    arr = undefined;
+
+    capture_frames = (new Zlib.Gunzip(capture_frames)).decompress();
+
+    arr = [];
+    const GUARD_1='[[[FRAME:';
+    const GUARD_2 = ']]]';
+    let i = 0;
+    let frame_timestamp = 0;
+
+    function read_guarded(guard) {
+      let copy_mode = 0;
+      let buff = [];
+      for (; i<capture_frames.length; i++) {
+        let ch = capture_frames[i];
+        buff.push(ch)
+        if (ch == guard.charCodeAt(copy_mode)) {
+          copy_mode += 1;
+          if (copy_mode >= guard.length) {
+            buff = buff.slice(0, buff.length - guard.length);
+            i += 1;
+            return new Uint8Array(buff);
+          }
+        } else {
+          copy_mode = 0;
+        }
+      }
+      return new Uint8Array(buff);
+    }
+
+    // skip first header
+    read_guarded(GUARD_1);
+
+    for (; i<capture_frames.length;) {
+      let frame_timestamp = read_guarded(GUARD_2);
+      frame_timestamp = (new TextDecoder("utf-8")).decode(frame_timestamp);
+      frame_timestamp = Math.floor(Number(frame_timestamp) / 1000000);
+      let frame = read_guarded(GUARD_1);
+      arr.push({'frame': frame, 'ts': frame_timestamp});
+    }
+
+    capture_frames = arr;
+    arr = undefined;
+
+    function get_frame_diff(index) {
+      return (new Zlib.Gunzip(capture_frames[index]['frame'])).decompress();
+    }
+
+    let _get_frame_binary_last_index = -1000;
+    let _get_frame_binary_result = new Uint8Array(0);
+    let _get_frame_binary_result_length = 0;
+    let _get_frame_binary_next_result = new Uint8Array(0);
+    function get_frame_binary(index) {
+      if (index < 0) {
+        return get_frame_binary(0);
+      }
+      if (index >= capture_frames.length) {
+        return get_frame_binary(capture_frames.length - 1);
+      }
+      if (capture_frames.length == 0) {
+        return new Uint8Array(0);
+      }
+      console.log('get_frame_binary', index);
+      if (index == _get_frame_binary_last_index) {
+        return {
+          'result': _get_frame_binary_result,
+          'length': _get_frame_binary_result_length
+        };
+      }
+      let diff = get_frame_diff(index);
+      if (index == 0) {
+        result = undiff(new Uint8Array(0), 0, diff, _get_frame_binary_next_result);
+        _get_frame_binary_next_result = _get_frame_binary_result;
+        _get_frame_binary_result = result['result'];
+        _get_frame_binary_result_length = result['length'];
+        _get_frame_binary_last_index = index;
+        return {
+          'result': _get_frame_binary_result,
+          'length': _get_frame_binary_result_length
+        };
+      } else if (index == _get_frame_binary_last_index + 1) {
+        try {
+          result = undiff(_get_frame_binary_result, _get_frame_binary_result_length, diff, _get_frame_binary_next_result);
+        } catch (e) {
+          throw e + ' ON FRAME ' + index;
+        }
+        _get_frame_binary_next_result = _get_frame_binary_result;
+        _get_frame_binary_result = result['result'];
+        _get_frame_binary_result_length = result['length'];
+        _get_frame_binary_last_index = index;
+        return {
+          'result': _get_frame_binary_result,
+          'length': _get_frame_binary_result_length
+        };
+      } else {
+        console.log('-------------------------------');
+        last_full_frame = Math.floor(index / COMPLETE_FRAME_EVERY) * COMPLETE_FRAME_EVERY;
+        let result = null;
+
+        if (index > _get_frame_binary_last_index && (index - _get_frame_binary_last_index) < (index - last_full_frame)) {
+          console.log('--> fast forward');
+          for (let i = _get_frame_binary_last_index; i <= index; i++) {
+            result = get_frame_binary(i);
+          }
+        } else {
+          console.log('--> rebuild');
+          for (let i = last_full_frame; i <= index; i++) {
+            result = get_frame_binary(i);
+          }
+        }
+        console.log('-------------------------------');
+        return result;
+      }
+    }
+
+    function get_frame_html(index) {
+      let binary = get_frame_binary(index);
+      return '<pre>' + unbinary(binary['result'], binary['length']) + '</pre>';
+    }
+
+//function undiff(current, current_length, diff, result) {
+//function unbinary(buffer, buffer_length) {
+
+  </script>
+
+  <style>
+    #slider {
+      width: 90%;
+    }
+
+    #control_container {
+      position: fixed;
+      width: 100%;
+      padding: 5px 20px 5px 20px;
+      left: 0px;
+      top: 0px;
+    }
+
+    #counter {
+      background: lightyellow;
+      color: black;
+      padding: 5px;
+      display: table-cell;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #frame_container {
+      position: absolute;
+      top: 90px;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body style="color:white; background-color:black">
+
+<div id="control_container">
+
+<input type="range" min="0" max="100" value="0" class="slider" id="slider"></input>
+<span id="counter">00:00:00 / 00:00:00</span>
+<input type="button" value="Play/Pause" id="playbtn"></input>
+
+</div>
+
+<div id="frame_container">
+</div>
+
+<script language="javascript">
+
+insert_unbinary;
+insert_undiff;
+
+function main() {
+
+  let playing = true;
+  let slider_pausing = false;
+  let has_reached_end = false;
+  const FPS = 10;
+  const COMPLETE_FRAME_EVERY = 1024;
+
+  let render_start_at = 0;
+  if (capture_frames.length > 0) {
+    render_start_at = capture_frames[0]['ts']
+  }
+  let render_offset = 0;
+  let screen_render_offset = 0;
+  let render_last = render_start_at;
+  let value = -1;
+
+  screen_render_start_at = (new Date()).getTime();
+
+  document.getElementById('playbtn').onclick = function() {
+    playing = !playing;
+  }
+
+  let frame_container = document.getElementById('frame_container');
+  let slider = document.getElementById('slider');
+  let counter = document.getElementById('counter');
+
+  const fullRenderFrame = (frame, offset_time=0) => {
+    frame_container.innerHTML = get_frame_html(frame);
+    show_frame_time(frame, offset_time);
+    has_reached_end = false;
+  }
+
+  slider.value = 0;
+  slider.max = 0;
+
+  if (capture_frames.length > 0) {
+    slider.max = Math.ceil((capture_frames[capture_frames.length - 1]['ts'] - capture_frames[0]['ts']) / 1000);
+  }
+
+  const slider_onchange = function (e) {
+    let new_value = absolute_time_to_frame(Number(slider.value) * 1000);
+    let value_absolute_time = frame_absolute_time(value);
+    let new_value_absolute_time = frame_absolute_time(new_value);
+    let offset_time = (Number(slider.value) * 1000) - new_value_absolute_time;
+    let current_screen_render = (new Date()).getTime();
+    screen_render_offset += new_value_absolute_time - value_absolute_time + offset_time;
+    value = new_value;
+    fullRenderFrame(value, offset_time);
+  };
+
+  if (slider.addEventListener) {
+    slider.addEventListener("click", slider_onchange, false);
+    slider.addEventListener("mousedown", () => { slider_pausing = true; });
+    slider.addEventListener("mouseup", () => { slider_pausing = false; });
+  }
+  else if (buttonInput.attachEvent) {
+    slider.attachEvent('onclick', testtest);
+  }
+
+  setInterval(function() {
+    let current_screen_render = (new Date()).getTime();
+    let current_render = (current_screen_render - screen_render_start_at + screen_render_offset) + render_start_at;
+
+    if (!playing || slider_pausing || has_reached_end) {
+      render_offset += current_render - render_last;
+      render_last = current_render;
+      return;
+    }
+
+    render_last = current_render;
+    current_render -= render_offset;
+
+    let display_value = value + 1;
+    while (display_value < capture_frames.length && capture_frames[display_value]['ts'] < current_render) {
+      display_value = display_value + 1;
+    }
+    display_value = display_value - 1;
+
+    if (capture_frames.length > 0 && (display_value + 1) == capture_frames.length && current_render >= capture_frames[display_value]['ts']) {
+      has_reached_end = true;
+    }
+
+    if (value != display_value) {
+      frame_container.innerHTML = get_frame_html(display_value);
+      slider.value = display_value;
+      value = display_value;
+    }
+
+    show_frame_time(value, (current_render - render_start_at) - frame_absolute_time(value));
+
+  }, (1000/FPS));
+
+  function absolute_time_to_frame(absolute_time) {
+    if (capture_frames.length == 0) {
+      return 0;
+    }
+
+    let ts = capture_frames[0]['ts'] + absolute_time;
+
+    let lo = 0;
+    let hi = capture_frames.length - 1;
+
+    while (lo < hi) {
+      let mid = Math.floor((lo + hi) / 2);
+
+      if (capture_frames[mid]['ts'] < ts) {
+        lo = mid + 1;
+      } else {
+        hi = mid;
+      }
+    }
+
+    return lo;
+  }
+
+  function show_frame_time(frame, offset_time=0) {
+    counter.innerHTML = frame_to_timerange(frame, offset_time);
+    slider.value = Math.round((frame_absolute_time(frame) + offset_time) / 1000);
+  }
+
+  function frame_to_timerange(frame, offset_time=0) {
+    return frame_to_time(frame, offset_time) + ' / ' + frame_to_time(capture_frames.length - 1);
+  }
+
+  function frame_to_time(frame, offset_time=0) {
+    let seconds = Math.floor(Math.min(capture_length_absolute_time(), (frame_absolute_time(frame) + offset_time)) / 1000);
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    let hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+
+    return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
+  }
+
+  function frame_absolute_time(frame) {
+    if (frame < capture_frames.length) {
+      return capture_frames[frame]['ts'] - capture_frames[0]['ts'];
+    }
+
+    if (frame >= capture_frames.length && capture_frames.length > 0) {
+      return capture_frames[capture_frames.length - 1]['ts'] - capture_frames[0]['ts'];
+    }
+
+    return 0;
+  }
+
+  function capture_length_absolute_time() {
+    return frame_absolute_time(capture_frames.length);
+  }
+
+  function pad(n) {
+    if (n < 10) {
+      return '0' + n;
+    }
+    return '' + n;
+  }
+}
+
+main();
+
+</script>
+
+</body>
+
+</html>

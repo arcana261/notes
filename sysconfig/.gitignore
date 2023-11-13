@@ -1,0 +1,7 @@
+*.swp
+*.swo
+.venv
+/bash/capture/leven
+/bash/capture/binerize
+telepresence.log
+
