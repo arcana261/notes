@@ -52,7 +52,7 @@ reboot
 ###### IF BOOT FAILS
 
 1. Prepare a live Windows stick
-2. Verify partition is mounted on C: (by running Notepad and checking This PC)
+2. Verify partition is mounted on C: [by running Notepad and checking This PC]
 3. Run commands
   bootrec /fixboot
   bcdboot c:\windows
@@ -154,20 +154,20 @@ sudo -i
   reboot
 
 # install tools
-sudo apt update && sudo apt install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio pulseaudio-utils snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags aha nodejs git-secret dbus-tests cgroup-tools acpi mc x11vnc x11vnc xvfb fluxbox vim-gtk3 nautilus firefox gnome-terminal gnome-shell x11-apps gedit
+sudo apt update && sudo apt install -y vim tmux screen htop psmisc wget xz-utils openssh-server ufw mlocate uuid-runtime tcpdump man-db traceroute w3m bridge-utils default-jdk git rar unrar iputils-arping network-manager-openvpn-gnome network-manager-openconnect-gnome iperf curl uget gnome-tweak-tool python3-pip p7zip-full p7zip net-tools pulseaudio pulseaudio-utils snapd clang wine winetricks xclip python3-venv gawk jq sshpass jsonnet whois ncat silversearcher-ag vim-nox gimp ctags aha nodejs git-secret dbus-tests cgroup-tools acpi mc x11vnc x11vnc xvfb fluxbox vim-gtk3 nautilus firefox gnome-terminal gnome-shell x11-apps gedit imagemagick
 
 # clone notes
 mkdir -p ~/Documents
 cd Documents/
 git clone https://github.com/arcana261/notes.git
-cd Documents
+cd notes
 git submodule update --init --recursive
 
 # setup RSA key
 ssh-keygen -t rsa
 
 # setup language
-Settings -> Reguin and Language
+Settings -> Region and Language
                                 -> Format: United States
                                 -> Manage Installed Languages
                                                               -> Install/Remove Languages -> Persian
@@ -188,7 +188,6 @@ Settings -> Reguin and Language
 ## Setup VPN
 
 ## install chrome
-    -> Make as default
     -> Login
 
 # setup python
@@ -269,8 +268,9 @@ git config --global credential.helper store
 vim ~/.git-credentials
 ...........................................
 https://arcana261:xxxxxxxxxx@github.com
-https://oauth2:xxxxxxxxxxx@git.cafebazaar.ir
 ...........................................
+
+## install SSH public key to github
 
 # install samba server
 sudo apt -y install samba samba-common
@@ -280,7 +280,7 @@ sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.org
 mkdir -p ~/.local/share
 sudo vim /etc/samba/smb.conf
 .....
-[general]
+[global]
        map to guest = bad user
 
 [junk]
@@ -556,6 +556,7 @@ kubectl completion bash > ~/.config/bash_completions/kubectl
  -> Diff
  -> Vim
  -> Docker
+ -> ES7 React/Redux/GraphQL/React-Native
 
 ## Rebuild whois cache
 cd ~/Documents/notes/awk/whois
@@ -587,13 +588,36 @@ chmod 600 ~/.ssh/config
 vim ~/.ssh/config
 ................................
 Host ucoder
-  Hostname srv4.ucoder.ir
+  Hostname www.ucoder.ir
   Port xxxx
   User xxxx
 ................................
+ssh-copy-id ucoder
 
 ## Import gpg key
 gpg --import Downloads/gpg.asc
+
+
+...................... SETUP GIT ............................................
+git config --global --unset gpg.format
+gpg --list-secret-keys --keyid-format=long
+
+
+$ gpg --list-secret-keys --keyid-format=long
+/Users/hubot/.gnupg/secring.gpg
+------------------------------------
+sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+uid                          Hubot <hubot@example.com>
+ssb   4096R/4BB6D45482678BE3 2016-03-10
+
+
+git config --global user.signingkey 3AA5C34371567BD2
+
+git config --global commit.gpgsign true
+
+[ -f ~/.bashrc ] && echo -e '\nexport GPG_TTY=$(tty)' >> ~/.bashrc
+.................... ENV SETUP GIT ..........................................
+
 
 ## Configure ocean SSH
 ocean
@@ -617,20 +641,10 @@ aws_secret_access_key=xxxxxxxxxxxxx
 ## Change Avatar
 
 ## Install MineCraft Client
-# create desktop entry
-vim ~/.local/share/applications/minecraft.desktop
-..........................................
-[Desktop Entry]
-Version=1.0
-Name=Minecraft
-Type=Application
-Comment=Launch Minecraft
-Exec=/home/arcana/.local/bin/minecraft
-Categories=Game;
-GenericName=Minecraft
-..........................................
-desktop-file-validate ~/.local/share/applications/minecraft.desktop
-sudo update-desktop-database
+....................................
+ln -s /home/arcana/.minecraft/screenshots /home/arcana/Pictures/minecraft-screenshots
+ln -s /home/arcana/.minecraft/backups /home/arcana/Documents/minecraft-backups
+....................................
 
 ## Install OBS Studio
 
@@ -797,6 +811,14 @@ build-glassfish
 
 ## install octave
 sudo apt install -y octave
+
+## install some more utilities
+sudo snap install --classic duf-utility bottom
+
+## setup imagemagick and PDF by commenting out the policy
+## <policy domain="coder" rights="none" pattern="PDF" />
+sudo vim /etc/ImageMagick-6/policy.xml
+
 
 =====================================================================================================
 =====================================================================================================

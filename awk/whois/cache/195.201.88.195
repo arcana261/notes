@@ -1,0 +1,100 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '195.201.88.0 - 195.201.95.255'
+
+% Abuse contact for '195.201.88.0 - 195.201.95.255' is 'abuse@hetzner.com'
+
+inetnum:        195.201.88.0 - 195.201.95.255
+netname:        HETZNER-nbg1-dc3
+descr:          Hetzner Online GmbH
+descr:          Datacenter nbg1-dc3
+country:        DE
+admin-c:        HOAC1-RIPE
+tech-c:         HOAC1-RIPE
+status:         ASSIGNED PA
+remarks:        INFRA-AW
+mnt-by:         HOS-GUN
+mnt-lower:      HOS-GUN
+mnt-routes:     HOS-GUN
+created:        2018-03-15T14:45:32Z
+last-modified:  2018-03-15T14:45:32Z
+source:         RIPE
+
+role:           Hetzner Online GmbH - Contact Role
+address:        Hetzner Online GmbH
+address:        Industriestrasse 25
+address:        D-91710 Gunzenhausen
+address:        Germany
+phone:          +49 9831 505-0
+fax-no:         +49 9831 505-3
+abuse-mailbox:  abuse@hetzner.com
+remarks:        *************************************************
+remarks:        * For spam/abuse/security issues please contact *
+remarks:        * abuse@hetzner.com, or fill out the form at *
+remarks:        * abuse.hetzner.com, thank you. *
+remarks:        *************************************************
+remarks:
+remarks:        *************************************************
+remarks:        * Any questions on Peering please send to *
+remarks:        * peering@hetzner.com *
+remarks:        *************************************************
+org:            ORG-HOA1-RIPE
+admin-c:        MH375-RIPE
+tech-c:         GM834-RIPE
+tech-c:         SK2374-RIPE
+tech-c:         TF2013-RIPE
+tech-c:         MF1400-RIPE
+tech-c:         SK8441-RIPE
+nic-hdl:        HOAC1-RIPE
+mnt-by:         HOS-GUN
+created:        2004-08-12T09:40:20Z
+last-modified:  2020-09-25T12:21:56Z
+source:         RIPE # Filtered
+
+% Information related to '195.201.0.0/16AS24940'
+
+route:          195.201.0.0/16
+org:            ORG-HOA1-RIPE
+descr:          HETZNER-DC
+origin:         AS24940
+mnt-by:         HOS-GUN
+created:        2017-12-14T08:50:16Z
+last-modified:  2017-12-14T08:50:16Z
+source:         RIPE
+
+organisation:   ORG-HOA1-RIPE
+org-name:       Hetzner Online GmbH
+country:        DE
+org-type:       LIR
+address:        Industriestrasse 25
+address:        D-91710
+address:        Gunzenhausen
+address:        GERMANY
+phone:          +49 9831 5050
+fax-no:         +49 9831 5053
+admin-c:        TF2013-RIPE
+admin-c:        MF1400-RIPE
+admin-c:        GM834-RIPE
+admin-c:        HOAC1-RIPE
+admin-c:        MH375-RIPE
+admin-c:        SK2374-RIPE
+admin-c:        SK8441-RIPE
+abuse-c:        HOAC1-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        HOS-GUN
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         HOS-GUN
+created:        2004-04-17T11:07:58Z
+last-modified:  2020-12-16T13:13:06Z
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.101 (HEREFORD)
+
+

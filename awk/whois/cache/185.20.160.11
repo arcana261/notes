@@ -1,0 +1,85 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '185.20.160.0 - 185.20.163.255'
+
+% Abuse contact for '185.20.160.0 - 185.20.163.255' is 'abuse@fanava.net'
+
+inetnum:        185.20.160.0 - 185.20.163.255
+netname:        IR-FANAVA-GROUP-20130307
+country:        IR
+org:            ORG-FG8-RIPE
+admin-c:        FNA3-RIPE
+tech-c:         FDP401-RIPE
+status:         ALLOCATED PA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-FANAVA
+mnt-routes:     MNT-FANAVA
+mnt-domains:    MNT-FANAVA
+created:        2013-03-07T12:55:33Z
+last-modified:  2019-03-02T13:05:14Z
+source:         RIPE
+
+organisation:   ORG-FG8-RIPE
+org-name:       Fanava Group
+country:        IR
+org-type:       LIR
+address:        No.39,17th West St. , Kordestan Ave.
+address:        1438843955
+address:        TEHRAN
+address:        IRAN, ISLAMIC REPUBLIC OF
+phone:          +989126983869
+phone:          +982182195485
+fax-no:         +982182195221
+abuse-c:        AR15628-RIPE
+mnt-ref:        RIPE-NCC-HM-MNT
+mnt-ref:        MNT-FANAVA
+mnt-by:         RIPE-NCC-HM-MNT
+mnt-by:         MNT-FANAVA
+admin-c:        FDP401-RIPE
+created:        2006-09-06T11:28:42Z
+last-modified:  2021-05-16T05:09:54Z
+source:         RIPE # Filtered
+
+role:           Fanava Network Administrators
+address:        No.39,17th West St. , Kordestan Ave. , Tehran , Iran
+phone:          +98 21 82195450
+fax-no:         +98 21 82195221
+admin-c:        FDP401-RIPE
+tech-c:         FDP401-RIPE
+nic-hdl:        FNA3-RIPE
+mnt-by:         MNT-FANAVA
+created:        2007-07-18T12:14:46Z
+last-modified:  2019-03-02T09:48:30Z
+source:         RIPE # Filtered
+
+person:         Aliakbar Akhavan
+address:        No.39,17th West St. , Kordestan Ave. Tehran
+phone:          +982182195469
+phone:          +989124274095
+nic-hdl:        FDP401-RIPE
+mnt-by:         Fanavadp-LIR
+mnt-by:         MNT-FANAVA
+mnt-by:         MNT-ERFANAVA
+created:        2018-08-06T13:39:56Z
+last-modified:  2019-09-11T10:39:41Z
+source:         RIPE # Filtered
+
+% Information related to '185.20.160.0/24AS41881'
+
+route:          185.20.160.0/24
+origin:         AS41881
+mnt-by:         MNT-FANAVA
+created:        2017-12-10T16:05:00Z
+last-modified:  2017-12-10T16:05:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.101 (BLAARKOP)
+
+

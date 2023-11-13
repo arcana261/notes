@@ -1,32 +1,29 @@
-[srv7]
-srv7.ucoder.ir
-
-[srv9]
-srv9.ucoder.ir
+[srv11]
+srv11.ucoder.ir
 
 [irvpn]
-srv7.ucoder.ir
+srv11.ucoder.ir
 
 [euvpn]
-srv9.ucoder.ir
+srv11.ucoder.ir
 
 [vpn]
-srv9.ucoder.ir
+srv11.ucoder.ir
 
 [blog]
-srv9.ucoder.ir
+srv11.ucoder.ir
 
 [webhook]
-srv9.ucoder.ir
+srv11.ucoder.ir
 
 [prometheus]
-srv9.ucoder.ir
+srv11.ucoder.ir
 
 [grafana]
-srv9.ucoder.ir
+srv11.ucoder.ir
 
 [registry]
-srv9.ucoder.ir
+srv11.ucoder.ir
 
 [fileserver]
-srv9.ucoder.ir
+srv11.ucoder.ir

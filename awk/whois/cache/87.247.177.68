@@ -1,0 +1,64 @@
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '87.247.177.0 - 87.247.177.255'
+
+% Abuse contact for '87.247.177.0 - 87.247.177.255' is 'afshar@neda.net'
+
+inetnum:        87.247.177.0 - 87.247.177.255
+netname:        NEDANETWORK
+descr:          Neda Rayaneh Data Center
+country:        ir
+admin-c:        at24-ripe
+tech-c:         MF18595-RIPE
+status:         ASSIGNED PA
+mnt-by:         LIR-IR-NEDA-MNT
+created:        2010-02-07T07:52:08Z
+last-modified:  2018-12-08T09:44:26Z
+source:         RIPE
+
+person:         Afshar Tavakoli
+address:        NEDA RAYANEH Intitute For Cultural
+address:        Data & Communication Development
+address:        P.O.Box 16315-569
+address:        TEHRAN, IRAN
+phone:          +9821 22508600
+fax-no:         +9821 22531399
+nic-hdl:        AT24-RIPE
+mnt-by:         IRNETCO-RIPE-MNT
+created:        1970-01-01T00:00:00Z
+last-modified:  2009-11-10T20:37:23Z
+source:         RIPE # Filtered
+
+person:         Mohammad Farah
+address:        NEDA RAYANEH Intitute For Cultural
+address:        Data & Communication Development
+address:        P.O.Box 16315-569
+address:        TEHRAN, IRAN
+phone:          +9821 22508600
+phone:          +9821 22531399
+nic-hdl:        MF18595-RIPE
+mnt-by:         LIR-IR-NEDA-MNT
+created:        2018-12-08T09:05:53Z
+last-modified:  2018-12-08T10:00:27Z
+source:         RIPE
+
+% Information related to '87.247.177.0/24as30902'
+
+route:          87.247.177.0/24
+descr:          Neda Network
+origin:         as30902
+mnt-by:         LIR-IR-NEDA-MNT
+created:        2011-03-30T06:44:06Z
+last-modified:  2011-03-30T06:44:06Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.101 (BLAARKOP)
+
+
