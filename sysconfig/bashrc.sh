@@ -58,6 +58,9 @@ alias csv2bsv="tr ' ' '-' | tr ',' ' '"
 alias json2tsv="json2csv | csv2tsv"
 alias json2bsv="json2csv | csv2bsv"
 alias pdf2="convert -density 300 -quality 100 "
+alias jpgfix="mogrify -set comment 'Extraneous bytes removed' "
+# usage: jpg2pdf 001.jpg 002.jpg temp.pdf
+alias jpg2pdf="convert -auto-orient "
 
 function dictionary-add() {
   dictionary_word=""
