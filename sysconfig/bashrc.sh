@@ -61,6 +61,7 @@ alias pdf2="convert -density 300 -quality 100 "
 alias jpgfix="mogrify -set comment 'Extraneous bytes removed' "
 # usage: jpg2pdf 001.jpg 002.jpg temp.pdf
 alias jpg2pdf="convert -auto-orient "
+# pdfunit in1.pdf in2.pdf out.pdf
 
 function dictionary-add() {
   dictionary_word=""
