@@ -827,6 +827,11 @@ sudo snap install --classic duf-utility bottom
 ## <policy domain="coder" rights="none" pattern="EPS" />
 ## <policy domain="coder" rights="none" pattern="PDF" />
 ## <policy domain="coder" rights="none" pattern="XPS" />
+##
+## adjust cache size
+##
+##  <policy domain="resource" name="memory" value="4GiB"/>
+##  <policy domain="resource" name="map" value="8GiB"/>
 sudo vim /etc/ImageMagick-6/policy.xml
 
 
